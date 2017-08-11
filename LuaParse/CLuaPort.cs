@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 
 namespace LuaParse
 {
     public static class CLuaPort
     {
-        #region ctype.h
+        private static Boolean IsAlphaByte ( Byte c )
+        {
+            return
+                ( c >= 'a' && c <= 'z' ) ||
+                ( c >= 'A' && c <= 'Z' ) ||
+                ( c >= 194 && c <= 244 ) ||
+                ( c == '_' );
+        }
 
-        private const Int32
-            _UPPER = 0x01,      // uppercase letter
-            _LOWER = 0x02,      // lowercase letter
-            _DIGIT = 0x04,      // digit[0-9]
-            _SPACE = 0x08,      // tab, carriage return, newline, vertical tab, or form feed
-            _PUNCT = 0x10,      // punctuation character
-            _CONTROL = 0x20,    // control character
-            _BLANK = 0x40,      // space char (tab is handled separately)
-            _HEX = 0x80,        // hexadecimal digit
-            _LEADBYTE = 0x8000,
-            _ALPHA = ( 0x0100 | _UPPER | _LOWER );
+        private static Boolean IsAlNumByte ( Byte c )
+        {
+            return IsAlphaByte ( c ) || ( c >= '0' && c <= '9' );
+        }
 
-        private static readonly Char[] FalsePositives = new[] { '(', ')', '.', '\r', '\n', '"', '\''};
+        public static Boolean IsAlpha ( Char c )
+            => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsAlphaByte );
 
-        public static Boolean IsAlpha ( Char c ) => !FalsePositives.Contains ( c ) && !Char.IsDigit ( c ) && ( Char.IsLetter ( c ) || ( c & _ALPHA ) != 0 );
-
-        public static Boolean IsAlNum ( Char c ) => !FalsePositives.Contains ( c ) && ( Char.IsLetterOrDigit ( c ) || ( c & ( _ALPHA | _DIGIT ) ) != 0 );
-
-        #endregion ctype.h
+        public static Boolean IsAlNum ( Char c )
+            => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsAlNumByte );
     }
 }
