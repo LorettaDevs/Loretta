@@ -42,6 +42,20 @@ namespace LuaParse
         }
 
         /// <summary>
+        /// Checks whether the next character after
+        /// <paramref name="dist" /> passes through <paramref name="Filter" />
+        /// </summary>
+        /// <param name="Filter">The condition</param>
+        /// <param name="dist">
+        /// The distance at when to start looking for
+        /// </param>
+        /// <returns></returns>
+        public Boolean IsNext ( Func<Char, Boolean> Filter, Int32 dist = 1 )
+        {
+            return Filter?.Invoke ( Next ( dist ) ) ?? default ( Boolean );
+        }
+
+        /// <summary>
         /// Checks whether <paramref name="a" /> is before <paramref name="b" />
         /// </summary>
         /// <param name="a"></param>
@@ -87,14 +101,14 @@ namespace LuaParse
         /// </summary>
         /// <param name="dist"></param>
         /// <returns></returns>
-        public Char Unread ( Int32 dist = 1 ) => Read ( -dist );
+        public Char Unread ( Int32 dist = 0 ) => Read ( -dist );
 
         /// <summary>
         /// Returns the <paramref name="dist" /> th last caracter
         /// </summary>
         /// <param name="dist"></param>
         /// <returns></returns>
-        public Char Last ( Int32 dist = 1 ) => Next ( -dist );
+        public Char Last ( Int32 dist = 0 ) => Next ( -dist );
 
         /// <summary>
         /// Returns the distance from <see cref="Position" /> +
@@ -106,13 +120,7 @@ namespace LuaParse
         /// searching for
         /// </param>
         /// <returns></returns>
-        public Int32 IndexOf ( Char ch, Int32 start = 0 )
-        {
-            for ( int i = Position + start ; i < Value.Length ; i++ )
-                if ( Value[i] == ch )
-                    return i - Position;
-            return -1;
-        }
+        public Int32 IndexOf ( Char ch, Int32 start = 0 ) => Value.IndexOf ( ch, Position + start );
 
         /// <summary>
         /// Returns the distance from <see cref="Position" /> +
@@ -135,7 +143,7 @@ namespace LuaParse
         {
             for ( int i = Position ; i < Value.Length ; i++ )
                 if ( Filter?.Invoke ( Value[i] ) ?? default ( Boolean ) )
-                    return i - Position;
+                    return i;
             return -1;
         }
 
@@ -150,10 +158,8 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntil ( Char ch )
         {
-            var b = new StringBuilder ( );
-            while ( Next ( ) != ch )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+            var i = IndexOf ( ch );
+            return i == -1 ? "" : ReadString ( i - Position );
         }
 
         /// <summary>
@@ -163,10 +169,10 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntil ( Func<Char, Boolean> Filter )
         {
-            var b = new StringBuilder ( );
-            while ( !Filter?.Invoke ( Next ( 1 ) ) ?? default ( Boolean ) )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+            var len = -1;
+            while ( !Filter?.Invoke ( Next ( len + 1 ) ) ?? default ( Boolean ) )
+                len++;
+            return ReadString ( len );
         }
 
         /// <summary>
@@ -176,7 +182,7 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntil ( Func<Char, Char, Boolean> Filter )
         {
-            var len = 0;
+            var len = -1;
             while ( !Filter?.Invoke ( Next ( len + 1 ), Next ( len + 2 ) ) ?? default ( Boolean ) )
                 len++;
             return ReadString ( len );
@@ -190,7 +196,7 @@ namespace LuaParse
         public String ReadUntil ( String str )
         {
             var i = IndexOf ( str );
-            return i == -1 ? "" : ReadString ( Position - i );
+            return i == -1 ? "" : ReadString ( i - Position );
         }
 
         /// <summary>
@@ -200,10 +206,10 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntilNot ( Func<Char, Boolean> Filter )
         {
-            var b = new StringBuilder ( );
-            while ( Filter?.Invoke ( Next ( 1 ) ) ?? default ( Boolean ) )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+            var len = -1;
+            while ( Filter?.Invoke ( Next ( len + 1 ) ) ?? default ( Boolean ) )
+                len++;
+            return ReadString ( len );
         }
 
         /// <summary>
@@ -213,10 +219,10 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntilNot ( Func<Char, Char, Boolean> Filter )
         {
-            var b = new StringBuilder ( );
-            while ( Filter?.Invoke ( Next ( 1 ), Next ( 2 ) ) ?? default ( Boolean ) )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+            var len = -1; // Start from current char
+            while ( Filter?.Invoke ( Next ( len + 1 ), Next ( len + 2 ) ) ?? default ( Boolean ) )
+                len++;
+            return ReadString ( len );
         }
 
         /// <summary>
@@ -226,10 +232,16 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadString ( Int32 length )
         {
-            var b = new StringBuilder ( );
-            while ( length-- > 0 )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+            if ( length < 1 )
+                return "";
+            try
+            {
+                return this.Value.Substring ( this.Position, length );
+            }
+            finally
+            {
+                Read ( length );
+            }
         }
 
         #endregion Advanced Movement
