@@ -10,7 +10,7 @@
         private static void Main ( String[] args )
         {
             String fn;
-            fn = args.Length < 2 ? "fuckthis.lua" : args[1];
+            fn = args.Length < 1 ? "fuckthis.lua" : args[0];
             var f = Path.GetFileNameWithoutExtension(fn);
 
             var ofi = new FileInfo ( $"{f}.json" );
@@ -38,9 +38,6 @@
             {
                 Console.WriteLine ( e );
             }
-
-            Console.WriteLine ( "Done." );
-            Console.ReadKey ( );
         }
     }
 
