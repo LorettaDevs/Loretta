@@ -9,14 +9,12 @@
     {
         private static void Main ( String[] args )
         {
-            String fn;
-            fn = args.Length < 1 ? "fuckthis.lua" : args[0];
+            var fn = args.Length < 1 ? Console.ReadLine ( ) : args[0];
             var f = Path.GetFileNameWithoutExtension(fn);
 
             var ofi = new FileInfo ( $"{f}.json" );
 
-            if ( ofi.Exists )
-                ofi.Delete ( );
+            if ( ofi.Exists ) ofi.Delete ( );
 
             Console.WriteLine ( $"Writing to {ofi.FullName}" );
             try
@@ -31,13 +29,11 @@
                     var js = new JsonSerializer ( );
                     js.Converters.Add ( new MyEnumConverter ( ) );
                     js.Converters.Add ( new MyStringBuilderConverter ( ) );
-                    js.Serialize ( jw, Tokenizer.Tokenize ( File.ReadAllText ( fn ) ) );
+                    //js.Serialize ( jw, Tokenizer.Tokenize ( File.ReadAllText ( fn ) ) );
                 }
             }
             catch ( Exception e )
-            {
-                Console.WriteLine ( e );
-            }
+            { Console.WriteLine ( e ); }
         }
     }
 
