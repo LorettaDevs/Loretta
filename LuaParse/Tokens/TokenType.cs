@@ -34,7 +34,7 @@
         Function,   // function
         BinaryOp,   // +, -, /, *, ^, and, or, &&, ||, ~=, !=, ==
         UnaryOp,    // -, +, !, not
-        Identifier, // Something that doesn't fits in the rest and may be a var nam
+        Identifier, // Something that doesn't fits in the rest and may be a var name
         Equal,      // =
         PossibleValue = RParen | Number | String | Identifier | Nil
     }

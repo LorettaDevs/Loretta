@@ -1,20 +1,20 @@
-﻿using LuaParse.Tokens.Abstract;
-using System;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace LuaParse.Tokens
 {
-    public class Token : IToken
+    public class Token
     {
         /// <summary>
-        /// Whitespace after the token
+        /// Tokens preceding it
         /// </summary>
-        public StringBuilder WhitespaceAfter { get; set; } = new StringBuilder ( );
+        public IList<Token> TokensBefore = new List<Token> ( );
 
         /// <summary>
-        /// Whitespace before the token
         /// </summary>
-        public StringBuilder WhitespaceBefore { get; set; } = new StringBuilder ( );
+        public IList<Token> TokensAfter = new List<Token> ( );
 
         /// <summary>
         /// The raw token
@@ -24,48 +24,11 @@ namespace LuaParse.Tokens
         /// <summary>
         /// The type of the token
         /// </summary>
-        public TokenType Type { get; set; }
+        public TokenType Type;
 
         public Token ( String Raw )
         {
             this.Raw = Raw;
-        }
-
-        /// <summary>
-        /// Clears and sets the whitespace after the token
-        /// </summary>
-        /// <param name="wp">Whitespace to be set to</param>
-        public void SetWhitespaceAfter ( String wp )
-        {
-            this.WhitespaceAfter.Clear ( );
-            this.WhitespaceAfter.Append ( wp );
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="wp">Whitespace to append</param>
-        public void AddWhitespaceAfter ( String wp )
-        {
-            this.WhitespaceAfter.Append ( wp );
-        }
-
-        /// <summary>
-        /// Clears and sets the whitespace before the token
-        /// </summary>
-        /// <param name="wp">Whitespace to be set to</param>
-        public void SetWhitespaceBefore ( String wp )
-        {
-            this.WhitespaceBefore.Clear ( );
-            this.WhitespaceBefore.Append ( wp );
-        }
-
-        /// <summary>
-        /// Appends the whitespace before the token
-        /// </summary>
-        /// <param name="wp">Whitespace to be added</param>
-        public void AddWhitespaceBefore ( String wp )
-        {
-            this.WhitespaceBefore.Append ( wp );
         }
 
         /// <summary>
