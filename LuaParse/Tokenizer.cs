@@ -147,7 +147,7 @@ namespace LuaParse
 
         public Token ReadIdentifier ( )
         {
-            var raw = Reader.ReadUntilNot ( x => CLuaPort.IsAlNum ( x ) || x == '_' );
+            var raw = Reader.ReadUntilNot ( x => CLuaJitPort.IsIdent( x ) || x == '_' );
 
             var tok = new SyntaxToken ( raw );
             switch ( raw )
