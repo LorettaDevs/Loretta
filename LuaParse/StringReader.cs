@@ -169,7 +169,7 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntil ( Func<Char, Boolean> Filter )
         {
-            var len = -1;
+            var len = this.Position > -1 ? -1 : 0; // Start from current char
             while ( !Filter?.Invoke ( Next ( len + 1 ) ) ?? default ( Boolean ) )
                 len++;
             return ReadString ( len );
@@ -182,7 +182,7 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntil ( Func<Char, Char, Boolean> Filter )
         {
-            var len = -1;
+            var len = this.Position > -1 ? -1 : 0; // Start from current char
             while ( !Filter?.Invoke ( Next ( len + 1 ), Next ( len + 2 ) ) ?? default ( Boolean ) )
                 len++;
             return ReadString ( len );
@@ -206,7 +206,7 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntilNot ( Func<Char, Boolean> Filter )
         {
-            var len = -1;
+            var len = this.Position > -1 ? -1 : 0; // Start from current char
             while ( Filter?.Invoke ( Next ( len + 1 ) ) ?? default ( Boolean ) )
                 len++;
             return ReadString ( len );
@@ -219,7 +219,7 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntilNot ( Func<Char, Char, Boolean> Filter )
         {
-            var len = -1; // Start from current char
+            var len = this.Position > -1 ? -1 : 0; // Start from current char
             while ( Filter?.Invoke ( Next ( len + 1 ), Next ( len + 2 ) ) ?? default ( Boolean ) )
                 len++;
             return ReadString ( len );
@@ -236,7 +236,7 @@ namespace LuaParse
                 return "";
             try
             {
-                return this.Value.Substring ( this.Position, length );
+                return this.Value.Substring ( Math.Max ( this.Position, 0 ), length );
             }
             finally
             {
