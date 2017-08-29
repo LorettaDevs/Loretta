@@ -108,10 +108,8 @@ namespace LuaParse
         /// <returns></returns>
         public Int32 IndexOf ( Char ch, Int32 start = 0 )
         {
-            for ( int i = Position + start ; i < Value.Length ; i++ )
-                if ( Value[i] == ch )
-                    return i - Position;
-            return -1;
+            var idx = this.Value.IndexOf ( ch, Position + start );
+            return idx == -1 ? -1 : idx - Position;
         }
 
         /// <summary>
@@ -150,10 +148,8 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntil ( Char ch )
         {
-            var b = new StringBuilder ( );
-            while ( Next ( ) != ch )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+            var idx = this.Value.IndexOf ( ch, Position );
+            return idx == -1 ? "" : this.ReadString ( idx - Position );
         }
 
         /// <summary>
@@ -163,10 +159,10 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntil ( Func<Char, Boolean> Filter )
         {
-            var b = new StringBuilder ( );
+            var len = 0;
             while ( !Filter?.Invoke ( Next ( 1 ) ) ?? default ( Boolean ) )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+                len++;
+            return this.ReadString ( len );
         }
 
         /// <summary>
@@ -189,8 +185,8 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntil ( String str )
         {
-            var i = IndexOf ( str );
-            return i == -1 ? "" : ReadString ( Position - i );
+            var i = IndexOf ( str, Position );
+            return i == -1 ? "" : ReadString ( i - Position );
         }
 
         /// <summary>
@@ -200,10 +196,10 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntilNot ( Func<Char, Boolean> Filter )
         {
-            var b = new StringBuilder ( );
+            var len = 0;
             while ( Filter?.Invoke ( Next ( 1 ) ) ?? default ( Boolean ) )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+                len++;
+            return this.ReadString ( len );
         }
 
         /// <summary>
@@ -213,10 +209,10 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadUntilNot ( Func<Char, Char, Boolean> Filter )
         {
-            var b = new StringBuilder ( );
+            var len = 0;
             while ( Filter?.Invoke ( Next ( 1 ), Next ( 2 ) ) ?? default ( Boolean ) )
-                b.Append ( Read ( ) );
-            return b.ToString ( );
+                len++;
+            return this.ReadString ( len );
         }
 
         /// <summary>
@@ -226,16 +222,15 @@ namespace LuaParse
         /// <returns></returns>
         public String ReadString ( Int32 length )
         {
-            var i = 0;
-            while ( length-- > 0 )
-                i++;
+            if ( length == 0 )
+                return String.Empty;
             try
             {
-                return this.Value.Substring ( this.Position, i );
+                return this.Value.Substring ( this.Position, length );
             }
             finally
             {
-                this.Position += i;
+                this.Position += length;
             }
         }
 
