@@ -128,7 +128,7 @@ namespace LuaParse
                             break;
 
                         default:
-                            throw new Exception ( $"Unexpected \"{next}\" near \"{LastToken.Raw}\"\"{LastToken.WhitespaceAfter}\"" );
+                            throw new Exception ( $"Unexpected \"{next}\" near \"{LastToken.Raw}\"" );
                     }
                 }
             }
