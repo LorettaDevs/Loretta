@@ -31,7 +31,7 @@ namespace LuaParse
 
             while ( ( next = Reader.Next ( ) ) != '\0' )
             {
-                if ( CLuaPort.IsAlpha ( next ) )
+                if ( CLuaJitPort.IsAlpha ( next ) )
                     ret.Add ( LastToken = ReadIdentifier ( ) );
                 else if ( Char.IsDigit ( next ) || ( next == '.' && Char.IsDigit ( Reader.Next ( 2 ) ) ) )
                     ret.Add ( LastToken = ReadNumber ( ) );
