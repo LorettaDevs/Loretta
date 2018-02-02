@@ -3,7 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace LuaParse
+namespace Loretta
 {
     internal enum LJ_CHAR : Byte
     {
@@ -15,15 +15,16 @@ namespace LuaParse
         UPPER = 0b00100000,
         LOWER = 0b01000000,
         IDENT = 0b10000000,
-        ALPHA = 0b01100000, // ( enums.LJ_CHAR_LOWER | enums.LJ_CHAR_UPPER )
-        ALNUM = 0b01101000, // ( enums.LJ_CHAR_ALPHA | enums.LJ_CHAR_DIGIT )
-        GRAPH = 0b01101100  // ( enums.LJ_CHAR_ALNUM | enums.LJ_CHAR_PUNCT )
+        ALPHA = LOWER | UPPER,
+        ALNUM = ALPHA | DIGIT,
+        GRAPH = ALNUM | PUNCT
     }
 
     public static class CLuaJitPort
     {
         private static readonly Byte[] CharList = new[]
         {
+            #region Long ass char list
             /* [0x000] = */ ( Byte ) 0b00000000,
             /* [0x001] = */ ( Byte ) LJ_CHAR.CNTRL,
             /* [0x002] = */ ( Byte ) LJ_CHAR.CNTRL,
@@ -281,6 +282,7 @@ namespace LuaParse
             /* [0x0FE] = */ ( Byte ) LJ_CHAR.IDENT,
             /* [0x0FF] = */ ( Byte ) LJ_CHAR.IDENT,
             /* [0x100] = */ ( Byte ) LJ_CHAR.IDENT
+#endregion Long ass char list
         };
 
         private static Boolean IsA ( Byte c, LJ_CHAR type ) => ( CharList[c] & ( Byte ) type ) != 0;
@@ -386,6 +388,6 @@ namespace LuaParse
 
         [DllImport ( "ucrtbase.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "atof", CharSet = CharSet.Ansi )]
         [return: MarshalAs ( UnmanagedType.R8 )]
-        public static extern Double atof ( [MarshalAs ( UnmanagedType.LPStr )] String number );
+        public static extern Double CStringToFloat ( [MarshalAs ( UnmanagedType.LPStr )] String number );
     }
 }

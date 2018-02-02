@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LuaParse
+namespace Loretta
 {
     public static class LuaParse
     {

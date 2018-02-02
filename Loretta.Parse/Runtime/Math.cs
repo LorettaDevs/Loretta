@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace LuaParse.Runtime
+namespace Loretta.Runtime
 {
     public class LuaMath
     {
@@ -36,7 +36,7 @@ namespace LuaParse.Runtime
         public Double Random ( )
         {
             U64double u; u.u64 = 0; u.d = 0;
-            if ( !rs.valid )
+            if ( !this.rs.valid )
                 this.RandomInit ( 0.0 );
             u.u64 = this.RandomStep ( );
             return u.d - 1.0;
@@ -46,7 +46,7 @@ namespace LuaParse.Runtime
         {
             U64double u; u.u64 = 0; u.d = 0;
             Double d;
-            if ( !rs.valid )
+            if ( !this.rs.valid )
                 this.RandomInit ( 0.0 );
             u.u64 = this.RandomStep ( );
             d = u.d - 1.0;
@@ -57,7 +57,7 @@ namespace LuaParse.Runtime
         {
             U64double u; u.u64 = 0; u.d = 0;
             Double d;
-            if ( !rs.valid )
+            if ( !this.rs.valid )
                 this.RandomInit ( 0.0 );
             u.u64 = this.RandomStep ( );
             d = u.d - 1.0;
@@ -68,7 +68,7 @@ namespace LuaParse.Runtime
         {
             U64double u; u.u64 = 0; u.d = 0;
             Double d;
-            if ( !rs.valid )
+            if ( !this.rs.valid )
                 this.RandomInit ( 0.0 );
             u.u64 = this.RandomStep ( );
             d = u.d - 1.0;
@@ -79,7 +79,7 @@ namespace LuaParse.Runtime
         {
             U64double u; u.u64 = 0; u.d = 0;
             Double d;
-            if ( !rs.valid )
+            if ( !this.rs.valid )
                 this.RandomInit ( 0.0 );
             u.u64 = this.RandomStep ( );
             d = u.d - 1.0;
@@ -89,25 +89,25 @@ namespace LuaParse.Runtime
         private UInt64 RandomStep ( )
         {
             UInt64 z, r = 0;
-            z = rs.gen[0];
+            z = this.rs.gen[0];
             z = ( ( ( z << 31 ) ^ z ) >> 45 ) ^ ( ( z & 0xFFFFFFFFFFFFFFFE ) << 18 );
             r ^= z;
-            rs.gen[0] = z;
+            this.rs.gen[0] = z;
 
-            z = rs.gen[1];
+            z = this.rs.gen[1];
             z = ( ( ( z << 19 ) ^ z ) >> 30 ) ^ ( ( z & 0xFFFFFFFFFFFFFFC0 ) << 28 );
             r ^= z;
-            rs.gen[1] = z;
+            this.rs.gen[1] = z;
 
-            z = rs.gen[2];
+            z = this.rs.gen[2];
             z = ( ( ( z << 24 ) ^ z ) >> 48 ) ^ ( ( z & 0xFFFFFFFFFFFFFE00 ) << 7 );
             r ^= z;
-            rs.gen[2] = z;
+            this.rs.gen[2] = z;
 
-            z = rs.gen[3];
+            z = this.rs.gen[3];
             z = ( ( ( z << 21 ) ^ z ) >> 39 ) ^ ( ( z & 0xFFFFFFFFFFFE0000 ) << 8 );
             r ^= z;
-            rs.gen[3] = z;
+            this.rs.gen[3] = z;
 
             return ( r & 0xFFFFFFFFFFFFF ) | 0x3FF0000000000000;
         }
@@ -116,18 +116,18 @@ namespace LuaParse.Runtime
         {
             UInt32 r = 0x11090601;
 
-            for ( var i = 0 ; i < 4 ; i++ )
+            for ( var i = 0; i < 4; i++ )
             {
                 U64double u; u.u64 = 0;
                 var m = 1U << ( Int32 ) ( r & 255 );
                 r >>= 8;
                 u.d = d = d * 3.14159265358979323846 + 2.7182818284590452354;
                 if ( u.u64 < m ) u.u64 += m;  /* Ensure k[i] MSB of gen[i] are non-zero. */
-                rs.gen[i] = u.u64;
+                this.rs.gen[i] = u.u64;
             }
-            rs.valid = true;
+            this.rs.valid = true;
 
-            for ( var i = 0 ; i < 10 ; i++ )
+            for ( var i = 0; i < 10; i++ )
                 this.RandomStep ( );
         }
     }

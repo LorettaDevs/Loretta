@@ -1,4 +1,4 @@
-﻿namespace LuaParse.Console
+﻿namespace Loretta.Console
 {
     using Newtonsoft.Json;
     using System;
@@ -46,12 +46,11 @@
 
         public override Object ReadJson ( JsonReader reader, Type objectType, Object existingValue, JsonSerializer serializer )
         {
-            throw new NotImplementedException ( );
+            return Enum.Parse ( typeof ( Tokens.TokenType ), reader.ReadAsString ( ) );
         }
 
         public override void WriteJson ( JsonWriter writer, Object value, JsonSerializer serializer )
         {
-            writer.WriteValue ( ( Tokens.TokenType ) value );
             writer.WriteComment ( ( ( Tokens.TokenType ) value ).ToString ( ) );
         }
     }
