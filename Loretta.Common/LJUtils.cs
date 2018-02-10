@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 
-namespace Loretta
+namespace Loretta.Common
 {
-    internal enum LJ_CHAR : Byte
+    public enum LJ_CHAR : Byte
     {
         CNTRL = 0b00000001,
         SPACE = 0b00000010,
@@ -20,9 +17,9 @@ namespace Loretta
         GRAPH = ALNUM | PUNCT
     }
 
-    public static class CLuaJitPort
+    public static class LJUtils
     {
-        private static readonly Byte[] CharList = new[]
+        public static readonly Byte[] CharList = new[]
         {
             #region Long ass char list
             /* [0x000] = */ ( Byte ) 0b00000000,
@@ -282,112 +279,108 @@ namespace Loretta
             /* [0x0FE] = */ ( Byte ) LJ_CHAR.IDENT,
             /* [0x0FF] = */ ( Byte ) LJ_CHAR.IDENT,
             /* [0x100] = */ ( Byte ) LJ_CHAR.IDENT
-#endregion Long ass char list
+            #endregion Long ass char list
         };
 
-        private static Boolean IsA ( Byte c, LJ_CHAR type ) => ( CharList[c] & ( Byte ) type ) != 0;
+        public static Boolean IsA ( Byte c, LJ_CHAR type ) => ( CharList[c] & ( Byte ) type ) != 0;
 
         #region Cntrl implementation
 
-        private static Boolean IsCntrlByte ( Byte c ) => IsA ( c, LJ_CHAR.CNTRL );
+        public static Boolean IsCntrlByte ( Byte c ) => IsA ( c, LJ_CHAR.CNTRL );
 
         public static Boolean IsCntrl ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsCntrlByte );
+                => IsCntrlByte ( ( Byte ) c );
 
         #endregion Cntrl implementation
 
         #region Space implementation
 
-        private static Boolean IsSpaceByte ( Byte c ) => IsA ( c, LJ_CHAR.SPACE );
+        public static Boolean IsSpaceByte ( Byte c ) => IsA ( c, LJ_CHAR.SPACE );
 
         public static Boolean IsSpace ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsSpaceByte );
+                => IsSpaceByte ( ( Byte ) c );
 
         #endregion Space implementation
 
         #region Punct implementation
 
-        private static Boolean IsPunctByte ( Byte c ) => IsA ( c, LJ_CHAR.PUNCT );
+        public static Boolean IsPunctByte ( Byte c ) => IsA ( c, LJ_CHAR.PUNCT );
 
         public static Boolean IsPunct ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsPunctByte );
+                => IsPunctByte ( ( Byte ) c );
 
         #endregion Punct implementation
 
         #region Digit implementation
 
-        private static Boolean IsDigitByte ( Byte c ) => IsA ( c, LJ_CHAR.DIGIT );
+        public static Boolean IsDigitByte ( Byte c ) => IsA ( c, LJ_CHAR.DIGIT );
 
         public static Boolean IsDigit ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsDigitByte );
+                => IsDigitByte ( ( Byte ) c );
 
         #endregion Digit implementation
 
         #region XDigit implementation
 
-        private static Boolean IsXDigitByte ( Byte c ) => IsA ( c, LJ_CHAR.XDIGIT );
+        public static Boolean IsXDigitByte ( Byte c ) => IsA ( c, LJ_CHAR.XDIGIT );
 
         public static Boolean IsXDigit ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsXDigitByte );
+                => IsXDigitByte ( ( Byte ) c );
 
         #endregion XDigit implementation
 
         #region Upper implementation
 
-        private static Boolean IsUpperByte ( Byte c ) => IsA ( c, LJ_CHAR.UPPER );
+        public static Boolean IsUpperByte ( Byte c ) => IsA ( c, LJ_CHAR.UPPER );
 
         public static Boolean IsUpper ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsUpperByte );
+                => IsUpperByte ( ( Byte ) c );
 
         #endregion Upper implementation
 
         #region Lower implementation
 
-        private static Boolean IsLowerByte ( Byte c ) => IsA ( c, LJ_CHAR.LOWER );
+        public static Boolean IsLowerByte ( Byte c ) => IsA ( c, LJ_CHAR.LOWER );
 
         public static Boolean IsLower ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsLowerByte );
+                => IsLowerByte ( ( Byte ) c );
 
         #endregion Lower implementation
 
         #region Ident implementation
 
-        private static Boolean IsIdentByte ( Byte c ) => IsA ( c, LJ_CHAR.IDENT );
+        public static Boolean IsIdentByte ( Byte c ) => IsA ( c, LJ_CHAR.IDENT );
 
         public static Boolean IsIdent ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsIdentByte );
+                => IsIdentByte ( ( Byte ) c );
 
         #endregion Ident implementation
 
         #region Alpha implementation
 
-        private static Boolean IsAlphaByte ( Byte c ) => IsA ( c, LJ_CHAR.ALPHA );
+        public static Boolean IsAlphaByte ( Byte c ) => IsA ( c, LJ_CHAR.ALPHA );
 
         public static Boolean IsAlpha ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsAlphaByte );
+                => IsAlphaByte ( ( Byte ) c );
 
         #endregion Alpha implementation
 
         #region AlNum implementation
 
-        private static Boolean IsAlNumByte ( Byte c ) => IsA ( c, LJ_CHAR.ALNUM );
+        public static Boolean IsAlNumByte ( Byte c ) => IsA ( c, LJ_CHAR.ALNUM );
 
         public static Boolean IsAlNum ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsAlNumByte );
+                => IsAlNumByte ( ( Byte ) c );
 
         #endregion AlNum implementation
 
         #region Graph implementation
 
-        private static Boolean IsGraphByte ( Byte c ) => IsA ( c, LJ_CHAR.GRAPH );
+        public static Boolean IsGraphByte ( Byte c ) => IsA ( c, LJ_CHAR.GRAPH );
 
         public static Boolean IsGraph ( Char c )
-                => Encoding.UTF8.GetBytes ( new[] { c } ).All ( IsGraphByte );
+                => IsGraphByte ( ( Byte ) c );
 
         #endregion Graph implementation
-
-        [DllImport ( "ucrtbase.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "atof", CharSet = CharSet.Ansi )]
-        [return: MarshalAs ( UnmanagedType.R8 )]
-        public static extern Double CStringToFloat ( [MarshalAs ( UnmanagedType.LPStr )] String number );
     }
 }
