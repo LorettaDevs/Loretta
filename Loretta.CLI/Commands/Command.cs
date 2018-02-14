@@ -22,11 +22,12 @@ namespace Loretta.CLI.Commands
             ParameterInfo[] @params = this.Method.GetParameters ( );
             for ( var i = 0; i < @params.Length; i++ )
                 if (
+                    Attribute.IsDefined ( @params[i], typeof ( CommandArgumentRestAttribute ) )
                     // Either the attribute is not at the end
-                    ( Attribute.IsDefined ( @params[i], typeof ( CommandArgumentRestAttribute ) ) && i != @params.Length - 1 )
+                    && ( i != @params.Length - 1
                     // Or it has been used in an argument that
                     // isn't a string/string[]
-                    || ( @params[i].ParameterType != typeof ( String[] ) && @params[i].ParameterType != typeof ( String ) )
+                    || @params[i].ParameterType != typeof ( String[] ) && @params[i].ParameterType != typeof ( String ) )
                 )
                     throw new Exception ( "[CommandArgumentRest] Should only be used on the last parameter of a Method." );
         }

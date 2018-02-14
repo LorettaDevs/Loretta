@@ -1,9 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <CodeAnalysisRuleSet>RuleSet1.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,12 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\GParse\GParse.Lexing\GParse.Lexing.csproj" />
-    <ProjectReference Include="..\Loretta\Loretta.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="samples\*.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\..\GParse\GParse.Parsing\GParse.Parsing.csproj" />
   </ItemGroup>
 </Project>
