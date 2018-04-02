@@ -44,7 +44,7 @@ namespace Loretta.CLI.Commands
         public Object Invoke ( String[] arguments )
         {
             ParameterInfo[] methodParams = this.Method.GetParameters ( );
-            Object[] args = new Object[methodParams.Length];
+            var args = new Object[methodParams.Length];
 
             for ( var i = 0; i < methodParams.Length; i++ )
             {

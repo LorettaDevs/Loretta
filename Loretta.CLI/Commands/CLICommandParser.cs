@@ -13,7 +13,7 @@ namespace Loretta.CLI.Commands
             var inQuote = false;
             var quote = '\0';
 
-            foreach ( Char ch in line )
+            foreach ( var ch in line )
             {
                 switch ( ch )
                 {

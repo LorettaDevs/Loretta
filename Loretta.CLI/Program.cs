@@ -7,6 +7,7 @@ using GParse.Lexing;
 using GParse.Lexing.Errors;
 using Loretta.CLI.Commands;
 using Loretta.Lexing;
+using Loretta.Reconstructors;
 using Loretta.Utils;
 
 namespace Loretta.CLI
@@ -29,18 +30,19 @@ namespace Loretta.CLI
                 if ( line == "exit" )
                     break;
 
-                try
-                {
-                    commandManager.Execute ( line );
-                }
-                catch ( LexException e )
-                {
-                    Error ( $"{e.Location} {e.Message}" );
-                }
-                catch ( Exception e )
-                {
-                    Error ( e.ToString ( ) );
-                }
+                //Reconstruct ( line );
+                //try
+                //{
+                commandManager.Execute ( line );
+                //}
+                //catch ( LexException e )
+                //{
+                //    Error ( $"{e.Location} {e.Message}" );
+                //}
+                //catch ( Exception e )
+                //{
+                //    Error ( e.ToString ( ) );
+                //}
             }
         }
 
@@ -76,12 +78,12 @@ namespace Loretta.CLI
 
             using ( FileStream handle = File.OpenRead ( filePath ) )
             {
-                String data = CInterop.ReadToEndAsASCII ( handle );
+                var data = CInterop.ReadToEndAsASCII ( handle );
                 Console.WriteLine ( String.Join ( " ", data.Take ( bytes ).Select ( ch => ch + $"({( ( Int32 ) ch ).ToString ( "X2" )})" ) ) );
             }
         }
 
-        [Command ( "lex" )]
+        [Command ( "l" )]
         public static void LexFile ( String filePath, String outputPath = "stdin" )
         {
             if ( !File.Exists ( filePath ) )
@@ -104,13 +106,63 @@ namespace Loretta.CLI
                     foreach ( Token flair in token.LeadingFlair )
                         outputWriter.WriteLine ( $"\tLTokenFlair ( '{flair.ID}', '{flair.Raw}', '{flair.Value}', {flair.Type}, {flair.Range} )" );
 
-                    if ( last == token.Range )
+                    if ( last == token.Range && token.Type != TokenType.EOF )
                         throw new Exception ( "Possible infinite loop. Token has same range as last." );
                     last = token.Range;
                 }
                 sw.Stop ( );
                 outputWriter.WriteLine ( $"Time elapsed on lexing: {HumanTime ( sw )}" );
             }
+        }
+
+        [Command ( "e" )]
+        public static void Encodings ( )
+        {
+            foreach ( EncodingInfo info in Encoding.GetEncodings ( ) )
+            {
+                if ( Encoding.GetEncoding ( info.CodePage ).IsSingleByte )
+                {
+                    Console.WriteLine ( info.CodePage );
+                }
+            }
+        }
+
+        [Command ( "r" )]
+        public static void Reconstruct ( String path, String output = "stdout" )
+        {
+            if ( !File.Exists ( path ) )
+            {
+                Error ( "File doesn't exists." );
+                return;
+            }
+
+            var code = File.ReadAllText ( path );
+            var environment = new LuaEnvironment ( );
+            environment.AddAnalyser ( "fixparents", new Analysis.FixParentsAnalyser ( ) );
+            environment.AddAnalyser ( "gotocheck", new Analysis.GotoTargetCheckAnalyser ( ) );
+            environment.AddFolder ( "ConstantFolder 1st pass", new Folder.ConstantASTFolder ( ) );
+            environment.AddAnalyser ( "AssignmentAnalyser", new Analysis.AssignmentAnalyser ( ) );
+            environment.AddFolder ( "AssignmentFolder", new Folder.AssignmentFolder ( ) );
+            //environment.AddFolder ( "ConstantFolder 2nd pass", new Folder.ConstantASTFolder ( ) );
+
+            var sw1 = Stopwatch.StartNew ( );
+            Env.EnvFile file = environment.ProcessFile ( path, code );
+            sw1.Stop ( );
+            foreach ( Error err in file.Errors )
+                Console.WriteLine ( $"{err.Location} [{err.Type}] {err.Message}" );
+
+            var sw2 = Stopwatch.StartNew ( );
+            using ( var mem = new MemoryStream ( ) )
+            using ( Stream fileStream = output == "stdout" ? Console.OpenStandardOutput ( ) : File.OpenWrite ( output ) )
+            using ( var writer = new StreamWriter ( fileStream, Encoding.UTF8 ) )
+            {
+                var reconstructor = new FormattedLuaReconstructor ( );
+                reconstructor.Construct ( file.AST, mem );
+                writer.Write ( Encoding.UTF8.GetString ( mem.ToArray ( ) ) );
+            }
+            sw2.Stop ( );
+            Console.WriteLine ( $"Time elapsed on parsing + analysing + folding: {HumanTime ( sw1 )}" );
+            Console.WriteLine ( $"Time elapsed on serializing code: {HumanTime ( sw2 )}" );
         }
 
         private const Double TicksPerMicrosecond = TimeSpan.TicksPerMillisecond / 1000D;

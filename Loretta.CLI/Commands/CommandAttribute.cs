@@ -2,7 +2,7 @@
 
 namespace Loretta.CLI.Commands
 {
-    [AttributeUsage ( AttributeTargets.Method, Inherited = false, AllowMultiple = false )]
+    [AttributeUsage ( AttributeTargets.Method, Inherited = false, AllowMultiple = true )]
     internal sealed class CommandAttribute : Attribute
     {
         private readonly String _name;
