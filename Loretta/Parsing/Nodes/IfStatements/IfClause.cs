@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Loretta.Lexing;
 
 namespace Loretta.Parsing.Nodes.IfStatements
 {
-    public class IfClause : ASTNode
+    public class IfClause : ASTNode, IEquatable<IfClause>
     {
         public ASTNode Condition { get; private set; }
 
@@ -30,5 +29,41 @@ namespace Loretta.Parsing.Nodes.IfStatements
             this.AddChild ( body );
             this.Body = body;
         }
+
+        public override ASTNode Clone ( )
+        {
+            var clause = new IfClause ( this.Parent, this.Scope, this.CloneTokenList ( ) );
+            clause.SetCondition ( this.Condition.Clone ( ) );
+            clause.SetBody ( ( StatementList ) this.Body.Clone ( ) );
+            return clause;
+        }
+
+        #region Generated Code
+
+        public override Boolean Equals ( Object obj )
+        {
+            return this.Equals ( obj as IfClause );
+        }
+
+        public Boolean Equals ( IfClause other )
+        {
+            return other != null &&
+                    EqualityComparer<ASTNode>.Default.Equals ( this.Condition, other.Condition ) &&
+                    EqualityComparer<StatementList>.Default.Equals ( this.Body, other.Body );
+        }
+
+        public override Int32 GetHashCode ( )
+        {
+            var hashCode = -2019592797;
+            hashCode = hashCode * -1521134295 + EqualityComparer<ASTNode>.Default.GetHashCode ( this.Condition );
+            hashCode = hashCode * -1521134295 + EqualityComparer<StatementList>.Default.GetHashCode ( this.Body );
+            return hashCode;
+        }
+
+        public static Boolean operator == ( IfClause clause1, IfClause clause2 ) => EqualityComparer<IfClause>.Default.Equals ( clause1, clause2 );
+
+        public static Boolean operator != ( IfClause clause1, IfClause clause2 ) => !( clause1 == clause2 );
+
+        #endregion Generated Code
     }
 }

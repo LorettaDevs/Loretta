@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using GParse.Lexing;
 using Loretta.Lexing;
 
@@ -53,6 +52,16 @@ namespace Loretta.Parsing.Nodes
 
         public override String ToString ( ) => $"{this.GetType ( ).Name}<>";
 
+        public abstract ASTNode Clone ( );
+
+        public List<LToken> CloneTokenList ( )
+        {
+            var list = new List<LToken> ( );
+            foreach ( LToken tok in this.Tokens )
+                list.Add ( new LToken ( tok ) );
+            return list;
+        }
+
         public void SetParent ( ASTNode parent )
         {
             if ( this.Parent != null )
@@ -78,45 +87,45 @@ namespace Loretta.Parsing.Nodes
 
             foreach ( LToken tok in this.Tokens )
             {
-                SourceLocation loc = tok.Location;
+                SourceRange range = tok.Range;
 
-                startB = Math.Min ( startB, loc.Byte );
-                if ( startB == loc.Byte )
+                startB = Math.Min ( startB, range.Start.Byte );
+                if ( startB == range.Start.Byte )
                 {
-                    startL = loc.Line;
-                    startC = loc.Column;
+                    startL = range.Start.Line;
+                    startC = range.Start.Column;
                     updatedStart = true;
                 }
 
-                endB = Math.Max ( endB, loc.Byte );
-                if ( endB == loc.Byte )
+                endB = Math.Max ( endB, range.End.Byte );
+                if ( endB == range.End.Byte )
                 {
-                    endL = loc.Line;
-                    endC = loc.Column;
+                    endL = range.End.Line;
+                    endC = range.End.Column;
                     updatedEnd = true;
                 }
+            }
 
-                foreach ( ASTNode child in this.Children )
+            foreach ( ASTNode child in this.Children )
+            {
+                child.RecomputeBounds ( );
+
+                if ( child.Range.Start != SourceLocation.Max && child.Range.End != SourceLocation.Min )
                 {
-                    child.RecomputeBounds ( );
-
-                    if ( child.Range.Start != SourceLocation.Max )
+                    startB = Math.Min ( startB, child.Range.Start.Byte );
+                    if ( startB == child.Range.Start.Byte )
                     {
-                        startB = Math.Min ( startB, child.Range.Start.Byte );
-                        if ( startB == child.Range.Start.Byte )
-                        {
-                            startL = child.Range.Start.Line;
-                            startC = child.Range.Start.Column;
-                            updatedStart = true;
-                        }
+                        startL = child.Range.Start.Line;
+                        startC = child.Range.Start.Column;
+                        updatedStart = true;
+                    }
 
-                        endB = Math.Max ( endB, child.Range.End.Byte );
-                        if ( endB == child.Range.End.Byte )
-                        {
-                            endL = child.Range.End.Line;
-                            endC = child.Range.End.Column;
-                            updatedEnd = true;
-                        }
+                    endB = Math.Max ( endB, child.Range.End.Byte );
+                    if ( endB == child.Range.End.Byte )
+                    {
+                        endL = child.Range.End.Line;
+                        endC = child.Range.End.Column;
+                        updatedEnd = true;
                     }
                 }
             }
@@ -142,6 +151,8 @@ namespace Loretta.Parsing.Nodes
         /// <param name="newChild"></param>
         public void AddChild ( ASTNode newChild )
         {
+            if ( newChild == null )
+                return;
             this.Children.Add ( newChild );
             this.ParentChild ( newChild, this.Children.Count - 1 );
         }
@@ -152,6 +163,8 @@ namespace Loretta.Parsing.Nodes
         /// <param name="newChildren"></param>
         public void AddChildren ( IEnumerable<ASTNode> newChildren )
         {
+            if ( newChildren == null )
+                return;
             foreach ( ASTNode newChild in newChildren )
                 this.AddChild ( newChild );
         }
@@ -163,11 +176,13 @@ namespace Loretta.Parsing.Nodes
         /// <param name="index"></param>
         public void InsertChild ( ASTNode newChild, Int32 index )
         {
+            if ( newChild == null )
+                return;
             this.Children.Insert ( index, newChild );
             this.ParentChild ( newChild, index );
 
             // Fix the index of all children after this
-            for ( var i = index + 1; i < this.Children.Count; i++ )
+            for ( var i = 0; i < this.Children.Count; i++ )
                 this.Children[i].ParentIndex = i;
         }
 
@@ -178,6 +193,9 @@ namespace Loretta.Parsing.Nodes
         /// <param name="index"></param>
         public void InsertChildren ( IEnumerable<ASTNode> newChildren, Int32 index )
         {
+            if ( newChildren == null )
+                return;
+
             foreach ( ASTNode newChild in newChildren )
                 this.InsertChild ( newChild, index++ );
         }
@@ -189,10 +207,14 @@ namespace Loretta.Parsing.Nodes
         /// <param name="newChild"></param>
         public void ReplaceChild ( ASTNode oldChild, ASTNode newChild )
         {
-            // Sanity check
-            if ( oldChild.Parent != this )
-                throw new Exception ( "ASTNode to be replaced is not a child of this node." );
-
+            if ( oldChild == null && newChild == null )
+                throw new ArgumentNullException ( "oldChild AND newChild", "Just what the fuck are you doing?" );
+            else if ( oldChild == null )
+                this.AddChild ( newChild );
+            else if ( newChild == null )
+                this.RemoveChild ( oldChild );
+            else if ( oldChild.Parent != this )
+                return; // wtf are you even doing
             this.Children[oldChild.ParentIndex] = newChild;
             this.ParentChild ( newChild, oldChild.ParentIndex );
         }
@@ -203,11 +225,8 @@ namespace Loretta.Parsing.Nodes
         /// <param name="child"></param>
         public void RemoveChild ( ASTNode child )
         {
-            if ( child.Parent != this )
-                throw new Exception ( "ASTNode to be removed is not a child of this node." );
-
+            child.Parent = null;
             this.Children.Remove ( child );
-
             for ( var i = 0; i < this.Children.Count; i++ )
                 this.Children[i].ParentIndex = i;
         }
@@ -218,7 +237,7 @@ namespace Loretta.Parsing.Nodes
         /// <param name="newNode"></param>
         public void ReplaceInParent ( ASTNode newNode )
         {
-            this.Parent.ReplaceChild ( this, newNode );
+            this.Parent?.ReplaceChild ( this, newNode );
         }
 
         #endregion Children Manipulation

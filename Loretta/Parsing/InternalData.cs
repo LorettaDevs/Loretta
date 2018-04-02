@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Loretta.Parsing
 {
@@ -16,6 +15,11 @@ namespace Loretta.Parsing
         public void SetValue ( String Key, Object Value )
         {
             this.Data[Key] = Value;
+        }
+
+        public void RemoveValue ( String Key )
+        {
+            this.Data.Remove ( Key );
         }
 
         public Boolean HasKey ( String Key )

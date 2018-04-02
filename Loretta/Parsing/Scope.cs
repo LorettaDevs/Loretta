@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using GParse.Lexing;
 using GParse.Parsing.Errors;
 
 namespace Loretta.Parsing
 {
-    public class Scope
+    public class Scope : IEquatable<Scope>
     {
         public GLuaParser Parser { get; }
 
         public Scope Parent { get; }
+
+        public Scope RootScope => this.Parent != null ? this.Parent.RootScope : this;
 
         public Boolean IsRoot { get; }
 
@@ -24,11 +25,15 @@ namespace Loretta.Parsing
 
         public SourceLocation EndPosition { get; private set; }
 
+        public List<Scope> Children { get; } = new List<Scope> ( );
+
         public Scope ( GLuaParser Parser, Scope Parent = null )
         {
             this.Parser = Parser;
             this.Parent = Parent;
             this.IsRoot = Parent != null;
+            if ( Parent != null )
+                Parent.Children.Add ( this );
         }
 
         public void Start ( )
@@ -142,5 +147,29 @@ namespace Loretta.Parsing
 
             return null;
         }
+
+        #region Generated Code
+
+        public override Boolean Equals ( Object obj )
+        {
+            return this.Equals ( obj as Scope );
+        }
+
+        public Boolean Equals ( Scope other )
+        {
+            return other != null &&
+                    EqualityComparer<Scope>.Default.Equals ( this.Parent, other.Parent );
+        }
+
+        public override Int32 GetHashCode ( )
+        {
+            return -1801665627 + EqualityComparer<Scope>.Default.GetHashCode ( this.Parent );
+        }
+
+        public static Boolean operator == ( Scope scope1, Scope scope2 ) => EqualityComparer<Scope>.Default.Equals ( scope1, scope2 );
+
+        public static Boolean operator != ( Scope scope1, Scope scope2 ) => !( scope1 == scope2 );
+
+        #endregion Generated Code
     }
 }

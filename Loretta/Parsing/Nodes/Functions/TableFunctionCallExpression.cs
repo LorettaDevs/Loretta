@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Loretta.Lexing;
 using Loretta.Parsing.Nodes.Constants;
 
 namespace Loretta.Parsing.Nodes.Functions
 {
-    public class TableFunctionCallExpression : ASTStatement
+    public class TableFunctionCallExpression : ASTStatement, IFunctionCall, IEquatable<TableFunctionCallExpression>
     {
         public TableConstructorExpression Argument { get; private set; } = null;
 
@@ -31,5 +30,41 @@ namespace Loretta.Parsing.Nodes.Functions
             this.AddChild ( @base );
             this.Base = @base;
         }
+
+        public override ASTNode Clone ( )
+        {
+            var call = new TableFunctionCallExpression ( this.Parent, this.Scope, this.CloneTokenList ( ) );
+            call.SetBase ( this.Base.Clone ( ) );
+            call.SetArgument ( ( TableConstructorExpression ) this.Argument.Clone ( ) );
+            return call;
+        }
+
+        #region Generated Code
+
+        public override Boolean Equals ( Object obj )
+        {
+            return this.Equals ( obj as TableFunctionCallExpression );
+        }
+
+        public Boolean Equals ( TableFunctionCallExpression other )
+        {
+            return other != null &&
+                    EqualityComparer<TableConstructorExpression>.Default.Equals ( this.Argument, other.Argument ) &&
+                    EqualityComparer<ASTNode>.Default.Equals ( this.Base, other.Base );
+        }
+
+        public override Int32 GetHashCode ( )
+        {
+            var hashCode = 988583102;
+            hashCode = hashCode * -1521134295 + EqualityComparer<TableConstructorExpression>.Default.GetHashCode ( this.Argument );
+            hashCode = hashCode * -1521134295 + EqualityComparer<ASTNode>.Default.GetHashCode ( this.Base );
+            return hashCode;
+        }
+
+        public static Boolean operator == ( TableFunctionCallExpression expression1, TableFunctionCallExpression expression2 ) => EqualityComparer<TableFunctionCallExpression>.Default.Equals ( expression1, expression2 );
+
+        public static Boolean operator != ( TableFunctionCallExpression expression1, TableFunctionCallExpression expression2 ) => !( expression1 == expression2 );
+
+        #endregion Generated Code
     }
 }

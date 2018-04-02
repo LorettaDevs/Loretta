@@ -28,6 +28,8 @@ namespace Loretta.Parsing
             { ">=", new[] { 3d, 3 } },
             { "and", new[] { 2d, 2 } },
             { "or", new[] { 1d, 1 } },
+            { "&&", new[] { 2d, 2 } },
+            { "||", new[] { 1d, 1 } },
         };
 
         public const Int32 UnaryOpPriority = 8;

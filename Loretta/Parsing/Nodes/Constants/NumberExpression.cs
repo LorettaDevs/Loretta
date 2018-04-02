@@ -15,5 +15,10 @@ namespace Loretta.Parsing.Nodes.Constants
             this.Raw = this.Tokens[0].Raw;
             this.Value = ( Double ) this.Tokens[0].Value;
         }
+
+        public override ASTNode Clone ( )
+        {
+            return new NumberExpression ( this.Parent, this.Scope, this.CloneTokenList ( ) );
+        }
     }
 }

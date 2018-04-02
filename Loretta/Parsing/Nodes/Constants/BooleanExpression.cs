@@ -14,5 +14,10 @@ namespace Loretta.Parsing.Nodes.Constants
             this.Raw = this.Tokens[0].Raw;
             this.Value = this.Tokens[0].Raw == "true";
         }
+
+        public override ASTNode Clone ( )
+        {
+            return new BooleanExpression ( this.Parent, this.Scope, this.CloneTokenList ( ) );
+        }
     }
 }

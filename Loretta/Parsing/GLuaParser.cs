@@ -25,19 +25,18 @@ namespace Loretta.Parsing
         public Scope RootScope { get; }
 
         public Scope CurrentScope => this.ScopeStack.Peek ( );
+#if DEBUG
+        // Just for the sake of debugging
 
-        protected Stack<Reality> RealityStack { get; }
+        private LToken CurrentToken => ( LToken ) this.Peek ( );
 
-        public Reality RootReality { get; }
-
-        public Reality ActiveReality => this.RealityStack.Peek ( );
-
+        private LToken NextToken => ( LToken ) this.Peek ( 1 );
+#endif
         public GLuaParser ( GLuaLexer lexer, LuaEnvironment environment ) : base ( lexer )
         {
             this.Environment = environment;
             this.RootScope = this.CreateScope ( null );
             this.ScopeStack = new Stack<Scope> ( );
-            this.RealityStack = new Stack<Reality> ( );
         }
 
         #region Scope Management
@@ -58,25 +57,6 @@ namespace Loretta.Parsing
         }
 
         #endregion Scope Management
-
-        #region Realities Management
-
-        public Reality CreateReality ( Scope scope, Boolean isUncertain )
-            => this.CreateRealityEx ( this.ActiveReality, scope, false, isUncertain );
-
-        public Reality CreateRealityEx ( Reality parent, Scope scope, Boolean isRoot, Boolean isUncertain )
-            => new Reality ( this, isRoot ? this.RootScope : scope, parent, isUncertain );
-
-        public Reality CreateSubReality ( Scope scope, Boolean isUncertain )
-            => this.ActiveReality;
-
-        public void PushReality ( Reality reality )
-            => this.RealityStack.Push ( reality );
-
-        public Reality PopReality ( )
-            => this.RealityStack.Pop ( );
-
-        #endregion Realities Management
 
         #region Actual Parsing
 
@@ -201,7 +181,6 @@ namespace Loretta.Parsing
 
                     if ( this.Consume ( "}", out LToken _, fullTableTokens ) )
                     {
-                        tableExpr.HasTrailingComma = true;
                         break;
                     }
                 }
@@ -242,7 +221,7 @@ namespace Loretta.Parsing
             this.Expect ( "(", tokens );
             var args = new List<ASTNode> ( );
 
-            if ( this.NextIs ( "identifier" ) )
+            if ( this.NextIs ( "ident" ) )
             {
                 while ( true )
                 {
@@ -296,7 +275,6 @@ namespace Loretta.Parsing
 
             scope.Finish ( );
 
-            funcExpr.InternalData.SetValue ( "isFunction", true );
             scope.InternalData.SetValue ( "isFunction", true );
 
             return funcExpr;
@@ -526,7 +504,7 @@ namespace Loretta.Parsing
             {
                 if ( ParserData.OpPriorities.ContainsKey ( this.Peek ( ).ID ) )
                 {
-                    Double[] priority = ParserData.OpPriorities[this.Peek ( ).ID];
+                    var priority = ParserData.OpPriorities[this.Peek ( ).ID];
 
                     if ( priority[0] > lastOperatorPriority )
                     {
@@ -544,6 +522,10 @@ namespace Loretta.Parsing
                         break;
                     }
                 }
+                else
+                {
+                    break;
+                }
             }
 
             return expr;
@@ -557,7 +539,7 @@ namespace Loretta.Parsing
             Scope scope = this.CreateScope ( daddyScope );
             var tokens = new List<LToken> ( );
             var ifStat = new IfStatement ( parent, scope, tokens );
-            var first = false; // haha, first
+            var first = true; // haha, first
 
             scope.Start ( );
             {
@@ -640,7 +622,7 @@ namespace Loretta.Parsing
             scope.Start ( );
             {
                 this.Expect ( "for", tokens );
-                forStat.SetIncrementExpression ( this.ParseVariableExpression ( forStat, scope ) );
+                forStat.SetVariable ( this.ParseVariableExpression ( forStat, scope ) );
                 this.Expect ( "=", tokens );
                 forStat.SetInitialExpression ( this.ParseExpression ( forStat, scope ) );
                 this.Expect ( ",", tokens );
@@ -729,7 +711,6 @@ namespace Loretta.Parsing
             }
             scope.Finish ( );
 
-            funExpr.InternalData.SetValue ( "isFunction", true );
             scope.InternalData.SetValue ( "isFunction", true );
             return funExpr;
         }
@@ -751,7 +732,7 @@ namespace Loretta.Parsing
                 this.Expect ( "end", tokens );
             }
             scope.Finish ( );
-            funcExpr.InternalData.SetValue ( "isFunction", true );
+
             scope.InternalData.SetValue ( "isFunction", true );
             return funcExpr;
         }
@@ -782,6 +763,7 @@ namespace Loretta.Parsing
             var tokens = new List<LToken> ( );
             var retStat = new ReturnStatement ( parent, scope, tokens );
 
+            this.Expect ( "return", tokens );
             if ( !ParserData.StatListCloseKeywords.Contains ( this.Peek ( ).ID ) && !this.NextIs ( TokenType.EOF ) )
             {
                 do retStat.AddReturn ( this.ParseExpression ( retStat, scope ) );
@@ -923,7 +905,7 @@ namespace Loretta.Parsing
         {
             ASTNode node = this.ParseStatementInternal ( parent, scope );
             if ( node is ASTStatement stat )
-                stat.HasSemicolon = this.Consume ( ",", out LToken _ );
+                stat.HasSemicolon = this.Consume ( ";", out LToken _ );
             return node;
         }
 
@@ -955,20 +937,22 @@ namespace Loretta.Parsing
 
         public StatementList Parse ( )
         {
-            this.RootScope.Start ( );
-            this.RootScope.InternalData.SetValue ( "isFunction", true );
             try
             {
-                return this.ParseStatementList ( null, this.RootScope );
+                this.RootScope.Start ( );
+                this.RootScope.InternalData.SetValue ( "isFunction", true );
+                this.RootScope.InternalData.SetValue ( "isRoot", true );
+                StatementList list = this.ParseStatementList ( null, this.RootScope );
+                this.RootScope.Finish ( );
+                return list;
             }
             catch ( ParseException e )
             {
-                this.Environment.GetFile ( this ).Errors.Add ( new Error ( ErrorType.Fatal, e.Location, e.Message ) );
+                this.Environment
+                    .GetFile ( this )
+                    .Errors
+                    .Add ( new Error ( ErrorType.Fatal, e.Location, e.Message ) );
                 throw;
-            }
-            finally
-            {
-                this.RootScope.Finish ( );
             }
         }
     }
