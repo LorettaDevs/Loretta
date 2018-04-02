@@ -3,7 +3,7 @@ using GParse.Lexing;
 using Loretta.Lexing;
 using Loretta.Parsing.Nodes;
 
-namespace Loretta
+namespace Loretta.Env
 {
     public enum ErrorType
     {
