@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Loretta.Utils
 {
+    // interop with C
     public static class CInterop
     {
         [DllImport ( "ucrtbase.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "atof", CharSet = CharSet.Ansi )]
@@ -15,8 +15,8 @@ namespace Loretta.Utils
         public static String ConvertStringToASCII ( String value )
         {
             using ( var mem = new MemoryStream ( ) )
-            using ( var writer = new StreamWriter ( mem, Encoding.GetEncoding ( 1252 ) ) )
-            using ( var reader = new StreamReader ( mem, Encoding.GetEncoding ( 1252 ) ) )
+            using ( var writer = new StreamWriter ( mem, new UTF8Encoding ( false, false ) ) )
+            using ( var reader = new StreamReader ( mem, Encoding.GetEncoding ( 28591 ) ) )
             {
                 writer.AutoFlush = true;
                 writer.Write ( value );

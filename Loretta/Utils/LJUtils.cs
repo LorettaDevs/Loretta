@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Loretta.Utils
 {
@@ -22,7 +23,7 @@ namespace Loretta.Utils
     public static class LJUtils
     {
         public static readonly LJ_CHAR[] CharList = new LJ_CHAR[] {
-            #region Long ass char list
+            #region Long ass (generated) char list
             /* '\x00'(0x 0) */ LJ_CHAR.CNTRL,
             /* '\x01'(0x 1) */ LJ_CHAR.CNTRL,
             /* '\x02'(0x 2) */ LJ_CHAR.CNTRL,
@@ -279,7 +280,7 @@ namespace Loretta.Utils
             /*    'ý'(0xFD) */ LJ_CHAR.IDENT,
             /*    'þ'(0xFE) */ LJ_CHAR.IDENT,
             /*    'ÿ'(0xFF) */ LJ_CHAR.IDENT
-            #endregion Long ass char list
+            #endregion
         };
 
         /// <summary>
@@ -292,7 +293,7 @@ namespace Loretta.Utils
             if ( c > 255 )
                 throw new Exception ( "Character is not in the Extended ASCII range ([0, 255])." );
 
-            LJ_CHAR[] enums = new LJ_CHAR[] { LJ_CHAR.GRAPH, LJ_CHAR.ALNUM, LJ_CHAR.ALPHA, LJ_CHAR.IDENT, LJ_CHAR.LOWER, LJ_CHAR.UPPER, LJ_CHAR.XDIGIT, LJ_CHAR.DIGIT, LJ_CHAR.PUNCT, LJ_CHAR.SPACE, LJ_CHAR.CNTRL };
+            var enums = new LJ_CHAR[] { LJ_CHAR.GRAPH, LJ_CHAR.ALNUM, LJ_CHAR.ALPHA, LJ_CHAR.IDENT, LJ_CHAR.LOWER, LJ_CHAR.UPPER, LJ_CHAR.XDIGIT, LJ_CHAR.DIGIT, LJ_CHAR.PUNCT, LJ_CHAR.SPACE, LJ_CHAR.CNTRL };
             var list = new List<String> ( );
             LJ_CHAR vals = CharList[c];
 
@@ -303,18 +304,19 @@ namespace Loretta.Utils
             return list.Count > 0 ? String.Join ( " | ", list ) : "LJ_CHAR.NONE";
         }
 
+        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsA ( Byte c, LJ_CHAR type )
         {
-            if ( c > 255 )
-                throw new Exception ( "Character is outside of the Extended ASCII range. ([0, 255])" );
-            return ( CharList[c] & type ) == type;
+            return ( CharList[c] & type ) != 0;
         }
 
+        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsA ( Char c, LJ_CHAR type )
         {
-            if ( c > 255 )
-                throw new Exception ( "Character is outside of the Extended ASCII range. ([0, 255])" );
-            return ( CharList[c] & type ) == type;
+            // Make sure that we receive a character in the extended ascii range
+            return c > 255
+                ? throw new ArgumentOutOfRangeException ( nameof ( c ), "Character is outside of the Extended ASCII range. ([0, 255])" )
+                : ( CharList[c] & type ) != 0;
         }
 
         #region Cntrl implementation
