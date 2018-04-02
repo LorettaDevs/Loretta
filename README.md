@@ -7,5 +7,9 @@ A C# (G)Lua code processor with some extensions.
 - Scope-based variable keeping
 
 ## Dependencies:
-- VS 2017 or VS Code and .NET Core 2.0 SDK
+- [VS 2017](https://www.visualstudio.com/vs/) or [VS Code](https://code.visualstudio.com/) and [.NET Core 2.0 SDK](https://www.microsoft.com/net/download/dotnet-core/sdk-2.0.3)
 - [GParse](https://github.com/GGG-KILLER/GParse)
+
+## License
+[GPL v3.0](/LICENSE).
+However most part of the [parser](/Loretta/Parsing/) was taken from a project by [@SwadicalRag](https://github.com/SwadicalRag) made in lua that is not available anymore.
