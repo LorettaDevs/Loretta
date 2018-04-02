@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Loretta.Runtime
 {
+    // luajit's math.random and math.randomseed
     public class LuaJITMath
     {
         #region LuaJIT internals
