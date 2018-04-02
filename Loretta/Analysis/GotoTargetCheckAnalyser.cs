@@ -6,11 +6,11 @@ namespace Loretta.Analysis
 {
     public class GotoTargetCheckAnalyser : BaseASTAnalyser
     {
-        protected GotoTargetCheckAnalyser ( LuaEnvironment env, EnvFile file ) : base ( env, file )
+        public GotoTargetCheckAnalyser ( ) : base ( )
         {
         }
 
-        protected override Object[] GotoStatement ( GotoStatement node, params Object[] args )
+        protected override Object[] AnalyseGotoStatement ( GotoStatement node, params Object[] args )
         {
             if ( node.Label.Node == null )
                 this.File.Errors.Add ( new Error ( ErrorType.Error, node, $"Label {node.Label.Name} has no target node." ) );

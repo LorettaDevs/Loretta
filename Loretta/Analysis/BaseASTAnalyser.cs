@@ -13,17 +13,11 @@ namespace Loretta.Analysis
 {
     public abstract class BaseASTAnalyser
     {
-        public LuaEnvironment Environment { get; }
+        public LuaEnvironment Environment { get; internal set; }
 
-        public EnvFile File { get; }
+        public EnvFile File { get; internal set; }
 
-        protected BaseASTAnalyser ( LuaEnvironment env, EnvFile file )
-        {
-            this.Environment = env;
-            this.File = file;
-        }
-
-        protected virtual Object[] Analyse ( ASTNode node, params Object[] args )
+        public virtual Object[] Analyse ( ASTNode node, params Object[] args )
         {
             // Protection. JustInCase™
             if ( node == null )
@@ -37,75 +31,75 @@ namespace Loretta.Analysis
         {
             #region Regex Generated Mess
             if ( node is DoStatement )
-                return this.DoStatement ( ( DoStatement ) node, args );
+                return this.AnalyseDoStatement ( ( DoStatement ) node, args );
             else if ( node is StatementList )
-                return this.StatementList ( ( StatementList ) node, args );
+                return this.AnalyseStatementList ( ( StatementList ) node, args );
             else if ( node is AssignmentStatement )
-                return this.AssignmentStatement ( ( AssignmentStatement ) node, args );
+                return this.AnalyseAssignmentStatement ( ( AssignmentStatement ) node, args );
             else if ( node is LocalVariableStatement )
-                return this.LocalVariableStatement ( ( LocalVariableStatement ) node, args );
+                return this.AnalyseLocalVariableStatement ( ( LocalVariableStatement ) node, args );
             else if ( node is VariableExpression )
-                return this.VariableExpression ( ( VariableExpression ) node, args );
+                return this.AnalyseVariableExpression ( ( VariableExpression ) node, args );
             else if ( node is BinaryOperatorExpression )
-                return this.BinaryOperatorExpression ( ( BinaryOperatorExpression ) node, args );
+                return this.AnalyseBinaryOperatorExpression ( ( BinaryOperatorExpression ) node, args );
             else if ( node is UnaryOperatorExpression )
-                return this.UnaryOperatorExpression ( ( UnaryOperatorExpression ) node, args );
+                return this.AnalyseUnaryOperatorExpression ( ( UnaryOperatorExpression ) node, args );
             else if ( node is ForGenericStatement )
-                return this.ForGenericStatement ( ( ForGenericStatement ) node, args );
+                return this.AnalyseForGenericStatement ( ( ForGenericStatement ) node, args );
             else if ( node is ForNumericStatement )
-                return this.ForNumericStatement ( ( ForNumericStatement ) node, args );
+                return this.AnalyseForNumericStatement ( ( ForNumericStatement ) node, args );
             else if ( node is RepeatStatement )
-                return this.RepeatStatement ( ( RepeatStatement ) node, args );
+                return this.AnalyseRepeatStatement ( ( RepeatStatement ) node, args );
             else if ( node is WhileStatement )
-                return this.WhileStatement ( ( WhileStatement ) node, args );
+                return this.AnalyseWhileStatement ( ( WhileStatement ) node, args );
             else if ( node is Parsing.Nodes.Indexers.IndexExpression )
-                return this.IndexExpression ( ( Parsing.Nodes.Indexers.IndexExpression ) node, args );
+                return this.AnalyseIndexExpression ( ( Parsing.Nodes.Indexers.IndexExpression ) node, args );
             else if ( node is Parsing.Nodes.Indexers.MemberExpression )
-                return this.MemberExpression ( ( Parsing.Nodes.Indexers.MemberExpression ) node, args );
+                return this.AnalyseMemberExpression ( ( Parsing.Nodes.Indexers.MemberExpression ) node, args );
             else if ( node is IfClause )
-                return this.IfClause ( ( IfClause ) node, args );
+                return this.AnalyseIfClause ( ( IfClause ) node, args );
             else if ( node is IfStatement )
-                return this.IfStatement ( ( IfStatement ) node, args );
+                return this.AnalyseIfStatement ( ( IfStatement ) node, args );
             else if ( node is AnonymousFunctionExpression )
-                return this.AnonymousFunctionExpression ( ( AnonymousFunctionExpression ) node, args );
+                return this.AnalyseAnonymousFunctionExpression ( ( AnonymousFunctionExpression ) node, args );
             else if ( node is FunctionCallExpression )
-                return this.FunctionCallExpression ( ( FunctionCallExpression ) node, args );
+                return this.AnalyseFunctionCallExpression ( ( FunctionCallExpression ) node, args );
             else if ( node is LocalFunctionStatement )
-                return this.LocalFunctionStatement ( ( LocalFunctionStatement ) node, args );
+                return this.AnalyseLocalFunctionStatement ( ( LocalFunctionStatement ) node, args );
             else if ( node is NamedFunctionStatement )
-                return this.NamedFunctionStatement ( ( NamedFunctionStatement ) node, args );
+                return this.AnalyseNamedFunctionStatement ( ( NamedFunctionStatement ) node, args );
             else if ( node is StringFunctionCallExpression )
-                return this.StringFunctionCallExpression ( ( StringFunctionCallExpression ) node, args );
+                return this.AnalyseStringFunctionCallExpression ( ( StringFunctionCallExpression ) node, args );
             else if ( node is TableFunctionCallExpression )
-                return this.TableFunctionCallExpression ( ( TableFunctionCallExpression ) node, args );
+                return this.AnalyseTableFunctionCallExpression ( ( TableFunctionCallExpression ) node, args );
             else if ( node is BreakStatement )
-                return this.BreakStatement ( ( BreakStatement ) node, args );
+                return this.AnalyseBreakStatement ( ( BreakStatement ) node, args );
             else if ( node is ContinueStatement )
-                return this.ContinueStatement ( ( ContinueStatement ) node, args );
+                return this.AnalyseContinueStatement ( ( ContinueStatement ) node, args );
             else if ( node is GotoStatement )
-                return this.GotoStatement ( ( GotoStatement ) node, args );
+                return this.AnalyseGotoStatement ( ( GotoStatement ) node, args );
             else if ( node is GotoLabelStatement )
-                return this.GotoLabelStatement ( ( GotoLabelStatement ) node, args );
+                return this.AnalyseGotoLabelStatement ( ( GotoLabelStatement ) node, args );
             else if ( node is ReturnStatement )
-                return this.ReturnStatement ( ( ReturnStatement ) node, args );
+                return this.AnalyseReturnStatement ( ( ReturnStatement ) node, args );
             else if ( node is BooleanExpression )
-                return this.BooleanExpression ( ( BooleanExpression ) node, args );
+                return this.AnalyseBooleanExpression ( ( BooleanExpression ) node, args );
             else if ( node is Eof )
-                return this.Eof ( ( Eof ) node, args );
+                return this.AnalyseEof ( ( Eof ) node, args );
             else if ( node is NilExpression )
-                return this.NilExpression ( ( NilExpression ) node, args );
+                return this.AnalyseNilExpression ( ( NilExpression ) node, args );
             else if ( node is NumberExpression )
-                return this.NumberExpression ( ( NumberExpression ) node, args );
+                return this.AnalyseNumberExpression ( ( NumberExpression ) node, args );
             else if ( node is ParenthesisExpression )
-                return this.ParenthesisExpression ( ( ParenthesisExpression ) node, args );
+                return this.AnalyseParenthesisExpression ( ( ParenthesisExpression ) node, args );
             else if ( node is StringExpression )
-                return this.StringExpression ( ( StringExpression ) node, args );
+                return this.AnalyseStringExpression ( ( StringExpression ) node, args );
             else if ( node is TableConstructorExpression )
-                return this.TableConstructorExpression ( ( TableConstructorExpression ) node, args );
+                return this.AnalyseTableConstructorExpression ( ( TableConstructorExpression ) node, args );
             else if ( node is TableKeyValue )
-                return this.TableKeyValue ( ( TableKeyValue ) node, args );
+                return this.AnalyseTableKeyValue ( ( TableKeyValue ) node, args );
             else if ( node is VarArgExpression )
-                return this.VarArgExpression ( ( VarArgExpression ) node, args );
+                return this.AnalyseVarArgExpression ( ( VarArgExpression ) node, args );
             #endregion Regex Generated Mess
             else
                 throw new Exception ( "Unknown node type: " + node );
@@ -121,20 +115,20 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] DoStatement ( DoStatement node, params Object[] args )
+        protected virtual Object[] AnalyseDoStatement ( DoStatement node, params Object[] args )
         {
             this.Analyse ( node.Body );
             return null;
         }
 
-        protected virtual Object[] StatementList ( StatementList node, params Object[] args )
+        protected virtual Object[] AnalyseStatementList ( StatementList node, params Object[] args )
         {
             foreach ( ASTNode statement in node.Statements )
                 this.Analyse ( statement );
             return null;
         }
 
-        protected virtual Object[] AssignmentStatement ( AssignmentStatement node, params Object[] args )
+        protected virtual Object[] AnalyseAssignmentStatement ( AssignmentStatement node, params Object[] args )
         {
             foreach ( ASTNode var in node.Variables )
                 this.Analyse ( var );
@@ -143,7 +137,7 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] LocalVariableStatement ( LocalVariableStatement node, params Object[] args )
+        protected virtual Object[] AnalyseLocalVariableStatement ( LocalVariableStatement node, params Object[] args )
         {
             foreach ( ASTNode var in node.Variables )
                 this.Analyse ( var );
@@ -152,25 +146,25 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] VariableExpression ( VariableExpression node, params Object[] args )
+        protected virtual Object[] AnalyseVariableExpression ( VariableExpression node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] BinaryOperatorExpression ( BinaryOperatorExpression node, params Object[] args )
+        protected virtual Object[] AnalyseBinaryOperatorExpression ( BinaryOperatorExpression node, params Object[] args )
         {
             this.Analyse ( node.LeftOperand );
             this.Analyse ( node.RightOperand );
             return null;
         }
 
-        protected virtual Object[] UnaryOperatorExpression ( UnaryOperatorExpression node, params Object[] args )
+        protected virtual Object[] AnalyseUnaryOperatorExpression ( UnaryOperatorExpression node, params Object[] args )
         {
             this.Analyse ( node.Operand );
             return null;
         }
 
-        protected virtual Object[] ForGenericStatement ( ForGenericStatement node, params Object[] args )
+        protected virtual Object[] AnalyseForGenericStatement ( ForGenericStatement node, params Object[] args )
         {
             foreach ( VariableExpression var in node.Variables )
                 this.Analyse ( var );
@@ -183,7 +177,7 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] ForNumericStatement ( ForNumericStatement node, params Object[] args )
+        protected virtual Object[] AnalyseForNumericStatement ( ForNumericStatement node, params Object[] args )
         {
             this.Analyse ( node.InitialExpression );
             this.Analyse ( node.FinalExpression );
@@ -192,41 +186,41 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] RepeatStatement ( RepeatStatement node, params Object[] args )
+        protected virtual Object[] AnalyseRepeatStatement ( RepeatStatement node, params Object[] args )
         {
             this.Analyse ( node.Body );
             this.Analyse ( node.Condition );
             return null;
         }
 
-        protected virtual Object[] WhileStatement ( WhileStatement node, params Object[] args )
+        protected virtual Object[] AnalyseWhileStatement ( WhileStatement node, params Object[] args )
         {
             this.Analyse ( node.Body );
             this.Analyse ( node.Condition );
             return null;
         }
 
-        protected virtual Object[] IndexExpression ( Parsing.Nodes.Indexers.IndexExpression node, params Object[] args )
+        protected virtual Object[] AnalyseIndexExpression ( Parsing.Nodes.Indexers.IndexExpression node, params Object[] args )
         {
             this.Analyse ( node.Base );
             this.Analyse ( node.Indexer );
             return null;
         }
 
-        protected virtual Object[] MemberExpression ( Parsing.Nodes.Indexers.MemberExpression node, params Object[] args )
+        protected virtual Object[] AnalyseMemberExpression ( Parsing.Nodes.Indexers.MemberExpression node, params Object[] args )
         {
             this.Analyse ( node.Base );
             return null;
         }
 
-        protected virtual Object[] IfClause ( IfClause node, params Object[] args )
+        protected virtual Object[] AnalyseIfClause ( IfClause node, params Object[] args )
         {
             this.Analyse ( node.Condition );
             this.Analyse ( node.Body );
             return null;
         }
 
-        protected virtual Object[] IfStatement ( IfStatement node, params Object[] args )
+        protected virtual Object[] AnalyseIfStatement ( IfStatement node, params Object[] args )
         {
             this.Analyse ( node.MainClause );
             foreach ( IfClause elif in node.ElseIfClauses )
@@ -235,7 +229,7 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] AnonymousFunctionExpression ( AnonymousFunctionExpression node, params Object[] args )
+        protected virtual Object[] AnalyseAnonymousFunctionExpression ( AnonymousFunctionExpression node, params Object[] args )
         {
             foreach ( ASTNode arg in node.Arguments )
                 this.Analyse ( arg );
@@ -243,7 +237,7 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] FunctionCallExpression ( FunctionCallExpression node, params Object[] args )
+        protected virtual Object[] AnalyseFunctionCallExpression ( FunctionCallExpression node, params Object[] args )
         {
             this.Analyse ( node.Base );
             foreach ( ASTNode arg in node.Arguments )
@@ -251,7 +245,7 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] LocalFunctionStatement ( LocalFunctionStatement node, params Object[] args )
+        protected virtual Object[] AnalyseLocalFunctionStatement ( LocalFunctionStatement node, params Object[] args )
         {
             this.Analyse ( node.Identifier );
             foreach ( ASTNode arg in node.Arguments )
@@ -260,7 +254,7 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] NamedFunctionStatement ( NamedFunctionStatement node, params Object[] args )
+        protected virtual Object[] AnalyseNamedFunctionStatement ( NamedFunctionStatement node, params Object[] args )
         {
             this.Analyse ( node.Identifier );
             foreach ( ASTNode arg in node.Arguments )
@@ -269,94 +263,94 @@ namespace Loretta.Analysis
             return null;
         }
 
-        protected virtual Object[] StringFunctionCallExpression ( StringFunctionCallExpression node, params Object[] args )
+        protected virtual Object[] AnalyseStringFunctionCallExpression ( StringFunctionCallExpression node, params Object[] args )
         {
             this.Analyse ( node.Base );
             this.Analyse ( node.Argument );
             return null;
         }
 
-        protected virtual Object[] TableFunctionCallExpression ( TableFunctionCallExpression node, params Object[] args )
+        protected virtual Object[] AnalyseTableFunctionCallExpression ( TableFunctionCallExpression node, params Object[] args )
         {
             this.Analyse ( node.Base );
             this.Analyse ( node.Argument );
             return null;
         }
 
-        protected virtual Object[] BreakStatement ( BreakStatement node, params Object[] args )
+        protected virtual Object[] AnalyseBreakStatement ( BreakStatement node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] ContinueStatement ( ContinueStatement node, params Object[] args )
+        protected virtual Object[] AnalyseContinueStatement ( ContinueStatement node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] GotoStatement ( GotoStatement node, params Object[] args )
+        protected virtual Object[] AnalyseGotoStatement ( GotoStatement node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] GotoLabelStatement ( GotoLabelStatement node, params Object[] args )
+        protected virtual Object[] AnalyseGotoLabelStatement ( GotoLabelStatement node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] ReturnStatement ( ReturnStatement node, params Object[] args )
+        protected virtual Object[] AnalyseReturnStatement ( ReturnStatement node, params Object[] args )
         {
             foreach ( ASTNode ret in node.Returns )
                 this.Analyse ( ret );
             return null;
         }
 
-        protected virtual Object[] BooleanExpression ( BooleanExpression node, params Object[] args )
+        protected virtual Object[] AnalyseBooleanExpression ( BooleanExpression node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] Eof ( Eof node, params Object[] args )
+        protected virtual Object[] AnalyseEof ( Eof node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] NilExpression ( NilExpression node, params Object[] args )
+        protected virtual Object[] AnalyseNilExpression ( NilExpression node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] NumberExpression ( NumberExpression node, params Object[] args )
+        protected virtual Object[] AnalyseNumberExpression ( NumberExpression node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] ParenthesisExpression ( ParenthesisExpression node, params Object[] args )
+        protected virtual Object[] AnalyseParenthesisExpression ( ParenthesisExpression node, params Object[] args )
         {
             this.Analyse ( node.Expression );
             return null;
         }
 
-        protected virtual Object[] StringExpression ( StringExpression node, params Object[] args )
+        protected virtual Object[] AnalyseStringExpression ( StringExpression node, params Object[] args )
         {
             return null;
         }
 
-        protected virtual Object[] TableConstructorExpression ( TableConstructorExpression node, params Object[] args )
+        protected virtual Object[] AnalyseTableConstructorExpression ( TableConstructorExpression node, params Object[] args )
         {
             foreach ( TableKeyValue field in node.Fields )
                 this.Analyse ( field );
             return null;
         }
 
-        protected virtual Object[] TableKeyValue ( TableKeyValue node, params Object[] args )
+        protected virtual Object[] AnalyseTableKeyValue ( TableKeyValue node, params Object[] args )
         {
-            if ( !node.Sequential )
+            if ( !node.IsSequential )
                 this.Analyse ( node.Key );
             this.Analyse ( node.Value );
             return null;
         }
 
-        protected virtual Object[] VarArgExpression ( VarArgExpression node, params Object[] args )
+        protected virtual Object[] AnalyseVarArgExpression ( VarArgExpression node, params Object[] args )
         {
             return null;
         }

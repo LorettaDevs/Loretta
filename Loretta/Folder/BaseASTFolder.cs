@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Loretta.Env;
 using Loretta.Parsing.Nodes;
 using Loretta.Parsing.Nodes.Constants;
 using Loretta.Parsing.Nodes.ControlStatements;
@@ -14,17 +14,15 @@ namespace Loretta.Folder
 {
     public abstract class BaseASTFolder
     {
-        public LuaEnvironment Environment { get; }
+        public LuaEnvironment Environment { get; internal set; }
 
-        public EnvFile File { get; }
+        public EnvFile File { get; internal set; }
 
-        protected BaseASTFolder ( LuaEnvironment env, EnvFile file )
+        protected BaseASTFolder ( )
         {
-            this.Environment = env;
-            this.File = file;
         }
 
-        protected virtual ASTNode Fold ( ASTNode node, params Object[] args )
+        public virtual ASTNode Fold ( ASTNode node, params Object[] args )
         {
             // Protection. JustInCase™
             if ( node == null )
@@ -33,7 +31,10 @@ namespace Loretta.Folder
             this.FoldNode ( node, args );
             ASTNode ret = this.InternalNodeFoldFunc ( node, args );
 
-            if ( !node.Equals ( ret ) && node.Parent != null )
+            // We may want to remove a node
+            if ( ret == null )
+                node.Parent.RemoveChild ( node );
+            else if ( !node.Equals ( ret ) && node.Parent != null )
                 node.ReplaceInParent ( ret );
 
             return ret;
@@ -43,78 +44,96 @@ namespace Loretta.Folder
         {
             #region Regex Generated Mess
             if ( node is DoStatement )
-                return this.DoStatement ( ( DoStatement ) node, args );
+                return this.FoldDoStatement ( ( DoStatement ) node, args );
             else if ( node is StatementList )
-                return this.StatementList ( ( StatementList ) node, args );
+                return this.FoldStatementList ( ( StatementList ) node, args );
             else if ( node is AssignmentStatement )
-                return this.AssignmentStatement ( ( AssignmentStatement ) node, args );
+                return this.FoldAssignmentStatement ( ( AssignmentStatement ) node, args );
             else if ( node is LocalVariableStatement )
-                return this.LocalVariableStatement ( ( LocalVariableStatement ) node, args );
+                return this.FoldLocalVariableStatement ( ( LocalVariableStatement ) node, args );
             else if ( node is VariableExpression )
-                return this.VariableExpression ( ( VariableExpression ) node, args );
+                return this.FoldVariableExpression ( ( VariableExpression ) node, args );
             else if ( node is BinaryOperatorExpression )
-                return this.BinaryOperatorExpression ( ( BinaryOperatorExpression ) node, args );
+                return this.FoldBinaryOperatorExpression ( ( BinaryOperatorExpression ) node, args );
             else if ( node is UnaryOperatorExpression )
-                return this.UnaryOperatorExpression ( ( UnaryOperatorExpression ) node, args );
+                return this.FoldUnaryOperatorExpression ( ( UnaryOperatorExpression ) node, args );
             else if ( node is ForGenericStatement )
-                return this.ForGenericStatement ( ( ForGenericStatement ) node, args );
+                return this.FoldForGenericStatement ( ( ForGenericStatement ) node, args );
             else if ( node is ForNumericStatement )
-                return this.ForNumericStatement ( ( ForNumericStatement ) node, args );
+                return this.FoldForNumericStatement ( ( ForNumericStatement ) node, args );
             else if ( node is RepeatStatement )
-                return this.RepeatStatement ( ( RepeatStatement ) node, args );
+                return this.FoldRepeatStatement ( ( RepeatStatement ) node, args );
             else if ( node is WhileStatement )
-                return this.WhileStatement ( ( WhileStatement ) node, args );
+                return this.FoldWhileStatement ( ( WhileStatement ) node, args );
             else if ( node is Parsing.Nodes.Indexers.IndexExpression )
-                return this.IndexExpression ( ( Parsing.Nodes.Indexers.IndexExpression ) node, args );
+                return this.FoldIndexExpression ( ( Parsing.Nodes.Indexers.IndexExpression ) node, args );
             else if ( node is Parsing.Nodes.Indexers.MemberExpression )
-                return this.MemberExpression ( ( Parsing.Nodes.Indexers.MemberExpression ) node, args );
+                return this.FoldMemberExpression ( ( Parsing.Nodes.Indexers.MemberExpression ) node, args );
             else if ( node is IfClause )
-                return this.IfClause ( ( IfClause ) node, args );
+                return this.FoldIfClause ( ( IfClause ) node, args );
             else if ( node is IfStatement )
-                return this.IfStatement ( ( IfStatement ) node, args );
+                return this.FoldIfStatement ( ( IfStatement ) node, args );
             else if ( node is AnonymousFunctionExpression )
-                return this.AnonymousFunctionExpression ( ( AnonymousFunctionExpression ) node, args );
+                return this.FoldAnonymousFunctionExpression ( ( AnonymousFunctionExpression ) node, args );
             else if ( node is FunctionCallExpression )
-                return this.FunctionCallExpression ( ( FunctionCallExpression ) node, args );
+                return this.FoldFunctionCallExpression ( ( FunctionCallExpression ) node, args );
             else if ( node is LocalFunctionStatement )
-                return this.LocalFunctionStatement ( ( LocalFunctionStatement ) node, args );
+                return this.FoldLocalFunctionStatement ( ( LocalFunctionStatement ) node, args );
             else if ( node is NamedFunctionStatement )
-                return this.NamedFunctionStatement ( ( NamedFunctionStatement ) node, args );
+                return this.FoldNamedFunctionStatement ( ( NamedFunctionStatement ) node, args );
             else if ( node is StringFunctionCallExpression )
-                return this.StringFunctionCallExpression ( ( StringFunctionCallExpression ) node, args );
+                return this.FoldStringFunctionCallExpression ( ( StringFunctionCallExpression ) node, args );
             else if ( node is TableFunctionCallExpression )
-                return this.TableFunctionCallExpression ( ( TableFunctionCallExpression ) node, args );
+                return this.FoldTableFunctionCallExpression ( ( TableFunctionCallExpression ) node, args );
             else if ( node is BreakStatement )
-                return this.BreakStatement ( ( BreakStatement ) node, args );
+                return this.FoldBreakStatement ( ( BreakStatement ) node, args );
             else if ( node is ContinueStatement )
-                return this.ContinueStatement ( ( ContinueStatement ) node, args );
+                return this.FoldContinueStatement ( ( ContinueStatement ) node, args );
             else if ( node is GotoStatement )
-                return this.GotoStatement ( ( GotoStatement ) node, args );
+                return this.FoldGotoStatement ( ( GotoStatement ) node, args );
             else if ( node is GotoLabelStatement )
-                return this.GotoLabelStatement ( ( GotoLabelStatement ) node, args );
+                return this.FoldGotoLabelStatement ( ( GotoLabelStatement ) node, args );
             else if ( node is ReturnStatement )
-                return this.ReturnStatement ( ( ReturnStatement ) node, args );
+                return this.FoldReturnStatement ( ( ReturnStatement ) node, args );
             else if ( node is BooleanExpression )
-                return this.BooleanExpression ( ( BooleanExpression ) node, args );
+                return this.FoldBooleanExpression ( ( BooleanExpression ) node, args );
             else if ( node is Eof )
-                return this.Eof ( ( Eof ) node, args );
+                return this.FoldEof ( ( Eof ) node, args );
             else if ( node is NilExpression )
-                return this.NilExpression ( ( NilExpression ) node, args );
+                return this.FoldNilExpression ( ( NilExpression ) node, args );
             else if ( node is NumberExpression )
-                return this.NumberExpression ( ( NumberExpression ) node, args );
+                return this.FoldNumberExpression ( ( NumberExpression ) node, args );
             else if ( node is ParenthesisExpression )
-                return this.ParenthesisExpression ( ( ParenthesisExpression ) node, args );
+                return this.FoldParenthesisExpression ( ( ParenthesisExpression ) node, args );
             else if ( node is StringExpression )
-                return this.StringExpression ( ( StringExpression ) node, args );
+                return this.FoldStringExpression ( ( StringExpression ) node, args );
             else if ( node is TableConstructorExpression )
-                return this.TableConstructorExpression ( ( TableConstructorExpression ) node, args );
+                return this.FoldTableConstructorExpression ( ( TableConstructorExpression ) node, args );
             else if ( node is TableKeyValue )
-                return this.TableKeyValue ( ( TableKeyValue ) node, args );
+                return this.FoldTableKeyValue ( ( TableKeyValue ) node, args );
             else if ( node is VarArgExpression )
-                return this.VarArgExpression ( ( VarArgExpression ) node, args );
+                return this.FoldVarArgExpression ( ( VarArgExpression ) node, args );
             #endregion Regex Generated Mess
             else
                 throw new Exception ( "Unknown node type: " + node );
+        }
+
+        /// <summary>
+        /// Folds a list of astnodes and returns a new list with
+        /// all non-nulled nodes
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <returns></returns>
+        protected List<ASTNode> FoldNodeList ( IEnumerable<ASTNode> nodes )
+        {
+            var newList = new List<ASTNode> ( );
+            foreach ( ASTNode node in nodes )
+            {
+                ASTNode newNode = this.Fold ( node );
+                if ( newNode != null )
+                    newList.Add ( newNode );
+            }
+            return newList;
         }
 
         /// <summary>
@@ -127,239 +146,300 @@ namespace Loretta.Folder
             return null;
         }
 
-        protected virtual ASTNode DoStatement ( DoStatement node, params Object[] args )
+        protected virtual ASTNode FoldDoStatement ( DoStatement node, params Object[] args )
         {
-            node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
+            if ( node.Body == null )
+                throw new Exception ( "Cannot have a DoStatement with a null body." );
+            node.SetBody ( this.FoldStatementList ( node.Body ) );
+
+            if ( node.Body.Statements.Count == 0 )
+                return null;
             return node;
         }
 
-        protected virtual ASTNode StatementList ( StatementList node, params Object[] args )
+        protected virtual StatementList FoldStatementList ( StatementList node, params Object[] args )
         {
-            for ( var i = 0; i < node.Statements.Count; i++ )
-                node.Statements[i] = this.Fold ( node.Statements[i] );
+            List<ASTNode> newList = this.FoldNodeList ( node.Statements );
+            node.SetStatements ( newList );
             return node;
         }
 
-        protected virtual ASTNode AssignmentStatement ( AssignmentStatement node, params Object[] args )
+        protected virtual ASTNode FoldAssignmentStatement ( AssignmentStatement node, params Object[] args )
         {
-            for ( var i = 0; i < node.Variables.Count; i++ )
-                node.Variables[i] = this.Fold ( node.Variables[i] );
-            for ( var i = 0; i < node.Assignments.Count; i++ )
-                node.Assignments[i] = this.Fold ( node.Assignments[i] );
+            node.SetVariables ( this.FoldNodeList ( node.Variables ) );
+            node.SetAssignments ( this.FoldNodeList ( node.Assignments ) );
+
+            if ( node.Variables.Count == 0 )
+                return null;
             return node;
         }
 
-        protected virtual ASTNode LocalVariableStatement ( LocalVariableStatement node, params Object[] args )
+        protected virtual ASTNode FoldLocalVariableStatement ( LocalVariableStatement node, params Object[] args )
         {
-            for ( var i = 0; i < node.Variables.Count; i++ )
-                node.Variables[i] = ( VariableExpression ) this.Fold ( node.Variables[i] );
-            for ( var i = 0; i < node.Assignments.Count; i++ )
-                node.Assignments[i] = this.Fold ( node.Assignments[i] );
+            node.SetVariables ( this.FoldNodeList ( node.Variables ) );
+            node.SetAssignments ( this.FoldNodeList ( node.Assignments ) );
+
+            if ( node.Variables.Count == 0 )
+                return null;
             return node;
         }
 
-        protected virtual ASTNode VariableExpression ( VariableExpression node, params Object[] args )
+        protected virtual ASTNode FoldVariableExpression ( VariableExpression node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode BinaryOperatorExpression ( BinaryOperatorExpression node, params Object[] args )
+        protected virtual ASTNode FoldBinaryOperatorExpression ( BinaryOperatorExpression node, params Object[] args )
         {
-            node.SetLeftOperand ( this.Fold ( node.LeftOperand ) );
-            node.SetRightOperand ( this.Fold ( node.RightOperand ) );
+            if ( node.LeftOperand != null )
+                node.SetLeftOperand ( this.Fold ( node.LeftOperand ) );
+            if ( node.RightOperand != null )
+                node.SetRightOperand ( this.Fold ( node.RightOperand ) );
+            if ( node.LeftOperand == null && node.RightOperand == null )
+                throw new Exception ( "Cannot fold both operands to null." );
+
+            if ( node.LeftOperand == null )
+                return node.RightOperand;
+            else if ( node.RightOperand == null )
+                return node.LeftOperand;
+            else
+                return node;
+        }
+
+        protected virtual ASTNode FoldUnaryOperatorExpression ( UnaryOperatorExpression node, params Object[] args )
+        {
+            if ( node.Operand != null )
+                node.SetOperand ( this.Fold ( node.Operand ) );
+            if ( node.Operand == null )
+                throw new Exception ( "Cannot have a unary expression with a null operand." );
             return node;
         }
 
-        protected virtual ASTNode UnaryOperatorExpression ( UnaryOperatorExpression node, params Object[] args )
+        protected virtual ASTNode FoldForGenericStatement ( ForGenericStatement node, params Object[] args )
         {
-            node.SetOperand ( this.Fold ( node.Operand ) );
+            node.SetVariables ( this.FoldNodeList ( node.Variables ) );
+            node.SetGenerators ( this.FoldNodeList ( node.Generators ) );
+
+            if ( node.Variables.Count == 0 || node.Generators.Count == 0 )
+                throw new Exception ( "Cannot have a generic for without variables or generators." );
+            if ( node.Body == null )
+                throw new Exception ( "Cannot have a generic for with a null body." );
+            node.SetBody ( this.FoldStatementList ( node.Body ) );
+
             return node;
         }
 
-        protected virtual ASTNode ForGenericStatement ( ForGenericStatement node, params Object[] args )
+        protected virtual ASTNode FoldForNumericStatement ( ForNumericStatement node, params Object[] args )
         {
-            for ( var i = 0; i < node.Variables.Count; i++ )
-                node.Variables[i] = ( VariableExpression ) this.Fold ( node.Variables[i] );
-            for ( var i = 0; i < node.Generators.Count; i++ )
-                node.Generators[i] = this.Fold ( node.Generators[i] );
-            node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
+            if ( node.Variable != null )
+            {
+                var var = ( VariableExpression ) this.Fold ( node.Variable );
+                if ( var != null )
+                    node.SetVariable ( var );
+                else
+                    throw new Exception ( "Cannot have a numeric for statement without a variable." );
+            }
+            else
+                throw new Exception ( "Cannot have a numeric for statement without a variable." );
+
+            if ( node.InitialExpression != null )
+            {
+                ASTNode init = this.Fold ( node.InitialExpression );
+                if ( init != null )
+                    node.SetInitialExpression ( init );
+                else
+                    throw new Exception ( "Cannot have a numeric for statement without an initial expression." );
+            }
+            else
+                throw new Exception ( "Cannot have a numeric for statement without an initial expression." );
+
+            if ( node.FinalExpression != null )
+            {
+                ASTNode final = this.Fold ( node.FinalExpression );
+                if ( final != null )
+                    node.SetFinalExpression ( final );
+                else
+                    throw new Exception ( "Cannot have a numeric for statement without a final expression." );
+            }
+            else
+                throw new Exception ( "Cannot have a numeric for statement without a final expression." );
+
+            if ( node.IncrementExpression != null )
+                node.SetIncrementExpression ( this.Fold ( node.IncrementExpression ) );
+
+            if ( node.Body == null )
+                throw new Exception ( "Cannot have a numeric for statement with a null body." );
+            node.SetBody ( this.FoldStatementList ( node.Body ) );
             return node;
         }
 
-        protected virtual ASTNode ForNumericStatement ( ForNumericStatement node, params Object[] args )
+        protected virtual ASTNode FoldRepeatStatement ( RepeatStatement node, params Object[] args )
         {
-            node.SetInitialExpression ( this.Fold ( node.InitialExpression ) );
-            node.SetFinalExpression ( this.Fold ( node.FinalExpression ) );
-            node.SetIncrementExpression ( this.Fold ( node.IncrementExpression ) );
-            node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
+            node.SetBody ( this.FoldStatementList ( node.Body ) );
+            node.SetCondition ( this.Fold ( node.Condition ) );
             return node;
         }
 
-        protected virtual ASTNode RepeatStatement ( RepeatStatement node, params Object[] args )
+        protected virtual ASTNode FoldWhileStatement ( WhileStatement node, params Object[] args )
         {
             node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
             node.SetCondition ( this.Fold ( node.Condition ) );
             return node;
         }
 
-        protected virtual ASTNode WhileStatement ( WhileStatement node, params Object[] args )
-        {
-            node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
-            node.SetCondition ( this.Fold ( node.Condition ) );
-            return node;
-        }
-
-        protected virtual ASTNode IndexExpression ( Parsing.Nodes.Indexers.IndexExpression node, params Object[] args )
+        protected virtual ASTNode FoldIndexExpression ( Parsing.Nodes.Indexers.IndexExpression node, params Object[] args )
         {
             node.SetBase ( this.Fold ( node.Base ) );
             node.SetIndexer ( this.Fold ( node.Indexer ) );
             return node;
         }
 
-        protected virtual ASTNode MemberExpression ( Parsing.Nodes.Indexers.MemberExpression node, params Object[] args )
+        protected virtual ASTNode FoldMemberExpression ( Parsing.Nodes.Indexers.MemberExpression node, params Object[] args )
         {
             node.SetBase ( this.Fold ( node.Base ) );
             return node;
         }
 
-        protected virtual ASTNode IfClause ( IfClause node, params Object[] args )
+        protected virtual ASTNode FoldIfClause ( IfClause node, params Object[] args )
         {
             node.SetCondition ( this.Fold ( node.Condition ) );
             node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
             return node;
         }
 
-        protected virtual ASTNode IfStatement ( IfStatement node, params Object[] args )
+        protected virtual ASTNode FoldIfStatement ( IfStatement node, params Object[] args )
         {
-            node.SetMainClause ( ( IfClause ) this.Fold ( node.MainClause ) );
-            for ( var i = 0; i < node.ElseIfClauses.Count; i++ )
-                node.ElseIfClauses[i] = ( IfClause ) this.Fold ( node.ElseIfClauses[i] );
-            node.SetElseBlock ( ( StatementList ) this.Fold ( node.ElseBlock ) );
+            if ( node.MainClause != null )
+                node.SetMainClause ( ( IfClause ) this.Fold ( node.MainClause ) );
+            else
+                throw new Exception ( "Cannot have an if statement without a main clause." );
+
+            node.SetElseIfClauses ( this.FoldNodeList ( node.ElseIfClauses ) );
+
+            if ( node.ElseBlock != null )
+                node.SetElseBlock ( ( StatementList ) this.Fold ( node.ElseBlock ) );
+
+            if ( node.ElseBlock != null && node.ElseBlock.Statements.Count == 0 )
+                node.SetElseBlock ( null );
             return node;
         }
 
-        protected virtual ASTNode AnonymousFunctionExpression ( AnonymousFunctionExpression node, params Object[] args )
+        protected virtual ASTNode FoldAnonymousFunctionExpression ( AnonymousFunctionExpression node, params Object[] args )
         {
-            for ( var i = 0; i < node.Arguments.Count; i++ )
-                node.Arguments[i] = this.Fold ( node.Arguments[i] );
+            node.SetArguments ( this.FoldNodeList ( node.Arguments ) );
             node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
             return node;
         }
 
-        protected virtual ASTNode FunctionCallExpression ( FunctionCallExpression node, params Object[] args )
+        protected virtual ASTNode FoldFunctionCallExpression ( FunctionCallExpression node, params Object[] args )
         {
             node.SetBase ( this.Fold ( node.Base ) );
-            for ( var i = 0; i < node.Arguments.Count; i++ )
-                node.Arguments[i] = this.Fold ( node.Arguments[i] );
+            node.SetArguments ( this.FoldNodeList ( node.Arguments ) );
             return node;
         }
 
-        protected virtual ASTNode LocalFunctionStatement ( LocalFunctionStatement node, params Object[] args )
+        protected virtual ASTNode FoldLocalFunctionStatement ( LocalFunctionStatement node, params Object[] args )
         {
             node.SetIdentifier ( ( VariableExpression ) this.Fold ( node.Identifier ) );
-            for ( var i = 0; i < node.Arguments.Count; i++ )
-                node.Arguments[i] = this.Fold ( node.Arguments[i] );
+            node.SetArguments ( this.FoldNodeList ( node.Arguments ) );
             node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
             return node;
         }
 
-        protected virtual ASTNode NamedFunctionStatement ( NamedFunctionStatement node, params Object[] args )
+        protected virtual ASTNode FoldNamedFunctionStatement ( NamedFunctionStatement node, params Object[] args )
         {
-            node.SetIdentifier ( ( VariableExpression ) this.Fold ( node.Identifier ) );
-            for ( var i = 0; i < node.Arguments.Count; i++ )
-                node.Arguments[i] = this.Fold ( node.Arguments[i] );
+            node.SetIdentifier ( this.Fold ( node.Identifier ) );
+            node.SetArguments ( this.FoldNodeList ( node.Arguments ) );
             node.SetBody ( ( StatementList ) this.Fold ( node.Body ) );
             return node;
         }
 
-        protected virtual ASTNode StringFunctionCallExpression ( StringFunctionCallExpression node, params Object[] args )
+        protected virtual ASTNode FoldStringFunctionCallExpression ( StringFunctionCallExpression node, params Object[] args )
         {
             node.SetBase ( this.Fold ( node.Base ) );
             node.SetArgument ( ( StringExpression ) this.Fold ( node.Argument ) );
             return null;
         }
 
-        protected virtual ASTNode TableFunctionCallExpression ( TableFunctionCallExpression node, params Object[] args )
+        protected virtual ASTNode FoldTableFunctionCallExpression ( TableFunctionCallExpression node, params Object[] args )
         {
             node.SetBase ( this.Fold ( node.Base ) );
             node.SetArgument ( ( TableConstructorExpression ) this.Fold ( node.Argument ) );
             return null;
         }
 
-        protected virtual ASTNode BreakStatement ( BreakStatement node, params Object[] args )
+        protected virtual ASTNode FoldBreakStatement ( BreakStatement node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode ContinueStatement ( ContinueStatement node, params Object[] args )
+        protected virtual ASTNode FoldContinueStatement ( ContinueStatement node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode GotoStatement ( GotoStatement node, params Object[] args )
+        protected virtual ASTNode FoldGotoStatement ( GotoStatement node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode GotoLabelStatement ( GotoLabelStatement node, params Object[] args )
+        protected virtual ASTNode FoldGotoLabelStatement ( GotoLabelStatement node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode ReturnStatement ( ReturnStatement node, params Object[] args )
+        protected virtual ASTNode FoldReturnStatement ( ReturnStatement node, params Object[] args )
         {
-            for ( var i = 0; i < node.Returns.Count; i++ )
-                node.Returns[i] = this.Fold ( node.Returns[i] );
+            node.SetReturns ( this.FoldNodeList ( node.Returns ) );
             return node;
         }
 
-        protected virtual ASTNode BooleanExpression ( BooleanExpression node, params Object[] args )
-        {
-            return node;
-        }
-
-        protected virtual ASTNode Eof ( Eof node, params Object[] args )
+        protected virtual ASTNode FoldBooleanExpression ( BooleanExpression node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode NilExpression ( NilExpression node, params Object[] args )
+        protected virtual ASTNode FoldEof ( Eof node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode NumberExpression ( NumberExpression node, params Object[] args )
+        protected virtual ASTNode FoldNilExpression ( NilExpression node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode ParenthesisExpression ( ParenthesisExpression node, params Object[] args )
+        protected virtual ASTNode FoldNumberExpression ( NumberExpression node, params Object[] args )
+        {
+            return node;
+        }
+
+        protected virtual ASTNode FoldParenthesisExpression ( ParenthesisExpression node, params Object[] args )
         {
             node.SetExpression ( this.Fold ( node.Expression ) );
             return node;
         }
 
-        protected virtual ASTNode StringExpression ( StringExpression node, params Object[] args )
+        protected virtual ASTNode FoldStringExpression ( StringExpression node, params Object[] args )
         {
             return node;
         }
 
-        protected virtual ASTNode TableConstructorExpression ( TableConstructorExpression node, params Object[] args )
+        protected virtual ASTNode FoldTableConstructorExpression ( TableConstructorExpression node, params Object[] args )
         {
-            for ( var i = 0; i < node.Fields.Count; i++ )
-                node.Fields[i] = ( TableKeyValue ) this.Fold ( node.Fields[i] );
+            node.SetFields ( this.FoldNodeList ( node.Fields ) );
             return node;
         }
 
-        protected virtual ASTNode TableKeyValue ( TableKeyValue node, params Object[] args )
+        protected virtual ASTNode FoldTableKeyValue ( TableKeyValue node, params Object[] args )
         {
-            if ( !node.Sequential )
+            if ( !node.IsSequential )
                 node.Key = this.Fold ( node.Key );
-            node.Value = this.Fold ( node.Key );
+            node.Value = this.Fold ( node.Value );
             return node;
         }
 
-        protected virtual ASTNode VarArgExpression ( VarArgExpression node, params Object[] args )
+        protected virtual ASTNode FoldVarArgExpression ( VarArgExpression node, params Object[] args )
         {
             return node;
         }

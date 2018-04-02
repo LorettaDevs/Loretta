@@ -1,16 +1,18 @@
 ﻿using System;
-using Loretta.Env;
 using Loretta.Parsing.Nodes;
 
 namespace Loretta.Analysis
 {
+    // Updates the bounds of the nodes so
+    // that they map to the correct places
+    // in the source code (recommended)
     public class UpdateBoundsAnalyser : BaseASTAnalyser
     {
-        protected UpdateBoundsAnalyser ( LuaEnvironment env, EnvFile file ) : base ( env, file )
+        public UpdateBoundsAnalyser ( ) : base ( )
         {
         }
 
-        protected override Object[] Analyse ( ASTNode AST, params Object[] args )
+        public override Object[] Analyse ( ASTNode AST, params Object[] args )
         {
             AST.RecomputeBounds ( );
             return null;

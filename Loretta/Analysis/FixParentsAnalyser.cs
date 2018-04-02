@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Loretta.Env;
 using Loretta.Parsing.Nodes;
 
 namespace Loretta.Analysis
 {
+    // Use this to fix stuff (recommended)
     public class FixParentsAnalyser : BaseASTAnalyser
     {
         private List<ASTNode> Stack { get; } = new List<ASTNode> ( );
 
-        public FixParentsAnalyser ( LuaEnvironment env, EnvFile file ) : base ( env, file )
+        public FixParentsAnalyser ( ) : base ( )
         {
         }
 
-        protected override Object[] Analyse ( ASTNode node, params Object[] args )
+        public override Object[] Analyse ( ASTNode node, params Object[] args )
         {
             try
             {
