@@ -36,10 +36,18 @@ namespace Loretta.Lexing
         }
 
         /// <summary>
-        /// Token escalation
+        /// Token upgrading
         /// </summary>
         /// <param name="token"></param>
-        public LToken ( Token token ) : base ( token.ID, token.Raw, token.Value, token.Type, token.Range )
+        public LToken ( Token token ) : this ( token.ID, token.Raw, token.Value, token.Type, token.Range )
+        {
+        }
+
+        /// <summary>
+        /// Clones a token
+        /// </summary>
+        /// <param name="token"></param>
+        public LToken ( LToken token ) : this ( token.ID, token.Raw, token.Value, token.Type, token.Range, token.LeadingFlair )
         {
         }
     }

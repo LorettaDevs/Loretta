@@ -20,12 +20,11 @@ namespace Loretta.Lexing
 
         /// <summary>
         /// </summary>
-        /// <param name="input">
-        /// If this is not in ASCII non-helpful exceptions will be thrown.
-        /// </param>
+        /// <param name="input">Should be in Extended ASCII</param>
         /// <param name="isGlua"></param>
         public GLuaLexer ( String input ) : base ( CInterop.ConvertStringToASCII ( input ) )
         {
+            input = CInterop.ConvertStringToASCII ( input );
             if ( input.Any ( ch => ch > 255 ) )
                 throw new LexException ( "Input data is not in Extended ASCII.", this.Location );
             // Silently eat up BOM
@@ -48,6 +47,7 @@ namespace Loretta.Lexing
                 // \000 -> \255
                 DecimalEscapePrefix = "\\",
                 DecimalEscapeMaxLengh = 3,
+                DecimalEscapeMaxValue = 255,
 
                 // \x00 -> \xFF
                 HexadecimalEscapePrefix = "\\x",
@@ -82,18 +82,23 @@ namespace Loretta.Lexing
             #region Binary Operators
 
             this.tokenManager
+                .AddToken ( "=", "=", TokenType.Operator )
+                // Arithmetic
                 .AddToken ( "+", "+", TokenType.Operator )
-                .AddToken ( "-", "-", TokenType.Operator )
+                .AddToken ( "-", "-", TokenType.Operator, next => next != '-' )
+                .AddToken ( "%", "%", TokenType.Operator )
+                .AddToken ( "/", "/", TokenType.Operator )
+                .AddToken ( "*", "*", TokenType.Operator )
+                .AddToken ( "^", "^", TokenType.Operator )
+                // Binary
                 .AddToken ( "<<", "<<", TokenType.Operator )
                 .AddToken ( ">>", ">>", TokenType.Operator )
                 .AddToken ( "|", "|", TokenType.Operator )
                 .AddToken ( "&", "&", TokenType.Operator )
                 .AddToken ( "~", "~", TokenType.Operator )
-                .AddToken ( "%", "%", TokenType.Operator )
-                .AddToken ( "/", "/", TokenType.Operator )
-                .AddToken ( "*", "*", TokenType.Operator )
-                .AddToken ( "^", "^", TokenType.Operator )
+                // String
                 .AddToken ( "..", "..", TokenType.Operator )
+                // Boolean
                 .AddToken ( "==", "==", TokenType.Operator )
                 .AddToken ( "<", "<", TokenType.Operator )
                 .AddToken ( "<=", "<=", TokenType.Operator )
@@ -101,6 +106,8 @@ namespace Loretta.Lexing
                 .AddToken ( "!=", "!=", TokenType.Operator )
                 .AddToken ( ">", ">", TokenType.Operator )
                 .AddToken ( ">=", ">=", TokenType.Operator )
+                .AddToken ( "&&", "&&", TokenType.Operator )
+                .AddToken ( "||", "||", TokenType.Operator )
                 .AddToken ( "and", "and", TokenType.Operator, notalnum )
                 .AddToken ( "or", "or", TokenType.Operator, notalnum );
 
@@ -127,8 +134,7 @@ namespace Loretta.Lexing
                 .AddToken ( "...", "...", TokenType.Identifier )
                 .AddToken ( "(", "(", TokenType.LParen )
                 .AddToken ( ")", ")", TokenType.RParen )
-                // Cannot use these because of multiline strings
-                //.AddToken ( "[", "[", TokenType.LBracket )
+                .AddToken ( "[", "[", TokenType.LBracket, next => next != '[' && next != '=' )
                 .AddToken ( "]", "]", TokenType.RBracket )
                 .AddToken ( "{", "{", TokenType.LCurly )
                 .AddToken ( "}", "}", TokenType.RCurly );
@@ -138,25 +144,26 @@ namespace Loretta.Lexing
             #region Keywords
 
             this.tokenManager
+                .AddToken ( "break", "break", TokenType.Keyword, notalnum )
+                .AddToken ( "continue", "continue", TokenType.Keyword, notalnum )
+                .AddToken ( "goto", "goto", TokenType.Keyword, notalnum )
                 .AddToken ( "do", "do", TokenType.Keyword, notalnum )
                 .AddToken ( "end", "end", TokenType.Keyword, notalnum )
                 .AddToken ( "while", "while", TokenType.Keyword, notalnum )
-                .AddToken ( "function", "function", TokenType.Keyword, notalnum )
-                .AddToken ( "nil", "nil", TokenType.Keyword, notalnum )
-                .AddToken ( "true", "true", TokenType.Keyword, notalnum )
-                .AddToken ( "false", "false", TokenType.Keyword, notalnum )
-                .AddToken ( "return", "return", TokenType.Keyword, notalnum )
-                .AddToken ( "break", "break", TokenType.Keyword, notalnum )
-                .AddToken ( "local", "local", TokenType.Keyword, notalnum )
-                .AddToken ( "for", "for", TokenType.Keyword, notalnum )
-                .AddToken ( "in", "in", TokenType.Keyword, notalnum )
+                .AddToken ( "repeat", "repeat", TokenType.Keyword, notalnum )
+                .AddToken ( "until", "until", TokenType.Keyword, notalnum )
                 .AddToken ( "if", "if", TokenType.Keyword, notalnum )
                 .AddToken ( "then", "then", TokenType.Keyword, notalnum )
                 .AddToken ( "elseif", "elseif", TokenType.Keyword, notalnum )
                 .AddToken ( "else", "else", TokenType.Keyword, notalnum )
-                .AddToken ( "repeat", "repeat", TokenType.Keyword, notalnum )
-                .AddToken ( "until", "until", TokenType.Keyword, notalnum )
-                .AddToken ( "continue", "continue", TokenType.Keyword, notalnum );
+                .AddToken ( "for", "for", TokenType.Keyword, notalnum )
+                .AddToken ( "in", "in", TokenType.Keyword, notalnum )
+                .AddToken ( "function", "function", TokenType.Keyword, notalnum )
+                .AddToken ( "local", "local", TokenType.Keyword, notalnum )
+                .AddToken ( "return", "return", TokenType.Keyword, notalnum )
+                .AddToken ( "nil", "nil", TokenType.Keyword, notalnum )
+                .AddToken ( "true", "true", TokenType.Keyword, notalnum )
+                .AddToken ( "false", "false", TokenType.Keyword, notalnum );
 
             #endregion Keywords
         }
@@ -176,7 +183,7 @@ namespace Loretta.Lexing
             tok = null;
 
             // Shebang (I'll consider this a leading flair because
-            // it doesn't matters to me currently.)
+            // it's technnically a comment)
             if ( this.Location.Line == 0 && this.Consume ( "#!" ) )
             {
                 var exec = this.reader.ReadLine ( );
@@ -185,23 +192,37 @@ namespace Loretta.Lexing
             // Numbers
             else if ( LJUtils.IsDigit ( peekedChar ) || ( peekedChar == '.' && LJUtils.IsDigit ( ( Char ) this.reader.Peek ( 1 ) ) ) )
             {
-                var (Raw, Value) = this.ReadLuaNumber ( );
-                tok = this.CreateToken ( "number", Raw, Value, TokenType.Number, start.To ( this.reader.Location ) );
+                try
+                {
+                    (var Raw, var Value) = this.ReadLuaNumber ( );
+                    tok = this.CreateToken ( "number", Raw, Value, TokenType.Number, start.To ( this.reader.Location ) );
+                }
+                catch ( LexException )
+                {
+                    tok = null;
+                }
             }
             // Identifiers (keywords are read by the tokenmanager)
             else if ( LJUtils.IsIdent ( peekedChar ) || peekedChar == '_' )
             {
-                String ident = this.reader.ReadStringWhile ( LJUtils.IsIdent );
+                var ident = this.reader.ReadStringWhile ( LJUtils.IsIdent );
                 tok = this.CreateToken ( "ident", ident, ident, TokenType.Identifier, start.To ( this.reader.Location ) );
             }
             // Normal strings
             else if ( this.Consume ( '\'', '"' ) )
             {
-                // Lexer base string reader doesn't adds
+                // LexerBase string reader doesn't adds
                 // delimiters to the raw
-                var (Raw, Value) = this.ReadString ( peekedChar.ToString ( ), false, this.stringSettings );
-                Raw = $"{peekedChar}{Raw}{peekedChar}";
-                tok = this.CreateToken ( "string", Raw, Value, TokenType.String, start.To ( this.Location ) );
+                try
+                {
+                    (var Raw, var Value) = this.ReadString ( peekedChar.ToString ( ), false, this.stringSettings );
+                    Raw = $"{peekedChar}{Raw}{peekedChar}";
+                    tok = this.CreateToken ( "string", Raw, Value, TokenType.String, start.To ( this.Location ) );
+                }
+                catch ( LexException )
+                {
+                    tok = null;
+                }
             }
             // Stuff that has/is :
             else if ( this.Consume ( ':' ) )
@@ -223,22 +244,13 @@ namespace Loretta.Lexing
             // comments
             else if ( this.reader.IsNext ( "//" ) || this.reader.IsNext ( "--" ) || this.reader.IsNext ( "/*" ) )
             {
-                var (Raw, Value) = this.ReadComment ( );
+                (var Raw, var Value) = this.ReadComment ( );
                 tok = CreateToken ( "comment", Raw, Value, TokenType.Comment, start.To ( this.Location ) );
             }
             else if ( this.Consume ( '[' ) )
             {
-                // Long string
-                if ( this.reader.IsNext ( "=" ) || this.reader.IsNext ( "[" ) )
-                {
-                    var (Raw, Value) = this.ReadLiteralString ( );
-                    tok = CreateToken ( "string", Raw, Value, TokenType.String, start.To ( this.Location ) );
-                }
-                // Normal symbol
-                else
-                {
-                    tok = CreateToken ( "[", "[", "[", TokenType.Punctuation, start.To ( this.Location ) );
-                }
+                (var Raw, var Value) = this.ReadLiteralString ( );
+                tok = CreateToken ( "literalstring", Raw, Value, TokenType.String, start.To ( this.Location ) );
             }
 
             return tok != null;
@@ -257,11 +269,9 @@ namespace Loretta.Lexing
             String integer = this.reader.ReadStringWhile ( LJUtils.IsDigit ), fractional = null, exp = null;
             rawNumber.Append ( integer );
 
-            if ( this.reader.IsNext ( "." ) )
+            if ( this.Consume ( '.' ) )
             {
-                this.reader.Advance ( 1 );
                 rawNumber.Append ( '.' );
-
                 fractional = this.reader.ReadStringWhile ( LJUtils.IsDigit );
                 rawNumber.Append ( fractional );
             }
@@ -346,7 +356,7 @@ namespace Loretta.Lexing
                 if ( this.Consume ( '[' ) )
                 {
                     // read '[', {'='}, '['
-                    String eqs = this.reader.ReadStringUntilNot ( '=' );
+                    var eqs = this.reader.ReadStringUntilNot ( '=' );
                     this.Expect ( '[' );
 
                     // Raw initial comment delimiter
@@ -406,7 +416,7 @@ namespace Loretta.Lexing
             var raw = new StringBuilder ( "[" );
 
             // Read rest of the start
-            String eqs = this.reader.ReadStringUntilNot ( '=' );
+            var eqs = this.reader.ReadStringUntilNot ( '=' );
             this.Expect ( '[' );
             raw.Append ( eqs ).Append ( '[' );
 
@@ -424,21 +434,6 @@ namespace Loretta.Lexing
         }
 
         #endregion Lua Literal String Lexing
-
-        #region Ugly ReadChar Override
-
-        // This is required due to decimal escape sequences
-        // allowing for > 255 character codes but lua strings run
-        // on ascii ([0,255] char range)
-        protected new(String Raw, Char Value) ReadChar ( String Delimiter, CharLexSettings conf = default )
-        {
-            var (Raw, Value) = base.ReadChar ( Delimiter, conf );
-            if ( Value > 255 )
-                throw new LexException ( "Invalid character escape.", this.Location );
-            return (Raw, Value);
-        }
-
-        #endregion Ugly ReadChar Override
 
         protected override Token CreateToken ( in String ID, in String raw, in Object value, in TokenType type, in SourceRange range )
         {
