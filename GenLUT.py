@@ -34,7 +34,7 @@ lut = [
 ]
 
 with open ( 'list.cs', 'w' ) as outp:
-	outp.write ( '\t\tpublic static readonly LJ_CHAR[] CharList = new LJ_CHAR[] {\n\t\t\t#region Long ass char list\n' )
+	outp.write ( '\t\tpublic static readonly LJ_CHAR[] CharList = new LJ_CHAR[] {\n\t\t\t#region Long ass (generated) char list\n' )
 	for i, val in enumerate ( lut ):
 		enumList = []
 		for name in enums:
