@@ -14,19 +14,17 @@ namespace Loretta.Reconstructors
 {
     public abstract class BaseReconstructor
     {
-        public LuaEnvironment Environment { get; }
-
         /// <summary>
-        /// The indentation level. You'll regret setting this
-        /// directly (just saying...)
+        /// The indentation level. Use <see cref="Indent" /> and
+        /// <see cref="Outdent" /> to change this.
         /// </summary>
-        protected Int32 IndentLevel { get; set; }
+        protected Int32 IndentLevel { get; private set; }
 
         /// <summary>
         /// The string that should be repeated the amount of times
         /// that the current <see cref="IndentLevel" /> is in
         /// </summary>
-        protected String IndentationSequence { get; set; }
+        public String IndentationSequence { get; set; } = "\t";
 
         /// <summary>
         /// The line indentation prefix (basically what you should
@@ -34,20 +32,50 @@ namespace Loretta.Reconstructors
         /// </summary>
         protected String IndentString { get; private set; }
 
-        protected BaseReconstructor ( LuaEnvironment environment )
+        /// <summary>
+        /// The current stream being used
+        /// </summary>
+        private Stream Stream { get; set; }
+
+        /// <summary>
+        /// The current StreamWriter
+        /// </summary>
+        private StreamWriter StreamWriter { get; set; }
+
+        protected BaseReconstructor ( )
         {
-            this.Environment = environment;
         }
 
         /// <summary>
-        /// Constructs the code from a node
+        /// Constructs the code from a node. DO NOT CALL THIS
+        /// INTERNALLY, CALL <see cref="ConstructInternal(ASTNode)" />.
         /// </summary>
         /// <param name="node"></param>
-        /// <param name="args"></param>
-        public virtual void Construct ( ASTNode node, params Object[] args )
+        /// <param name="stream"></param>
+        public virtual void Construct ( ASTNode node, Stream stream )
         {
             this.IndentLevel = 0;
-            this.InternalConstructChoose ( node, args );
+            using ( this.StreamWriter = new StreamWriter ( stream, Encoding.GetEncoding ( 28591 ), 4096, true ) )
+                this.ConstructInternal ( node );
+        }
+
+        /// <summary>
+        /// Constructs the code from a node. DO NOT CALL THIS
+        /// INTERNALLY, CALL <see cref="ConstructInternal(ASTNode)" />.
+        /// </summary>
+        /// <param name="node"></param>
+        public virtual String Construct ( ASTNode node )
+        {
+            using ( var mem = new MemoryStream ( ) )
+            using ( var reader = new StreamReader ( mem ) )
+            using ( this.StreamWriter = new StreamWriter ( mem ) )
+            {
+                this.IndentLevel = 0;
+                this.ConstructInternal ( node );
+
+                mem.Seek ( 0, SeekOrigin.Begin );
+                return reader.ReadToEnd ( );
+            }
         }
 
         #region Indentation System
@@ -83,85 +111,110 @@ namespace Loretta.Reconstructors
             this.IndentString = build.ToString ( );
         }
 
+        #endregion Indentation System
+
+        #region Stream Writing
+
+        protected void Write ( Object value )
+            => this.StreamWriter.Write ( value );
+
+        protected void WriteLine ( )
+            => this.StreamWriter.WriteLine ( );
+
+        protected void WriteLine ( Object value )
+            => this.StreamWriter.WriteLine ( value );
+
+        protected void WriteIndent ( )
+            => this.StreamWriter.Write ( this.IndentString );
+
+        protected void WriteIndented ( Object value )
+            => this.StreamWriter.Write ( this.IndentString + value );
+
+        protected void WriteLineIndented ( )
+            => this.StreamWriter.WriteLine ( this.IndentString );
+
+        protected void WriteLineIndented ( Object value )
+            => this.StreamWriter.WriteLine ( this.IndentString + value );
+
+        #endregion Stream Writing
+
         /// <summary>
         /// Call this on the various nodes so that they are all
-        /// written to the stream
+        /// written to the stream. DO NOT CALL
+        /// <see cref="Construct(ASTNode)" /> INTERNALLY.
         /// </summary>
         /// <param name="node"></param>
-        /// <param name="args"></param>
-        protected virtual void InternalConstructChoose ( ASTNode node, params Object[] args )
+        protected virtual void ConstructInternal ( ASTNode node )
         {
             #region Regex Generated Mess
             if ( node is DoStatement )
-                this.DoStatement ( ( DoStatement ) node, args );
+                this.ConstructDoStatement ( ( DoStatement ) node );
             else if ( node is StatementList )
-                this.StatementList ( ( StatementList ) node, args );
+                this.ConstructStatementList ( ( StatementList ) node );
             else if ( node is AssignmentStatement )
-                this.AssignmentStatement ( ( AssignmentStatement ) node, args );
+                this.ConstructAssignmentStatement ( ( AssignmentStatement ) node );
             else if ( node is LocalVariableStatement )
-                this.LocalVariableStatement ( ( LocalVariableStatement ) node, args );
+                this.ConstructLocalVariableStatement ( ( LocalVariableStatement ) node );
             else if ( node is VariableExpression )
-                this.VariableExpression ( ( VariableExpression ) node, args );
+                this.ConstructVariableExpression ( ( VariableExpression ) node );
             else if ( node is BinaryOperatorExpression )
-                this.BinaryOperatorExpression ( ( BinaryOperatorExpression ) node, args );
+                this.ConstructBinaryOperatorExpression ( ( BinaryOperatorExpression ) node );
             else if ( node is UnaryOperatorExpression )
-                this.UnaryOperatorExpression ( ( UnaryOperatorExpression ) node, args );
+                this.ConstructUnaryOperatorExpression ( ( UnaryOperatorExpression ) node );
             else if ( node is ForGenericStatement )
-                this.ForGenericStatement ( ( ForGenericStatement ) node, args );
+                this.ConstructForGenericStatement ( ( ForGenericStatement ) node );
             else if ( node is ForNumericStatement )
-                this.ForNumericStatement ( ( ForNumericStatement ) node, args );
+                this.ConstructForNumericStatement ( ( ForNumericStatement ) node );
             else if ( node is RepeatStatement )
-                this.RepeatStatement ( ( RepeatStatement ) node, args );
+                this.ConstructRepeatStatement ( ( RepeatStatement ) node );
             else if ( node is WhileStatement )
-                this.WhileStatement ( ( WhileStatement ) node, args );
+                this.ConstructWhileStatement ( ( WhileStatement ) node );
             else if ( node is Parsing.Nodes.Indexers.IndexExpression )
-                this.IndexExpression ( ( Parsing.Nodes.Indexers.IndexExpression ) node, args );
+                this.ConstructIndexExpression ( ( Parsing.Nodes.Indexers.IndexExpression ) node );
             else if ( node is Parsing.Nodes.Indexers.MemberExpression )
-                this.MemberExpression ( ( Parsing.Nodes.Indexers.MemberExpression ) node, args );
+                this.ConstructMemberExpression ( ( Parsing.Nodes.Indexers.MemberExpression ) node );
             else if ( node is IfClause )
-                this.IfClause ( ( IfClause ) node, args );
+                this.ConstructIfClause ( ( IfClause ) node );
             else if ( node is IfStatement )
-                this.IfStatement ( ( IfStatement ) node, args );
+                this.ConstructIfStatement ( ( IfStatement ) node );
             else if ( node is AnonymousFunctionExpression )
-                this.AnonymousFunctionExpression ( ( AnonymousFunctionExpression ) node, args );
+                this.ConstructAnonymousFunctionExpression ( ( AnonymousFunctionExpression ) node );
             else if ( node is FunctionCallExpression )
-                this.FunctionCallExpression ( ( FunctionCallExpression ) node, args );
+                this.ConstructFunctionCallExpression ( ( FunctionCallExpression ) node );
             else if ( node is LocalFunctionStatement )
-                this.LocalFunctionStatement ( ( LocalFunctionStatement ) node, args );
+                this.ConstructLocalFunctionStatement ( ( LocalFunctionStatement ) node );
             else if ( node is NamedFunctionStatement )
-                this.NamedFunctionStatement ( ( NamedFunctionStatement ) node, args );
+                this.ConstructNamedFunctionStatement ( ( NamedFunctionStatement ) node );
             else if ( node is StringFunctionCallExpression )
-                this.StringFunctionCallExpression ( ( StringFunctionCallExpression ) node, args );
+                this.ConstructStringFunctionCallExpression ( ( StringFunctionCallExpression ) node );
             else if ( node is TableFunctionCallExpression )
-                this.TableFunctionCallExpression ( ( TableFunctionCallExpression ) node, args );
+                this.ConstructTableFunctionCallExpression ( ( TableFunctionCallExpression ) node );
             else if ( node is BreakStatement )
-                this.BreakStatement ( ( BreakStatement ) node, args );
+                this.ConstructBreakStatement ( ( BreakStatement ) node );
             else if ( node is ContinueStatement )
-                this.ContinueStatement ( ( ContinueStatement ) node, args );
+                this.ConstructContinueStatement ( ( ContinueStatement ) node );
             else if ( node is GotoStatement )
-                this.GotoStatement ( ( GotoStatement ) node, args );
+                this.ConstructGotoStatement ( ( GotoStatement ) node );
             else if ( node is GotoLabelStatement )
-                this.GotoLabelStatement ( ( GotoLabelStatement ) node, args );
+                this.ConstructGotoLabelStatement ( ( GotoLabelStatement ) node );
             else if ( node is ReturnStatement )
-                this.ReturnStatement ( ( ReturnStatement ) node, args );
+                this.ConstructReturnStatement ( ( ReturnStatement ) node );
             else if ( node is BooleanExpression )
-                this.BooleanExpression ( ( BooleanExpression ) node, args );
+                this.ConstructBooleanExpression ( ( BooleanExpression ) node );
             else if ( node is Eof )
-                this.Eof ( ( Eof ) node, args );
+                this.ConstructEof ( ( Eof ) node );
             else if ( node is NilExpression )
-                this.NilExpression ( ( NilExpression ) node, args );
+                this.ConstructNilExpression ( ( NilExpression ) node );
             else if ( node is NumberExpression )
-                this.NumberExpression ( ( NumberExpression ) node, args );
+                this.ConstructNumberExpression ( ( NumberExpression ) node );
             else if ( node is ParenthesisExpression )
-                this.ParenthesisExpression ( ( ParenthesisExpression ) node, args );
+                this.ConstructParenthesisExpression ( ( ParenthesisExpression ) node );
             else if ( node is StringExpression )
-                this.StringExpression ( ( StringExpression ) node, args );
+                this.ConstructStringExpression ( ( StringExpression ) node );
             else if ( node is TableConstructorExpression )
-                this.TableConstructorExpression ( ( TableConstructorExpression ) node, args );
-            else if ( node is TableKeyValue )
-                this.TableKeyValue ( ( TableKeyValue ) node, args );
+                this.ConstructTableConstructorExpression ( ( TableConstructorExpression ) node );
             else if ( node is VarArgExpression )
-                this.VarArgExpression ( ( VarArgExpression ) node, args );
+                this.ConstructVarArgExpression ( ( VarArgExpression ) node );
             #endregion Regex Generated Mess
             else
                 throw new Exception ( "Unrecognized node: " + node );
@@ -169,75 +222,73 @@ namespace Loretta.Reconstructors
 
         #region Regex Generated Mess
 
-        public abstract void DoStatement ( DoStatement node, params Object[] args );
+        public abstract void ConstructDoStatement ( DoStatement node );
 
-        public abstract void StatementList ( StatementList node, params Object[] args );
+        public abstract void ConstructStatementList ( StatementList node );
 
-        public abstract void AssignmentStatement ( AssignmentStatement node, params Object[] args );
+        public abstract void ConstructAssignmentStatement ( AssignmentStatement node );
 
-        public abstract void LocalVariableStatement ( LocalVariableStatement node, params Object[] args );
+        public abstract void ConstructLocalVariableStatement ( LocalVariableStatement node );
 
-        public abstract void VariableExpression ( VariableExpression node, params Object[] args );
+        public abstract void ConstructVariableExpression ( VariableExpression node );
 
-        public abstract void BinaryOperatorExpression ( BinaryOperatorExpression node, params Object[] args );
+        public abstract void ConstructBinaryOperatorExpression ( BinaryOperatorExpression node );
 
-        public abstract void UnaryOperatorExpression ( UnaryOperatorExpression node, params Object[] args );
+        public abstract void ConstructUnaryOperatorExpression ( UnaryOperatorExpression node );
 
-        public abstract void ForGenericStatement ( ForGenericStatement node, params Object[] args );
+        public abstract void ConstructForGenericStatement ( ForGenericStatement node );
 
-        public abstract void ForNumericStatement ( ForNumericStatement node, params Object[] args );
+        public abstract void ConstructForNumericStatement ( ForNumericStatement node );
 
-        public abstract void RepeatStatement ( RepeatStatement node, params Object[] args );
+        public abstract void ConstructRepeatStatement ( RepeatStatement node );
 
-        public abstract void WhileStatement ( WhileStatement node, params Object[] args );
+        public abstract void ConstructWhileStatement ( WhileStatement node );
 
-        public abstract void IndexExpression ( Parsing.Nodes.Indexers.IndexExpression node, params Object[] args );
+        public abstract void ConstructIndexExpression ( Parsing.Nodes.Indexers.IndexExpression node );
 
-        public abstract void MemberExpression ( Parsing.Nodes.Indexers.MemberExpression node, params Object[] args );
+        public abstract void ConstructMemberExpression ( Parsing.Nodes.Indexers.MemberExpression node );
 
-        public abstract void IfClause ( IfClause node, params Object[] args );
+        public abstract void ConstructIfClause ( IfClause node );
 
-        public abstract void IfStatement ( IfStatement node, params Object[] args );
+        public abstract void ConstructIfStatement ( IfStatement node );
 
-        public abstract void AnonymousFunctionExpression ( AnonymousFunctionExpression node, params Object[] args );
+        public abstract void ConstructAnonymousFunctionExpression ( AnonymousFunctionExpression node );
 
-        public abstract void FunctionCallExpression ( FunctionCallExpression node, params Object[] args );
+        public abstract void ConstructFunctionCallExpression ( FunctionCallExpression node );
 
-        public abstract void LocalFunctionStatement ( LocalFunctionStatement node, params Object[] args );
+        public abstract void ConstructLocalFunctionStatement ( LocalFunctionStatement node );
 
-        public abstract void NamedFunctionStatement ( NamedFunctionStatement node, params Object[] args );
+        public abstract void ConstructNamedFunctionStatement ( NamedFunctionStatement node );
 
-        public abstract void StringFunctionCallExpression ( StringFunctionCallExpression node, params Object[] args );
+        public abstract void ConstructStringFunctionCallExpression ( StringFunctionCallExpression node );
 
-        public abstract void TableFunctionCallExpression ( TableFunctionCallExpression node, params Object[] args );
+        public abstract void ConstructTableFunctionCallExpression ( TableFunctionCallExpression node );
 
-        public abstract void BreakStatement ( BreakStatement node, params Object[] args );
+        public abstract void ConstructBreakStatement ( BreakStatement node );
 
-        public abstract void ContinueStatement ( ContinueStatement node, params Object[] args );
+        public abstract void ConstructContinueStatement ( ContinueStatement node );
 
-        public abstract void GotoStatement ( GotoStatement node, params Object[] args );
+        public abstract void ConstructGotoStatement ( GotoStatement node );
 
-        public abstract void GotoLabelStatement ( GotoLabelStatement node, params Object[] args );
+        public abstract void ConstructGotoLabelStatement ( GotoLabelStatement node );
 
-        public abstract void ReturnStatement ( ReturnStatement node, params Object[] args );
+        public abstract void ConstructReturnStatement ( ReturnStatement node );
 
-        public abstract void BooleanExpression ( BooleanExpression node, params Object[] args );
+        public abstract void ConstructBooleanExpression ( BooleanExpression node );
 
-        public abstract void Eof ( Eof node, params Object[] args );
+        public abstract void ConstructEof ( Eof node );
 
-        public abstract void NilExpression ( NilExpression node, params Object[] args );
+        public abstract void ConstructNilExpression ( NilExpression node );
 
-        public abstract void NumberExpression ( NumberExpression node, params Object[] args );
+        public abstract void ConstructNumberExpression ( NumberExpression node );
 
-        public abstract void ParenthesisExpression ( ParenthesisExpression node, params Object[] args );
+        public abstract void ConstructParenthesisExpression ( ParenthesisExpression node );
 
-        public abstract void StringExpression ( StringExpression node, params Object[] args );
+        public abstract void ConstructStringExpression ( StringExpression node );
 
-        public abstract void TableConstructorExpression ( TableConstructorExpression node, params Object[] args );
+        public abstract void ConstructTableConstructorExpression ( TableConstructorExpression node );
 
-        public abstract void TableKeyValue ( TableKeyValue node, params Object[] args );
-
-        public abstract void VarArgExpression ( VarArgExpression node, params Object[] args );
+        public abstract void ConstructVarArgExpression ( VarArgExpression node );
 
         #endregion Regex Generated Mess
     }
