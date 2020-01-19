@@ -306,8 +306,11 @@ namespace Loretta.Parsing.Visitor
         {
             this._writer.WriteIndented ( "local " );
             this.WriteSeparatedNodeList ( ", ", localVariableDeclaration.Identifiers );
-            this._writer.Write ( " = " );
-            this.WriteSeparatedNodeList ( ", ", localVariableDeclaration.Values );
+            if ( localVariableDeclaration.Values.Any ( ) )
+            {
+                this._writer.Write ( " = " );
+                this.WriteSeparatedNodeList ( ", ", localVariableDeclaration.Values );
+            }
             this.WriteStatementLineEnd ( localVariableDeclaration );
         }
 
