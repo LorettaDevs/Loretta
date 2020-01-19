@@ -1,188 +1,160 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
+using GParse.Collections;
 using GParse.Lexing;
-using GParse.Lexing.Errors;
-using Loretta.CLI.Commands;
+using GUtils.CLI.Commands;
+using GUtils.CLI.Commands.Errors;
+using GUtils.IO;
+using GUtils.Timing;
 using Loretta.Lexing;
-using Loretta.Reconstructors;
-using Loretta.Utils;
+using Loretta.Parsing;
+using Loretta.Parsing.AST;
+using Loretta.Parsing.Visitor;
 
 namespace Loretta.CLI
 {
-    internal class Program
+    public static class Program
     {
-        private static readonly CommandManager commandManager = new CommandManager ( );
+        private static Boolean ShouldRun;
+        private static ConsoleTimingLogger Logger;
 
-        public static Boolean ShouldRun { get; private set; } = true;
-
-        private static void Main ( )
+        public static void Main ( )
         {
-            commandManager.LoadCommands ( typeof ( Program ), instance: null );
+            var commandManager = new ConsoleCommandManager ( );
+            commandManager.LoadCommands ( typeof ( Program ), null );
+            commandManager.AddHelpCommand ( );
+
+            Logger = new ConsoleTimingLogger ( );
+
+            ShouldRun = true;
             while ( ShouldRun )
             {
-                var path = Environment.CurrentDirectory.Replace ( '\\', '/' );
-                path = path.Substring ( path.IndexOf ( "Loretta" ) );
-                Console.Write ( $"{path}>" );
-                var line = Console.ReadLine ( ).Trim ( );
-                if ( line == "exit" )
-                    break;
-
-                //Reconstruct ( line );
-                //try
-                //{
-                commandManager.Execute ( line );
-                //}
-                //catch ( LexException e )
-                //{
-                //    Error ( $"{e.Location} {e.Message}" );
-                //}
-                //catch ( Exception e )
-                //{
-                //    Error ( e.ToString ( ) );
-                //}
+                try
+                {
+                    Logger.Write ( $"{Environment.CurrentDirectory}> " );
+                    commandManager.Execute ( Logger.ReadLine ( ) );
+                }
+                catch ( NonExistentCommandException ex )
+                {
+                    Logger.LogError ( "Unexistent command '{0}'. Use the 'help' command to list all commands.", ex.Command );
+                }
+                catch ( CommandInvocationException ex )
+                {
+                    Logger.LogError ( "Error while executing '{0}': {1}\n{2}", ex.Command, ex.Message, ex.StackTrace );
+                }
             }
         }
 
-        [Command ( "cwd" )]
-        public static void CurrentWorkingDir ( )
-        {
-            Console.WriteLine ( Environment.CurrentDirectory );
-        }
+        [Command ( "q" ), Command ( "quit" ), Command ( "exit" )]
+        public static void Quit ( ) => ShouldRun = false;
+
+        #region Current Directory Management
 
         [Command ( "cd" )]
-        public static void ChangeDirectory ( [CommandArgumentRest] String path )
-        {
-            if ( !Directory.Exists ( path ) )
-                Error ( "Directory doesn't exists." );
-            Environment.CurrentDirectory = path;
-        }
+        public static void ChangeDirectory ( String relativePath ) =>
+            Environment.CurrentDirectory = Path.GetFullPath ( Path.Combine ( Environment.CurrentDirectory, relativePath ) );
 
         [Command ( "ls" )]
-        public static void ListStuff ( )
+        public static void ListSymbols ( )
         {
-            var cwd = new DirectoryInfo ( "." );
-            foreach ( DirectoryInfo di in cwd.EnumerateDirectories ( ) )
-                Console.WriteLine ( $"{di.Name}/" );
-            foreach ( FileInfo fi in cwd.EnumerateFiles ( ) )
-                Console.WriteLine ( fi.Name );
+            var di = new DirectoryInfo ( Environment.CurrentDirectory );
+            foreach ( DirectoryInfo directoryInfo in di.EnumerateDirectories ( ) )
+                Logger.WriteLine ( $"./{directoryInfo.Name}/" );
+
+            foreach ( FileInfo fileInfo in di.EnumerateFiles ( ) )
+                Logger.WriteLine ( $"./{fileInfo.Name}" );
         }
 
-        [Command ( "head" )]
-        public static void Head ( String filePath, Int32 bytes )
-        {
-            if ( !File.Exists ( filePath ) )
-                throw new Exception ( "File doesn't exists." );
+        #endregion Current Directory Management
 
-            using ( FileStream handle = File.OpenRead ( filePath ) )
-            {
-                var data = CInterop.ReadToEndAsASCII ( handle );
-                Console.WriteLine ( String.Join ( " ", data.Take ( bytes ).Select ( ch => ch + $"({( ( Int32 ) ch ).ToString ( "X2" )})" ) ) );
-            }
-        }
-
-        [Command ( "l" )]
-        public static void LexFile ( String filePath, String outputPath = "stdin" )
-        {
-            if ( !File.Exists ( filePath ) )
-                throw new Exception ( "File doesn't exists." );
-
-            StreamWriter outputWriter;
-            using ( outputWriter = outputPath == "stdin"
-                ? new StreamWriter ( Console.OpenStandardOutput ( ), Encoding.UTF8, 4096 )
-                : new StreamWriter ( outputPath, false, Encoding.UTF8, 4096 ) )
-            using ( FileStream handle = File.OpenRead ( filePath ) )
-            {
-                var max = new SourceLocation ( Int32.MaxValue, Int32.MaxValue, Int32.MaxValue );
-                var last = new SourceRange ( max, max );
-
-                var sw = Stopwatch.StartNew ( );
-                var lexer = new GLuaLexer ( handle );
-                foreach ( LToken token in lexer.Lex ( ) )
-                {
-                    outputWriter.WriteLine ( $"LToken ( '{token.ID}', '{token.Raw}', '{token.Value}', {token.Type}, {token.Range} )" );
-                    foreach ( Token flair in token.LeadingFlair )
-                        outputWriter.WriteLine ( $"\tLTokenFlair ( '{flair.ID}', '{flair.Raw}', '{flair.Value}', {flair.Type}, {flair.Range} )" );
-
-                    if ( last == token.Range && token.Type != TokenType.EOF )
-                        throw new Exception ( "Possible infinite loop. Token has same range as last." );
-                    last = token.Range;
-                }
-                sw.Stop ( );
-                outputWriter.WriteLine ( $"Time elapsed on lexing: {HumanTime ( sw )}" );
-            }
-        }
-
-        [Command ( "e" )]
-        public static void Encodings ( )
-        {
-            foreach ( EncodingInfo info in Encoding.GetEncodings ( ) )
-            {
-                if ( Encoding.GetEncoding ( info.CodePage ).IsSingleByte )
-                {
-                    Console.WriteLine ( info.CodePage );
-                }
-            }
-        }
-
-        [Command ( "r" )]
-        public static void Reconstruct ( String path, String output = "stdout" )
+        [Command ( "p" ), Command ( "parse" )]
+        public static void Parse ( String path )
         {
             if ( !File.Exists ( path ) )
             {
-                Error ( "File doesn't exists." );
+                Logger.LogError ( "Provided path does not exist." );
                 return;
             }
 
-            var code = File.ReadAllText ( path );
-            var environment = new LuaEnvironment ( );
-            environment.AddAnalyser ( "fixparents", new Analysis.FixParentsAnalyser ( ) );
-            environment.AddAnalyser ( "gotocheck", new Analysis.GotoTargetCheckAnalyser ( ) );
-            environment.AddFolder ( "ConstantFolder 1st pass", new Folder.ConstantASTFolder ( ) );
-            environment.AddAnalyser ( "AssignmentAnalyser", new Analysis.AssignmentAnalyser ( ) );
-            environment.AddFolder ( "AssignmentFolder", new Folder.AssignmentFolder ( ) );
-            //environment.AddFolder ( "ConstantFolder 2nd pass", new Folder.ConstantASTFolder ( ) );
+            var sw = Stopwatch.StartNew ( );
+            var dl = new DiagnosticList ( );
+            var lb = new LuaLexerBuilder ( );
+            var pb = new LuaParserBuilder ( );
+            var fw = new FormattedLuaCodeSerializer ( "    " );
+            ILexer<LuaTokenType> l = lb.CreateLexer ( File.ReadAllText ( path ), dl );
+            LuaParser p = pb.CreateParser ( new TokenReader<LuaTokenType> ( l ), dl );
+            StatementList t = p.Parse ( );
+            fw.VisitStatementList ( t );
+            sw.Stop ( );
+            var time = Duration.Format ( sw.ElapsedTicks );
+            Logger.WriteLine ( fw.ToString ( ) );
+            Logger.WriteLine ( $"Parsed and compiled back to code in {time}." );
+        }
 
-            var sw1 = Stopwatch.StartNew ( );
-            Env.EnvFile file = environment.ProcessFile ( path, code );
-            sw1.Stop ( );
-            foreach ( Error err in file.Errors )
-                Console.WriteLine ( $"{err.Location} [{err.Type}] {err.Message}" );
+        #region Memory Usage
 
-            var sw2 = Stopwatch.StartNew ( );
-            using ( var mem = new MemoryStream ( ) )
-            using ( Stream fileStream = output == "stdout" ? Console.OpenStandardOutput ( ) : File.OpenWrite ( output ) )
-            using ( var writer = new StreamWriter ( fileStream, Encoding.UTF8 ) )
+        private static readonly Process CurrentProc = Process.GetCurrentProcess ( );
+        private static readonly Stack<(Int64 gcMemory, Int64 processMemory)> MemoryStack = new Stack<(Int64 gcMemory, Int64 processMemory)> ( );
+
+        [Command ( "m" ), Command ( "mem" )]
+        public static void PrintMemoryUsage ( )
+        {
+            var gcmem = GC.GetTotalMemory ( false );
+            var procmem = CurrentProc.PrivateMemorySize64;
+            Logger.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( gcmem )}" );
+            Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( procmem )}" );
+        }
+
+        [Command ( "mpush" ), Command ( "memory-push" )]
+        public static void PushMemoryUsage ( )
+        {
+            var gcmem = GC.GetTotalMemory ( false );
+            var procmem = CurrentProc.PrivateMemorySize64;
+            Logger.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( gcmem )}" );
+            Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( procmem )}" );
+            MemoryStack.Push ( (gcmem, procmem) );
+            Logger.WriteLine ( "Memory usage pushed to stack." );
+        }
+
+        [Command ( "mcomp" ), Command ( "memory-compare" )]
+        public static void CompareMemoryUsage ( )
+        {
+            var currgcmem = GC.GetTotalMemory ( false );
+            var currprocmem = CurrentProc.PrivateMemorySize64;
+            Logger.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( currgcmem )}" );
+            Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( currprocmem )}" );
+
+            if ( MemoryStack.Count == 0 )
             {
-                var reconstructor = new FormattedLuaReconstructor ( );
-                reconstructor.Construct ( file.AST, mem );
-                writer.Write ( Encoding.UTF8.GetString ( mem.ToArray ( ) ) );
+                Logger.LogError ( "Nothing on memory stack to compare to." );
+                return;
             }
-            sw2.Stop ( );
-            Console.WriteLine ( $"Time elapsed on parsing + analysing + folding: {HumanTime ( sw1 )}" );
-            Console.WriteLine ( $"Time elapsed on serializing code: {HumanTime ( sw2 )}" );
+
+            (var oldgcmem, var oldprocmem) = MemoryStack.Peek ( );
+            (var Δgcmem, var Δprocmem) = (currgcmem - oldgcmem, currprocmem - oldprocmem);
+            Logger.WriteLine ( $"ΔMemory usage according to GC:      {( Δgcmem < 0 ? $"-{FileSize.Format ( -Δgcmem )}" : FileSize.Format ( Δgcmem ) )}" );
+            Logger.WriteLine ( $"ΔMemory usage according to Process: {( Δprocmem < 0 ? $"-{FileSize.Format ( -Δprocmem )}" : FileSize.Format ( Δgcmem ) )}" );
         }
 
-        private const Double TicksPerMicrosecond = TimeSpan.TicksPerMillisecond / 1000D;
-
-        public static String HumanTime ( Stopwatch sw )
+        [Command ( "mpop" ), Command ( "memory-pop" )]
+        public static void PopMemoryUsage ( )
         {
-            return sw.ElapsedTicks > TimeSpan.TicksPerMinute
-                ? $"{sw.Elapsed.TotalMinutes:#00.00}m"
-                : sw.ElapsedTicks > TimeSpan.TicksPerSecond
-                    ? $"{sw.Elapsed.TotalSeconds:#00.00}s"
-                    : sw.ElapsedTicks > TimeSpan.TicksPerMillisecond
-                        ? $"{sw.Elapsed.TotalMilliseconds:#00.00}ms"
-                        : $"{sw.ElapsedTicks / TicksPerMicrosecond:#00.00}μs";
+            if ( MemoryStack.Count == 0 )
+            {
+                Logger.LogError ( "Nothing on memory stack to pop." );
+                return;
+            }
+
+            CompareMemoryUsage ( );
+            MemoryStack.Pop ( );
         }
 
-        private static void Error ( String v )
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine ( v );
-            Console.ResetColor ( );
-        }
+        [Command ( "gc" )]
+        [HelpDescription ( "Invokes the garbage collector" )]
+        public static void InvokeGC ( ) => GC.Collect ( );
+
+        #endregion Memory Usage
     }
 }

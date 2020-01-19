@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GUtils.CLI" Version="7.0.1" />
-    <PackageReference Include="GUtils.IO" Version="8.0.1" />
-    <PackageReference Include="GUtils.Timing" Version="4.0.1" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,9 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="samples\*.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

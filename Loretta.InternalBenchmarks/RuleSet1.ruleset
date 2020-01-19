@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="New Rule Set" Description=" " ToolsVersion="15.0">
+  <Rules AnalyzerId="CodeCracker.CSharp" RuleNamespace="CodeCracker.CSharp">
+    <Rule Id="CC0001" Action="None" />
+    <Rule Id="CC0004" Action="None" />
+    <Rule Id="CC0084" Action="None" />
+    <Rule Id="CC0105" Action="None" />
+  </Rules>
+</RuleSet>

@@ -1,175 +1,184 @@
 ﻿using System;
 using System.Collections.Generic;
-using GParse.Lexing;
-using GParse.Parsing.Errors;
+using Loretta.Lexing;
+using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
 namespace Loretta.Parsing
 {
-    public class Scope : IEquatable<Scope>
+    public class Scope
     {
-        public GLuaParser Parser { get; }
-
-        public Scope Parent { get; }
-
-        public Scope RootScope => this.Parent != null ? this.Parent.RootScope : this;
-
-        public Boolean IsRoot { get; }
-
-        public List<Variable> Locals { get; } = new List<Variable> ( );
-
-        public Dictionary<String, Label> Labels { get; } = new Dictionary<String, Label> ( );
-
-        public InternalData InternalData { get; } = new InternalData ( );
-
-        public SourceLocation StartPosition { get; private set; }
-
-        public SourceLocation EndPosition { get; private set; }
-
-        public List<Scope> Children { get; } = new List<Scope> ( );
-
-        public Scope ( GLuaParser Parser, Scope Parent = null )
+        public enum FindMode
         {
-            this.Parser = Parser;
-            this.Parent = Parent;
-            this.IsRoot = Parent != null;
-            if ( Parent != null )
-                Parent.Children.Add ( this );
+            /// <summary>
+            /// Only checks the current scope
+            /// </summary>
+            CheckSelf,
+            /// <summary>
+            /// Checks parents until we hit a function scope
+            /// </summary>
+            CheckFunctionScope,
+            /// <summary>
+            ///  Checks all parents
+            /// </summary>
+            CheckParents,
         }
 
-        public void Start ( )
-        {
-            SourceLocation location = this.Parser.GetLocation ( );
-            this.StartPosition = location;
+        public readonly Scope Parent;
 
-            this.Parser.PushScope ( this );
+        //private readonly List<Variable> variables = new List<Variable> ( );
+        private readonly Dictionary<String, Variable> _variables = new Dictionary<String, Variable> ( );
+
+        //private readonly List<Label> labels = new List<Label> ( );
+        private readonly Dictionary<String, GotoLabel> _gotoLabels = new Dictionary<String, GotoLabel> ( );
+
+        // Yes, you can technically edit the dictionary like this, but when one wants to abuse an
+        // API they will find a way to do it.
+        public IEnumerable<Variable> Variables => this._variables.Values;
+
+        public IEnumerable<GotoLabel> GotoLabels => this._gotoLabels.Values;
+
+        public Boolean IsFunctionScope { get; }
+
+        public Scope ( Boolean isFunctionScope )
+        {
+            this.Parent = null;
+            this.IsFunctionScope = isFunctionScope;
         }
 
-        public void Finish ( )
+        public Scope ( Scope parent, Boolean isFunctionScope )
         {
-            SourceLocation location = this.Parser.GetLocation ( );
-            this.EndPosition = location;
-
-            if ( this.Parser.PopScope ( ) != this )
-                throw new ParseException ( location, "Scope popped from parser != this, shitcode alert" );
+            this.Parent = parent;
+            this.IsFunctionScope = isFunctionScope;
         }
 
-        /// <summary>
-        /// Returns the last local variable with name
-        /// <paramref name="name" /> or null if nothing is found
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private Variable FindLocalVariable ( String name )
-        {
-            for ( var i = this.Locals.Count - 1; i >= 0; i-- )
-            {
-                if ( this.Locals[i].Name == name )
-                    return this.Locals[i];
-            }
+        #region FindVariable
 
-            return null;
+        public Variable FindVariable ( LuaToken identifier, FindMode findMode )
+        {
+            if ( identifier.Type != LuaTokenType.Identifier )
+                throw new ArgumentException ( "Token is not an identifier", nameof ( identifier ) );
+
+            return this.FindVariable ( identifier.Value as String, findMode );
         }
 
-        /// <summary>
-        /// Returns the global variable with the name provided or
-        /// null if it doesn't exists
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private Variable FindGlobalVariable ( String name )
+        public Variable FindVariable ( String identifier, FindMode findMode )
         {
-            return this.Parser.Environment.Globals.ContainsKey ( name ) ? this.Parser.Environment.Globals[name] : null;
-        }
-
-        /// <summary>
-        /// Creates a global variable in the parser's
-        /// <see cref="LuaEnvironment" /> and returns it
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private Variable CreateGlobalVariable ( String name )
-        {
-            var var = new Variable ( this, name, false );
-            this.Parser.Environment.Globals[name] = var;
-            return var;
-        }
-
-        /// <summary>
-        /// Creates a local variable and inserts it into the
-        /// <see cref="Locals" /> list.
-        /// </summary>
-        /// <param name="Name"></param>
-        /// <returns></returns>
-        public Variable CreateLocalVariable ( String Name )
-        {
-            var variable = new Variable ( this, Name, true );
-            this.Locals.Add ( variable );
+            if ( !this.TryFindVariable ( identifier, findMode, out Variable variable ) )
+                return null;
             return variable;
         }
 
-        /// <summary>
-        /// Attempts to find a variable with the provided name and
-        /// creates a global variable if the variable is not found
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Variable GetVariable ( String name )
+        #endregion FindVariable
+
+        #region TryFindVariable
+
+        public Boolean TryFindVariable ( LuaToken identifier, FindMode findMode, out Variable variable )
         {
-            Variable var = this.FindLocalVariable ( name );
+            if ( identifier.Type != LuaTokenType.Identifier )
+                throw new ArgumentException ( "Token is not an identifier", nameof ( identifier ) );
 
-            if ( var == null )
-                var = this.FindGlobalVariable ( name );
-
-            if ( var == null )
-                var = this.CreateGlobalVariable ( name );
-
-            return var;
+            return this.TryFindVariable ( ( String ) identifier.Value, findMode, out variable );
         }
 
-        public Label GetLabel ( String value )
+        public Boolean TryFindVariable ( String identifier, FindMode findMode, out Variable variable )
         {
-            if ( this.Labels.ContainsKey ( value ) )
-                return this.Labels[value];
+            if ( this._variables.TryGetValue ( identifier, out variable ) )
+                return true;
 
-            if ( this.Parent != null )
+            if ( ( findMode == FindMode.CheckFunctionScope && !this.IsFunctionScope ) || ( findMode == FindMode.CheckParents && this.Parent != null ) )
+                return this.Parent.TryFindVariable ( identifier, findMode, out variable );
+
+            variable = null;
+            return false;
+        }
+
+        #endregion TryFindVariable
+
+        #region GetVariable
+
+        public Variable GetVariable ( LuaToken identifier, FindMode findMode )
+        {
+            if ( identifier.Type != LuaTokenType.Identifier )
+                throw new ArgumentException ( "Token is not an identifier", nameof ( identifier ) );
+            return this.GetVariable ( ( String ) identifier.Value, findMode );
+        }
+
+        public Variable GetVariable ( String identifier, FindMode findMode )
+        {
+            if ( !this.TryFindVariable ( identifier, findMode, out Variable variable ) )
             {
-                Label label = this.Parent.GetLabel ( value );
-                if ( label != null )
-                    return label;
+                variable = new Variable ( identifier, this );
+                this._variables.Add ( identifier, variable );
             }
 
-            if ( this.InternalData.GetValue ( "isFunction", false ) )
+            return variable;
+        }
+
+        #endregion GetVariable
+
+        #region FindLabel
+
+        public GotoLabel FindLabel ( LuaToken labelIdentifier, FindMode findMode )
+        {
+            if ( labelIdentifier.Type != LuaTokenType.Identifier )
+                throw new ArgumentException ( "Token is not an identifier", nameof ( labelIdentifier ) );
+
+            return this.FindLabel ( labelIdentifier.Value as String, findMode );
+        }
+
+        public GotoLabel FindLabel ( String labelIdentifier, FindMode findMode )
+        {
+            if ( !this.TryFindLabel ( labelIdentifier, findMode, out GotoLabel label ) )
+                return null;
+            return label;
+        }
+
+        #endregion FindLabel
+
+        #region TryFindLabel
+
+        public Boolean TryFindLabel ( LuaToken labelIdentifier, FindMode findMode, out GotoLabel label )
+        {
+            if ( labelIdentifier.Type != LuaTokenType.Identifier )
+                throw new ArgumentException ( "Token is not am identifier", nameof ( labelIdentifier ) );
+
+            return this.TryFindLabel ( ( String ) labelIdentifier.Value, findMode, out label );
+        }
+
+        public Boolean TryFindLabel ( String labelIdentifier, FindMode findMode, out GotoLabel label )
+        {
+            if ( this._gotoLabels.TryGetValue ( labelIdentifier, out label ) )
+                return true;
+
+            if ( ( findMode == FindMode.CheckFunctionScope && !this.IsFunctionScope ) || ( findMode == FindMode.CheckParents && this.Parent != null ) )
+                return this.Parent.TryFindLabel ( labelIdentifier, findMode, out label );
+
+            label = null;
+            return false;
+        }
+
+        #endregion TryFindLabel
+
+        #region GetLabel
+
+        public GotoLabel GetLabel ( LuaToken labelIdentifier, FindMode findMode )
+        {
+            if ( labelIdentifier.Type != LuaTokenType.Identifier )
+                throw new ArgumentException ( "Token is not an identifier", nameof ( labelIdentifier ) );
+            return this.GetLabel ( ( String ) labelIdentifier.Value, findMode );
+        }
+
+        public GotoLabel GetLabel ( String labelIdentifier, FindMode findMode )
+        {
+            if ( !this.TryFindLabel ( labelIdentifier, findMode, out GotoLabel label ) )
             {
-                var label = new Label ( this, value );
-                this.Labels[value] = label;
-                return label;
+                label = new GotoLabel ( this, labelIdentifier );
+                this._gotoLabels.Add ( labelIdentifier, label );
             }
 
-            return null;
+            return label;
         }
 
-        #region Generated Code
-
-        public override Boolean Equals ( Object obj )
-        {
-            return this.Equals ( obj as Scope );
-        }
-
-        public Boolean Equals ( Scope other )
-        {
-            return other != null &&
-                    EqualityComparer<Scope>.Default.Equals ( this.Parent, other.Parent );
-        }
-
-        public override Int32 GetHashCode ( )
-        {
-            return -1801665627 + EqualityComparer<Scope>.Default.GetHashCode ( this.Parent );
-        }
-
-        public static Boolean operator == ( Scope scope1, Scope scope2 ) => EqualityComparer<Scope>.Default.Equals ( scope1, scope2 );
-
-        public static Boolean operator != ( Scope scope1, Scope scope2 ) => !( scope1 == scope2 );
-
-        #endregion Generated Code
+        #endregion GetLabel
     }
 }

@@ -1,0 +1,4 @@
+This project uses things from other projects.
+
+1. This project uses the file "HexFloat.cs" from the FParsec project.
+This is their license: http://www.quanttec.com/fparsec/license.html
