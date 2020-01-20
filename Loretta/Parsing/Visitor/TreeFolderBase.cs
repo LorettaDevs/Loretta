@@ -134,9 +134,9 @@ namespace Loretta.Parsing.Visitor
                 Token<LuaTokenType>[] tokens = node.Tokens.ToArray ( );
                 return node.KeyType switch
                 {
-                    TableFieldKeyType.Expression => new TableField ( tokens[0], key, tokens[1], tokens[2], value, tokens[3] ),
-                    TableFieldKeyType.Identifier => new TableField ( tokens[0], tokens[1], value, tokens[2] ),
-                    TableFieldKeyType.None => new TableField ( value, tokens[0] ),
+                    TableFieldKeyType.Expression => new TableField ( tokens[0], key, tokens[1], tokens[2], value, tokens.Length > 3 ? tokens[3] : default ),
+                    TableFieldKeyType.Identifier => new TableField ( tokens[0], tokens[1], value, tokens.Length > 2 ? tokens[2] : default ),
+                    TableFieldKeyType.None => new TableField ( value, tokens.Length > 0 ? tokens[0] : default ),
                     _ => throw new ArgumentException ( nameof ( node ), "Invalid key type." )
                 };
             }
@@ -322,7 +322,8 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
-        public virtual LuaASTNode VisitNode ( LuaASTNode node ) => node.Accept ( this );
+        public virtual LuaASTNode VisitNode ( LuaASTNode node ) =>
+            node?.Accept ( this );
 
         public virtual LuaASTNode VisitNumericFor ( NumericForLoopStatement node )
         {
