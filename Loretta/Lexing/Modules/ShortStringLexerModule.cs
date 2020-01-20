@@ -9,6 +9,7 @@ using GParse.IO;
 using GParse.Lexing;
 using GParse.Lexing.Modules;
 using GUtils.Pooling;
+using Loretta.Utilities;
 
 namespace Loretta.Lexing.Modules
 {

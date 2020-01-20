@@ -8,6 +8,7 @@ using GParse.Lexing;
 using GParse.Lexing.Modules;
 using GUtils.Pooling;
 using Loretta.ThirdParty.FParsec;
+using Loretta.Utilities;
 
 namespace Loretta.Lexing.Modules
 {
