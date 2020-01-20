@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Loretta.Lexing;
-using Loretta.Parsing.AST;
 using Loretta.Parsing.Visitor;
 using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
@@ -19,9 +18,11 @@ namespace Loretta.Parsing.AST
         /// <summary>
         /// Whether this is an indexing in the format a.b or a[b]
         /// </summary>
-        public readonly IndexType Type;
-        public readonly Expression Indexee;
-        public readonly Expression Indexer;
+        public IndexType Type { get; }
+
+        public Expression Indexee { get; }
+
+        public Expression Indexer { get; }
 
         private IndexExpression ( IEnumerable<LuaToken> tokens, IndexType type, Expression indexee, Expression indexer )
         {
@@ -59,6 +60,7 @@ namespace Loretta.Parsing.AST
         }
 
         internal override void Accept ( ITreeVisitor visitor ) => visitor.VisitIndex ( this );
+
         internal override T Accept<T> ( ITreeVisitor<T> visitor ) => visitor.VisitIndex ( this );
     }
 }
