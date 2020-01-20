@@ -10,7 +10,7 @@ namespace Loretta.Parsing.AST
     public class TableConstructorExpression : Expression
     {
         private readonly ImmutableArray<LuaToken> tokens;
-        public readonly ImmutableArray<TableField> Fields;
+        public ImmutableArray<TableField> Fields { get; }
 
         public TableConstructorExpression ( LuaToken lcurly, TableField[] fields, LuaToken rcurly )
         {
