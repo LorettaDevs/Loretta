@@ -8,7 +8,7 @@ using System;
 
 namespace Loretta.ThirdParty.FParsec
 {
-    public static class HexFloat
+    internal static class HexFloat
     {
         // see http://www.quanttec.com/fparsec/reference/charparsers.html#members.floatToHexString
         // for more information on the supported hexadecimal floating-point format
