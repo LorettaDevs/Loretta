@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GUtils.CLI" Version="7.0.1" />
+    <PackageReference Include="GUtils.CLI" Version="8.0.0" />
     <PackageReference Include="GUtils.IO" Version="8.0.1" />
     <PackageReference Include="GUtils.Timing" Version="4.0.1" />
   </ItemGroup>

@@ -69,8 +69,14 @@ namespace Loretta.CLI
 
         #endregion Current Directory Management
 
+        public enum ASTVisitor
+        {
+            ConstantFolder,
+            RawStringRewriter
+        }
+
         [Command ( "p" ), Command ( "parse" )]
-        public static void Parse ( String path )
+        public static void Parse ( String path, params ASTVisitor[] visitors )
         {
             if ( !File.Exists ( path ) )
             {
@@ -85,8 +91,26 @@ namespace Loretta.CLI
             var fw = new FormattedLuaCodeSerializer ( "    " );
             ILexer<LuaTokenType> l = lb.CreateLexer ( File.ReadAllText ( path ), dl );
             LuaParser p = pb.CreateParser ( new TokenReader<LuaTokenType> ( l ), dl );
-            StatementList t = p.Parse ( );
-            fw.VisitStatementList ( t );
+            StatementList parsed = p.Parse ( );
+            foreach ( ASTVisitor visitor in visitors )
+            {
+                switch ( visitor )
+                {
+                    case ASTVisitor.ConstantFolder:
+                    {
+                        var folder = new ConstantFolder ( );
+                        parsed = folder.VisitStatementList ( parsed ) as StatementList;
+                        break;
+                    }
+                    case ASTVisitor.RawStringRewriter:
+                    {
+                        var rewriter = new RawStringRewriter ( );
+                        parsed = rewriter.VisitStatementList ( parsed ) as StatementList;
+                        break;
+                    }
+                }
+            }
+            fw.VisitStatementList ( parsed );
             sw.Stop ( );
             var time = Duration.Format ( sw.ElapsedTicks );
             Logger.WriteLine ( fw.ToString ( ) );
