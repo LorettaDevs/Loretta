@@ -4,6 +4,7 @@ using System.Text;
 using GParse.Lexing;
 using Loretta.Lexing;
 using Loretta.Parsing.AST;
+using Loretta.Utilities;
 
 namespace Loretta.Parsing.Visitor
 {
@@ -25,7 +26,7 @@ namespace Loretta.Parsing.Visitor
                 if ( Char.IsLetterOrDigit ( ch ) || Char.IsPunctuation ( ch ) /*|| Char.IsSymbol ( ch )*/ || ch == ' ' )
                     rawBuilder.Append ( ch );
                 else
-                    rawBuilder.Append ( EncodeCharToUtf8 ( ch ) );
+                    rawBuilder.Append ( CharUtils.EncodeCharToUtf8 ( ch ) );
             }
             rawBuilder.Append ( delim );
 
