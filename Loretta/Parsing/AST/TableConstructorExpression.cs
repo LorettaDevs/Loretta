@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using Loretta.Parsing.AST;
 using Loretta.Parsing.AST.Tables;
@@ -11,6 +12,9 @@ namespace Loretta.Parsing.AST
     {
         private readonly ImmutableArray<LuaToken> tokens;
         public ImmutableArray<TableField> Fields { get; }
+
+        public override Boolean IsConstant => false;
+        public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
 
         public TableConstructorExpression ( LuaToken lcurly, TableField[] fields, LuaToken rcurly )
         {

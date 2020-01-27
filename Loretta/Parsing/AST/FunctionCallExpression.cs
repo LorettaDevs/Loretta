@@ -15,6 +15,9 @@ namespace Loretta.Parsing.AST
         public ImmutableArray<Expression> Arguments { get; }
         public Boolean HasParenthesis { get; }
 
+        public override Boolean IsConstant => false;
+        public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
+
         public FunctionCallExpression ( Expression function, Expression argument )
         {
             this.HasParenthesis = false;

@@ -11,6 +11,9 @@ namespace Loretta.Parsing.AST
     {
         public Expression InnerExpression { get; }
 
+        public override Boolean IsConstant => this.InnerExpression.IsConstant;
+        public override Object ConstantValue => this.InnerExpression.ConstantValue;
+
         public GroupedExpression ( Token<LuaTokenType> lparen, Expression inner, Token<LuaTokenType> rparen )
         {
             this.InnerExpression = inner ?? throw new ArgumentNullException ( nameof ( inner ) );

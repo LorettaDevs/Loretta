@@ -15,6 +15,9 @@ namespace Loretta.Parsing.AST
         public readonly Variable Variable;
         public String Identifier => this.Variable?.Identifier ?? ( String ) this.Token.Value;
 
+        public override Boolean IsConstant => false;
+        public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
+
         public IdentifierExpression ( LuaToken token, Variable variable )
         {
             this.Token = token;

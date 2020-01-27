@@ -6,11 +6,23 @@ using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
 namespace Loretta.Parsing.AST
 {
+    /// <summary>
+    /// The type of indexing this is
+    /// </summary>
     public enum IndexType
     {
+        /// <summary>
+        /// Indexing done with an expression ('[', expr, ']')
+        /// </summary>
         Indexer, // '[', expr, ']'
-        Member,  // '.' ident
-        Method   // ':' ident <funccall>
+        /// <summary>
+        /// Indexing done with an identifier ('.' ident)
+        /// </summary>
+        Member,     // '.' ident
+        /// <summary>
+        /// Function call done on an indexing done with an identifier (':' ident <funccall>)
+        /// </summary>
+        Method      // ':' ident <funccall>
     }
 
     public class IndexExpression : Expression
@@ -23,6 +35,9 @@ namespace Loretta.Parsing.AST
         public Expression Indexee { get; }
 
         public Expression Indexer { get; }
+
+        public override Boolean IsConstant => false;
+        public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
 
         private IndexExpression ( IEnumerable<LuaToken> tokens, IndexType type, Expression indexee, Expression indexer )
         {

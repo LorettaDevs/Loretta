@@ -13,6 +13,9 @@ namespace Loretta.Parsing.AST
         private readonly Token<LuaTokenType> Token;
         public Boolean Value { get; }
 
+        public override Boolean IsConstant => true;
+        public override Object ConstantValue => this.Value;
+
         public BooleanExpression ( Token<LuaTokenType> token, Boolean value )
         {
             this.Value = value;

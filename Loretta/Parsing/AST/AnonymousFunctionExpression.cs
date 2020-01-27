@@ -12,6 +12,9 @@ namespace Loretta.Parsing.AST
         public ImmutableArray<Expression> Arguments { get; }
         public StatementList Body { get; }
 
+        public override Boolean IsConstant => false;
+        public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
+
         public AnonymousFunctionExpression ( IEnumerable<LuaToken> tokens, IEnumerable<Expression> arguments, StatementList body )
         {
             this.Tokens    = tokens.ToImmutableArray ( );

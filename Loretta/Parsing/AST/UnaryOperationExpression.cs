@@ -17,6 +17,9 @@ namespace Loretta.Parsing.AST
         public LuaToken Operator { get; }
         public Expression Operand { get; }
 
+        public override Boolean IsConstant => false;
+        public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
+
         public UnaryOperationExpression ( UnaryOperationFix fix, LuaToken op, Expression expr )
         {
             this.Fix = fix;

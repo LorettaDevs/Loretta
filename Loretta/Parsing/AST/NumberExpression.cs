@@ -12,6 +12,9 @@ namespace Loretta.Parsing.AST
         private readonly LuaToken Token;
         public readonly Double Value;
 
+        public override Boolean IsConstant => true;
+        public override Object ConstantValue => this.Value;
+
         public NumberExpression ( LuaToken token )
         {
             this.Token = token;

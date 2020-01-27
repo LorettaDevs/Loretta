@@ -12,6 +12,9 @@ namespace Loretta.Parsing.AST
     {
         private readonly Token<LuaTokenType> Token;
 
+        public override Boolean IsConstant => false;
+        public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
+
         public VarArgExpression ( Token<LuaTokenType> token )
         {
             if ( token.Type != LuaTokenType.VarArg )

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Loretta.Parsing.Visitor;
 using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
@@ -9,6 +10,9 @@ namespace Loretta.Parsing.AST
         public Expression Left { get; }
         public LuaToken Operator { get; }
         public Expression Right { get; }
+
+        public override Boolean IsConstant => false;
+        public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
 
         public BinaryOperationExpression ( Expression left, LuaToken op, Expression right )
         {

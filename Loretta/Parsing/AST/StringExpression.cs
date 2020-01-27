@@ -15,6 +15,9 @@ namespace Loretta.Parsing.AST
         public Boolean IsLong => this.Token.Type == LuaTokenType.LongString;
         public String Value => ( String ) this.Token.Value;
 
+        public override Boolean IsConstant => true;
+        public override Object ConstantValue => this.Value;
+
         public StringExpression ( LuaToken token )
         {
             this.Token = token;
