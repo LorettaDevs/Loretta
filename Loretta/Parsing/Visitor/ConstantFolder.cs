@@ -8,7 +8,7 @@ namespace Loretta.Parsing.Visitor
         public override LuaASTNode VisitUnaryOperation ( UnaryOperationExpression node )
         {
             var @operator = node.Operator.Value;
-            var operand = this.VisitNode ( node.Operand ) as Expression;
+            var operand = ( Expression ) this.VisitNode ( node.Operand );
 
             return @operator switch
             {
@@ -44,8 +44,8 @@ namespace Loretta.Parsing.Visitor
         public override LuaASTNode VisitBinaryOperation ( BinaryOperationExpression node )
         {
             var @operator = node.Operator.Value;
-            var left = this.VisitNode ( node.Left ) as Expression;
-            var right = this.VisitNode ( node.Right ) as Expression;
+            var left = ( Expression ) this.VisitNode ( node.Left );
+            var right = ( Expression ) this.VisitNode ( node.Right );
             // All checks will be done on the <side>Expression vars since the <side> var could be a
             // parenthesized expression, but when returning, we use the original <side> vars.
             Expression leftExpression = left;
@@ -134,7 +134,9 @@ namespace Loretta.Parsing.Visitor
 
         public override LuaASTNode VisitTableConstructor ( TableConstructorExpression node )
         {
-            return base.VisitTableConstructor ( node );
+            var table = ( TableConstructorExpression ) base.VisitTableConstructor ( node );
+
+            return table;
         }
     }
 }

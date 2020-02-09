@@ -18,7 +18,7 @@ namespace Loretta.Parsing.AST
         public NumberExpression ( LuaToken token )
         {
             this.Token = token;
-            this.Value = ( Double ) token.Value;
+            this.Value = ( Double ) token.Value!;
         }
 
         public override IEnumerable<LuaToken> Tokens

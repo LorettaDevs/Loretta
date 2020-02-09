@@ -13,11 +13,11 @@ namespace Loretta.Lexing.Modules
 
         protected readonly HashSet<String> Operators = new HashSet<String> ( );
 
-        protected readonly Dictionary<String, (LuaTokenType type, Object value)> Literals = new Dictionary<String, (LuaTokenType, Object)> ( );
+        protected readonly Dictionary<String, (LuaTokenType type, Object? value)> Literals = new Dictionary<String, (LuaTokenType, Object?)> ( );
 
         public String Name => "Identifier Lexer Module";
 
-        public String Prefix => null;
+        public String? Prefix => null;
 
         public IdentifierLexerModule ( )
         {
@@ -43,7 +43,7 @@ namespace Loretta.Lexing.Modules
 
         public void AddOperators ( IEnumerable<String> operators ) => this.Operators.UnionWith ( operators );
 
-        public void AddLiteral ( String literal, LuaTokenType tokenType, Object value ) => this.Literals.Add ( literal, (tokenType, value) );
+        public void AddLiteral ( String literal, LuaTokenType tokenType, Object? value ) => this.Literals.Add ( literal, (tokenType, value) );
 
         #endregion Language Identifiers Management
 
@@ -69,7 +69,7 @@ namespace Loretta.Lexing.Modules
             {
                 return new Token<LuaTokenType> ( identifier, identifier, identifier, LuaTokenType.Operator, range );
             }
-            else if ( this.Literals.TryGetValue ( identifier, out (LuaTokenType type, Object value) info ) )
+            else if ( this.Literals.TryGetValue ( identifier, out (LuaTokenType type, Object? value) info ) )
             {
                 return new Token<LuaTokenType> ( identifier, identifier, info.value, info.type, range );
             }

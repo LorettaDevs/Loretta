@@ -20,6 +20,6 @@ namespace Loretta.Parsing.Visitor.ReadWrite
 
         public override ReadWriteContainer AddContainer ( Object identifier ) => this._proxied.AddContainer ( identifier );
 
-        public override ReadWriteContainer this[Object identifier] => this._proxied[identifier];
+        public override ReadWriteContainer? this[Object identifier] => this._proxied[identifier];
     }
 }

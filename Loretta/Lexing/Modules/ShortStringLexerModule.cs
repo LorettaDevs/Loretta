@@ -32,7 +32,7 @@ namespace Loretta.Lexing.Modules
 
         public String Name => "String Lexer Module";
 
-        public String Prefix => null;
+        public String? Prefix => null;
 
         public Boolean CanConsumeNext ( IReadOnlyCodeReader reader ) =>
             reader.IsNext ( '\'' ) || reader.IsNext ( '"' );
@@ -93,7 +93,7 @@ namespace Loretta.Lexing.Modules
             try
             {
                 SourceLocation start = reader.Location;
-                var delim = ( Char ) reader.Read ( );
+                var delim = ( Char ) reader.Read ( )!;
                 if ( delim != '\'' && delim != '"' )
                 {
                     throw new InvalidOperationException ( "Short string lexer module called when the input on the reader is invalid. Did you forget to call CanConsumeNext?" );
@@ -167,7 +167,7 @@ namespace Loretta.Lexing.Modules
                 }
                 else
                 {
-                    endingDelim = ( Char ) reader.Read ( );
+                    endingDelim = ( Char ) reader.Read ( )!;
                 }
                 rawBuffer.Append ( endingDelim );
 

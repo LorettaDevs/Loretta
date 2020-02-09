@@ -7,8 +7,8 @@ namespace Loretta.Parsing
 {
     public static class LuaNodeFactory
     {
-        public static IfStatement IfStatement ( IEnumerable<IfClause> clauses, StatementList elseBlock = null ) =>
-            elseBlock != null
+        public static IfStatement IfStatement ( IEnumerable<IfClause> clauses, StatementList? elseBlock = null ) =>
+            elseBlock == null
                 ? new IfStatement ( clauses, TokenFactory.Token ( "end", LuaTokenType.Keyword ) )
                 : new IfStatement ( clauses, TokenFactory.Token ( "else", LuaTokenType.Keyword ), elseBlock,
                     TokenFactory.Token ( "end", LuaTokenType.Keyword ) );

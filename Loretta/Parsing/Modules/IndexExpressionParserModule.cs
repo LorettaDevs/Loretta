@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using GParse;
 using GParse.Errors;
 using GParse.Lexing;
@@ -11,14 +12,12 @@ namespace Loretta.Parsing.Modules
 {
     public class IndexExpressionParserModule : IInfixParselet<LuaTokenType, Expression>
     {
-        public static IndexExpressionParserModule Instance { get; private set; }
-
         public static void Register ( IPrattParserBuilder<LuaTokenType, Expression> builder, Int32 precedence )
         {
-            Instance = new IndexExpressionParserModule ( precedence );
-            builder.Register ( LuaTokenType.Dot, Instance );
-            builder.Register ( LuaTokenType.Colon, Instance );
-            builder.Register ( LuaTokenType.LBracket, Instance );
+            var instance = new IndexExpressionParserModule ( precedence );
+            builder.Register ( LuaTokenType.Dot, instance );
+            builder.Register ( LuaTokenType.Colon, instance );
+            builder.Register ( LuaTokenType.LBracket, instance );
         }
 
         public Int32 Precedence { get; }
@@ -28,7 +27,7 @@ namespace Loretta.Parsing.Modules
             this.Precedence = precedence;
         }
 
-        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, Expression indexee, IProgress<Diagnostic> diagnosticReporter, out Expression expression )
+        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, Expression indexee, IProgress<Diagnostic> diagnosticReporter, [NotNullWhen ( true )] out Expression expression )
         {
             if ( parser.TokenReader.Accept ( new[] { LuaTokenType.Dot, LuaTokenType.Colon }, out Token<LuaTokenType> sep ) )
             {
@@ -59,7 +58,7 @@ namespace Loretta.Parsing.Modules
             }
             else
             {
-                expression = default;
+                expression = default!;
                 return false;
             }
         }

@@ -12,9 +12,9 @@ namespace Loretta.Parsing.Visitor.ReadWrite
 
         public Object Identifier { get; }
 
-        public Variable Variable { get; }
+        public Variable? Variable { get; }
 
-        public virtual ReadWriteContainer Parent { get; }
+        public virtual ReadWriteContainer? Parent { get; }
 
         public virtual IReadOnlyCollection<Read> Reads => this._reads;
 
@@ -68,6 +68,7 @@ namespace Loretta.Parsing.Visitor.ReadWrite
             return proxy;
         }
 
-        public virtual ReadWriteContainer this[Object identifier] => this._containers.TryGetValue ( identifier, out ReadWriteContainer value ) ? value : null;
+        public virtual ReadWriteContainer? this[Object identifier] =>
+            this._containers.TryGetValue ( identifier, out ReadWriteContainer value ) ? value : null;
     }
 }

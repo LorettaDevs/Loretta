@@ -29,7 +29,7 @@ namespace Loretta.Parsing
 
         protected internal virtual GotoLabel GetOrCreateLabel ( in LuaToken token, Scope.FindMode findMode ) => this._scopeStack.Peek ( ).GetLabel ( token, findMode );
 
-        protected internal virtual Scope LeaveScope ( )
+        protected internal virtual Scope? LeaveScope ( )
         {
             this._scopeStack.Pop ( );
             return this._scopeStack.Count > 0 ? this._scopeStack.Peek ( ) : null;
@@ -296,7 +296,7 @@ namespace Loretta.Parsing
             Expression final = this.ParseExpression ( );
 
             // Attempts to get the step (if any)
-            Expression step = null;
+            Expression? step = null;
             if ( this.TokenReader.Accept ( LuaTokenType.Comma, out LuaToken comma2 ) )
                 step = this.ParseExpression ( );
 

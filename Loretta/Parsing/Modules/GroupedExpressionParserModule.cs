@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using GParse;
 using GParse.Errors;
 using GParse.Lexing;
@@ -16,11 +17,11 @@ namespace Loretta.Parsing.Modules
         public static void Register ( IPrattParserBuilder<LuaTokenType, Expression> builder ) =>
             builder.Register ( LuaTokenType.LParen, Instance );
 
-        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, IProgress<Diagnostic> diagnosticEmitter, out Expression expression )
+        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, IProgress<Diagnostic> diagnosticEmitter, [NotNullWhen ( true )] out Expression expression )
         {
             if ( !parser.TokenReader.Accept ( LuaTokenType.LParen, out Token<LuaTokenType> lparen ) )
             {
-                expression = default;
+                expression = default!;
                 return false;
             }
 

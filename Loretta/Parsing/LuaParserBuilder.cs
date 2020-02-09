@@ -11,8 +11,6 @@ namespace Loretta.Parsing
 {
     public class LuaParserBuilder : PrattParserBuilder<LuaTokenType, Expression>
     {
-#pragma warning disable CC0067 // Virtual Method Called On Constructor
-
         private static Boolean StringExpressionFactory ( LuaToken token, out Expression expression )
         {
             expression = new StringExpression ( token );
@@ -95,8 +93,6 @@ namespace Loretta.Parsing
 
             #endregion Operators
         }
-
-#pragma warning restore CC0067 // Virtual Method Called On Constructor
 
         #region Operator Management
 

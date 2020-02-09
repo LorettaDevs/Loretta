@@ -19,7 +19,7 @@ namespace Loretta.Lexing.Modules
     {
         public String Name => "Number Lexer Module";
 
-        public String Prefix => null;
+        public String? Prefix => null;
 
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsHexadecimalChar ( Char ch ) =>
@@ -76,11 +76,11 @@ namespace Loretta.Lexing.Modules
                     // Read the exponent
                     if ( reader.IsNext ( 'p' ) || reader.IsNext ( 'P' ) )
                     {
-                        buffer.Append ( ( Char ) reader.Read ( ) );
+                        buffer.Append ( ( Char ) reader.Read ( )! );
 
                         // Acommodate optional exponent sign
                         if ( reader.IsNext ( '+' ) || reader.IsNext ( '-' ) )
-                            buffer.Append ( ( Char ) reader.Read ( ) );
+                            buffer.Append ( ( Char ) reader.Read ( )! );
 
                         buffer.Append ( reader.ReadStringWhile ( this.IsDecimalChar ) );
                     }
@@ -128,7 +128,7 @@ namespace Loretta.Lexing.Modules
                          * so
                          * x * 8 ≡ x << 3
                          */
-                        num = ( num << 3 ) | ( reader.Read ( ).Value - '0' );
+                        num = ( num << 3 ) | ( reader.Read ( )!.Value - '0' );
                         digs++;
                     }
 
@@ -162,7 +162,7 @@ namespace Loretta.Lexing.Modules
                             continue;
                         }
 
-                        num = ( num << 1 ) | ( reader.Read ( ).Value & 1 );
+                        num = ( num << 1 ) | ( reader.Read ( )!.Value & 1 );
                         digs++;
                     }
 
@@ -196,11 +196,11 @@ namespace Loretta.Lexing.Modules
                     // Read the exponent
                     if ( reader.IsNext ( 'e' ) || reader.IsNext ( 'E' ) )
                     {
-                        buffer.Append ( ( Char ) reader.Read ( ) );
+                        buffer.Append ( ( Char ) reader.Read ( )! );
 
                         // Acommodate optional exponent sign
                         if ( reader.IsNext ( '+' ) || reader.IsNext ( '-' ) )
-                            buffer.Append ( ( Char ) reader.Read ( ) );
+                            buffer.Append ( ( Char ) reader.Read ( )! );
 
                         buffer.Append ( reader.ReadStringWhile ( this.IsDecimalChar ) );
                     }

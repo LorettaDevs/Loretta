@@ -145,12 +145,12 @@ namespace Loretta.Parsing.Visitor
             {
                 case TableFieldKeyType.Expression:
                     this._writer.Write ( "[" );
-                    this.VisitNode ( node.Key );
+                    this.VisitNode ( node.Key! );
                     this._writer.Write ( "] = " );
                     break;
 
                 case TableFieldKeyType.Identifier:
-                    this.VisitNode ( node.Key );
+                    this.VisitNode ( node.Key! );
                     this._writer.Write ( " = " );
                     break;
 

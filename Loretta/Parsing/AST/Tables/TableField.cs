@@ -32,7 +32,7 @@ namespace Loretta.Parsing.AST.Tables
         /// <see cref="IdentifierExpression"/> if the key was an identifier or some other expression
         /// if it was the bracket-based index.
         /// </summary>
-        public Expression Key { get; }
+        public Expression? Key { get; }
 
         /// <summary>
         /// The value of the table entry.
@@ -52,6 +52,7 @@ namespace Loretta.Parsing.AST.Tables
                 toks.Add ( delimiter );
             this._tokens = toks.ToArray ( );
             this.Delimiter = delimiter;
+            this.Value = null!;
         }
 
         /// <summary>
@@ -115,7 +116,8 @@ namespace Loretta.Parsing.AST.Tables
         {
             get
             {
-                yield return this.Key;
+                if ( this.Key != null )
+                    yield return this.Key;
                 yield return this.Value;
             }
         }

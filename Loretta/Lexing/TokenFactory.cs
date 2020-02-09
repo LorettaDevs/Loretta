@@ -10,7 +10,7 @@ namespace Loretta.Lexing
         public static LuaToken ChangeTokenType ( LuaToken token, LuaTokenType type ) =>
             new LuaToken ( token.Id, token.Raw, token.Value, type, token.Range );
 
-        public static LuaToken Token ( String ID, LuaTokenType type, String raw = null, Object value = null, SourceRange? range = null ) =>
+        public static LuaToken Token ( String ID, LuaTokenType type, String? raw = null, Object? value = null, SourceRange? range = null ) =>
             new LuaToken ( ID, raw ?? ID, value, type, range ?? SourceRange.Zero );
 
         public static LuaToken Boolean ( Boolean value, SourceRange? range = null )
@@ -19,7 +19,7 @@ namespace Loretta.Lexing
             return Token ( strValue, LuaTokenType.Boolean, strValue, value, range );
         }
 
-        public static LuaToken Number ( Double value, String rawValue = null, SourceRange? range = null )
+        public static LuaToken Number ( Double value, String? rawValue = null, SourceRange? range = null )
         {
             if ( Double.IsNaN ( value ) || Double.IsInfinity ( value ) )
             {

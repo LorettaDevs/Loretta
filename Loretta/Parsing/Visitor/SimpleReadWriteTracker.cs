@@ -13,7 +13,7 @@ namespace Loretta.Parsing.Visitor
 
         private Boolean _classifyWritesAsUnconditional = true;
 
-        private ReadWriteContainer GetSubContainer ( ReadWriteContainer parent, Object identifier, Boolean createIfNotFound = true, ReadWriteContainer proxied = null )
+        private ReadWriteContainer? GetSubContainer ( ReadWriteContainer parent, Object identifier, Boolean createIfNotFound = true, ReadWriteContainer? proxied = null )
         {
             if ( identifier is null )
                 return null;
@@ -39,7 +39,7 @@ namespace Loretta.Parsing.Visitor
             }
         }
 
-        public ReadWriteContainer GetContainerForVariable ( Variable variable, Boolean createIfNotFound = true, ReadWriteContainer proxied = null )
+        public ReadWriteContainer? GetContainerForVariable ( Variable variable, Boolean createIfNotFound = true, ReadWriteContainer? proxied = null )
         {
             if ( !this._containers.TryGetValue ( variable, out ReadWriteContainer container ) && createIfNotFound )
             {
@@ -54,7 +54,7 @@ namespace Loretta.Parsing.Visitor
             return container;
         }
 
-        public ReadWriteContainer GetContainerForTree ( IndexExpression index, Boolean createIfNotFound = true, ReadWriteContainer proxied = null )
+        public ReadWriteContainer? GetContainerForTree ( IndexExpression index, Boolean createIfNotFound = true, ReadWriteContainer? proxied = null )
         {
             if ( index.Type == IndexType.Indexer && !index.Indexer.IsConstant )
                 return null;
@@ -65,16 +65,21 @@ namespace Loretta.Parsing.Visitor
                 _ => ( ( IdentifierExpression ) index.Indexer ).Identifier
             };
 
-            ReadWriteContainer container = this.GetContainerForTree ( index.Indexee, createIfNotFound, null );
-            return this.GetSubContainer ( container, indexer, createIfNotFound, proxied );
+            if ( this.GetContainerForTree ( index.Indexee, createIfNotFound, null ) is ReadWriteContainer container
+                 && !( indexer is null ) )
+            {
+                return this.GetSubContainer ( container, indexer, createIfNotFound, proxied );
+            }
+
+            return null;
         }
 
-        public ReadWriteContainer GetContainerForTree ( Expression expression, Boolean createIfNotFound = true, ReadWriteContainer proxied = null )
+        public ReadWriteContainer? GetContainerForTree ( Expression? expression, Boolean createIfNotFound = true, ReadWriteContainer? proxied = null )
         {
             return expression switch
             {
                 IndexExpression index => this.GetContainerForTree ( index, createIfNotFound, proxied ),
-                IdentifierExpression identifier => this.GetContainerForVariable ( identifier.Variable, createIfNotFound, proxied ),
+                IdentifierExpression { Variable: Variable variable } => this.GetContainerForVariable ( variable, createIfNotFound, proxied ),
                 _ => null
             };
         }
@@ -83,16 +88,20 @@ namespace Loretta.Parsing.Visitor
         {
             foreach ( TableField field in tableConstructor.Fields )
             {
-                if ( field.KeyType == TableFieldKeyType.None || ( field.KeyType == TableFieldKeyType.Expression && !field.Key.IsConstant ) ) continue;
+                if ( field.KeyType == TableFieldKeyType.None
+                     || ( field.KeyType == TableFieldKeyType.Expression && !field.Key!.IsConstant ) )
+                {
+                    continue;
+                }
 
                 var key = field.KeyType switch
                 {
-                    TableFieldKeyType.Identifier => ( ( IdentifierExpression ) field.Key ).Identifier,
-                    TableFieldKeyType.Expression => field.Key.ConstantValue,
+                    TableFieldKeyType.Identifier => ( ( IdentifierExpression ) field.Key! ).Identifier,
+                    TableFieldKeyType.Expression => field.Key!.ConstantValue,
                     _ => throw new InvalidOperationException ( )
                 };
 
-                if ( this.GetSubContainer ( table, key ) is ReadWriteContainer fieldContainer )
+                if ( key is Object && this.GetSubContainer ( table, key ) is ReadWriteContainer fieldContainer )
                 {
                     fieldContainer.AddWrite ( this._classifyWritesAsUnconditional, field.Key, field.Value );
                     if ( field.Value is TableConstructorExpression fieldTableConstructor )
@@ -107,22 +116,25 @@ namespace Loretta.Parsing.Visitor
         {
             for ( var i = 0; i < variables.Length; i++ )
             {
-                Expression value = null;
+                Expression? value = null;
                 if ( values.Length > i )
                 {
                     value = values[i];
                 }
 
                 if ( this.GetContainerForTree ( value, false ) is ReadWriteContainer valueContainer )
-                    valueContainer.AddRead ( true, value );
+                    valueContainer.AddRead ( true, value! );
 
                 Expression variable = variables[i];
-                ReadWriteContainer variableContainer = this.GetContainerForTree ( variable, true );
 
-                variableContainer.AddWrite ( this._classifyWritesAsUnconditional, variable, value );
-                if ( value is TableConstructorExpression table )
+                if ( this.GetContainerForTree ( variable, true ) is ReadWriteContainer variableContainer
+                     && value is Expression )
                 {
-                    this.InitializeContainerWithTable ( variableContainer, table );
+                    variableContainer.AddWrite ( this._classifyWritesAsUnconditional, variable, value );
+                    if ( value is TableConstructorExpression table )
+                    {
+                        this.InitializeContainerWithTable ( variableContainer, table );
+                    }
                 }
             }
         }

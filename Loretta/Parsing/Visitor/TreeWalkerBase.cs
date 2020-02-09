@@ -56,7 +56,8 @@ namespace Loretta.Parsing.Visitor
 
         public virtual void VisitTableField ( TableField node )
         {
-            this.VisitNode ( node.Key );
+            if ( node.Key is Expression )
+                this.VisitNode ( node.Key );
             this.VisitNode ( node.Value );
         }
 

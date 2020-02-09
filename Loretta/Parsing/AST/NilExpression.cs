@@ -14,7 +14,7 @@ namespace Loretta.Parsing.AST
         private readonly Token<LuaTokenType> Token;
 
         public override Boolean IsConstant => true;
-        public override Object ConstantValue => null;
+        public override Object? ConstantValue => null;
 
         public NilExpression ( Token<LuaTokenType> tok )
         {

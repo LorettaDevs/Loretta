@@ -12,7 +12,7 @@ namespace Loretta.Parsing
         public static BooleanExpression BooleanExpression ( Boolean value, SourceRange? range = null ) =>
             new BooleanExpression ( TokenFactory.Boolean ( value, range ), value );
 
-        public static NumberExpression NumberExpression ( Double value, String rawValue = null, SourceRange? range = null ) =>
+        public static NumberExpression NumberExpression ( Double value, String? rawValue = null, SourceRange? range = null ) =>
             new NumberExpression ( TokenFactory.Number ( value, rawValue, range ) );
 
         public static StringExpression ShortString ( String value, String rawValue, SourceRange? range = null ) =>

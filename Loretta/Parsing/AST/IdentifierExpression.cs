@@ -12,13 +12,13 @@ namespace Loretta.Parsing.AST
     {
         private readonly LuaToken Token;
 
-        public readonly Variable Variable;
-        public String Identifier => this.Variable?.Identifier ?? ( String ) this.Token.Value;
+        public readonly Variable? Variable;
+        public String Identifier => this.Variable?.Identifier ?? ( String ) this.Token.Value!;
 
         public override Boolean IsConstant => false;
         public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
 
-        public IdentifierExpression ( LuaToken token, Variable variable )
+        public IdentifierExpression ( LuaToken token, Variable? variable )
         {
             this.Token = token;
             this.Variable = variable;

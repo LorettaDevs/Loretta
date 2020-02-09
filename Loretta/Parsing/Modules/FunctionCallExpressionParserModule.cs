@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GParse;
 using GParse.Lexing;
 using GParse.Parsing;
@@ -12,15 +13,13 @@ namespace Loretta.Parsing.Modules
 {
     public class FunctionCallExpressionParserModule : IInfixParselet<LuaTokenType, Expression>
     {
-        public static FunctionCallExpressionParserModule Instance { get; private set; }
-
         public static void Register ( IPrattParserBuilder<LuaTokenType, Expression> builder, Int32 precedence )
         {
-            Instance = new FunctionCallExpressionParserModule ( precedence );
-            builder.Register ( LuaTokenType.LCurly, Instance );
-            builder.Register ( LuaTokenType.String, Instance );
-            builder.Register ( LuaTokenType.LongString, Instance );
-            builder.Register ( LuaTokenType.LParen, Instance );
+            var instance = new FunctionCallExpressionParserModule ( precedence );
+            builder.Register ( LuaTokenType.LCurly, instance );
+            builder.Register ( LuaTokenType.String, instance );
+            builder.Register ( LuaTokenType.LongString, instance );
+            builder.Register ( LuaTokenType.LParen, instance );
         }
 
         public Int32 Precedence { get; }
@@ -30,7 +29,7 @@ namespace Loretta.Parsing.Modules
             this.Precedence = precedence;
         }
 
-        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, Expression function, IProgress<Diagnostic> diagnosticReporter, out Expression expression )
+        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, Expression function, IProgress<Diagnostic> diagnosticReporter, [NotNullWhen ( true )] out Expression expression )
         {
             if ( parser.TokenReader.IsAhead ( LuaTokenType.LCurly )
                  && TableConstructorExpressionParserModule.Instance.TryParse ( parser, diagnosticReporter, out Expression tableExpression ) )
@@ -78,7 +77,7 @@ namespace Loretta.Parsing.Modules
             }
             else
             {
-                expression = default;
+                expression = default!;
                 return false;
             }
         }

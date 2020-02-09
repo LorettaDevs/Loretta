@@ -52,17 +52,6 @@ namespace Loretta
 
             public static Diagnostic UnfinishedString ( SourceRange range ) =>
                 new Diagnostic ( "LUA0006", range, DiagnosticSeverity.Error, "Unfinished string." );
-
-            public static Diagnostic RedeclaredLocalVariable ( LuaToken token )
-            {
-                if ( token.Type != Lexing.LuaTokenType.Identifier )
-                    throw new ArgumentException ( "Token is not an identifier.", nameof ( token ) );
-
-                return RedeclaredLocalVariable ( ( String ) token.Value, token.Range );
-            }
-
-            public static Diagnostic RedeclaredLocalVariable ( String name, SourceRange range ) =>
-                new Diagnostic ( "LUA0007", range, DiagnosticSeverity.Error, $"Redeclared local variable '{name}'." );
         }
     }
 }

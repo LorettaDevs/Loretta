@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GParse;
 using GParse.Errors;
 using GParse.Lexing;
@@ -25,13 +26,13 @@ namespace Loretta.Parsing.Modules
         };
 
         public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser,
-                                        IProgress<Diagnostic> diagnosticReporter,
-                                        out Expression expression )
+                                  IProgress<Diagnostic> diagnosticReporter,
+                                  [NotNullWhen ( true )] out Expression expression )
         {
             ITokenReader<LuaTokenType> reader = parser.TokenReader;
             if ( !reader.Accept ( LuaTokenType.LCurly, out Token<LuaTokenType> lcurly ) )
             {
-                expression = default;
+                expression = default!;
                 return false;
             }
 
