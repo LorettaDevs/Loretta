@@ -115,7 +115,7 @@ namespace Loretta.ThirdParty.FParsec
             // n*4 <= Int32.MaxValue protects against an nBits overflow, the additional -minSExp +
             // 10 margin is needed for parsing the exponent
             if ( n > ( Int32.MaxValue + minSExp - 10 ) / 4 )
-                throw new System.OverflowException ( "The given hexadecimal string representation of a double precision floating-point number is too long." );
+                throw new OverflowException ( "The given hexadecimal string representation of a double precision floating-point number is too long." );
 
             var sign = 0;   // 0 == positive, 1 == negative
             UInt64 xn = 0;    // integer significand with up to maxBits + 2 bits, where the (maxBits + 2)th bit
@@ -239,7 +239,7 @@ namespace Loretta.ThirdParty.FParsec
                     {
                         exp = checked(exp + e);
                     }
-                    catch ( System.OverflowException )
+                    catch ( OverflowException )
                     {
                         exp = e < 0 ? Int32.MinValue : Int32.MaxValue;
                     }
@@ -321,12 +321,12 @@ namespace Loretta.ThirdParty.FParsec
             Overflow:
             var msg = n < 32 ? "The given string (\"" + str + "\") represents a value either too large or too small for a double precision floating-point number."
                         : "The given string represents a value either too large or too small for a double precision floating-point number.";
-            throw new System.OverflowException ( msg );
+            throw new OverflowException ( msg );
 
             InvalidFormat:
             var errmsg = n < 32 ? "The given hexadecimal string representation of a double precision floating-point number (\"" + str + "\") is invalid."
                            : "The given hexadecimal string representation of a double precision floating-point number is invalid.";
-            throw new System.FormatException ( errmsg );
+            throw new FormatException ( errmsg );
         }
     } // class HexFloat
 }

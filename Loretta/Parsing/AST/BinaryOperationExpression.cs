@@ -16,9 +16,9 @@ namespace Loretta.Parsing.AST
 
         public BinaryOperationExpression ( Expression left, LuaToken op, Expression right )
         {
-            this.Left = left ?? throw new System.ArgumentNullException ( nameof ( left ) );
+            this.Left = left ?? throw new ArgumentNullException ( nameof ( left ) );
             this.Operator = op;
-            this.Right = right ?? throw new System.ArgumentNullException ( nameof ( right ) );
+            this.Right = right ?? throw new ArgumentNullException ( nameof ( right ) );
         }
 
         public override IEnumerable<LuaToken> Tokens
