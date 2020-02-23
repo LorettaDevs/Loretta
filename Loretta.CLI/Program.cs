@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using GParse;
 using GParse.Collections;
 using GParse.Lexing;
 using GUtils.CLI.Commands;
@@ -84,14 +86,15 @@ namespace Loretta.CLI
                 return;
             }
 
-            var sw = Stopwatch.StartNew ( );
-            var dl = new DiagnosticList ( );
-            var lb = new LuaLexerBuilder ( );
-            var pb = new LuaParserBuilder ( );
-            var fw = new FormattedLuaCodeSerializer ( "    " );
-            ILexer<LuaTokenType> l = lb.CreateLexer ( File.ReadAllText ( path ), dl );
-            LuaParser p = pb.CreateParser ( new TokenReader<LuaTokenType> ( l ), dl );
-            StatementList parsed = p.Parse ( );
+            var stopwatch = Stopwatch.StartNew ( );
+            var diagnosticList = new DiagnosticList ( );
+            var lexerBuilder = new LuaLexerBuilder ( );
+            var parserBuilder = new LuaParserBuilder ( );
+            var formattedCodeSerializer = new FormattedLuaCodeSerializer ( "    " );
+            var code = File.ReadAllText ( path );
+            ILexer<LuaTokenType> lexer = lexerBuilder.CreateLexer ( code, diagnosticList );
+            LuaParser parser = parserBuilder.CreateParser ( new TokenReader<LuaTokenType> ( lexer ), diagnosticList );
+            StatementList statementList = parser.Parse ( );
             foreach ( ASTVisitor visitor in visitors )
             {
                 switch ( visitor )
@@ -99,22 +102,28 @@ namespace Loretta.CLI
                     case ASTVisitor.ConstantFolder:
                     {
                         var folder = new ConstantFolder ( );
-                        parsed = folder.VisitStatementList ( parsed ) as StatementList;
+                        statementList = folder.VisitStatementList ( statementList ) as StatementList;
                         break;
                     }
+
                     case ASTVisitor.RawStringRewriter:
                     {
                         var rewriter = new RawStringRewriter ( );
-                        parsed = rewriter.VisitStatementList ( parsed ) as StatementList;
+                        statementList = rewriter.VisitStatementList ( statementList ) as StatementList;
                         break;
                     }
                 }
             }
-            fw.VisitStatementList ( parsed );
-            sw.Stop ( );
-            var time = Duration.Format ( sw.ElapsedTicks );
-            Logger.WriteLine ( fw.ToString ( ) );
+            formattedCodeSerializer.VisitStatementList ( statementList );
+            stopwatch.Stop ( );
+            var time = Duration.Format ( stopwatch.ElapsedTicks );
+            Logger.WriteLine ( formattedCodeSerializer.ToString ( ) );
             Logger.WriteLine ( $"Parsed and compiled back to code in {time}." );
+            foreach ( Diagnostic diagnostic in diagnosticList.OrderBy ( d => d.Severity ) )
+            {
+                Logger.WriteLine ( $@"{diagnostic.Id} {diagnostic.Severity}: {diagnostic.Description}
+{LuaDiagnostics.HighlightRange ( code, diagnostic.Range )}" );
+            }
         }
 
         #region Memory Usage
