@@ -20,8 +20,7 @@ namespace Loretta.Parsing.AST
             this.OperatorToken = operatorToken;
             this.ValueExpression = valueExpression;
 
-            this.Tokens = this.Assignee.Tokens.Concat ( new[] { this.OperatorToken } )
-                                              .Concat ( this.ValueExpression.Tokens );
+            this.Tokens = new[] { this.OperatorToken };
         }
 
         public override IEnumerable<Token<LuaTokenType>> Tokens { get; }
