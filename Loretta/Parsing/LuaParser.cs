@@ -7,7 +7,6 @@ using GParse.Parsing;
 using GParse.Parsing.Parselets;
 using Loretta.Lexing;
 using Loretta.Parsing.AST;
-using Loretta.Parsing.Modules;
 using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
 namespace Loretta.Parsing
@@ -41,10 +40,11 @@ namespace Loretta.Parsing
         {
         }
 
-        private static readonly String[] Terminal = new[] { "end", "else", "elseif", "until" };
+        private static readonly String[] terminals = new[] { "end", "else", "elseif", "until" };
+        private static readonly String[] compoundAssignmentOperatorIds = new[] { "+=", "-=", "*=", "/=", "^=", "%=", "..=" };
 
         private Boolean HasTerminalAhead ( ) =>
-            this.TokenReader.IsAhead ( LuaTokenType.EOF ) || this.TokenReader.IsAhead ( Terminal );
+            this.TokenReader.IsAhead ( LuaTokenType.EOF ) || this.TokenReader.IsAhead ( terminals );
 
         protected Expression ParseExpression ( )
         {
@@ -219,6 +219,15 @@ namespace Loretta.Parsing
             return new AssignmentStatement ( vars, varsCommas, equals, vals, valsCommas );
         }
 
+        private CompoundAssignmentStatement ParseCompoundAssignmentStatement ( Expression assignee )
+        {
+            LuaToken compoundAssignmentOperator = this.TokenReader.FatalExpect ( new[] { LuaTokenType.Operator }, compoundAssignmentOperatorIds );
+            
+            Expression? value = this.ParseExpression ( );
+
+            return new CompoundAssignmentStatement ( assignee, compoundAssignmentOperator, value );
+        }
+
         private WhileLoopStatement ParseWhileLoopStatement ( )
         {
             return new WhileLoopStatement (
@@ -383,9 +392,25 @@ namespace Loretta.Parsing
             else if ( !this.TokenReader.IsAhead ( LuaTokenType.Semicolon ) )
             {
                 Expression expr = this.ParseExpression ( );
-                stmt = ( expr is IndexExpression || expr is IdentifierExpression ) && ( this.TokenReader.IsAhead ( LuaTokenType.Operator, "=" ) || this.TokenReader.IsAhead ( LuaTokenType.Comma ) )
-                    ? this.ParseAssignmentStatement ( expr )
-                    : ( Statement ) new ExpressionStatement ( expr );
+                if ( expr is IndexExpression || expr is IdentifierExpression )
+                {
+                    if ( this.TokenReader.IsAhead ( LuaTokenType.Operator, "=" ) || this.TokenReader.IsAhead ( LuaTokenType.Comma ) )
+                    {
+                        stmt = this.ParseAssignmentStatement ( expr );
+                    }
+                    else if ( this.TokenReader.IsAhead ( new[] { LuaTokenType.Operator }, compoundAssignmentOperatorIds ) )
+                    {
+                        stmt = this.ParseCompoundAssignmentStatement ( expr );
+                    }
+                    else
+                    {
+                        stmt = new ExpressionStatement ( expr );
+                    }
+                }
+                else
+                {
+                    stmt = new ExpressionStatement ( expr );
+                }
             }
             else
             {
