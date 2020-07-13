@@ -33,8 +33,9 @@ namespace Loretta.Parsing.Visitor
 
         void VisitAnonymousFunction ( AnonymousFunctionExpression node );
 
-
         void VisitAssignment ( AssignmentStatement node );
+
+        void VisitCompoundAssignmentStatement ( CompoundAssignmentStatement compoundAssignmentStatement );
 
         void VisitBreak ( BreakStatement node );
 
@@ -99,8 +100,9 @@ namespace Loretta.Parsing.Visitor
 
         T VisitAnonymousFunction ( AnonymousFunctionExpression node );
 
-
         T VisitAssignment ( AssignmentStatement node );
+
+        T VisitCompoundAssignmentStatement ( CompoundAssignmentStatement compoundAssignmentStatement );
 
         T VisitBreak ( BreakStatement node );
 

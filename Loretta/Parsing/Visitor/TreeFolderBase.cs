@@ -146,7 +146,7 @@ namespace Loretta.Parsing.Visitor
 
         public virtual LuaASTNode VisitTableConstructor ( TableConstructorExpression node )
         {
-            TableField[] fields = node.Fields.Select ( f => ( TableField ) this.VisitTableField ( f ) ).ToArray ( );
+            TableField[] fields = node.Fields.Select ( f => ( TableField ) this.VisitNode ( f ) ).ToArray ( );
             if ( !node.Fields.SequenceEqual ( fields ) )
             {
                 Token<LuaTokenType>[] tokens = node.Tokens.ToArray ( );
@@ -158,7 +158,7 @@ namespace Loretta.Parsing.Visitor
 
         public virtual LuaASTNode VisitAnonymousFunction ( AnonymousFunctionExpression node )
         {
-            var body = ( StatementList ) this.VisitStatementList ( node.Body );
+            var body = ( StatementList ) this.VisitNode ( node.Body );
             if ( node.Body != body )
             {
                 return new AnonymousFunctionExpression ( node.Tokens, node.Arguments, body );
@@ -184,13 +184,25 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        public virtual LuaASTNode VisitCompoundAssignmentStatement ( CompoundAssignmentStatement node )
+        {
+            var assignee = ( Expression ) this.VisitNode ( node.Assignee );
+            var value = ( Expression ) this.VisitNode ( node.ValueExpression );
+            if ( node.Assignee != assignee || node.ValueExpression != value )
+            {
+                return new CompoundAssignmentStatement ( assignee, node.OperatorToken, value );
+            }
+
+            return node;
+        }
+
         public virtual LuaASTNode VisitBreak ( BreakStatement node ) => node;
 
         public virtual LuaASTNode VisitContinue ( ContinueStatement node ) => node;
 
         public virtual LuaASTNode VisitDo ( DoStatement node )
         {
-            var body = ( StatementList ) this.VisitStatementList ( node.Body );
+            var body = ( StatementList ) this.VisitNode ( node.Body );
             if ( body != node.Body )
             {
                 Token<LuaTokenType>[] tokens = node.Tokens.ToArray ( );
@@ -214,7 +226,7 @@ namespace Loretta.Parsing.Visitor
         public virtual LuaASTNode VisitFunctionDefinition ( FunctionDefinitionStatement node )
         {
             Expression name = node.IsLocal ? node.Name : ( Expression ) this.VisitNode ( node.Name );
-            var body = ( StatementList ) this.VisitStatementList ( node.Body );
+            var body = ( StatementList ) this.VisitNode ( node.Body );
 
             if ( name != node.Name || body != node.Body )
             {
@@ -254,7 +266,7 @@ namespace Loretta.Parsing.Visitor
             IfClause[] clauses = node.Clauses.Select ( clause =>
             {
                 var condition = ( Expression ) this.VisitNode ( clause.Condition );
-                var body = ( StatementList ) this.VisitStatementList ( clause.Body );
+                var body = ( StatementList ) this.VisitNode ( clause.Body );
 
                 if ( condition != clause.Condition || body != clause.Body )
                 {
@@ -267,7 +279,7 @@ namespace Loretta.Parsing.Visitor
 
             if ( node.ElseBlock is StatementList elseBlock )
             {
-                elseBlock = ( StatementList ) this.VisitStatementList ( elseBlock );
+                elseBlock = ( StatementList ) this.VisitNode ( elseBlock );
 
                 if ( elseBlock != node.ElseBlock || !clauses.SequenceEqual ( node.Clauses ) )
                 {
@@ -285,7 +297,7 @@ namespace Loretta.Parsing.Visitor
         public virtual LuaASTNode VisitGenericFor ( GenericForLoopStatement node )
         {
             var iteratable = ( Expression ) this.VisitNode ( node.Iteratable );
-            var body = ( StatementList ) this.VisitStatementList ( node.Body );
+            var body = ( StatementList ) this.VisitNode ( node.Body );
 
             if ( iteratable != node.Iteratable || body != node.Body )
             {
@@ -327,7 +339,7 @@ namespace Loretta.Parsing.Visitor
 
         public virtual LuaASTNode VisitNumericFor ( NumericForLoopStatement node )
         {
-            var body = ( StatementList ) this.VisitStatementList ( node.Body );
+            var body = ( StatementList ) this.VisitNode ( node.Body );
             var initial = ( Expression ) this.VisitNode ( node.Initial );
             var final = ( Expression ) this.VisitNode ( node.Final );
 
@@ -362,7 +374,7 @@ namespace Loretta.Parsing.Visitor
 
         public virtual LuaASTNode VisitRepeatUntil ( RepeatUntilStatement node )
         {
-            var body = ( StatementList ) this.VisitStatementList ( node.Body );
+            var body = ( StatementList ) this.VisitNode ( node.Body );
             var cond = ( Expression ) this.VisitNode ( node.Condition );
 
             if ( body != node.Body || cond != node.Condition )
@@ -407,7 +419,7 @@ namespace Loretta.Parsing.Visitor
         public virtual LuaASTNode VisitWhileLoop ( WhileLoopStatement node )
         {
             var cond = ( Expression ) this.VisitNode ( node.Condition );
-            var body = ( StatementList ) this.VisitStatementList ( node.Body );
+            var body = ( StatementList ) this.VisitNode ( node.Body );
 
             if ( cond != node.Condition || body != node.Body )
             {

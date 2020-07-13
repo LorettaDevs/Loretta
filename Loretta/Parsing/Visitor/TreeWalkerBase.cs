@@ -65,7 +65,7 @@ namespace Loretta.Parsing.Visitor
         {
             foreach ( TableField field in node.Fields )
             {
-                this.VisitTableField ( field );
+                this.VisitNode ( field );
             }
         }
 
@@ -76,7 +76,7 @@ namespace Loretta.Parsing.Visitor
                 this.VisitNode ( argument );
             }
 
-            this.VisitStatementList ( node.Body );
+            this.VisitNode ( node.Body );
         }
 
         public virtual void VisitAssignment ( AssignmentStatement node )
@@ -92,6 +92,12 @@ namespace Loretta.Parsing.Visitor
             }
         }
 
+        public void VisitCompoundAssignmentStatement ( CompoundAssignmentStatement node )
+        {
+            this.VisitNode ( node.Assignee );
+            this.VisitNode ( node.ValueExpression );
+        }
+
         public virtual void VisitBreak ( BreakStatement node )
         {
         }
@@ -101,7 +107,7 @@ namespace Loretta.Parsing.Visitor
         }
 
         public virtual void VisitDo ( DoStatement node ) =>
-            this.VisitStatementList ( node.Body );
+            this.VisitNode ( node.Body );
 
         public virtual void VisitExpressionStatement ( ExpressionStatement node ) =>
             this.VisitNode ( node.Expression );
@@ -113,7 +119,7 @@ namespace Loretta.Parsing.Visitor
             {
                 this.VisitNode ( argument );
             }
-            this.VisitStatementList ( node.Body );
+            this.VisitNode ( node.Body );
         }
 
         public virtual void VisitGotoLabel ( GotoLabelStatement node )
@@ -129,12 +135,12 @@ namespace Loretta.Parsing.Visitor
             foreach ( IfClause clause in node.Clauses )
             {
                 this.VisitNode ( clause.Condition );
-                this.VisitStatementList ( clause.Body );
+                this.VisitNode ( clause.Body );
             }
 
             if ( node.ElseBlock != null )
             {
-                this.VisitStatementList ( node.ElseBlock );
+                this.VisitNode ( node.ElseBlock );
             }
         }
 
@@ -142,18 +148,18 @@ namespace Loretta.Parsing.Visitor
         {
             foreach ( IdentifierExpression variable in node.Variables )
             {
-                this.VisitIdentifier ( variable );
+                this.VisitNode ( variable );
             }
 
             this.VisitNode ( node.Iteratable );
-            this.VisitStatementList ( node.Body );
+            this.VisitNode ( node.Body );
         }
 
         public virtual void VisitLocalVariableDeclaration ( LocalVariableDeclarationStatement node )
         {
             foreach ( IdentifierExpression identifier in node.Identifiers )
             {
-                this.VisitIdentifier ( identifier );
+                this.VisitNode ( identifier );
             }
 
             foreach ( Expression value in node.Values )
@@ -167,17 +173,17 @@ namespace Loretta.Parsing.Visitor
 
         public virtual void VisitNumericFor ( NumericForLoopStatement node )
         {
-            this.VisitIdentifier ( node.Variable );
+            this.VisitNode ( node.Variable );
             this.VisitNode ( node.Initial );
             this.VisitNode ( node.Final );
             if ( node.Step != null )
                 this.VisitNode ( node.Step );
-            this.VisitStatementList ( node.Body );
+            this.VisitNode ( node.Body );
         }
 
         public virtual void VisitRepeatUntil ( RepeatUntilStatement node )
         {
-            this.VisitStatementList ( node.Body );
+            this.VisitNode ( node.Body );
             this.VisitNode ( node.Condition );
         }
 
@@ -198,7 +204,7 @@ namespace Loretta.Parsing.Visitor
         public virtual void VisitWhileLoop ( WhileLoopStatement node )
         {
             this.VisitNode ( node.Condition );
-            this.VisitStatementList ( node.Body );
+            this.VisitNode ( node.Body );
         }
     }
 }

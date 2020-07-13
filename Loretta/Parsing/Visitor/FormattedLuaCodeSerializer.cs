@@ -55,7 +55,7 @@ namespace Loretta.Parsing.Visitor
             this._writer.Write ( "function ( " );
             this.WriteSeparatedNodeList ( ", ", anonymousFunction.Arguments );
             this._writer.WriteLine ( " )" );
-            this._writer.WithIndentation ( ( ) => this.VisitStatementList ( anonymousFunction.Body ) );
+            this._writer.WithIndentation ( ( ) => this.VisitNode ( anonymousFunction.Body ) );
             this._writer.WriteIndented ( "end" );
         }
 
@@ -132,7 +132,7 @@ namespace Loretta.Parsing.Visitor
                 for ( var i = 0; i < node.Fields.Length; i++ )
                 {
                     this._writer.WriteIndentation ( );
-                    this.VisitTableField ( node.Fields[i] );
+                    this.VisitNode ( node.Fields[i] );
                     this._writer.WriteLine ( );
                 }
             } );
@@ -197,6 +197,16 @@ namespace Loretta.Parsing.Visitor
             this.WriteSeparatedNodeList ( ", ", assignmentStatement.Values );
             this.WriteStatementLineEnd ( assignmentStatement );
         }
+        public void VisitCompoundAssignmentStatement ( CompoundAssignmentStatement compoundAssignmentStatement )
+        {
+            this._writer.WriteIndentation ( );
+            this.VisitNode ( compoundAssignmentStatement.Assignee );
+            this._writer.Write ( " " );
+            this._writer.Write ( compoundAssignmentStatement.OperatorToken.Id );
+            this._writer.Write ( " " );
+            this.VisitNode ( compoundAssignmentStatement.ValueExpression );
+            this.WriteStatementLineEnd ( compoundAssignmentStatement );
+        }
 
         public virtual void VisitBreak ( BreakStatement breakStatement )
         {
@@ -213,7 +223,7 @@ namespace Loretta.Parsing.Visitor
         public virtual void VisitDo ( DoStatement doStatement )
         {
             this._writer.WriteLineIndented ( "do" );
-            this._writer.WithIndentation ( ( ) => this.VisitStatementList ( doStatement.Body ) );
+            this._writer.WithIndentation ( ( ) => this.VisitNode ( doStatement.Body ) );
             this._writer.WriteIndented ( "end" );
             this.WriteStatementLineEnd ( doStatement );
         }
@@ -240,7 +250,7 @@ namespace Loretta.Parsing.Visitor
             this._writer.Write ( " ( " );
             this.WriteSeparatedNodeList ( ", ", functionDeclaration.Arguments );
             this._writer.WriteLine ( " ) " );
-            this._writer.WithIndentation ( ( ) => this.VisitStatementList ( functionDeclaration.Body ) );
+            this._writer.WithIndentation ( ( ) => this.VisitNode ( functionDeclaration.Body ) );
             this._writer.WriteIndented ( "end" );
             this.WriteStatementLineEnd ( functionDeclaration );
         }
@@ -277,13 +287,13 @@ namespace Loretta.Parsing.Visitor
                 this.VisitNode ( clause.Condition );
 
                 this._writer.WriteLine ( " then" );
-                this._writer.WithIndentation ( ( ) => this.VisitStatementList ( clause.Body ) );
+                this._writer.WithIndentation ( ( ) => this.VisitNode ( clause.Body ) );
             }
 
             if ( ifStatement.ElseBlock is StatementList )
             {
                 this._writer.WriteLineIndented ( "else" );
-                this._writer.WithIndentation ( ( ) => this.VisitStatementList ( ifStatement.ElseBlock ) );
+                this._writer.WithIndentation ( ( ) => this.VisitNode ( ifStatement.ElseBlock ) );
             }
 
             this._writer.WriteIndented ( "end" );
@@ -297,7 +307,7 @@ namespace Loretta.Parsing.Visitor
             this._writer.Write ( " in " );
             this.VisitNode ( genericForLoop.Iteratable );
             this._writer.WriteLine ( " do" );
-            this._writer.WithIndentation ( ( ) => this.VisitStatementList ( genericForLoop.Body ) );
+            this._writer.WithIndentation ( ( ) => this.VisitNode ( genericForLoop.Body ) );
             this._writer.WriteIndented ( "end" );
             this.WriteStatementLineEnd ( genericForLoop );
         }
@@ -317,7 +327,7 @@ namespace Loretta.Parsing.Visitor
         public virtual void VisitNumericFor ( NumericForLoopStatement numericForLoop )
         {
             this._writer.WriteIndented ( "for " );
-            this.VisitIdentifier ( numericForLoop.Variable );
+            this.VisitNode ( numericForLoop.Variable );
             this._writer.Write ( " = " );
             this.VisitNode ( numericForLoop.Initial );
             this._writer.Write ( ", " );
@@ -328,7 +338,7 @@ namespace Loretta.Parsing.Visitor
                 this.VisitNode ( numericForLoop.Step );
             }
             this._writer.WriteLine ( " do" );
-            this._writer.WithIndentation ( ( ) => this.VisitStatementList ( numericForLoop.Body ) );
+            this._writer.WithIndentation ( ( ) => this.VisitNode ( numericForLoop.Body ) );
             this._writer.WriteIndented ( "end" );
             this.WriteStatementLineEnd ( numericForLoop );
         }
@@ -336,7 +346,7 @@ namespace Loretta.Parsing.Visitor
         public virtual void VisitRepeatUntil ( RepeatUntilStatement repeatUntilLoop )
         {
             this._writer.WriteLineIndented ( "repeat" );
-            this._writer.WithIndentation ( ( ) => this.VisitStatementList ( repeatUntilLoop.Body ) );
+            this._writer.WithIndentation ( ( ) => this.VisitNode ( repeatUntilLoop.Body ) );
             this._writer.WriteIndented ( "until " );
             this.VisitNode ( repeatUntilLoop.Condition );
             this.WriteStatementLineEnd ( repeatUntilLoop );
@@ -362,7 +372,7 @@ namespace Loretta.Parsing.Visitor
             this._writer.WriteIndented ( "while " );
             this.VisitNode ( whileLoop.Condition );
             this._writer.WriteLine ( " do" );
-            this._writer.WithIndentation ( ( ) => this.VisitStatementList ( whileLoop.Body ) );
+            this._writer.WithIndentation ( ( ) => this.VisitNode ( whileLoop.Body ) );
             this._writer.WriteIndented ( "end" );
             this.WriteStatementLineEnd ( whileLoop );
         }
