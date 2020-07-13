@@ -85,6 +85,15 @@ namespace Loretta.Lexing
             this.AddLiteral ( "=", LuaTokenType.Operator, "=" );
             this.AddLiteral ( "%", LuaTokenType.Operator, "%" );
 
+            // Roblox Lua compound assignment
+            this.AddLiteral ( "+=", LuaTokenType.Operator, "+=" );
+            this.AddLiteral ( "-=", LuaTokenType.Operator, "-=" );
+            this.AddLiteral ( "*=", LuaTokenType.Operator, "*=" );
+            this.AddLiteral ( "/=", LuaTokenType.Operator, "/=" );
+            this.AddLiteral ( "^=", LuaTokenType.Operator, "^=" );
+            this.AddLiteral ( "%=", LuaTokenType.Operator, "%=" );
+            this.AddLiteral ( "..=", LuaTokenType.Operator, "..=" );
+
             #endregion Infix Operators
 
             #region Prefix Operators
