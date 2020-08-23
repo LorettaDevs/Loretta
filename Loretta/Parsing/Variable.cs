@@ -4,6 +4,8 @@ namespace Loretta.Parsing
 {
     public class Variable
     {
+        public static readonly Variable _G = new Variable ( "_G", null! );
+
         public String Identifier { get; private set; }
         public readonly Scope ParentScope;
 
