@@ -222,7 +222,7 @@ namespace Loretta.Parsing
         private CompoundAssignmentStatement ParseCompoundAssignmentStatement ( Expression assignee )
         {
             LuaToken compoundAssignmentOperator = this.TokenReader.FatalExpect ( new[] { LuaTokenType.Operator }, compoundAssignmentOperatorIds );
-            
+
             Expression? value = this.ParseExpression ( );
 
             return new CompoundAssignmentStatement ( assignee, compoundAssignmentOperator, value );
@@ -324,9 +324,9 @@ namespace Loretta.Parsing
             LuaToken returnKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "return" );
             var retvals = new List<Expression> ( );
             var commas = new List<LuaToken> ( );
-            if ( !this.HasTerminalAhead ( ) )
+            if ( this.TryParseExpression ( out Expression firstReturn ) )
             {
-                retvals.Add ( this.ParseExpression ( ) );
+                retvals.Add ( firstReturn );
                 while ( this.TokenReader.Accept ( LuaTokenType.Comma, out LuaToken comma ) )
                 {
                     commas.Add ( comma );
