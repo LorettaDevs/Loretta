@@ -10,9 +10,9 @@ namespace Loretta.Lexing.Modules
 {
     public class IdentifierLexerModule : ILexerModule<LuaTokenType>
     {
-        protected readonly HashSet<String> Keywords = new HashSet<String> ( );
+        protected readonly HashSet<String> Keywords = new HashSet<String> ( StringComparer.Ordinal );
 
-        protected readonly HashSet<String> Operators = new HashSet<String> ( );
+        protected readonly HashSet<String> Operators = new HashSet<String> ( StringComparer.Ordinal );
 
         protected readonly Dictionary<String, (LuaTokenType type, Object? value)> Literals = new Dictionary<String, (LuaTokenType, Object?)> ( );
 
