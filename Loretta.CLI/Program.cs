@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using GParse;
 using GParse.Collections;
+using GParse.Errors;
 using GParse.Lexing;
 using GUtils.CLI.Commands;
 using GUtils.CLI.Commands.Errors;
@@ -177,6 +178,54 @@ namespace Loretta.CLI
                 tracker.VisitNode ( statementList );
                 statementList = new SimpleInliner ( tracker ).VisitNode ( statementList ) as StatementList;
                 return statementList;
+            }
+        }
+
+        [Command ( "mp" ), Command ( "mass-parse" )]
+        public static void MassParse ( params String[] patterns )
+        {
+            var files = patterns.SelectMany ( pattern => Directory.EnumerateFiles ( ".", pattern, new EnumerationOptions
+            {
+                IgnoreInaccessible = true,
+                MatchType = MatchType.Simple
+            } ) )
+                .ToArray ( );
+
+            var lexerBuilder = new LuaLexerBuilder ( );
+            var parserBuilder = new LuaParserBuilder ( );
+            foreach ( var file in files )
+            {
+                var stopwatch = Stopwatch.StartNew ( );
+                var diagnosticList = new DiagnosticList ( );
+                var formattedCodeSerializer = new FormattedLuaCodeSerializer ( "    " );
+                var code = File.ReadAllText ( file );
+                try
+                {
+                    ILexer<LuaTokenType> lexer = lexerBuilder.CreateLexer ( code, diagnosticList );
+                    LuaParser parser = parserBuilder.CreateParser ( new TokenReader<LuaTokenType> ( lexer ), diagnosticList );
+                    StatementList statementList = parser.Parse ( );
+                    formattedCodeSerializer.VisitNode ( statementList );
+                    stopwatch.Stop ( );
+                    var time = Duration.Format ( stopwatch.ElapsedTicks );
+                    Logger.WriteLine ( $"{file}: {time}." );
+                    foreach ( Diagnostic diagnostic in diagnosticList.OrderBy ( d => d.Severity ) )
+                    {
+                        Logger.WriteLine ( $@"{diagnostic.Id} {diagnostic.Severity}: {diagnostic.Description}
+{LuaDiagnostics.HighlightRange ( code, diagnostic.Range )}" );
+                    }
+                }
+                catch ( FatalParsingException fpex )
+                {
+                    Logger.WriteLine ( $"{file}:" );
+                    Logger.LogError ( $"{typeof ( FatalParsingException ).FullName}: {fpex.Message}" );
+                    Logger.LogError ( LuaDiagnostics.HighlightRange ( code, fpex.Range ) );
+                    Logger.LogError ( fpex.StackTrace );
+                }
+                catch ( Exception ex )
+                {
+                    Logger.WriteLine ( $"{file}:" );
+                    Logger.LogError ( ex.ToString ( ) );
+                }
             }
         }
 
