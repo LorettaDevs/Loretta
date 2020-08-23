@@ -16,7 +16,9 @@ namespace Loretta.Parsing.Visitor
                 {
                     NilExpression _ => ASTNodeFactory.BooleanExpression ( false ),
                     BooleanExpression boolean => ASTNodeFactory.BooleanExpression ( !boolean.Value ),
-                    _ => ASTNodeFactory.BooleanExpression ( true )
+                    _ => node.Operand != operand
+                        ? new UnaryOperationExpression ( node.Fix, node.Operator, operand )
+                        : node
                 },
                 "-" => operand switch
                 {
