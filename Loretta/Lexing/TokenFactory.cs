@@ -13,6 +13,9 @@ namespace Loretta.Lexing
         public static LuaToken Token ( String ID, LuaTokenType type, String? raw = null, Object? value = null, SourceRange? range = null ) =>
             new LuaToken ( ID, raw ?? ID, value, type, range ?? SourceRange.Zero );
 
+        public static LuaToken Identifier ( String value, SourceRange? range = null ) =>
+            Token ( value, LuaTokenType.Identifier, value, value, range );
+
         public static LuaToken Boolean ( Boolean value, SourceRange? range = null )
         {
             var strValue = value ? "true" : "false";
