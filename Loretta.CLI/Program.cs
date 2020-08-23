@@ -74,7 +74,10 @@ namespace Loretta.CLI
         public enum ASTVisitor
         {
             ConstantFolder,
-            RawStringRewriter
+            RawStringRewriter,
+            UselessAssignmentRemover,
+            SimpleInliner,
+            AllTillNothingMoreToDo
         }
 
         [Command ( "p" ), Command ( "parse" )]
@@ -101,20 +104,43 @@ namespace Loretta.CLI
                 {
                     case ASTVisitor.ConstantFolder:
                     {
-                        var folder = new ConstantFolder ( );
-                        statementList = folder.VisitStatementList ( statementList ) as StatementList;
+                        statementList = constantFolder ( statementList );
                         break;
                     }
 
                     case ASTVisitor.RawStringRewriter:
                     {
-                        var rewriter = new RawStringRewriter ( );
-                        statementList = rewriter.VisitStatementList ( statementList ) as StatementList;
+                        statementList = rawStringRewriter ( statementList );
+                        break;
+                    }
+
+                    case ASTVisitor.UselessAssignmentRemover:
+                    {
+                        statementList = uselessAssignmentRemover ( statementList );
+                        break;
+                    }
+
+                    case ASTVisitor.SimpleInliner:
+                    {
+                        statementList = simpleInliner ( statementList );
+                        break;
+                    }
+
+                    case ASTVisitor.AllTillNothingMoreToDo:
+                    {
+                        StatementList original;
+                        var rounds = 0;
+                        do
+                        {
+                            original = statementList;
+                            statementList = simpleInliner ( uselessAssignmentRemover ( rawStringRewriter ( constantFolder ( statementList ) ) ) );
+                        }
+                        while ( original != statementList && rounds++ < 120 );
                         break;
                     }
                 }
             }
-            formattedCodeSerializer.VisitStatementList ( statementList );
+            formattedCodeSerializer.VisitNode ( statementList );
             stopwatch.Stop ( );
             var time = Duration.Format ( stopwatch.ElapsedTicks );
             Logger.WriteLine ( formattedCodeSerializer.ToString ( ) );
@@ -123,6 +149,34 @@ namespace Loretta.CLI
             {
                 Logger.WriteLine ( $@"{diagnostic.Id} {diagnostic.Severity}: {diagnostic.Description}
 {LuaDiagnostics.HighlightRange ( code, diagnostic.Range )}" );
+            }
+
+            static StatementList constantFolder ( StatementList statementList )
+            {
+                statementList = new ConstantFolder ( ).VisitNode ( statementList ) as StatementList;
+                return statementList;
+            }
+
+            static StatementList rawStringRewriter ( StatementList statementList )
+            {
+                statementList = new RawStringRewriter ( ).VisitNode ( statementList ) as StatementList;
+                return statementList;
+            }
+
+            static StatementList uselessAssignmentRemover ( StatementList statementList )
+            {
+                var tracker = new SimpleReadWriteTracker ( );
+                tracker.VisitNode ( statementList );
+                statementList = new UselessAssignmentRemover ( tracker ).VisitNode ( statementList ) as StatementList;
+                return statementList;
+            }
+
+            static StatementList simpleInliner ( StatementList statementList )
+            {
+                var tracker = new SimpleReadWriteTracker ( );
+                tracker.VisitNode ( statementList );
+                statementList = new SimpleInliner ( tracker ).VisitNode ( statementList ) as StatementList;
+                return statementList;
             }
         }
 
