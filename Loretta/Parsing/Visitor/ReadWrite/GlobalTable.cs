@@ -6,9 +6,9 @@ namespace Loretta.Parsing.Visitor.ReadWrite
     {
         public override ReadWriteContainer Parent => this;
 
-        public GlobalTable ( Object identifier ) : base ( identifier )
+        public GlobalTable ( Object identifier ) : base ( null!, identifier )
         {
-            this.AddContainerProxy ( identifier, this );
+            this.AddContainerProxy ( null!, identifier, this );
         }
     }
 }

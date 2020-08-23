@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Loretta.Parsing.AST;
 
 namespace Loretta.Parsing.Visitor.ReadWrite
 {
     public readonly struct Read
     {
-        public Boolean CanCauseMutation { get; }
+        public Boolean IsBeingAlised { get; }
         public Expression Node { get; }
+        public Expression? Alias { get; }
 
-        public Read ( Boolean canCauseMutation, Expression node )
+        public Read ( Boolean isBeingAliased, Expression node, Expression? alias )
         {
-            this.CanCauseMutation = canCauseMutation;
+            this.IsBeingAlised = isBeingAliased;
             this.Node = node ?? throw new ArgumentNullException ( nameof ( node ) );
+            this.Alias = alias;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Loretta.Parsing.AST;
 
 namespace Loretta.Parsing.Visitor.ReadWrite
@@ -10,39 +11,50 @@ namespace Loretta.Parsing.Visitor.ReadWrite
         private readonly List<Read> _reads = new List<Read> ( );
         private readonly List<Write> _writes = new List<Write> ( );
 
-        public Object Identifier { get; }
+        public LuaASTNode Definer { get; }
+
+        public Object? Identifier { get; }
 
         public Variable? Variable { get; }
 
         public virtual ReadWriteContainer? Parent { get; }
 
+        public virtual IReadOnlyDictionary<Object, ReadWriteContainer> Containers => this._containers;
+
         public virtual IReadOnlyCollection<Read> Reads => this._reads;
 
         public virtual IReadOnlyCollection<Write> Writes => this._writes;
 
-        public ReadWriteContainer ( Object identifier )
+        public virtual Boolean HasConditionalWrites => this.Writes.Any ( write => !write.IsUnconditional );
+
+        public virtual Boolean HasUndefinedWrites => this.Writes.Any ( write => write.Value is UndefinedValueExpression );
+
+        public virtual Boolean HasIndirectWrites => this.Parent?.Reads.Any ( read => read.IsBeingAlised ) is true;
+
+        public ReadWriteContainer ( LuaASTNode definer, Object identifier )
         {
+            this.Definer = definer;
             this.Identifier = identifier ?? throw new ArgumentNullException ( nameof ( identifier ) );
         }
 
-        public ReadWriteContainer ( Object identifier, Variable variable ) : this ( identifier )
+        public ReadWriteContainer ( LuaASTNode definer, Object identifier, Variable variable ) : this ( definer, identifier )
         {
             this.Variable = variable ?? throw new ArgumentNullException ( nameof ( variable ) );
         }
 
-        public ReadWriteContainer ( Object identifier, ReadWriteContainer parent ) : this ( identifier )
+        public ReadWriteContainer ( LuaASTNode definer, Object identifier, ReadWriteContainer parent ) : this ( definer, identifier )
         {
             this.Parent = parent ?? throw new ArgumentNullException ( nameof ( parent ) );
         }
 
-        public ReadWriteContainer ( Object identifier, Variable variable, ReadWriteContainer parent ) : this ( identifier, variable )
+        public ReadWriteContainer ( LuaASTNode definer, Object identifier, Variable variable, ReadWriteContainer parent ) : this ( definer, identifier, variable )
         {
             this.Parent = parent ?? throw new ArgumentNullException ( nameof ( parent ) );
         }
 
-        public virtual Read AddRead ( Boolean canCauseMutation, Expression node )
+        public virtual Read AddRead ( Boolean isBeingAliased, Expression node, Expression? alias )
         {
-            var read = new Read ( canCauseMutation, node );
+            var read = new Read ( isBeingAliased, node, alias );
             this._reads.Add ( read );
             return read;
         }
@@ -54,16 +66,16 @@ namespace Loretta.Parsing.Visitor.ReadWrite
             return write;
         }
 
-        public virtual ReadWriteContainer AddContainer ( Object identifier )
+        public virtual ReadWriteContainer AddContainer ( LuaASTNode definer, Object identifier )
         {
-            var container = new ReadWriteContainer ( identifier, this );
+            var container = new ReadWriteContainer ( definer, identifier, this );
             this._containers.Add ( identifier, container );
             return container;
         }
 
-        public virtual ReadWriteContainerProxy AddContainerProxy ( Object identifier, ReadWriteContainer container )
+        public virtual ReadWriteContainerProxy AddContainerProxy ( LuaASTNode definer, Object identifier, ReadWriteContainer container )
         {
-            var proxy = new ReadWriteContainerProxy ( identifier, this, container );
+            var proxy = new ReadWriteContainerProxy ( definer, identifier, this, container );
             this._containers.Add ( identifier, proxy );
             return proxy;
         }

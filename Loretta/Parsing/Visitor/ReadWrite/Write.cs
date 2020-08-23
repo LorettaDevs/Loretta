@@ -12,8 +12,8 @@ namespace Loretta.Parsing.Visitor.ReadWrite
         public Write ( Boolean isUnconditional, Expression node, Expression value )
         {
             this.IsUnconditional = isUnconditional;
-            this.Node = node ?? throw new System.ArgumentNullException ( nameof ( node ) );
-            this.Value = value ?? throw new System.ArgumentNullException ( nameof ( value ) );
+            this.Node = node ?? throw new ArgumentNullException ( nameof ( node ) );
+            this.Value = value;
         }
     }
 }
