@@ -6,6 +6,7 @@ using GParse.Lexing;
 using Loretta.Lexing;
 using Loretta.Parsing.AST;
 using Loretta.Parsing.AST.Tables;
+using Loretta.Utilities;
 
 namespace Loretta.Parsing.Visitor
 {
@@ -171,11 +172,15 @@ namespace Loretta.Parsing.Visitor
             {
                 case UnaryOperationFix.Prefix:
                     this._writer.Write ( node.Operator.Value );
+                    if ( StringUtils.IsIdentifier ( node.Operator.Raw ) )
+                        this._writer.Write ( ' ' );
                     this.VisitNode ( node.Operand );
                     break;
 
                 case UnaryOperationFix.Postfix:
                     this.VisitNode ( node.Operand );
+                    if ( StringUtils.IsIdentifier ( node.Operator.Raw ) )
+                        this._writer.Write ( ' ' );
                     this._writer.Write ( node.Operator.Value );
                     break;
 
