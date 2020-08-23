@@ -22,7 +22,7 @@ namespace Loretta.Utilities
             if ( value.Length >= 1 && !CharUtils.IsValidFirstIdentifierChar ( value[0] ) )
                 return false;
 
-            for ( var idx = 1; idx <= value.Length; idx++ )
+            for ( var idx = 1; idx < value.Length; idx++ )
             {
                 if ( !CharUtils.IsValidTrailingIdentifierChar ( value[idx] ) )
                     return false;
