@@ -31,7 +31,7 @@ namespace Loretta.Lexing.Modules
 
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsOctalChar ( Char ch ) =>
-            ( '0' <= ch && ch <= '7' ) || ch == '_';
+            CharUtils.IsInRange ( '0', ch, '7' ) || ch == '_';
 
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsBinaryChar ( Char ch ) =>
@@ -40,7 +40,7 @@ namespace Loretta.Lexing.Modules
         public virtual Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
         {
             // We use CharUtils' IsDecimal instead of ours because we don't accept underlines at the
-            // start of a number nor after the dot.
+            // start of a number nor right after the dot.
             return reader.Peek ( ) is Char peek
                    && ( CharUtils.IsDecimal ( peek )
                         || ( peek == '.' && reader.Peek ( 1 ) is Char peek2 && CharUtils.IsDecimal ( peek2 ) ) );

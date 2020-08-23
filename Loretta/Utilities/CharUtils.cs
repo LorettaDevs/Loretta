@@ -1,20 +1,89 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Loretta.Utilities
 {
+    /// <summary>
+    /// A general character utility class.
+    /// </summary>
     internal class CharUtils
     {
+        /// <summary>
+        /// Checks whether the provided <paramref name="value" /> is in the range [ <paramref
+        /// name="start" />, <paramref name="end" />].
+        /// </summary>
+        /// <param name="start">The first character of the range (inclusive).</param>
+        /// <param name="value">The character to check for.</param>
+        /// <param name="end">The last character of the range (inclusive).</param>
+        /// <returns>Whether the provided character is in the range.</returns>
+        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
+        public static Boolean IsInRange ( Char start, Char value, Char end ) =>
+            ( UInt32 ) ( value - start ) <= ( end - start );
+
+        /// <summary>
+        /// Checks whether the provided character is a decimal character (between 0 and 9).
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>Whether the provided character is a decimal character.</returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsDecimal ( Char ch ) =>
-            '0' <= ch && ch <= '9';
+            IsInRange ( '0', ch, '9' );
 
+        /// <summary>
+        /// Checks whether the provided character is a hexadecimal character.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>Whether the provided character is hexadecimal.</returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsHexadecimal ( Char ch ) =>
-            IsDecimal ( ch ) || ( 'a' <= ch && ch <= 'f' ) || ( 'A' <= ch && ch <= 'F' );
+            IsDecimal ( ch )
+            // Using the table on /.notes/number-parsing.md, one can see that there's a bit that can
+            // be used to convert uppercase characters to lower case (the 6th bit left to right). So
+            // we preemptively set it on the char to avoid an extra range check.
+            || IsInRange ( 'a', ( Char ) ( ch | 0b0100000 ), 'f' );
 
+        /// <summary>
+        /// Checks whether the provided character is an alpha character (a-z, A-Z).
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>Whether the provided character is an alpha character.</returns>
+        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
+        public static Boolean IsAlpha ( Char ch ) =>
+            // Refer to IsHexadecimal(Char) for an explanation of the bitwise or.
+            IsInRange ( 'a', ( Char ) ( ch | 0b100000 ), 'z' );
+
+        /// <summary>
+        /// Checks whether the provided character is an alphanumeric character (a-z, A-Z, 0-9).
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>Whether the provided character is an alphanumeric character.</returns>
+        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
+        public static Boolean IsAlphaNumeric ( Char ch ) =>
+            IsDecimal ( ch ) || IsAlpha ( ch );
+
+        /// <summary>
+        /// Checks whether the provided character is a valid LuaJIT first identifier character.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>Whether the provided character is a valid LuaJIT first identifier character.</returns>
+        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
+        public static Boolean IsValidFirstIdentifierChar ( Char ch ) =>
+            ch == '_' || ch >= 0x7F || IsAlpha ( ch );
+
+        /// <summary>
+        /// Checks whether the provided character is a valid trailing LuaJIT identifier character.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>Whether the provided character is a valid trailing LuaJIT identifier character.</returns>
+        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
+        public static Boolean IsValidTrailingIdentifierChar ( Char ch ) =>
+            IsValidFirstIdentifierChar ( ch ) || IsDecimal ( ch );
+
+        /// <summary>
+        /// Encodes the provided character into a hexadecimal escape sequence representing its UTF-8 bytes.
+        /// </summary>
+        /// <param name="ch">The character to encode.</param>
+        /// <returns>The provided character encoded in UTF-8 hexadecimal escape sequences.</returns>
         public static String EncodeCharToUtf8 ( Char ch )
         {
             var n = ( UInt16 ) ch;

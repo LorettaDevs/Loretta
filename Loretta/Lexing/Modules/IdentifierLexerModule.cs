@@ -4,6 +4,7 @@ using GParse;
 using GParse.IO;
 using GParse.Lexing;
 using GParse.Lexing.Modules;
+using Loretta.Utilities;
 
 namespace Loretta.Lexing.Modules
 {
@@ -51,14 +52,13 @@ namespace Loretta.Lexing.Modules
         {
             // Non-equals operations with Nullable<Char> should be exception safe and always return false
             var ch = reader.Peek ( );
-            return ch == '_' || ch > 0x7F || ( 'a' <= ch && ch <= 'z' ) || ( 'A' <= ch && ch <= 'Z' );
+            return CharUtils.IsValidFirstIdentifierChar ( ch.GetValueOrDefault ( ) );
         }
 
         public Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticReporter )
         {
             SourceLocation start = reader.Location;
-            var identifier = reader.ReadStringWhile ( ch =>
-                ch == '_' || ch > 0x7F || ( 'a' <= ch && ch <= 'z' ) || ( '0' <= ch && ch <= '9' ) || ( 'A' <= ch && ch <= 'Z' ) );
+            var identifier = reader.ReadStringWhile ( ch => CharUtils.IsValidTrailingIdentifierChar ( ch ) );
             SourceRange range = start.To ( reader.Location );
 
             if ( this.Keywords.Contains ( identifier ) )
