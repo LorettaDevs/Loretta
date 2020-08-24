@@ -215,15 +215,16 @@ namespace Loretta.Parsing.Visitor
         {
             this.WithConditionalWrites ( node =>
             {
-                for ( var i = 0; i < node.Variables.Length; i++ )
+                foreach ( IdentifierExpression variable in node.Variables )
                 {
-                    IdentifierExpression variable = node.Variables[i];
-
                     this.AddWrite ( variable, new UndefinedValueExpression ( ) );
                     base.VisitNode ( variable );
                 }
 
-                this.VisitNode ( node.Iteratable );
+                foreach ( Expression iteratable in node.Expressions )
+                {
+                    this.VisitNode ( iteratable );
+                }
                 this.VisitNode ( node.Body );
             }, node );
         }

@@ -296,18 +296,19 @@ namespace Loretta.Parsing.Visitor
 
         public virtual LuaASTNode VisitGenericFor ( GenericForLoopStatement node )
         {
-            var iteratable = ( Expression ) this.VisitNode ( node.Iteratable );
+            Expression[] iteratables = node.Expressions.Select ( iteratable => ( Expression ) this.VisitNode ( iteratable ) ).ToArray ( );
             var body = ( StatementList ) this.VisitNode ( node.Body );
 
-            if ( iteratable != node.Iteratable || body != node.Body )
+            if ( !node.Expressions.SequenceEqual ( iteratables ) || body != node.Body )
             {
                 Token<LuaTokenType>[] tokens = node.Tokens.ToArray ( );
                 Token<LuaTokenType> forKw = tokens[0];
-                var commas = new ArraySegment<Token<LuaTokenType>> ( tokens, 1, node.Variables.Length - 1 );
-                Token<LuaTokenType> inKw = tokens[1 + commas.Count];
-                Token<LuaTokenType> doKw = tokens[2 + commas.Count];
-                Token<LuaTokenType> endKw = tokens[3 + commas.Count];
-                return new GenericForLoopStatement ( node.Scope, forKw, node.Variables, commas, inKw, iteratable, doKw, body, endKw ) { Semicolon = node.Semicolon };
+                var varCommas = new ArraySegment<Token<LuaTokenType>> ( tokens, 1, node.Variables.Length - 1 );
+                Token<LuaTokenType> inKw = tokens[1 + varCommas.Count];
+                var iteratableCommas = new ArraySegment<Token<LuaTokenType>> ( tokens, 2 + varCommas.Count, node.Expressions.Length - 1 );
+                Token<LuaTokenType> doKw = tokens[2 + varCommas.Count + iteratableCommas.Count];
+                Token<LuaTokenType> endKw = tokens[3 + varCommas.Count + iteratableCommas.Count];
+                return new GenericForLoopStatement ( node.Scope, forKw, node.Variables, varCommas.Concat ( iteratableCommas ), inKw, iteratables, doKw, body, endKw ) { Semicolon = node.Semicolon };
             }
 
             return node;

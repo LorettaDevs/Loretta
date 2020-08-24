@@ -310,7 +310,7 @@ namespace Loretta.Parsing.Visitor
             this._writer.WriteIndented ( "for " );
             this.WriteSeparatedNodeList ( ", ", genericForLoop.Variables );
             this._writer.Write ( " in " );
-            this.VisitNode ( genericForLoop.Iteratable );
+            this.WriteSeparatedNodeList ( ", ", genericForLoop.Expressions );
             this._writer.WriteLine ( " do" );
             this._writer.WithIndentation ( ( ) => this.VisitNode ( genericForLoop.Body ) );
             this._writer.WriteIndented ( "end" );
@@ -389,5 +389,12 @@ namespace Loretta.Parsing.Visitor
 
         public override String ToString ( ) =>
             this._writer.ToString ( );
+
+        public static String Format ( LuaASTNode node )
+        {
+            var serializer = new FormattedLuaCodeSerializer ( );
+            serializer.VisitNode ( node );
+            return serializer.ToString ( );
+        }
     }
 }

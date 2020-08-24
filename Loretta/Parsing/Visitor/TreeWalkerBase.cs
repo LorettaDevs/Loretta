@@ -150,8 +150,10 @@ namespace Loretta.Parsing.Visitor
             {
                 this.VisitNode ( variable );
             }
-
-            this.VisitNode ( node.Iteratable );
+            foreach ( Expression iteratable in node.Expressions )
+            {
+                this.VisitNode ( iteratable );
+            }
             this.VisitNode ( node.Body );
         }
 

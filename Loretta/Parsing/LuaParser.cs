@@ -273,13 +273,19 @@ namespace Loretta.Parsing
             }
 
             LuaToken inKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "in" );
-            Expression iteratable = this.ParseExpression ( );
+            // usually these only have a single expression so start out with 1 element
+            var expressions = new List<Expression> ( 1 ) { this.ParseExpression ( ) };
+            while ( this.TokenReader.Accept ( LuaTokenType.Comma, out LuaToken comma ) )
+            {
+                commas.Add ( comma );
+                expressions.Add ( this.ParseExpression ( ) );
+            }
             LuaToken doKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "do" );
             StatementList body = this.ParseStatementList ( scope );
             LuaToken endKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "end" );
             this.LeaveScope ( );
 
-            return new GenericForLoopStatement ( scope, forKw, vars, commas, inKw, iteratable, doKw, body, endKw );
+            return new GenericForLoopStatement ( scope, forKw, vars, commas, inKw, expressions, doKw, body, endKw );
         }
 
         private NumericForLoopStatement ParseNumericForLoopStatement ( )
