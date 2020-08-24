@@ -387,9 +387,9 @@ namespace Loretta.Parsing
             {
                 stmt = new BreakStatement ( breakKw );
             }
-            else if ( this.TokenReader.Accept ( LuaTokenType.Keyword, "continue", out LuaToken continueKw ) )
+            else if ( this.TokenReader.Accept ( LuaTokenType.Identifier, "continue", out LuaToken continueKw ) )
             {
-                stmt = new ContinueStatement ( continueKw );
+                stmt = new ContinueStatement ( TokenFactory.ChangeTokenType ( continueKw, LuaTokenType.Keyword ) );
             }
             else if ( this.TokenReader.IsAhead ( LuaTokenType.GotoLabelDelimiter ) )
             {

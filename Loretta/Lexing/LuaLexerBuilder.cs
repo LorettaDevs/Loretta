@@ -43,7 +43,7 @@ namespace Loretta.Lexing
                 "local",
 
                 // control flow
-                "return", "break", "goto", "continue"
+                "return", "break", "goto"
             }, new[]
             {
                 "and", "or", "not"
