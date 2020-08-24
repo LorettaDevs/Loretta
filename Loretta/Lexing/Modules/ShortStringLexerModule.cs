@@ -8,7 +8,6 @@ using GParse;
 using GParse.IO;
 using GParse.Lexing;
 using GParse.Lexing.Modules;
-using GUtils.Pooling;
 using Loretta.Utilities;
 
 namespace Loretta.Lexing.Modules
@@ -88,96 +87,88 @@ namespace Loretta.Lexing.Modules
 
         public Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticReporter )
         {
-            StringBuilder rawBuffer = StringBuilderPool.Shared.Rent ( ),
-                parsedBuffer = StringBuilderPool.Shared.Rent ( );
-            try
+            StringBuilder rawBuffer = new StringBuilder ( ),
+                parsedBuffer = new StringBuilder ( );
+            SourceLocation start = reader.Location;
+            var delim = ( Char ) reader.Read ( )!;
+            if ( delim != '\'' && delim != '"' )
             {
-                SourceLocation start = reader.Location;
-                var delim = ( Char ) reader.Read ( )!;
-                if ( delim != '\'' && delim != '"' )
-                {
-                    throw new InvalidOperationException ( "Short string lexer module called when the input on the reader is invalid. Did you forget to call CanConsumeNext?" );
-                }
-                rawBuffer.Append ( delim );
+                throw new InvalidOperationException ( "Short string lexer module called when the input on the reader is invalid. Did you forget to call CanConsumeNext?" );
+            }
+            rawBuffer.Append ( delim );
 
-                while ( reader.Peek ( ) is Char peek && peek != delim )
+            while ( reader.Peek ( ) is Char peek && peek != delim )
+            {
+                switch ( peek )
                 {
-                    switch ( peek )
+                    case '\\':
                     {
-                        case '\\':
+                        SourceLocation escapeStart = reader.Location;
+                        reader.Advance ( 1 );
+                        rawBuffer.Append ( '\\' );
+
+                        if ( !( reader.Peek ( ) is Char peek2 ) )
                         {
-                            SourceLocation escapeStart = reader.Location;
-                            reader.Advance ( 1 );
-                            rawBuffer.Append ( '\\' );
-
-                            if ( !( reader.Peek ( ) is Char peek2 ) )
-                            {
-                                diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.ThingExpectedAfter ( reader.Location, "rest of escape", "backslash" ) );
-                                break;
-                            }
-
-                            if ( escapes.TryGetValue ( peek2, out var escaped ) )
-                            {
-                                reader.Advance ( 1 );
-                                rawBuffer.Append ( peek2 );
-                                parsedBuffer.Append ( escaped );
-                            }
-                            else if ( peek2 == '\r' && reader.Peek ( 1 ) == '\n' )
-                            {
-                                reader.Advance ( 2 );
-                                rawBuffer.Append ( "\r\n" );
-                                parsedBuffer.Append ( "\r\n" );
-                            }
-                            else if ( CharUtils.IsDecimal ( peek2 ) )
-                            {
-                                ParseDecimalEscape ( reader, rawBuffer, parsedBuffer );
-                            }
-                            else if ( peek2 == 'x' )
-                            {
-                                reader.Advance ( 1 );
-                                rawBuffer.Append ( 'x' );
-                                ParseHexadecimalEscape ( reader, rawBuffer, parsedBuffer );
-                            }
-                            else
-                            {
-                                diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.InvalidEscapeInString ( escapeStart.To ( reader.Location ) ) );
-                            }
-
+                            diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.ThingExpectedAfter ( reader.Location, "rest of escape", "backslash" ) );
                             break;
                         }
 
-                        case '\r':
-                        case '\n':
-                            goto endloop;
-
-                        default:
+                        if ( escapes.TryGetValue ( peek2, out var escaped ) )
+                        {
                             reader.Advance ( 1 );
-                            rawBuffer.Append ( peek );
-                            parsedBuffer.Append ( peek );
-                            break;
+                            rawBuffer.Append ( peek2 );
+                            parsedBuffer.Append ( escaped );
+                        }
+                        else if ( peek2 == '\r' && reader.Peek ( 1 ) == '\n' )
+                        {
+                            reader.Advance ( 2 );
+                            rawBuffer.Append ( "\r\n" );
+                            parsedBuffer.Append ( "\r\n" );
+                        }
+                        else if ( CharUtils.IsDecimal ( peek2 ) )
+                        {
+                            ParseDecimalEscape ( reader, rawBuffer, parsedBuffer );
+                        }
+                        else if ( peek2 == 'x' )
+                        {
+                            reader.Advance ( 1 );
+                            rawBuffer.Append ( 'x' );
+                            ParseHexadecimalEscape ( reader, rawBuffer, parsedBuffer );
+                        }
+                        else
+                        {
+                            diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.InvalidEscapeInString ( escapeStart.To ( reader.Location ) ) );
+                        }
+
+                        break;
                     }
-                }
 
-            endloop:
-                Char endingDelim;
-                if ( reader.Peek ( ) != delim )
-                {
-                    diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.UnfinishedString ( start.To ( reader.Location ) ) );
-                    endingDelim = delim;
-                }
-                else
-                {
-                    endingDelim = ( Char ) reader.Read ( )!;
-                }
-                rawBuffer.Append ( endingDelim );
+                    case '\r':
+                    case '\n':
+                        goto endloop;
 
-                return new Token<LuaTokenType> ( "string", rawBuffer.ToString ( ), parsedBuffer.ToString ( ), LuaTokenType.String, start.To ( reader.Location ) );
+                    default:
+                        reader.Advance ( 1 );
+                        rawBuffer.Append ( peek );
+                        parsedBuffer.Append ( peek );
+                        break;
+                }
             }
-            finally
+
+        endloop:
+            Char endingDelim;
+            if ( reader.Peek ( ) != delim )
             {
-                StringBuilderPool.Shared.Return ( parsedBuffer );
-                StringBuilderPool.Shared.Return ( rawBuffer );
+                diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.UnfinishedString ( start.To ( reader.Location ) ) );
+                endingDelim = delim;
             }
+            else
+            {
+                endingDelim = ( Char ) reader.Read ( )!;
+            }
+            rawBuffer.Append ( endingDelim );
+
+            return new Token<LuaTokenType> ( "string", rawBuffer.ToString ( ), parsedBuffer.ToString ( ), LuaTokenType.String, start.To ( reader.Location ) );
         }
     }
 }

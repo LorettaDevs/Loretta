@@ -6,7 +6,6 @@ using GParse;
 using GParse.IO;
 using GParse.Lexing;
 using GParse.Lexing.Modules;
-using GUtils.Pooling;
 using Loretta.ThirdParty.FParsec;
 using Loretta.Utilities;
 
