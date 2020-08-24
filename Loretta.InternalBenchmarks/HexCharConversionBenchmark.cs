@@ -46,11 +46,11 @@ namespace Loretta.InternalBenchmarks
         }
 
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
-        private static Boolean IsHexCharBitwise ( in Char ch ) =>
+        private static Boolean IsHexCharBitwise ( Char ch ) =>
             ( '0' <= ch & ch <= '9' ) | ( 'a' <= ch & ch <= 'f' ) | ( 'A' <= ch & ch <= 'F' );
 
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
-        private static Boolean IsHexCharBoolean ( in Char ch ) =>
+        private static Boolean IsHexCharBoolean ( Char ch ) =>
             ( '0' <= ch && ch <= '9' ) || ( 'a' <= ch && ch <= 'f' ) || ( 'A' <= ch && ch <= 'F' );
 
         [IterationCleanup]
