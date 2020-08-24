@@ -30,7 +30,7 @@ namespace Loretta
 
                 for ( var i = startLine; i <= endLine; i++ )
                 {
-                    var line = lines[i];
+                    var line = lines[i - 1];
                     var lineLength = line.Length;
 
                     builder.AppendLine ( line )
