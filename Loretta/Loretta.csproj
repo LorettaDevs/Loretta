@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GParse" Version="4.0.0" />
+    <PackageReference Include="GParse" Version="4.0.1" />
     <PackageReference Include="GUtils.Pooling" Version="1.0.0" />
-    <PackageReference Include="System.Collections.Immutable" Version="1.7.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
   </ItemGroup>
 
   <ItemGroup>
