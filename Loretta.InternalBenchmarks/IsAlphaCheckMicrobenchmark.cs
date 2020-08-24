@@ -9,7 +9,8 @@ namespace Loretta.InternalBenchmarks
     [SimpleJob ( RunStrategy.Throughput, RuntimeMoniker.NetCoreApp31, baseline: true )]
     [SimpleJob ( RunStrategy.Throughput, RuntimeMoniker.NetCoreApp50 )]
     [DisassemblyDiagnoser ( exportHtml: true, exportDiff: true )]
-    public class IsAlhpaCheckMicrobenchmark
+    public class IsAlphaCheckMicrobenchmark
+
     {
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsInRange ( Char start, Char value, Char end ) =>

@@ -1,6 +1,6 @@
 ## .NET Core 3.1.6 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.31603), X64 RyuJIT
 ```assembly
-; Loretta.InternalBenchmarks.AlhpaCheckMicrobenchmark.IsAlphaAA()
+; Loretta.InternalBenchmarks.AlphaCheckMicrobenchmark.IsAlphaAA()
        movzx     eax,word ptr [rcx+8]
        lea       edx,[rax+0FF9F]
        cmp       rdx,19
@@ -19,7 +19,7 @@ M00_L01:
 
 ## .NET Core 3.1.6 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.31603), X64 RyuJIT
 ```assembly
-; Loretta.InternalBenchmarks.AlhpaCheckMicrobenchmark.IsAlphaAB()
+; Loretta.InternalBenchmarks.AlphaCheckMicrobenchmark.IsAlphaAB()
        movzx     eax,word ptr [rcx+8]
        lea       edx,[rax+0FF9F]
        cmp       rdx,19
@@ -37,7 +37,7 @@ M00_L01:
 
 ## .NET Core 3.1.6 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.31603), X64 RyuJIT
 ```assembly
-; Loretta.InternalBenchmarks.AlhpaCheckMicrobenchmark.IsAlphaB()
+; Loretta.InternalBenchmarks.AlphaCheckMicrobenchmark.IsAlphaB()
        movzx     eax,word ptr [rcx+8]
        or        eax,20
        movzx     eax,ax
@@ -51,7 +51,7 @@ M00_L01:
 
 ## .NET Core 5.0.0 (CoreCLR 5.0.20.36411, CoreFX 5.0.20.36411), X64 RyuJIT
 ```assembly
-; Loretta.InternalBenchmarks.AlhpaCheckMicrobenchmark.IsAlphaAA()
+; Loretta.InternalBenchmarks.AlphaCheckMicrobenchmark.IsAlphaAA()
        movzx     eax,word ptr [rcx+8]
        lea       edx,[rax+0FF9F]
        cmp       rdx,19
@@ -70,7 +70,7 @@ M00_L01:
 
 ## .NET Core 5.0.0 (CoreCLR 5.0.20.36411, CoreFX 5.0.20.36411), X64 RyuJIT
 ```assembly
-; Loretta.InternalBenchmarks.AlhpaCheckMicrobenchmark.IsAlphaAB()
+; Loretta.InternalBenchmarks.AlphaCheckMicrobenchmark.IsAlphaAB()
        movzx     eax,word ptr [rcx+8]
        lea       edx,[rax+0FF9F]
        cmp       rdx,19
@@ -88,7 +88,7 @@ M00_L01:
 
 ## .NET Core 5.0.0 (CoreCLR 5.0.20.36411, CoreFX 5.0.20.36411), X64 RyuJIT
 ```assembly
-; Loretta.InternalBenchmarks.AlhpaCheckMicrobenchmark.IsAlphaB()
+; Loretta.InternalBenchmarks.AlphaCheckMicrobenchmark.IsAlphaB()
        movzx     eax,word ptr [rcx+8]
        or        eax,20
        movzx     eax,ax
