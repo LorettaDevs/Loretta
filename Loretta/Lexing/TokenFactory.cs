@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using GParse;
 using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
@@ -8,7 +9,7 @@ namespace Loretta.Lexing
     public static class TokenFactory
     {
         public static LuaToken ChangeTokenType ( LuaToken token, LuaTokenType type ) =>
-            new LuaToken ( token.Id, token.Raw, token.Value, type, token.Range );
+            new LuaToken ( token.Id, token.Raw, token.Value, type, token.Range, token.IsTrivia, token.Trivia.ToArray ( ) );
 
         public static LuaToken Token ( String ID, LuaTokenType type, String? raw = null, Object? value = null, SourceRange? range = null ) =>
             new LuaToken ( ID, raw ?? ID, value, type, range ?? SourceRange.Zero );
