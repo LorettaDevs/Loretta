@@ -345,6 +345,7 @@ namespace Loretta.Parsing
 
         private Statement ParseStatement ( )
         {
+            SourceLocation startLocation = this.TokenReader.Location;
             Statement stmt;
             if ( this.TokenReader.IsAhead ( LuaTokenType.Keyword, "local" ) )
             {
@@ -410,23 +411,36 @@ namespace Loretta.Parsing
                     }
                     else
                     {
-                        stmt = new ExpressionStatement ( expr );
+                        goto unexpectedToken;
                     }
+                }
+                else if ( expr is FunctionCallExpression )
+                {
+                    stmt = new ExpressionStatement ( expr );
                 }
                 else
                 {
-                    stmt = new ExpressionStatement ( expr );
+                    goto unexpectedToken;
                 }
             }
             else
             {
-                throw new NotImplementedException ( );
+                goto unexpectedToken;
             }
 
             if ( this.TokenReader.Accept ( LuaTokenType.Semicolon, out LuaToken semicolon ) )
                 stmt.Semicolon = semicolon;
 
             return stmt;
+
+        unexpectedToken:
+            this.TokenReader.Rewind ( startLocation );
+            LuaToken followingToken = this.TokenReader.Lookahead ( );
+            var message = $"Unexpected {followingToken.Type}";
+            if ( followingToken.Type.CanUseRawInError ( ) )
+                message += $" '{followingToken.Raw}'";
+            message += $" at {followingToken.Range.Start}.";
+            throw new FatalParsingException ( this.TokenReader.Location, message );
         }
 
         public StatementList ParseStatementList ( Scope scope )

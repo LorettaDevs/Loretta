@@ -1,4 +1,6 @@
-﻿namespace Loretta.Lexing
+﻿using System;
+
+namespace Loretta.Lexing
 {
     public enum LuaTokenType
     {
@@ -45,5 +47,14 @@
         GotoLabelDelimiter,
 
         #endregion Others
+    }
+
+    public static class LuaTokenTypeExtensions
+    {
+        public static Boolean CanUseRawInError ( this LuaTokenType tokenType ) =>
+            tokenType == LuaTokenType.Identifier
+            || tokenType == LuaTokenType.Keyword
+            || tokenType == LuaTokenType.Number
+            || tokenType == LuaTokenType.Operator;
     }
 }
