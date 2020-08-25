@@ -122,12 +122,20 @@ namespace Loretta.Parsing.Visitor
             ? GetGroupedExpressionInnerExpression ( groupedExpression.InnerExpression )
             : expression;
 
+        /// <summary>
         /// Checks whether the value is false according to lua's rules.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         private static Boolean IsFalsey ( Expression expression ) =>
             expression is NilExpression || expression is BooleanExpression { Value: false };
 
-        // Checks whether we can statically convert this to a boolean (function calls, indexing
-        // operations and identifiers can't be converted since we don't know the values they might return)
+        /// <summary>
+        /// Checks whether we can statically convert this to a boolean (function calls, indexing
+        /// operations and identifiers can't be converted since we don't know the values they might return)
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         private static Boolean CanConvertToBoolean ( Expression expression ) =>
             expression is NilExpression
             || expression is BooleanExpression
