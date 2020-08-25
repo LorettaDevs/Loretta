@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Loretta.Parsing.AST;
+using Loretta.Parsing.AST.Tables;
 
 namespace Loretta.Parsing.Visitor
 {
@@ -14,6 +18,7 @@ namespace Loretta.Parsing.Visitor
             {
                 ("not", _ ) when CanConvertToBoolean ( operand ) => ASTNodeFactory.BooleanExpression ( !IsFalsey ( operand ) ),
                 ("-", NumberExpression number ) => ASTNodeFactory.NumberExpression ( -number.Value ),
+                ("#", TableConstructorExpression tableConstructor ) when TryGetTableLength ( tableConstructor, out var length ) => ASTNodeFactory.NumberExpression ( length ),
                 _ => unary,
             };
         }
@@ -143,5 +148,78 @@ namespace Loretta.Parsing.Visitor
             || expression is StringExpression
             || expression is TableConstructorExpression
             || expression is AnonymousFunctionExpression;
+
+        /// <summary>
+        /// Attempts to build a dictionary with all table indexes and values. The dictionary can
+        /// only be built if all table keys are identifiers, constants or sequential.
+        /// </summary>
+        /// <param name="tableConstructor"></param>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
+        private static Boolean TryGetDictionaryFromTable (
+            TableConstructorExpression tableConstructor,
+            [NotNullWhen ( true )] out IImmutableDictionary<Object, Expression>? dictionary )
+        {
+            if ( tableConstructor.Fields.All ( field => field.Key is null || field.KeyType == TableFieldKeyType.Identifier || field.Key.IsConstant ) )
+            {
+                ImmutableDictionary<Object, Expression>.Builder builder = ImmutableDictionary.CreateBuilder<Object, Expression> ( );
+                var sequentialIndex = 0;
+                foreach ( TableField? field in tableConstructor.Fields )
+                {
+                    switch ( field.KeyType )
+                    {
+                        case TableFieldKeyType.None:
+                            builder[++sequentialIndex] = field.Value;
+                            break;
+
+                        case TableFieldKeyType.Identifier:
+                            builder[( ( IdentifierExpression ) field.Key! ).Identifier] = field.Value;
+                            break;
+
+                        case TableFieldKeyType.Expression:
+                            builder[field.Value.ConstantValue!] = field.Value;
+                            break;
+                    }
+                }
+                dictionary = builder.ToImmutable ( );
+                return true;
+            }
+
+            dictionary = default;
+            return false;
+        }
+
+        /// <summary>
+        /// Attempts to get the table length. The length can only be obtained statically if all
+        /// table keys are constants, identifiers or sequential.
+        /// </summary>
+        /// <param name="tableConstructor"></param>
+        /// <param name="sequentialKeysCount"></param>
+        /// <returns></returns>
+        private static Boolean TryGetTableLength ( TableConstructorExpression tableConstructor, out Int32 sequentialKeysCount )
+        {
+            if ( TryGetDictionaryFromTable ( tableConstructor, out IImmutableDictionary<Object, Expression>? dictionary ) )
+            {
+                var keys = dictionary.Keys.OfType<Int32> ( ).OrderBy ( n => n ).ToImmutableArray ( );
+                /* Here we basically take advantage that lua indexing is 1-based while C#'s is
+                 * 0-based so the difference between the C# index and the lua key should be
+                 * exactly 1 for sequential keys:
+                 * |-----------------------|
+                 * | C#  | Lua | Lua - C#  |
+                 * |-----|-----|-----------|
+                 * |  0  |  1  |     1     |
+                 * |  1  |  2  |     1     |
+                 * | ... | ... |    ...    |
+                 * |-----------------------|
+                 */
+                sequentialKeysCount = 0;
+                while ( sequentialKeysCount < keys.Length && keys[sequentialKeysCount] - sequentialKeysCount > 1 )
+                    sequentialKeysCount++;
+                return true;
+            }
+
+            sequentialKeysCount = default;
+            return false;
+        }
     }
 }
