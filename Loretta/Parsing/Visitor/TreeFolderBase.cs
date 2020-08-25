@@ -58,7 +58,7 @@ namespace Loretta.Parsing.Visitor
                     throw new ArgumentException ( nameof ( node ), "Function call expression has no parenthesis and more than 1 argument" );
                 }
 
-                if ( !( arguments[0] is StringExpression ) || !( arguments[0] is TableConstructorExpression ) )
+                if ( !( arguments[0] is StringExpression ) && !( arguments[0] is TableConstructorExpression ) )
                 {
                     throw new InvalidOperationException ( "Can't fold a function call expression that has no parenthesis" );
                 }
