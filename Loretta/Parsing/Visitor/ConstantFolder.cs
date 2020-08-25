@@ -48,8 +48,10 @@ namespace Loretta.Parsing.Visitor
             var @operator = node.Operator.Value;
             var left = ( Expression ) this.VisitNode ( node.Left );
             var right = ( Expression ) this.VisitNode ( node.Right );
-            // All checks will be done on the <side>Expression vars since the <side> var could be a
-            // parenthesized expression, but when returning, we use the original <side> vars.
+
+            // All checks will be done on the &lt;side&gt; Expression vars since the &lt;side&gt;
+            // var could be a parenthesized expression, but when returning, we use the original
+            // &gt;side&lt; vars.
             Expression leftExpression = left;
             Expression rightExpression = right;
             if ( left is GroupedExpression leftGrouped )
@@ -58,50 +60,51 @@ namespace Loretta.Parsing.Visitor
             if ( right is GroupedExpression rightGrouped )
                 rightExpression = rightGrouped.InnerExpression;
 
-            if ( leftExpression is NumberExpression { Value: var leftNumber } && rightExpression is NumberExpression { Value: var rightNumber } )
+            switch ( (leftExpression, rightExpression) )
             {
-                switch ( @operator )
+                case (NumberExpression { Value: var leftNumber }, NumberExpression { Value: var rightNumber } ):
                 {
-                    case "+": return ASTNodeFactory.NumberExpression ( leftNumber + rightNumber );
-                    case "-": return ASTNodeFactory.NumberExpression ( leftNumber - rightNumber );
-                    case "/": return ASTNodeFactory.NumberExpression ( leftNumber / rightNumber );
-                    case "*": return ASTNodeFactory.NumberExpression ( leftNumber * rightNumber );
-                    case "^": return ASTNodeFactory.NumberExpression ( Math.Pow ( leftNumber, rightNumber ) );
-                    case "%": return ASTNodeFactory.NumberExpression ( leftNumber % rightNumber );
-                    case "<": return ASTNodeFactory.BooleanExpression ( leftNumber < rightNumber );
-                    case "<=": return ASTNodeFactory.BooleanExpression ( leftNumber <= rightNumber );
-                    case ">=": return ASTNodeFactory.BooleanExpression ( leftNumber >= rightNumber );
-                    case "==": return ASTNodeFactory.BooleanExpression ( leftNumber == rightNumber );
-                    case "~=": return ASTNodeFactory.BooleanExpression ( leftNumber != rightNumber );
-                    case "and": return right;
-                    case "or": return left;
+                    switch ( @operator )
+                    {
+                        case "+": return ASTNodeFactory.NumberExpression ( leftNumber + rightNumber );
+                        case "-": return ASTNodeFactory.NumberExpression ( leftNumber - rightNumber );
+                        case "/": return ASTNodeFactory.NumberExpression ( leftNumber / rightNumber );
+                        case "*": return ASTNodeFactory.NumberExpression ( leftNumber * rightNumber );
+                        case "^": return ASTNodeFactory.NumberExpression ( Math.Pow ( leftNumber, rightNumber ) );
+                        case "%": return ASTNodeFactory.NumberExpression ( leftNumber % rightNumber );
+                        case "<": return ASTNodeFactory.BooleanExpression ( leftNumber < rightNumber );
+                        case "<=": return ASTNodeFactory.BooleanExpression ( leftNumber <= rightNumber );
+                        case ">=": return ASTNodeFactory.BooleanExpression ( leftNumber >= rightNumber );
+                        case "==": return ASTNodeFactory.BooleanExpression ( leftNumber == rightNumber );
+                        case "~=": return ASTNodeFactory.BooleanExpression ( leftNumber != rightNumber );
+                        case "and": return right;
+                        case "or": return left;
+                    }
+                    break;
                 }
-            }
-            else if ( leftExpression is NilExpression )
-            {
-                switch ( @operator )
-                {
-                    case "==": return ASTNodeFactory.BooleanExpression ( rightExpression is NilExpression );
-                    case "~=": return ASTNodeFactory.BooleanExpression ( !( rightExpression is NilExpression ) );
-                    case "and": return ASTNodeFactory.Nil ( );
-                    case "or": return right;
-                }
-            }
-            else if ( canConvertToBoolean ( leftExpression ) && rightExpression is NilExpression )
-            {
-                switch ( @operator )
-                {
-                    case "==": return ASTNodeFactory.BooleanExpression ( leftExpression is NilExpression );
-                    case "~=": return ASTNodeFactory.BooleanExpression ( !( leftExpression is NilExpression ) );
-                    case "and":
-                        if ( isFalsey ( leftExpression ) )
-                            return left;
-                        return ASTNodeFactory.Nil ( );
 
-                    case "or":
-                        if ( isFalsey ( leftExpression ) )
-                            return ASTNodeFactory.Nil ( );
-                        return left;
+                case (NilExpression _, _ ):
+                {
+                    switch ( @operator )
+                    {
+                        case "==": return ASTNodeFactory.BooleanExpression ( rightExpression is NilExpression );
+                        case "~=": return ASTNodeFactory.BooleanExpression ( !( rightExpression is NilExpression ) );
+                        case "and": return ASTNodeFactory.Nil ( );
+                        case "or": return right;
+                    }
+                    break;
+                }
+
+                case (_, NilExpression _ ) when CanConvertToBoolean ( leftExpression ):
+                {
+                    switch ( @operator )
+                    {
+                        case "==": return ASTNodeFactory.BooleanExpression ( leftExpression is NilExpression );
+                        case "~=": return ASTNodeFactory.BooleanExpression ( !( leftExpression is NilExpression ) );
+                        case "and": return IsFalsey ( leftExpression ) ? left : ASTNodeFactory.Nil ( );
+                        case "or": return IsFalsey ( leftExpression ) ? ASTNodeFactory.Nil ( ) : left;
+                    }
+                    break;
                 }
             }
 
@@ -113,21 +116,6 @@ namespace Loretta.Parsing.Visitor
             {
                 return node;
             }
-
-            // Whether the provided expression is falsey according to lua rules
-            static Boolean isFalsey ( Expression expression ) =>
-                expression is NilExpression || expression is BooleanExpression { Value: false };
-
-            // Checks whether we can statically convert this to a boolean (function calls, indexing
-            // operations and identifiers can't be converted since we don't know the values they
-            // might return)
-            static Boolean canConvertToBoolean ( Expression expression ) =>
-                expression is NilExpression
-                || expression is BooleanExpression
-                || expression is NumberExpression
-                || expression is StringExpression
-                || expression is TableConstructorExpression
-                || expression is AnonymousFunctionExpression;
         }
 
         private class TableConstructorState
@@ -140,5 +128,19 @@ namespace Loretta.Parsing.Visitor
 
             return table;
         }
+
+        // Checks whether the value is false according to lua's rules.
+        private static Boolean IsFalsey ( Expression expression ) =>
+            expression is NilExpression || expression is BooleanExpression { Value: false };
+
+        // Checks whether we can statically convert this to a boolean (function calls, indexing
+        // operations and identifiers can't be converted since we don't know the values they might return)
+        private static Boolean CanConvertToBoolean ( Expression expression ) =>
+            expression is NilExpression
+            || expression is BooleanExpression
+            || expression is NumberExpression
+            || expression is StringExpression
+            || expression is TableConstructorExpression
+            || expression is AnonymousFunctionExpression;
     }
 }
