@@ -106,6 +106,18 @@ namespace Loretta.Parsing.Visitor
                     }
                     break;
                 }
+
+                case (BooleanExpression { Value: var leftBoolean }, BooleanExpression { Value: var rightBoolean } ):
+                {
+                    switch ( @operator )
+                    {
+                        case "==": return ASTNodeFactory.BooleanExpression ( leftBoolean == rightBoolean );
+                        case "~=": return ASTNodeFactory.BooleanExpression ( leftBoolean != rightBoolean );
+                        case "and": return ASTNodeFactory.BooleanExpression ( leftBoolean && rightBoolean );
+                        case "or": return ASTNodeFactory.BooleanExpression ( leftBoolean || rightBoolean );
+                    }
+                    break;
+                }
             }
 
             if ( left != node.Left || right != node.Right )
