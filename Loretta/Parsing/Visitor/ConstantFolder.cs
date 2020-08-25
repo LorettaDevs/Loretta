@@ -12,14 +12,9 @@ namespace Loretta.Parsing.Visitor
 
             return @operator switch
             {
-                "not" => operand switch
-                {
-                    NilExpression _ => ASTNodeFactory.BooleanExpression ( false ),
-                    BooleanExpression boolean => ASTNodeFactory.BooleanExpression ( !boolean.Value ),
-                    _ => node.Operand != operand
-                        ? new UnaryOperationExpression ( node.Fix, node.Operator, operand )
-                        : node
-                },
+                "not" => CanConvertToBoolean ( operand )
+                    ? ASTNodeFactory.BooleanExpression ( !IsFalsey ( operand ) )
+                    : ( Expression ) createNewNodeIfNecessary ( node, operand ),
                 "-" => operand switch
                 {
                     NumberExpression number => ASTNodeFactory.NumberExpression ( -number.Value ),
