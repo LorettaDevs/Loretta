@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Loretta.Parsing.AST;
 
 namespace Loretta.Parsing.Visitor
@@ -7,35 +7,15 @@ namespace Loretta.Parsing.Visitor
     {
         public override LuaASTNode VisitUnaryOperation ( UnaryOperationExpression node )
         {
-            var @operator = node.Operator.Value;
-            var operand = ( Expression ) this.VisitNode ( node.Operand );
+            var unary = ( UnaryOperationExpression ) base.VisitUnaryOperation ( node );
+            Expression operand = GetGroupedExpressionInnerExpression ( unary.Operand );
 
-            return @operator switch
+            return (node.Operator.Value, operand) switch
             {
-                "not" => CanConvertToBoolean ( operand )
-                    ? ASTNodeFactory.BooleanExpression ( !IsFalsey ( operand ) )
-                    : ( Expression ) createNewNodeIfNecessary ( node, operand ),
-                "-" => operand switch
-                {
-                    NumberExpression number => ASTNodeFactory.NumberExpression ( -number.Value ),
-                    _ => createNewNodeIfNecessary ( node, operand )
-                },
-                // Not implemented.
-                //"#" => operand switch
-                //{
-                //},
-                _ => createNewNodeIfNecessary ( node, operand ),
+                ("not", _ ) when CanConvertToBoolean ( operand ) => ASTNodeFactory.BooleanExpression ( !IsFalsey ( operand ) ),
+                ("-", NumberExpression number ) => ASTNodeFactory.NumberExpression ( -number.Value ),
+                _ => unary,
             };
-
-            static UnaryOperationExpression createNewNodeIfNecessary ( UnaryOperationExpression expression, Expression operand )
-            {
-                if ( expression.Operand != operand )
-                {
-                    return new UnaryOperationExpression ( expression.Fix, expression.Operator, operand );
-                }
-
-                return expression;
-            }
         }
 
         public override LuaASTNode VisitBinaryOperation ( BinaryOperationExpression node )
@@ -47,13 +27,8 @@ namespace Loretta.Parsing.Visitor
             // All checks will be done on the &lt;side&gt; Expression vars since the &lt;side&gt;
             // var could be a parenthesized expression, but when returning, we use the original
             // &gt;side&lt; vars.
-            Expression leftExpression = left;
-            Expression rightExpression = right;
-            if ( left is GroupedExpression leftGrouped )
-                leftExpression = leftGrouped.InnerExpression;
-
-            if ( right is GroupedExpression rightGrouped )
-                rightExpression = rightGrouped.InnerExpression;
+            Expression leftExpression = GetGroupedExpressionInnerExpression ( left );
+            Expression rightExpression = GetGroupedExpressionInnerExpression ( right );
 
             switch ( (leftExpression, rightExpression) )
             {
@@ -136,7 +111,18 @@ namespace Loretta.Parsing.Visitor
             return table;
         }
 
-        // Checks whether the value is false according to lua's rules.
+        /// <summary>
+        /// Recursively fetches the innermost expression in a grouped expression of a {grouped
+        /// expression | non-grouped expression}.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        private static Expression GetGroupedExpressionInnerExpression ( Expression expression ) =>
+            expression is GroupedExpression groupedExpression
+            ? GetGroupedExpressionInnerExpression ( groupedExpression.InnerExpression )
+            : expression;
+
+        /// Checks whether the value is false according to lua's rules.
         private static Boolean IsFalsey ( Expression expression ) =>
             expression is NilExpression || expression is BooleanExpression { Value: false };
 
