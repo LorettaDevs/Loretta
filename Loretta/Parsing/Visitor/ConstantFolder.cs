@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace Loretta.Parsing.Visitor
             {
                 ("not", _ ) when CanConvertToBoolean ( operand ) => ASTNodeFactory.BooleanExpression ( !IsFalsey ( operand ) ),
                 ("-", NumberExpression number ) => ASTNodeFactory.NumberExpression ( -number.Value ),
-                ("#", TableConstructorExpression tableConstructor ) when TryGetTableLength ( tableConstructor, out var length ) => ASTNodeFactory.NumberExpression ( length ),
+                //("#", TableConstructorExpression tableConstructor ) when TryGetTableLength ( tableConstructor, out var length ) => ASTNodeFactory.NumberExpression ( length ),
                 _ => unary,
             };
         }
@@ -103,17 +103,6 @@ namespace Loretta.Parsing.Visitor
             {
                 return node;
             }
-        }
-
-        private class TableConstructorState
-        {
-        }
-
-        public override LuaASTNode VisitTableConstructor ( TableConstructorExpression node )
-        {
-            var table = ( TableConstructorExpression ) base.VisitTableConstructor ( node );
-
-            return table;
         }
 
         /// <summary>
