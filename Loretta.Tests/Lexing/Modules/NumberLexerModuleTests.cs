@@ -17,7 +17,7 @@ namespace Loretta.Tests.Lexing.Modules
 
         public NumberLexerModuleTests ( )
         {
-            this.lexerModule = new NumberLexerModule ( );
+            this.lexerModule = new NumberLexerModule ( LuaOptions.All );
         }
 
         [DataTestMethod]

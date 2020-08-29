@@ -15,7 +15,7 @@ namespace Loretta.Tests.Lexing.Modules
 
         public IdentifierLexerModuleTests ( )
         {
-            this.lexerModule = new IdentifierLexerModule ( new[]
+            this.lexerModule = new IdentifierLexerModule ( LuaOptions.All, new[]
             {
                 "do",
                 "end"
