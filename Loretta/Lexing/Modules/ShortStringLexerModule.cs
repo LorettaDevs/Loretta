@@ -33,6 +33,13 @@ namespace Loretta.Lexing.Modules
 
         public String? Prefix => null;
 
+        public LuaOptions LuaOptions { get; }
+
+        public ShortStringLexerModule ( LuaOptions luaOptions )
+        {
+            this.LuaOptions = luaOptions;
+        }
+
         public Boolean CanConsumeNext ( IReadOnlyCodeReader reader ) =>
             reader.IsNext ( '\'' ) || reader.IsNext ( '"' );
 
@@ -129,7 +136,7 @@ namespace Loretta.Lexing.Modules
                         {
                             ParseDecimalEscape ( reader, rawBuffer, parsedBuffer );
                         }
-                        else if ( peek2 == 'x' )
+                        else if ( this.LuaOptions.AcceptHexEscapesInStrings && peek2 == 'x' )
                         {
                             reader.Advance ( 1 );
                             rawBuffer.Append ( 'x' );
