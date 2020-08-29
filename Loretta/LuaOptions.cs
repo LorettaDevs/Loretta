@@ -53,17 +53,17 @@ namespace Loretta
             continueType: ContinueType.Keyword );
 
         public static readonly LuaOptions Roblox = new LuaOptions (
-            acceptBinaryNumbers: false,
+            acceptBinaryNumbers: true,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: true,
-            acceptEmptyStatements: true,
+            acceptEmptyStatements: false,
             acceptGModCOperators: false,
-            acceptGoto: true,
+            acceptGoto: false,
             acceptHexEscapesInStrings: true,
             acceptHexFloatLiterals: true,
             acceptOctalNumbers: false,
             acceptShebang: false,
-            acceptUnderlineInNumberLiterals: false,
+            acceptUnderlineInNumberLiterals: true,
             useLuaJitIdentifierRules: false,
             continueType: ContinueType.ContextualKeyword );
 
