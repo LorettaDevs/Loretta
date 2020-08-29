@@ -208,5 +208,9 @@ namespace Loretta.Parsing.Visitor
             this.VisitNode ( node.Condition );
             this.VisitNode ( node.Body );
         }
+
+        public void VisitEmptyStatement ( EmptyStatement emptyStatement )
+        {
+        }
     }
 }

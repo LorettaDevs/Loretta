@@ -22,6 +22,8 @@ namespace Loretta.Parsing.Visitor
 
         public virtual LuaASTNode VisitVarArg ( VarArgExpression node ) => node;
 
+        public virtual LuaASTNode VisitEmptyStatement ( EmptyStatement node ) => node;
+
         public virtual LuaASTNode VisitIndex ( IndexExpression node )
         {
             var indexee = ( Expression ) this.VisitNode ( node.Indexee );

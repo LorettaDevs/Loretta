@@ -382,6 +382,12 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( whileLoop );
         }
 
+        public void VisitEmptyStatement ( EmptyStatement emptyStatement )
+        {
+            this._writer.WriteIndentation ( );
+            this.WriteStatementLineEnd ( emptyStatement );
+        }
+
         #endregion ITreeVisitor
 
         public void Clear ( ) =>

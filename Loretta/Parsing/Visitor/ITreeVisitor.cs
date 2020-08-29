@@ -68,6 +68,8 @@ namespace Loretta.Parsing.Visitor
         void VisitStatementList ( StatementList node );
 
         void VisitWhileLoop ( WhileLoopStatement node );
+
+        void VisitEmptyStatement ( EmptyStatement emptyStatement );
     }
 
     public interface ITreeVisitor<T>
@@ -135,5 +137,7 @@ namespace Loretta.Parsing.Visitor
         T VisitStatementList ( StatementList node );
 
         T VisitWhileLoop ( WhileLoopStatement node );
+
+        T VisitEmptyStatement ( EmptyStatement emptyStatement );
     }
 }
