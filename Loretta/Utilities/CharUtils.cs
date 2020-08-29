@@ -64,11 +64,12 @@ namespace Loretta.Utilities
         /// <summary>
         /// Checks whether the provided character is a valid LuaJIT first identifier character.
         /// </summary>
+        /// <param name="useLuaJitIdentifierRules">Whether to use LuaJIT's identifier matching rule.</param>
         /// <param name="ch">The character to check.</param>
         /// <returns>Whether the provided character is a valid LuaJIT first identifier character.</returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
-        public static Boolean IsValidFirstIdentifierChar ( Char ch ) =>
-            ch == '_' || ch >= 0x7F || IsAlpha ( ch );
+        public static Boolean IsValidFirstIdentifierChar ( Boolean useLuaJitIdentifierRules, Char ch ) =>
+            ch == '_' || IsAlpha ( ch ) || ( useLuaJitIdentifierRules && ch >= 0x7F );
 
         /// <summary>
         /// Checks whether the provided character is a valid trailing LuaJIT identifier character.
@@ -76,8 +77,8 @@ namespace Loretta.Utilities
         /// <param name="ch">The character to check.</param>
         /// <returns>Whether the provided character is a valid trailing LuaJIT identifier character.</returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
-        public static Boolean IsValidTrailingIdentifierChar ( Char ch ) =>
-            IsValidFirstIdentifierChar ( ch ) || IsDecimal ( ch );
+        public static Boolean IsValidTrailingIdentifierChar ( Boolean useLuaJitIdentifierRules, Char ch ) =>
+            IsValidFirstIdentifierChar ( useLuaJitIdentifierRules, ch ) || IsDecimal ( ch );
 
         /// <summary>
         /// Encodes the provided character into a hexadecimal escape sequence representing its UTF-8 bytes.
