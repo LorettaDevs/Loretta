@@ -16,9 +16,8 @@ namespace Loretta.Lexing.Modules
         public Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
         {
             // . followed by non-number
-            return reader.IsNext ( '.' )
-                   && ( reader.Peek ( 1 ) is null
-                        || ( reader.Peek ( 1 ) is Char peek2 && !CharUtils.IsDecimal ( peek2 ) ) );
+            var peek = reader.Peek ( 1 );
+            return peek is null || !CharUtils.IsDecimal ( peek.Value );
         }
 
         public Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticEmitter )
