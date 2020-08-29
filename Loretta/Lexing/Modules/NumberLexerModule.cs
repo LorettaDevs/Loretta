@@ -20,21 +20,32 @@ namespace Loretta.Lexing.Modules
 
         public String? Prefix => null;
 
+        public LuaOptions LuaOptions { get; }
+
+        public NumberLexerModule ( LuaOptions luaOptions )
+        {
+            this.LuaOptions = luaOptions;
+        }
+
+        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
+        private Boolean IsUnderline ( Char ch ) =>
+            this.LuaOptions.AcceptUnderlineInNumberLiterals && ch == '_';
+
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsHexadecimalChar ( Char ch ) =>
-            CharUtils.IsHexadecimal ( ch ) || ch == '_';
+            CharUtils.IsHexadecimal ( ch ) || this.IsUnderline ( ch );
 
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsDecimalChar ( Char ch ) =>
-            CharUtils.IsDecimal ( ch ) || ch == '_';
+            CharUtils.IsDecimal ( ch ) || this.IsUnderline ( ch );
 
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsOctalChar ( Char ch ) =>
-            CharUtils.IsInRange ( '0', ch, '7' ) || ch == '_';
+            CharUtils.IsInRange ( '0', ch, '7' ) || this.IsUnderline ( ch );
 
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsBinaryChar ( Char ch ) =>
-            ch == '0' || ch == '1' || ch == '_';
+            ch == '0' || ch == '1' || this.IsUnderline ( ch );
 
         public virtual Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
         {
@@ -64,44 +75,62 @@ namespace Loretta.Lexing.Modules
                     buffer.Append ( 'x' );
                     buffer.Append ( reader.ReadStringWhile ( this.IsHexadecimalChar ) );
 
-                    // Read the fractional part
-                    if ( reader.IsNext ( '.' ) )
+                    if ( this.LuaOptions.AcceptHexFloatLiterals )
                     {
-                        reader.Advance ( 1 );
-                        buffer.Append ( '.' );
-                        buffer.Append ( reader.ReadStringWhile ( this.IsHexadecimalChar ) );
-                    }
+                        // Read the fractional part
+                        if ( reader.IsNext ( '.' ) )
+                        {
+                            reader.Advance ( 1 );
+                            buffer.Append ( '.' );
+                            buffer.Append ( reader.ReadStringWhile ( this.IsHexadecimalChar ) );
+                        }
 
-                    // Read the exponent
-                    if ( reader.IsNext ( 'p' ) || reader.IsNext ( 'P' ) )
-                    {
-                        buffer.Append ( ( Char ) reader.Read ( )! );
-
-                        // Acommodate optional exponent sign
-                        if ( reader.IsNext ( '+' ) || reader.IsNext ( '-' ) )
+                        // Read the exponent
+                        if ( reader.IsNext ( 'p' ) || reader.IsNext ( 'P' ) )
+                        {
                             buffer.Append ( ( Char ) reader.Read ( )! );
 
-                        buffer.Append ( reader.ReadStringWhile ( this.IsDecimalChar ) );
-                    }
+                            // Acommodate optional exponent sign
+                            if ( reader.IsNext ( '+' ) || reader.IsNext ( '-' ) )
+                                buffer.Append ( ( Char ) reader.Read ( )! );
 
-                    try
-                    {
-                        value = HexFloat.DoubleFromHexString ( buffer.ToString ( ).Replace ( "_", "" ) );
+                            buffer.Append ( reader.ReadStringWhile ( this.IsDecimalChar ) );
+                        }
+
+                        try
+                        {
+                            value = HexFloat.DoubleFromHexString ( buffer.ToString ( )[2..].Replace ( "_", "" ) );
+                        }
+                        catch ( OverflowException )
+                        {
+                            goto numberTooLarge;
+                        }
+                        catch ( FormatException )
+                        {
+                            goto invalidNumber;
+                        }
                     }
-                    catch ( OverflowException )
+                    else
                     {
-                        goto numberTooLarge;
-                    }
-                    catch ( FormatException )
-                    {
-                        goto invalidNumber;
+                        try
+                        {
+                            value = Double.Parse ( buffer.ToString ( ).Replace ( "_", "" ), NumberStyles.AllowHexSpecifier );
+                        }
+                        catch ( OverflowException )
+                        {
+                            goto numberTooLarge;
+                        }
+                        catch ( FormatException )
+                        {
+                            goto invalidNumber;
+                        }
                     }
                     break;
 
                     #endregion Hexadecimal number parsing
                 }
 
-                case 'o':
+                case 'o' when this.LuaOptions.AcceptOctalNumbers:
                 {
                     #region Octal number parsing
 
@@ -142,7 +171,7 @@ namespace Loretta.Lexing.Modules
                     #endregion Octal number parsing
                 }
 
-                case 'b':
+                case 'b' when this.LuaOptions.AcceptBinaryNumbers:
                 {
                     #region Binary number parsing
 
