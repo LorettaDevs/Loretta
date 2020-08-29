@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GParse;
 using GParse.Lexing;
 using Loretta.Lexing.Modules;
@@ -7,13 +8,13 @@ namespace Loretta.Lexing
 {
     public class LuaLexerBuilder : ModularLexerBuilder<LuaTokenType>
     {
-        public LuaLexerBuilder ( )
+        public LuaLexerBuilder ( LuaOptions luaOptions )
         {
-            const String longStringExpr = @"\[(=*)\[([\S\s]*?)\]\1\]";
+            const String longStringExpr = /*lang=regex*/@"\[(=*)\[([\S\s]*?)\]\1\]";
 
             #region Identifier Module Initialization
 
-            var identifierModule = new IdentifierLexerModule ( new[]
+            var keywords = new List<String> ( 30 )
             {
                 // do ... end
                 "do", "end",
@@ -30,7 +31,7 @@ namespace Loretta.Lexing
                 // for <v> = <i>, <e>, <inc> do ... end
                 "for", "do", "end",
 
-                // for <list> in <exp> do ... end
+                // for <list> in <list> do ... end
                 "for",  "in", "do", "end",
 
                 // function <name> <args> ... end
@@ -44,7 +45,10 @@ namespace Loretta.Lexing
 
                 // control flow
                 "return", "break", "goto"
-            }, new[]
+            };
+            if ( luaOptions.ContinueType == ContinueType.Keyword )
+                keywords.Add ( "continue" );
+            var identifierModule = new IdentifierLexerModule ( luaOptions, keywords, new[]
             {
                 "and", "or", "not"
             } );
@@ -56,9 +60,11 @@ namespace Loretta.Lexing
 
             #endregion Identifier Module Initialization
 
+            this.AddModule ( new DotLexerModule ( ) );
+
             #region Punctuation
 
-            this.AddRegex ( "[", LuaTokenType.LBracket, @"\[(?![=\[])" );
+            this.AddRegex ( "[", LuaTokenType.LBracket, /*lang=regex*/@"\[(?![=\[])" );
             this.AddLiteral ( "]", LuaTokenType.RBracket, "]" );
             this.AddLiteral ( "(", LuaTokenType.LParen, "(" );
             this.AddLiteral ( ")", LuaTokenType.RParen, ")" );
@@ -66,9 +72,9 @@ namespace Loretta.Lexing
             this.AddLiteral ( "}", LuaTokenType.RCurly, "}" );
             this.AddLiteral ( ";", LuaTokenType.Semicolon, ";" );
             this.AddLiteral ( ",", LuaTokenType.Comma, "," );
-            this.AddModule ( new DotLexerModule ( ) );
             this.AddLiteral ( ":", LuaTokenType.Colon, ":" );
-            this.AddLiteral ( "::", LuaTokenType.GotoLabelDelimiter, "::" );
+            if ( luaOptions.AcceptGoto )
+                this.AddLiteral ( "::", LuaTokenType.GotoLabelDelimiter, "::" );
 
             #endregion Punctuation
 
@@ -81,18 +87,8 @@ namespace Loretta.Lexing
             this.AddLiteral ( "*", LuaTokenType.Operator, "*" );
             this.AddLiteral ( "/", LuaTokenType.Operator, "/" );
             this.AddLiteral ( "^", LuaTokenType.Operator, "^" );
-            this.AddLiteral ( "..", LuaTokenType.Operator, ".." );
             this.AddLiteral ( "=", LuaTokenType.Operator, "=" );
             this.AddLiteral ( "%", LuaTokenType.Operator, "%" );
-
-            // Roblox Lua compound assignment
-            this.AddLiteral ( "+=", LuaTokenType.Operator, "+=" );
-            this.AddLiteral ( "-=", LuaTokenType.Operator, "-=" );
-            this.AddLiteral ( "*=", LuaTokenType.Operator, "*=" );
-            this.AddLiteral ( "/=", LuaTokenType.Operator, "/=" );
-            this.AddLiteral ( "^=", LuaTokenType.Operator, "^=" );
-            this.AddLiteral ( "%=", LuaTokenType.Operator, "%=" );
-            this.AddLiteral ( "..=", LuaTokenType.Operator, "..=" );
 
             #endregion Infix Operators
 
@@ -116,10 +112,25 @@ namespace Loretta.Lexing
             #region Language Version Specific Operators
 
             // GLua operators
-            this.AddLiteral ( "~=", LuaTokenType.Operator, "!=", "~=" );
-            this.AddLiteral ( "and", LuaTokenType.Operator, "&&", "and" );
-            this.AddLiteral ( "or", LuaTokenType.Operator, "||", "or" );
-            this.AddLiteral ( "not", LuaTokenType.Operator, "!", "not" );
+            if ( luaOptions.AcceptGModCOperators )
+            {
+                this.AddLiteral ( "~=", LuaTokenType.Operator, "!=", "~=" );
+                this.AddLiteral ( "and", LuaTokenType.Operator, "&&", "and" );
+                this.AddLiteral ( "or", LuaTokenType.Operator, "||", "or" );
+                this.AddLiteral ( "not", LuaTokenType.Operator, "!", "not" );
+            }
+
+            // Roblox Lua compound assignment
+            if ( luaOptions.AcceptCompoundAssignment )
+            {
+                this.AddLiteral ( "+=", LuaTokenType.Operator, "+=" );
+                this.AddLiteral ( "-=", LuaTokenType.Operator, "-=" );
+                this.AddLiteral ( "*=", LuaTokenType.Operator, "*=" );
+                this.AddLiteral ( "/=", LuaTokenType.Operator, "/=" );
+                this.AddLiteral ( "^=", LuaTokenType.Operator, "^=" );
+                this.AddLiteral ( "%=", LuaTokenType.Operator, "%=" );
+                this.AddLiteral ( "..=", LuaTokenType.Operator, "..=" );
+            }
 
             #endregion Language Version Specific Operators
 
@@ -127,24 +138,29 @@ namespace Loretta.Lexing
 
             #region Literals
 
-            this.AddModule ( new ShortStringLexerModule ( ) );
+            this.AddModule ( new ShortStringLexerModule ( luaOptions ) );
             this.AddRegex ( "long-string", LuaTokenType.LongString, longStringExpr, "[", match => match.Groups[2].Value );
 
-            this.AddModule ( new NumberLexerModule ( ) );
-            this.AddLiteral ( "...", LuaTokenType.VarArg, "..." );
+            this.AddModule ( new NumberLexerModule ( luaOptions ) );
 
             #endregion Literals
 
             #region Others
 
-            this.AddRegex ( "shebang", LuaTokenType.Shebang, @"#!([^\r\n]+)", "#!", m => m.Groups[1].Value );
+            if ( luaOptions.AcceptShebang )
+            {
+                this.AddRegex ( "shebang", LuaTokenType.Shebang, /*lang=regex*/@"#!([^\r\n]+)", "#!", m => m.Groups[1].Value );
+            }
 
-            this.AddRegex ( "comment", LuaTokenType.Comment, @"--([^\r\n]*)", "--", match => match.Groups[1].Value, true );
+            this.AddRegex ( "comment", LuaTokenType.Comment, /*lang=regex*/@"--([^\r\n]*)", "--", match => match.Groups[1].Value, true );
             this.AddRegex ( "long-comment", LuaTokenType.LongComment, "--" + longStringExpr, "--[", match => match.Groups[2].Value, true );
-            this.AddRegex ( "whitespace", LuaTokenType.Whitespace, @"\s+", null, ws => ws.Value, true );
+            this.AddRegex ( "whitespace", LuaTokenType.Whitespace, /*lang=regex*/@"\s+", null, ws => ws.Value, true );
 
-            this.AddRegex ( "comment", LuaTokenType.Comment, @"\/\/([^\r\n]*)", "//", match => match.Groups[1].Value, true );
-            this.AddRegex ( "long-comment", LuaTokenType.LongComment, @"\/\*([\S\s]*?)\*\/", "/*", match => match.Groups[1].Value, true );
+            if ( luaOptions.AcceptCCommentSyntax )
+            {
+                this.AddRegex ( "comment", LuaTokenType.Comment, /*lang=regex*/@"\/\/([^\r\n]*)", "//", match => match.Groups[1].Value, true );
+                this.AddRegex ( "long-comment", LuaTokenType.LongComment, /*lang=regex*/@"\/\*([\S\s]*?)\*\/", "/*", match => match.Groups[1].Value, true );
+            }
 
             #endregion Others
         }
