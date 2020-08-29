@@ -72,7 +72,17 @@ namespace Loretta.CLI
 
         #endregion Current Directory Management
 
-        public enum ASTVisitor
+        public enum LuaOptionsPreset
+        {
+            Lua51,
+            Lua52,
+            LuaJIT,
+            GMod,
+            Roblox,
+            All,
+        }
+
+        public enum ASTVisitors
         {
             ConstantFolder,
             RawStringRewriter,
@@ -82,7 +92,7 @@ namespace Loretta.CLI
         }
 
         [Command ( "p" ), Command ( "parse" )]
-        public static void Parse ( String path, params ASTVisitor[] visitors )
+        public static void Parse ( LuaOptionsPreset preset, String path, params ASTVisitors[] visitors )
         {
             if ( !File.Exists ( path ) )
             {
@@ -91,43 +101,53 @@ namespace Loretta.CLI
             }
 
             var stopwatch = Stopwatch.StartNew ( );
+            LuaOptions luaOptions = preset switch
+            {
+                LuaOptionsPreset.Lua51 => LuaOptions.Lua51,
+                LuaOptionsPreset.Lua52 => LuaOptions.Lua52,
+                LuaOptionsPreset.LuaJIT => LuaOptions.LuaJIT,
+                LuaOptionsPreset.GMod => LuaOptions.GMod,
+                LuaOptionsPreset.Roblox => LuaOptions.Roblox,
+                LuaOptionsPreset.All => LuaOptions.All,
+                _ => throw new InvalidOperationException ( ),
+            };
             var diagnosticList = new DiagnosticList ( );
-            var lexerBuilder = new LuaLexerBuilder ( );
-            var parserBuilder = new LuaParserBuilder ( );
-            var formattedCodeSerializer = new FormattedLuaCodeSerializer ( "    " );
+            var lexerBuilder = new LuaLexerBuilder ( luaOptions );
+            var parserBuilder = new LuaParserBuilder ( luaOptions );
+            var formattedCodeSerializer = new FormattedLuaCodeSerializer ( luaOptions, "    " );
             var code = File.ReadAllText ( path );
             ILexer<LuaTokenType> lexer = lexerBuilder.CreateLexer ( code, diagnosticList );
             LuaParser parser = parserBuilder.CreateParser ( new TokenReader<LuaTokenType> ( lexer ), diagnosticList );
             StatementList statementList = parser.Parse ( );
-            foreach ( ASTVisitor visitor in visitors )
+            foreach ( ASTVisitors visitor in visitors )
             {
                 switch ( visitor )
                 {
-                    case ASTVisitor.ConstantFolder:
+                    case ASTVisitors.ConstantFolder:
                     {
                         statementList = constantFolder ( statementList );
                         break;
                     }
 
-                    case ASTVisitor.RawStringRewriter:
+                    case ASTVisitors.RawStringRewriter:
                     {
                         statementList = rawStringRewriter ( statementList );
                         break;
                     }
 
-                    case ASTVisitor.UselessAssignmentRemover:
+                    case ASTVisitors.UselessAssignmentRemover:
                     {
                         statementList = uselessAssignmentRemover ( statementList );
                         break;
                     }
 
-                    case ASTVisitor.SimpleInliner:
+                    case ASTVisitors.SimpleInliner:
                     {
                         statementList = simpleInliner ( statementList );
                         break;
                     }
 
-                    case ASTVisitor.AllTillNothingMoreToDo:
+                    case ASTVisitors.AllTillNothingMoreToDo:
                     {
                         StatementList original;
                         var rounds = 0;
@@ -182,7 +202,7 @@ namespace Loretta.CLI
         }
 
         [Command ( "mp" ), Command ( "mass-parse" )]
-        public static void MassParse ( params String[] patterns )
+        public static void MassParse ( LuaOptionsPreset preset, params String[] patterns )
         {
             var files = patterns.SelectMany ( pattern => Directory.EnumerateFiles ( ".", pattern, new EnumerationOptions
             {
@@ -191,13 +211,23 @@ namespace Loretta.CLI
             } ) )
                 .ToArray ( );
 
-            var lexerBuilder = new LuaLexerBuilder ( );
-            var parserBuilder = new LuaParserBuilder ( );
+            LuaOptions luaOptions = preset switch
+            {
+                LuaOptionsPreset.Lua51 => LuaOptions.Lua51,
+                LuaOptionsPreset.Lua52 => LuaOptions.Lua52,
+                LuaOptionsPreset.LuaJIT => LuaOptions.LuaJIT,
+                LuaOptionsPreset.GMod => LuaOptions.GMod,
+                LuaOptionsPreset.Roblox => LuaOptions.Roblox,
+                LuaOptionsPreset.All => LuaOptions.All,
+                _ => throw new InvalidOperationException ( ),
+            };
+            var lexerBuilder = new LuaLexerBuilder ( luaOptions );
+            var parserBuilder = new LuaParserBuilder ( luaOptions );
             foreach ( var file in files )
             {
                 var stopwatch = Stopwatch.StartNew ( );
                 var diagnosticList = new DiagnosticList ( );
-                var formattedCodeSerializer = new FormattedLuaCodeSerializer ( "    " );
+                var formattedCodeSerializer = new FormattedLuaCodeSerializer ( luaOptions, "    " );
                 var code = File.ReadAllText ( file );
                 try
                 {
