@@ -11,6 +11,8 @@ namespace Loretta.Parsing
 {
     public class LuaParserBuilder : PrattParserBuilder<LuaTokenType, Expression>
     {
+        public LuaOptions LuaOptions { get; }
+
         private static Boolean StringExpressionFactory ( LuaToken token, out Expression expression )
         {
             expression = new StringExpression ( token );
@@ -31,7 +33,7 @@ namespace Loretta.Parsing
 
         private static Boolean BooleanExpressionFactory ( LuaToken token, out Expression expression )
         {
-            expression = new BooleanExpression ( token, token.Id == "true" );
+            expression = new BooleanExpression ( token, ( Boolean ) token.Value! );
             return true;
         }
 
@@ -41,8 +43,10 @@ namespace Loretta.Parsing
             return true;
         }
 
-        public LuaParserBuilder ( )
+        public LuaParserBuilder ( LuaOptions luaOptions )
         {
+            this.LuaOptions = luaOptions;
+
             #region Value Expressions
 
             this.RegisterLiteral ( LuaTokenType.String, StringExpressionFactory );
@@ -131,6 +135,6 @@ namespace Loretta.Parsing
         #endregion Operator Management
 
         public new LuaParser CreateParser ( ITokenReader<LuaTokenType> reader, IProgress<Diagnostic> diagnosticEmmiter ) =>
-            new LuaParser ( reader, this.prefixModuleTree, this.infixModuleTree, diagnosticEmmiter );
+            new LuaParser ( this.LuaOptions, reader, this.prefixModuleTree, this.infixModuleTree, diagnosticEmmiter );
     }
 }
