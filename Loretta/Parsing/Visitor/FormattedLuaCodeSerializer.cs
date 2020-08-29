@@ -14,9 +14,12 @@ namespace Loretta.Parsing.Visitor
     {
         private readonly CodeWriter _writer;
 
-        public FormattedLuaCodeSerializer ( String indentation = "\t" )
+        public LuaOptions LuaOptions { get; }
+
+        public FormattedLuaCodeSerializer ( LuaOptions luaOptions, String indentation = "\t" )
         {
             this._writer = new CodeWriter ( indentation );
+            this.LuaOptions = luaOptions;
         }
 
         #region Code Serialization Helpers
@@ -172,14 +175,14 @@ namespace Loretta.Parsing.Visitor
             {
                 case UnaryOperationFix.Prefix:
                     this._writer.Write ( node.Operator.Value );
-                    if ( StringUtils.IsIdentifier ( node.Operator.Raw ) )
+                    if ( StringUtils.IsIdentifier ( this.LuaOptions.UseLuaJitIdentifierRules, node.Operator.Raw ) )
                         this._writer.Write ( ' ' );
                     this.VisitNode ( node.Operand );
                     break;
 
                 case UnaryOperationFix.Postfix:
                     this.VisitNode ( node.Operand );
-                    if ( StringUtils.IsIdentifier ( node.Operator.Raw ) )
+                    if ( StringUtils.IsIdentifier ( this.LuaOptions.UseLuaJitIdentifierRules, node.Operator.Raw ) )
                         this._writer.Write ( ' ' );
                     this._writer.Write ( node.Operator.Value );
                     break;
@@ -396,9 +399,9 @@ namespace Loretta.Parsing.Visitor
         public override String ToString ( ) =>
             this._writer.ToString ( );
 
-        public static String Format ( LuaASTNode node )
+        public static String Format ( LuaOptions luaOptions, LuaASTNode node )
         {
-            var serializer = new FormattedLuaCodeSerializer ( );
+            var serializer = new FormattedLuaCodeSerializer ( luaOptions );
             serializer.VisitNode ( node );
             return serializer.ToString ( );
         }
