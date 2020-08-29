@@ -20,16 +20,21 @@ namespace Loretta.Lexing.Modules
 
         public String? Prefix => null;
 
-        public IdentifierLexerModule ( )
+        public LuaOptions LuaOptions { get; }
+
+        public IdentifierLexerModule ( LuaOptions luaOptions )
         {
+            this.LuaOptions = luaOptions;
         }
 
-        public IdentifierLexerModule ( IEnumerable<String> keywords )
+        public IdentifierLexerModule ( LuaOptions luaOptions, IEnumerable<String> keywords )
+            : this ( luaOptions )
         {
             this.Keywords.UnionWith ( keywords );
         }
 
-        public IdentifierLexerModule ( IEnumerable<String> keywords, IEnumerable<String> operators ) : this ( keywords )
+        public IdentifierLexerModule ( LuaOptions luaOptions, IEnumerable<String> keywords, IEnumerable<String> operators )
+            : this ( luaOptions, keywords )
         {
             this.Operators.UnionWith ( operators );
         }
@@ -51,14 +56,17 @@ namespace Loretta.Lexing.Modules
         public Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
         {
             // Non-equals operations with Nullable<Char> should be exception safe and always return false
-            var ch = reader.Peek ( );
-            return CharUtils.IsValidFirstIdentifierChar ( ch.GetValueOrDefault ( ) );
+            var peek = reader.Peek ( );
+            return peek.HasValue
+                   && CharUtils.IsValidFirstIdentifierChar ( this.LuaOptions.UseLuaJitIdentifierRules, peek.Value );
         }
 
         public Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticReporter )
         {
             SourceLocation start = reader.Location;
-            var identifier = reader.ReadStringWhile ( ch => CharUtils.IsValidTrailingIdentifierChar ( ch ) );
+            var identifier = this.LuaOptions.UseLuaJitIdentifierRules
+                ? reader.ReadStringWhile ( ch => CharUtils.IsValidTrailingIdentifierChar ( true, ch ) )
+                : reader.ReadStringWhile ( ch => CharUtils.IsValidFirstIdentifierChar ( false, ch ) );
             SourceRange range = start.To ( reader.Location );
 
             if ( this.Keywords.Contains ( identifier ) )
