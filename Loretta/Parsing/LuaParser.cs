@@ -15,6 +15,8 @@ namespace Loretta.Parsing
     {
         private readonly Stack<Scope> _scopeStack = new Stack<Scope> ( );
 
+        public LuaOptions LuaOptions { get; }
+
         #region Scope and Label Management
 
         protected internal virtual Scope EnterScope ( Boolean isFuntion )
@@ -36,8 +38,9 @@ namespace Loretta.Parsing
 
         #endregion Scope and Label Management
 
-        protected internal LuaParser ( ITokenReader<LuaTokenType> tokenReader, PrattParserModuleTree<LuaTokenType, IPrefixParselet<LuaTokenType, Expression>> prefixModules, PrattParserModuleTree<LuaTokenType, IInfixParselet<LuaTokenType, Expression>> infixModules, IProgress<Diagnostic> diagnosticEmitter ) : base ( tokenReader, prefixModules, infixModules, diagnosticEmitter )
+        protected internal LuaParser ( LuaOptions luaOptions, ITokenReader<LuaTokenType> tokenReader, PrattParserModuleTree<LuaTokenType, IPrefixParselet<LuaTokenType, Expression>> prefixModules, PrattParserModuleTree<LuaTokenType, IInfixParselet<LuaTokenType, Expression>> infixModules, IProgress<Diagnostic> diagnosticEmitter ) : base ( tokenReader, prefixModules, infixModules, diagnosticEmitter )
         {
+            this.LuaOptions = luaOptions;
         }
 
         private static readonly String[] terminals = new[] { "end", "else", "elseif", "until" };
@@ -379,7 +382,8 @@ namespace Loretta.Parsing
             {
                 stmt = this.ParseDoStatement ( );
             }
-            else if ( this.TokenReader.Accept ( LuaTokenType.Keyword, "goto", out LuaToken gotoKw ) )
+            else if ( this.LuaOptions.AcceptGoto
+                      && this.TokenReader.Accept ( LuaTokenType.Keyword, "goto", out LuaToken gotoKw ) )
             {
                 LuaToken ident = this.TokenReader.FatalExpect ( LuaTokenType.Identifier );
                 stmt = new GotoStatement ( gotoKw, ident, this.GetOrCreateLabel ( ident, Scope.FindMode.CheckFunctionScope ) );
@@ -388,7 +392,10 @@ namespace Loretta.Parsing
             {
                 stmt = new BreakStatement ( breakKw );
             }
-            else if ( this.TokenReader.Accept ( LuaTokenType.Identifier, "continue", out LuaToken continueKw ) )
+            else if ( this.LuaOptions.ContinueType != ContinueType.None
+                      && this.TokenReader.Accept ( ( LuaTokenType ) this.LuaOptions.ContinueType,
+                                                   "continue",
+                                                   out LuaToken continueKw ) )
             {
                 stmt = new ContinueStatement ( TokenFactory.ChangeTokenType ( continueKw, LuaTokenType.Keyword ) );
             }
@@ -405,7 +412,7 @@ namespace Loretta.Parsing
                     {
                         stmt = this.ParseAssignmentStatement ( expr );
                     }
-                    else if ( this.TokenReader.IsAhead ( new[] { LuaTokenType.Operator }, compoundAssignmentOperatorIds ) )
+                    else if ( this.LuaOptions.AcceptCompoundAssignment && this.TokenReader.IsAhead ( new[] { LuaTokenType.Operator }, compoundAssignmentOperatorIds ) )
                     {
                         stmt = this.ParseCompoundAssignmentStatement ( expr );
                     }
@@ -422,6 +429,10 @@ namespace Loretta.Parsing
                 {
                     goto unexpectedToken;
                 }
+            }
+            else if ( this.LuaOptions.AcceptEmptyStatements && this.TokenReader.Accept ( LuaTokenType.Semicolon, out LuaToken emptyStmtSemicolon ) )
+            {
+                return new EmptyStatement { Semicolon = emptyStmtSemicolon };
             }
             else
             {
