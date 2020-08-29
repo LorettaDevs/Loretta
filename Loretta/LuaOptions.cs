@@ -67,6 +67,21 @@ namespace Loretta
             useLuaJitIdentifierRules: false,
             continueType: ContinueType.ContextualKeyword );
 
+        public static readonly LuaOptions All = new LuaOptions (
+            acceptBinaryNumbers: true,
+            acceptCCommentSyntax: true,
+            acceptCompoundAssignment: true,
+            acceptEmptyStatements: true,
+            acceptGModCOperators: true,
+            acceptGoto: true,
+            acceptHexEscapesInStrings: true,
+            acceptHexFloatLiterals: true,
+            acceptOctalNumbers: true,
+            acceptShebang: true,
+            acceptUnderlineInNumberLiterals: true,
+            useLuaJitIdentifierRules: true,
+            continueType: ContinueType.ContextualKeyword );
+
         public Boolean AcceptBinaryNumbers { get; }
         public Boolean AcceptCCommentSyntax { get; }
         public Boolean AcceptCompoundAssignment { get; }
