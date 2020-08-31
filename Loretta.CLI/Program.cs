@@ -135,18 +135,6 @@ namespace Loretta.CLI
                         break;
                     }
 
-                    case ASTVisitors.UselessAssignmentRemover:
-                    {
-                        statementList = uselessAssignmentRemover ( statementList );
-                        break;
-                    }
-
-                    case ASTVisitors.SimpleInliner:
-                    {
-                        statementList = simpleInliner ( statementList );
-                        break;
-                    }
-
                     case ASTVisitors.AllTillNothingMoreToDo:
                     {
                         StatementList original;
@@ -154,7 +142,7 @@ namespace Loretta.CLI
                         do
                         {
                             original = statementList;
-                            statementList = simpleInliner ( uselessAssignmentRemover ( rawStringRewriter ( constantFolder ( statementList ) ) ) );
+                            statementList = rawStringRewriter ( constantFolder ( statementList ) );
                         }
                         while ( original != statementList && rounds++ < 120 );
                         break;
@@ -181,22 +169,6 @@ namespace Loretta.CLI
             static StatementList rawStringRewriter ( StatementList statementList )
             {
                 statementList = new RawStringRewriter ( ).VisitNode ( statementList ) as StatementList;
-                return statementList;
-            }
-
-            static StatementList uselessAssignmentRemover ( StatementList statementList )
-            {
-                var tracker = new SimpleReadWriteTracker ( );
-                tracker.VisitNode ( statementList );
-                statementList = new UselessAssignmentRemover ( tracker ).VisitNode ( statementList ) as StatementList;
-                return statementList;
-            }
-
-            static StatementList simpleInliner ( StatementList statementList )
-            {
-                var tracker = new SimpleReadWriteTracker ( );
-                tracker.VisitNode ( statementList );
-                statementList = new SimpleInliner ( tracker ).VisitNode ( statementList ) as StatementList;
                 return statementList;
             }
         }
