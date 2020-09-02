@@ -48,10 +48,11 @@ namespace Loretta
             continueType: ContinueType.None );
 
         /// <summary>
-        /// The Lua 5.3 preset.
+        /// The Lua 5.2 preset.
         /// </summary>
         public static readonly LuaOptions Lua52 = Lua51.With (
             acceptEmptyStatements: true,
+            acceptGoto: true,
             acceptHexEscapesInStrings: true,
             acceptHexFloatLiterals: true );
 
