@@ -2,9 +2,28 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
-    <CodeAnalysisRuleSet>RuleSet1.ruleset</CodeAnalysisRuleSet>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  
+  <!-- Package data -->
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <Authors>GGG KILLER</Authors>
+    <Description>A Roblox/GLua/Lua lexer, parser, code analysis, transformation and generation library.</Description>
+    <Copyright>GGG KILLER © 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/GGG-KILLER/Loretta</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/GGG-KILLER/Loretta</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+    <!-- Source Link -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
