@@ -7,8 +7,16 @@ using Loretta.Parsing.AST.Tables;
 
 namespace Loretta.Parsing.Visitor
 {
+    /// <summary>
+    /// A folder that does constant folding (evaluates expressions with constant values to their results).
+    /// </summary>
     public class ConstantFolder : TreeFolderBase
     {
+        /// <summary>
+        /// Folds unary operations.
+        /// </summary>
+        /// <param name="node">The unary operation to fold.</param>
+        /// <returns>The folded node or the node with its operand folded.</returns>
         public override LuaASTNode VisitUnaryOperation ( UnaryOperationExpression node )
         {
             var unary = ( UnaryOperationExpression ) base.VisitUnaryOperation ( node );
@@ -23,6 +31,11 @@ namespace Loretta.Parsing.Visitor
             };
         }
 
+        /// <summary>
+        /// Folds binary operations.
+        /// </summary>
+        /// <param name="node">The binary operation to fold.</param>
+        /// <returns>The folded node or the node with its operands folded.</returns>
         public override LuaASTNode VisitBinaryOperation ( BinaryOperationExpression node )
         {
             var @operator = node.Operator.Value;

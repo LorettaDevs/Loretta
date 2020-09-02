@@ -8,11 +8,18 @@ using Loretta.Utilities;
 
 namespace Loretta.Lexing.Modules
 {
+    /// <summary>
+    /// Handles the parsing of ., .. and ... in the lexer.
+    /// </summary>
     public class DotLexerModule : ILexerModule<LuaTokenType>
     {
+        /// <inheritdoc />
         public String Name => "Dot Lexer Module";
+
+        /// <inheritdoc />
         public String Prefix => ".";
 
+        /// <inheritdoc />
         public Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
         {
             // . followed by non-number
@@ -20,6 +27,7 @@ namespace Loretta.Lexing.Modules
             return peek is null || !CharUtils.IsDecimal ( peek.Value );
         }
 
+        /// <inheritdoc />
         public Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticEmitter )
         {
             Debug.Assert ( this.CanConsumeNext ( reader ) );

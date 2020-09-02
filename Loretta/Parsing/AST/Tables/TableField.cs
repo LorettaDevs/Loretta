@@ -9,15 +9,29 @@ namespace Loretta.Parsing.AST.Tables
     using Loretta.Parsing.Visitor;
 
     /// <summary>
-    /// The type of key this <see cref="TableField"/> has
+    /// The type of key of the <see cref="TableField" />.
     /// </summary>
     public enum TableFieldKeyType
     {
+        /// <summary>
+        /// No key (sequential). Format: &lt;expr&gt;.
+        /// </summary>
         None,
+
+        /// <summary>
+        /// An identifier key. Format: &lt;ident&gt; = &lt;expr&gt;.
+        /// </summary>
         Identifier,
+
+        /// <summary>
+        /// An expression. Format: [&lt;expr&gt;] = &lt;expr&gt;.
+        /// </summary>
         Expression
     }
 
+    /// <summary>
+    /// Represents a table field.
+    /// </summary>
     public class TableField : LuaASTNode
     {
         private readonly LuaToken[] _tokens;
@@ -28,9 +42,9 @@ namespace Loretta.Parsing.AST.Tables
         public TableFieldKeyType KeyType { get; }
 
         /// <summary>
-        /// The key of the table entry. <see langword="null"/> if the field is a sequential one, an
-        /// <see cref="IdentifierExpression"/> if the key was an identifier or some other expression
-        /// if it was the bracket-based index.
+        /// The key of the table entry. <see langword="null" /> if the field is a sequential one, an
+        /// <see cref="IdentifierExpression" /> if the key was an identifier or some other
+        /// expression if it was the bracket-based index.
         /// </summary>
         public Expression? Key { get; }
 
@@ -56,11 +70,10 @@ namespace Loretta.Parsing.AST.Tables
         }
 
         /// <summary>
-        /// This constructor creates a sequential field
+        /// Creates a sequential table field.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="equalsSign"></param>
-        /// <param name="delim"></param>
+        /// <param name="value">The table field's value.</param>
+        /// <param name="delim">The table field's delimiter.</param>
         public TableField ( Expression value, LuaToken delim ) : this ( Array.Empty<LuaToken> ( ), delim )
         {
             this.KeyType = TableFieldKeyType.None;
@@ -69,13 +82,14 @@ namespace Loretta.Parsing.AST.Tables
         }
 
         /// <summary>
-        /// This constructor creates a identifier keyed field
+        /// Initializes an identifier-keyed field.
         /// </summary>
-        /// <param name="ident"></param>
-        /// <param name="equals"></param>
-        /// <param name="value"></param>
-        /// <param name="delim"></param>
-        public TableField ( LuaToken ident, LuaToken equals, Expression value, LuaToken delim ) : this ( new[] { ident, equals }, delim )
+        /// <param name="ident">The table field's identifier key.</param>
+        /// <param name="equals">The table field's equals sign.</param>
+        /// <param name="value">The table field's value.</param>
+        /// <param name="delim">The table field's delimiter.</param>
+        public TableField ( LuaToken ident, LuaToken equals, Expression value, LuaToken delim )
+            : this ( new[] { ident, equals }, delim )
         {
             if ( ident == null )
                 throw new ArgumentNullException ( nameof ( ident ) );
@@ -88,14 +102,14 @@ namespace Loretta.Parsing.AST.Tables
         }
 
         /// <summary>
-        /// This constructor creates a expression keyed field
+        /// Initializes a expression-keyed field.
         /// </summary>
-        /// <param name="lbracket"></param>
-        /// <param name="key"></param>
-        /// <param name="rbracket"></param>
-        /// <param name="equals"></param>
-        /// <param name="value"></param>
-        /// <param name="delim"></param>
+        /// <param name="lbracket">The table field's left bracket '['.</param>
+        /// <param name="key">The table field's key expression.</param>
+        /// <param name="rbracket">The table field's right bracket ']'.</param>
+        /// <param name="equals">The table field's equals sign.</param>
+        /// <param name="value">The table field's value expression.</param>
+        /// <param name="delim">The table field's delimiter.</param>
         public TableField ( LuaToken lbracket, Expression key, LuaToken rbracket, LuaToken equals, Expression value, LuaToken delim ) : this ( new[] { lbracket, rbracket, equals }, delim )
         {
             if ( lbracket == null )
@@ -110,8 +124,10 @@ namespace Loretta.Parsing.AST.Tables
             this.Value = value ?? throw new ArgumentNullException ( nameof ( value ) );
         }
 
+        /// <inheritdoc />
         public override IEnumerable<LuaToken> Tokens => this._tokens;
 
+        /// <inheritdoc />
         public override IEnumerable<LuaASTNode> Children
         {
             get

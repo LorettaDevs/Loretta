@@ -5,13 +5,43 @@ using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
 namespace Loretta.Parsing.AST
 {
+    /// <summary>
+    /// Represents a generic for loop statement.
+    /// </summary>
     public class GenericForLoopStatement : Statement
     {
+        /// <summary>
+        /// The for loop's scope.
+        /// </summary>
         public Scope Scope { get; }
+
+        /// <summary>
+        /// The for loop's iteration variables.
+        /// </summary>
         public ImmutableArray<IdentifierExpression> Variables { get; }
+
+        /// <summary>
+        /// The for loop's expressions.
+        /// </summary>
         public ImmutableArray<Expression> Expressions { get; }
+
+        /// <summary>
+        /// The for loop's body.
+        /// </summary>
         public StatementList Body { get; }
 
+        /// <summary>
+        /// Initializes a new generic for loop statement.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="forKw">The for keyword.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="commas">The commas.</param>
+        /// <param name="inKw">The in keyword.</param>
+        /// <param name="expressions">The expressions.</param>
+        /// <param name="doKw">The do keyword.</param>
+        /// <param name="body">The loop's body.</param>
+        /// <param name="endKw">The end keyword.</param>
         public GenericForLoopStatement (
             Scope scope,
             LuaToken forKw,
@@ -34,8 +64,10 @@ namespace Loretta.Parsing.AST
             this.Tokens = toks;
         }
 
+        /// <inheritdoc />
         public override IEnumerable<LuaToken> Tokens { get; }
 
+        /// <inheritdoc />
         public override IEnumerable<LuaASTNode> Children
         {
             get

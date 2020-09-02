@@ -10,14 +10,28 @@ using Loretta.Parsing.AST;
 
 namespace Loretta.Parsing.Modules
 {
+    /// <summary>
+    /// The module that parses grouped expressions.
+    /// </summary>
     public class GroupedExpressionParserModule : IPrefixParselet<LuaTokenType, Expression>
     {
+        /// <summary>
+        /// The module's instance.
+        /// </summary>
         public static GroupedExpressionParserModule Instance { get; } = new GroupedExpressionParserModule ( );
 
+        /// <summary>
+        /// Registers the module in a parser builder.
+        /// </summary>
+        /// <param name="builder">The builder to register in.</param>
         public static void Register ( IPrattParserBuilder<LuaTokenType, Expression> builder ) =>
             builder.Register ( LuaTokenType.LParen, Instance );
 
-        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, IProgress<Diagnostic> diagnosticEmitter, [NotNullWhen ( true )] out Expression expression )
+        /// <inheritdoc />
+        public Boolean TryParse (
+            IPrattParser<LuaTokenType, Expression> parser,
+            IProgress<Diagnostic> diagnosticEmitter,
+            [NotNullWhen ( true )] out Expression expression )
         {
             if ( !parser.TokenReader.Accept ( LuaTokenType.LParen, out Token<LuaTokenType> lparen ) )
             {

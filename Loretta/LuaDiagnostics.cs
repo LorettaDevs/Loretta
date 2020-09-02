@@ -3,15 +3,18 @@ using GParse;
 
 namespace Loretta
 {
+    /// <summary>
+    /// The class containing the factory methods for the diagnostics emmitted by the lua parser
+    /// along with a method to highlight a range in the source code.
+    /// </summary>
     public static partial class LuaDiagnostics
     {
-
         /// <summary>
         /// Highlights a range retrieving the line(s) referred to by the range and inserting ^'s
         /// under the code section that the range refers to.
         /// </summary>
-        /// <param name="expression">The expression to highlight</param>
-        /// <param name="range">The range to highlight</param>
+        /// <param name="expression">The expression containing the range to be highlighted.</param>
+        /// <param name="range">The range to highlight.</param>
         /// <returns></returns>
         public static String HighlightRange ( String expression, SourceRange range )
         {

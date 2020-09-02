@@ -11,13 +11,24 @@ using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
 namespace Loretta.Parsing.Modules
 {
+    /// <summary>
+    /// The module that parses anonymous function expressions.
+    /// </summary>
     internal class AnonymousFunctionExpressionParserModule : IPrefixParselet<LuaTokenType, Expression>
     {
+        /// <summary>
+        /// The module's instance.
+        /// </summary>
         public static AnonymousFunctionExpressionParserModule Instance { get; } = new AnonymousFunctionExpressionParserModule ( );
 
+        /// <summary>
+        /// Registers the module in the parser builder.
+        /// </summary>
+        /// <param name="builder">The builder to register the module in.</param>
         public static void Register ( IPrattParserBuilder<LuaTokenType, Expression> builder ) =>
             builder.Register ( LuaTokenType.Keyword, "function", Instance );
 
+        /// <inheritdoc/>
         public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> genParser, IProgress<Diagnostic> diagnosticReporter, [NotNullWhen ( true )] out Expression expression )
         {
             ITokenReader<LuaTokenType> reader = genParser.TokenReader;
@@ -36,7 +47,7 @@ namespace Loretta.Parsing.Modules
 
             if ( !reader.Accept ( LuaTokenType.LParen, out LuaToken lparen ) )
             {
-                diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.ThingExpectedFor ( reader.Location, '(', $"function keyword at line {functionKw.Range.Start.Line} column {functionKw.Range.Start.Column}" ) );
+                diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.ThingExpectedAfter ( reader.Location, '(', $"function keyword at line {functionKw.Range.Start.Line} column {functionKw.Range.Start.Column}" ) );
                 lparen = TokenFactory.Token ( "(", LuaTokenType.LParen, "(" );
             }
             toks.Add ( lparen );

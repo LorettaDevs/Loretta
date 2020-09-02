@@ -12,22 +12,37 @@ using Loretta.Parsing.AST.Tables;
 
 namespace Loretta.Parsing.Modules
 {
+    /// <summary>
+    /// The module that parses table constructor literal expressions.
+    /// </summary>
     public class TableConstructorExpressionParserModule : IPrefixParselet<LuaTokenType, Expression>
     {
+        /// <summary>
+        /// The module's instance.
+        /// </summary>
         public static TableConstructorExpressionParserModule Instance { get; } = new TableConstructorExpressionParserModule ( );
 
+        /// <summary>
+        /// Registers the module in a parser builder.
+        /// </summary>
+        /// <param name="builder">The builder to register in.</param>
         public static void Register ( IPrattParserBuilder<LuaTokenType, Expression> builder ) =>
             builder.Register ( LuaTokenType.LCurly, Instance );
 
+        /// <summary>
+        /// The two possible field separators.
+        /// </summary>
         private static readonly IEnumerable<LuaTokenType> FieldSeps = new[]
         {
             LuaTokenType.Comma,
             LuaTokenType.Semicolon
         };
 
-        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser,
-                                  IProgress<Diagnostic> diagnosticReporter,
-                                  [NotNullWhen ( true )] out Expression expression )
+        /// <inheritdoc />
+        public Boolean TryParse (
+            IPrattParser<LuaTokenType, Expression> parser,
+            IProgress<Diagnostic> diagnosticReporter,
+            [NotNullWhen ( true )] out Expression expression )
         {
             ITokenReader<LuaTokenType> reader = parser.TokenReader;
             if ( !reader.Accept ( LuaTokenType.LCurly, out Token<LuaTokenType> lcurly ) )
@@ -120,7 +135,6 @@ namespace Loretta.Parsing.Modules
 
                 return token;
             }
-
         }
     }
 }

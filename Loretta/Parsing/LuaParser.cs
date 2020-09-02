@@ -11,14 +11,25 @@ using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
 namespace Loretta.Parsing
 {
+    /// <summary>
+    /// The lua parser class.
+    /// </summary>
     public class LuaParser : PrattParser<LuaTokenType, Expression>
     {
         private readonly Stack<Scope> _scopeStack = new Stack<Scope> ( );
 
+        /// <summary>
+        /// The lua options used by this parser.
+        /// </summary>
         public LuaOptions LuaOptions { get; }
 
         #region Scope and Label Management
 
+        /// <summary>
+        /// Creates and enters a new scope.
+        /// </summary>
+        /// <param name="isFuntion">Whether the scope is a function's.</param>
+        /// <returns></returns>
         protected internal virtual Scope EnterScope ( Boolean isFuntion )
         {
             Scope scope = this._scopeStack.Count > 0 ? new Scope ( this._scopeStack.Peek ( ), isFuntion ) : new Scope ( isFuntion );
@@ -26,10 +37,26 @@ namespace Loretta.Parsing
             return scope;
         }
 
+        /// <summary>
+        /// Retrieves or creates a variable.
+        /// </summary>
+        /// <param name="token">The token that generated the variable.</param>
+        /// <param name="findMode">The scope search mode.</param>
+        /// <returns></returns>
         protected internal virtual Variable GetOrCreateVariable ( in LuaToken token, Scope.FindMode findMode ) => this._scopeStack.Peek ( ).GetVariable ( token, findMode );
 
+        /// <summary>
+        /// Retrieves or creates a goto label.
+        /// </summary>
+        /// <param name="token">The token that generated the goto label.</param>
+        /// <param name="findMode">The scope search mode.</param>
+        /// <returns></returns>
         protected internal virtual GotoLabel GetOrCreateLabel ( in LuaToken token, Scope.FindMode findMode ) => this._scopeStack.Peek ( ).GetLabel ( token, findMode );
 
+        /// <summary>
+        /// Returns and leaves the current scope.
+        /// </summary>
+        /// <returns></returns>
         protected internal virtual Scope? LeaveScope ( )
         {
             this._scopeStack.Pop ( );
@@ -38,17 +65,48 @@ namespace Loretta.Parsing
 
         #endregion Scope and Label Management
 
-        protected internal LuaParser ( LuaOptions luaOptions, ITokenReader<LuaTokenType> tokenReader, PrattParserModuleTree<LuaTokenType, IPrefixParselet<LuaTokenType, Expression>> prefixModules, PrattParserModuleTree<LuaTokenType, IInfixParselet<LuaTokenType, Expression>> infixModules, IProgress<Diagnostic> diagnosticEmitter ) : base ( tokenReader, prefixModules, infixModules, diagnosticEmitter )
+        /// <summary>
+        /// Initializes a new lua parser.
+        /// </summary>
+        /// <param name="luaOptions">The lua options to use.</param>
+        /// <param name="tokenReader">The token reader to use</param>
+        /// <param name="prefixModules">The prefix module tree.</param>
+        /// <param name="infixModules">The infix module tree.</param>
+        /// <param name="diagnosticEmitter">The diagnostic emitter.</param>
+        protected internal LuaParser (
+            LuaOptions luaOptions,
+            ITokenReader<LuaTokenType> tokenReader,
+            PrattParserModuleTree<LuaTokenType, IPrefixParselet<LuaTokenType, Expression>> prefixModules,
+            PrattParserModuleTree<LuaTokenType, IInfixParselet<LuaTokenType, Expression>> infixModules,
+            IProgress<Diagnostic> diagnosticEmitter )
+            : base ( tokenReader, prefixModules, infixModules, diagnosticEmitter )
         {
             this.LuaOptions = luaOptions;
         }
 
+        /// <summary>
+        /// The list of terminal token ids.
+        /// </summary>
         private static readonly String[] terminals = new[] { "end", "else", "elseif", "until" };
+
+        /// <summary>
+        /// The compound assignment operator token ids.
+        /// </summary>
         private static readonly String[] compoundAssignmentOperatorIds = new[] { "+=", "-=", "*=", "/=", "^=", "%=", "..=" };
 
+        /// <summary>
+        /// Whether the next token is a terminal.
+        /// </summary>
+        /// <returns></returns>
         private Boolean HasTerminalAhead ( ) =>
             this.TokenReader.IsAhead ( LuaTokenType.EOF ) || this.TokenReader.IsAhead ( terminals );
 
+        /// <summary>
+        /// Attempts to parse an expression and throws a <see cref="FatalParsingException" /> if
+        /// unable to.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="FatalParsingException">Thrown when the expression parsing fails.</exception>
         protected Expression ParseExpression ( )
         {
             if ( !this.TryParseExpression ( out Expression expression ) )
@@ -59,6 +117,11 @@ namespace Loretta.Parsing
             return expression;
         }
 
+        /// <summary>
+        /// Parses an identifier expression.
+        /// </summary>
+        /// <param name="checkParents">Whether to check parent scopes for the variable.</param>
+        /// <returns></returns>
         protected IdentifierExpression ParseIdentifierExpression ( Boolean checkParents )
         {
             LuaToken ident = this.TokenReader.FatalExpect ( LuaTokenType.Identifier );
@@ -67,6 +130,10 @@ namespace Loretta.Parsing
             return new IdentifierExpression ( ident, variable );
         }
 
+        /// <summary>
+        /// Parses a function name.
+        /// </summary>
+        /// <returns></returns>
         protected Expression ParseFunctionName ( )
         {
             LuaToken ident;
@@ -87,6 +154,10 @@ namespace Loretta.Parsing
             return name;
         }
 
+        /// <summary>
+        /// Parses a <see cref="DoStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private DoStatement ParseDoStatement ( )
         {
             return new DoStatement (
@@ -96,6 +167,10 @@ namespace Loretta.Parsing
             );
         }
 
+        /// <summary>
+        /// Parses a (local or not) function definition statement.
+        /// </summary>
+        /// <returns></returns>
         private FunctionDefinitionStatement ParseFunctionDefinitionStatement ( )
         {
             var isLocal = this.TokenReader.Accept ( LuaTokenType.Keyword, "local", out LuaToken localKw );
@@ -131,6 +206,10 @@ namespace Loretta.Parsing
                 : new FunctionDefinitionStatement ( funcKw, name, lparen, args, commas, rparen, body, endKw );
         }
 
+        /// <summary>
+        /// Parses an <see cref="IfStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private IfStatement ParseIfStatement ( )
         {
             var clauses = new List<IfClause>
@@ -162,6 +241,10 @@ namespace Loretta.Parsing
                 : new IfStatement ( clauses, this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "end" ) );
         }
 
+        /// <summary>
+        /// Parses a <see cref="LocalVariableDeclarationStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private LocalVariableDeclarationStatement ParseLocalVariableDeclarationStatement ( )
         {
             LuaToken localKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "local" );
@@ -192,6 +275,10 @@ namespace Loretta.Parsing
             return new LocalVariableDeclarationStatement ( localKw, idents, identCommas );
         }
 
+        /// <summary>
+        /// Parses a <see cref="GotoLabelStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private GotoLabelStatement ParseGotoLabelStatement ( )
         {
             LuaToken ldelim = this.TokenReader.FatalExpect ( LuaTokenType.GotoLabelDelimiter );
@@ -200,6 +287,11 @@ namespace Loretta.Parsing
             return new GotoLabelStatement ( ldelim, this.GetOrCreateLabel ( ident, Scope.FindMode.CheckFunctionScope ), ident, rdelim );
         }
 
+        /// <summary>
+        /// Parses an <see cref="AssignmentStatement" />.
+        /// </summary>
+        /// <param name="expr">The first expression on the left side of assignment.</param>
+        /// <returns></returns>
         private AssignmentStatement ParseAssignmentStatement ( Expression expr )
         {
             var vars = new List<Expression> { expr };
@@ -222,6 +314,11 @@ namespace Loretta.Parsing
             return new AssignmentStatement ( vars, varsCommas, equals, vals, valsCommas );
         }
 
+        /// <summary>
+        /// Parses a <see cref="CompoundAssignmentStatement" />.
+        /// </summary>
+        /// <param name="assignee">The expression on the left side of the assignment.</param>
+        /// <returns></returns>
         private CompoundAssignmentStatement ParseCompoundAssignmentStatement ( Expression assignee )
         {
             LuaToken compoundAssignmentOperator = this.TokenReader.FatalExpect ( new[] { LuaTokenType.Operator }, compoundAssignmentOperatorIds );
@@ -231,6 +328,10 @@ namespace Loretta.Parsing
             return new CompoundAssignmentStatement ( assignee, compoundAssignmentOperator, value );
         }
 
+        /// <summary>
+        /// Parses a <see cref="WhileLoopStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private WhileLoopStatement ParseWhileLoopStatement ( )
         {
             return new WhileLoopStatement (
@@ -242,6 +343,10 @@ namespace Loretta.Parsing
             );
         }
 
+        /// <summary>
+        /// Parses a <see cref="RepeatUntilStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private RepeatUntilStatement ParseRepeatUntilLoopStatement ( )
         {
             try
@@ -261,6 +366,10 @@ namespace Loretta.Parsing
             }
         }
 
+        /// <summary>
+        /// Parses a <see cref="GenericForLoopStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private GenericForLoopStatement ParseGenericForLoopStatement ( )
         {
             Scope scope = this.EnterScope ( false );
@@ -291,6 +400,10 @@ namespace Loretta.Parsing
             return new GenericForLoopStatement ( scope, forKw, vars, commas, inKw, expressions, doKw, body, endKw );
         }
 
+        /// <summary>
+        /// Parses a <see cref="NumericForLoopStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private NumericForLoopStatement ParseNumericForLoopStatement ( )
         {
             Scope scope = this.EnterScope ( false );
@@ -328,6 +441,10 @@ namespace Loretta.Parsing
                 : new NumericForLoopStatement ( scope, forKw, var, equals, initial, comma1, final, doKw, body, endKw );
         }
 
+        /// <summary>
+        /// Parses a <see cref="ReturnStatement" />.
+        /// </summary>
+        /// <returns></returns>
         private ReturnStatement ParseReturnStatement ( )
         {
             LuaToken returnKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "return" );
@@ -346,6 +463,10 @@ namespace Loretta.Parsing
             return new ReturnStatement ( returnKw, retvals, commas );
         }
 
+        /// <summary>
+        /// Parses a <see cref="Statement" />.
+        /// </summary>
+        /// <returns></returns>
         private Statement ParseStatement ( )
         {
             SourceLocation startLocation = this.TokenReader.Location;
@@ -454,6 +575,11 @@ namespace Loretta.Parsing
             throw new FatalParsingException ( this.TokenReader.Location, message );
         }
 
+        /// <summary>
+        /// Parses a <see cref="StatementList" />.
+        /// </summary>
+        /// <param name="scope">The statement list's scope.</param>
+        /// <returns></returns>
         public StatementList ParseStatementList ( Scope scope )
         {
             var statements = new List<Statement> ( );
@@ -472,6 +598,11 @@ namespace Loretta.Parsing
             return new StatementList ( scope, statements );
         }
 
+        /// <summary>
+        /// Parses a <see cref="StatementList" /> with a dedicated scope.
+        /// </summary>
+        /// <param name="isFunction">Whether the scope is a function's.</param>
+        /// <returns></returns>
         public StatementList ParseScopedStatementList ( Boolean isFunction )
         {
             try
@@ -485,6 +616,10 @@ namespace Loretta.Parsing
             }
         }
 
+        /// <summary>
+        /// Parses the entire provided code.
+        /// </summary>
+        /// <returns></returns>
         public StatementList Parse ( )
         {
             StatementList res = this.ParseScopedStatementList ( true );

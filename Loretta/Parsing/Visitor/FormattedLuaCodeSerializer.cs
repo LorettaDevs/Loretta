@@ -10,12 +10,23 @@ using Loretta.Utilities;
 
 namespace Loretta.Parsing.Visitor
 {
+    /// <summary>
+    /// A formatted lua code serializer. Transforms an AST into formatted code.
+    /// </summary>
     public class FormattedLuaCodeSerializer : ITreeVisitor
     {
         private readonly CodeWriter _writer;
 
+        /// <summary>
+        /// The lua options being used by this serializer.
+        /// </summary>
         public LuaOptions LuaOptions { get; }
 
+        /// <summary>
+        /// Initializes a new formatted lua code serializer.
+        /// </summary>
+        /// <param name="luaOptions">The lua options to be used by this serializer.</param>
+        /// <param name="indentation">The indentation to use.</param>
         public FormattedLuaCodeSerializer ( LuaOptions luaOptions, String indentation = "\t" )
         {
             this._writer = new CodeWriter ( indentation );
@@ -24,6 +35,10 @@ namespace Loretta.Parsing.Visitor
 
         #region Code Serialization Helpers
 
+        /// <summary>
+        /// Writes the EOL of a statement adding the semicolon if required.
+        /// </summary>
+        /// <param name="statement">The statement whose EOL is to be written.</param>
         private void WriteStatementLineEnd ( Statement statement )
         {
             if ( statement.Semicolon is Token<LuaTokenType> )
@@ -32,6 +47,12 @@ namespace Loretta.Parsing.Visitor
                 this._writer.WriteLine ( );
         }
 
+        /// <summary>
+        /// Writes a list of nodes separated by the specified separator.
+        /// </summary>
+        /// <typeparam name="T">The type of the nodes in the list.</typeparam>
+        /// <param name="separator">The separator.</param>
+        /// <param name="nodes">The nodes.</param>
         private void WriteSeparatedNodeList<T> ( String separator, ImmutableArray<T> nodes )
             where T : LuaASTNode
         {
@@ -49,11 +70,16 @@ namespace Loretta.Parsing.Visitor
 
         #region ITreeVisitor
 
+        /// <summary>
+        /// Visits a node.
+        /// </summary>
+        /// <param name="node"></param>
         public virtual void VisitNode ( LuaASTNode node ) =>
             node.Accept ( this );
 
         #region Expressions
 
+        /// <inheritdoc />
         public virtual void VisitAnonymousFunction ( AnonymousFunctionExpression anonymousFunction )
         {
             this._writer.Write ( "function ( " );
@@ -63,6 +89,7 @@ namespace Loretta.Parsing.Visitor
             this._writer.WriteIndented ( "end" );
         }
 
+        /// <inheritdoc />
         public virtual void VisitBinaryOperation ( BinaryOperationExpression binaryOperaion )
         {
             this.VisitNode ( binaryOperaion.Left );
@@ -72,9 +99,11 @@ namespace Loretta.Parsing.Visitor
             this.VisitNode ( binaryOperaion.Right );
         }
 
+        /// <inheritdoc />
         public virtual void VisitBoolean ( BooleanExpression booleanExpression ) =>
             this._writer.Write ( booleanExpression.Value ? "true" : "false" );
 
+        /// <inheritdoc />
         public virtual void VisitFunctionCall ( FunctionCallExpression node )
         {
             this.VisitNode ( node.Function );
@@ -83,6 +112,7 @@ namespace Loretta.Parsing.Visitor
             this._writer.Write ( " )" );
         }
 
+        /// <inheritdoc />
         public virtual void VisitGroupedExpression ( GroupedExpression node )
         {
             this._writer.Write ( "( " );
@@ -90,9 +120,11 @@ namespace Loretta.Parsing.Visitor
             this._writer.Write ( " )" );
         }
 
+        /// <inheritdoc />
         public virtual void VisitIdentifier ( IdentifierExpression identifier ) =>
             this._writer.Write ( identifier.Identifier );
 
+        /// <inheritdoc />
         public virtual void VisitIndex ( IndexExpression node )
         {
             this.VisitNode ( node.Indexee );
@@ -119,15 +151,19 @@ namespace Loretta.Parsing.Visitor
             }
         }
 
+        /// <inheritdoc />
         public virtual void VisitNil ( NilExpression nilExpression ) =>
             this._writer.Write ( "nil" );
 
+        /// <inheritdoc />
         public virtual void VisitNumber ( NumberExpression numberExpression ) =>
             this._writer.Write ( numberExpression.Tokens.Single ( ).Raw );
 
+        /// <inheritdoc />
         public virtual void VisitString ( StringExpression node ) =>
             this._writer.Write ( node.Tokens.Single ( ).Raw );
 
+        /// <inheritdoc />
         public virtual void VisitTableConstructor ( TableConstructorExpression node )
         {
             this._writer.WriteLine ( "{" );
@@ -143,6 +179,7 @@ namespace Loretta.Parsing.Visitor
             this._writer.WriteIndented ( "}" );
         }
 
+        /// <inheritdoc />
         public virtual void VisitTableField ( TableField node )
         {
             switch ( node.KeyType )
@@ -169,6 +206,7 @@ namespace Loretta.Parsing.Visitor
                 this._writer.Write ( node.Delimiter.Raw );
         }
 
+        /// <inheritdoc />
         public virtual void VisitUnaryOperation ( UnaryOperationExpression node )
         {
             switch ( node.Fix )
@@ -192,11 +230,13 @@ namespace Loretta.Parsing.Visitor
             }
         }
 
+        /// <inheritdoc />
         public virtual void VisitVarArg ( VarArgExpression varArg ) =>
             this._writer.Write ( "..." );
 
-        #endregion
+        #endregion Expressions
 
+        /// <inheritdoc />
         public virtual void VisitAssignment ( AssignmentStatement assignmentStatement )
         {
             this._writer.WriteIndentation ( );
@@ -205,6 +245,8 @@ namespace Loretta.Parsing.Visitor
             this.WriteSeparatedNodeList ( ", ", assignmentStatement.Values );
             this.WriteStatementLineEnd ( assignmentStatement );
         }
+
+        /// <inheritdoc />
         public void VisitCompoundAssignmentStatement ( CompoundAssignmentStatement compoundAssignmentStatement )
         {
             this._writer.WriteIndentation ( );
@@ -216,18 +258,21 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( compoundAssignmentStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitBreak ( BreakStatement breakStatement )
         {
             this._writer.WriteIndented ( "break" );
             this.WriteStatementLineEnd ( breakStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitContinue ( ContinueStatement continueStatement )
         {
             this._writer.WriteIndented ( "continue" );
             this.WriteStatementLineEnd ( continueStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitDo ( DoStatement doStatement )
         {
             this._writer.WriteLineIndented ( "do" );
@@ -236,6 +281,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( doStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitExpressionStatement ( ExpressionStatement expressionStatement )
         {
             this._writer.WriteIndentation ( );
@@ -243,6 +289,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( expressionStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitFunctionDefinition ( FunctionDefinitionStatement functionDeclaration )
         {
             if ( functionDeclaration.IsLocal )
@@ -263,6 +310,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( functionDeclaration );
         }
 
+        /// <inheritdoc />
         public virtual void VisitGotoLabel ( GotoLabelStatement gotoLabelStatement )
         {
             this._writer.WriteIndented ( "::" );
@@ -271,6 +319,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( gotoLabelStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitGoto ( GotoStatement gotoStatement )
         {
             this._writer.WriteIndented ( "goto " );
@@ -278,6 +327,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( gotoStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitIfStatement ( IfStatement ifStatement )
         {
             for ( var i = 0; i < ifStatement.Clauses.Length; i++ )
@@ -308,6 +358,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( ifStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitGenericFor ( GenericForLoopStatement genericForLoop )
         {
             this._writer.WriteIndented ( "for " );
@@ -320,6 +371,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( genericForLoop );
         }
 
+        /// <inheritdoc />
         public virtual void VisitLocalVariableDeclaration ( LocalVariableDeclarationStatement localVariableDeclaration )
         {
             this._writer.WriteIndented ( "local " );
@@ -332,6 +384,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( localVariableDeclaration );
         }
 
+        /// <inheritdoc />
         public virtual void VisitNumericFor ( NumericForLoopStatement numericForLoop )
         {
             this._writer.WriteIndented ( "for " );
@@ -351,6 +404,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( numericForLoop );
         }
 
+        /// <inheritdoc />
         public virtual void VisitRepeatUntil ( RepeatUntilStatement repeatUntilLoop )
         {
             this._writer.WriteLineIndented ( "repeat" );
@@ -360,6 +414,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( repeatUntilLoop );
         }
 
+        /// <inheritdoc />
         public virtual void VisitReturn ( ReturnStatement returnStatement )
         {
             this._writer.WriteIndented ( "return " );
@@ -367,6 +422,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( returnStatement );
         }
 
+        /// <inheritdoc />
         public virtual void VisitStatementList ( StatementList node )
         {
             foreach ( Statement statement in node.Body )
@@ -375,6 +431,7 @@ namespace Loretta.Parsing.Visitor
             }
         }
 
+        /// <inheritdoc />
         public virtual void VisitWhileLoop ( WhileLoopStatement whileLoop )
         {
             this._writer.WriteIndented ( "while " );
@@ -385,6 +442,7 @@ namespace Loretta.Parsing.Visitor
             this.WriteStatementLineEnd ( whileLoop );
         }
 
+        /// <inheritdoc />
         public void VisitEmptyStatement ( EmptyStatement emptyStatement )
         {
             this._writer.WriteIndentation ( );
@@ -393,12 +451,25 @@ namespace Loretta.Parsing.Visitor
 
         #endregion ITreeVisitor
 
+        /// <summary>
+        /// Clears the string contents written.
+        /// </summary>
         public void Clear ( ) =>
             this._writer.Reset ( );
 
+        /// <summary>
+        /// Obtains the string contents of the visited nodes up to now.
+        /// </summary>
+        /// <returns></returns>
         public override String ToString ( ) =>
             this._writer.ToString ( );
 
+        /// <summary>
+        /// Formats a node into code with the provided lua options.
+        /// </summary>
+        /// <param name="luaOptions">The lua options to be used.</param>
+        /// <param name="node">The node to be formatted.</param>
+        /// <returns></returns>
         public static String Format ( LuaOptions luaOptions, LuaASTNode node )
         {
             var serializer = new FormattedLuaCodeSerializer ( luaOptions );

@@ -9,8 +9,14 @@ using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
 namespace Loretta.Parsing
 {
+    /// <summary>
+    /// The lua parser builder.
+    /// </summary>
     public class LuaParserBuilder : PrattParserBuilder<LuaTokenType, Expression>
     {
+        /// <summary>
+        /// The lua options to be used by this builder and the parsers it builds.
+        /// </summary>
         public LuaOptions LuaOptions { get; }
 
         private static Boolean StringExpressionFactory ( LuaToken token, out Expression expression )
@@ -43,6 +49,10 @@ namespace Loretta.Parsing
             return true;
         }
 
+        /// <summary>
+        /// Initializes a new lua parser builder.
+        /// </summary>
+        /// <param name="luaOptions">The lua options to be used.</param>
         public LuaParserBuilder ( LuaOptions luaOptions )
         {
             this.LuaOptions = luaOptions;
@@ -100,24 +110,52 @@ namespace Loretta.Parsing
 
         #region Operator Management
 
+        /// <summary>
+        /// The factory method for <see cref="BinaryOperationExpression" /> nodes.
+        /// </summary>
+        /// <param name="left">The operand on the left side.</param>
+        /// <param name="op">The operator.</param>
+        /// <param name="right">The operand on the right side.</param>
+        /// <param name="expression">The created <see cref="BinaryOperationExpression" />.</param>
+        /// <returns><see langword="true" /></returns>
         protected virtual Boolean BinaryOperatorFactory ( Expression left, LuaToken op, Expression right, out Expression expression )
         {
             expression = new BinaryOperationExpression ( left, op, right );
             return true;
         }
 
+        /// <summary>
+        /// The factory method for prefix <see cref="UnaryOperationExpression" /> nodes.
+        /// </summary>
+        /// <param name="op">The operator.</param>
+        /// <param name="left">The operand.</param>
+        /// <param name="expression">The created <see cref="UnaryOperationExpression" /></param>
+        /// <returns><see langword="true" /></returns>
         protected virtual Boolean PrefixOperatorFactory ( LuaToken op, Expression left, out Expression expression )
         {
             expression = new UnaryOperationExpression ( UnaryOperationFix.Prefix, op, left );
             return true;
         }
 
+        /// <summary>
+        /// The factory method for postfix <see cref="UnaryOperationExpression" /> nodes.
+        /// </summary>
+        /// <param name="right">The operator.</param>
+        /// <param name="op">The operand.</param>
+        /// <param name="expression">The created <see cref="UnaryOperationExpression" />.</param>
+        /// <returns><see langword="true" /></returns>
         protected virtual Boolean PostfixOperatorFactory ( Expression right, LuaToken op, out Expression expression )
         {
             expression = new UnaryOperationExpression ( UnaryOperationFix.Postfix, op, right );
             return true;
         }
 
+        /// <summary>
+        /// Adds a binary operator to this builder.
+        /// </summary>
+        /// <param name="precedence">The operator's precedence.</param>
+        /// <param name="isRightAssociative">Whether the operator is right-associative.</param>
+        /// <param name="op">The operator token id.</param>
         protected virtual void AddBinaryOperator ( Int32 precedence, Boolean isRightAssociative, String op ) =>
             this.RegisterSingleTokenInfixOperator (
                 LuaTokenType.Operator,
@@ -126,14 +164,30 @@ namespace Loretta.Parsing
                 isRightAssociative,
                 this.BinaryOperatorFactory );
 
+        /// <summary>
+        /// Adds a prefix unary operator to this builder.
+        /// </summary>
+        /// <param name="precedence">The operator's precedence.</param>
+        /// <param name="op">The operator token id.</param>
         protected virtual void AddPrefixOperator ( Int32 precedence, String op ) =>
             this.RegisterSingleTokenPrefixOperator ( LuaTokenType.Operator, op, precedence, this.PrefixOperatorFactory );
 
+        /// <summary>
+        /// Adds a postfix unary operator to this builder.
+        /// </summary>
+        /// <param name="precedence">The operator's precedence.</param>
+        /// <param name="op">The operator token id.</param>
         protected virtual void AddPostfixOperator ( Int32 precedence, String op ) =>
             this.RegisterSingleTokenPostfixOperator ( LuaTokenType.Operator, op, precedence, this.PostfixOperatorFactory );
 
         #endregion Operator Management
 
+        /// <summary>
+        /// Creates a <see cref="LuaParser" /> from the provided reader and diagnostic emitter.
+        /// </summary>
+        /// <param name="reader">The token reader to use.</param>
+        /// <param name="diagnosticEmmiter">The diagnostic emitter.</param>
+        /// <returns></returns>
         public new LuaParser CreateParser ( ITokenReader<LuaTokenType> reader, IProgress<Diagnostic> diagnosticEmmiter ) =>
             new LuaParser ( this.LuaOptions, reader, this.prefixModuleTree, this.infixModuleTree, diagnosticEmmiter );
     }

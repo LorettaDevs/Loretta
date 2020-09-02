@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using GParse.Lexing;
 using Loretta.Lexing;
@@ -7,8 +6,12 @@ using Loretta.Parsing.Visitor;
 
 namespace Loretta.Parsing.AST
 {
+    /// <summary>
+    /// Represents an empty statement.
+    /// </summary>
     public class EmptyStatement : Statement
     {
+        /// <inheritdoc />
         public override IEnumerable<Token<LuaTokenType>> Tokens
         {
             get
@@ -18,6 +21,7 @@ namespace Loretta.Parsing.AST
             }
         }
 
+        /// <inheritdoc />
         public override IEnumerable<LuaASTNode> Children =>
             Enumerable.Empty<LuaASTNode> ( );
 

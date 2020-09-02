@@ -12,41 +12,96 @@ using Loretta.Utilities;
 namespace Loretta.Lexing.Modules
 {
     /// <summary>
-    /// This module does not support non-ascii numbers or letters.
+    /// Parses numbers in the lexer.
     /// </summary>
     public class NumberLexerModule : ILexerModule<LuaTokenType>
     {
+        /// <inheritdoc />
         public String Name => "Number Lexer Module";
 
+        /// <inheritdoc />
         public String? Prefix => null;
 
+        /// <summary>
+        /// The options used by this module.
+        /// </summary>
         public LuaOptions LuaOptions { get; }
 
+        /// <summary>
+        /// Initializes this module with the provided options.
+        /// </summary>
+        /// <param name="luaOptions">The options to be used by this module.</param>
         public NumberLexerModule ( LuaOptions luaOptions )
         {
             this.LuaOptions = luaOptions;
         }
 
+        /// <summary>
+        /// Checks whether the provided character is an underline and the options used by this
+        /// module allows accepting underlines in numbers.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>
+        /// Whether the provided character is an underline and the options used by this module
+        /// allows accepting underlines in numbers.
+        /// </returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsUnderline ( Char ch ) =>
             this.LuaOptions.AcceptUnderlineInNumberLiterals && ch == '_';
 
+        /// <summary>
+        /// Checks whether the provided character is a hexadecimal character or an underline if the
+        /// options used by this module allows accepting underlines in numbers.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>
+        /// Whether the provided character is a hexadecimal character or an underline if the options
+        /// used by this module allows accepting underlines in numbers.
+        /// </returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsHexadecimalChar ( Char ch ) =>
             CharUtils.IsHexadecimal ( ch ) || this.IsUnderline ( ch );
 
+        /// <summary>
+        /// Checks whether the provided character is a decimal character or an underline if the
+        /// options used by this module allows accepting underlines in numbers.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>
+        /// Whether the provided character is a decimal character or an underline if the options
+        /// used by this module allows accepting underlines in numbers.
+        /// </returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsDecimalChar ( Char ch ) =>
             CharUtils.IsDecimal ( ch ) || this.IsUnderline ( ch );
 
+        /// <summary>
+        /// Checks whether the provided character is an octal character or an underline if the
+        /// options used by this module allows accepting underlines in numbers.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>
+        /// Whether the provided character is an octal character or an underline if the options used
+        /// by this module allows accepting underlines in numbers.
+        /// </returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsOctalChar ( Char ch ) =>
             CharUtils.IsInRange ( '0', ch, '7' ) || this.IsUnderline ( ch );
 
+        /// <summary>
+        /// Checks whether the provided character is a binary character or an underline if the
+        /// options used by this module allows accepting underlines in numbers.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>
+        /// Whether the provided character is a binary character or an underline if the options used
+        /// by this module allows accepting underlines in numbers.
+        /// </returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private Boolean IsBinaryChar ( Char ch ) =>
             ch == '0' || ch == '1' || this.IsUnderline ( ch );
 
+        /// <inheritdoc />
         public virtual Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
         {
             // We use CharUtils' IsDecimal instead of ours because we don't accept underlines at the
@@ -56,6 +111,7 @@ namespace Loretta.Lexing.Modules
                         || ( peek == '.' && reader.Peek ( 1 ) is Char peek2 && CharUtils.IsDecimal ( peek2 ) ) );
         }
 
+        /// <inheritdoc />
         public virtual Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticReporter )
         {
             var buffer = new StringBuilder ( );

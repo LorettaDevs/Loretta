@@ -10,8 +10,16 @@ using Loretta.Parsing.AST;
 
 namespace Loretta.Parsing.Modules
 {
+    /// <summary>
+    /// The module that parses indexing expressions.
+    /// </summary>
     public class IndexExpressionParserModule : IInfixParselet<LuaTokenType, Expression>
     {
+        /// <summary>
+        /// Registers the module in a parser builder.
+        /// </summary>
+        /// <param name="builder">The builder to register in.</param>
+        /// <param name="precedence">The precedence to register the module with.</param>
         public static void Register ( IPrattParserBuilder<LuaTokenType, Expression> builder, Int32 precedence )
         {
             var instance = new IndexExpressionParserModule ( precedence );
@@ -20,14 +28,26 @@ namespace Loretta.Parsing.Modules
             builder.Register ( LuaTokenType.LBracket, instance );
         }
 
+        /// <summary>
+        /// The precedence to use for the indexing operation.
+        /// </summary>
         public Int32 Precedence { get; }
 
+        /// <summary>
+        /// Initializes a new indexing expression parser module.
+        /// </summary>
+        /// <param name="precedence"></param>
         public IndexExpressionParserModule ( Int32 precedence )
         {
             this.Precedence = precedence;
         }
 
-        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, Expression indexee, IProgress<Diagnostic> diagnosticReporter, [NotNullWhen ( true )] out Expression expression )
+        /// <inheritdoc />
+        public Boolean TryParse (
+            IPrattParser<LuaTokenType, Expression> parser,
+            Expression indexee,
+            IProgress<Diagnostic> diagnosticReporter,
+            [NotNullWhen ( true )] out Expression expression )
         {
             if ( parser.TokenReader.Accept ( new[] { LuaTokenType.Dot, LuaTokenType.Colon }, out Token<LuaTokenType> sep ) )
             {

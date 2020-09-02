@@ -12,31 +12,45 @@ namespace Loretta.Parsing.AST
     public enum IndexType
     {
         /// <summary>
-        /// Indexing done with an expression ('[', expr, ']')
+        /// Indexing done with an expression ('[', expr, ']').
         /// </summary>
-        Indexer, // '[', expr, ']'
+        Indexer,
+
         /// <summary>
-        /// Indexing done with an identifier ('.' ident)
+        /// Indexing done with an identifier ('.' ident).
         /// </summary>
-        Member,     // '.' ident
+        Member,
+
         /// <summary>
-        /// Function call done on an indexing done with an identifier (':' ident <funccall>)
+        /// Function call done on an indexing done with an identifier (':' ident &lt;funccall&gt;).
         /// </summary>
-        Method      // ':' ident <funccall>
+        Method
     }
 
+    /// <summary>
+    /// Represents an indexing expression.
+    /// </summary>
     public class IndexExpression : Expression
     {
         /// <summary>
-        /// Whether this is an indexing in the format a.b or a[b]
+        /// The type of indexing operation being done.
         /// </summary>
         public IndexType Type { get; }
 
+        /// <summary>
+        /// The expression being indexed.
+        /// </summary>
         public Expression Indexee { get; }
 
+        /// <summary>
+        /// THe expression being used to index.
+        /// </summary>
         public Expression Indexer { get; }
 
+        /// <inheritdoc />
         public override Boolean IsConstant => false;
+
+        /// <inheritdoc />
         public override Object ConstantValue => throw new InvalidOperationException ( "This is not a constant node." );
 
         private IndexExpression ( IEnumerable<LuaToken> tokens, IndexType type, Expression indexee, Expression indexer )
@@ -47,6 +61,13 @@ namespace Loretta.Parsing.AST
             this.Indexer = indexer;
         }
 
+        /// <summary>
+        /// Initializes a new expression-based indexing operation.
+        /// </summary>
+        /// <param name="indexee">The expresion being indexed.</param>
+        /// <param name="lbracket">The left bracket token.</param>
+        /// <param name="indexer">The expression being used to index.</param>
+        /// <param name="rbracket">The right bracket token.</param>
         public IndexExpression ( Expression indexee, LuaToken lbracket, Expression indexer, LuaToken rbracket )
             : this ( new[] { lbracket, rbracket }, IndexType.Indexer, indexee, indexer )
         {
@@ -56,6 +77,12 @@ namespace Loretta.Parsing.AST
                 throw new ArgumentException ( "RBracket must be a rbracket", nameof ( rbracket ) );
         }
 
+        /// <summary>
+        /// Initializes a new identifier-based indexing expression.
+        /// </summary>
+        /// <param name="indexee">The expression being indexed.</param>
+        /// <param name="separator">The indexing operation separator.</param>
+        /// <param name="indexer">The identifier being used to index.</param>
         public IndexExpression ( Expression indexee, LuaToken separator, IdentifierExpression indexer )
             : this ( new[] { separator }, separator.Type == LuaTokenType.Colon ? IndexType.Method : IndexType.Member, indexee, indexer )
         {
@@ -63,8 +90,10 @@ namespace Loretta.Parsing.AST
                 throw new ArgumentException ( "Separator must be either a colon or a dot", nameof ( separator ) );
         }
 
+        /// <inheritdoc />
         public override IEnumerable<LuaToken> Tokens { get; }
 
+        /// <inheritdoc />
         public override IEnumerable<LuaASTNode> Children
         {
             get

@@ -11,8 +11,16 @@ using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
 namespace Loretta.Parsing.Modules
 {
+    /// <summary>
+    /// The module that parses function call expressions.
+    /// </summary>
     public class FunctionCallExpressionParserModule : IInfixParselet<LuaTokenType, Expression>
     {
+        /// <summary>
+        /// Registers the module in a parser builder with the provided precedence.
+        /// </summary>
+        /// <param name="builder">The builder to register the module in.</param>
+        /// <param name="precedence">The precedence to register with.</param>
         public static void Register ( IPrattParserBuilder<LuaTokenType, Expression> builder, Int32 precedence )
         {
             var instance = new FunctionCallExpressionParserModule ( precedence );
@@ -22,14 +30,26 @@ namespace Loretta.Parsing.Modules
             builder.Register ( LuaTokenType.LParen, instance );
         }
 
+        /// <summary>
+        /// The configured function call precedence.
+        /// </summary>
         public Int32 Precedence { get; }
 
+        /// <summary>
+        /// Initializes a new function call expression parser module.
+        /// </summary>
+        /// <param name="precedence">The precedence to be used as the function call precedence.</param>
         public FunctionCallExpressionParserModule ( Int32 precedence )
         {
             this.Precedence = precedence;
         }
 
-        public Boolean TryParse ( IPrattParser<LuaTokenType, Expression> parser, Expression function, IProgress<Diagnostic> diagnosticReporter, [NotNullWhen ( true )] out Expression expression )
+        /// <inheritdoc />
+        public Boolean TryParse (
+            IPrattParser<LuaTokenType, Expression> parser,
+            Expression function,
+            IProgress<Diagnostic> diagnosticReporter,
+            [NotNullWhen ( true )] out Expression expression )
         {
             if ( parser.TokenReader.IsAhead ( LuaTokenType.LCurly )
                  && TableConstructorExpressionParserModule.Instance.TryParse ( parser, diagnosticReporter, out Expression tableExpression ) )
@@ -54,9 +74,10 @@ namespace Loretta.Parsing.Modules
                     {
                         LuaToken peek = parser.TokenReader.Lookahead ( );
                         rparen = TokenFactory.Token ( ")", LuaTokenType.RParen );
-                        diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.ThingExpectedAfter ( peek.Range,
-                                                                                                    "Closing parenthesis",
-                                                                                                    "argument list" ) );
+                        diagnosticReporter.Report ( LuaDiagnostics.SyntaxError.ThingExpectedAfter (
+                            peek.Range,
+                            "Closing parenthesis",
+                            "argument list" ) );
                         break;
                     }
 

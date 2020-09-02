@@ -12,8 +12,14 @@ using Loretta.Utilities;
 
 namespace Loretta.Lexing.Modules
 {
+    /// <summary>
+    /// Parses short strings in the lexer.
+    /// </summary>
     public class ShortStringLexerModule : ILexerModule<LuaTokenType>
     {
+        /// <summary>
+        /// The lookup table of single-char escapes.
+        /// </summary>
         private static readonly ImmutableDictionary<Char, Char> escapes = ImmutableDictionary.CreateRange ( new[]
         {
             new KeyValuePair<Char, Char> ( 'a', '\a' ),
@@ -29,20 +35,36 @@ namespace Loretta.Lexing.Modules
             new KeyValuePair<Char, Char> ( '"', '"' ),
         } );
 
+        /// <inheritdoc />
         public String Name => "String Lexer Module";
 
+        /// <inheritdoc />
         public String? Prefix => null;
 
+        /// <summary>
+        /// The lua options used by this module.
+        /// </summary>
         public LuaOptions LuaOptions { get; }
 
+        /// <summary>
+        /// Initializes this module with the provided options.
+        /// </summary>
+        /// <param name="luaOptions">The options to be used by this module.</param>
         public ShortStringLexerModule ( LuaOptions luaOptions )
         {
             this.LuaOptions = luaOptions;
         }
 
+        /// <inheritdoc />
         public Boolean CanConsumeNext ( IReadOnlyCodeReader reader ) =>
             reader.IsNext ( '\'' ) || reader.IsNext ( '"' );
 
+        /// <summary>
+        /// Parses a decimal number after the decimal escape prefix.
+        /// </summary>
+        /// <param name="reader">The reader to use.</param>
+        /// <param name="rawBuffer">The builder for the raw string.</param>
+        /// <param name="parsedBuffer">The builder for the parser string.</param>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private static void ParseDecimalEscape ( ICodeReader reader, StringBuilder rawBuffer, StringBuilder parsedBuffer )
         {
@@ -69,6 +91,12 @@ namespace Loretta.Lexing.Modules
             parsedBuffer.Append ( ( Char ) num );
         }
 
+        /// <summary>
+        /// Parses a hexadecimal number after the hexadecimal escape prefix.
+        /// </summary>
+        /// <param name="reader">The reader to use.</param>
+        /// <param name="rawBuffer">The builder for the raw string.</param>
+        /// <param name="parsedBuffer">The builder for the parser string.</param>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         private static void ParseHexadecimalEscape ( ICodeReader reader, StringBuilder rawBuffer, StringBuilder parsedBuffer )
         {
@@ -92,6 +120,7 @@ namespace Loretta.Lexing.Modules
             parsedBuffer.Append ( ( Char ) num );
         }
 
+        /// <inheritdoc />
         public Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticReporter )
         {
             StringBuilder rawBuffer = new StringBuilder ( ),

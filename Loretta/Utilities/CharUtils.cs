@@ -38,8 +38,9 @@ namespace Loretta.Utilities
         public static Boolean IsHexadecimal ( Char ch ) =>
             IsDecimal ( ch )
             // Using the table on /.notes/number-parsing.md, one can see that there's a bit that can
-            // be used to convert uppercase characters to lower case (the 6th bit left to right). So
-            // we preemptively set it on the char to avoid an extra range check.
+            // be used to convert uppercase characters to lower case (the 6th bit right to left). So
+            // we preemptively set it on the char to avoid an extra range check. Validated by the
+            // IsAlphaCheckMicrobenchmark microbenchmark.
             || IsInRange ( 'a', ( Char ) ( ch | 0b0100000 ), 'f' );
 
         /// <summary>
@@ -62,20 +63,25 @@ namespace Loretta.Utilities
             IsDecimal ( ch ) || IsAlpha ( ch );
 
         /// <summary>
-        /// Checks whether the provided character is a valid LuaJIT first identifier character.
+        /// Checks whether the provided character is a valid first identifier character.
         /// </summary>
-        /// <param name="useLuaJitIdentifierRules">Whether to use LuaJIT's identifier matching rule.</param>
+        /// <param name="useLuaJitIdentifierRules">
+        /// Whether to use LuaJIT's identifier matching rule.
+        /// </param>
         /// <param name="ch">The character to check.</param>
-        /// <returns>Whether the provided character is a valid LuaJIT first identifier character.</returns>
+        /// <returns>Whether the provided character is a valid first identifier character.</returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsValidFirstIdentifierChar ( Boolean useLuaJitIdentifierRules, Char ch ) =>
             ch == '_' || IsAlpha ( ch ) || ( useLuaJitIdentifierRules && ch >= 0x7F );
 
         /// <summary>
-        /// Checks whether the provided character is a valid trailing LuaJIT identifier character.
+        /// Checks whether the provided character is a valid trailing identifier character.
         /// </summary>
+        /// <param name="useLuaJitIdentifierRules">
+        /// Whether to use LuaJIT's identifier matching rule.
+        /// </param>
         /// <param name="ch">The character to check.</param>
-        /// <returns>Whether the provided character is a valid trailing LuaJIT identifier character.</returns>
+        /// <returns>Whether the provided character is a valid trailing identifier character.</returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsValidTrailingIdentifierChar ( Boolean useLuaJitIdentifierRules, Char ch ) =>
             IsValidFirstIdentifierChar ( useLuaJitIdentifierRules, ch ) || IsDecimal ( ch );

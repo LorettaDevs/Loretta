@@ -8,8 +8,17 @@ using Loretta.Utilities;
 
 namespace Loretta.Parsing.Visitor
 {
+    /// <summary>
+    /// A folder that rewrites the raw form of strings to only escape required (non-alphanumeric,
+    /// non-punctuation and non-space) characters.
+    /// </summary>
     public class RawStringRewriter : TreeFolderBase
     {
+        /// <summary>
+        /// Rewrites the raw form of the provided string.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public override LuaASTNode VisitString ( StringExpression node )
         {
             // Nothing to do about long strings

@@ -8,22 +8,66 @@ using Loretta.Parsing.AST.Tables;
 
 namespace Loretta.Parsing.Visitor
 {
+    /// <summary>
+    /// The base class for tree folders.
+    /// </summary>
     public class TreeFolderBase : ITreeVisitor<LuaASTNode>
     {
+        /// <summary>
+        /// Folds a nil expression. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The nil expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitNil ( NilExpression node ) => node;
 
+        /// <summary>
+        /// Folds a boolean expression. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The boolean expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitBoolean ( BooleanExpression node ) => node;
 
+        /// <summary>
+        /// Folds an identifier expression. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The identifier expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitIdentifier ( IdentifierExpression node ) => node;
 
+        /// <summary>
+        /// Folds a number expression. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The number expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitNumber ( NumberExpression node ) => node;
 
+        /// <summary>
+        /// Folds a string expression. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The string expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitString ( StringExpression node ) => node;
 
+        /// <summary>
+        /// Folds a vararg expression. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The vararg expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitVarArg ( VarArgExpression node ) => node;
 
+        /// <summary>
+        /// Folds an empty statement. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The empty statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitEmptyStatement ( EmptyStatement node ) => node;
 
+        /// <summary>
+        /// Folds an indexing operation expression. Folds the <see cref="IndexExpression.Indexee" />
+        /// and then the <see cref="IndexExpression.Indexer" /> by default.
+        /// </summary>
+        /// <param name="node">The indexing operation expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitIndex ( IndexExpression node )
         {
             var indexee = ( Expression ) this.VisitNode ( node.Indexee );
@@ -48,6 +92,13 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a function call expression. Folds the <see cref="FunctionCallExpression.Function"
+        /// /> and then the <see cref="FunctionCallExpression.Arguments" /> in the collection's
+        /// order by default.
+        /// </summary>
+        /// <param name="node">The function call expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitFunctionCall ( FunctionCallExpression node )
         {
             var function = ( Expression ) this.VisitNode ( node.Function );
@@ -70,16 +121,23 @@ namespace Loretta.Parsing.Visitor
 
             if ( function != node.Function || !arguments.SequenceEqual ( node.Arguments ) )
             {
-                return new FunctionCallExpression ( function,
-                                                    node.Tokens.First ( ),
-                                                    arguments,
-                                                    node.Tokens.Skip ( 1 ).SkipLast ( 1 ),
-                                                    node.Tokens.Last ( ) );
+                return new FunctionCallExpression (
+                    function,
+                    node.Tokens.First ( ),
+                    arguments,
+                    node.Tokens.Skip ( 1 ).SkipLast ( 1 ),
+                    node.Tokens.Last ( ) );
             }
 
             return node;
         }
 
+        /// <summary>
+        /// Folds an unary operation expression. Folds the <see
+        /// cref="UnaryOperationExpression.Operand" /> by default.
+        /// </summary>
+        /// <param name="node">The unary operation expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitUnaryOperation ( UnaryOperationExpression node )
         {
             Token<LuaTokenType> op = node.Operator;
@@ -95,6 +153,12 @@ namespace Loretta.Parsing.Visitor
             }
         }
 
+        /// <summary>
+        /// Folds a grouped expression. Folds the <see cref="GroupedExpression.InnerExpression" />
+        /// by default.
+        /// </summary>
+        /// <param name="node">The grouped expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitGroupedExpression ( GroupedExpression node )
         {
             var inner = ( Expression ) this.VisitNode ( node.InnerExpression );
@@ -108,6 +172,13 @@ namespace Loretta.Parsing.Visitor
             }
         }
 
+        /// <summary>
+        /// Folds a binary operation expression. Folds the <see
+        /// cref="BinaryOperationExpression.Left" /> operand and then the <see
+        /// cref="BinaryOperationExpression.Right" /> operand by default.
+        /// </summary>
+        /// <param name="node">The binary operation expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitBinaryOperation ( BinaryOperationExpression node )
         {
             var left = ( Expression ) this.VisitNode ( node.Left );
@@ -122,6 +193,12 @@ namespace Loretta.Parsing.Visitor
             }
         }
 
+        /// <summary>
+        /// Folds a table field. Folds the field's <see cref="TableField.Key" /> (if an expresion)
+        /// and the field's <see cref="TableField.Value" /> by default.
+        /// </summary>
+        /// <param name="node">The table field to fold.</param>
+        /// <returns>The folded table field.</returns>
         public virtual LuaASTNode VisitTableField ( TableField node )
         {
             Expression? key = node.KeyType switch
@@ -146,6 +223,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a table constructor expression. Folds all <see
+        /// cref="TableConstructorExpression.Fields" /> in the collection's order by default.
+        /// </summary>
+        /// <param name="node">The table constructor expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitTableConstructor ( TableConstructorExpression node )
         {
             TableField[] fields = node.Fields.Select ( f => ( TableField ) this.VisitNode ( f ) ).ToArray ( );
@@ -158,6 +241,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds an anonymous function expression. Folds the <see
+        /// cref="AnonymousFunctionExpression.Body" /> by default.
+        /// </summary>
+        /// <param name="node">The anonymous function expression to fold.</param>
+        /// <returns>The folded expression.</returns>
         public virtual LuaASTNode VisitAnonymousFunction ( AnonymousFunctionExpression node )
         {
             var body = ( StatementList ) this.VisitNode ( node.Body );
@@ -169,6 +258,13 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds an assignment statement. Folds the <see cref="AssignmentStatement.Variables" /> in
+        /// the collection's order and then the <see cref="AssignmentStatement.Values" /> in the
+        /// collection's order by default.
+        /// </summary>
+        /// <param name="node">The assignment statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitAssignment ( AssignmentStatement node )
         {
             var variables = node.Variables.Select ( var => ( Expression ) this.VisitNode ( var ) ).ToImmutableArray ( );
@@ -186,6 +282,13 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a compound assignment statement. Folds the <see
+        /// cref="CompoundAssignmentStatement.Assignee" /> and then the <see
+        /// cref="CompoundAssignmentStatement.ValueExpression" /> by default.
+        /// </summary>
+        /// <param name="node">The compound assignment statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitCompoundAssignmentStatement ( CompoundAssignmentStatement node )
         {
             var assignee = ( Expression ) this.VisitNode ( node.Assignee );
@@ -198,10 +301,25 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a break statement. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The break statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitBreak ( BreakStatement node ) => node;
 
+        /// <summary>
+        /// Folds a continue statement. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The continue statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitContinue ( ContinueStatement node ) => node;
 
+        /// <summary>
+        /// Folds a do statement. Folds the do's <see cref="DoStatement.Body" /> by default.
+        /// </summary>
+        /// <param name="node">The do statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitDo ( DoStatement node )
         {
             var body = ( StatementList ) this.VisitNode ( node.Body );
@@ -214,6 +332,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds an expression statement. Folds the <see cref="ExpressionStatement.Expression" />
+        /// by default.
+        /// </summary>
+        /// <param name="node">The expression statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitExpressionStatement ( ExpressionStatement node )
         {
             var inner = ( Expression ) this.VisitNode ( node.Expression );
@@ -225,6 +349,13 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a function definition statement. Folds the function's <see
+        /// cref="FunctionDefinitionStatement.Name" /> (if not local) and then the function's <see
+        /// cref="FunctionDefinitionStatement.Body" /> by default. and the function's body by default.
+        /// </summary>
+        /// <param name="node">The function definition statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitFunctionDefinition ( FunctionDefinitionStatement node )
         {
             Expression name = node.IsLocal ? node.Name : ( Expression ) this.VisitNode ( node.Name );
@@ -259,10 +390,27 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a goto label. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The goto label to fold.</param>
+        /// <returns>The folded label.</returns>
         public virtual LuaASTNode VisitGotoLabel ( GotoLabelStatement node ) => node;
 
+        /// <summary>
+        /// Folds a goto statement. Does nothing by default.
+        /// </summary>
+        /// <param name="node">The goto statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitGoto ( GotoStatement node ) => node;
 
+        /// <summary>
+        /// Folds an if statement. Folds the if <see cref="IfStatement.Clauses" />' <see
+        /// cref="IfClause.Condition" /> and <see cref="IfClause.Body" /> and the <see
+        /// cref="IfStatement.ElseBlock" /> (if any) by default.
+        /// </summary>
+        /// <param name="node">The if statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitIfStatement ( IfStatement node )
         {
             IfClause[] clauses = node.Clauses.Select ( clause =>
@@ -296,6 +444,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a generic for statement. Folds the <see cref="GenericForLoopStatement.Expressions"
+        /// />'s in the collection's order and the <see cref="GenericForLoopStatement.Body" /> by default.
+        /// </summary>
+        /// <param name="node">The generic for statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitGenericFor ( GenericForLoopStatement node )
         {
             Expression[] iteratables = node.Expressions.Select ( iteratable => ( Expression ) this.VisitNode ( iteratable ) ).ToArray ( );
@@ -316,6 +470,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a local variable declaration statement. Folds the <see
+        /// cref="LocalVariableDeclarationStatement.Values" /> in the collection's order by default.
+        /// </summary>
+        /// <param name="node">The local variable declaration statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitLocalVariableDeclaration ( LocalVariableDeclarationStatement node )
         {
             if ( node.Values.Length > 0 )
@@ -337,9 +497,23 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a node.
+        /// </summary>
+        /// <param name="node">The node to fold.</param>
+        /// <returns>The folded node.</returns>
         public virtual LuaASTNode VisitNode ( LuaASTNode node ) =>
             node.Accept ( this );
 
+        /// <summary>
+        /// Folds a numeric for statement. Folds the <see cref="NumericForLoopStatement.Body" />
+        /// then the <see cref="NumericForLoopStatement.Initial" /> value then the <see
+        /// cref="NumericForLoopStatement.Final" /> value and then the <see
+        /// cref="NumericForLoopStatement.Step" /> (if
+        /// any) by default.
+        /// </summary>
+        /// <param name="node">The numeric for statement statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitNumericFor ( NumericForLoopStatement node )
         {
             var body = ( StatementList ) this.VisitNode ( node.Body );
@@ -375,6 +549,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a repeat until statement. Folds the <see cref="RepeatUntilStatement.Body" /> and
+        /// the <see cref="RepeatUntilStatement.Condition" /> by default.
+        /// </summary>
+        /// <param name="node">The repeat until statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitRepeatUntil ( RepeatUntilStatement node )
         {
             var body = ( StatementList ) this.VisitNode ( node.Body );
@@ -392,6 +572,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a return statement. Folds the <see cref="ReturnStatement.Values" /> in the
+        /// collection's order by default.
+        /// </summary>
+        /// <param name="node">The return statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitReturn ( ReturnStatement node )
         {
             Expression[] values = node.Values.Select ( val => ( Expression ) this.VisitNode ( val ) ).ToArray ( );
@@ -407,6 +593,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a statement list. Folds the <see cref="StatementList.Body" />'s statements in the
+        /// collection's order by default.
+        /// </summary>
+        /// <param name="node">The statement list to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitStatementList ( StatementList node )
         {
             Statement[] body = node.Body.Select ( stmt => ( Statement ) this.VisitNode ( stmt ) ).ToArray ( );
@@ -419,6 +611,12 @@ namespace Loretta.Parsing.Visitor
             return node;
         }
 
+        /// <summary>
+        /// Folds a while loop statement. Folds the <see cref="WhileLoopStatement.Condition" /> and
+        /// then the <see cref="WhileLoopStatement.Body" /> by default.
+        /// </summary>
+        /// <param name="node">The while loop statement to fold.</param>
+        /// <returns>The folded statement.</returns>
         public virtual LuaASTNode VisitWhileLoop ( WhileLoopStatement node )
         {
             var cond = ( Expression ) this.VisitNode ( node.Condition );

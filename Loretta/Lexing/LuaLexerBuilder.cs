@@ -6,8 +6,15 @@ using Loretta.Lexing.Modules;
 
 namespace Loretta.Lexing
 {
+    /// <summary>
+    /// The lexer builder for loretta's lexer.
+    /// </summary>
     public class LuaLexerBuilder : ModularLexerBuilder<LuaTokenType>
     {
+        /// <summary>
+        /// Initializes this lexer builder with the provided options.
+        /// </summary>
+        /// <param name="luaOptions">The options to be used by this builder and the lexer.</param>
         public LuaLexerBuilder ( LuaOptions luaOptions )
         {
             const String longStringExpr = /*lang=regex*/@"\[(=*)\[([\S\s]*?)\]\1\]";
@@ -165,7 +172,13 @@ namespace Loretta.Lexing
             #endregion Others
         }
 
-        public ILexer<LuaTokenType> CreateLexer ( String contents, IProgress<Diagnostic> diagnosticReporter ) =>
-            this.BuildLexer ( contents, diagnosticReporter );
+        /// <summary>
+        /// Creates a lexer from the provided code string and diagnostic reporter.
+        /// </summary>
+        /// <param name="code">The code to lex.</param>
+        /// <param name="diagnosticReporter">The diagnostic reporter.</param>
+        /// <returns>The lexer.</returns>
+        public ILexer<LuaTokenType> CreateLexer ( String code, IProgress<Diagnostic> diagnosticReporter ) =>
+            this.BuildLexer ( code, diagnosticReporter );
     }
 }
