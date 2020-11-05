@@ -127,7 +127,7 @@ namespace Loretta.Lexing.Modules
             SourceLocation start = reader.Location;
             var identifier = this.LuaOptions.UseLuaJitIdentifierRules
                 ? reader.ReadStringWhile ( ch => CharUtils.IsValidTrailingIdentifierChar ( true, ch ) )
-                : reader.ReadStringWhile ( ch => CharUtils.IsValidFirstIdentifierChar ( false, ch ) );
+                : reader.ReadStringWhile ( ch => CharUtils.IsValidTrailingIdentifierChar ( false, ch ) );
             SourceRange range = start.To ( reader.Location );
 
             if ( this.Keywords.Contains ( identifier ) )
