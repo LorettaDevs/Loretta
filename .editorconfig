@@ -211,12 +211,4 @@ dotnet_naming_style.begins_with_t.word_separator =
 dotnet_naming_style.begins_with_t.capitalization                         = pascal_case
 
 # Severity settings
-dotnet_diagnostic.CC0001.severity = none
-dotnet_diagnostic.CC0004.severity = none
-dotnet_diagnostic.CC0021.severity = none
-dotnet_diagnostic.CC0048.severity = none
-dotnet_diagnostic.CC0073.severity = none
-dotnet_diagnostic.CC0088.severity = none
-dotnet_diagnostic.CC0095.severity = none
-dotnet_diagnostic.CC0105.severity = none
 dotnet_diagnostic.CA1303.severity = none
