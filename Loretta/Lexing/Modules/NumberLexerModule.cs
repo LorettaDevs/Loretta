@@ -102,7 +102,7 @@ namespace Loretta.Lexing.Modules
             ch == '0' || ch == '1' || this.IsUnderline ( ch );
 
         /// <inheritdoc />
-        public virtual Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
+        public Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
         {
             // We use CharUtils' IsDecimal instead of ours because we don't accept underlines at the
             // start of a number nor right after the dot.
@@ -112,7 +112,7 @@ namespace Loretta.Lexing.Modules
         }
 
         /// <inheritdoc />
-        public virtual Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticReporter )
+        public Token<LuaTokenType> ConsumeNext ( ICodeReader reader, IProgress<Diagnostic> diagnosticReporter )
         {
             var buffer = new StringBuilder ( );
             SourceLocation start = reader.Location;
