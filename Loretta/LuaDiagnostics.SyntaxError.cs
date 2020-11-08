@@ -170,6 +170,44 @@ namespace Loretta
             /// <returns>The created diagnostic.</returns>
             public static Diagnostic UnfinishedString ( SourceRange range ) =>
                 new Diagnostic ( "LUA0006", range, DiagnosticSeverity.Error, "Unfinished string." );
+
+            /// <summary>
+            /// Creates an <see cref="DiagnosticSeverity.Error"/> diagnostic with the ID LUA0007
+            /// and description in the format "Unfinished long comment.".
+            /// </summary>
+            /// <param name="range">The range the diagnostic refers to.</param>
+            /// <returns>The created diagnostic.</returns>
+            public static Diagnostic UnfinishedLongComment ( SourceRange range ) =>
+                new Diagnostic ( "LUA0007", range, DiagnosticSeverity.Error, "Unfinished long comment." );
+
+            /// <summary>
+            /// Creates an <see cref="DiagnosticSeverity.Error"/> diagnostic with the ID LUA0008
+            /// and description in the format "Long comment has an end with a different amount
+            /// of equal signs than the start.".
+            /// </summary>
+            /// <param name="range"></param>
+            /// <returns></returns>
+            public static Diagnostic LongCommentWithIncompatibleDelimiters ( SourceRange range ) =>
+                new Diagnostic ( "LUA0008", range, DiagnosticSeverity.Error, "Long comment has an end with a different amount of equal signs than the start." );
+
+            /// <summary>
+            /// Creates an <see cref="DiagnosticSeverity.Error"/> diagnostic with the ID LUA0009
+            /// and description in the format "Unfinished long string.".
+            /// </summary>
+            /// <param name="range">The range this diagnostic refers to.</param>
+            /// <returns></returns>
+            public static Diagnostic UnfinishedLongString ( SourceRange range ) =>
+                new Diagnostic ( "LUA0009", range, DiagnosticSeverity.Error, "Unfinished long string." );
+
+            /// <summary>
+            /// Creates an <see cref="DiagnosticSeverity.Error"/> diagnostic with the ID LUA0010
+            /// and description in the format "Long string has an end with a different amount of
+            /// equal signs than the start.".
+            /// </summary>
+            /// <param name="range"></param>
+            /// <returns></returns>
+            public static Diagnostic LongStringWithIncompatibleDelimiters ( SourceRange range ) =>
+                new Diagnostic ( "LUA0010", range, DiagnosticSeverity.Error, "Long string has an end with a different amount of equal signs than the start." );
         }
     }
 }
