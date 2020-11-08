@@ -70,7 +70,7 @@ namespace Loretta.Tests.Lexing.Modules
             var diagnostics = new DiagnosticList ( );
             Token<LuaTokenType> token = moduleWithLuajitRules.ConsumeNext ( new StringCodeReader ( input ), diagnostics );
 
-            TestUtils.AssertDiagnosticsEmpty ( diagnostics, input );
+            Assert.That.DiagnosticsAreEmpty ( diagnostics, input );
             Assert.AreEqual ( expectedType, token.Type );
             Assert.AreEqual ( expectedRaw, token.Raw );
             Assert.AreEqual ( expectedValue, token.Value );
@@ -80,7 +80,7 @@ namespace Loretta.Tests.Lexing.Modules
                 diagnostics = new DiagnosticList ( );
                 token = moduleWithoutLuajitRules.ConsumeNext ( new StringCodeReader ( input ), diagnostics );
 
-                TestUtils.AssertDiagnosticsEmpty ( diagnostics, input );
+                Assert.That.DiagnosticsAreEmpty ( diagnostics, input );
                 Assert.AreEqual ( expectedType, token.Type );
                 Assert.AreEqual ( expectedRaw, token.Raw );
                 Assert.AreEqual ( expectedValue, token.Value );
