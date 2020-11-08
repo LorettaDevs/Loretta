@@ -17,11 +17,12 @@ namespace Loretta.Lexing.Modules
         public String Name => "Dot Lexer Module";
 
         /// <inheritdoc />
-        public String Prefix => ".";
+        public String? Prefix => ".";
 
         /// <inheritdoc />
         public Boolean CanConsumeNext ( IReadOnlyCodeReader reader )
         {
+            Debug.Assert ( reader.IsNext ( '.' ) );
             // . followed by non-number
             var peek = reader.Peek ( 1 );
             return peek is null || !CharUtils.IsDecimal ( peek.Value );
