@@ -38,7 +38,7 @@ namespace Loretta.Tests.Lexing.Modules
             var diagnostics = new DiagnosticList ( );
             Token<LuaTokenType> token = this.lexerModule.ConsumeNext ( new StringCodeReader ( input ), diagnostics );
 
-            TestUtils.AssertDiagnosticsEmpty ( diagnostics, input );
+            Assert.That.DiagnosticsAreEmpty ( diagnostics, input );
             Assert.AreEqual ( LuaTokenType.String, token.Type );
             Assert.AreEqual ( input, token.Raw );
             Assert.AreEqual ( expected, token.Value );
