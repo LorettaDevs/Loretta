@@ -9,7 +9,7 @@
   
   <!-- Package data -->
   <PropertyGroup>
-    <Version>0.1.4</Version>
+    <Version>0.1.3</Version>
     <Authors>GGG KILLER</Authors>
     <Description>A Roblox/GLua/Lua lexer, parser, code analysis, transformation and generation library.</Description>
     <Copyright>GGG KILLER © 2020</Copyright>
