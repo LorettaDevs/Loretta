@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Loretta.Lexing;
 using LuaToken = GParse.Lexing.Token<Loretta.Lexing.LuaTokenType>;
 
@@ -17,17 +19,23 @@ namespace Loretta.Parsing
         public enum FindMode
         {
             /// <summary>
-            /// Only checks the current scope
+            /// Don't check any scopes, always create a new variable.
+            /// Only supported for variables.
+            /// </summary>
+            DontCheck,
+
+            /// <summary>
+            /// Only checks the current scope.
             /// </summary>
             CheckSelf,
 
             /// <summary>
-            /// Checks parents until we hit a function scope
+            /// Checks parents until we hit a function scope.
             /// </summary>
             CheckFunctionScope,
 
             /// <summary>
-            /// Checks all parents
+            /// Checks all parents.
             /// </summary>
             CheckParents,
         }
@@ -40,17 +48,17 @@ namespace Loretta.Parsing
         /// <summary>
         /// The variables registered in this scope.
         /// </summary>
-        private readonly Dictionary<String, Variable> _variables = new Dictionary<String, Variable> ( );
+        private readonly List<Variable> _variables = new ( );
 
         /// <summary>
         /// The goto labels registered in this scope.
         /// </summary>
-        private readonly Dictionary<String, GotoLabel> _gotoLabels = new Dictionary<String, GotoLabel> ( );
+        private readonly Dictionary<String, GotoLabel> _gotoLabels = new ( );
 
         /// <inheritdoc cref="_variables" />
         // Yes, you can technically edit the dictionary like this, but when one wants to abuse an
         // API they will find a way to do it.
-        public IEnumerable<Variable> Variables => this._variables.Values;
+        public IEnumerable<Variable> Variables => this._variables.AsReadOnly ( );
 
         /// <inheritdoc cref="_gotoLabels" />
         // Yes, you can technically edit the dictionary like this, but when one wants to abuse an
@@ -103,11 +111,18 @@ namespace Loretta.Parsing
         /// <inheritdoc cref="TryFindVariable(LuaToken, FindMode, out Variable?)" />
         public Boolean TryFindVariable ( String identifier, FindMode findMode, [NotNullWhen ( true )] out Variable? variable )
         {
-            if ( this._variables.TryGetValue ( identifier, out variable ) )
-                return true;
+            if ( findMode != FindMode.DontCheck )
+            {
+                // Gets the last declared variable in this scope.
+                if ( this._variables.LastOrDefault ( var => var.Identifier.Equals ( identifier, StringComparison.Ordinal ) ) is Variable var )
+                {
+                    variable = var;
+                    return true;
+                }
 
-            if ( ( ( findMode == FindMode.CheckFunctionScope && !this.IsFunctionScope ) || findMode == FindMode.CheckParents ) && this.Parent != null )
-                return this.Parent.TryFindVariable ( identifier, findMode, out variable );
+                if ( ( ( findMode == FindMode.CheckFunctionScope && !this.IsFunctionScope ) || findMode == FindMode.CheckParents ) && this.Parent != null )
+                    return this.Parent.TryFindVariable ( identifier, findMode, out variable );
+            }
 
             variable = null;
             return false;
@@ -136,7 +151,7 @@ namespace Loretta.Parsing
             if ( !this.TryFindVariable ( identifier, findMode, out Variable? variable ) )
             {
                 variable = new Variable ( identifier, this );
-                this._variables.Add ( identifier, variable );
+                this._variables.Add ( variable );
             }
 
             return variable;
@@ -190,6 +205,8 @@ namespace Loretta.Parsing
         /// <inheritdoc cref="TryFindLabel(LuaToken, FindMode, out GotoLabel?)" />
         public Boolean TryFindLabel ( String labelIdentifier, FindMode findMode, [NotNullWhen ( true )] out GotoLabel? label )
         {
+            if ( findMode == FindMode.DontCheck )
+                throw new InvalidOperationException ( "The don't check find mode is not supported for labels." );
             if ( this._gotoLabels.TryGetValue ( labelIdentifier, out label ) )
                 return true;
 
