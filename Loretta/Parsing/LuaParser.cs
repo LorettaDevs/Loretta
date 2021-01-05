@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using GParse;
 using GParse.Errors;
 using GParse.Lexing;
@@ -436,6 +437,8 @@ namespace Loretta.Parsing
             StatementList body = this.ParseStatementList ( scope );
             LuaToken endKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "end" );
 
+            this.LeaveScope ( );
+
             return step != null
                 ? new NumericForLoopStatement ( scope, forKw, var, equals, initial, comma1, final, comma2, step, doKw, body, endKw )
                 : new NumericForLoopStatement ( scope, forKw, var, equals, initial, comma1, final, doKw, body, endKw );
@@ -624,6 +627,7 @@ namespace Loretta.Parsing
         {
             StatementList res = this.ParseScopedStatementList ( true );
             this.TokenReader.FatalExpect ( LuaTokenType.EOF );
+            Debug.Assert ( this._scopeStack.Count == 0, "Leaked scope." );
             return res;
         }
     }
