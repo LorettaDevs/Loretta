@@ -71,7 +71,7 @@ namespace Loretta.Parsing.Modules
                         break;
                     }
 
-                    argList.Add ( new IdentifierExpression ( arg, parser.GetOrCreateVariable ( arg, Scope.FindMode.CheckSelf ) ) );
+                    argList.Add ( new IdentifierExpression ( arg, parser.GetOrCreateVariable ( arg, Scope.FindMode.DontCheck ) ) );
 
                     if ( reader.Accept ( LuaTokenType.Comma, out LuaToken comma ) )
                     {
