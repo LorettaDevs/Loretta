@@ -48,7 +48,7 @@ namespace Loretta.Parsing.AST
         {
             get
             {
-                foreach ( IdentifierExpression argument in this.Arguments )
+                foreach ( Expression argument in this.Arguments )
                     yield return argument;
                 yield return this.Body;
             }
