@@ -121,12 +121,12 @@ namespace Loretta.Parsing
         /// <summary>
         /// Parses an identifier expression.
         /// </summary>
-        /// <param name="checkParents">Whether to check parent scopes for the variable.</param>
+        /// <param name="findMode">The finding mode to use when getting a variable for the identifier.</param>
         /// <returns></returns>
-        protected IdentifierExpression ParseIdentifierExpression ( Boolean checkParents )
+        protected IdentifierExpression ParseIdentifierExpression ( Scope.FindMode findMode )
         {
             LuaToken ident = this.TokenReader.FatalExpect ( LuaTokenType.Identifier );
-            Variable variable = this.GetOrCreateVariable ( ident, checkParents ? Scope.FindMode.CheckParents : Scope.FindMode.CheckSelf );
+            Variable variable = this.GetOrCreateVariable ( ident, findMode );
 
             return new IdentifierExpression ( ident, variable );
         }
@@ -138,7 +138,7 @@ namespace Loretta.Parsing
         protected Expression ParseFunctionName ( )
         {
             LuaToken ident;
-            Expression name = this.ParseIdentifierExpression ( true );
+            Expression name = this.ParseIdentifierExpression ( Scope.FindMode.CheckParents );
 
             while ( this.TokenReader.Accept ( LuaTokenType.Dot, out LuaToken dot ) )
             {
@@ -176,7 +176,7 @@ namespace Loretta.Parsing
         {
             var isLocal = this.TokenReader.Accept ( LuaTokenType.Keyword, "local", out LuaToken localKw );
             LuaToken funcKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "function" );
-            Expression name = isLocal ? this.ParseIdentifierExpression ( false ) : this.ParseFunctionName ( );
+            Expression name = isLocal ? this.ParseIdentifierExpression ( Scope.FindMode.DontCheck ) : this.ParseFunctionName ( );
             LuaToken lparen = this.TokenReader.FatalExpect ( LuaTokenType.LParen );
 
             Scope scope = this.EnterScope ( true );
@@ -192,7 +192,7 @@ namespace Loretta.Parsing
                     break;
                 }
 
-                args.Add ( this.ParseIdentifierExpression ( false ) );
+                args.Add ( this.ParseIdentifierExpression ( Scope.FindMode.DontCheck ) );
                 if ( this.TokenReader.Accept ( LuaTokenType.RParen, out rparen ) )
                     break;
                 commas.Add ( this.TokenReader.FatalExpect ( LuaTokenType.Comma ) );
@@ -251,13 +251,13 @@ namespace Loretta.Parsing
             LuaToken localKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "local" );
             var idents = new List<IdentifierExpression>
             {
-                this.ParseIdentifierExpression ( false )
+                this.ParseIdentifierExpression ( Scope.FindMode.DontCheck )
             };
             var identCommas = new List<LuaToken> ( );
             while ( this.TokenReader.Accept ( LuaTokenType.Comma, out LuaToken comma ) )
             {
                 identCommas.Add ( comma );
-                idents.Add ( this.ParseIdentifierExpression ( false ) );
+                idents.Add ( this.ParseIdentifierExpression ( Scope.FindMode.DontCheck ) );
             }
 
             if ( this.TokenReader.Accept ( LuaTokenType.Operator, "=", out LuaToken equals ) )
@@ -377,12 +377,12 @@ namespace Loretta.Parsing
             LuaToken forKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "for" );
 
             // usually these are k, v loops, so start out with 2 elements
-            var vars = new List<IdentifierExpression> ( 2 ) { this.ParseIdentifierExpression ( false ) };
+            var vars = new List<IdentifierExpression> ( 2 ) { this.ParseIdentifierExpression ( Scope.FindMode.DontCheck ) };
             var commas = new List<LuaToken> ( 1 );
             while ( this.TokenReader.Accept ( LuaTokenType.Comma, out LuaToken comma ) )
             {
                 commas.Add ( comma );
-                vars.Add ( this.ParseIdentifierExpression ( false ) );
+                vars.Add ( this.ParseIdentifierExpression ( Scope.FindMode.DontCheck ) );
             }
 
             LuaToken inKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "in" );
@@ -413,7 +413,7 @@ namespace Loretta.Parsing
             LuaToken forKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "for" );
 
             // Loop variable name
-            IdentifierExpression var = this.ParseIdentifierExpression ( false );
+            IdentifierExpression var = this.ParseIdentifierExpression ( Scope.FindMode.DontCheck );
 
             // Assignment
             LuaToken equals = this.TokenReader.FatalExpect ( LuaTokenType.Operator, "=" );
