@@ -34,6 +34,25 @@ a = 2" );
         }
 
         [TestMethod]
+        // Regression test for https://github.com/GGG-KILLER/Loretta/issues/18
+        public void Issue_18 ( )
+        {
+            foreach ( LuaOptions preset in new[] { LuaOptions.Lua51, LuaOptions.Lua52, LuaOptions.LuaJIT, LuaOptions.GMod, LuaOptions.Roblox, LuaOptions.All } )
+            {
+                (StatementList statements, DiagnosticList diagnostics) = Parse ( preset, @"local a = b[a]" );
+                Assert.AreEqual ( 0, diagnostics.Count );
+
+                var localDeclaration = ( LocalVariableDeclarationStatement ) statements.Body[0];
+
+                Variable localDeclarationVariable = localDeclaration.Identifiers.Single ( ).Variable;
+                var indexExpression = ( IndexExpression ) localDeclaration.Values.Single ( );
+                Variable indexerVariable = ( ( IdentifierExpression ) indexExpression.Indexer ).Variable;
+
+                Assert.AreNotEqual ( localDeclarationVariable, indexerVariable );
+            }
+        }
+
+        [TestMethod]
         // Regression test for https://github.com/GGG-KILLER/Loretta/issues/19
         public void Issue_19 ( )
         {

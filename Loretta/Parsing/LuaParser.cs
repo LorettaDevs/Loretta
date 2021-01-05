@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using GParse;
 using GParse.Errors;
 using GParse.Lexing;
@@ -249,15 +250,15 @@ namespace Loretta.Parsing
         private LocalVariableDeclarationStatement ParseLocalVariableDeclarationStatement ( )
         {
             LuaToken localKw = this.TokenReader.FatalExpect ( LuaTokenType.Keyword, "local" );
-            var idents = new List<IdentifierExpression>
+            var identTokens = new List<LuaToken>
             {
-                this.ParseIdentifierExpression ( Scope.FindMode.DontCheck )
+                this.TokenReader.FatalExpect ( LuaTokenType.Identifier )
             };
             var identCommas = new List<LuaToken> ( );
             while ( this.TokenReader.Accept ( LuaTokenType.Comma, out LuaToken comma ) )
             {
                 identCommas.Add ( comma );
-                idents.Add ( this.ParseIdentifierExpression ( Scope.FindMode.DontCheck ) );
+                identTokens.Add ( this.TokenReader.FatalExpect ( LuaTokenType.Identifier ) );
             }
 
             if ( this.TokenReader.Accept ( LuaTokenType.Operator, "=", out LuaToken equals ) )
@@ -270,10 +271,16 @@ namespace Loretta.Parsing
                     vals.Add ( this.ParseExpression ( ) );
                 }
 
+                IdentifierExpression[] idents = identTokens.Select ( ident => new IdentifierExpression ( ident, this.GetOrCreateVariable ( ident, Scope.FindMode.DontCheck ) ) )
+                                                           .ToArray ( );
                 return new LocalVariableDeclarationStatement ( localKw, idents, identCommas, equals, vals, valCommas );
             }
-
-            return new LocalVariableDeclarationStatement ( localKw, idents, identCommas );
+            else
+            {
+                IdentifierExpression[] idents = identTokens.Select ( ident => new IdentifierExpression ( ident, this.GetOrCreateVariable ( ident, Scope.FindMode.DontCheck ) ) )
+                                                           .ToArray ( );
+                return new LocalVariableDeclarationStatement ( localKw, idents, identCommas );
+            }
         }
 
         /// <summary>
