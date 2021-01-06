@@ -170,7 +170,7 @@ namespace Loretta.Lexing.Modules
                     {
                         try
                         {
-                            value = Double.Parse ( buffer.ToString ( ).Replace ( "_", "" ), NumberStyles.AllowHexSpecifier );
+                            value = Int64.Parse ( buffer.ToString ( )[2..].Replace ( "_", "" ), NumberStyles.AllowHexSpecifier );
                         }
                         catch ( OverflowException )
                         {
