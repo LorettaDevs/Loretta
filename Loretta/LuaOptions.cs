@@ -1,5 +1,4 @@
 ﻿using System;
-using Loretta.Lexing;
 
 namespace Loretta
 {
@@ -16,12 +15,12 @@ namespace Loretta
         /// <summary>
         /// Continue is a keyword.
         /// </summary>
-        Keyword = LuaTokenType.Keyword,
+        Keyword,
 
         /// <summary>
         /// Continue is a contextual keyword (is only a keyword when used as a statement).
         /// </summary>
-        ContextualKeyword = LuaTokenType.Identifier
+        ContextualKeyword
     }
 
     /// <summary>

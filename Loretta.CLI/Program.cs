@@ -4,17 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using GParse;
-using GParse.Collections;
 using GParse.Errors;
 using GParse.Lexing;
 using GUtils.CLI.Commands;
 using GUtils.CLI.Commands.Errors;
 using GUtils.IO;
 using GUtils.Timing;
-using Loretta.Lexing;
-using Loretta.Parsing;
-using Loretta.Parsing.AST;
-using Loretta.Parsing.Visitor;
 
 namespace Loretta.CLI
 {
@@ -100,77 +95,6 @@ namespace Loretta.CLI
                 return;
             }
 
-            var stopwatch = Stopwatch.StartNew ( );
-            LuaOptions luaOptions = preset switch
-            {
-                LuaOptionsPreset.Lua51 => LuaOptions.Lua51,
-                LuaOptionsPreset.Lua52 => LuaOptions.Lua52,
-                LuaOptionsPreset.LuaJIT => LuaOptions.LuaJIT,
-                LuaOptionsPreset.GMod => LuaOptions.GMod,
-                LuaOptionsPreset.Roblox => LuaOptions.Roblox,
-                LuaOptionsPreset.All => LuaOptions.All,
-                _ => throw new InvalidOperationException ( ),
-            };
-            var diagnosticList = new DiagnosticList ( );
-            var lexerBuilder = new LuaLexerBuilder ( luaOptions );
-            var parserBuilder = new LuaParserBuilder ( luaOptions );
-            var formattedCodeSerializer = new FormattedLuaCodeSerializer ( luaOptions, "    " );
-            var code = File.ReadAllText ( path );
-            ILexer<LuaTokenType> lexer = lexerBuilder.CreateLexer ( code, diagnosticList );
-            LuaParser parser = parserBuilder.CreateParser ( new TokenReader<LuaTokenType> ( lexer ), diagnosticList );
-            StatementList statementList = parser.Parse ( );
-            foreach ( ASTVisitors visitor in visitors )
-            {
-                switch ( visitor )
-                {
-                    case ASTVisitors.ConstantFolder:
-                    {
-                        statementList = constantFolder ( statementList );
-                        break;
-                    }
-
-                    case ASTVisitors.RawStringRewriter:
-                    {
-                        statementList = rawStringRewriter ( statementList );
-                        break;
-                    }
-
-                    case ASTVisitors.AllTillNothingMoreToDo:
-                    {
-                        StatementList original;
-                        var rounds = 0;
-                        do
-                        {
-                            original = statementList;
-                            statementList = rawStringRewriter ( constantFolder ( statementList ) );
-                        }
-                        while ( original != statementList && rounds++ < 120 );
-                        break;
-                    }
-                }
-            }
-            formattedCodeSerializer.VisitNode ( statementList );
-            stopwatch.Stop ( );
-            var time = Duration.Format ( stopwatch.ElapsedTicks );
-            Logger.WriteLine ( formattedCodeSerializer.ToString ( ) );
-            Logger.WriteLine ( $"Parsed and compiled back to code in {time}." );
-            foreach ( Diagnostic diagnostic in diagnosticList.OrderBy ( d => d.Severity ) )
-            {
-                Logger.WriteLine ( $@"{diagnostic.Id} {diagnostic.Severity}: {diagnostic.Description}
-{LuaDiagnostics.HighlightRange ( code, diagnostic.Range )}" );
-            }
-
-            static StatementList constantFolder ( StatementList statementList )
-            {
-                statementList = new ConstantFolder ( ).VisitNode ( statementList ) as StatementList;
-                return statementList;
-            }
-
-            static StatementList rawStringRewriter ( StatementList statementList )
-            {
-                statementList = new RawStringRewriter ( ).VisitNode ( statementList ) as StatementList;
-                return statementList;
-            }
         }
 
         [Command ( "mp" ), Command ( "mass-parse" )]
@@ -182,53 +106,6 @@ namespace Loretta.CLI
                 MatchType = MatchType.Simple
             } ) )
                 .ToArray ( );
-
-            LuaOptions luaOptions = preset switch
-            {
-                LuaOptionsPreset.Lua51 => LuaOptions.Lua51,
-                LuaOptionsPreset.Lua52 => LuaOptions.Lua52,
-                LuaOptionsPreset.LuaJIT => LuaOptions.LuaJIT,
-                LuaOptionsPreset.GMod => LuaOptions.GMod,
-                LuaOptionsPreset.Roblox => LuaOptions.Roblox,
-                LuaOptionsPreset.All => LuaOptions.All,
-                _ => throw new InvalidOperationException ( ),
-            };
-            var lexerBuilder = new LuaLexerBuilder ( luaOptions );
-            var parserBuilder = new LuaParserBuilder ( luaOptions );
-            foreach ( var file in files )
-            {
-                var stopwatch = Stopwatch.StartNew ( );
-                var diagnosticList = new DiagnosticList ( );
-                var formattedCodeSerializer = new FormattedLuaCodeSerializer ( luaOptions, "    " );
-                var code = File.ReadAllText ( file );
-                try
-                {
-                    ILexer<LuaTokenType> lexer = lexerBuilder.CreateLexer ( code, diagnosticList );
-                    LuaParser parser = parserBuilder.CreateParser ( new TokenReader<LuaTokenType> ( lexer ), diagnosticList );
-                    StatementList statementList = parser.Parse ( );
-                    formattedCodeSerializer.VisitNode ( statementList );
-                    stopwatch.Stop ( );
-                    var time = Duration.Format ( stopwatch.ElapsedTicks );
-                    Logger.WriteLine ( $"{file}: {time}." );
-                    foreach ( Diagnostic diagnostic in diagnosticList.OrderBy ( d => d.Severity ) )
-                    {
-                        Logger.WriteLine ( $@"{diagnostic.Id} {diagnostic.Severity}: {diagnostic.Description}
-{LuaDiagnostics.HighlightRange ( code, diagnostic.Range )}" );
-                    }
-                }
-                catch ( FatalParsingException fpex )
-                {
-                    Logger.WriteLine ( $"{file}:" );
-                    Logger.LogError ( $"{typeof ( FatalParsingException ).FullName}: {fpex.Message}" );
-                    Logger.LogError ( LuaDiagnostics.HighlightRange ( code, fpex.Range ) );
-                    Logger.LogError ( fpex.StackTrace );
-                }
-                catch ( Exception ex )
-                {
-                    Logger.WriteLine ( $"{file}:" );
-                    Logger.LogError ( ex.ToString ( ) );
-                }
-            }
         }
 
         #region Memory Usage
