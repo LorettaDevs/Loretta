@@ -1,25 +1,14 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using GParse.Utilities;
 
 namespace Loretta.Utilities
 {
     /// <summary>
     /// A general character utility class.
     /// </summary>
-    internal class CharUtils
+    internal static class LoCharUtils
     {
-        /// <summary>
-        /// Checks whether the provided <paramref name="value" /> is in the range [ <paramref
-        /// name="start" />, <paramref name="end" />].
-        /// </summary>
-        /// <param name="start">The first character of the range (inclusive).</param>
-        /// <param name="value">The character to check for.</param>
-        /// <param name="end">The last character of the range (inclusive).</param>
-        /// <returns>Whether the provided character is in the range.</returns>
-        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
-        public static Boolean IsInRange ( Char start, Char value, Char end ) =>
-            ( UInt32 ) ( value - start ) <= ( end - start );
-
         /// <summary>
         /// Checks whether the provided character is a decimal character (between 0 and 9).
         /// </summary>
@@ -27,7 +16,7 @@ namespace Loretta.Utilities
         /// <returns>Whether the provided character is a decimal character.</returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsDecimal ( Char ch ) =>
-            IsInRange ( '0', ch, '9' );
+            CharUtils.IsInRange ( '0', ch, '9' );
 
         /// <summary>
         /// Checks whether the provided character is a hexadecimal character.
@@ -41,7 +30,7 @@ namespace Loretta.Utilities
             // be used to convert uppercase characters to lower case (the 6th bit right to left). So
             // we preemptively set it on the char to avoid an extra range check. Validated by the
             // IsAlphaCheckMicrobenchmark microbenchmark.
-            || IsInRange ( 'a', ( Char ) ( ch | 0b0100000 ), 'f' );
+            || CharUtils.IsInRange ( 'a', ( Char ) ( ch | 0b0100000 ), 'f' );
 
         /// <summary>
         /// Checks whether the provided character is an alpha character (a-z, A-Z).
@@ -51,7 +40,7 @@ namespace Loretta.Utilities
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsAlpha ( Char ch ) =>
             // Refer to IsHexadecimal(Char) for an explanation of the bitwise or.
-            IsInRange ( 'a', ( Char ) ( ch | 0b100000 ), 'z' );
+            CharUtils.IsInRange ( 'a', ( Char ) ( ch | 0b100000 ), 'z' );
 
         /// <summary>
         /// Checks whether the provided character is an alphanumeric character (a-z, A-Z, 0-9).

@@ -20,12 +20,12 @@ namespace Loretta.Utilities
 
             // Redundant length check but I'm not sure the JIT can elide the bounds check with only
             // IsEmpty here.
-            if ( value.Length >= 1 && !CharUtils.IsValidFirstIdentifierChar ( useLuaJitIdentifierRules, value[0] ) )
+            if ( value.Length >= 1 && !LoCharUtils.IsValidFirstIdentifierChar ( useLuaJitIdentifierRules, value[0] ) )
                 return false;
 
             for ( var idx = 1; idx < value.Length; idx++ )
             {
-                if ( !CharUtils.IsValidTrailingIdentifierChar ( useLuaJitIdentifierRules, value[idx] ) )
+                if ( !LoCharUtils.IsValidTrailingIdentifierChar ( useLuaJitIdentifierRules, value[idx] ) )
                     return false;
             }
 
