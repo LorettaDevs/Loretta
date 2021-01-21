@@ -36,17 +36,17 @@ namespace Loretta.ThirdParty.FParsec
             const Int32 expBits = 11;  // bits for biased exponent
             const Int32 maxBits = 53;  // significant bits (including implicit bit)
             const Int32 maxChars = 24; // "-0x1.fffffffffffffp-1022"
-            const Int32 maxBiasedExp = (1 << expBits) - 1;
-            const Int32 maxExp       = 1 << (expBits - 1); // max n for which 0.5*2^n is a double
+            const Int32 maxBiasedExp = ( 1 << expBits ) - 1;
+            const Int32 maxExp = 1 << ( expBits - 1 ); // max n for which 0.5*2^n is a double
             const Int32 bias = maxExp - 1;
 
-            const Int32 maxFractNibbles = (maxBits - 1 + 3)/4;
-            const UInt64 mask  = (1UL << (maxBits - 1)) - 1; // mask for lower (maxBits - 1) bits
+            const Int32 maxFractNibbles = ( maxBits - 1 + 3 ) / 4;
+            const UInt64 mask = ( 1UL << ( maxBits - 1 ) ) - 1; // mask for lower (maxBits - 1) bits
 
-            var xn = unchecked((UInt64)BitConverter.DoubleToInt64Bits(x));
-            var sign = (Int32)(xn >> (maxBits - 1 + expBits));
-            var e = (Int32)((xn >> (maxBits - 1)) & maxBiasedExp); // the biased exponent
-            var s  = xn & mask; // the significand (without the implicit bit)
+            var xn = unchecked(( UInt64 ) BitConverter.DoubleToInt64Bits ( x ));
+            var sign = ( Int32 ) ( xn >> ( maxBits - 1 + expBits ) );
+            var e = ( Int32 ) ( ( xn >> ( maxBits - 1 ) ) & maxBiasedExp ); // the biased exponent
+            var s = xn & mask; // the significand (without the implicit bit)
             if ( e < maxBiasedExp )
             {
                 if ( e == 0 && s == 0 ) return sign == 0 ? "0x0.0p0" : "-0x0.0p0";
@@ -63,7 +63,7 @@ namespace Loretta.ThirdParty.FParsec
                 var lastNonNull = i;
                 for ( var j = 0; j < maxFractNibbles; ++j )
                 {
-                    var h = unchecked((Int32) (s >> ((maxFractNibbles - 1 - j) << 2))) & 0xf;
+                    var h = unchecked(( Int32 ) ( s >> ( ( maxFractNibbles - 1 - j ) << 2 ) )) & 0xf;
                     if ( h != 0 ) lastNonNull = i;
                     str[i++] = "0123456789abcdef"[h];
                 }
@@ -79,11 +79,11 @@ namespace Loretta.ThirdParty.FParsec
                     e = e > 0 ? -( e - bias ) : bias - 1;
                 }
                 // e holds absolute unbiased exponent
-                var li = e < 10 ? 1 : (e < 100 ? 2 : (e < 1000 ? 3 : 4)); // floor(log(10, e))) + 1
+                var li = e < 10 ? 1 : ( e < 100 ? 2 : ( e < 1000 ? 3 : 4 ) ); // floor(log(10, e))) + 1
                 i += li;
                 do
                 {
-                    var r = e%10; e /= 10;
+                    var r = e % 10; e /= 10;
                     str[--i] = ( Char ) ( 48 + r );
                 } while ( e > 0 );
                 i += li;
@@ -96,17 +96,17 @@ namespace Loretta.ThirdParty.FParsec
             }
         }
 
-        public static Double DoubleFromHexString ( String str )
+        public static Double DoubleFromHexString ( ReadOnlySpan<Char> str )
         {
             const Int32 expBits = 11;    // bits for exponent
             const Int32 maxBits = 53;    // significant bits (including implicit bit)
 
-            const Int32 maxExp = 1 << (expBits - 1); // max n for which 0.5*2^n is a double
+            const Int32 maxExp = 1 << ( expBits - 1 ); // max n for which 0.5*2^n is a double
             const Int32 minExp = -maxExp + 3; // min n for which 0.5*2^n is a normal double
-            const Int32 minSExp = minExp - (maxBits - 1); // min n for which 0.5*2^n is a subnormal double
+            const Int32 minSExp = minExp - ( maxBits - 1 ); // min n for which 0.5*2^n is a subnormal double
 
             const Int32 maxBits2 = maxBits + 2;
-            const UInt64 mask  = (1UL << (maxBits - 1)) - 1; // mask for lower (maxBits - 1) bits
+            const UInt64 mask = ( 1UL << ( maxBits - 1 ) ) - 1; // mask for lower (maxBits - 1) bits
 
             if ( str == null ) throw new ArgumentNullException ( nameof ( str ) );
             var n = str.Length;
@@ -176,7 +176,7 @@ namespace Loretta.ThirdParty.FParsec
                     {
                         var nRemBits = maxBits2 - nBits;
                         var nSurplusBits = 4 - nRemBits;
-                        var surplusBits = h & (0xf >> nRemBits);
+                        var surplusBits = h & ( 0xf >> nRemBits );
                         // The .NET JIT is not able to emit branch-free code for surplusBits =
                         // surplusBits != 0 ? 1 : 0; So we use this version instead:
                         surplusBits = ( 0xfffe >> surplusBits ) & 1; // = surplusBits != 0 ? 1 : 0
@@ -295,7 +295,7 @@ namespace Loretta.ThirdParty.FParsec
                         } while ( ++exp < minExp );
                         if ( xn <= 2 ) return sign == 0 ? 0.0 : -0.0; // underflow
                     }
-                    var r = unchecked((Int32)xn) & 0x7; // (lsb, bit below lsb, logical OR of all bits below the bit below lsb)
+                    var r = unchecked(( Int32 ) xn) & 0x7; // (lsb, bit below lsb, logical OR of all bits below the bit below lsb)
                     xn >>= 2; // truncate to maxBits
                     if ( r >= 6 || r == 3 )
                     {
@@ -318,14 +318,14 @@ namespace Loretta.ThirdParty.FParsec
                 return BitConverter.Int64BitsToDouble ( unchecked(( Int64 ) xn) );
             }
 
-            Overflow:
-            var msg = n < 32 ? "The given string (\"" + str + "\") represents a value either too large or too small for a double precision floating-point number."
-                        : "The given string represents a value either too large or too small for a double precision floating-point number.";
+        Overflow:
+            var msg = n < 32 ? $"The given string (\"{str.ToString ( )}\") represents a value either too large or too small for a double precision floating-point number."
+                             : "The given string represents a value either too large or too small for a double precision floating-point number.";
             throw new OverflowException ( msg );
 
-            InvalidFormat:
-            var errmsg = n < 32 ? "The given hexadecimal string representation of a double precision floating-point number (\"" + str + "\") is invalid."
-                           : "The given hexadecimal string representation of a double precision floating-point number is invalid.";
+        InvalidFormat:
+            var errmsg = n < 32 ? $"The given hexadecimal string representation of a double precision floating-point number (\"{str.ToString ( )}\") is invalid."
+                                : "The given hexadecimal string representation of a double precision floating-point number is invalid.";
             throw new FormatException ( errmsg );
         }
     } // class HexFloat
