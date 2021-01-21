@@ -1,5 +1,5 @@
 ﻿using System;
-using GParse.Math;
+using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
@@ -8,12 +8,18 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public readonly struct SyntaxTrivia
     {
-        internal SyntaxTrivia ( SyntaxKind kind, Range<Int32> range, String text )
+        internal SyntaxTrivia ( SyntaxTree syntaxTree, SyntaxKind kind, Int32 position, String text )
         {
+            this.SyntaxTree = syntaxTree;
             this.Kind = kind;
-            this.Range = range;
+            this.Position = position;
             this.Text = text;
         }
+
+        /// <summary>
+        /// The tree this trivia belongs to.
+        /// </summary>
+        public SyntaxTree SyntaxTree { get; }
 
         /// <summary>
         /// This trivia's kind.
@@ -21,9 +27,14 @@ namespace Loretta.CodeAnalysis.Syntax
         public SyntaxKind Kind { get; }
 
         /// <summary>
+        /// This token's position.
+        /// </summary>
+        public Int32 Position { get; }
+
+        /// <summary>
         /// This trivia's position range.
         /// </summary>
-        public Range<Int32> Range { get; }
+        public TextSpan Span => new ( this.Position, this.Text?.Length ?? 0 );
 
         /// <summary>
         /// This trivia's text.

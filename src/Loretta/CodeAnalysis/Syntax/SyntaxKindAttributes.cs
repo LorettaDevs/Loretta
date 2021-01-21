@@ -97,4 +97,18 @@ namespace Loretta.CodeAnalysis.Syntax
         /// </summary>
         public Int32 Precedence { get; }
     }
+
+    /// <summary>
+    /// The syntax node indicator attribute.
+    /// </summary>
+    [AttributeUsage ( AttributeTargets.Field, Inherited = false, AllowMultiple = false )]
+    sealed class NodeAttribute : Attribute
+    {
+        public NodeAttribute ( Type type )
+        {
+            this.Type = type;
+        }
+
+        public Type Type { get; }
+    }
 }

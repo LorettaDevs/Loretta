@@ -189,5 +189,9 @@ namespace Loretta.CodeAnalysis.Syntax
         TrueKeyword,
         [Keyword ( "false" )]
         FalseKeyword,
+
+        // Nodes
+        [Node ( typeof ( CompilationUnitSyntax ) )]
+        CompilationUnit,
     }
 }

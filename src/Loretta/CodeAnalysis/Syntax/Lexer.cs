@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using GParse;
 using GParse.IO;
 using GParse.Math;
+using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Syntax
@@ -20,10 +21,12 @@ namespace Loretta.CodeAnalysis.Syntax
             LoCharUtils.IsValidTrailingIdentifierChar ( this._luaOptions.UseLuaJitIdentifierRules, ch );
 
         private readonly LuaOptions _luaOptions;
+        private readonly SourceText _sourceText;
         private readonly ICodeReader _reader;
 
         private Int32 _start;
         private readonly ImmutableArray<SyntaxTrivia>.Builder _triviaBuilder = ImmutableArray.CreateBuilder<SyntaxTrivia> ( );
+        private readonly SyntaxTree syntaxTree;
 
         public DiagnosticList Diagnostics { get; }
 
@@ -31,12 +34,13 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public Int32 Position => this._reader.Position;
 
-        public Lexer ( LuaOptions luaOptions, ICodeReader reader )
+        public Lexer ( SyntaxTree syntaxTree )
         {
-            this._luaOptions = luaOptions;
-            this._reader = reader;
+            this.syntaxTree = syntaxTree;
+            this._luaOptions = syntaxTree.Options;
+            this._sourceText = syntaxTree.Text;
+            this._reader = this._sourceText.GetReader ( );
             this.Diagnostics = new DiagnosticList ( );
-            SyntaxFacts.GetUnaryOperatorPrecedence ( SyntaxKind.BadToken );
         }
 
         public SyntaxToken Lex ( )
@@ -46,14 +50,14 @@ namespace Loretta.CodeAnalysis.Syntax
 
             (SyntaxKind tokenKind, var tokenValue) = this.ReadToken ( );
 
-            var tokenEnd = this._reader.Position;
+            var tokenLength = this._reader.Position - tokenStart;
+
             ImmutableArray<SyntaxTrivia> trailingTrivia = this.ReadTrivia ( leading: false );
-            Range<Int32> tokenRange = (tokenStart, tokenEnd);
 
             var tokenText = SyntaxFacts.GetText ( tokenKind )
-                            ?? this.GetString ( tokenRange );
+                            ?? this._sourceText.ToString ( tokenStart, tokenLength );
 
-            return new SyntaxToken ( tokenKind, tokenRange, tokenText, tokenValue, leadingTrivia, trailingTrivia );
+            return new SyntaxToken ( this.syntaxTree, tokenKind, tokenStart, tokenText, tokenValue, leadingTrivia, trailingTrivia );
         }
 
         private ImmutableArray<SyntaxTrivia> ReadTrivia ( Boolean leading )
@@ -184,8 +188,9 @@ namespace Loretta.CodeAnalysis.Syntax
 
             void submitTrivia ( SyntaxKind kind )
             {
-                Range<Int32> range = (this._start, this._reader.Position);
-                this._triviaBuilder.Add ( new SyntaxTrivia ( kind, range, this.GetString ( range ) ) );
+                var length = this._reader.Position - this._start;
+                var text = this._sourceText.ToString ( this._start, length );
+                this._triviaBuilder.Add ( new SyntaxTrivia ( this.syntaxTree, kind, this._start, text ) );
             }
         }
 
