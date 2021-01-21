@@ -1,4 +1,5 @@
 ﻿using System;
+using Tsu;
 
 namespace Loretta
 {
@@ -255,85 +256,85 @@ namespace Loretta
         /// Creates a new lua options changing the provided fields.
         /// </summary>
         /// <param name="acceptBinaryNumbers">
-        /// <inheritdoc cref="AcceptBinaryNumbers" path="/summary" /> If null uses the value of <see
+        /// <inheritdoc cref="AcceptBinaryNumbers" path="/summary" /> If None uses the value of <see
         /// cref="AcceptBinaryNumbers" />.
         /// </param>
         /// <param name="acceptCCommentSyntax">
-        /// <inheritdoc cref="AcceptCCommentSyntax" path="/summary" /> If null uses the value of
+        /// <inheritdoc cref="AcceptCCommentSyntax" path="/summary" /> If None uses the value of
         /// <see cref="AcceptCCommentSyntax" />.
         /// </param>
         /// <param name="acceptCompoundAssignment">
-        /// <inheritdoc cref="AcceptCompoundAssignment" path="/summary" /> If null uses the value of
+        /// <inheritdoc cref="AcceptCompoundAssignment" path="/summary" /> If None uses the value of
         /// <see cref="AcceptCompoundAssignment" />.
         /// </param>
         /// <param name="acceptEmptyStatements">
-        /// <inheritdoc cref="AcceptEmptyStatements" path="/summary" /> If null uses the value of
+        /// <inheritdoc cref="AcceptEmptyStatements" path="/summary" /> If None uses the value of
         /// <see cref="AcceptEmptyStatements" />.
         /// </param>
         /// <param name="acceptGModCOperators">
-        /// <inheritdoc cref="AcceptGModCOperators" path="/summary" /> If null uses the value of
+        /// <inheritdoc cref="AcceptGModCOperators" path="/summary" /> If None uses the value of
         /// <see cref="AcceptGModCOperators" />.
         /// </param>
         /// <param name="acceptGoto">
-        /// <inheritdoc cref="AcceptGoto" path="/summary" /> If null uses the value of <see
+        /// <inheritdoc cref="AcceptGoto" path="/summary" /> If None uses the value of <see
         /// cref="AcceptGoto" />.
         /// </param>
         /// <param name="acceptHexEscapesInStrings">
-        /// <inheritdoc cref="AcceptHexEscapesInStrings" path="/summary" /> If null uses the value
+        /// <inheritdoc cref="AcceptHexEscapesInStrings" path="/summary" /> If None uses the value
         /// of <see cref="AcceptHexEscapesInStrings" />.
         /// </param>
         /// <param name="acceptHexFloatLiterals">
-        /// <inheritdoc cref="AcceptHexFloatLiterals" path="/summary" /> If null uses the value of
+        /// <inheritdoc cref="AcceptHexFloatLiterals" path="/summary" /> If None uses the value of
         /// <see cref="AcceptHexFloatLiterals" />.
         /// </param>
         /// <param name="acceptOctalNumbers">
-        /// <inheritdoc cref="AcceptOctalNumbers" path="/summary" /> If null uses the value of <see
+        /// <inheritdoc cref="AcceptOctalNumbers" path="/summary" /> If None uses the value of <see
         /// cref="AcceptOctalNumbers" />.
         /// </param>
         /// <param name="acceptShebang">
-        /// <inheritdoc cref="AcceptShebang" path="/summary" /> If null uses the value of <see
+        /// <inheritdoc cref="AcceptShebang" path="/summary" /> If None uses the value of <see
         /// cref="AcceptShebang" />.
         /// </param>
         /// <param name="acceptUnderlineInNumberLiterals">
-        /// <inheritdoc cref="AcceptUnderlineInNumberLiterals" path="/summary" /> If null uses the
+        /// <inheritdoc cref="AcceptUnderlineInNumberLiterals" path="/summary" /> If None uses the
         /// value of <see cref="AcceptUnderlineInNumberLiterals" />.
         /// </param>
         /// <param name="useLuaJitIdentifierRules">
-        /// <inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" /> If null uses the value of
+        /// <inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" /> If None uses the value of
         /// <see cref="UseLuaJitIdentifierRules" />.
         /// </param>
         /// <param name="continueType">
-        /// <inheritdoc cref="ContinueType" path="/summary" /> If null uses the value of <see
+        /// <inheritdoc cref="ContinueType" path="/summary" /> If None uses the value of <see
         /// cref="ContinueType" />.
         /// </param>
         /// <returns></returns>
         public LuaOptions With (
-            Boolean? acceptBinaryNumbers = null,
-            Boolean? acceptCCommentSyntax = null,
-            Boolean? acceptCompoundAssignment = null,
-            Boolean? acceptEmptyStatements = null,
-            Boolean? acceptGModCOperators = null,
-            Boolean? acceptGoto = null,
-            Boolean? acceptHexEscapesInStrings = null,
-            Boolean? acceptHexFloatLiterals = null,
-            Boolean? acceptOctalNumbers = null,
-            Boolean? acceptShebang = null,
-            Boolean? acceptUnderlineInNumberLiterals = null,
-            Boolean? useLuaJitIdentifierRules = null,
-            ContinueType? continueType = null ) =>
+            Option<Boolean> acceptBinaryNumbers = default,
+            Option<Boolean> acceptCCommentSyntax = default,
+            Option<Boolean> acceptCompoundAssignment = default,
+            Option<Boolean> acceptEmptyStatements = default,
+            Option<Boolean> acceptGModCOperators = default,
+            Option<Boolean> acceptGoto = default,
+            Option<Boolean> acceptHexEscapesInStrings = default,
+            Option<Boolean> acceptHexFloatLiterals = default,
+            Option<Boolean> acceptOctalNumbers = default,
+            Option<Boolean> acceptShebang = default,
+            Option<Boolean> acceptUnderlineInNumberLiterals = default,
+            Option<Boolean> useLuaJitIdentifierRules = default,
+            Option<ContinueType> continueType = default ) =>
             new LuaOptions (
-                acceptBinaryNumbers ?? this.AcceptBinaryNumbers,
-                acceptCCommentSyntax ?? this.AcceptCCommentSyntax,
-                acceptCompoundAssignment ?? this.AcceptCompoundAssignment,
-                acceptEmptyStatements ?? this.AcceptEmptyStatements,
-                acceptGModCOperators ?? this.AcceptGModCOperators,
-                acceptGoto ?? this.AcceptGoto,
-                acceptHexEscapesInStrings ?? this.AcceptHexEscapesInStrings,
-                acceptHexFloatLiterals ?? this.AcceptHexFloatLiterals,
-                acceptOctalNumbers ?? this.AcceptOctalNumbers,
-                acceptShebang ?? this.AcceptShebang,
-                acceptUnderlineInNumberLiterals ?? this.AcceptUnderlineInNumberLiterals,
-                useLuaJitIdentifierRules ?? this.UseLuaJitIdentifierRules,
-                continueType ?? this.ContinueType );
+                acceptBinaryNumbers.UnwrapOr ( this.AcceptBinaryNumbers ),
+                acceptCCommentSyntax.UnwrapOr ( this.AcceptCCommentSyntax ),
+                acceptCompoundAssignment.UnwrapOr ( this.AcceptCompoundAssignment ),
+                acceptEmptyStatements.UnwrapOr ( this.AcceptEmptyStatements ),
+                acceptGModCOperators.UnwrapOr ( this.AcceptGModCOperators ),
+                acceptGoto.UnwrapOr ( this.AcceptGoto ),
+                acceptHexEscapesInStrings.UnwrapOr ( this.AcceptHexEscapesInStrings ),
+                acceptHexFloatLiterals.UnwrapOr ( this.AcceptHexFloatLiterals ),
+                acceptOctalNumbers.UnwrapOr ( this.AcceptOctalNumbers ),
+                acceptShebang.UnwrapOr ( this.AcceptShebang ),
+                acceptUnderlineInNumberLiterals.UnwrapOr ( this.AcceptUnderlineInNumberLiterals ),
+                useLuaJitIdentifierRules.UnwrapOr ( this.UseLuaJitIdentifierRules ),
+                continueType.UnwrapOr ( this.ContinueType ) );
     }
 }
