@@ -35,6 +35,11 @@ namespace Loretta.CodeAnalysis.Syntax
             }
 
             SourceRange? range = null;
+            if ( !this._luaOptions.AcceptBinaryNumbers )
+            {
+                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
+                LuaDiagnostics.BinaryLiteralNotSupportedInVersion.ReportTo ( this.Diagnostics, range );
+            }
             if ( digits < 1 )
             {
                 range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
@@ -44,11 +49,6 @@ namespace Loretta.CodeAnalysis.Syntax
             {
                 range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
                 LuaDiagnostics.NumericLiteralTooLarge.ReportTo ( this.Diagnostics, range );
-            }
-            if ( !this._luaOptions.AcceptBinaryNumbers )
-            {
-                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
-                LuaDiagnostics.BinaryLiteralNotSupportedInVersion.ReportTo ( this.Diagnostics, range );
             }
 
             return num;
@@ -68,6 +68,11 @@ namespace Loretta.CodeAnalysis.Syntax
             }
 
             SourceRange? range = null;
+            if ( !this._luaOptions.AcceptOctalNumbers )
+            {
+                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
+                LuaDiagnostics.OctalLiteralNotSupportedInVersion.ReportTo ( this.Diagnostics, range );
+            }
             if ( digits < 1 )
             {
                 range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
@@ -77,11 +82,6 @@ namespace Loretta.CodeAnalysis.Syntax
             {
                 range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
                 LuaDiagnostics.NumericLiteralTooLarge.ReportTo ( this.Diagnostics, range );
-            }
-            if ( !this._luaOptions.AcceptOctalNumbers )
-            {
-                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
-                LuaDiagnostics.OctalLiteralNotSupportedInVersion.ReportTo ( this.Diagnostics, range );
             }
 
             return num;
@@ -154,6 +154,12 @@ namespace Loretta.CodeAnalysis.Syntax
                     if ( this._reader.IsNext ( '+' ) || this._reader.IsNext ( '-' ) )
                         this._reader.Advance ( 1 );
                     this.SkipDecimalDigits ( );
+                }
+
+                if ( !this._luaOptions.AcceptHexFloatLiterals )
+                {
+                    SourceRange range = this._reader.GetLocation ( (this._start, this._reader.Position) );
+                    LuaDiagnostics.HexFloatLiteralNotSupportedInVersion.ReportTo ( this.Diagnostics, range );
                 }
             }
 
