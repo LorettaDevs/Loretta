@@ -91,10 +91,9 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             var numStart = this._reader.Position;
 
-            var integralDigits = this.SkipDecimalDigits ( );
+            this.SkipDecimalDigits ( );
             if ( this._reader.IsNext ( '.' ) )
             {
-                integralDigits = -1;
                 this._reader.Advance ( 1 );
                 this.SkipDecimalDigits ( );
                 if ( CharUtils.AsciiLowerCase ( this._reader.Peek ( ).GetValueOrDefault ( ) ) == 'e' )

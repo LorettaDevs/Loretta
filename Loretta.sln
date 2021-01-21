@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29319.158
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta", "Loretta\Loretta.csproj", "{C9EF1345-C4FF-42C6-80B9-4C5AC1BAB6D5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CLI", "Loretta.CLI\Loretta.CLI.csproj", "{05AF8761-D31F-400B-808A-F0FC52585935}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".notes", ".notes", "{97DA683A-E503-4D83-B3AF-D2A73B3A06D5}"
 	ProjectSection(SolutionItems) = preProject
 		.notes\number-parsing.md = .notes\number-parsing.md
@@ -22,11 +18,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		THIRD-PARTY-NOTICES.txt = THIRD-PARTY-NOTICES.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.InternalBenchmarks", "Loretta.InternalBenchmarks\Loretta.InternalBenchmarks.csproj", "{FD9ABE2B-EF10-416A-B0A8-3E68F72B48A8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3F54E170-3225-440D-B723-FAF60D91124B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Tests", "Loretta.Tests\Loretta.Tests.csproj", "{C84FB448-E256-4804-893B-E1D6EB85EB1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta", "src\Loretta\Loretta.csproj", "{8B589DD3-F00F-4822-AA07-B66BECABBCDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta.Generators", "Loretta.Generators\Loretta.Generators.csproj", "{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta.CLI", "src\Loretta.CLI\Loretta.CLI.csproj", "{9499CFE2-2A15-4BC4-AC7C-93E8283069EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta.Generators", "src\Loretta.Generators\Loretta.Generators.csproj", "{76E3C4F5-99BD-48F1-A39C-8D2BAAC660C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta.InternalBenchmarks", "src\Loretta.InternalBenchmarks\Loretta.InternalBenchmarks.csproj", "{3ED120A7-5F1E-472F-A95F-FC5CC01C0B3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{208D0FDA-5502-4B7F-818A-662186F45239}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta.Tests", "test\Loretta.Tests\Loretta.Tests.csproj", "{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,31 +38,38 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C9EF1345-C4FF-42C6-80B9-4C5AC1BAB6D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9EF1345-C4FF-42C6-80B9-4C5AC1BAB6D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9EF1345-C4FF-42C6-80B9-4C5AC1BAB6D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9EF1345-C4FF-42C6-80B9-4C5AC1BAB6D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05AF8761-D31F-400B-808A-F0FC52585935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05AF8761-D31F-400B-808A-F0FC52585935}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05AF8761-D31F-400B-808A-F0FC52585935}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05AF8761-D31F-400B-808A-F0FC52585935}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD9ABE2B-EF10-416A-B0A8-3E68F72B48A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD9ABE2B-EF10-416A-B0A8-3E68F72B48A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD9ABE2B-EF10-416A-B0A8-3E68F72B48A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD9ABE2B-EF10-416A-B0A8-3E68F72B48A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C84FB448-E256-4804-893B-E1D6EB85EB1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C84FB448-E256-4804-893B-E1D6EB85EB1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C84FB448-E256-4804-893B-E1D6EB85EB1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C84FB448-E256-4804-893B-E1D6EB85EB1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B589DD3-F00F-4822-AA07-B66BECABBCDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B589DD3-F00F-4822-AA07-B66BECABBCDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B589DD3-F00F-4822-AA07-B66BECABBCDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B589DD3-F00F-4822-AA07-B66BECABBCDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9499CFE2-2A15-4BC4-AC7C-93E8283069EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9499CFE2-2A15-4BC4-AC7C-93E8283069EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9499CFE2-2A15-4BC4-AC7C-93E8283069EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9499CFE2-2A15-4BC4-AC7C-93E8283069EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76E3C4F5-99BD-48F1-A39C-8D2BAAC660C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76E3C4F5-99BD-48F1-A39C-8D2BAAC660C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76E3C4F5-99BD-48F1-A39C-8D2BAAC660C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76E3C4F5-99BD-48F1-A39C-8D2BAAC660C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ED120A7-5F1E-472F-A95F-FC5CC01C0B3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ED120A7-5F1E-472F-A95F-FC5CC01C0B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ED120A7-5F1E-472F-A95F-FC5CC01C0B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ED120A7-5F1E-472F-A95F-FC5CC01C0B3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2976112B-0D4A-472A-9FD3-DFA4FFD326D0}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8B589DD3-F00F-4822-AA07-B66BECABBCDF} = {3F54E170-3225-440D-B723-FAF60D91124B}
+		{9499CFE2-2A15-4BC4-AC7C-93E8283069EA} = {3F54E170-3225-440D-B723-FAF60D91124B}
+		{76E3C4F5-99BD-48F1-A39C-8D2BAAC660C0} = {3F54E170-3225-440D-B723-FAF60D91124B}
+		{3ED120A7-5F1E-472F-A95F-FC5CC01C0B3E} = {3F54E170-3225-440D-B723-FAF60D91124B}
+		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187} = {208D0FDA-5502-4B7F-818A-662186F45239}
 	EndGlobalSection
 EndGlobal
