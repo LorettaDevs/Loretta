@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using GParse;
-using GParse.Lexing;
-using Loretta.Lexing;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 
@@ -11,18 +11,19 @@ namespace Loretta.Tests
 {
     public static class AssertExtensions
     {
-        public static void TokensAreEqual ( this Assert assert, Token<LuaTokenType> expected, Token<LuaTokenType> actual, Boolean compareTrivia = false )
+        public static void TokensAreEqual ( this Assert assert, SyntaxToken expected, SyntaxToken actual, Boolean compareTrivia = false )
         {
             _ = assert;
-            Assert.AreEqual ( expected.Id, actual.Id );
-            Assert.AreEqual ( expected.Raw, actual.Raw );
-            Assert.AreEqual ( expected.Value, actual.Value );
-            Assert.AreEqual ( expected.Type, actual.Type );
+            Assert.AreEqual ( expected.Kind, actual.Kind );
             Assert.AreEqual ( expected.Range, actual.Range );
-            Assert.AreEqual ( expected.IsTrivia, actual.IsTrivia );
+            Assert.AreEqual ( expected.Text, actual.Text );
+            Assert.AreEqual ( expected.Value, actual.Value );
 
             if ( compareTrivia )
-                CollectionAssert.AreEqual ( expected.Trivia.ToArray ( ), actual.Trivia.ToArray ( ) );
+            {
+                CollectionAssert.AreEqual ( expected.LeadingTrivia, actual.LeadingTrivia );
+                CollectionAssert.AreEqual ( expected.TrailingTrivia, actual.TrailingTrivia );
+            }
         }
 
         public static void DiagnosticsAreEmpty ( this Assert assert, IReadOnlyList<Diagnostic> diagnostics, String input )
