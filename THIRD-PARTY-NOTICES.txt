@@ -2,3 +2,6 @@ This project uses things from other projects.
 
 1. This project uses the file "HexFloat.cs" from the FParsec project.
 This is their license: http://www.quanttec.com/fparsec/license.html
+
+2. This project uses code based on the Minsk project.
+This is their license: https://github.com/terrajobst/minsk/blob/master/LICENSE
