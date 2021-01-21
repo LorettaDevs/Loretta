@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.InternalBenchmarks"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Tests", "Loretta.Tests\Loretta.Tests.csproj", "{C84FB448-E256-4804-893B-E1D6EB85EB1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta.Generators", "Loretta.Generators\Loretta.Generators.csproj", "{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{C84FB448-E256-4804-893B-E1D6EB85EB1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C84FB448-E256-4804-893B-E1D6EB85EB1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C84FB448-E256-4804-893B-E1D6EB85EB1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC86F7C-996D-43FE-BE9B-84DB30803A9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
