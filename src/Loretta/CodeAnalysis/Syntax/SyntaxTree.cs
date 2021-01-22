@@ -76,7 +76,7 @@ namespace Loretta.CodeAnalysis.Syntax
             }
 
             var syntaxTree = new SyntaxTree ( options, text, ParseTokens );
-            diagnostics = syntaxTree.Diagnostics.ToImmutableArray ( );
+            diagnostics = syntaxTree.Diagnostics;
             return tokens.ToImmutable ( );
         }
 
