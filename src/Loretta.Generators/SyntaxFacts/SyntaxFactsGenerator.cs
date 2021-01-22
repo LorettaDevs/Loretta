@@ -75,6 +75,8 @@ namespace Loretta.Generators.SyntaxFacts
             indentedTextWriter.WriteLine ( "using System.Collections.Immutable;" );
             indentedTextWriter.WriteLine ( "using System.Diagnostics.CodeAnalysis;" );
             indentedTextWriter.WriteLine ( );
+            indentedTextWriter.WriteLine ( "#nullable enable" );
+            indentedTextWriter.WriteLine ( );
 
             using ( new CurlyIndenter ( indentedTextWriter, "namespace Loretta.CodeAnalysis.Syntax" ) )
             {
