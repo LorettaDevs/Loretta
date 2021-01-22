@@ -68,64 +68,89 @@ namespace Loretta.Generators.SyntaxFacts
                 return;
             }
 
-            using var stringWriter = new StringWriter ( );
-            using var indentedTextWriter = new IndentedTextWriter ( stringWriter, "    " );
-            indentedTextWriter.WriteLine ( "using System;" );
-            indentedTextWriter.WriteLine ( "using System.Collections.Generic;" );
-            indentedTextWriter.WriteLine ( "using System.Collections.Immutable;" );
-            indentedTextWriter.WriteLine ( "using System.Diagnostics.CodeAnalysis;" );
-            indentedTextWriter.WriteLine ( );
-            indentedTextWriter.WriteLine ( "#nullable enable" );
-            indentedTextWriter.WriteLine ( );
-
-            using ( new CurlyIndenter ( indentedTextWriter, "namespace Loretta.CodeAnalysis.Syntax" ) )
+            SourceText sourceText;
+            using ( var stringWriter = new StringWriter ( ) )
+            using ( var indentedTextWriter = new IndentedTextWriter ( stringWriter, "    " ) )
             {
-                using ( new CurlyIndenter ( indentedTextWriter, "public static partial class SyntaxFacts" ) )
+                indentedTextWriter.WriteLine ( "using System;" );
+                indentedTextWriter.WriteLine ( "using System.Collections.Generic;" );
+                indentedTextWriter.WriteLine ( "using System.Collections.Immutable;" );
+                indentedTextWriter.WriteLine ( "using System.Diagnostics.CodeAnalysis;" );
+                indentedTextWriter.WriteLine ( );
+                indentedTextWriter.WriteLine ( "#nullable enable" );
+                indentedTextWriter.WriteLine ( );
+
+                using ( new CurlyIndenter ( indentedTextWriter, "namespace Loretta.CodeAnalysis.Syntax" ) )
                 {
-                    GenerateGetUnaryOperatorPrecedence ( kinds, indentedTextWriter );
+                    using ( new CurlyIndenter ( indentedTextWriter, "public static partial class SyntaxFacts" ) )
+                    {
+                        GenerateGetUnaryOperatorPrecedence ( kinds, indentedTextWriter );
 
-                    indentedTextWriter.WriteLineNoTabs ( "" );
+                        indentedTextWriter.WriteLineNoTabs ( "" );
 
-                    GenerateGetBinaryOperatorPrecedence ( kinds, indentedTextWriter );
+                        GenerateGetBinaryOperatorPrecedence ( kinds, indentedTextWriter );
 
-                    indentedTextWriter.WriteLineNoTabs ( "" );
+                        indentedTextWriter.WriteLineNoTabs ( "" );
 
-                    GenerateGetKeywordKind ( kinds, indentedTextWriter );
+                        GenerateGetKeywordKind ( kinds, indentedTextWriter );
 
-                    indentedTextWriter.WriteLineNoTabs ( "" );
+                        indentedTextWriter.WriteLineNoTabs ( "" );
 
-                    GenerateGetUnaryOperatorKinds ( kinds, indentedTextWriter );
+                        GenerateGetUnaryOperatorKinds ( kinds, indentedTextWriter );
 
-                    indentedTextWriter.WriteLineNoTabs ( "" );
+                        indentedTextWriter.WriteLineNoTabs ( "" );
 
-                    GenerateGetBinaryOperatorKinds ( kinds, indentedTextWriter );
+                        GenerateGetBinaryOperatorKinds ( kinds, indentedTextWriter );
 
-                    indentedTextWriter.WriteLineNoTabs ( "" );
+                        indentedTextWriter.WriteLineNoTabs ( "" );
 
-                    GenerateGetText ( kinds, indentedTextWriter );
+                        GenerateGetText ( kinds, indentedTextWriter );
 
-                    indentedTextWriter.WriteLineNoTabs ( "" );
+                        indentedTextWriter.WriteLineNoTabs ( "" );
 
-                    // Generate IsTrivia
-                    GenerateIsX ( kinds, indentedTextWriter, "Trivia", kind => kind.IsTrivia );
+                        // Generate IsTrivia
+                        GenerateIsX ( kinds, indentedTextWriter, "Trivia", kind => kind.IsTrivia );
 
-                    indentedTextWriter.WriteLineNoTabs ( "" );
+                        indentedTextWriter.WriteLineNoTabs ( "" );
 
-                    // Generate IsKeyword
-                    GenerateIsX ( kinds, indentedTextWriter, "Keyword", kind => kind.TokenInfo?.IsKeyword is true );
+                        // Generate IsKeyword
+                        GenerateIsX ( kinds, indentedTextWriter, "Keyword", kind => kind.TokenInfo?.IsKeyword is true );
 
-                    indentedTextWriter.WriteLineNoTabs ( "" );
+                        indentedTextWriter.WriteLineNoTabs ( "" );
 
-                    // Generate IsToken
-                    GenerateIsX ( kinds, indentedTextWriter, "Token", kind => kind.TokenInfo is not null );
+                        // Generate IsToken
+                        GenerateIsX ( kinds, indentedTextWriter, "Token", kind => kind.TokenInfo is not null );
 
+                    }
                 }
+
+                indentedTextWriter.Flush ( );
+                stringWriter.Flush ( );
+                sourceText = SourceText.From ( stringWriter.ToString ( ), Encoding.UTF8 );
             }
 
-            indentedTextWriter.Flush ( );
-            stringWriter.Flush ( );
+            context.AddSource ( "SyntaxFacts.g.cs", sourceText );
 
-            context.AddSource ( "SyntaxFacts.g.cs", SourceText.From ( stringWriter.ToString ( ), Encoding.UTF8 ) );
+            // HACK
+            //
+            // Make generator work in VS Code. See src\Directory.Build.props for
+            // details.
+
+            var fileName = "SyntaxFacts.g.cs";
+            var syntaxNodeFilePath = syntaxKindType.DeclaringSyntaxReferences.First ( ).SyntaxTree.FilePath;
+            var syntaxDirectory = Path.GetDirectoryName ( syntaxNodeFilePath );
+            var filePath = Path.Combine ( syntaxDirectory, fileName );
+
+            if ( File.Exists ( filePath ) )
+            {
+                var fileText = File.ReadAllText ( filePath );
+                var sourceFileText = SourceText.From ( fileText, Encoding.UTF8 );
+                if ( sourceText.ContentEquals ( sourceFileText ) )
+                    return;
+            }
+
+            using var writer = new StreamWriter ( filePath );
+            sourceText.Write ( writer );
         }
 
         private static void GenerateGetUnaryOperatorPrecedence ( ImmutableArray<KindInfo> kinds, IndentedTextWriter indentedTextWriter )
