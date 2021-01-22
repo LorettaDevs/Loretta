@@ -34,8 +34,17 @@ namespace Loretta.Generators.SyntaxFacts
 
         private static readonly DiagnosticDescriptor OperatorWithoutText = new (
             id: "LO0003",
-            title: "An operator kind must have a token text associated with it",
-            messageFormat: "An operator kind must have a token text associated with it",
+            title: "An operator kind must have a non-empty and non-whitespace text associated with it",
+            messageFormat: "An operator kind must have a non-empty and non-whitespace text associated with it",
+            category: "Loretta.Generators",
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable } );
+
+        private static readonly DiagnosticDescriptor KeywordWithoutText = new (
+            id: "LO0003",
+            title: "A keyword kind must have a non-empty and non-whitespace text associated with it",
+            messageFormat: "A keyword kind must have a non-empty and non-whitespace text associated with it",
             category: "Loretta.Generators",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
@@ -301,8 +310,8 @@ namespace Loretta.Generators.SyntaxFacts
                 indentedTextWriter.WriteLine ( "{" );
                 using ( new Indenter ( indentedTextWriter ) )
                 {
-                    IEnumerable<KindInfo> tokens = kinds.Where ( kind => kind.TokenInfo?.IsKeyword is false );
-                    IEnumerable<KindInfo> keywords = kinds.Where ( kind => kind.TokenInfo?.IsKeyword is true );
+                    IEnumerable<KindInfo> tokens = kinds.Where ( kind => kind.TokenInfo is { IsKeyword: false, Text: not null and not "" } );
+                    IEnumerable<KindInfo> keywords = kinds.Where ( kind => kind.TokenInfo is { IsKeyword: true, Text: not null and not "" } );
 
                     indentedTextWriter.WriteLine ( "#region Tokens" );
                     indentedTextWriter.WriteLineNoTabs ( "" );
@@ -396,8 +405,13 @@ namespace Loretta.Generators.SyntaxFacts
                     context.ReportDiagnostic ( Diagnostic.Create ( TriviaAndToken, field.Locations.Single ( ) ) );
                 }
 
-                if ( ( unaryOperatorInfo is not null || binaryOperatorInfo is not null )
-                     && tokenInfo?.Text is null )
+                if ( tokenInfo is { IsKeyword: true, Text: null } )
+                {
+                    hasErrors = true;
+                    context.ReportDiagnostic ( Diagnostic.Create ( KeywordWithoutText, field.Locations.Single ( ) ) );
+                }
+
+                if ( ( unaryOperatorInfo is not null || binaryOperatorInfo is not null ) && String.IsNullOrWhiteSpace ( tokenInfo?.Text ) )
                 {
                     hasErrors = true;
                     context.ReportDiagnostic ( Diagnostic.Create ( OperatorWithoutText, field.Locations.Single ( ) ) );
@@ -428,11 +442,13 @@ namespace Loretta.Generators.SyntaxFacts
             if ( Utilities.GetAttribute ( field, keywordAttributeType ) is AttributeData keywordAttributeData )
             {
                 var text = keywordAttributeData.ConstructorArguments.Single ( ).Value as String;
+                if ( String.IsNullOrWhiteSpace ( text ) ) text = null;
                 return new TokenInfo ( text, true );
             }
             else if ( Utilities.GetAttribute ( field, tokenAttributeType ) is AttributeData tokenAttributeData )
             {
                 var text = tokenAttributeData.NamedArguments.SingleOrDefault ( kv => kv.Key == "Text" ).Value.Value as String;
+                if ( String.IsNullOrWhiteSpace ( text ) ) text = null;
                 return new TokenInfo ( text, false );
             }
             else
