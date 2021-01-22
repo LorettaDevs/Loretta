@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using Tsu;
 
 namespace Loretta
@@ -118,6 +119,19 @@ namespace Loretta
             acceptUnderlineInNumberLiterals: true,
             useLuaJitIdentifierRules: true,
             continueType: ContinueType.ContextualKeyword );
+
+        /// <summary>
+        /// All presets that are preconfigured in <see cref="LuaOptions"/>.
+        /// </summary>
+        public static ImmutableArray<LuaOptions> AllPresets { get; } = ImmutableArray.Create ( new[]
+        {
+            Lua51,
+            Lua52,
+            LuaJIT,
+            GMod,
+            Roblox,
+            All
+        } );
 
         /// <summary>
         /// Whether to accept binary numbers (format: /0b[10]+/).
