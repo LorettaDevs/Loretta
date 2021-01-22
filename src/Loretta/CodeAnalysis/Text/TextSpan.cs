@@ -5,7 +5,7 @@ namespace Loretta.CodeAnalysis.Text
     /// <summary>
     /// Represents a span of the source text.
     /// </summary>
-    public readonly struct TextSpan
+    public readonly struct TextSpan : IEquatable<TextSpan>
     {
         /// <summary>
         /// Creates a <see cref="TextSpan"/> from its bounds.
@@ -54,6 +54,37 @@ namespace Loretta.CodeAnalysis.Text
             this.Start < other.End && other.Start < this.End;
 
         /// <inheritdoc/>
+        public override Boolean Equals ( Object? obj ) =>
+            obj is TextSpan span && this.Equals ( span );
+
+        /// <inheritdoc/>
+        public Boolean Equals ( TextSpan other ) =>
+            this.Start == other.Start
+            && this.Length == other.Length;
+
+        /// <inheritdoc/>
+        public override Int32 GetHashCode ( ) =>
+            HashCode.Combine ( this.Start, this.Length );
+
+        /// <inheritdoc/>
         public override String ToString ( ) => $"{this.Start}..{this.End}";
+
+        /// <summary>
+        /// Checks whether two text spans are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static Boolean operator == ( TextSpan left, TextSpan right ) =>
+            left.Equals ( right );
+
+        /// <summary>
+        /// Checks whether two text spans are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static Boolean operator != ( TextSpan left, TextSpan right ) =>
+            !( left == right );
     }
 }
