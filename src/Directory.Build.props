@@ -1,0 +1,32 @@
+<Project>
+
+  <PropertyGroup>
+
+    <Features>strict</Features>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <!-- Treat all non-nullable reference types warnings as errors (as it should be). -->
+    <WarningsAsErrors>CS8600;CS8601;CS8602;CS8603;CS8604;CS8605;CS8607;CS8608;CS8609;CS8610;CS8611;CS8612;CS8613;CS8614;CS8615;CS8616;CS8617;CS8618;CS8619;CS8620;CS8621;CS8622;CS8624;CS8625;CS8629;CS8631;CS8633;CS8634;CS8643;CS8644;CS8645;CS8655;CS8667;CS8670;CS8714</WarningsAsErrors>
+  </PropertyGroup>
+
+  <!--
+      HACK:
+      VS Code currently doesn't support Roslyn generators (VS 16.6+ does, tho).
+      In order to void seeing errors in VS Code and to get IntelliSense,
+      we're doing a trick:
+      1. The generator writes the file to disk, using the *.g.cs naming
+         convention (borrowed from WPF).
+      2. In MSBuild we're excluding those files
+      Since VS Code's C# extension (or more specifically OmniSharp) doesn't
+      resolve items from MSBuild, it will include the file while neither
+      VS nor the CLI/CI build will.
+      Also include the generated file in Rider, which retrieves items from
+      MSBuild, but doesn't currently support generators.
+  -->
+  <PropertyGroup>
+    <GeneratedSources>**/*.g.cs</GeneratedSources>
+    <DefaultItemExcludes Condition="'$(JetBrainsDesignTimeBuild)' == ''">$(DefaultItemExcludes);$(GeneratedSources)</DefaultItemExcludes>
+  </PropertyGroup>
+
+</Project>
