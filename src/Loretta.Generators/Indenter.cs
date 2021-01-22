@@ -15,9 +15,11 @@ namespace Loretta.Generators
         /// </summary>
         /// <param name="indentedTextWriter">The writer to use</param>
         /// <param name="openingLine">any line to write before the curly</param>
-        public Indenter ( IndentedTextWriter indentedTextWriter )
+        public Indenter ( IndentedTextWriter indentedTextWriter, String openingLine = "" )
         {
             this._indentedTextWriter = indentedTextWriter;
+            if ( !String.IsNullOrWhiteSpace ( openingLine ) )
+                indentedTextWriter.WriteLine ( openingLine );
             indentedTextWriter.Indent++;
         }
 
