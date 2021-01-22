@@ -26,11 +26,7 @@ namespace Loretta.Utilities
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsHexadecimal ( Char ch ) =>
             IsDecimal ( ch )
-            // Using the table on /.notes/number-parsing.md, one can see that there's a bit that can
-            // be used to convert uppercase characters to lower case (the 6th bit right to left). So
-            // we preemptively set it on the char to avoid an extra range check. Validated by the
-            // IsAlphaCheckMicrobenchmark microbenchmark.
-            || CharUtils.IsInRange ( 'a', ( Char ) ( ch | 0b0100000 ), 'f' );
+            || CharUtils.IsInRange ( 'a', CharUtils.AsciiLowerCase ( ch ), 'f' );
 
         /// <summary>
         /// Checks whether the provided character is an alpha character (a-z, A-Z).
@@ -39,8 +35,7 @@ namespace Loretta.Utilities
         /// <returns>Whether the provided character is an alpha character.</returns>
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public static Boolean IsAlpha ( Char ch ) =>
-            // Refer to IsHexadecimal(Char) for an explanation of the bitwise or.
-            CharUtils.IsInRange ( 'a', ( Char ) ( ch | 0b100000 ), 'z' );
+            CharUtils.IsInRange ( 'a', CharUtils.AsciiLowerCase ( ch ), 'z' );
 
         /// <summary>
         /// Checks whether the provided character is an alphanumeric character (a-z, A-Z, 0-9).
