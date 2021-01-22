@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Threading;
-using GParse;
 using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Syntax

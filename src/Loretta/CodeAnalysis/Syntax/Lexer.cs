@@ -10,7 +10,7 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
-    internal partial class Lexer : IRestorablePositionContainer
+    internal sealed partial class Lexer : IRestorablePositionContainer
     {
         [MethodImpl ( MethodImplOptions.AggressiveInlining )]
         public Boolean IsValidIdentifierLeadingCharacter ( Char ch ) =>
@@ -21,14 +21,14 @@ namespace Loretta.CodeAnalysis.Syntax
             LoCharUtils.IsValidTrailingIdentifierChar ( this._luaOptions.UseLuaJitIdentifierRules, ch );
 
         private readonly LuaOptions _luaOptions;
-        private readonly SourceText _sourceText;
+        private readonly SourceText _text;
         private readonly ICodeReader _reader;
 
         private Int32 _start;
         private readonly ImmutableArray<SyntaxTrivia>.Builder _triviaBuilder = ImmutableArray.CreateBuilder<SyntaxTrivia> ( );
         private readonly SyntaxTree syntaxTree;
 
-        public DiagnosticList Diagnostics { get; }
+        public DiagnosticBag Diagnostics { get; }
 
         public Int32 Length => this._reader.Length;
 
@@ -38,9 +38,9 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             this.syntaxTree = syntaxTree;
             this._luaOptions = syntaxTree.Options;
-            this._sourceText = syntaxTree.Text;
-            this._reader = this._sourceText.GetReader ( );
-            this.Diagnostics = new DiagnosticList ( );
+            this._text = syntaxTree.Text;
+            this._reader = this._text.GetReader ( );
+            this.Diagnostics = new DiagnosticBag ( );
         }
 
         public SyntaxToken Lex ( )
@@ -55,7 +55,7 @@ namespace Loretta.CodeAnalysis.Syntax
             ImmutableArray<SyntaxTrivia> trailingTrivia = this.ReadTrivia ( leading: false );
 
             var tokenText = SyntaxFacts.GetText ( tokenKind )
-                            ?? this._sourceText.ToString ( tokenStart, tokenLength );
+                            ?? this._text.ToString ( tokenStart, tokenLength );
 
             return new SyntaxToken ( this.syntaxTree, tokenKind, tokenStart, tokenText, tokenValue, leadingTrivia, trailingTrivia );
         }
@@ -78,8 +78,9 @@ namespace Loretta.CodeAnalysis.Syntax
                             {
                                 if ( closingNotFound )
                                 {
-                                    SourceRange? sourceRange = this._reader.GetLocation ( (this._start, this._reader.Position) );
-                                    LuaDiagnostics.UnfinishedLongComment.ReportTo ( this.Diagnostics, sourceRange );
+                                    var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+                                    var location = new TextLocation ( this._text, span );
+                                    this.Diagnostics.ReportUnfinishedLongComment ( location );
                                 }
 
                                 submitTrivia ( SyntaxKind.MultiLineCommentTrivia );
@@ -163,8 +164,9 @@ namespace Loretta.CodeAnalysis.Syntax
 
                             if ( !this._luaOptions.AcceptShebang )
                             {
-                                SourceRange range = this._reader.GetLocation ( (this._start, this._reader.Position) );
-                                LuaDiagnostics.InvalidShebang.ReportTo ( this.Diagnostics, range );
+                                var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+                                var location = new TextLocation ( this._text, span );
+                                this.Diagnostics.ReportShebang ( location );
                             }
 
                             submitTrivia ( SyntaxKind.ShebangTrivia );
@@ -189,7 +191,7 @@ namespace Loretta.CodeAnalysis.Syntax
             void submitTrivia ( SyntaxKind kind )
             {
                 var length = this._reader.Position - this._start;
-                var text = this._sourceText.ToString ( this._start, length );
+                var text = this._text.ToString ( this._start, length );
                 this._triviaBuilder.Add ( new SyntaxTrivia ( this.syntaxTree, kind, this._start, text ) );
             }
         }
@@ -278,8 +280,9 @@ namespace Loretta.CodeAnalysis.Syntax
                     {
                         if ( closingNotFound )
                         {
-                            SourceRange range = this._reader.GetLocation ( (this._start, this._reader.Position) );
-                            LuaDiagnostics.UnfinishedString.ReportTo ( this.Diagnostics, range );
+                            var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+                            var location = new TextLocation ( this._text, span );
+                            this.Diagnostics.ReportUnfinishedString ( location );
                         }
 
                         return (SyntaxKind.LongStringToken, contents);

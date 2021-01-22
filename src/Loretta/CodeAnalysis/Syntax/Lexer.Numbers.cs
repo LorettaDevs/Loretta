@@ -2,12 +2,13 @@
 using System.Globalization;
 using GParse;
 using GParse.Utilities;
+using Loretta.CodeAnalysis.Text;
 using Loretta.ThirdParty.FParsec;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
-    internal partial class Lexer
+    internal sealed partial class Lexer
     {
         private Int32 SkipDecimalDigits ( )
         {
@@ -34,22 +35,14 @@ namespace Loretta.CodeAnalysis.Syntax
                 digits++;
             }
 
-            SourceRange? range = null;
+            var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+            var location = new TextLocation ( this._text, span );
             if ( !this._luaOptions.AcceptBinaryNumbers )
-            {
-                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
-                LuaDiagnostics.BinaryLiteralNotSupportedInVersion.ReportTo ( this.Diagnostics, range );
-            }
+                this.Diagnostics.ReportBinaryLiteralNotSupportedInVersion ( location );
             if ( digits < 1 )
-            {
-                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
-                LuaDiagnostics.InvalidNumber.ReportTo ( this.Diagnostics, range );
-            }
+                this.Diagnostics.ReportInvalidNumber ( location );
             if ( digits > 64 )
-            {
-                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
-                LuaDiagnostics.NumericLiteralTooLarge.ReportTo ( this.Diagnostics, range );
-            }
+                this.Diagnostics.ReportNumericLiteralTooLarge ( location );
 
             return num;
         }
@@ -67,22 +60,14 @@ namespace Loretta.CodeAnalysis.Syntax
                 digits++;
             }
 
-            SourceRange? range = null;
+            var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+            var location = new TextLocation ( this._text, span );
             if ( !this._luaOptions.AcceptOctalNumbers )
-            {
-                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
-                LuaDiagnostics.OctalLiteralNotSupportedInVersion.ReportTo ( this.Diagnostics, range );
-            }
+                this.Diagnostics.ReportOctalLiteralNotSupportedInVersion ( location );
             if ( digits < 1 )
-            {
-                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
-                LuaDiagnostics.InvalidNumber.ReportTo ( this.Diagnostics, range );
-            }
+                this.Diagnostics.ReportInvalidNumber ( location );
             if ( digits > 21 )
-            {
-                range ??= this._reader.GetLocation ( (this._start, this._reader.Position) );
-                LuaDiagnostics.NumericLiteralTooLarge.ReportTo ( this.Diagnostics, range );
-            }
+                this.Diagnostics.ReportNumericLiteralTooLarge ( location );
 
             return num;
         }
@@ -157,8 +142,9 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 if ( !this._luaOptions.AcceptHexFloatLiterals )
                 {
-                    SourceRange range = this._reader.GetLocation ( (this._start, this._reader.Position) );
-                    LuaDiagnostics.HexFloatLiteralNotSupportedInVersion.ReportTo ( this.Diagnostics, range );
+                    var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+                    var location = new TextLocation ( this._text, span );
+                    this.Diagnostics.ReportHexFloatLiteralNotSupportedInVersion ( location );
                 }
             }
 

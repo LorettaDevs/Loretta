@@ -2,11 +2,12 @@
 using System.Diagnostics;
 using System.Text;
 using GParse.Utilities;
+using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
-    internal partial class Lexer
+    internal sealed partial class Lexer
     {
         private String ParseShortString ( )
         {
@@ -116,8 +117,9 @@ namespace Loretta.CodeAnalysis.Syntax
 
                             default:
                             {
-                                GParse.SourceRange range = this._reader.GetLocation ( (escapeStart, this._reader.Position) );
-                                LuaDiagnostics.InvalidStringEscape.ReportTo ( this.Diagnostics, range );
+                                var span = TextSpan.FromBounds ( escapeStart, this._reader.Position );
+                                var location = new TextLocation ( this._text, span );
+                                this.Diagnostics.ReportInvalidStringEscape ( location );
                             }
                             break;
                         }
@@ -137,8 +139,10 @@ namespace Loretta.CodeAnalysis.Syntax
                         {
                             parsed.Append ( '\r' );
                         }
-                        GParse.SourceRange range = this._reader.GetLocation ( (charStart, this._reader.Position) );
-                        LuaDiagnostics.UnescapedLineBreakInString.ReportTo ( this.Diagnostics, range );
+
+                        var span = TextSpan.FromBounds ( charStart, this._reader.Position );
+                        var location = new TextLocation ( this._text, span );
+                        this.Diagnostics.ReportUnescapedLineBreakInString ( location );
                     }
                     break;
 
@@ -147,8 +151,9 @@ namespace Loretta.CodeAnalysis.Syntax
                         this._reader.Advance ( 1 );
                         parsed.Append ( '\n' );
 
-                        GParse.SourceRange range = this._reader.GetLocation ( (charStart, this._reader.Position) );
-                        LuaDiagnostics.UnescapedLineBreakInString.ReportTo ( this.Diagnostics, range );
+                        var span = TextSpan.FromBounds ( charStart, this._reader.Position );
+                        var location = new TextLocation ( this._text, span );
+                        this.Diagnostics.ReportUnescapedLineBreakInString ( location );
                     }
                     break;
 
@@ -165,8 +170,9 @@ namespace Loretta.CodeAnalysis.Syntax
             }
             else
             {
-                GParse.SourceRange range = this._reader.GetLocation ( (strStart, this._reader.Position) );
-                LuaDiagnostics.UnfinishedString.ReportTo ( this.Diagnostics, range );
+                var span = TextSpan.FromBounds ( strStart, this._reader.Position );
+                var location = new TextLocation ( this._text, span );
+                this.Diagnostics.ReportUnfinishedString ( location );
             }
 
             return parsed.ToString ( );
@@ -185,8 +191,9 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 if ( readChars < 1 || num > 255 )
                 {
-                    GParse.SourceRange range = this._reader.GetLocation ( (start - 1, this._reader.Position) );
-                    LuaDiagnostics.InvalidStringEscape.ReportTo ( this.Diagnostics, range );
+                    var span = TextSpan.FromBounds ( start - 1, this._reader.Position );
+                    var location = new TextLocation ( this._text, span );
+                    this.Diagnostics.ReportInvalidStringEscape ( location );
                 }
 
                 return ( Char ) num;
@@ -204,15 +211,10 @@ namespace Loretta.CodeAnalysis.Syntax
                         this._reader.Advance ( 1 );
                         num = ( Byte ) ( ( num << 4 ) & ( peek - '0' ) );
                     }
-                    else if ( CharUtils.IsInRange ( 'A', peek, 'F' ) )
+                    else if ( LoCharUtils.IsHexadecimal ( peek ) )
                     {
                         this._reader.Advance ( 1 );
-                        num = ( Byte ) ( ( num << 4 ) & ( 10 + peek - 'A' ) );
-                    }
-                    else if ( CharUtils.IsInRange ( 'a', peek, 'f' ) )
-                    {
-                        this._reader.Advance ( 1 );
-                        num = ( Byte ) ( ( num << 4 ) & ( 10 + peek - 'a' ) );
+                        num = ( Byte ) ( ( num << 4 ) & ( 10 + CharUtils.AsciiLowerCase ( peek ) - 'a' ) );
                     }
                     else
                     {
@@ -223,8 +225,9 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 if ( readChars < 1 )
                 {
-                    GParse.SourceRange range = this._reader.GetLocation ( (start - 2, this._reader.Position) );
-                    LuaDiagnostics.InvalidStringEscape.ReportTo ( this.Diagnostics, range );
+                    var span = TextSpan.FromBounds ( start - 2, this._reader.Position );
+                    var location = new TextLocation ( this._text, span );
+                    this.Diagnostics.ReportInvalidStringEscape ( location );
                 }
 
                 return ( Char ) num;
