@@ -67,8 +67,8 @@ namespace Loretta.CodeAnalysis
         internal void ReportUnfinishedLongComment ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0006", "Unfinished long comment", location ) );
 
-        internal void ReportShebang ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0007", "Unexpected shebang", location ) );
+        internal void ReportShebangNotSupportedInVersion ( TextLocation location ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0007", "Shebangs are not supported in this version of lua", location ) );
 
         internal void ReportBinaryLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0008", "Binary number literals are not supported in this version of lua", location ) );

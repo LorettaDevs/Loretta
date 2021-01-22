@@ -166,7 +166,7 @@ namespace Loretta.CodeAnalysis.Syntax
                             {
                                 var span = TextSpan.FromBounds ( this._start, this._reader.Position );
                                 var location = new TextLocation ( this._text, span );
-                                this.Diagnostics.ReportShebang ( location );
+                                this.Diagnostics.ReportShebangNotSupportedInVersion ( location );
                             }
 
                             submitTrivia ( SyntaxKind.ShebangTrivia );
