@@ -50,34 +50,34 @@ namespace Loretta.CodeAnalysis
             this._diagnostics.AddRange ( diagnostics );
 
         internal void ReportInvalidStringEscape ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Invalid string escape", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0001", "Invalid string escape", location ) );
 
         internal void ReportUnescapedLineBreakInString ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Unescaped line break in string", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0002", "Unescaped line break in string", location ) );
 
         internal void ReportUnfinishedString ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Unfinished string", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0003", "Unfinished string", location ) );
 
         internal void ReportInvalidNumber ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Invalid number", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0004", "Invalid number", location ) );
 
         internal void ReportNumericLiteralTooLarge ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Numeric literal is too large", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0005", "Numeric literal is too large", location ) );
 
         internal void ReportUnfinishedLongComment ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Unfinished long comment", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0006", "Unfinished long comment", location ) );
 
         internal void ReportShebang ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Unexpected shebang", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0007", "Unexpected shebang", location ) );
 
         internal void ReportBinaryLiteralNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Binary number literals are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0008", "Binary number literals are not supported in this version of lua", location ) );
 
         internal void ReportOctalLiteralNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Octal number literals are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0009", "Octal number literals are not supported in this version of lua", location ) );
 
         internal void ReportHexFloatLiteralNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, null, "Hexadecimal floating point number literals are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0010", "Hexadecimal floating point number literals are not supported in this version of lua", location ) );
 
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>
