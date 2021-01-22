@@ -2,7 +2,10 @@
 
 namespace Loretta.CodeAnalysis.Syntax
 {
-    public sealed class CompilationUnitSyntax : SyntaxNode
+    /// <summary>
+    /// The node containing all of the file's contents.
+    /// </summary>
+    public sealed partial class CompilationUnitSyntax : SyntaxNode
     {
         internal CompilationUnitSyntax ( SyntaxTree syntaxTree, ImmutableArray<MemberSyntax> members, SyntaxToken endOfFileToken )
             : base ( syntaxTree )
