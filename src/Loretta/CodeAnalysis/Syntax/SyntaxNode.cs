@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
+    /// <summary>
+    /// The base class for all syntax nodes.
+    /// </summary>
     public abstract class SyntaxNode
     {
         private protected SyntaxNode ( SyntaxTree syntaxTree )
@@ -35,8 +36,8 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             get
             {
-                var first = GetChildren ( ).First ( ).Span;
-                var last = GetChildren ( ).Last ( ).Span;
+                TextSpan first = this.GetChildren ( ).First ( ).Span;
+                TextSpan last = this.GetChildren ( ).Last ( ).Span;
                 return TextSpan.FromBounds ( first.Start, last.End );
             }
         }
@@ -48,8 +49,8 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             get
             {
-                var first = GetChildren ( ).First ( ).FullSpan;
-                var last = GetChildren ( ).Last ( ).FullSpan;
+                TextSpan first = this.GetChildren ( ).First ( ).FullSpan;
+                TextSpan last = this.GetChildren ( ).Last ( ).FullSpan;
                 return TextSpan.FromBounds ( first.Start, last.End );
             }
         }
@@ -87,11 +88,22 @@ namespace Loretta.CodeAnalysis.Syntax
             }
         }
 
+        /// <summary>
+        /// Retrieves all immediate children from this node.
+        /// </summary>
+        /// <returns></returns>
         public abstract IEnumerable<SyntaxNode> GetChildren ( );
 
+        /// <summary>
+        /// Returns the last token of the tree rooted by this node.
+        /// </summary>
+        /// <returns></returns>
         public virtual SyntaxToken GetLastToken ( )
         {
-            return GetChildren ( ).Last ( ).GetLastToken ( );
+            if ( this is SyntaxToken token )
+                return token;
+
+            return this.GetChildren ( ).Last ( ).GetLastToken ( );
         }
     }
 }
