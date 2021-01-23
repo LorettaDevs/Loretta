@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using GUtils.CLI.Commands;
-using GUtils.CLI.Commands.Errors;
-using GUtils.IO;
-using GUtils.Timing;
+using Tsu.CLI.Commands;
+using Tsu.CLI.Commands.Errors;
+using Tsu.Numerics;
+using Tsu.Timing;
 
 namespace Loretta.CLI
 {
@@ -37,7 +37,7 @@ namespace Loretta.CLI
                 }
                 catch ( CommandInvocationException ex )
                 {
-                    Logger.LogError ( "Error while executing '{0}': {1}\n{2}", ex.Command, ex.Message, ex.StackTrace );
+                    Logger.LogError ( "Error while executing '{0}': {1}\n{2}", ex.Command, ex.Message, ex.StackTrace! );
                 }
             }
         }
