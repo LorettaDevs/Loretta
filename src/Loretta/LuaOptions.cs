@@ -44,7 +44,7 @@ namespace Loretta
             acceptHexFloatLiterals: false,
             acceptOctalNumbers: false,
             acceptShebang: false,
-            acceptUnderlineInNumberLiterals: false,
+            acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: false,
             continueType: ContinueType.None );
 
@@ -71,7 +71,7 @@ namespace Loretta
             acceptHexFloatLiterals: true,
             acceptOctalNumbers: false,
             acceptShebang: false,
-            acceptUnderlineInNumberLiterals: false,
+            acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: true,
             continueType: ContinueType.None );
 
@@ -97,7 +97,7 @@ namespace Loretta
             acceptHexFloatLiterals: true,
             acceptOctalNumbers: false,
             acceptShebang: false,
-            acceptUnderlineInNumberLiterals: true,
+            acceptUnderscoreInNumberLiterals: true,
             useLuaJitIdentifierRules: false,
             continueType: ContinueType.ContextualKeyword );
 
@@ -116,7 +116,7 @@ namespace Loretta
             acceptHexFloatLiterals: true,
             acceptOctalNumbers: true,
             acceptShebang: true,
-            acceptUnderlineInNumberLiterals: true,
+            acceptUnderscoreInNumberLiterals: true,
             useLuaJitIdentifierRules: true,
             continueType: ContinueType.ContextualKeyword );
 
@@ -185,9 +185,9 @@ namespace Loretta
         public Boolean AcceptShebang { get; }
 
         /// <summary>
-        /// Whether to accept underlines in any number literals (will be ignored when parsing the number).
+        /// Whether to accept underscores in any number literals (will be ignored when parsing the number).
         /// </summary>
-        public Boolean AcceptUnderlineInNumberLiterals { get; }
+        public Boolean AcceptUnderscoreInNumberLiterals { get; }
 
         /// <summary>
         /// Whether to use LuaJIT's identifier character rules (accepts any character greater than
@@ -229,8 +229,8 @@ namespace Loretta
         /// <inheritdoc cref="AcceptOctalNumbers" path="/summary" />
         /// </param>
         /// <param name="acceptShebang"><inheritdoc cref="AcceptShebang" path="/summary" /></param>
-        /// <param name="acceptUnderlineInNumberLiterals">
-        /// <inheritdoc cref="AcceptUnderlineInNumberLiterals" path="/summary" />
+        /// <param name="acceptUnderscoreInNumberLiterals">
+        /// <inheritdoc cref="AcceptUnderscoreInNumberLiterals" path="/summary" />
         /// </param>
         /// <param name="useLuaJitIdentifierRules">
         /// <inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" />
@@ -247,7 +247,7 @@ namespace Loretta
             Boolean acceptHexFloatLiterals,
             Boolean acceptOctalNumbers,
             Boolean acceptShebang,
-            Boolean acceptUnderlineInNumberLiterals,
+            Boolean acceptUnderscoreInNumberLiterals,
             Boolean useLuaJitIdentifierRules,
             ContinueType continueType )
         {
@@ -261,7 +261,7 @@ namespace Loretta
             this.AcceptHexFloatLiterals = acceptHexFloatLiterals;
             this.AcceptOctalNumbers = acceptOctalNumbers;
             this.AcceptShebang = acceptShebang;
-            this.AcceptUnderlineInNumberLiterals = acceptUnderlineInNumberLiterals;
+            this.AcceptUnderscoreInNumberLiterals = acceptUnderscoreInNumberLiterals;
             this.UseLuaJitIdentifierRules = useLuaJitIdentifierRules;
             this.ContinueType = continueType;
         }
@@ -309,9 +309,9 @@ namespace Loretta
         /// <inheritdoc cref="AcceptShebang" path="/summary" /> If None uses the value of <see
         /// cref="AcceptShebang" />.
         /// </param>
-        /// <param name="acceptUnderlineInNumberLiterals">
-        /// <inheritdoc cref="AcceptUnderlineInNumberLiterals" path="/summary" /> If None uses the
-        /// value of <see cref="AcceptUnderlineInNumberLiterals" />.
+        /// <param name="acceptUnderscoreInNumberLiterals">
+        /// <inheritdoc cref="AcceptUnderscoreInNumberLiterals" path="/summary" /> If None uses the
+        /// value of <see cref="AcceptUnderscoreInNumberLiterals" />.
         /// </param>
         /// <param name="useLuaJitIdentifierRules">
         /// <inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" /> If None uses the value of
@@ -333,7 +333,7 @@ namespace Loretta
             Option<Boolean> acceptHexFloatLiterals = default,
             Option<Boolean> acceptOctalNumbers = default,
             Option<Boolean> acceptShebang = default,
-            Option<Boolean> acceptUnderlineInNumberLiterals = default,
+            Option<Boolean> acceptUnderscoreInNumberLiterals = default,
             Option<Boolean> useLuaJitIdentifierRules = default,
             Option<ContinueType> continueType = default ) =>
             new LuaOptions (
@@ -347,7 +347,7 @@ namespace Loretta
                 acceptHexFloatLiterals.UnwrapOr ( this.AcceptHexFloatLiterals ),
                 acceptOctalNumbers.UnwrapOr ( this.AcceptOctalNumbers ),
                 acceptShebang.UnwrapOr ( this.AcceptShebang ),
-                acceptUnderlineInNumberLiterals.UnwrapOr ( this.AcceptUnderlineInNumberLiterals ),
+                acceptUnderscoreInNumberLiterals.UnwrapOr ( this.AcceptUnderscoreInNumberLiterals ),
                 useLuaJitIdentifierRules.UnwrapOr ( this.UseLuaJitIdentifierRules ),
                 continueType.UnwrapOr ( this.ContinueType ) );
     }
