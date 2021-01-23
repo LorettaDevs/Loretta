@@ -70,7 +70,7 @@ namespace Loretta.Generators.SyntaxFacts
                                        .OfType<IFieldSymbol> ( )
                                        .ToImmutableArray ( );
 
-            ImmutableArray<KindInfo> kinds = MapToKindInfo ( context, syntaxKindType, fields );
+            ImmutableArray<KindInfo> kinds = MapToKindInfo ( context, fields );
             if ( kinds.Length < 1 )
             {
                 context.ReportDiagnostic ( Diagnostic.Create ( NoKinds, syntaxKindType.Locations.Single ( ) ) );
@@ -365,7 +365,6 @@ namespace Loretta.Generators.SyntaxFacts
 
         private static ImmutableArray<KindInfo> MapToKindInfo (
             GeneratorExecutionContext context,
-            INamedTypeSymbol syntaxKindType,
             IEnumerable<IFieldSymbol> fields )
         {
             var compilation = ( CSharpCompilation ) context.Compilation;
