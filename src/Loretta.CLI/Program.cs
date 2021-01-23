@@ -16,7 +16,7 @@ namespace Loretta.CLI
     public static class Program
     {
         private static Boolean ShouldRun;
-        private static ConsoleTimingLogger Logger;
+        private static ConsoleTimingLogger? Logger;
 
         public static void Main ( )
         {
@@ -59,10 +59,10 @@ namespace Loretta.CLI
         {
             var di = new DirectoryInfo ( Environment.CurrentDirectory );
             foreach ( DirectoryInfo directoryInfo in di.EnumerateDirectories ( ) )
-                Logger.WriteLine ( $"./{directoryInfo.Name}/" );
+                Logger!.WriteLine ( $"./{directoryInfo.Name}/" );
 
             foreach ( FileInfo fileInfo in di.EnumerateFiles ( ) )
-                Logger.WriteLine ( $"./{fileInfo.Name}" );
+                Logger!.WriteLine ( $"./{fileInfo.Name}" );
         }
 
         #endregion Current Directory Management
@@ -91,7 +91,7 @@ namespace Loretta.CLI
         {
             if ( !File.Exists ( path ) )
             {
-                Logger.LogError ( "Provided path does not exist." );
+                Logger!.LogError ( "Provided path does not exist." );
                 return;
             }
 
@@ -118,7 +118,7 @@ namespace Loretta.CLI
         {
             var gcmem = GC.GetTotalMemory ( false );
             var procmem = CurrentProc.PrivateMemorySize64;
-            Logger.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( gcmem )}" );
+            Logger!.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( gcmem )}" );
             Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( procmem )}" );
         }
 
@@ -127,7 +127,7 @@ namespace Loretta.CLI
         {
             var gcmem = GC.GetTotalMemory ( false );
             var procmem = CurrentProc.PrivateMemorySize64;
-            Logger.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( gcmem )}" );
+            Logger!.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( gcmem )}" );
             Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( procmem )}" );
             MemoryStack.Push ( (gcmem, procmem) );
             Logger.WriteLine ( "Memory usage pushed to stack." );
@@ -138,7 +138,7 @@ namespace Loretta.CLI
         {
             var currgcmem = GC.GetTotalMemory ( false );
             var currprocmem = CurrentProc.PrivateMemorySize64;
-            Logger.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( currgcmem )}" );
+            Logger!.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( currgcmem )}" );
             Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( currprocmem )}" );
 
             if ( MemoryStack.Count == 0 )
@@ -158,7 +158,7 @@ namespace Loretta.CLI
         {
             if ( MemoryStack.Count == 0 )
             {
-                Logger.LogError ( "Nothing on memory stack to pop." );
+                Logger!.LogError ( "Nothing on memory stack to pop." );
                 return;
             }
 
