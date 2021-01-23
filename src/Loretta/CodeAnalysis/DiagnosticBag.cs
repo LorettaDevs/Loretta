@@ -51,7 +51,6 @@ namespace Loretta.CodeAnalysis
 
         internal void ReportInvalidStringEscape ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0001", "Invalid string escape", location ) );
-
         internal void ReportUnescapedLineBreakInString ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0002", "Unescaped line break in string", location ) );
 
@@ -78,6 +77,8 @@ namespace Loretta.CodeAnalysis
 
         internal void ReportHexFloatLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0010", "Hexadecimal floating point number literals are not supported in this version of lua", location ) );
+        internal void ReportUnderscoreInNumberLiteralNotSupportedInVersion ( TextLocation location ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0011", "Underscores in number literals are not supported in this version of lua", location ) );
 
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>
