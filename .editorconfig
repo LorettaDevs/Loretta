@@ -212,3 +212,4 @@ dotnet_naming_style.begins_with_t.capitalization                         = pasca
 
 # Severity settings
 dotnet_diagnostic.CA1303.severity = none
+dotnet_diagnostic.IDE0090.severity = silent
