@@ -619,7 +619,7 @@ namespace Loretta.CodeAnalysis.Syntax
                     while ( this.IsValidIdentifierTrailingCharacter ( this._reader.Peek ( ).GetValueOrDefault ( ) ) )
                         this._reader.Advance ( 1 );
 
-                    var text = this._text.ToString ( this._start, this._reader.Position );
+                    var text = this._text.ToString ( this._start, this._reader.Position - this._start );
                     SyntaxKind kind = SyntaxFacts.GetKeywordKind ( text );
                     Option<Object?> val = SyntaxFacts.GetKeywordValue ( kind );
                     return (kind, val);
