@@ -123,7 +123,7 @@ namespace Loretta.ThirdParty.FParsec
                               // 2)th and all following input bits
             var nBits = -1; // number of bits in xn, not counting leading zeros
             var exp = 0;    // the base-2 exponent
-            var s = str;
+            ReadOnlySpan<Char> s = str;
             var i = 0;
             // sign
             if ( s[0] == '+' )
