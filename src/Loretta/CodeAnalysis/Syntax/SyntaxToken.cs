@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Loretta.CodeAnalysis.Text;
+using Tsu;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
@@ -21,15 +22,23 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
         /// <param name="leadingTrivia"><inheritdoc cref="LeadingTrivia" path="/summary"/></param>
         /// <param name="trailingTrivia"><inheritdoc cref="TrailingTrivia" path="/summary"/></param>
-        internal SyntaxToken ( SyntaxTree syntaxTree, SyntaxKind kind, Int32 position, String? text, Object? value, ImmutableArray<SyntaxTrivia> leadingTrivia, ImmutableArray<SyntaxTrivia> trailingTrivia )
+        internal SyntaxToken (
+            SyntaxTree syntaxTree,
+            SyntaxKind kind,
+            Int32 position,
+            Option<String> text,
+            Option<Object?> value,
+            ImmutableArray<SyntaxTrivia> leadingTrivia,
+            ImmutableArray<SyntaxTrivia> trailingTrivia )
             : base ( syntaxTree )
         {
             this.Kind = kind;
             this.Position = position;
-            this.Text = text ?? String.Empty;
+            this.Text = text.UnwrapOr ( String.Empty );
             this.Value = value;
             this.LeadingTrivia = leadingTrivia;
             this.TrailingTrivia = trailingTrivia;
+            this.IsMissing = text.IsNone;
         }
 
         /// <summary>
@@ -50,7 +59,7 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <summary>
         /// This token's value.
         /// </summary>
-        public Object? Value { get; }
+        public Option<Object?> Value { get; }
 
         /// <summary>
         /// This token's position range.
@@ -87,7 +96,7 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <summary>
         /// Whether this token is missing (inserted by the parser and doesn't appear in source).
         /// </summary>
-        public Boolean IsMissing => this.Text is null;
+        public Boolean IsMissing { get; }
 
         /// <inheritdoc/>
         public override IEnumerable<SyntaxNode> GetChildren ( ) => Enumerable.Empty<SyntaxNode> ( );

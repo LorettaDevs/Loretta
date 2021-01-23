@@ -7,6 +7,7 @@ using GParse.IO;
 using GParse.Math;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
+using Tsu;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
@@ -48,7 +49,7 @@ namespace Loretta.CodeAnalysis.Syntax
             ImmutableArray<SyntaxTrivia> leadingTrivia = this.ReadTrivia ( leading: true );
             var tokenStart = this._reader.Position;
 
-            (SyntaxKind tokenKind, var tokenValue) = this.ReadToken ( );
+            (SyntaxKind tokenKind, Option<Object?> tokenValue) = this.ReadToken ( );
 
             var tokenLength = this._reader.Position - tokenStart;
 
@@ -57,7 +58,14 @@ namespace Loretta.CodeAnalysis.Syntax
             var tokenText = SyntaxFacts.GetText ( tokenKind )
                             ?? this._text.ToString ( tokenStart, tokenLength );
 
-            return new SyntaxToken ( this.syntaxTree, tokenKind, tokenStart, tokenText, tokenValue, leadingTrivia, trailingTrivia );
+            return new SyntaxToken (
+                this.syntaxTree,
+                tokenKind,
+                tokenStart,
+                tokenText,
+                tokenValue,
+                leadingTrivia,
+                trailingTrivia );
         }
 
         private ImmutableArray<SyntaxTrivia> ReadTrivia ( Boolean leading )
@@ -208,7 +216,7 @@ namespace Loretta.CodeAnalysis.Syntax
             }
         }
 
-        public (SyntaxKind kind, Object? tokenValue) ReadToken ( )
+        public (SyntaxKind kind, Option<Object?> tokenValue) ReadToken ( )
         {
             this._start = this._reader.Position;
 
@@ -228,19 +236,19 @@ namespace Loretta.CodeAnalysis.Syntax
                         if ( this._reader.IsAt ( '.', 2 ) )
                         {
                             this._reader.Advance ( 3 );
-                            return (SyntaxKind.DotDotDotToken, null);
+                            return (SyntaxKind.DotDotDotToken, Option.None<Object?> ( ));
                         }
                         // \.\.=
                         else if ( this._reader.IsAt ( '=', 2 ) )
                         {
                             this._reader.Advance ( 3 );
-                            return (SyntaxKind.DotDotEqualsToken, null);
+                            return (SyntaxKind.DotDotEqualsToken, Option.None<Object?> ( ));
                         }
                         // \.\.
                         else
                         {
                             this._reader.Advance ( 2 );
-                            return (SyntaxKind.DotDotToken, null);
+                            return (SyntaxKind.DotDotToken, Option.None<Object?> ( ));
                         }
                     }
                     // \.[0-9]
@@ -252,39 +260,39 @@ namespace Loretta.CodeAnalysis.Syntax
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.DotToken, null);
+                        return (SyntaxKind.DotToken, Option.None<Object?> ( ));
                     }
                 }
 
                 case ';':
                     this._reader.Advance ( 1 );
-                    return (SyntaxKind.SemicolonToken, null);
+                    return (SyntaxKind.SemicolonToken, Option.None<Object?> ( ));
 
                 case ',':
                     this._reader.Advance ( 1 );
-                    return (SyntaxKind.CommaToken, null);
+                    return (SyntaxKind.CommaToken, Option.None<Object?> ( ));
 
                 case ':':
                     if ( this._reader.IsAt ( ':', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.GotoLabelDelimiterToken, null);
+                        return (SyntaxKind.GotoLabelDelimiterToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.ColonToken, null);
+                        return (SyntaxKind.ColonToken, Option.None<Object?> ( ));
                     }
 
                 #endregion Punctuation
 
                 case '(':
                     this._reader.Advance ( 1 );
-                    return (SyntaxKind.OpenParenthesisToken, null);
+                    return (SyntaxKind.OpenParenthesisToken, Option.None<Object?> ( ));
 
                 case ')':
                     this._reader.Advance ( 1 );
-                    return (SyntaxKind.CloseParenthesisToken, null);
+                    return (SyntaxKind.CloseParenthesisToken, Option.None<Object?> ( ));
 
                 case '[':
                 {
@@ -302,22 +310,22 @@ namespace Loretta.CodeAnalysis.Syntax
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.OpenBracketToken, null);
+                        return (SyntaxKind.OpenBracketToken, Option.None<Object?> ( ));
                     }
                 }
 
 
                 case ']':
                     this._reader.Advance ( 1 );
-                    return (SyntaxKind.CloseBracketToken, null);
+                    return (SyntaxKind.CloseBracketToken, Option.None<Object?> ( ));
 
                 case '{':
                     this._reader.Advance ( 1 );
-                    return (SyntaxKind.OpenBraceToken, null);
+                    return (SyntaxKind.OpenBraceToken, Option.None<Object?> ( ));
 
                 case '}':
                     this._reader.Advance ( 1 );
-                    return (SyntaxKind.CloseBraceToken, null);
+                    return (SyntaxKind.CloseBraceToken, Option.None<Object?> ( ));
 
                 #region Operators
 
@@ -325,95 +333,95 @@ namespace Loretta.CodeAnalysis.Syntax
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.PlusEqualsToken, null);
+                        return (SyntaxKind.PlusEqualsToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.PlusToken, null);
+                        return (SyntaxKind.PlusToken, Option.None<Object?> ( ));
                     }
 
                 case '-':
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.MinusEqualsToken, null);
+                        return (SyntaxKind.MinusEqualsToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.MinusToken, null);
+                        return (SyntaxKind.MinusToken, Option.None<Object?> ( ));
                     }
 
                 case '*':
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.StartEqualsToken, null);
+                        return (SyntaxKind.StartEqualsToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.StarToken, null);
+                        return (SyntaxKind.StarToken, Option.None<Object?> ( ));
                     }
 
                 case '/':
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.SlashEqualsToken, null);
+                        return (SyntaxKind.SlashEqualsToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.SlashToken, null);
+                        return (SyntaxKind.SlashToken, Option.None<Object?> ( ));
                     }
 
                 case '^':
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.HatEqualsToken, null);
+                        return (SyntaxKind.HatEqualsToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.HatToken, null);
+                        return (SyntaxKind.HatToken, Option.None<Object?> ( ));
                     }
 
                 case '%':
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.PercentEqualsToken, null);
+                        return (SyntaxKind.PercentEqualsToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.PercentToken, null);
+                        return (SyntaxKind.PercentToken, Option.None<Object?> ( ));
                     }
 
                 case '=':
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.EqualsEqualsToken, null);
+                        return (SyntaxKind.EqualsEqualsToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.EqualsToken, null);
+                        return (SyntaxKind.EqualsToken, Option.None<Object?> ( ));
                     }
 
                 case '#':
                     this._reader.Advance ( 1 );
-                    return (SyntaxKind.HashToken, null);
+                    return (SyntaxKind.HashToken, Option.None<Object?> ( ));
 
                 case '~':
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.TildeEqualsToken, null);
+                        return (SyntaxKind.TildeEqualsToken, Option.None<Object?> ( ));
                     }
                     break;
 
@@ -422,15 +430,15 @@ namespace Loretta.CodeAnalysis.Syntax
                     {
                         case '=':
                             this._reader.Advance ( 2 );
-                            return (SyntaxKind.GreaterThanEqualsToken, null);
+                            return (SyntaxKind.GreaterThanEqualsToken, Option.None<Object?> ( ));
 
                         case '>':
                             this._reader.Advance ( 2 );
-                            return (SyntaxKind.GreaterThanGreaterThanToken, null);
+                            return (SyntaxKind.GreaterThanGreaterThanToken, Option.None<Object?> ( ));
 
                         default:
                             this._reader.Advance ( 1 );
-                            return (SyntaxKind.GreaterThanToken, null);
+                            return (SyntaxKind.GreaterThanToken, Option.None<Object?> ( ));
                     }
 
                 case '<':
@@ -438,51 +446,51 @@ namespace Loretta.CodeAnalysis.Syntax
                     {
                         case '=':
                             this._reader.Advance ( 2 );
-                            return (SyntaxKind.LessThanEqualsToken, null);
+                            return (SyntaxKind.LessThanEqualsToken, Option.None<Object?> ( ));
 
                         case '<':
                             this._reader.Advance ( 2 );
-                            return (SyntaxKind.LessThanLessThanToken, null);
+                            return (SyntaxKind.LessThanLessThanToken, Option.None<Object?> ( ));
 
                         default:
                             this._reader.Advance ( 1 );
-                            return (SyntaxKind.LessThanToken, null);
+                            return (SyntaxKind.LessThanToken, Option.None<Object?> ( ));
                     }
 
                 case '&':
                     if ( this._reader.IsAt ( '&', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.AmpersandAmpersandToken, null);
+                        return (SyntaxKind.AmpersandAmpersandToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.AmpersandToken, null);
+                        return (SyntaxKind.AmpersandToken, Option.None<Object?> ( ));
                     }
 
                 case '|':
                     if ( this._reader.IsAt ( '|', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.PipePipeToken, null);
+                        return (SyntaxKind.PipePipeToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.PipeToken, null);
+                        return (SyntaxKind.PipeToken, Option.None<Object?> ( ));
                     }
 
                 case '!':
                     if ( this._reader.IsAt ( '=', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.BangEqualsToken, null);
+                        return (SyntaxKind.BangEqualsToken, Option.None<Object?> ( ));
                     }
                     else
                     {
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.BangToken, null);
+                        return (SyntaxKind.BangToken, Option.None<Object?> ( ));
                     }
 
                 #endregion Operators
@@ -611,8 +619,10 @@ namespace Loretta.CodeAnalysis.Syntax
                     while ( this.IsValidIdentifierTrailingCharacter ( this._reader.Peek ( ).GetValueOrDefault ( ) ) )
                         this._reader.Advance ( 1 );
 
-                    var text = this.GetString ( (this._start, end: this._reader.Position) );
-                    return (SyntaxFacts.GetKeywordKind ( text ), null);
+                    var text = this._text.ToString ( this._start, this._reader.Position );
+                    SyntaxKind kind = SyntaxFacts.GetKeywordKind ( text );
+                    Option<Object?> val = SyntaxFacts.GetKeywordValue ( kind );
+                    return (kind, val);
                 }
 
                 #endregion Identifiers
@@ -625,9 +635,8 @@ namespace Loretta.CodeAnalysis.Syntax
                     }
                     else
                     {
-                        this._reader.Restore ( this._start );
                         this._reader.Advance ( 1 );
-                        return (SyntaxKind.BadToken, null);
+                        return (SyntaxKind.BadToken, Option.None<Object?> ( ));
                     }
                 }
             } // end switch

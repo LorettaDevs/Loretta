@@ -1,4 +1,5 @@
 ﻿using System;
+using Tsu;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
@@ -14,5 +15,21 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <returns></returns>
         public static Boolean IsComment ( this SyntaxKind kind ) =>
             kind is SyntaxKind.SingleLineCommentTrivia or SyntaxKind.MultiLineCommentTrivia;
+
+        /// <summary>
+        /// Obtains the value of a keyword's <see cref="SyntaxKind"/> if any.
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        public static Option<Object?> GetKeywordValue ( SyntaxKind kind )
+        {
+            return kind switch
+            {
+                SyntaxKind.NilKeyword => null,
+                SyntaxKind.TrueKeyword => true,
+                SyntaxKind.FalseKeyword => false,
+                _ => Option.None<Object?> ( )
+            };
+        }
     }
 }
