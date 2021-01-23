@@ -197,7 +197,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 return HexFloat.DoubleFromHexString ( rawNum.Replace ( "_", "" ) );
             }
 
-            void skipHexDigits ( out int digits, out bool hasUnderscores )
+            void skipHexDigits ( )
             {
                 Char digit;
                 while ( LoCharUtils.IsHexadecimal ( digit = this._reader.Peek ( ).GetValueOrDefault ( ) ) || digit == '_' )
