@@ -28,7 +28,7 @@ namespace Loretta
     /// <summary>
     /// The options used by Loretta to adapt to the flavor of lua being parsed.
     /// </summary>
-    public class LuaOptions
+    public class LuaOptions : IEquatable<LuaOptions?>
     {
         /// <summary>
         /// The Lua 5.1 preset.
@@ -38,7 +38,7 @@ namespace Loretta
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: false,
             acceptEmptyStatements: false,
-            acceptGModCOperators: false,
+            acceptCBooleanOperators: false,
             acceptGoto: false,
             acceptHexEscapesInStrings: false,
             acceptHexFloatLiterals: false,
@@ -65,7 +65,7 @@ namespace Loretta
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: false,
             acceptEmptyStatements: true,
-            acceptGModCOperators: false,
+            acceptCBooleanOperators: false,
             acceptGoto: true,
             acceptHexEscapesInStrings: true,
             acceptHexFloatLiterals: true,
@@ -80,7 +80,7 @@ namespace Loretta
         /// </summary>
         public static readonly LuaOptions GMod = LuaJIT.With (
             acceptCCommentSyntax: true,
-            acceptGModCOperators: true,
+            acceptCBooleanOperators: true,
             continueType: ContinueType.Keyword );
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Loretta
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: true,
             acceptEmptyStatements: false,
-            acceptGModCOperators: false,
+            acceptCBooleanOperators: false,
             acceptGoto: false,
             acceptHexEscapesInStrings: true,
             acceptHexFloatLiterals: true,
@@ -110,7 +110,7 @@ namespace Loretta
             acceptCCommentSyntax: true,
             acceptCompoundAssignment: true,
             acceptEmptyStatements: true,
-            acceptGModCOperators: true,
+            acceptCBooleanOperators: true,
             acceptGoto: true,
             acceptHexEscapesInStrings: true,
             acceptHexFloatLiterals: true,
@@ -134,8 +134,60 @@ namespace Loretta
         } );
 
         /// <summary>
+        /// Initializes a new lua options set.
+        /// </summary>
+        /// <param name="acceptBinaryNumbers"><inheritdoc cref="AcceptBinaryNumbers" path="/summary" /></param>
+        /// <param name="acceptCCommentSyntax"><inheritdoc cref="AcceptCCommentSyntax" path="/summary" /></param>
+        /// <param name="acceptCompoundAssignment"><inheritdoc cref="AcceptCompoundAssignment" path="/summary" /></param>
+        /// <param name="acceptEmptyStatements"><inheritdoc cref="AcceptEmptyStatements" path="/summary" /></param>
+        /// <param name="acceptCBooleanOperators"><inheritdoc cref="AcceptCBooleanOperators" path="/summary" /></param>
+        /// <param name="acceptGoto"><inheritdoc cref="AcceptGoto" path="/summary" /></param>
+        /// <param name="acceptHexEscapesInStrings"><inheritdoc cref="AcceptHexEscapesInStrings" path="/summary" /></param>
+        /// <param name="acceptHexFloatLiterals"><inheritdoc cref="AcceptHexFloatLiterals" path="/summary" /></param>
+        /// <param name="acceptOctalNumbers"><inheritdoc cref="AcceptOctalNumbers" path="/summary" /></param>
+        /// <param name="acceptShebang"><inheritdoc cref="AcceptShebang" path="/summary" /></param>
+        /// <param name="acceptUnderscoreInNumberLiterals"><inheritdoc cref="AcceptUnderscoreInNumberLiterals" path="/summary" /></param>
+        /// <param name="useLuaJitIdentifierRules"><inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" /></param>
+        /// <param name="continueType"><inheritdoc cref="ContinueType" path="/summary" /></param>
+        public LuaOptions (
+            Boolean acceptBinaryNumbers,
+            Boolean acceptCCommentSyntax,
+            Boolean acceptCompoundAssignment,
+            Boolean acceptEmptyStatements,
+            Boolean acceptCBooleanOperators,
+            Boolean acceptGoto,
+            Boolean acceptHexEscapesInStrings,
+            Boolean acceptHexFloatLiterals,
+            Boolean acceptOctalNumbers,
+            Boolean acceptShebang,
+            Boolean acceptUnderscoreInNumberLiterals,
+            Boolean useLuaJitIdentifierRules,
+            ContinueType continueType )
+        {
+            this.AcceptBinaryNumbers = acceptBinaryNumbers;
+            this.AcceptCCommentSyntax = acceptCCommentSyntax;
+            this.AcceptCompoundAssignment = acceptCompoundAssignment;
+            this.AcceptEmptyStatements = acceptEmptyStatements;
+            this.AcceptCBooleanOperators = acceptCBooleanOperators;
+            this.AcceptGoto = acceptGoto;
+            this.AcceptHexEscapesInStrings = acceptHexEscapesInStrings;
+            this.AcceptHexFloatLiterals = acceptHexFloatLiterals;
+            this.AcceptOctalNumbers = acceptOctalNumbers;
+            this.AcceptShebang = acceptShebang;
+            this.AcceptUnderscoreInNumberLiterals = acceptUnderscoreInNumberLiterals;
+            this.UseLuaJitIdentifierRules = useLuaJitIdentifierRules;
+            this.ContinueType = continueType;
+        }
+
+        /// <summary>
         /// Whether to accept binary numbers (format: /0b[10]+/).
         /// </summary>
+        /// <remarks>
+        /// "accept" means an <see cref="CodeAnalysis.DiagnosticSeverity.Error"/>
+        /// <see cref="CodeAnalysis.Diagnostic"/> will be raised when encountering
+        /// a binary number, however the parsing process will still continue as if
+        /// the number was a normal one.
+        /// </remarks>
         public Boolean AcceptBinaryNumbers { get; }
 
         /// <summary>
@@ -155,9 +207,9 @@ namespace Loretta
         public Boolean AcceptEmptyStatements { get; }
 
         /// <summary>
-        /// Whether to accept the C operators addde in GLua (formats: "&amp;&amp;", "||", "!=", "!").
+        /// Whether to accept the C boolean operators (&amp;&amp;, ||, != and !).
         /// </summary>
-        public Boolean AcceptGModCOperators { get; }
+        public Boolean AcceptCBooleanOperators { get; }
 
         /// <summary>
         /// Whether to accept goto labels and statements.
@@ -201,72 +253,6 @@ namespace Loretta
         public ContinueType ContinueType { get; }
 
         /// <summary>
-        /// Initializes a new lua options set.
-        /// </summary>
-        /// <param name="acceptBinaryNumbers">
-        /// <inheritdoc cref="AcceptBinaryNumbers" path="/summary" />
-        /// </param>
-        /// <param name="acceptCCommentSyntax">
-        /// <inheritdoc cref="AcceptCCommentSyntax" path="/summary" />
-        /// </param>
-        /// <param name="acceptCompoundAssignment">
-        /// <inheritdoc cref="AcceptCompoundAssignment" path="/summary" />
-        /// </param>
-        /// <param name="acceptEmptyStatements">
-        /// <inheritdoc cref="AcceptEmptyStatements" path="/summary" />
-        /// </param>
-        /// <param name="acceptGModCOperators">
-        /// <inheritdoc cref="AcceptGModCOperators" path="/summary" />
-        /// </param>
-        /// <param name="acceptGoto"><inheritdoc cref="AcceptGoto" path="/summary" /></param>
-        /// <param name="acceptHexEscapesInStrings">
-        /// <inheritdoc cref="AcceptHexEscapesInStrings" path="/summary" />
-        /// </param>
-        /// <param name="acceptHexFloatLiterals">
-        /// <inheritdoc cref="AcceptHexFloatLiterals" path="/summary" />
-        /// </param>
-        /// <param name="acceptOctalNumbers">
-        /// <inheritdoc cref="AcceptOctalNumbers" path="/summary" />
-        /// </param>
-        /// <param name="acceptShebang"><inheritdoc cref="AcceptShebang" path="/summary" /></param>
-        /// <param name="acceptUnderscoreInNumberLiterals">
-        /// <inheritdoc cref="AcceptUnderscoreInNumberLiterals" path="/summary" />
-        /// </param>
-        /// <param name="useLuaJitIdentifierRules">
-        /// <inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" />
-        /// </param>
-        /// <param name="continueType"><inheritdoc cref="ContinueType" path="/summary" /></param>
-        public LuaOptions (
-            Boolean acceptBinaryNumbers,
-            Boolean acceptCCommentSyntax,
-            Boolean acceptCompoundAssignment,
-            Boolean acceptEmptyStatements,
-            Boolean acceptGModCOperators,
-            Boolean acceptGoto,
-            Boolean acceptHexEscapesInStrings,
-            Boolean acceptHexFloatLiterals,
-            Boolean acceptOctalNumbers,
-            Boolean acceptShebang,
-            Boolean acceptUnderscoreInNumberLiterals,
-            Boolean useLuaJitIdentifierRules,
-            ContinueType continueType )
-        {
-            this.AcceptBinaryNumbers = acceptBinaryNumbers;
-            this.AcceptCCommentSyntax = acceptCCommentSyntax;
-            this.AcceptCompoundAssignment = acceptCompoundAssignment;
-            this.AcceptEmptyStatements = acceptEmptyStatements;
-            this.AcceptGModCOperators = acceptGModCOperators;
-            this.AcceptGoto = acceptGoto;
-            this.AcceptHexEscapesInStrings = acceptHexEscapesInStrings;
-            this.AcceptHexFloatLiterals = acceptHexFloatLiterals;
-            this.AcceptOctalNumbers = acceptOctalNumbers;
-            this.AcceptShebang = acceptShebang;
-            this.AcceptUnderscoreInNumberLiterals = acceptUnderscoreInNumberLiterals;
-            this.UseLuaJitIdentifierRules = useLuaJitIdentifierRules;
-            this.ContinueType = continueType;
-        }
-
-        /// <summary>
         /// Creates a new lua options changing the provided fields.
         /// </summary>
         /// <param name="acceptBinaryNumbers">
@@ -285,9 +271,9 @@ namespace Loretta
         /// <inheritdoc cref="AcceptEmptyStatements" path="/summary" /> If None uses the value of
         /// <see cref="AcceptEmptyStatements" />.
         /// </param>
-        /// <param name="acceptGModCOperators">
-        /// <inheritdoc cref="AcceptGModCOperators" path="/summary" /> If None uses the value of
-        /// <see cref="AcceptGModCOperators" />.
+        /// <param name="acceptCBooleanOperators">
+        /// <inheritdoc cref="AcceptCBooleanOperators" path="/summary" /> If None uses the value of
+        /// <see cref="AcceptCBooleanOperators" />.
         /// </param>
         /// <param name="acceptGoto">
         /// <inheritdoc cref="AcceptGoto" path="/summary" /> If None uses the value of <see
@@ -327,7 +313,7 @@ namespace Loretta
             Option<Boolean> acceptCCommentSyntax = default,
             Option<Boolean> acceptCompoundAssignment = default,
             Option<Boolean> acceptEmptyStatements = default,
-            Option<Boolean> acceptGModCOperators = default,
+            Option<Boolean> acceptCBooleanOperators = default,
             Option<Boolean> acceptGoto = default,
             Option<Boolean> acceptHexEscapesInStrings = default,
             Option<Boolean> acceptHexFloatLiterals = default,
@@ -341,7 +327,7 @@ namespace Loretta
                 acceptCCommentSyntax.UnwrapOr ( this.AcceptCCommentSyntax ),
                 acceptCompoundAssignment.UnwrapOr ( this.AcceptCompoundAssignment ),
                 acceptEmptyStatements.UnwrapOr ( this.AcceptEmptyStatements ),
-                acceptGModCOperators.UnwrapOr ( this.AcceptGModCOperators ),
+                acceptCBooleanOperators.UnwrapOr ( this.AcceptCBooleanOperators ),
                 acceptGoto.UnwrapOr ( this.AcceptGoto ),
                 acceptHexEscapesInStrings.UnwrapOr ( this.AcceptHexEscapesInStrings ),
                 acceptHexFloatLiterals.UnwrapOr ( this.AcceptHexFloatLiterals ),
@@ -350,5 +336,96 @@ namespace Loretta
                 acceptUnderscoreInNumberLiterals.UnwrapOr ( this.AcceptUnderscoreInNumberLiterals ),
                 useLuaJitIdentifierRules.UnwrapOr ( this.UseLuaJitIdentifierRules ),
                 continueType.UnwrapOr ( this.ContinueType ) );
+
+        /// <inheritdoc/>
+        public override Boolean Equals ( Object? obj ) =>
+            this.Equals ( obj as LuaOptions );
+
+        /// <inheritdoc/>
+        public Boolean Equals ( LuaOptions? other ) =>
+            other != null
+            && this.AcceptBinaryNumbers == other.AcceptBinaryNumbers
+            && this.AcceptCCommentSyntax == other.AcceptCCommentSyntax
+            && this.AcceptCompoundAssignment == other.AcceptCompoundAssignment
+            && this.AcceptEmptyStatements == other.AcceptEmptyStatements
+            && this.AcceptCBooleanOperators == other.AcceptCBooleanOperators
+            && this.AcceptGoto == other.AcceptGoto
+            && this.AcceptHexEscapesInStrings == other.AcceptHexEscapesInStrings
+            && this.AcceptHexFloatLiterals == other.AcceptHexFloatLiterals
+            && this.AcceptOctalNumbers == other.AcceptOctalNumbers
+            && this.AcceptShebang == other.AcceptShebang
+            && this.AcceptUnderscoreInNumberLiterals == other.AcceptUnderscoreInNumberLiterals
+            && this.UseLuaJitIdentifierRules == other.UseLuaJitIdentifierRules
+            && this.ContinueType == other.ContinueType;
+
+        /// <inheritdoc/>
+        public override Int32 GetHashCode ( )
+        {
+            var hash = new HashCode ( );
+            hash.Add ( this.AcceptBinaryNumbers );
+            hash.Add ( this.AcceptCCommentSyntax );
+            hash.Add ( this.AcceptCompoundAssignment );
+            hash.Add ( this.AcceptEmptyStatements );
+            hash.Add ( this.AcceptCBooleanOperators );
+            hash.Add ( this.AcceptGoto );
+            hash.Add ( this.AcceptHexEscapesInStrings );
+            hash.Add ( this.AcceptHexFloatLiterals );
+            hash.Add ( this.AcceptOctalNumbers );
+            hash.Add ( this.AcceptShebang );
+            hash.Add ( this.AcceptUnderscoreInNumberLiterals );
+            hash.Add ( this.UseLuaJitIdentifierRules );
+            hash.Add ( this.ContinueType );
+            return hash.ToHashCode ( );
+        }
+
+        /// <inheritdoc/>
+        public override String ToString ( )
+        {
+            if ( this == Lua51 )
+            {
+                return "Lua 5.1";
+            }
+            else if ( this == Lua52 )
+            {
+                return "Lua 5.2";
+            }
+            else if ( this == LuaJIT )
+            {
+                return "LuaJIT";
+            }
+            else if ( this == GMod )
+            {
+                return "GLua";
+            }
+            else if ( this == Roblox )
+            {
+                return "Roblox";
+            }
+            else
+            {
+                return $"{{ AcceptBinaryNumbers = {this.AcceptBinaryNumbers}, AcceptCCommentSyntax = {this.AcceptCCommentSyntax}, AcceptCompoundAssignment = {this.AcceptCompoundAssignment}, AcceptEmptyStatements = {this.AcceptEmptyStatements}, AcceptCBooleanOperators = {this.AcceptCBooleanOperators}, AcceptGoto = {this.AcceptGoto}, AcceptHexEscapesInStrings = {this.AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {this.AcceptHexFloatLiterals}, AcceptOctalNumbers = {this.AcceptOctalNumbers}, AcceptShebang = {this.AcceptShebang}, AcceptUnderscoreInNumberLiterals = {this.AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {this.UseLuaJitIdentifierRules}, ContinueType = {this.ContinueType} }}";
+            }
+        }
+
+        /// <summary>
+        /// Checks whether two lua option sets are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static Boolean operator == ( LuaOptions? left, LuaOptions? right )
+        {
+            if ( right is null ) return left is null;
+            return right.Equals ( left );
+        }
+
+        /// <summary>
+        /// Checks whether two lua option sets are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static Boolean operator != ( LuaOptions? left, LuaOptions? right ) =>
+            !( left == right );
     }
 }
