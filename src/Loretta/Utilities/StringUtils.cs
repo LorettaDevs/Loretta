@@ -10,22 +10,20 @@ namespace Loretta.Utilities
         /// <summary>
         /// Returns whether the provided string is a valid identifier.
         /// </summary>
-        /// <param name="useLuaJitIdentifierRules">Whether to use LuaJIT's identifier rules.</param>
         /// <param name="value">The string to check.</param>
+        /// 
         /// <returns>Whether the provided string is a valid identifier.</returns>
-        public static Boolean IsIdentifier ( Boolean useLuaJitIdentifierRules, ReadOnlySpan<Char> value )
+        public static Boolean IsIdentifier ( ReadOnlySpan<Char> value )
         {
             if ( value.IsEmpty )
                 return false;
 
-            // Redundant length check but I'm not sure the JIT can elide the bounds check with only
-            // IsEmpty here.
-            if ( value.Length >= 1 && !LoCharUtils.IsValidFirstIdentifierChar ( useLuaJitIdentifierRules, value[0] ) )
+            if ( !LoCharUtils.IsValidFirstIdentifierChar ( value[0] ) )
                 return false;
 
             for ( var idx = 1; idx < value.Length; idx++ )
             {
-                if ( !LoCharUtils.IsValidTrailingIdentifierChar ( useLuaJitIdentifierRules, value[idx] ) )
+                if ( !LoCharUtils.IsValidTrailingIdentifierChar ( value[idx] ) )
                     return false;
             }
 

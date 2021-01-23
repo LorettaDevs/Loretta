@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using GParse;
 using GParse.IO;
@@ -13,14 +14,6 @@ namespace Loretta.CodeAnalysis.Syntax
 {
     internal sealed partial class Lexer : IRestorablePositionContainer
     {
-        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
-        public Boolean IsValidIdentifierLeadingCharacter ( Char ch ) =>
-            LoCharUtils.IsValidFirstIdentifierChar ( this._luaOptions.UseLuaJitIdentifierRules, ch );
-
-        [MethodImpl ( MethodImplOptions.AggressiveInlining )]
-        public Boolean IsValidIdentifierTrailingCharacter ( Char ch ) =>
-            LoCharUtils.IsValidTrailingIdentifierChar ( this._luaOptions.UseLuaJitIdentifierRules, ch );
-
         private readonly LuaOptions _luaOptions;
         private readonly SourceText _text;
         private readonly ICodeReader _reader;
@@ -616,10 +609,16 @@ namespace Loretta.CodeAnalysis.Syntax
                 case 'Z':
                 case '_':
                 {
-                    while ( this.IsValidIdentifierTrailingCharacter ( this._reader.Peek ( ).GetValueOrDefault ( ) ) )
+                    while ( LoCharUtils.IsValidTrailingIdentifierChar ( this._reader.Peek ( ).GetValueOrDefault ( ) ) )
                         this._reader.Advance ( 1 );
 
                     var text = this._text.ToString ( this._start, this._reader.Position - this._start );
+                    if ( !this._luaOptions.UseLuaJitIdentifierRules && text.Any ( ch => ch >= 0x7F ) )
+                    {
+                        var span = new TextSpan ( this._start, text.Length );
+                        var location = new TextLocation ( this._text, span );
+                        this.Diagnostics.ReportLuajitIdentifierRulesNotSupportedInVersion ( location );
+                    }
                     SyntaxKind kind = SyntaxFacts.GetKeywordKind ( text );
                     Option<Object?> val = SyntaxFacts.GetKeywordValue ( kind );
                     return (kind, val);
@@ -629,7 +628,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 default:
                 {
-                    if ( this.IsValidIdentifierLeadingCharacter ( peek0 ) )
+                    if ( LoCharUtils.IsValidFirstIdentifierChar ( peek0 ) )
                     {
                         goto case 'a';
                     }
