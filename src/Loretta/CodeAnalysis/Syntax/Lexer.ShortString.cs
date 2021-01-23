@@ -112,6 +112,7 @@ namespace Loretta.CodeAnalysis.Syntax
                                 break;
 
                             case 'x':
+                                this._reader.Advance ( 1 );
                                 parsed.Append ( parseHexadecimalInteger ( escapeStart ) );
                                 break;
 
@@ -209,12 +210,12 @@ namespace Loretta.CodeAnalysis.Syntax
                     if ( LoCharUtils.IsDecimal ( peek ) )
                     {
                         this._reader.Advance ( 1 );
-                        num = ( Byte ) ( ( num << 4 ) & ( peek - '0' ) );
+                        num = ( Byte ) ( ( num << 4 ) | ( peek - '0' ) );
                     }
                     else if ( LoCharUtils.IsHexadecimal ( peek ) )
                     {
                         this._reader.Advance ( 1 );
-                        num = ( Byte ) ( ( num << 4 ) & ( 10 + CharUtils.AsciiLowerCase ( peek ) - 'a' ) );
+                        num = ( Byte ) ( ( num << 4 ) | ( 10 + CharUtils.AsciiLowerCase ( peek ) - 'a' ) );
                     }
                     else
                     {
