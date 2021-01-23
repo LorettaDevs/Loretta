@@ -67,20 +67,22 @@ namespace Loretta.CodeAnalysis
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0006", "Unfinished long comment", location ) );
 
         internal void ReportShebangNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0007", "Shebangs are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0007", "Shebangs are not supported in this lua version", location ) );
 
         internal void ReportBinaryLiteralNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0008", "Binary number literals are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0008", "Binary number literals are not supported in this lua version", location ) );
 
         internal void ReportOctalLiteralNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0009", "Octal number literals are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0009", "Octal number literals are not supported in this lua version", location ) );
 
         internal void ReportHexFloatLiteralNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0010", "Hexadecimal floating point number literals are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0010", "Hexadecimal floating point number literals are not supported in this lua version", location ) );
         internal void ReportUnderscoreInNumberLiteralNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0011", "Underscores in number literals are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0011", "Underscores in number literals are not supported in this lua version", location ) );
         internal void ReportCCommentsNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0012", "C comments are not supported in this version of lua", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0012", "C comments are not supported in this lua version", location ) );
+        internal void ReportLuajitIdentifierRulesNotSupportedInVersion ( TextLocation location ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0013", "Characters with value above 0x7F are not supported in this lua version.", location ) );
 
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>
