@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using GParse;
 using GParse.IO;
 using GParse.Math;
@@ -88,8 +87,8 @@ namespace Loretta.CodeAnalysis.Syntax
                             }
                             else
                             {
-                                // A span is stack allocated so if we ignore it we won't allocate heap memory unnecessarily
-                                _ = this._reader.ReadSpanLine ( );
+                                while ( this._reader.Peek ( ) is not ( null or '\n' or '\r' ) )
+                                    this._reader.Advance ( 1 );
                                 submitTrivia ( SyntaxKind.SingleLineCommentTrivia );
                             }
                         }
@@ -103,7 +102,8 @@ namespace Loretta.CodeAnalysis.Syntax
                         if ( this._reader.IsAt ( '/', 1 ) )
                         {
                             this._reader.Advance ( 2 );
-                            _ = this._reader.ReadSpanLine ( );
+                            while ( this._reader.Peek ( ) is not ( null or '\n' or '\r' ) )
+                                this._reader.Advance ( 1 );
 
                             if ( !this._luaOptions.AcceptCCommentSyntax )
                             {
@@ -137,19 +137,19 @@ namespace Loretta.CodeAnalysis.Syntax
                         break;
 
                     case '\r':
-                        if ( !leading )
-                            goto end;
                         this._reader.Advance ( 1 );
                         if ( this._reader.Peek ( ) == '\n' )
                             this._reader.Advance ( 1 );
                         submitTrivia ( SyntaxKind.LineBreakTrivia );
+                        if ( !leading )
+                            goto end;
                         break;
 
                     case '\n':
-                        if ( !leading )
-                            goto end;
                         this._reader.Advance ( 1 );
                         submitTrivia ( SyntaxKind.LineBreakTrivia );
+                        if ( !leading )
+                            goto end;
                         break;
 
                     case ' ':
@@ -269,7 +269,7 @@ namespace Loretta.CodeAnalysis.Syntax
                     if ( this._reader.IsAt ( ':', 1 ) )
                     {
                         this._reader.Advance ( 2 );
-                        return (SyntaxKind.GotoLabelDelimiterToken, Option.None<Object?> ( ));
+                        return (SyntaxKind.ColonColonToken, Option.None<Object?> ( ));
                     }
                     else
                     {
@@ -609,6 +609,8 @@ namespace Loretta.CodeAnalysis.Syntax
                 case 'Z':
                 case '_':
                 {
+                    // We've already checked that the first letter is a valid identifier char. No need to re-check.
+                    this._reader.Advance ( 1 );
                     while ( LoCharUtils.IsValidTrailingIdentifierChar ( this._reader.Peek ( ).GetValueOrDefault ( ) ) )
                         this._reader.Advance ( 1 );
 

@@ -137,7 +137,7 @@ namespace Loretta.CodeAnalysis.Syntax
         [BinaryOperator ( precedence: 1 )]
         PipePipeToken,
         [Token ( Text = "::" )]
-        GotoLabelDelimiterToken,
+        ColonColonToken,
 
         // Keywords
         [Keyword ( "do" )]
