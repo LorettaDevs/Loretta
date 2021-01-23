@@ -79,6 +79,8 @@ namespace Loretta.CodeAnalysis
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0010", "Hexadecimal floating point number literals are not supported in this version of lua", location ) );
         internal void ReportUnderscoreInNumberLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0011", "Underscores in number literals are not supported in this version of lua", location ) );
+        internal void ReportCCommentsNotSupportedInVersion ( TextLocation location ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0012", "C comments are not supported in this version of lua", location ) );
 
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>

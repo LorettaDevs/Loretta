@@ -104,9 +104,11 @@ namespace Loretta.CodeAnalysis.Syntax
                             this._reader.Advance ( 2 );
                             _ = this._reader.ReadSpanLine ( );
 
-                            if ( this._luaOptions.AcceptCCommentSyntax )
+                            if ( !this._luaOptions.AcceptCCommentSyntax )
                             {
-
+                                var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+                                var location = new TextLocation ( this._text, span );
+                                this.Diagnostics.ReportCCommentsNotSupportedInVersion ( location );
                             }
 
                             submitTrivia ( SyntaxKind.SingleLineCommentTrivia );
@@ -115,6 +117,16 @@ namespace Loretta.CodeAnalysis.Syntax
                         {
                             this._reader.Advance ( 2 );
                             _ = this._reader.ReadSpanUntil ( "*/" );
+
+                            var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+                            var location = new TextLocation ( this._text, span );
+                            if ( !this._reader.IsNext ( "*/" ) )
+                                this.Diagnostics.ReportUnfinishedLongComment ( location );
+                            else
+                                this._reader.Advance ( 2 );
+                            if ( !this._luaOptions.AcceptCCommentSyntax )
+                                this.Diagnostics.ReportCCommentsNotSupportedInVersion ( location );
+
                             submitTrivia ( SyntaxKind.MultiLineCommentTrivia );
                         }
                         else
