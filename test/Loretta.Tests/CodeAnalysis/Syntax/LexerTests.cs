@@ -313,6 +313,9 @@ fourth line \xFF.";
                 new ShortToken ( SyntaxKind.LineBreakTrivia, "\n" ),
                 new ShortToken ( SyntaxKind.LineBreakTrivia, "\r\n" ),
                 new ShortToken ( SyntaxKind.MultiLineCommentTrivia, "/**/" ),
+                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, "--[[]]" ),
+                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, "--[=[]=]" ),
+                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, "--[====[]====]" ),
                 // Longs comments can't be used as separators because of the minus token.
             };
         }
