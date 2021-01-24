@@ -5,6 +5,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   
   <!-- Package data -->
