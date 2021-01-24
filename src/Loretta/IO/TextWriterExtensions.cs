@@ -23,6 +23,10 @@ namespace Loretta.IO
             if ( writer == Console.Error )
                 return !Console.IsErrorRedirected && !Console.IsOutputRedirected; // Color codes are always output to Console.Out
 
+            // Don't want to add a hard dependency on this.
+            if ( writer.GetType ( ).Name == "ConsoleTimingLoggerTextWriter" )
+                return true;
+
             if ( writer is IndentedTextWriter iw && iw.InnerWriter.IsConsole ( ) )
                 return true;
 
