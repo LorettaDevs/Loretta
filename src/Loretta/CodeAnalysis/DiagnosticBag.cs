@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GParse.Utilities;
+using Loretta.CodeAnalysis.Syntax;
 using Loretta.CodeAnalysis.Text;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
 {
@@ -71,7 +74,6 @@ namespace Loretta.CodeAnalysis
 
         internal void ReportBinaryLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0008", "Binary number literals are not supported in this lua version", location ) );
-
         internal void ReportOctalLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0009", "Octal number literals are not supported in this lua version", location ) );
 
@@ -83,6 +85,10 @@ namespace Loretta.CodeAnalysis
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0012", "C comments are not supported in this lua version", location ) );
         internal void ReportLuajitIdentifierRulesNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0013", "Characters with value above 0x7F are not supported in this lua version.", location ) );
+        internal void ReportBadCharacter ( TextLocation location, Char character ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0014", $"Bad character input: '{LoCharUtils.ToReadableString ( character )}'", location ) );
+        internal void ReportUnexpectedToken ( TextLocation location, SyntaxKind actual, SyntaxKind expected ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0015", $"Unexpected token {actual}, expected {expected}", location ) );
 
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>

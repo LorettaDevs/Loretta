@@ -637,6 +637,9 @@ namespace Loretta.CodeAnalysis.Syntax
                     else
                     {
                         this._reader.Advance ( 1 );
+                        var span = new TextSpan ( this._start, 1 );
+                        var location = new TextLocation ( this._text, span );
+                        this.Diagnostics.ReportBadCharacter ( location, peek0 );
                         return (SyntaxKind.BadToken, Option.None<Object?> ( ));
                     }
                 }
