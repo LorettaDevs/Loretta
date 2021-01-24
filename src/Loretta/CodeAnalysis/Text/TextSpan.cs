@@ -13,8 +13,19 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when:
+        /// <paramref name="start"/> is negative;
+        /// <para>-or-</para>
+        /// <paramref name="end"/> is less than <paramref name="start"/>.
+        /// </exception>
         public static TextSpan FromBounds ( Int32 start, Int32 end )
         {
+            if ( start < 0 )
+                throw new ArgumentOutOfRangeException ( nameof ( start ), "Start must be positive." );
+            if ( end < start )
+                throw new ArgumentOutOfRangeException ( nameof ( end ), "End must be greater than start." );
+
             var length = end - start;
             return new TextSpan ( start, length );
         }
@@ -24,8 +35,18 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         /// <param name="start"></param>
         /// <param name="length"></param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when:
+        /// <paramref name="start"/> is negative;
+        /// <para>-or-</para>
+        /// <paramref name="length"/> is negative.
+        /// </exception>
         public TextSpan ( Int32 start, Int32 length )
         {
+            if ( start < 0 )
+                throw new ArgumentOutOfRangeException ( nameof ( start ), "Start must be positive." );
+            if ( length < 0 )
+                throw new ArgumentOutOfRangeException ( nameof ( length ), "Length must be positive." );
             this.Start = start;
             this.Length = length;
         }
