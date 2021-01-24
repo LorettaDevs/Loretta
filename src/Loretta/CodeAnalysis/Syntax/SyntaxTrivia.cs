@@ -6,7 +6,7 @@ namespace Loretta.CodeAnalysis.Syntax
     /// <summary>
     /// Represents trivia contained in the source text.
     /// </summary>
-    public readonly struct SyntaxTrivia
+    public sealed class SyntaxTrivia
     {
         internal SyntaxTrivia ( SyntaxTree syntaxTree, SyntaxKind kind, Int32 position, String text )
         {
