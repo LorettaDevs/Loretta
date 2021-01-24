@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using GParse;
 
 namespace Loretta.CodeAnalysis.Text
@@ -8,8 +9,6 @@ namespace Loretta.CodeAnalysis.Text
     /// </summary>
     public readonly struct TextLocation
     {
-        private readonly Lazy<SourceRange> _range;
-
         /// <summary>
         /// Initializes a new text location.
         /// </summary>
@@ -19,8 +18,6 @@ namespace Loretta.CodeAnalysis.Text
         {
             this.Text = text;
             this.Span = span;
-            this._range = new Lazy<SourceRange> ( ( ) =>
-                SourceRange.Calculate ( text.ToString ( ), (span.Start, span.End) ) );
         }
 
         /// <summary>
@@ -39,13 +36,23 @@ namespace Loretta.CodeAnalysis.Text
         public String FileName => this.Text.FileName;
 
         /// <summary>
-        /// The <see cref="SourceLocation"/> this location starts at.
+        /// The index of line where this location starts at.
         /// </summary>
-        public SourceLocation Start => this._range.Value.Start;
+        public Int32 StartLine => this.Text.GetLineIndex ( this.Span.Start );
 
         /// <summary>
-        /// The <see cref="SourceLocation"/> this location ends at.
+        /// The index of the character on the line this location starts at.
         /// </summary>
-        public SourceLocation End => this._range.Value.End;
+        public Int32 StartCharacter => this.Span.Start - this.Text.Lines[this.StartLine].Start;
+
+        /// <summary>
+        /// The index of the line this location ends at.
+        /// </summary>
+        public Int32 EndLine => this.Text.GetLineIndex ( this.Span.End );
+
+        /// <summary>
+        /// The index of the character on the line this location ends at.
+        /// </summary>
+        public Int32 EndCharacter => this.Span.End - this.Text.Lines[this.EndLine].Start;
     }
 }
