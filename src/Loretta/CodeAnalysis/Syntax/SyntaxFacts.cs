@@ -31,5 +31,13 @@ namespace Loretta.CodeAnalysis.Syntax
                 _ => Option.None<Object?> ( )
             };
         }
+
+        /// <summary>
+        /// Checks whether a given <see cref="SyntaxKind"/> is a right associative operator's.
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        public static Boolean IsRightAssociative ( this SyntaxKind kind ) =>
+            kind is SyntaxKind.HatToken;
     }
 }
