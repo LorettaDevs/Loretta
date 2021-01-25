@@ -210,7 +210,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 if ( readChars < 1 || num > 255 )
                 {
-                    var span = TextSpan.FromBounds ( start - 1, this._reader.Position );
+                    var span = TextSpan.FromBounds ( start, this._reader.Position );
                     var location = new TextLocation ( this._text, span );
                     this.Diagnostics.ReportInvalidStringEscape ( location );
                     return Char.MaxValue;
@@ -245,7 +245,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 if ( readChars < 1 )
                 {
-                    var span = TextSpan.FromBounds ( start - 2, this._reader.Position );
+                    var span = TextSpan.FromBounds ( start, this._reader.Position );
                     var location = new TextLocation ( this._text, span );
                     this.Diagnostics.ReportInvalidStringEscape ( location );
                     return Char.MaxValue;
