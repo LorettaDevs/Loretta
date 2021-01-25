@@ -108,16 +108,33 @@ namespace Loretta.CodeAnalysis.Syntax
                             case '7':
                             case '8':
                             case '9':
-                                parsed.Append ( parseDecimalInteger ( escapeStart ) );
+                            {
+                                var parsedCharInteger = parseDecimalInteger ( escapeStart );
+                                if ( parsedCharInteger != Char.MaxValue )
+                                    parsed.Append ( parsedCharInteger );
                                 break;
+                            }
 
                             case 'x':
+                            {
                                 this._reader.Advance ( 1 );
-                                parsed.Append ( parseHexadecimalInteger ( escapeStart ) );
-                                break;
+                                var parsedCharInteger = parseHexadecimalInteger ( escapeStart );
+                                if ( parsedCharInteger != Char.MaxValue )
+                                    parsed.Append ( parsedCharInteger );
+
+                                if ( !this._luaOptions.AcceptHexEscapesInStrings )
+                                {
+                                    var span = TextSpan.FromBounds ( escapeStart, this._reader.Position );
+                                    var location = new TextLocation ( this._text, span );
+                                    this.Diagnostics.ReportHexStringEscapesNotSupportedInVersion ( location );
+                                }
+                            }
+                            break;
 
                             default:
                             {
+                                // Skip the character after the escape.
+                                this._reader.Advance ( 1 );
                                 var span = TextSpan.FromBounds ( escapeStart, this._reader.Position );
                                 var location = new TextLocation ( this._text, span );
                                 this.Diagnostics.ReportInvalidStringEscape ( location );
@@ -138,6 +155,7 @@ namespace Loretta.CodeAnalysis.Syntax
                         }
                         else
                         {
+                            this._reader.Advance ( 1 );
                             parsed.Append ( '\r' );
                         }
 
@@ -195,6 +213,7 @@ namespace Loretta.CodeAnalysis.Syntax
                     var span = TextSpan.FromBounds ( start - 1, this._reader.Position );
                     var location = new TextLocation ( this._text, span );
                     this.Diagnostics.ReportInvalidStringEscape ( location );
+                    return Char.MaxValue;
                 }
 
                 return ( Char ) num;
@@ -229,6 +248,7 @@ namespace Loretta.CodeAnalysis.Syntax
                     var span = TextSpan.FromBounds ( start - 2, this._reader.Position );
                     var location = new TextLocation ( this._text, span );
                     this.Diagnostics.ReportInvalidStringEscape ( location );
+                    return Char.MaxValue;
                 }
 
                 return ( Char ) num;

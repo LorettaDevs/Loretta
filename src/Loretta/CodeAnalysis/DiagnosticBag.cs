@@ -54,6 +54,7 @@ namespace Loretta.CodeAnalysis
 
         internal void ReportInvalidStringEscape ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0001", "Invalid string escape", location ) );
+
         internal void ReportUnescapedLineBreakInString ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0002", "Unescaped line break in string", location ) );
 
@@ -74,21 +75,30 @@ namespace Loretta.CodeAnalysis
 
         internal void ReportBinaryLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0008", "Binary number literals are not supported in this lua version", location ) );
+
         internal void ReportOctalLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0009", "Octal number literals are not supported in this lua version", location ) );
 
         internal void ReportHexFloatLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0010", "Hexadecimal floating point number literals are not supported in this lua version", location ) );
+
         internal void ReportUnderscoreInNumberLiteralNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0011", "Underscores in number literals are not supported in this lua version", location ) );
+
         internal void ReportCCommentsNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0012", "C comments are not supported in this lua version", location ) );
+
         internal void ReportLuajitIdentifierRulesNotSupportedInVersion ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0013", "Characters with value above 0x7F are not supported in this lua version.", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0013", "Characters with value above 0x7F are not supported in this lua version", location ) );
+
         internal void ReportBadCharacter ( TextLocation location, Char character ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0014", $"Bad character input: '{LoCharUtils.ToReadableString ( character )}'", location ) );
+
         internal void ReportUnexpectedToken ( TextLocation location, SyntaxKind actual, SyntaxKind expected ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0015", $"Unexpected token {actual}, expected {expected}", location ) );
+
+        internal void ReportHexStringEscapesNotSupportedInVersion ( TextLocation location ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0016", "Hexadecimal string escapes are not supported in this lua version", location ) );
 
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>
