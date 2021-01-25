@@ -18,6 +18,10 @@ namespace Loretta.CodeAnalysis.Syntax
 
         private Double ParseBinaryNumber ( )
         {
+            // Skip leading 0s
+            while ( this._reader.Peek ( ).GetValueOrDefault ( ) == '0' )
+                this._reader.Advance ( 1 );
+
             var num = 0L;
             var digits = 0;
             var hasUnderscores = false;
@@ -50,6 +54,10 @@ namespace Loretta.CodeAnalysis.Syntax
 
         private Double ParseOctalNumber ( )
         {
+            // Skip leading 0s
+            while ( this._reader.Peek ( ).GetValueOrDefault ( ) == '0' )
+                this._reader.Advance ( 1 );
+
             var num = 0L;
             var digits = 0;
             var hasUnderscores = false;
