@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Loretta.CodeAnalysis.Text;
 
@@ -124,6 +125,95 @@ namespace Loretta.CodeAnalysis.Syntax
                 return token;
 
             return this.GetChildren ( ).Last ( ).GetLastToken ( );
+        }
+
+        /// <summary>
+        /// Pretty prints a tree to the console.
+        /// </summary>
+        /// <param name="writer"></param>
+        public void PrettyPrintTo ( TextWriter writer ) =>
+            PrettyPrint ( writer, this );
+
+        private static void PrettyPrint ( TextWriter writer, SyntaxNode node, String indent = "", Boolean isLast = true )
+        {
+            var isToConsole = writer == Console.Out;
+            var token = node as SyntaxToken;
+
+            if ( token != null )
+            {
+                foreach ( SyntaxTrivia trivia in token.LeadingTrivia )
+                {
+                    if ( isToConsole )
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+
+                    writer.Write ( indent );
+                    writer.Write ( "├──" );
+
+                    if ( isToConsole )
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                    writer.WriteLine ( $"L: {trivia.Kind}" );
+                }
+            }
+
+            var hasTrailingTrivia = token != null && token.TrailingTrivia.Any ( );
+            var tokenMarker = !hasTrailingTrivia && isLast ? "└──" : "├──";
+
+            if ( isToConsole )
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            writer.Write ( indent );
+            writer.Write ( tokenMarker );
+
+            if ( isToConsole )
+                Console.ForegroundColor = node is SyntaxToken ? ConsoleColor.Blue : ConsoleColor.Cyan;
+
+            writer.Write ( node.Kind );
+
+            if ( token != null && token.Value.IsSome )
+            {
+                writer.Write ( " " );
+                writer.Write ( token.Value.Value ?? "null" );
+            }
+
+            if ( isToConsole )
+                Console.ResetColor ( );
+
+            writer.WriteLine ( );
+
+            if ( token != null )
+            {
+                foreach ( SyntaxTrivia trivia in token.TrailingTrivia )
+                {
+                    var isLastTrailingTrivia = trivia == token.TrailingTrivia.Last ( );
+                    var triviaMarker = isLast && isLastTrailingTrivia ? "└──" : "├──";
+
+                    if ( isToConsole )
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+
+                    writer.Write ( indent );
+                    writer.Write ( triviaMarker );
+
+                    if ( isToConsole )
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                    writer.WriteLine ( $"T: {trivia.Kind}" );
+                }
+            }
+
+            indent += isLast ? "   " : "│  ";
+
+            SyntaxNode? lastChild = node.GetChildren ( ).LastOrDefault ( );
+
+            foreach ( SyntaxNode? child in node.GetChildren ( ) )
+                PrettyPrint ( writer, child, indent, child == lastChild );
+        }
+
+        public override String ToString ( )
+        {
+            using var writer = new StringWriter ( );
+            this.PrettyPrintTo ( writer );
+            return writer.ToString ( );
         }
     }
 }
