@@ -45,9 +45,15 @@ namespace Loretta.CodeAnalysis.Syntax
             if ( !this._luaOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores )
                 this.Diagnostics.ReportUnderscoreInNumberLiteralNotSupportedInVersion ( location );
             if ( digits < 1 )
+            {
+                num = 0; // Safe default
                 this.Diagnostics.ReportInvalidNumber ( location );
+            }
             if ( digits > 64 )
+            {
+                num = 0; // Safe default
                 this.Diagnostics.ReportNumericLiteralTooLarge ( location );
+            }
 
             return num;
         }
@@ -81,9 +87,15 @@ namespace Loretta.CodeAnalysis.Syntax
             if ( !this._luaOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores )
                 this.Diagnostics.ReportUnderscoreInNumberLiteralNotSupportedInVersion ( location );
             if ( digits < 1 )
+            {
+                num = 0; // Safe default
                 this.Diagnostics.ReportInvalidNumber ( location );
+            }
             if ( digits > 21 )
+            {
+                num = 0; // Safe default
                 this.Diagnostics.ReportNumericLiteralTooLarge ( location );
+            }
 
             return num;
         }
