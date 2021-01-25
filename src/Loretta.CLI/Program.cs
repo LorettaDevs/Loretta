@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Syntax;
+using Loretta.CodeAnalysis.Text;
+using Loretta.IO;
+using Loretta.Utilities;
 using Tsu.CLI.Commands;
 using Tsu.CLI.Commands.Errors;
 using Tsu.Numerics;
@@ -48,8 +54,17 @@ namespace Loretta.CLI
         #region Current Directory Management
 
         [Command ( "cd" )]
-        public static void ChangeDirectory ( String relativePath ) =>
-            Environment.CurrentDirectory = Path.GetFullPath ( Path.Combine ( Environment.CurrentDirectory, relativePath ) );
+        public static void ChangeDirectory ( String relativePath )
+        {
+            try
+            {
+                Environment.CurrentDirectory = Path.GetFullPath ( Path.Combine ( Environment.CurrentDirectory, relativePath ) );
+            }
+            catch ( Exception ex )
+            {
+                Logger!.LogError ( "Error while changing directory: {0}", ex );
+            }
+        }
 
         [Command ( "ls" )]
         public static void ListSymbols ( )
@@ -74,6 +89,20 @@ namespace Loretta.CLI
             All,
         }
 
+        private static LuaOptions PresetEnumToPresetOptions ( LuaOptionsPreset preset )
+        {
+            return preset switch
+            {
+                LuaOptionsPreset.Lua51 => LuaOptions.Lua51,
+                LuaOptionsPreset.Lua52 => LuaOptions.Lua52,
+                LuaOptionsPreset.LuaJIT => LuaOptions.LuaJIT,
+                LuaOptionsPreset.GMod => LuaOptions.GMod,
+                LuaOptionsPreset.Roblox => LuaOptions.Roblox,
+                LuaOptionsPreset.All => LuaOptions.All,
+                _ => throw new InvalidOperationException ( ),
+            };
+        }
+
         public enum ASTVisitors
         {
             ConstantFolder,
@@ -81,6 +110,36 @@ namespace Loretta.CLI
             UselessAssignmentRemover,
             SimpleInliner,
             AllTillNothingMoreToDo
+        }
+
+        [Command ( "l" ), Command ( "lex" )]
+        public static void Lex ( LuaOptionsPreset preset, String path, Boolean printTokens = false )
+        {
+            if ( !File.Exists ( path ) )
+            {
+                Logger!.LogError ( "Provided path does not exist." );
+                return;
+            }
+
+            LuaOptions options = PresetEnumToPresetOptions ( preset );
+            var text = File.ReadAllText ( path );
+            var sourceText = SourceText.From ( text, path );
+            ImmutableArray<SyntaxToken> tokens;
+            ImmutableArray<Diagnostic> diagnostics;
+            using ( Logger!.BeginOperation ( "Lexing" ) )
+                tokens = SyntaxTree.ParseTokens ( options, sourceText, out diagnostics, includeEndOfFile: true );
+
+            Logger!.LogInformation ( $"{tokens.Length} tokens lexed." );
+            var tw = new ConsoleTimingLoggerTextWriter ( Logger );
+            if ( printTokens )
+            {
+                foreach ( SyntaxToken token in tokens )
+                {
+                    token.PrettyPrintTo ( tw );
+                }
+            }
+
+            tw.WriteDiagnostics ( diagnostics );
         }
 
         [Command ( "p" ), Command ( "parse" )]
