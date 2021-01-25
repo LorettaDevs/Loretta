@@ -128,7 +128,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 if ( !this._luaOptions.AcceptUnderscoreInNumberLiterals
                      && rawNum.IndexOf ( '_' ) >= 0 )
                 {
-                    var span = new TextSpan ( this._start, numLength );
+                    var span = TextSpan.FromBounds ( this._start, this._reader.Position );
                     var location = new TextLocation ( this._text, span );
                     this.Diagnostics.ReportUnderscoreInNumberLiteralNotSupportedInVersion ( location );
                 }
@@ -154,7 +154,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 if ( !this._luaOptions.AcceptUnderscoreInNumberLiterals
                      && rawNum.Contains ( '_' ) )
                 {
-                    var span = new TextSpan ( this._start, numLength );
+                    var span = TextSpan.FromBounds ( this._start, this._reader.Position );
                     var location = new TextLocation ( this._text, span );
                     this.Diagnostics.ReportUnderscoreInNumberLiteralNotSupportedInVersion ( location );
                 }
@@ -207,7 +207,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 if ( !this._luaOptions.AcceptUnderscoreInNumberLiterals
                      && rawNum.IndexOf ( '_' ) >= 0 )
                 {
-                    var span = new TextSpan ( this._start, numLength );
+                    var span = TextSpan.FromBounds ( this._start, this._reader.Position );
                     var location = new TextLocation ( this._text, span );
                     this.Diagnostics.ReportUnderscoreInNumberLiteralNotSupportedInVersion ( location );
                 }
@@ -230,7 +230,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 if ( !this._luaOptions.AcceptUnderscoreInNumberLiterals
                      && rawNum.Contains ( '_' ) )
                 {
-                    var span = new TextSpan ( this._start, numLength );
+                    var span = TextSpan.FromBounds ( this._start, this._reader.Position );
                     var location = new TextLocation ( this._text, span );
                     this.Diagnostics.ReportUnderscoreInNumberLiteralNotSupportedInVersion ( location );
                 }
