@@ -171,24 +171,28 @@ namespace Loretta.CodeAnalysis.Syntax
             var numStart = this._reader.Position;
 
             skipHexDigits ( );
+            var isHexFloat = false;
             if ( this._reader.IsNext ( '.' ) )
             {
+                isHexFloat = true;
                 this._reader.Advance ( 1 );
                 skipHexDigits ( );
-                if ( CharUtils.AsciiLowerCase ( this._reader.Peek ( ).GetValueOrDefault ( ) ) == 'p' )
-                {
-                    this._reader.Advance ( 1 );
-                    if ( this._reader.IsNext ( '+' ) || this._reader.IsNext ( '-' ) )
-                        this._reader.Advance ( 1 );
-                    this.SkipDecimalDigits ( );
-                }
+            }
 
-                if ( !this._luaOptions.AcceptHexFloatLiterals )
-                {
-                    var span = TextSpan.FromBounds ( this._start, this._reader.Position );
-                    var location = new TextLocation ( this._text, span );
-                    this.Diagnostics.ReportHexFloatLiteralNotSupportedInVersion ( location );
-                }
+            if ( CharUtils.AsciiLowerCase ( this._reader.Peek ( ).GetValueOrDefault ( ) ) == 'p' )
+            {
+                isHexFloat = true;
+                this._reader.Advance ( 1 );
+                if ( this._reader.IsNext ( '+' ) || this._reader.IsNext ( '-' ) )
+                    this._reader.Advance ( 1 );
+                this.SkipDecimalDigits ( );
+            }
+
+            if ( isHexFloat && !this._luaOptions.AcceptHexFloatLiterals )
+            {
+                var span = TextSpan.FromBounds ( this._start, this._reader.Position );
+                var location = new TextLocation ( this._text, span );
+                this.Diagnostics.ReportHexFloatLiteralNotSupportedInVersion ( location );
             }
 
             var numEnd = this._reader.Position;
@@ -199,6 +203,14 @@ namespace Loretta.CodeAnalysis.Syntax
             {
                 ReadOnlySpan<Char> rawNum = this._reader.ReadSpan ( numLength );
                 Span<Char> buff = stackalloc Char[numLength];
+
+                if ( !this._luaOptions.AcceptUnderscoreInNumberLiterals
+                     && rawNum.IndexOf ( '_' ) >= 0 )
+                {
+                    var span = new TextSpan ( this._start, numLength );
+                    var location = new TextLocation ( this._text, span );
+                    this.Diagnostics.ReportUnderscoreInNumberLiteralNotSupportedInVersion ( location );
+                }
 
                 var buffIdx = 0;
                 for ( var rawNumIdx = 0; rawNumIdx < numLength; rawNumIdx++ )
@@ -214,6 +226,15 @@ namespace Loretta.CodeAnalysis.Syntax
             else
             {
                 var rawNum = this._reader.ReadString ( numLength )!;
+
+                if ( !this._luaOptions.AcceptUnderscoreInNumberLiterals
+                     && rawNum.Contains ( '_' ) )
+                {
+                    var span = new TextSpan ( this._start, numLength );
+                    var location = new TextLocation ( this._text, span );
+                    this.Diagnostics.ReportUnderscoreInNumberLiteralNotSupportedInVersion ( location );
+                }
+
                 return HexFloat.DoubleFromHexString ( rawNum.Replace ( "_", "" ) );
             }
 
