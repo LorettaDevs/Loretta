@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Syntax;
 using Loretta.CodeAnalysis.Text;
@@ -81,6 +79,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             var untestedTokenKinds = new SortedSet<SyntaxKind> ( tokenKinds );
             untestedTokenKinds.Remove ( SyntaxKind.BadToken );
             untestedTokenKinds.Remove ( SyntaxKind.EndOfFileToken );
+            untestedTokenKinds.Remove ( SyntaxKind.SkippedTextTrivia );
             untestedTokenKinds.ExceptWith ( testedTokenKinds );
 
             Assert.Empty ( untestedTokenKinds );
