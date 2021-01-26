@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Loretta.Generators.SyntaxFacts
+namespace Loretta.Generators.SyntaxKind
 {
     internal readonly struct TokenInfo
     {
