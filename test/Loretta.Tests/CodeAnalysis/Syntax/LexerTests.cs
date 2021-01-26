@@ -6,6 +6,7 @@ using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Syntax;
 using Loretta.CodeAnalysis.Text;
 using Loretta.ThirdParty.FParsec;
+using Loretta.Utilities;
 using Tsu;
 using Xunit;
 
@@ -14,10 +15,63 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
     public class LexerTests
     {
         [Theory]
-        [MemberData ( nameof ( GetUnfinishedShortStringsData ) )]
-        public void Lexer_Lexes_UnterminatedShortString ( LuaOptions options, String text, String value )
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "\"some\\ltext\"", "sometext", 5, 2 )]
+        [InlineData ( "'some\\ltext'", "sometext", 5, 2 )]
+        [InlineData ( "\"some\\xGtext\"", "someGtext", 5, 2 )]
+        [InlineData ( "'some\\xGtext'", "someGtext", 5, 2 )]
+        [InlineData ( "\"some\\300text\"", "sometext", 5, 4 )]
+        [InlineData ( "'some\\300text'", "sometext", 5, 4 )]
+        public void Lexer_EmitsDiagnosticsOn_InvalidEscapes ( String text, String value, Int32 escapePosition, Int32 escapeLength )
         {
-            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+            Assert.Equal ( value, token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0001", diagnostic.Id );
+            Assert.Equal ( "Invalid string escape", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( escapePosition, escapeLength ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "\"some\ntext\"", "some\ntext", 5, 1 )]
+        [InlineData ( "'some\ntext'", "some\ntext", 5, 1 )]
+        [InlineData ( "\"some\rtext\"", "some\rtext", 5, 1 )]
+        [InlineData ( "'some\rtext'", "some\rtext", 5, 1 )]
+        [InlineData ( "\"some\r\ntext\"", "some\r\ntext", 5, 2 )]
+        [InlineData ( "'some\r\ntext'", "some\r\ntext", 5, 2 )]
+        public void Lexer_EmitsDiagnosticsOn_StringWithLineBreak ( String text, String value, Int32 lineBreakPosition, Int32 lineBreakLength )
+        {
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+            Assert.Equal ( value, token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0002", diagnostic.Id );
+            Assert.Equal ( "Unescaped line break in string", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( lineBreakPosition, lineBreakLength ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "\"text", "text" )]
+        [InlineData ( "'text", "text" )]
+        [InlineData ( "\"text'", "text'" )]
+        [InlineData ( "'text\"", "text\"" )]
+        public void Lexer_EmitsDiagnosticsOn_UnterminatedShortString ( String text, String value )
+        {
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
@@ -26,16 +80,315 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
             Assert.Equal ( "LUA0003", diagnostic.Id );
-            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
             Assert.Equal ( "Unfinished string", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
         }
 
         [Theory]
-        [MemberData ( nameof ( GetAllPresetsData ) )]
-        public void Lexer_Lexes_ShebangsOnlyOnFileStart ( LuaOptions options )
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "0b" )]
+        [InlineData ( "0b_" )]
+        [InlineData ( "0o" )]
+        [InlineData ( "0o_" )]
+        public void Lexer_EmitsDiagnosticsOn_InvalidNumbers ( String text )
+        {
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+            Assert.Equal ( 0d, token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0004", diagnostic.Id );
+            Assert.Equal ( "Invalid number", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "0b10000000000000000000000000000000000000000000000000000000000000000" )]
+        [InlineData ( "0o1000000000000000000000" )]
+        public void Lexer_EmitsDiagnosticsOn_LargeNumbers ( String text )
+        {
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+            Assert.Equal ( 0d, token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0005", diagnostic.Id );
+            Assert.Equal ( "Numeric literal is too large", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "0b00000000000000000000000000000000000000000000000000000000000000001" )]
+        [InlineData ( "0o0000000000000000000001" )]
+        public void Lexer_DoesNot_CountNumberDigitsNaively ( String text )
+        {
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+            Assert.Equal ( 1d, token.Value.Value );
+
+            Assert.Empty ( diagnostics );
+        }
+
+        [Theory]
+        [InlineData ( "/* hi" )]
+        [InlineData ( "--[[ hi" )]
+        [InlineData ( "--[=[ hi" )]
+        public void Lexer_EmitsDiagnosticOn_UnfinishedLongComment ( String text )
+        {
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics, includeEndOfFile: true );
+
+            SyntaxToken eofToken = Assert.Single ( tokens );
+            SyntaxTrivia commentTrivia = Assert.Single ( eofToken.LeadingTrivia );
+            Assert.Equal ( SyntaxKind.MultiLineCommentTrivia, commentTrivia.Kind );
+            Assert.Equal ( text, commentTrivia.Text );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0006", diagnostic.Id );
+            Assert.Equal ( "Unfinished long comment", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Output" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "--[" )]
+        [InlineData ( "--[=" )]
+        [InlineData ( "--[==" )]
+        [InlineData ( "--[ [" )]
+        [InlineData ( "--[= [" )]
+        [InlineData ( "--[= =[" )]
+        public void Lexer_DoesNot_IdentifyLongCommentsNaively ( String text )
+        {
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics, includeEndOfFile: true );
+
+            SyntaxToken eof = Assert.Single ( tokens );
+            SyntaxTrivia trivia = Assert.Single ( eof.LeadingTrivia );
+            Assert.Equal ( SyntaxKind.SingleLineCommentTrivia, trivia.Kind );
+            Assert.Equal ( text, trivia.Text );
+
+            Assert.Empty ( diagnostics );
+        }
+
+        [Fact]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        public void Lexer_EmitsDiagnosticWhen_ShebangIsFound_And_LuaOptionsAcceptShebangIsFalse ( )
         {
             const String shebang = "#!/bin/bash";
-            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, shebang, includeEndOfFile: true );
+            LuaOptions options = LuaOptions.All.With ( acceptShebang: false );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, shebang, out ImmutableArray<Diagnostic> diagnostics, includeEndOfFile: true );
+
+            SyntaxToken eof = Assert.Single ( tokens );
+            SyntaxTrivia trivia = Assert.Single ( eof.LeadingTrivia );
+            Assert.Equal ( SyntaxKind.ShebangTrivia, trivia.Kind );
+            Assert.Equal ( shebang, trivia.Text );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0007", diagnostic.Id );
+            Assert.Equal ( "Shebangs are not supported in this lua version", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, shebang.Length ), diagnostic.Location.Span );
+        }
+
+        [Fact]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        public void Lexer_EmitsDiagnosticWhen_BinaryNumberIsFound_And_LuaOptionsAcceptBinaryNumbersIsFalse ( )
+        {
+            const String numberText = "0b1010";
+
+            LuaOptions options = LuaOptions.All.With ( acceptBinaryNumbers: false );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, numberText, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( numberText, token.Text );
+            Assert.Equal ( ( Double ) 0b1010, token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0008", diagnostic.Id );
+            Assert.Equal ( "Binary number literals are not supported in this lua version", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, numberText.Length ), diagnostic.Location.Span );
+        }
+
+        [Fact]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        public void Lexer_EmitsDiagnosticWhen_OctalNumberIsFound_And_LuaOptionsAcceptOctalNumbersIsFalse ( )
+        {
+            const String numberText = "0o77";
+            LuaOptions options = LuaOptions.All.With ( acceptOctalNumbers: false );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, numberText, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( numberText, token.Text );
+            Assert.Equal ( 7d * 8d + 7d, token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0009", diagnostic.Id );
+            Assert.Equal ( "Octal number literals are not supported in this lua version", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, numberText.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "0xff.ff" )]
+        [InlineData ( "0xffp10" )]
+        [InlineData ( "0xff.ffp10" )]
+        public void Lexer_EmitsDiagnosticWhen_HexFloatIsFound_And_LuaOptionsAcceptHexFloatIsFalse ( String text )
+        {
+            LuaOptions options = LuaOptions.All.With ( acceptHexFloatLiterals: false );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+            Assert.Equal ( HexFloat.DoubleFromHexString ( text ), token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0010", diagnostic.Id );
+            Assert.Equal ( "Hexadecimal floating point number literals are not supported in this lua version", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "0b1010_1010", 0b1010_1010 )]
+        [InlineData ( "0o7070_7070", 14913080d )]
+        [InlineData ( "10_10.10_10", 10_10.10_10d )]
+        [InlineData ( "0xf_f", 0xF_F )]
+        public void Lexer_EmitsDiagnosticWhen_UnderscoreInNumberIsFound_And_LuaOptionsAcceptUnderscoresInNumbersIsFalse ( String text, Double value )
+        {
+            LuaOptions options = LuaOptions.All.With ( acceptUnderscoreInNumberLiterals: false );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+            Assert.Equal ( value, token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0011", diagnostic.Id );
+            Assert.Equal ( "Underscores in number literals are not supported in this lua version", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "// hi" )]
+        [InlineData ( "/* hi */" )]
+        public void Lexer_EmitsDiagnosticWhen_CCommentIsFound_And_LuaOptionsAcceptCCommentsIsFalse ( String text )
+        {
+            LuaOptions options = LuaOptions.All.With ( acceptCCommentSyntax: false );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics, includeEndOfFile: true );
+
+            SyntaxToken eof = Assert.Single ( tokens );
+            SyntaxTrivia trivia = Assert.Single ( eof.LeadingTrivia );
+            Assert.Equal (
+                text.StartsWith ( "//", StringComparison.Ordinal )
+                ? SyntaxKind.SingleLineCommentTrivia
+                : SyntaxKind.MultiLineCommentTrivia,
+                trivia.Kind );
+            Assert.Equal ( text, trivia.Text );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0012", diagnostic.Id );
+            Assert.Equal ( "C comments are not supported in this lua version", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "🅱" )]
+        [InlineData ( "\ufeff"  /* ZERO WIDTH NO-BREAK SPACE */ )]
+        [InlineData ( "\u206b"  /* ACTIVATE SYMMETRIC SWAPPING */ )]
+        [InlineData ( "\u202a"  /* LEFT-TO-RIGHT EMBEDDING */ )]
+        [InlineData ( "\u206a"  /* INHIBIT SYMMETRIC SWAPPING */ )]
+        [InlineData ( "\u200e"  /* LEFT-TO-RIGHT MARK */ )]
+        [InlineData ( "\u200c"  /* ZERO WIDTH NON-JOINER */ )]
+        public void Lexer_EmitsDiagnosticWhen_IdentifiersWithCharactersAbove0x7FAreFound_And_LuaOptionsUseLuajitIdentifierRulesIsFalse ( String text )
+        {
+            LuaOptions options = LuaOptions.All.With ( useLuaJitIdentifierRules: false );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.IdentifierToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0013", diagnostic.Id );
+            Assert.Equal ( "Characters with value above 0x7F are not supported in this lua version", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "$" )]
+        [InlineData ( "\\" )]
+        [InlineData ( "?" )]
+        public void Lexer_EmitsDiagnosticWhen_BadCharactersAreFound ( String text )
+        {
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.BadToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0014", diagnostic.Id );
+            Assert.Equal ( $"Bad character input: '{LoCharUtils.ToReadableString ( text[0] )}'", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( 0, text.Length ), diagnostic.Location.Span );
+        }
+
+        [Theory]
+        [Trait ( "Category", "Lexer/Diagnostics" )]
+        [Trait ( "Duration", "Short" )]
+        [InlineData ( "\"hello\\xAthere\"", "hello\xAthere", 6, 3 )]
+        [InlineData ( "'hello\\xAthere'", "hello\xAthere", 6, 3 )]
+        [InlineData ( "\"hello\\xFFthere\"", "hello\xFFthere", 6, 4 )]
+        [InlineData ( "'hello\\xFFthere'", "hello\xFFthere", 6, 4 )]
+        public void Lexer_EmitsDiagnosticsWhen_HexEscapesAreFound_And_LuaOptionsAcceptHexEscapesIsFalse ( String text, String value, Int32 escapePosition, Int32 escapeLength )
+        {
+            LuaOptions options = LuaOptions.All.With ( acceptHexEscapesInStrings: false );
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics );
+
+            SyntaxToken token = Assert.Single ( tokens );
+            Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
+            Assert.Equal ( text, token.Text );
+            Assert.Equal ( value, token.Value.Value );
+
+            Diagnostic diagnostic = Assert.Single ( diagnostics );
+            Assert.Equal ( "LUA0016", diagnostic.Id );
+            Assert.Equal ( "Hexadecimal string escapes are not supported in this lua version", diagnostic.Description );
+            Assert.Equal ( new TextSpan ( escapePosition, escapeLength ), diagnostic.Location.Span );
+        }
+
+        [Fact]
+        [Trait ( "Category", "Lexer/Output" )]
+        [Trait ( "Duration", "Short" )]
+        public void Lexer_Lexes_ShebangsOnlyOnFileStart ( )
+        {
+            const String shebang = "#!/bin/bash";
+            ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, shebang, includeEndOfFile: true );
 
             SyntaxToken eof = Assert.Single ( tokens );
             SyntaxTrivia trivia = Assert.Single ( eof.LeadingTrivia );
@@ -43,7 +396,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal ( shebang, trivia.Text );
             Assert.Equal ( new TextSpan ( 0, shebang.Length ), trivia.Span );
 
-            tokens = SyntaxTree.ParseTokens ( options, $"\n{shebang}", includeEndOfFile: true );
+            tokens = SyntaxTree.ParseTokens ( LuaOptions.All, $"\n{shebang}", includeEndOfFile: true );
             ShortToken[] expectedBrokenTokens = new[]
             {
                 new ShortToken ( SyntaxKind.HashToken, "#", new TextSpan ( 1, 1 ) ),
@@ -68,6 +421,8 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
         }
 
         [Fact]
+        [Trait ( "Category", "Lexer/Lexer_Tests" )]
+        [Trait ( "Duration", "Very Short" )]
         public void Lexer_Covers_AllTokens ( )
         {
             IEnumerable<SyntaxKind> tokenKinds = Enum.GetValues<SyntaxKind> ( )
@@ -86,6 +441,8 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
         }
 
         [Theory]
+        [Trait ( "Category", "Lexer/Output" )]
+        [Trait ( "Duration", "Medium" )]
         [MemberData ( nameof ( GetTokensData ) )]
         public void Lexer_Lexes_Token ( LuaOptions options, ShortToken expectedToken )
         {
@@ -108,6 +465,8 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
 
         [Theory]
+        [Trait ( "Category", "Lexer/Output" )]
+        [Trait ( "Duration", "Medium" )]
         [MemberData ( nameof ( GetTriviaData ) )]
         public void Lexer_Lexes_Trivia ( LuaOptions luaOptions, ShortToken expectedTrivia )
         {
@@ -121,6 +480,8 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
         }
 
         [Theory]
+        [Trait ( "Category", "Lexer/Output" )]
+        [Trait ( "Duration", "Long" )]
         [MemberData ( nameof ( GetTokenPairsData ) )]
         public void Lexer_Lexes_TokenPairs ( LuaOptions luaOptions, ShortToken tokenA, ShortToken tokenB )
         {
@@ -137,6 +498,8 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
         }
 
         [Theory]
+        [Trait ( "Category", "Lexer/Output" )]
+        [Trait ( "Duration", "Very Long" )]
         [MemberData ( nameof ( GetTokenPairsWithSeparatorsData ) )]
         public void Lexer_Lexes_TokenPairs_WithSeparators (
             LuaOptions options,
@@ -160,21 +523,6 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal ( tokenB.Kind, tokens[1].Kind );
             Assert.Equal ( tokenB.Text, tokens[1].Text );
             Assert.Equal ( tokenB.Span, tokens[1].Span );
-        }
-
-        public static IEnumerable<Object[]> GetUnfinishedShortStringsData ( )
-        {
-            var textAndValues = new String[][]
-            {
-                new[] { "\"text", "text" },
-                new[] { "'text", "text" },
-                new[] { "\"text'", "text'" },
-                new[] { "'text\"", "text\"" },
-            };
-
-            return from options in LuaOptions.AllPresets
-                   from textAndValue in textAndValues
-                   select new Object[] { options, textAndValue[0], textAndValue[1] };
         }
 
         public static IEnumerable<Object[]> GetTokensData ( ) =>
@@ -240,6 +588,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
                 // Hexadecimal
                 new ShortToken ( SyntaxKind.NumberToken, "0xf", HexFloat.DoubleFromHexString ( "0xf".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumberToken, "0xfp10", HexFloat.DoubleFromHexString ( "0xfp10".Replace ( "_", "" ) ) ),
                 new ShortToken ( SyntaxKind.NumberToken, "0xf.f", HexFloat.DoubleFromHexString ( "0xf.f".Replace ( "_", "" ) ) ),
                 new ShortToken ( SyntaxKind.NumberToken, "0xf.fp10", HexFloat.DoubleFromHexString ( "0xf.fp10".Replace ( "_", "" ) ) ),
                 new ShortToken ( SyntaxKind.NumberToken, "0x.f", HexFloat.DoubleFromHexString ( "0x.f".Replace ( "_", "" ) ) ),
@@ -249,6 +598,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
                 new ShortToken ( SyntaxKind.NumberToken, "0xf_f.f_fp1_0", HexFloat.DoubleFromHexString ( "0xf_f.f_fp1_0".Replace ( "_", "" ) ) ),
                 new ShortToken ( SyntaxKind.NumberToken, "0x.f_f", HexFloat.DoubleFromHexString ( "0x.f_f".Replace ( "_", "" ) ) ),
                 new ShortToken ( SyntaxKind.NumberToken, "0x.f_fp1_0", HexFloat.DoubleFromHexString ( "0x.f_fp1_0".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumberToken, "0xf_fp1_0", HexFloat.DoubleFromHexString ( "0xf_fp1_0".Replace ( "_", "" ) ) ),
 
                 #endregion Numbers
 
