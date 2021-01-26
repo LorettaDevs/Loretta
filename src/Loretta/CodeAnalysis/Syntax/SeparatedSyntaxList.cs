@@ -41,9 +41,10 @@ namespace Loretta.CodeAnalysis.Syntax
         public Int32 Count => ( this._nodesAndSeparators.Length + 1 ) >> 1;
 
         /// <summary>
-        /// The amount of nodes in this list (including the separators).
+        /// Checks whether this separated syntax list has a trailing separator.
         /// </summary>
-        public Int32 CountWithSeparators => this._nodesAndSeparators.Length;
+        // If we have an even number of elements, then we have a trailing separator, otherwise, we don't.
+        public Boolean HasTrailingSeparator => ( this._nodesAndSeparators.Length & 1 ) == 0;
 
         /// <summary>
         /// Retrieves the nth node from this list.
@@ -59,7 +60,8 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <returns></returns>
         public SyntaxToken GetSeparator ( Int32 index )
         {
-            if ( index < 0 || index >= this.Count - 1 )
+
+            if ( index < 0 || index >= ( this.HasTrailingSeparator ? this.Count : this.Count - 1 ) )
                 throw new ArgumentOutOfRangeException ( nameof ( index ) );
 
             return ( SyntaxToken ) this._nodesAndSeparators[( index << 1 ) | 1];
