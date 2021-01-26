@@ -1,6 +1,4 @@
-﻿using System;
-
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member (still not sure of how to document this)
+﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member (still not sure of how to document this)
 
 namespace Loretta.CodeAnalysis.Syntax
 {
@@ -19,6 +17,8 @@ namespace Loretta.CodeAnalysis.Syntax
         WhitespaceTrivia,
         [Trivia]
         LineBreakTrivia,
+        [Trivia]
+        SkippedTextTrivia,
 
         // Tokens
         [Token]
@@ -193,5 +193,51 @@ namespace Loretta.CodeAnalysis.Syntax
         // Nodes
         [Node ( typeof ( CompilationUnitSyntax ) )]
         CompilationUnit,
+        [Node ( typeof ( ParenthesizedExpressionSyntax ) )]
+        ParenthesizedExpression,
+        [Node ( typeof ( NumberLiteralExpressionSyntax ) )]
+        NumberLiteralExpression,
+        [Node ( typeof ( StringLiteralExpressionSyntax ) )]
+        StringLiteralExpression,
+        [Node ( typeof ( NilLiteralExpressionSyntax ) )]
+        NilLiteralExpression,
+        [Node ( typeof ( BooleanLiteralExpressionSyntax ) )]
+        BooleanLiteralExpression,
+        [Node ( typeof ( VarArgExpressionSyntax ) )]
+        VarArgExpression,
+        [Node ( typeof ( UnaryExpressionSyntax ) )]
+        UnaryExpression,
+        [Node ( typeof ( BinaryExpressionSyntax ) )]
+        BinaryExpression,
+        [Node ( typeof ( ParameterListSyntax ) )]
+        ParameterList,
+        [Node ( typeof ( VarArgParameterSyntax ) )]
+        VarArgParameter,
+        [Node ( typeof ( NameExpressionSyntax ) )]
+        NameExpression,
+        [Node ( typeof ( MemberAccessExpressionSyntax ) )]
+        MemberAccessExpression,
+        [Node ( typeof ( ElementAccessExpressionSyntax ) )]
+        ElementAccessExpression,
+        [Node ( typeof ( StringFunctionArgumentSyntax ) )]
+        StringFunctionArgument,
+        [Node ( typeof ( IdentifierKeyedTableFieldSyntax ) )]
+        IdentifierKeyedTableField,
+        [Node ( typeof ( ExpressionKeyedTableFieldSyntax ) )]
+        ExpressionKeyedTableField,
+        [Node ( typeof ( UnkeyedTableFieldSyntax ) )]
+        UnkeyedTableField,
+        [Node ( typeof ( TableConstructorExpressionSyntax ) )]
+        TableConstructorExpression,
+        [Node ( typeof ( TableConstructorFunctionArgumentSyntax ) )]
+        TableConstructorFunctionArgument,
+        [Node ( typeof ( FunctionArgumentListSyntax ) )]
+        FunctionArgumentList,
+        [Node ( typeof ( MethodCallExpressionSyntax ) )]
+        MethodCallExpression,
+        [Node ( typeof ( FunctionCallExpressionSyntax ) )]
+        FunctionCallExpression,
+        [Node ( typeof ( NamedParameterSyntax ) )]
+        NamedParameter,
     }
 }

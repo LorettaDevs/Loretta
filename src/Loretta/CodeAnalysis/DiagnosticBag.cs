@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using GParse.Utilities;
 using Loretta.CodeAnalysis.Syntax;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
@@ -99,6 +98,9 @@ namespace Loretta.CodeAnalysis
 
         internal void ReportHexStringEscapesNotSupportedInVersion ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0016", "Hexadecimal string escapes are not supported in this lua version", location ) );
+
+        internal void ReportAmbiguousFunctionCallOrNewStatement ( TextLocation location ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0017", "Syntax ambiguous between a function call and a new statement.", location ) );
 
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>

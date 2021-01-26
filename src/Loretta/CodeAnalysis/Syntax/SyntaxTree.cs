@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.IO;
 using System.Threading;
 using Loretta.CodeAnalysis.Text;
 
@@ -14,7 +15,9 @@ namespace Loretta.CodeAnalysis.Syntax
 
         private static void Parse ( SyntaxTree syntaxTree, out CompilationUnitSyntax root, out ImmutableArray<Diagnostic> diagnostics )
         {
-            throw new NotImplementedException ( );
+            var parser = new Parser ( syntaxTree );
+            root = parser.ParseCompilationUnit ( );
+            diagnostics = parser.Diagnostics.ToImmutableArray ( );
         }
 
         /// <summary>
@@ -39,6 +42,19 @@ namespace Loretta.CodeAnalysis.Syntax
         }
 
         #endregion Parse
+
+        /// <summary>
+        /// Loads and parses a syntax tree from the provided file path.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static SyntaxTree Load ( LuaOptions options, String filePath )
+        {
+            var text = File.ReadAllText ( filePath );
+            var sourceText = SourceText.From ( text, filePath );
+            return Parse ( options, sourceText );
+        }
 
         #region ParseTokens
 
@@ -118,6 +134,35 @@ namespace Loretta.CodeAnalysis.Syntax
         }
 
         #endregion ParseTokens
+
+        /// <summary>
+        /// Loads and parses a token list from the provided file path.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="filePath"></param>
+        /// <param name="includeEndOfFile"></param>
+        /// <returns></returns>
+        public static ImmutableArray<SyntaxToken> LoadTokens ( LuaOptions options, String filePath, Boolean includeEndOfFile = false )
+        {
+            var text = File.ReadAllText ( filePath );
+            var sourceText = SourceText.From ( text, filePath );
+            return ParseTokens ( options, sourceText, includeEndOfFile );
+        }
+
+        /// <summary>
+        /// Loads and parses a token list from the provided file path.
+        /// </summary>
+        /// <param name="options">The options to use when lexing.</param>
+        /// <param name="filePath">The path of the file to lex.</param>
+        /// <param name="diagnostics">The diagnostics generated when lexing the file.</param>
+        /// <param name="includeEndOfFile">Whether to include the End-of-File token.</param>
+        /// <returns></returns>
+        public static ImmutableArray<SyntaxToken> LoadTokens ( LuaOptions options, String filePath, out ImmutableArray<Diagnostic> diagnostics, Boolean includeEndOfFile = false )
+        {
+            var text = File.ReadAllText ( filePath );
+            var sourceText = SourceText.From ( text, filePath );
+            return ParseTokens ( options, sourceText, out diagnostics, includeEndOfFile );
+        }
 
         private IImmutableDictionary<SyntaxNode, SyntaxNode?>? _parents;
 
