@@ -2,16 +2,14 @@
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using GParse;
 using GParse.IO;
-using GParse.Math;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
 using Tsu;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
-    internal sealed partial class Lexer : IRestorablePositionContainer
+    internal sealed partial class Lexer
     {
         private readonly LuaOptions _luaOptions;
         private readonly SourceText _text;
@@ -657,20 +655,6 @@ namespace Loretta.CodeAnalysis.Syntax
             throw new Exception ( "Unreacheable." );
         }
 
-        private String GetString ( Range<Int32> range )
-        {
-            var pos = this._reader.Position;
-            try
-            {
-                this._reader.Restore ( range.Start );
-                return this._reader.ReadString ( range.End - range.Start )!;
-            }
-            finally
-            {
-                this._reader.Restore ( pos );
-            }
-        }
-
         private Boolean TryReadLongString ( [NotNullWhen ( true )] out String? contents, out Boolean closingNotFound )
         {
             closingNotFound = true;
@@ -703,12 +687,5 @@ namespace Loretta.CodeAnalysis.Syntax
             contents = null;
             return false;
         }
-
-        public void Restore ( SourceLocation location ) => this._reader.Restore ( location );
-        public void Restore ( Int32 position ) => this._reader.Restore ( position );
-
-        public SourceLocation GetLocation ( ) => this._reader.GetLocation ( );
-        public SourceLocation GetLocation ( Int32 position ) => this._reader.GetLocation ( position );
-        public SourceRange GetLocation ( Range<Int32> range ) => this._reader.GetLocation ( range );
     }
 }
