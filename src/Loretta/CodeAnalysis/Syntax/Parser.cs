@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Loretta.CodeAnalysis.Text;
+using Tsu;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
@@ -79,7 +80,7 @@ namespace Loretta.CodeAnalysis.Syntax
         private SyntaxToken Current => this.Peek ( 0 );
         private SyntaxToken Lookahead => this.Peek ( 1 );
 
-        private SyntaxToken Match ( SyntaxKind kind )
+        public SyntaxToken Match ( SyntaxKind kind )
         {
             if ( this.Current.Kind == kind )
                 return this.Next ( );
@@ -122,7 +123,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public ImmutableArray<MemberSyntax> ParseMembers ( ) => throw new NotImplementedException ( );
 
-        private ExpressionSyntax ParseExpression ( ) =>
+        public ExpressionSyntax ParseExpression ( ) =>
             this.ParseBinaryExpression ( );
 
         private ExpressionSyntax ParseBinaryExpression ( Int32 parentPrecedence = 0, SyntaxKind parentOperator = SyntaxKind.BadToken, Boolean isParentUnary = false )
@@ -205,9 +206,9 @@ namespace Loretta.CodeAnalysis.Syntax
             return expression;
         }
 
-        private VariableExpression ParseVariableExpression ( )
+        private VariableExpressionSyntax ParseVariableExpression ( )
         {
-            VariableExpression expression = this.ParseNameExpression ( );
+            VariableExpressionSyntax expression = this.ParseNameExpression ( );
             while ( true )
             {
                 if ( this.Current.Kind == SyntaxKind.DotToken )

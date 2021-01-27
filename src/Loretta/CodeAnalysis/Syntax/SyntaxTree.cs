@@ -56,6 +56,71 @@ namespace Loretta.CodeAnalysis.Syntax
             return Parse ( options, sourceText );
         }
 
+        #region ParseExpression
+
+        /// <summary>
+        /// Parses an expression from the provided text.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="text"></param>
+        /// <param name="diagnostics"></param>
+        /// <returns></returns>
+        public static ExpressionSyntax ParseExpression ( LuaOptions options, SourceText text, out ImmutableArray<Diagnostic> diagnostics )
+        {
+            ExpressionSyntax? expression = null;
+            void ParseExpression ( SyntaxTree syntaxTree, out CompilationUnitSyntax root, out ImmutableArray<Diagnostic> diagnostics )
+            {
+                var parser = new Parser ( syntaxTree );
+
+                expression = parser.ParseExpression ( );
+
+                SyntaxToken? eofToken = parser.Match ( SyntaxKind.EndOfFileToken );
+                root = new CompilationUnitSyntax ( syntaxTree, ImmutableArray<MemberSyntax>.Empty, eofToken );
+                diagnostics = parser.Diagnostics.ToImmutableArray ( );
+            }
+
+
+            var syntaxTree = new SyntaxTree ( options, text, ParseExpression );
+            diagnostics = syntaxTree.Diagnostics;
+            return expression!;
+        }
+
+        /// <summary>
+        /// Parses an expression from the provided text.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static ExpressionSyntax ParseExpression ( LuaOptions options, SourceText text ) =>
+            ParseExpression ( options, text, out _ );
+
+        /// <summary>
+        /// Parses an expression from the provided text.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="text"></param>
+        /// <param name="diagnostics"></param>
+        /// <returns></returns>
+        public static ExpressionSyntax ParseExpression ( LuaOptions options, String text, out ImmutableArray<Diagnostic> diagnostics )
+        {
+            var sourceText = SourceText.From ( text );
+            return ParseExpression ( options, sourceText, out diagnostics );
+        }
+
+        /// <summary>
+        /// Parses an expression from the provided text.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static ExpressionSyntax ParseExpression ( LuaOptions options, String text )
+        {
+            var sourceText = SourceText.From ( text );
+            return ParseExpression ( options, sourceText );
+        }
+
+        #endregion ParseExpression
+
         #region ParseTokens
 
         /// <summary>

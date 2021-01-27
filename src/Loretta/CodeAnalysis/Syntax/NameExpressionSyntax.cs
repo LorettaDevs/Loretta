@@ -1,6 +1,6 @@
 ﻿namespace Loretta.CodeAnalysis.Syntax
 {
-    public sealed partial class NameExpressionSyntax : VariableExpression
+    public sealed partial class NameExpressionSyntax : VariableExpressionSyntax
     {
         internal NameExpressionSyntax ( SyntaxTree syntaxTree, SyntaxToken identifier )
             : base ( syntaxTree )

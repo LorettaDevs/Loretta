@@ -3,9 +3,9 @@
     /// <summary>
     /// The base class for variable expressions (values that can be assigned to).
     /// </summary>
-    public abstract class VariableExpression : PrefixExpressionSyntax
+    public abstract class VariableExpressionSyntax : PrefixExpressionSyntax
     {
-        private protected VariableExpression ( SyntaxTree syntaxTree ) : base ( syntaxTree )
+        private protected VariableExpressionSyntax ( SyntaxTree syntaxTree ) : base ( syntaxTree )
         {
         }
     }

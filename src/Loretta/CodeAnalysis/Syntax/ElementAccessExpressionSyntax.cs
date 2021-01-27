@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an element access expression.
     /// </summary>
-    public sealed partial class ElementAccessExpressionSyntax : VariableExpression
+    public sealed partial class ElementAccessExpressionSyntax : VariableExpressionSyntax
     {
         internal ElementAccessExpressionSyntax (
             SyntaxTree syntaxTree,

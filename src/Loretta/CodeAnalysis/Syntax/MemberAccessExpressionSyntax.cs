@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a member access expression.
     /// </summary>
-    public sealed partial class MemberAccessExpressionSyntax : VariableExpression
+    public sealed partial class MemberAccessExpressionSyntax : VariableExpressionSyntax
     {
         internal MemberAccessExpressionSyntax ( SyntaxTree syntaxTree, PrefixExpressionSyntax expression, SyntaxToken dotSeparator, SyntaxToken memberName )
             : base ( syntaxTree )
