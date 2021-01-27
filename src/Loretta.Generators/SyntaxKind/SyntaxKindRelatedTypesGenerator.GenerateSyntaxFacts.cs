@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
 namespace Loretta.Generators.SyntaxKind
@@ -14,6 +15,14 @@ namespace Loretta.Generators.SyntaxKind
     {
         private static void GenerateSyntaxFacts ( GeneratorExecutionContext context, INamedTypeSymbol syntaxKindType, ImmutableArray<KindInfo> kinds )
         {
+            var compilation = ( CSharpCompilation ) context.Compilation;
+
+            INamedTypeSymbol? syntaxNodeType =
+                compilation.GetTypeByMetadataName ( "Loretta.CodeAnalysis.Syntax.SyntaxNode" );
+
+            if ( syntaxNodeType is null )
+                return;
+
             SourceText sourceText;
             using ( var stringWriter = new StringWriter ( ) )
             using ( var indentedTextWriter = new IndentedTextWriter ( stringWriter, "    " ) )
@@ -67,6 +76,25 @@ namespace Loretta.Generators.SyntaxKind
                         // Generate IsToken
                         GenerateIsX ( kinds, indentedTextWriter, "Token", kind => kind.TokenInfo is not null );
 
+                        indentedTextWriter.WriteLineNoTabs ( "" );
+
+                        // Generate IsNode
+                        GenerateIsX ( kinds, indentedTextWriter, "Node", kind => kind.NodeInfo is not null );
+
+                        var groups = kinds.Where ( kind => kind.NodeInfo is not null )
+                                          .SelectMany ( kind => Utilities.GetParentsUntil ( kind.NodeInfo!.Value.NodeType, syntaxNodeType ).Select ( type => (type, kind) ) )
+                                          .GroupBy ( pair => pair.type )
+                                          .ToImmutableDictionary ( group => group.Key, group => group.Select ( pair => pair.kind ).ToImmutableArray ( ) );
+
+                        foreach ( KeyValuePair<ITypeSymbol, ImmutableArray<KindInfo>> kv in groups )
+                        {
+                            indentedTextWriter.WriteLineNoTabs ( "" );
+
+                            var length = kv.Key.Name.IndexOf ( "Syntax" );
+                            if ( length == -1 ) length = kv.Key.Name.Length;
+                            var categoryName = kv.Key.Name.Substring ( 0, length );
+                            GenerateIsX ( kv.Value, indentedTextWriter, categoryName, k => true );
+                        }
                     }
                 }
 

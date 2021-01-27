@@ -92,7 +92,18 @@ namespace Loretta.Generators.SyntaxKind
                 return;
             }
 
-            GenerateSyntaxFacts ( context, syntaxKindType, kinds );
+            try
+            {
+                GenerateSyntaxFacts ( context, syntaxKindType, kinds );
+                GenerateSyntaxVisitor ( context, syntaxKindType, kinds );
+            }
+            catch ( Exception ex )
+            {
+                var syntaxKindFilePath = syntaxKindType.DeclaringSyntaxReferences.First ( ).SyntaxTree.FilePath;
+                var syntaxDirectory = Path.GetDirectoryName ( syntaxKindFilePath );
+                var filePath = Path.Combine ( syntaxDirectory, "exception.log" );
+                File.WriteAllText ( filePath, ex.ToString ( ) );
+            }
         }
 
         private static void DoVsCodeHack ( INamedTypeSymbol syntaxKindType, String fileName, SourceText sourceText )
@@ -102,8 +113,8 @@ namespace Loretta.Generators.SyntaxKind
             // Make generator work in VS Code. See src\Directory.Build.props for
             // details.
 
-            var syntaxNodeFilePath = syntaxKindType.DeclaringSyntaxReferences.First ( ).SyntaxTree.FilePath;
-            var syntaxDirectory = Path.GetDirectoryName ( syntaxNodeFilePath );
+            var syntaxKindFilePath = syntaxKindType.DeclaringSyntaxReferences.First ( ).SyntaxTree.FilePath;
+            var syntaxDirectory = Path.GetDirectoryName ( syntaxKindFilePath );
             var filePath = Path.Combine ( syntaxDirectory, fileName );
 
             if ( File.Exists ( filePath ) )

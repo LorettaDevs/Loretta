@@ -32,6 +32,26 @@ namespace Loretta.Generators
             return false;
         }
 
+        public static ImmutableArray<ITypeSymbol> GetParentsUntil ( ITypeSymbol? type, INamedTypeSymbol baseType )
+        {
+            if ( !IsDerivedFrom ( type, baseType ) )
+                throw new InvalidOperationException ( "Provided type is not derived from base type." );
+
+            ImmutableArray<ITypeSymbol>.Builder parents = ImmutableArray.CreateBuilder<ITypeSymbol> ( );
+
+            INamedTypeSymbol? current = type?.BaseType;
+            while ( current != null )
+            {
+                if ( SymbolEqualityComparer.Default.Equals ( current, baseType ) )
+                    break;
+
+                parents.Add ( current );
+                current = current.BaseType;
+            }
+
+            return parents.ToImmutable ( );
+        }
+
         public static Boolean IsPartial ( INamedTypeSymbol type )
         {
             foreach ( SyntaxReference declaration in type.DeclaringSyntaxReferences )
