@@ -33,19 +33,19 @@ public static class CodeFormatter
 {
     private static readonly LuaLexerBuilder _lexerBuilder = new LuaLexerBuilder ( LuaOptions.GMod );
     private static readonly LuaParserBuilder _parserBuilder = new LuaParserBuilder ( LuaOptions.GMod );
-    
+
     public static (IEnumerable<Diagnostic> diagnostics, String? formatted) Format ( String code )
     {
         var diagnostics = new DiagnosticList ( );
-        var lexer = this._lexerBuilder.CreateLexer ( code, diagnostics );
-        var tokenReader = new TokenReader<LuaTokenType> ( );
-        var parser = this._parserBuilder.CreateParser ( lexer, diagnostics );
+        var lexer = _lexerBuilder.CreateLexer ( code, diagnostics );
+        var tokenReader = new TokenReader<LuaTokenType> ( lexer );
+        var parser = _parserBuilder.CreateParser ( tokenReader, diagnostics );
         var tree = parser.Parse ( );
         if ( diagnostics.Any ( diagnostic => diagnostic.Severity == DiagnosticSeverity.Error ) )
         {
             return (diagnostics, null);
         }
-        
+
         return (diagnostics, FormattedLuaCodeSerializer.Format ( LuaOptions.GMod, tree ));
     }
 }
