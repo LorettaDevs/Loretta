@@ -664,7 +664,7 @@ namespace Loretta.CodeAnalysis.Syntax
             ExpressionSyntax left;
 
             var unaryOperatorPrecedence = SyntaxFacts.GetUnaryOperatorPrecedence ( this.Current.Kind );
-            if ( unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence )
+            if ( unaryOperatorPrecedence != 0 )
             {
                 SyntaxToken operatorToken = this.Next ( );
                 SyntaxKind kind = SyntaxFacts.GetUnaryExpression ( operatorToken.Kind ).Value;
@@ -688,7 +688,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 SyntaxToken operatorToken = this.Next ( );
                 SyntaxKind kind = SyntaxFacts.GetBinaryExpression ( operatorToken.Kind ).Value;
-                ExpressionSyntax right = this.ParseBinaryExpression ( precedence, operatorKind, true );
+                ExpressionSyntax right = this.ParseBinaryExpression ( precedence, operatorKind, false );
                 left = new BinaryExpressionSyntax ( this._syntaxTree, kind, left, operatorToken, right );
             }
 
