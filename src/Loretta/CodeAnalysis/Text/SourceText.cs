@@ -91,6 +91,7 @@ namespace Loretta.CodeAnalysis.Text
         {
             this._text = text;
             this.FileName = fileName;
+            this.Lines = ParseLines ( this, text );
         }
 
         /// <summary>
