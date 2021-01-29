@@ -177,7 +177,7 @@ namespace Loretta.IO
                                             : ConsoleColor.DarkRed;
                 writer.SetForeground ( messageColor );
                 writer.Write ( $"{fileName}({startLine},{startCharacter},{endLine},{endCharacter}): " );
-                writer.WriteLine ( diagnostic );
+                writer.WriteLine ( $"{diagnostic.Id}: {diagnostic.Description}" );
                 writer.ResetColor ( );
 
                 var prefixSpan = TextSpan.FromBounds ( line.Start, span.Start );
