@@ -45,8 +45,9 @@ namespace Loretta.CodeAnalysis.Syntax
 
             ImmutableArray<SyntaxTrivia> trailingTrivia = this.ReadTrivia ( leading: false );
 
-            var tokenText = SyntaxFacts.GetText ( tokenKind )
-                            ?? this._text.ToString ( tokenStart, tokenLength );
+            ReadOnlyMemory<Char> tokenText = SyntaxFacts.GetText ( tokenKind ) is String txt
+                                             ? txt.AsMemory ( )
+                                             : this._text.AsMemory ( tokenStart, tokenLength );
 
             return new SyntaxToken (
                 this.syntaxTree,
@@ -211,7 +212,7 @@ namespace Loretta.CodeAnalysis.Syntax
             void submitTrivia ( SyntaxKind kind )
             {
                 var length = this._reader.Position - this._start;
-                var text = this._text.ToString ( this._start, length );
+                ReadOnlyMemory<Char> text = this._text.AsMemory ( this._start, length );
                 this._triviaBuilder.Add ( new SyntaxTrivia ( this.syntaxTree, kind, this._start, text ) );
             }
         }

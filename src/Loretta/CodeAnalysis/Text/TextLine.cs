@@ -58,6 +58,12 @@ namespace Loretta.CodeAnalysis.Text
         public TextSpan SpanWithLineBreak => new TextSpan ( this.Start, this.LengthWithLineBreak );
 
         /// <summary>
+        /// Retrieves this line's contents as a <see cref="ReadOnlyMemory{T}"/>.
+        /// </summary>
+        /// <returns></returns>
+        public ReadOnlyMemory<Char> AsMemory ( ) => this.Text.AsMemory ( this.Span );
+
+        /// <summary>
         /// Retrieves line's contents.
         /// </summary>
         /// <returns></returns>

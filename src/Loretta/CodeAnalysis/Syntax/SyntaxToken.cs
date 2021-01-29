@@ -26,7 +26,7 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxTree syntaxTree,
             SyntaxKind kind,
             Int32 position,
-            Option<String> text,
+            Option<ReadOnlyMemory<Char>> text,
             Option<Object?> value,
             ImmutableArray<SyntaxTrivia> leadingTrivia,
             ImmutableArray<SyntaxTrivia> trailingTrivia )
@@ -34,7 +34,7 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             this.Kind = kind;
             this.Position = position;
-            this.Text = text.UnwrapOr ( String.Empty );
+            this.Text = text.UnwrapOr ( ReadOnlyMemory<Char>.Empty );
             this.Value = value;
             this.LeadingTrivia = leadingTrivia;
             this.TrailingTrivia = trailingTrivia;
@@ -54,7 +54,7 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <summary>
         /// This token's raw text.
         /// </summary>
-        public String Text { get; }
+        public ReadOnlyMemory<Char> Text { get; }
 
         /// <summary>
         /// This token's value.

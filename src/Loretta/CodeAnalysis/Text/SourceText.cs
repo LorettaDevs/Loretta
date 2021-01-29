@@ -169,10 +169,25 @@ namespace Loretta.CodeAnalysis.Text
         public String ToString ( Int32 start, Int32 length ) => this._text.Substring ( start, length );
 
         /// <summary>
+        /// Returns a span of the text as a <see cref="ReadOnlyMemory{T}"/>.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public ReadOnlyMemory<Char> AsMemory ( Int32 start, Int32 length ) => this._text.AsMemory ( start, length );
+
+        /// <summary>
         /// Returns a substring of the text for this source text.
         /// </summary>
         /// <param name="span"></param>
         /// <returns></returns>
         public String ToString ( TextSpan span ) => this.ToString ( span.Start, span.Length );
+
+        /// <summary>
+        /// Returns a span of the text as a <see cref="ReadOnlyMemory{T}"/>.
+        /// </summary>
+        /// <param name="span"></param>
+        /// <returns></returns>
+        public ReadOnlyMemory<Char> AsMemory ( TextSpan span ) => this.AsMemory ( span.Start, span.Length );
     }
 }

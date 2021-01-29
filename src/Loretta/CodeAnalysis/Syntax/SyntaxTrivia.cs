@@ -8,7 +8,7 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed class SyntaxTrivia
     {
-        internal SyntaxTrivia ( SyntaxTree syntaxTree, SyntaxKind kind, Int32 position, String text )
+        internal SyntaxTrivia ( SyntaxTree syntaxTree, SyntaxKind kind, Int32 position, ReadOnlyMemory<Char> text )
         {
             this.SyntaxTree = syntaxTree;
             this.Kind = kind;
@@ -34,11 +34,11 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <summary>
         /// This trivia's position range.
         /// </summary>
-        public TextSpan Span => new ( this.Position, this.Text?.Length ?? 0 );
+        public TextSpan Span => new ( this.Position, this.Text.Length );
 
         /// <summary>
         /// This trivia's text.
         /// </summary>
-        public String Text { get; }
+        public ReadOnlyMemory<Char> Text { get; }
     }
 }

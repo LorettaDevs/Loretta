@@ -29,7 +29,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -53,7 +53,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -75,7 +75,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -97,7 +97,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( 0d, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -117,7 +117,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( 0d, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -137,7 +137,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( 1d, token.Value.Value );
 
             Assert.Empty ( diagnostics );
@@ -154,7 +154,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             SyntaxToken eofToken = Assert.Single ( tokens );
             SyntaxTrivia commentTrivia = Assert.Single ( eofToken.LeadingTrivia );
             Assert.Equal ( SyntaxKind.MultiLineCommentTrivia, commentTrivia.Kind );
-            Assert.Equal ( text, commentTrivia.Text );
+            Assert.True ( commentTrivia.Text.Span.Equals ( text, StringComparison.Ordinal ) );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
             Assert.Equal ( "LUA0006", diagnostic.Id );
@@ -178,7 +178,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             SyntaxToken eof = Assert.Single ( tokens );
             SyntaxTrivia trivia = Assert.Single ( eof.LeadingTrivia );
             Assert.Equal ( SyntaxKind.SingleLineCommentTrivia, trivia.Kind );
-            Assert.Equal ( text, trivia.Text );
+            Assert.True ( trivia.Text.Span.Equals ( text, StringComparison.Ordinal ) );
 
             Assert.Empty ( diagnostics );
         }
@@ -195,7 +195,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             SyntaxToken eof = Assert.Single ( tokens );
             SyntaxTrivia trivia = Assert.Single ( eof.LeadingTrivia );
             Assert.Equal ( SyntaxKind.ShebangTrivia, trivia.Kind );
-            Assert.Equal ( shebang, trivia.Text );
+            Assert.True ( trivia.Text.Span.Equals ( shebang, StringComparison.Ordinal ) );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
             Assert.Equal ( "LUA0007", diagnostic.Id );
@@ -215,7 +215,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
-            Assert.Equal ( numberText, token.Text );
+            Assert.True ( token.Text.Span.Equals ( numberText, StringComparison.Ordinal ) );
             Assert.Equal ( ( Double ) 0b1010, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -235,7 +235,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
-            Assert.Equal ( numberText, token.Text );
+            Assert.True ( token.Text.Span.Equals ( numberText, StringComparison.Ordinal ) );
             Assert.Equal ( 7d * 8d + 7d, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -257,7 +257,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( HexFloat.DoubleFromHexString ( text ), token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -280,7 +280,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -306,7 +306,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
                 ? SyntaxKind.SingleLineCommentTrivia
                 : SyntaxKind.MultiLineCommentTrivia,
                 trivia.Kind );
-            Assert.Equal ( text, trivia.Text );
+            Assert.True ( trivia.Text.Span.Equals ( text, StringComparison.Ordinal ) );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
             Assert.Equal ( "LUA0012", diagnostic.Id );
@@ -331,7 +331,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.IdentifierToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
             Assert.Equal ( "LUA0013", diagnostic.Id );
@@ -351,7 +351,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.BadToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
             Assert.Equal ( "LUA0014", diagnostic.Id );
@@ -373,7 +373,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
             Diagnostic diagnostic = Assert.Single ( diagnostics );
@@ -393,7 +393,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             SyntaxToken eof = Assert.Single ( tokens );
             SyntaxTrivia trivia = Assert.Single ( eof.LeadingTrivia );
             Assert.Equal ( SyntaxKind.ShebangTrivia, trivia.Kind );
-            Assert.Equal ( shebang, trivia.Text );
+            Assert.True ( trivia.Text.Span.Equals ( shebang, StringComparison.Ordinal ) );
             Assert.Equal ( new TextSpan ( 0, shebang.Length ), trivia.Span );
 
             tokens = SyntaxTree.ParseTokens ( LuaOptions.All, $"\n{shebang}", includeEndOfFile: true );
@@ -415,7 +415,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
                 ShortToken expected = expectedBrokenTokens[idx];
 
                 Assert.Equal ( expected.Kind, token.Kind );
-                Assert.Equal ( expected.Text, token.Text );
+                Assert.True ( token.Text.Span.Equals ( expected.Text, StringComparison.Ordinal ) );
                 Assert.Equal ( expected.Span, token.Span );
             }
         }
@@ -450,7 +450,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( expectedToken.Kind, token.Kind );
-            Assert.Equal ( expectedToken.Text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( expectedToken.Text, StringComparison.Ordinal ) );
             Assert.Equal ( expectedToken.Span, token.Span );
             if ( expectedToken.Value.IsSome )
             {
@@ -475,7 +475,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             SyntaxToken token = Assert.Single ( tokens );
             SyntaxTrivia actualTrivia = Assert.Single ( token.LeadingTrivia );
             Assert.Equal ( expectedTrivia.Kind, actualTrivia.Kind );
-            Assert.Equal ( expectedTrivia.Text, actualTrivia.Text );
+            Assert.True ( actualTrivia.Text.Span.Equals ( expectedTrivia.Text, StringComparison.Ordinal ) );
             Assert.Equal ( expectedTrivia.Span, actualTrivia.Span );
         }
 
@@ -490,10 +490,10 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             Assert.Equal ( 2, tokens.Length );
             Assert.Equal ( tokenA.Kind, tokens[0].Kind );
-            Assert.Equal ( tokenA.Text, tokens[0].Text );
+            Assert.True ( tokens[0].Text.Span.Equals ( tokenA.Text, StringComparison.Ordinal ) );
             Assert.Equal ( tokenA.Span, tokens[0].Span );
             Assert.Equal ( tokenB.Kind, tokens[1].Kind );
-            Assert.Equal ( tokenB.Text, tokens[1].Text );
+            Assert.True ( tokens[1].Text.Span.Equals ( tokenB.Text, StringComparison.Ordinal ) );
             Assert.Equal ( tokenB.Span, tokens[1].Span );
         }
 
@@ -512,16 +512,16 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             Assert.Equal ( 2, tokens.Length );
             Assert.Equal ( tokenA.Kind, tokens[0].Kind );
-            Assert.Equal ( tokenA.Text, tokens[0].Text );
+            Assert.True ( tokens[0].Text.Span.Equals ( tokenA.Text, StringComparison.Ordinal ) );
             Assert.Equal ( tokenA.Span, tokens[0].Span );
 
             SyntaxTrivia actualSeparator = Assert.Single ( tokens[0].TrailingTrivia );
             Assert.Equal ( expectedSeparator.Kind, actualSeparator.Kind );
-            Assert.Equal ( expectedSeparator.Text, actualSeparator.Text );
+            Assert.True ( actualSeparator.Text.Span.Equals ( expectedSeparator.Text, StringComparison.Ordinal ) );
             Assert.Equal ( expectedSeparator.Span, actualSeparator.Span );
 
             Assert.Equal ( tokenB.Kind, tokens[1].Kind );
-            Assert.Equal ( tokenB.Text, tokens[1].Text );
+            Assert.True ( tokens[1].Text.Span.Equals ( tokenB.Text, StringComparison.Ordinal ) );
             Assert.Equal ( tokenB.Span, tokens[1].Span );
         }
 
@@ -807,7 +807,7 @@ fourth line \xFF.";
         }
 
         public ShortToken ( SyntaxToken token )
-            : this ( token.Kind, token.Text, token.Span, token.Value )
+            : this ( token.Kind, token.Text.Span.ToString ( ), token.Span, token.Value )
         {
         }
 

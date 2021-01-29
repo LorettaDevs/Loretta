@@ -19,7 +19,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text );
             SyntaxToken token = Assert.Single ( tokens );
             Assert.Equal ( kind, token.Kind );
-            Assert.Equal ( text, token.Text );
+            Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
         }
 
         public static IEnumerable<Object[]> GetSyntaxKindData ( ) =>
