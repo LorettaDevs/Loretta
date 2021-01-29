@@ -152,8 +152,7 @@ namespace Loretta.CLI
             }
 
             LuaOptions options = PresetEnumToPresetOptions ( preset );
-            var text = File.ReadAllText ( path );
-            var sourceText = SourceText.From ( text, path );
+            var sourceText = SourceText.Load ( path );
             SyntaxTree syntaxTree;
             using ( Logger!.BeginOperation ( "Parsing" ) )
                 syntaxTree = SyntaxTree.Parse ( options, sourceText );
@@ -179,9 +178,19 @@ namespace Loretta.CLI
             LuaOptions options = PresetEnumToPresetOptions ( preset );
             foreach ( var file in files )
             {
-
+                var sourceText = SourceText.Load ( file );
+                var stopwatch = Stopwatch.StartNew ( );
+                var tree = SyntaxTree.Parse ( options, sourceText );
+                stopwatch.Stop ( );
+                Logger!.WriteLine ( $"{file}: {Duration.Format ( stopwatch.ElapsedTicks )}" );
+                if ( !tree.Diagnostics.IsEmpty )
+                    Logger.LogError ( "Diagnostics were emitted." );
             }
         }
+
+        [Command ( "cls" ), Command ( "clear" )]
+        public static void Clear ( ) =>
+            Console.Clear ( );
 
         #region Memory Usage
 
