@@ -9,7 +9,7 @@ namespace Loretta.CodeAnalysis.Syntax
     {
         internal AssignmentStatementSyntax (
             SyntaxTree syntaxTree,
-            SeparatedSyntaxList<VariableExpressionSyntax> variables,
+            SeparatedSyntaxList<PrefixExpressionSyntax> variables,
             SyntaxToken equalsToken,
             SeparatedSyntaxList<ExpressionSyntax> values,
             Option<SyntaxToken> semicolonToken )
@@ -26,7 +26,7 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <summary>
         /// The variables being assigned to.
         /// </summary>
-        public SeparatedSyntaxList<VariableExpressionSyntax> Variables { get; }
+        public SeparatedSyntaxList<PrefixExpressionSyntax> Variables { get; }
 
         /// <summary>
         /// The equals token.

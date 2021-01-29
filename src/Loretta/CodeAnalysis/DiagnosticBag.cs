@@ -105,6 +105,9 @@ namespace Loretta.CodeAnalysis
         internal void ReportNonFunctionCallBeingUsedAsStatement ( TextLocation location ) =>
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0018", "Function calls are the only expressions that can be used as statements", location ) );
 
+        internal void ReportCannotBeAssignedTo ( TextLocation location ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0019", "This expression cannot be assigned to", location ) );
+
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>
             this._diagnostics.GetEnumerator ( );

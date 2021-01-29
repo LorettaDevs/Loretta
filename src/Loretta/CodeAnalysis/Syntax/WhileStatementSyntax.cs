@@ -3,6 +3,9 @@ using Tsu;
 
 namespace Loretta.CodeAnalysis.Syntax
 {
+    /// <summary>
+    /// Represents a while statement.
+    /// </summary>
     public sealed partial class WhileStatementSyntax : StatementSyntax
     {
         internal WhileStatementSyntax (

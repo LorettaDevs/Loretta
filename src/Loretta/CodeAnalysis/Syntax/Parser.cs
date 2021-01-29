@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Loretta.CodeAnalysis.Text;
 using Tsu;
 
@@ -199,16 +200,14 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 default:
                 {
-                    PrefixExpressionSyntax expression = this.ParsePrefixExpression ( );
-                    if ( SyntaxFacts.IsVariableExpression ( expression.Kind )
-                         && this.Current.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken )
+                    PrefixExpressionSyntax expression = this.ParsePrefixOrVariableExpression ( );
+                    if ( this.Current.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken )
                     {
-                        return this.ParseAssignmentStatement ( ( VariableExpressionSyntax ) expression );
+                        return this.ParseAssignmentStatement ( expression );
                     }
-                    else if ( SyntaxFacts.IsVariableExpression ( expression.Kind )
-                              && SyntaxFacts.IsCompoundAssignmentOperatorToken ( this.Current.Kind ) )
+                    else if ( SyntaxFacts.IsCompoundAssignmentOperatorToken ( this.Current.Kind ) )
                     {
-                        return this.ParseCompoundAssignment ( ( VariableExpressionSyntax ) expression );
+                        return this.ParseCompoundAssignment ( expression );
                     }
                     else
                     {
@@ -396,7 +395,7 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken ifKeyword = this.Match ( SyntaxKind.IfKeyword );
             ExpressionSyntax condition = this.ParseExpression ( );
             SyntaxToken thenKeyword = this.Match ( SyntaxKind.ThenKeyword );
-            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.ElseIfKeyword, SyntaxKind.EndKeyword );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.ElseIfKeyword, SyntaxKind.ElseKeyword, SyntaxKind.EndKeyword );
 
             ImmutableArray<ElseIfClauseSyntax>.Builder elseIfClausesBuilder = ImmutableArray.CreateBuilder<ElseIfClauseSyntax> ( );
             while ( this.Current.Kind is SyntaxKind.ElseIfKeyword )
@@ -404,7 +403,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 SyntaxToken elseIfKeyword = this.Match ( SyntaxKind.ElseIfKeyword );
                 ExpressionSyntax elseIfCondition = this.ParseExpression ( );
                 SyntaxToken elseIfThenKeyword = this.Match ( SyntaxKind.ThenKeyword );
-                ImmutableArray<StatementSyntax> elseIfBody = this.ParseStatementList ( SyntaxKind.ElseIfKeyword, SyntaxKind.EndKeyword );
+                ImmutableArray<StatementSyntax> elseIfBody = this.ParseStatementList ( SyntaxKind.ElseIfKeyword, SyntaxKind.ElseKeyword, SyntaxKind.EndKeyword );
 
                 elseIfClausesBuilder.Add ( new ElseIfClauseSyntax (
                     this._syntaxTree,
@@ -578,12 +577,14 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 while ( this.Current.Kind == SyntaxKind.CommaToken )
                 {
-                    SyntaxToken separator = this.Match ( SyntaxKind.SemicolonToken );
+                    SyntaxToken separator = this.Match ( SyntaxKind.CommaToken );
                     expressionsAndSeparators.Add ( separator );
 
                     expression = this.ParseExpression ( );
                     expressionsAndSeparators.Add ( expression );
                 }
+
+                expressions = new SeparatedSyntaxList<ExpressionSyntax> ( expressionsAndSeparators.ToImmutable ( ) );
             }
             expressions ??= new SeparatedSyntaxList<ExpressionSyntax> ( ImmutableArray<SyntaxNode>.Empty );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
@@ -594,16 +595,20 @@ namespace Loretta.CodeAnalysis.Syntax
                 semicolonToken );
         }
 
-        private AssignmentStatementSyntax ParseAssignmentStatement ( VariableExpressionSyntax firstVariable )
+        private AssignmentStatementSyntax ParseAssignmentStatement ( PrefixExpressionSyntax variable )
         {
             ImmutableArray<SyntaxNode>.Builder variablesAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( 1 );
-            variablesAndSeparators.Add ( firstVariable );
+            if ( !SyntaxFacts.IsVariableExpression ( variable.Kind ) )
+                this.Diagnostics.ReportCannotBeAssignedTo ( variable.Location );
+            variablesAndSeparators.Add ( variable );
             while ( this.Current.Kind == SyntaxKind.CommaToken )
             {
                 SyntaxToken separator = this.Match ( SyntaxKind.CommaToken );
                 variablesAndSeparators.Add ( separator );
 
-                VariableExpressionSyntax variable = this.ParseVariableExpression ( );
+                variable = this.ParsePrefixOrVariableExpression ( );
+                if ( !SyntaxFacts.IsVariableExpression ( variable.Kind ) )
+                    this.Diagnostics.ReportCannotBeAssignedTo ( variable.Location );
                 variablesAndSeparators.Add ( variable );
             }
 
@@ -623,7 +628,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
 
-            var variables = new SeparatedSyntaxList<VariableExpressionSyntax> ( variablesAndSeparators.ToImmutable ( ) );
+            var variables = new SeparatedSyntaxList<PrefixExpressionSyntax> ( variablesAndSeparators.ToImmutable ( ) );
             var values = new SeparatedSyntaxList<ExpressionSyntax> ( valuesAndSeparators.ToImmutable ( ) );
             return new AssignmentStatementSyntax (
                 this._syntaxTree,
@@ -633,9 +638,11 @@ namespace Loretta.CodeAnalysis.Syntax
                 semicolonToken );
         }
 
-        private CompoundAssignmentStatementSyntax ParseCompoundAssignment ( VariableExpressionSyntax variable )
+        private CompoundAssignmentStatementSyntax ParseCompoundAssignment ( PrefixExpressionSyntax variable )
         {
             Debug.Assert ( SyntaxFacts.IsCompoundAssignmentOperatorToken ( this.Current.Kind ) );
+            if ( !SyntaxFacts.IsVariableExpression ( variable.Kind ) )
+                this.Diagnostics.ReportCannotBeAssignedTo ( variable.Location );
             SyntaxToken assignmentOperatorToken = this.Next ( );
             SyntaxKind kind = SyntaxFacts.GetCompoundAssignmentStatement ( assignmentOperatorToken.Kind ).Value;
             ExpressionSyntax expression = this.ParseExpression ( );
@@ -701,54 +708,48 @@ namespace Loretta.CodeAnalysis.Syntax
                 SyntaxKind.DotDotDotToken => this.ParseVarArgExpression ( ),
                 SyntaxKind.OpenBraceToken => this.ParseTableConstructorExpression ( ),
                 SyntaxKind.FunctionKeyword when this.Lookahead.Kind == SyntaxKind.OpenParenthesisToken => this.ParseAnonymousFunctionExpression ( ),
-                _ => this.ParsePrefixExpression ( ),
+                _ => this.ParsePrefixOrVariableExpression ( ),
             };
         }
 
-        private PrefixExpressionSyntax ParsePrefixExpression ( )
+        private PrefixExpressionSyntax ParsePrefixOrVariableExpression ( )
         {
             PrefixExpressionSyntax expression;
             if ( this.Current.Kind == SyntaxKind.OpenParenthesisToken )
                 expression = this.ParseParenthesizedExpression ( );
             else
-                expression = this.ParseVariableExpression ( );
+                expression = this.ParseNameExpression ( );
 
-            while ( this.Current.Kind is SyntaxKind.ColonToken or SyntaxKind.OpenParenthesisToken or SyntaxKind.ShortStringToken or SyntaxKind.LongStringToken or SyntaxKind.OpenBraceToken )
+            var @continue = true;
+            while ( @continue )
             {
-                SyntaxToken? colonToken = null, identifier = null;
-                var isMethodCall = this.Current.Kind is SyntaxKind.ColonToken;
-                if ( isMethodCall )
+                switch ( this.Current.Kind )
                 {
-                    colonToken = this.Match ( SyntaxKind.ColonToken );
-                    identifier = this.MatchIdentifier ( );
+                    case SyntaxKind.DotToken:
+                        expression = this.ParseMemberAccessExpression ( expression );
+                        break;
+
+                    case SyntaxKind.OpenBracketToken:
+                        expression = this.ParseElementAccessExpression ( expression );
+                        break;
+
+                    case SyntaxKind.ColonToken:
+                        expression = this.ParseMethodCallExpression ( expression );
+                        break;
+
+                    case SyntaxKind.ShortStringToken:
+                    case SyntaxKind.LongStringToken:
+                    case SyntaxKind.OpenBraceToken:
+                    case SyntaxKind.OpenParenthesisToken:
+                        expression = this.ParseFunctionCall ( expression );
+                        break;
+
+                    default:
+                        goto endloop;
                 }
-
-                var isAmbiguous = this.Current.Kind is SyntaxKind.OpenParenthesisToken && expression.GetLastToken ( ).TrailingTrivia.Any ( trivia => trivia.Kind == SyntaxKind.LineBreakTrivia );
-                FunctionArgumentSyntax argument = this.ParseFunctionArgument ( );
-
-                if ( isMethodCall )
-                    expression = new MethodCallExpressionSyntax ( this._syntaxTree, expression, colonToken!, identifier!, argument );
-                else
-                    expression = new FunctionCallExpressionSyntax ( this._syntaxTree, expression, argument );
-                if ( isAmbiguous )
-                    this.Diagnostics.ReportAmbiguousFunctionCallOrNewStatement ( expression.Location );
             }
 
-            return expression;
-        }
-
-        private VariableExpressionSyntax ParseVariableExpression ( )
-        {
-            VariableExpressionSyntax expression = this.ParseNameExpression ( );
-            while ( true )
-            {
-                if ( this.Current.Kind == SyntaxKind.DotToken )
-                    expression = this.ParseMemberAccessExpression ( expression );
-                else if ( this.Current.Kind == SyntaxKind.OpenBracketToken )
-                    expression = this.ParseElementAccessExpression ( expression );
-                else
-                    break;
-            }
+        endloop:
             return expression;
         }
 
@@ -792,6 +793,29 @@ namespace Loretta.CodeAnalysis.Syntax
                 openBracketToken,
                 elementExpression,
                 closeBracketToken );
+        }
+
+        private MethodCallExpressionSyntax ParseMethodCallExpression ( PrefixExpressionSyntax expression )
+        {
+            SyntaxToken colonToken = this.Match ( SyntaxKind.ColonToken );
+            SyntaxToken identifier = this.MatchIdentifier ( );
+            FunctionArgumentSyntax arguments = this.ParseFunctionArgument ( );
+
+            return new MethodCallExpressionSyntax (
+                this._syntaxTree,
+                expression,
+                colonToken,
+                identifier,
+                arguments );
+        }
+
+        private FunctionCallExpressionSyntax ParseFunctionCall ( PrefixExpressionSyntax expression )
+        {
+            FunctionArgumentSyntax arguments = this.ParseFunctionArgument ( );
+            return new FunctionCallExpressionSyntax (
+                this._syntaxTree,
+                expression,
+                arguments );
         }
 
         private FunctionArgumentSyntax ParseFunctionArgument ( )
