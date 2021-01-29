@@ -288,6 +288,7 @@ namespace Loretta.CodeAnalysis.Syntax
         ExponentiateExpression,
 
         // Expressions
+        BadExpression,
         ParenthesizedExpression,
         FunctionCallExpression,
         [ExtraCategories ( "VariableExpression" )]
@@ -330,6 +331,7 @@ namespace Loretta.CodeAnalysis.Syntax
         ContinueStatement,
 
         // Statements
+        BadStatement,
         LocalVariableDeclarationStatement,
         LocalFunctionDeclarationStatement,
         FunctionDeclarationStatement,

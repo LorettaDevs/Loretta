@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using Loretta.CodeAnalysis.Text;
 using Tsu;
 
@@ -201,6 +200,10 @@ namespace Loretta.CodeAnalysis.Syntax
                 default:
                 {
                     PrefixExpressionSyntax expression = this.ParsePrefixOrVariableExpression ( );
+                    if ( expression.Kind is SyntaxKind.BadExpression )
+                    {
+                        return new BadStatementSyntax ( this._syntaxTree, ( BadExpressionSyntax ) expression );
+                    }
                     if ( this.Current.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken )
                     {
                         return this.ParseAssignmentStatement ( expression );
@@ -716,9 +719,18 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             PrefixExpressionSyntax expression;
             if ( this.Current.Kind == SyntaxKind.OpenParenthesisToken )
+            {
                 expression = this.ParseParenthesizedExpression ( );
-            else
+            }
+            else if ( this.Current.Kind == SyntaxKind.IdentifierToken
+                      || ( this._luaOptions.ContinueType == ContinueType.ContextualKeyword && this.Current.Kind == SyntaxKind.ContinueKeyword ) )
+            {
                 expression = this.ParseNameExpression ( );
+            }
+            else
+            {
+                return new BadExpressionSyntax ( this._syntaxTree, this.Next ( ) );
+            }
 
             var @continue = true;
             while ( @continue )
