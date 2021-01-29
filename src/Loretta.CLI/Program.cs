@@ -8,7 +8,6 @@ using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Syntax;
 using Loretta.CodeAnalysis.Text;
 using Loretta.IO;
-using Loretta.Utilities;
 using Tsu.CLI.Commands;
 using Tsu.CLI.Commands.Errors;
 using Tsu.Numerics;
@@ -163,6 +162,21 @@ namespace Loretta.CLI
             Console.ReadKey ( true );
             Logger.WriteLine ( "" );
             syntaxTree.Root.PrettyPrintTo ( tw );
+        }
+
+        [Command ( "e" ), Command ( "expr" ), Command ( "expression" )]
+        [RawInput]
+        public static void ParseExpression ( String input )
+        {
+            var presetName = input.Substring ( 0, input.IndexOf ( ' ' ) );
+            var code = input.Substring ( input.IndexOf ( ' ' ) + 1 );
+            LuaOptions options = PresetEnumToPresetOptions ( Enum.Parse<LuaOptionsPreset> ( presetName, true ) );
+            var text = SourceText.From ( code, "Console" );
+
+            ExpressionSyntax expr = SyntaxTree.ParseExpression ( options, text, out ImmutableArray<Diagnostic> diagnostics );
+            var tw = new ConsoleTimingLoggerTextWriter ( Logger! );
+            expr.PrettyPrintTo ( tw );
+            tw.WriteDiagnostics ( diagnostics );
         }
 
         [Command ( "mp" ), Command ( "mass-parse" )]
