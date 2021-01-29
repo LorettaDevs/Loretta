@@ -3,9 +3,9 @@
     /// <summary>
     /// Represents a list of expressions being passed as a function's arguments.
     /// </summary>
-    public sealed partial class FunctionArgumentListSyntax : FunctionArgumentSyntax
+    public sealed partial class ExpressionListFunctionArgumentSyntax : FunctionArgumentSyntax
     {
-        internal FunctionArgumentListSyntax (
+        internal ExpressionListFunctionArgumentSyntax (
             SyntaxTree syntaxTree,
             SyntaxToken openParenthesisToken,
             SeparatedSyntaxList<ExpressionSyntax> expressions,
@@ -19,7 +19,7 @@
         }
 
         /// <inheritdoc/>
-        public override SyntaxKind Kind => SyntaxKind.FunctionArgumentList;
+        public override SyntaxKind Kind => SyntaxKind.ExpressionListFunctionArgument;
 
         /// <summary>
         /// The argument list's opening parenthesis token.

@@ -209,6 +209,10 @@ namespace Loretta.CodeAnalysis.Syntax
                 PrettyPrint ( writer, child, indent, child == lastChild );
         }
 
+        /// <summary>
+        /// Pretty-prints a tree of the syntax node.
+        /// </summary>
+        /// <returns></returns>
         public override String ToString ( )
         {
             using var writer = new StringWriter ( );

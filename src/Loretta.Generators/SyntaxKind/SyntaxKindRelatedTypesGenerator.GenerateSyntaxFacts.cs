@@ -15,14 +15,6 @@ namespace Loretta.Generators.SyntaxKind
     {
         private static void GenerateSyntaxFacts ( GeneratorExecutionContext context, INamedTypeSymbol syntaxKindType, ImmutableArray<KindInfo> kinds )
         {
-            var compilation = ( CSharpCompilation ) context.Compilation;
-
-            INamedTypeSymbol? syntaxNodeType =
-                compilation.GetTypeByMetadataName ( "Loretta.CodeAnalysis.Syntax.SyntaxNode" );
-
-            if ( syntaxNodeType is null )
-                return;
-
             SourceText sourceText;
             using ( var stringWriter = new StringWriter ( ) )
             using ( var indentedTextWriter = new IndentedTextWriter ( stringWriter, "    " ) )
@@ -31,6 +23,7 @@ namespace Loretta.Generators.SyntaxKind
                 indentedTextWriter.WriteLine ( "using System.Collections.Generic;" );
                 indentedTextWriter.WriteLine ( "using System.Collections.Immutable;" );
                 indentedTextWriter.WriteLine ( "using System.Diagnostics.CodeAnalysis;" );
+                indentedTextWriter.WriteLine ( "using Tsu;" );
                 indentedTextWriter.WriteLine ( );
                 indentedTextWriter.WriteLine ( "#nullable enable" );
                 indentedTextWriter.WriteLine ( );
@@ -43,7 +36,15 @@ namespace Loretta.Generators.SyntaxKind
 
                         indentedTextWriter.WriteLineNoTabs ( "" );
 
+                        GenerateGetUnaryExpression ( kinds, indentedTextWriter );
+
+                        indentedTextWriter.WriteLineNoTabs ( "" );
+
                         GenerateGetBinaryOperatorPrecedence ( kinds, indentedTextWriter );
+
+                        indentedTextWriter.WriteLineNoTabs ( "" );
+
+                        GenerateGetBinaryExpression ( kinds, indentedTextWriter );
 
                         indentedTextWriter.WriteLineNoTabs ( "" );
 
@@ -60,6 +61,34 @@ namespace Loretta.Generators.SyntaxKind
                         indentedTextWriter.WriteLineNoTabs ( "" );
 
                         GenerateGetText ( kinds, indentedTextWriter );
+
+                        IEnumerable<IGrouping<String, (KindInfo kind, TypedConstant value)>> properties =
+                            kinds.SelectMany ( kind => kind.Properties.Select ( kv => (kind, key: kv.Key, value: kv.Value) ) )
+                                 .GroupBy ( t => t.key, t => (t.kind, t.value) );
+                        foreach ( IGrouping<String, (KindInfo kind, TypedConstant value)> propertyGroup in properties )
+                        {
+                            ITypeSymbol type = propertyGroup.Select ( t => t.value.Type ).Where ( t => t is not null ).Distinct ( ).Single ( )!;
+
+                            indentedTextWriter.WriteLineNoTabs ( "" );
+                            using ( new CurlyIndenter ( indentedTextWriter, $"public static Option<{type.Name}> Get{propertyGroup.Key} ( SyntaxKind kind )" ) )
+                            {
+                                IEnumerable<IGrouping<TypedConstant, KindInfo>> values = propertyGroup.GroupBy ( t => t.value, t => t.kind );
+                                indentedTextWriter.WriteLine ( "return kind switch" );
+                                indentedTextWriter.WriteLine ( "{" );
+                                using ( new Indenter ( indentedTextWriter ) )
+                                {
+                                    foreach ( IGrouping<TypedConstant, KindInfo> value in values )
+                                    {
+                                        indentedTextWriter.Write ( String.Join ( " or ", value.Select ( k => $"SyntaxKind.{k.Field.Name}" ) ) );
+                                        indentedTextWriter.Write ( " => " );
+                                        indentedTextWriter.Write ( value.Key.ToCSharpString ( ) );
+                                        indentedTextWriter.WriteLine ( "," );
+                                    }
+                                    indentedTextWriter.WriteLine ( "_ => default," );
+                                }
+                                indentedTextWriter.WriteLine ( "};" );
+                            }
+                        }
 
                         indentedTextWriter.WriteLineNoTabs ( "" );
 
@@ -78,22 +107,30 @@ namespace Loretta.Generators.SyntaxKind
 
                         indentedTextWriter.WriteLineNoTabs ( "" );
 
-                        // Generate IsNode
-                        GenerateIsX ( kinds, indentedTextWriter, "Node", kind => kind.NodeInfo is not null );
-
-                        var groups = kinds.Where ( kind => kind.NodeInfo is not null )
-                                          .SelectMany ( kind => Utilities.GetParentsUntil ( kind.NodeInfo!.Value.NodeType, syntaxNodeType ).Select ( type => (type, kind) ) )
-                                          .GroupBy ( pair => pair.type )
-                                          .ToImmutableDictionary ( group => group.Key, group => group.Select ( pair => pair.kind ).ToImmutableArray ( ) );
-
-                        foreach ( KeyValuePair<ITypeSymbol, ImmutableArray<KindInfo>> kv in groups )
+                        // Extra Categories
+                        IEnumerable<IGrouping<String, KindInfo>> extraCategories = kinds.SelectMany ( kind => kind.ExtraCategories.Select ( cat => (cat, kind) ) ).GroupBy ( t => t.cat, t => t.kind );
+                        foreach ( IGrouping<String, KindInfo> group in extraCategories )
                         {
                             indentedTextWriter.WriteLineNoTabs ( "" );
 
-                            var length = kv.Key.Name.IndexOf ( "Syntax" );
-                            if ( length == -1 ) length = kv.Key.Name.Length;
-                            var categoryName = kv.Key.Name.Substring ( 0, length );
-                            GenerateIsX ( kv.Value, indentedTextWriter, categoryName, k => true );
+                            var groupKinds = group.ToImmutableArray ( );
+                            GenerateIsX ( groupKinds, indentedTextWriter, group.Key, k => true );
+
+                            indentedTextWriter.WriteLineNoTabs ( "" );
+                            indentedTextWriter.WriteLine ( "/// <summary>" );
+                            indentedTextWriter.WriteLine ( $"/// Returns all <see cref=\"SyntaxKind\"/>s that are in the {group.Key} category." );
+                            indentedTextWriter.WriteLine ( "/// </summary>" );
+                            indentedTextWriter.WriteLine ( "/// <returns></returns>" );
+                            indentedTextWriter.WriteLine ( $"public static IEnumerable<SyntaxKind> Get{group.Key}Kinds ( ) => ImmutableArray.Create ( new[]" );
+                            indentedTextWriter.WriteLine ( "{" );
+                            using ( new Indenter ( indentedTextWriter ) )
+                            {
+                                foreach ( KindInfo kind in group )
+                                {
+                                    indentedTextWriter.WriteLine ( $"SyntaxKind.{kind.Field.Name}," );
+                                }
+                            }
+                            indentedTextWriter.WriteLine ( "} );" );
                         }
                     }
                 }
@@ -143,6 +180,33 @@ namespace Loretta.Generators.SyntaxKind
             }
         }
 
+        private static void GenerateGetUnaryExpression ( ImmutableArray<KindInfo> kinds, IndentedTextWriter indentedTextWriter )
+        {
+            indentedTextWriter.WriteLine ( "/// <summary>" );
+            indentedTextWriter.WriteLine ( "/// Returns the expression kind for a given unary operator or None if not a unary operator." );
+            indentedTextWriter.WriteLine ( "/// </summary>" );
+            indentedTextWriter.WriteLine ( "/// <param name=\"kind\"></param>" );
+            indentedTextWriter.WriteLine ( "/// <returns>" );
+            indentedTextWriter.WriteLine ( "/// A positive number indicating the binary operator precedence or 0 if the kind is not a binary operator." );
+            indentedTextWriter.WriteLine ( "/// </returns>" );
+            using ( new CurlyIndenter ( indentedTextWriter, "public static Option<SyntaxKind> GetUnaryExpression ( SyntaxKind kind )" ) )
+            {
+                indentedTextWriter.WriteLine ( "return kind switch" );
+                indentedTextWriter.WriteLine ( "{" );
+                using ( new Indenter ( indentedTextWriter ) )
+                {
+                    IEnumerable<KindInfo> unaryOperators = kinds.Where ( kind => kind.UnaryOperatorInfo is not null );
+
+                    foreach ( KindInfo unaryOperator in unaryOperators )
+                    {
+                        indentedTextWriter.WriteLine ( $"SyntaxKind.{unaryOperator.Field.Name} => {unaryOperator.UnaryOperatorInfo!.Value.Expression.ToCSharpString ( )}," );
+                    }
+                    indentedTextWriter.WriteLine ( "_ => default," );
+                }
+                indentedTextWriter.WriteLine ( "};" );
+            }
+        }
+
         private static void GenerateGetBinaryOperatorPrecedence ( ImmutableArray<KindInfo> kinds, IndentedTextWriter indentedTextWriter )
         {
             indentedTextWriter.WriteLine ( "/// <summary>" );
@@ -176,6 +240,33 @@ namespace Loretta.Generators.SyntaxKind
                     using ( new Indenter ( indentedTextWriter ) )
                         indentedTextWriter.WriteLine ( "return 0;" );
                 }
+            }
+        }
+
+        private static void GenerateGetBinaryExpression ( ImmutableArray<KindInfo> kinds, IndentedTextWriter indentedTextWriter )
+        {
+            indentedTextWriter.WriteLine ( "/// <summary>" );
+            indentedTextWriter.WriteLine ( "/// Returns the expression kind for a given unary operator or None if not a unary operator." );
+            indentedTextWriter.WriteLine ( "/// </summary>" );
+            indentedTextWriter.WriteLine ( "/// <param name=\"kind\"></param>" );
+            indentedTextWriter.WriteLine ( "/// <returns>" );
+            indentedTextWriter.WriteLine ( "/// A positive number indicating the binary operator precedence or 0 if the kind is not a binary operator." );
+            indentedTextWriter.WriteLine ( "/// </returns>" );
+            using ( new CurlyIndenter ( indentedTextWriter, "public static Option<SyntaxKind> GetBinaryExpression ( SyntaxKind kind )" ) )
+            {
+                indentedTextWriter.WriteLine ( "return kind switch" );
+                indentedTextWriter.WriteLine ( "{" );
+                using ( new Indenter ( indentedTextWriter ) )
+                {
+                    IEnumerable<KindInfo> binaryOperators = kinds.Where ( kind => kind.BinaryOperatorInfo is not null );
+
+                    foreach ( KindInfo binaryOperator in binaryOperators )
+                    {
+                        indentedTextWriter.WriteLine ( $"SyntaxKind.{binaryOperator.Field.Name} => {binaryOperator.BinaryOperatorInfo!.Value.Expression.ToCSharpString ( )}," );
+                    }
+                    indentedTextWriter.WriteLine ( "_ => default," );
+                }
+                indentedTextWriter.WriteLine ( "};" );
             }
         }
 

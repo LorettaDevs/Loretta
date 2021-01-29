@@ -559,8 +559,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             IEnumerable<ShortToken> fixedTokens = from kind in Enum.GetValues<SyntaxKind> ( )
                                                   let text = SyntaxFacts.GetText ( kind )
                                                   where text is not null
-                                                  let value = SyntaxFacts.GetKeywordValue ( kind )
-                                                  select new ShortToken ( kind, text, value );
+                                                  select new ShortToken ( kind, text );
 
             var dynamicTokens = new List<ShortToken>
             {

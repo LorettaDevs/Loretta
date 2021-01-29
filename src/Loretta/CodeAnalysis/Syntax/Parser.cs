@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using Loretta.CodeAnalysis.Text;
 using Tsu;
@@ -114,14 +115,539 @@ namespace Loretta.CodeAnalysis.Syntax
             return this.Match ( SyntaxKind.IdentifierToken );
         }
 
-        public CompilationUnitSyntax ParseCompilationUnit ( )
+        private Option<SyntaxToken> TryMatchSemicolon ( )
         {
-            ImmutableArray<MemberSyntax> members = this.ParseMembers ( );
-            SyntaxToken? endOfFileToken = this.Match ( SyntaxKind.EndOfFileToken );
-            return new CompilationUnitSyntax ( this._syntaxTree, members, endOfFileToken );
+            if ( this.Current.Kind == SyntaxKind.SemicolonToken )
+                return this.Next ( );
+            return default;
         }
 
-        public ImmutableArray<MemberSyntax> ParseMembers ( ) => throw new NotImplementedException ( );
+        public CompilationUnitSyntax ParseCompilationUnit ( )
+        {
+            ImmutableArray<StatementSyntax> statements = this.ParseStatementList ( );
+            SyntaxToken? endOfFileToken = this.Match ( SyntaxKind.EndOfFileToken );
+            return new CompilationUnitSyntax ( this._syntaxTree, statements, endOfFileToken );
+        }
+
+        private ImmutableArray<StatementSyntax> ParseStatementList ( params SyntaxKind[] terminalKinds )
+        {
+            ImmutableArray<StatementSyntax>.Builder builder = ImmutableArray.CreateBuilder<StatementSyntax> ( );
+            while ( true )
+            {
+                SyntaxKind kind = this.Current.Kind;
+                if ( kind == SyntaxKind.EndOfFileToken || terminalKinds.Contains ( kind ) )
+                    break;
+
+                SyntaxToken startToken = this.Current;
+
+                StatementSyntax statement = this.ParseStatement ( );
+                builder.Add ( statement );
+
+                // If ParseStatement did not consume any tokens, we have to advance ourselves
+                // otherwise we get stuck in an infinite loop.
+                if ( this.Current == startToken )
+                    _ = this.Next ( );
+            }
+            return builder.ToImmutable ( );
+        }
+
+        private StatementSyntax ParseStatement ( )
+        {
+            switch ( this.Current.Kind )
+            {
+                case SyntaxKind.LocalKeyword:
+                    if ( this.Lookahead.Kind is SyntaxKind.FunctionKeyword )
+                        return this.ParseLocalFunctionDeclarationStatement ( );
+                    else
+                        return this.ParseLocalVariableDeclarationStatement ( );
+
+                case SyntaxKind.ForKeyword:
+                    if ( this.Peek ( 2 ).Kind == SyntaxKind.EqualsToken )
+                        return this.ParseNumericForStatement ( );
+                    else
+                        return this.ParseGenericForStatement ( );
+
+                case SyntaxKind.IfKeyword:
+                    return this.ParseIfStatement ( );
+
+                case SyntaxKind.RepeatKeyword:
+                    return this.ParseRepeatUntilStatement ( );
+
+                case SyntaxKind.WhileKeyword:
+                    return this.ParseWhileStatement ( );
+
+                case SyntaxKind.DoKeyword:
+                    return this.ParseDoStatement ( );
+
+                case SyntaxKind.GotoKeyword:
+                    return this.ParseGotoStatement ( );
+
+                case SyntaxKind.BreakKeyword:
+                    return this.ParseBreakStatement ( );
+
+                case SyntaxKind.ContinueKeyword:
+                    return this.ParseContinueStatement ( );
+
+                case SyntaxKind.ColonColonToken:
+                    return this.ParseGotoLabelStatement ( );
+
+                case SyntaxKind.FunctionKeyword:
+                    return this.ParseFunctionDeclarationStatement ( );
+
+                case SyntaxKind.ReturnKeyword:
+                    return this.ParseReturnStatement ( );
+
+                default:
+                {
+                    PrefixExpressionSyntax expression = this.ParsePrefixExpression ( );
+                    if ( SyntaxFacts.IsVariableExpression ( expression.Kind )
+                         && this.Current.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken )
+                    {
+                        return this.ParseAssignmentStatement ( ( VariableExpressionSyntax ) expression );
+                    }
+                    else if ( SyntaxFacts.IsVariableExpression ( expression.Kind )
+                              && SyntaxFacts.IsCompoundAssignmentOperatorToken ( this.Current.Kind ) )
+                    {
+                        return this.ParseCompoundAssignment ( ( VariableExpressionSyntax ) expression );
+                    }
+                    else
+                    {
+                        if ( expression.Kind is not ( SyntaxKind.FunctionCallExpression or SyntaxKind.MethodCallExpression ) )
+                            this.Diagnostics.ReportNonFunctionCallBeingUsedAsStatement ( expression.Location );
+                        Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+                        return new ExpressionStatementSyntax (
+                            this._syntaxTree,
+                            expression,
+                            semicolonToken );
+                    }
+                }
+            }
+        }
+
+        private LocalVariableDeclarationStatementSyntax ParseLocalVariableDeclarationStatement ( )
+        {
+            SyntaxToken localKeyword = this.Match ( SyntaxKind.LocalKeyword );
+            ImmutableArray<SyntaxNode>.Builder namesAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( );
+
+            NameExpressionSyntax name = this.ParseNameExpression ( );
+            namesAndSeparators.Add ( name );
+
+            while ( this.Current.Kind is SyntaxKind.CommaToken )
+            {
+                SyntaxToken separator = this.Match ( SyntaxKind.CommaToken );
+                namesAndSeparators.Add ( separator );
+
+                name = this.ParseNameExpression ( );
+                namesAndSeparators.Add ( name );
+            }
+
+            var names = new SeparatedSyntaxList<NameExpressionSyntax> ( namesAndSeparators.ToImmutable ( ) );
+            if ( this.Current.Kind == SyntaxKind.EqualsToken )
+            {
+                SyntaxToken equalsToken = this.Match ( SyntaxKind.EqualsToken );
+
+                ImmutableArray<SyntaxNode>.Builder expressionsAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( );
+
+                ExpressionSyntax value = this.ParseExpression ( );
+                expressionsAndSeparators.Add ( value );
+
+                while ( this.Current.Kind is SyntaxKind.CommaToken )
+                {
+                    SyntaxToken separator = this.Match ( SyntaxKind.CommaToken );
+                    expressionsAndSeparators.Add ( separator );
+
+                    value = this.ParseExpression ( );
+                    expressionsAndSeparators.Add ( value );
+                }
+
+                Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+
+                var values = new SeparatedSyntaxList<ExpressionSyntax> ( expressionsAndSeparators.ToImmutable ( ) );
+
+                return new LocalVariableDeclarationStatementSyntax (
+                    this._syntaxTree,
+                    localKeyword,
+                    names,
+                    equalsToken,
+                    values,
+                    semicolonToken );
+            }
+            else
+            {
+                Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+
+                return new LocalVariableDeclarationStatementSyntax (
+                    this._syntaxTree,
+                    localKeyword,
+                    names,
+                    semicolonToken );
+            }
+        }
+
+        private LocalFunctionDeclarationStatementSyntax ParseLocalFunctionDeclarationStatement ( )
+        {
+            SyntaxToken localKeyword = this.Match ( SyntaxKind.LocalKeyword );
+            SyntaxToken functionKeyword = this.Match ( SyntaxKind.FunctionKeyword );
+            SyntaxToken identifier = this.MatchIdentifier ( );
+            ParameterListSyntax parameters = this.ParseParameterList ( );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.EndKeyword );
+            SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+
+            return new LocalFunctionDeclarationStatementSyntax (
+                this._syntaxTree,
+                localKeyword,
+                functionKeyword,
+                identifier,
+                parameters,
+                body,
+                endKeyword,
+                semicolonToken );
+        }
+
+        private NumericForStatementSyntax ParseNumericForStatement ( )
+        {
+            SyntaxToken forKeyword = this.Match ( SyntaxKind.ForKeyword );
+            SyntaxToken identifier = this.MatchIdentifier ( );
+            SyntaxToken equalsToken = this.Match ( SyntaxKind.EqualsToken );
+            ExpressionSyntax initialValue = this.ParseExpression ( );
+            SyntaxToken finalValueCommaToken = this.Match ( SyntaxKind.CommaToken );
+            ExpressionSyntax finalValue = this.ParseExpression ( );
+            Option<SyntaxToken> stepValueCommaToken = default;
+            Option<ExpressionSyntax> stepValue = default;
+            if ( this.Current.Kind == SyntaxKind.CommaToken )
+            {
+                stepValueCommaToken = this.Match ( SyntaxKind.CommaToken );
+                stepValue = this.ParseExpression ( );
+            }
+            SyntaxToken doKeyword = this.Match ( SyntaxKind.DoKeyword );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.EndKeyword );
+            SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new NumericForStatementSyntax (
+                this._syntaxTree,
+                forKeyword,
+                identifier,
+                equalsToken,
+                initialValue,
+                finalValueCommaToken,
+                finalValue,
+                stepValueCommaToken,
+                stepValue,
+                doKeyword,
+                body,
+                endKeyword,
+                semicolonToken );
+        }
+
+        private GenericForStatementSyntax ParseGenericForStatement ( )
+        {
+            SyntaxToken forKeyword = this.Match ( SyntaxKind.ForKeyword );
+
+            ImmutableArray<SyntaxNode>.Builder? identifiersAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( 3 );
+
+            SyntaxToken identifier = this.MatchIdentifier ( );
+            identifiersAndSeparators.Add ( identifier );
+            while ( this.Current.Kind is SyntaxKind.CommaToken )
+            {
+                SyntaxToken separator = this.Match ( SyntaxKind.CommaToken );
+                identifiersAndSeparators.Add ( separator );
+
+                identifier = this.MatchIdentifier ( );
+                identifiersAndSeparators.Add ( identifier );
+            }
+
+            SyntaxToken inKeyword = this.Match ( SyntaxKind.InKeyword );
+
+            ImmutableArray<SyntaxNode>.Builder? expressionsAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( 1 );
+
+            ExpressionSyntax expression = this.ParseExpression ( );
+            expressionsAndSeparators.Add ( expression );
+            while ( this.Current.Kind is SyntaxKind.CommaToken )
+            {
+                SyntaxToken separator = this.Match ( SyntaxKind.CommaToken );
+                expressionsAndSeparators.Add ( separator );
+
+                expression = this.ParseExpression ( );
+                expressionsAndSeparators.Add ( expression );
+            }
+
+            SyntaxToken doKeyword = this.Match ( SyntaxKind.DoKeyword );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.EndKeyword );
+            SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+
+            var identifiers = new SeparatedSyntaxList<SyntaxToken> ( identifiersAndSeparators.ToImmutable ( ) );
+            var expressions = new SeparatedSyntaxList<ExpressionSyntax> ( expressionsAndSeparators.ToImmutable ( ) );
+            return new GenericForStatementSyntax (
+                this._syntaxTree,
+                forKeyword,
+                identifiers,
+                inKeyword,
+                expressions,
+                doKeyword,
+                body,
+                endKeyword,
+                semicolonToken );
+        }
+
+        private IfStatementSyntax ParseIfStatement ( )
+        {
+            SyntaxToken ifKeyword = this.Match ( SyntaxKind.IfKeyword );
+            ExpressionSyntax condition = this.ParseExpression ( );
+            SyntaxToken thenKeyword = this.Match ( SyntaxKind.ThenKeyword );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.ElseIfKeyword, SyntaxKind.EndKeyword );
+
+            ImmutableArray<ElseIfClauseSyntax>.Builder elseIfClausesBuilder = ImmutableArray.CreateBuilder<ElseIfClauseSyntax> ( );
+            while ( this.Current.Kind is SyntaxKind.ElseIfKeyword )
+            {
+                SyntaxToken elseIfKeyword = this.Match ( SyntaxKind.ElseIfKeyword );
+                ExpressionSyntax elseIfCondition = this.ParseExpression ( );
+                SyntaxToken elseIfThenKeyword = this.Match ( SyntaxKind.ThenKeyword );
+                ImmutableArray<StatementSyntax> elseIfBody = this.ParseStatementList ( SyntaxKind.ElseIfKeyword, SyntaxKind.EndKeyword );
+
+                elseIfClausesBuilder.Add ( new ElseIfClauseSyntax (
+                    this._syntaxTree,
+                    elseIfKeyword,
+                    elseIfCondition,
+                    elseIfThenKeyword,
+                    elseIfBody ) );
+            }
+
+            Option<ElseClauseSyntax> elseClause = default;
+            if ( this.Current.Kind is SyntaxKind.ElseKeyword )
+            {
+                SyntaxToken elseKeyword = this.Match ( SyntaxKind.ElseKeyword );
+                ImmutableArray<StatementSyntax> elseBody = this.ParseStatementList ( SyntaxKind.EndKeyword );
+                elseClause = new ElseClauseSyntax ( this._syntaxTree, elseKeyword, elseBody );
+            }
+
+            SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+
+            ImmutableArray<ElseIfClauseSyntax> elseIfClauses = elseIfClausesBuilder.ToImmutable ( );
+            return new IfStatementSyntax (
+                this._syntaxTree,
+                ifKeyword,
+                condition,
+                thenKeyword,
+                body,
+                elseIfClauses,
+                elseClause,
+                endKeyword,
+                semicolonToken );
+        }
+
+        private RepeatUntilStatementSyntax ParseRepeatUntilStatement ( )
+        {
+            SyntaxToken repeatKeyword = this.Match ( SyntaxKind.RepeatKeyword );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.UntilKeyword );
+            SyntaxToken untilKeyword = this.Match ( SyntaxKind.UntilKeyword );
+            ExpressionSyntax condition = this.ParseExpression ( );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new RepeatUntilStatementSyntax (
+                this._syntaxTree,
+                repeatKeyword,
+                body,
+                untilKeyword,
+                condition,
+                semicolonToken );
+        }
+
+        private WhileStatementSyntax ParseWhileStatement ( )
+        {
+            SyntaxToken whileKeyword = this.Match ( SyntaxKind.WhileKeyword );
+            ExpressionSyntax condition = this.ParseExpression ( );
+            SyntaxToken doKeyword = this.Match ( SyntaxKind.DoKeyword );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.EndKeyword );
+            SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new WhileStatementSyntax (
+                this._syntaxTree,
+                whileKeyword,
+                condition,
+                doKeyword,
+                body,
+                endKeyword,
+                semicolonToken );
+        }
+
+        private DoStatementSyntax ParseDoStatement ( )
+        {
+            SyntaxToken doKeyword = this.Match ( SyntaxKind.DoKeyword );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.EndKeyword );
+            SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new DoStatementSyntax (
+                this._syntaxTree,
+                doKeyword,
+                body,
+                endKeyword,
+                semicolonToken );
+        }
+
+        private GotoStatementSyntax ParseGotoStatement ( )
+        {
+            SyntaxToken gotoKeyword = this.Match ( SyntaxKind.GotoKeyword );
+            SyntaxToken labelName = this.MatchIdentifier ( );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new GotoStatementSyntax (
+                this._syntaxTree,
+                gotoKeyword,
+                labelName,
+                semicolonToken );
+        }
+
+        private BreakStatementSyntax ParseBreakStatement ( )
+        {
+            SyntaxToken breakKeyword = this.Match ( SyntaxKind.BreakKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new BreakStatementSyntax ( this._syntaxTree, breakKeyword, semicolonToken );
+        }
+
+        private ContinueStatementSyntax ParseContinueStatement ( )
+        {
+            SyntaxToken? continueKeyword = this.Match ( SyntaxKind.ContinueKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new ContinueStatementSyntax ( this._syntaxTree, continueKeyword, semicolonToken );
+        }
+
+        private GotoLabelStatementSyntax ParseGotoLabelStatement ( )
+        {
+            SyntaxToken leftDelimiterToken = this.Match ( SyntaxKind.ColonColonToken );
+            SyntaxToken identifier = this.MatchIdentifier ( );
+            SyntaxToken rightDelimiterToken = this.Match ( SyntaxKind.ColonColonToken );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new GotoLabelStatementSyntax (
+                this._syntaxTree,
+                leftDelimiterToken,
+                identifier,
+                rightDelimiterToken,
+                semicolonToken );
+        }
+
+        private FunctionDeclarationStatementSyntax ParseFunctionDeclarationStatement ( )
+        {
+            SyntaxToken functionKeyword = this.Match ( SyntaxKind.FunctionKeyword );
+            FunctionNameSyntax name = this.ParseFunctionName ( );
+            ParameterListSyntax parameters = this.ParseParameterList ( );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.EndKeyword );
+            SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new FunctionDeclarationStatementSyntax (
+                this._syntaxTree,
+                functionKeyword,
+                name,
+                parameters,
+                body,
+                endKeyword,
+                semicolonToken );
+        }
+
+        private FunctionNameSyntax ParseFunctionName ( )
+        {
+            SyntaxToken identifier = this.MatchIdentifier ( );
+            FunctionNameSyntax name = new SimpleFunctionNameSyntax ( this._syntaxTree, identifier );
+
+            while ( this.Current.Kind == SyntaxKind.DotToken )
+            {
+                SyntaxToken dotToken = this.Match ( SyntaxKind.DotToken );
+                identifier = this.MatchIdentifier ( );
+                name = new MemberFunctionNameSyntax ( this._syntaxTree, name, dotToken, identifier );
+            }
+
+            if ( this.Current.Kind == SyntaxKind.ColonToken )
+            {
+                SyntaxToken colonToken = this.Match ( SyntaxKind.ColonToken );
+                identifier = this.MatchIdentifier ( );
+                name = new MethodFunctionNameSyntax ( this._syntaxTree, name, colonToken, identifier );
+            }
+
+            return name;
+        }
+
+        private ReturnStatementSyntax ParseReturnStatement ( )
+        {
+            SyntaxToken returnKeyword = this.Match ( SyntaxKind.ReturnKeyword );
+            SeparatedSyntaxList<ExpressionSyntax>? expressions = null;
+            if ( this.Current.Kind is not ( SyntaxKind.ElseKeyword or SyntaxKind.ElseIfKeyword or SyntaxKind.EndKeyword or SyntaxKind.UntilKeyword or SyntaxKind.SemicolonToken ) )
+            {
+                ImmutableArray<SyntaxNode>.Builder expressionsAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( 1 );
+                ExpressionSyntax expression = this.ParseExpression ( );
+                expressionsAndSeparators.Add ( expression );
+
+                while ( this.Current.Kind == SyntaxKind.CommaToken )
+                {
+                    SyntaxToken separator = this.Match ( SyntaxKind.SemicolonToken );
+                    expressionsAndSeparators.Add ( separator );
+
+                    expression = this.ParseExpression ( );
+                    expressionsAndSeparators.Add ( expression );
+                }
+            }
+            expressions ??= new SeparatedSyntaxList<ExpressionSyntax> ( ImmutableArray<SyntaxNode>.Empty );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new ReturnStatementSyntax (
+                this._syntaxTree,
+                returnKeyword,
+                expressions,
+                semicolonToken );
+        }
+
+        private AssignmentStatementSyntax ParseAssignmentStatement ( VariableExpressionSyntax firstVariable )
+        {
+            ImmutableArray<SyntaxNode>.Builder variablesAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( 1 );
+            variablesAndSeparators.Add ( firstVariable );
+            while ( this.Current.Kind == SyntaxKind.CommaToken )
+            {
+                SyntaxToken separator = this.Match ( SyntaxKind.CommaToken );
+                variablesAndSeparators.Add ( separator );
+
+                VariableExpressionSyntax variable = this.ParseVariableExpression ( );
+                variablesAndSeparators.Add ( variable );
+            }
+
+            SyntaxToken equalsToken = this.Match ( SyntaxKind.EqualsToken );
+
+            ImmutableArray<SyntaxNode>.Builder valuesAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( 1 );
+            ExpressionSyntax value = this.ParseExpression ( );
+            valuesAndSeparators.Add ( value );
+            while ( this.Current.Kind == SyntaxKind.CommaToken )
+            {
+                SyntaxToken separator = this.Match ( SyntaxKind.CommaToken );
+                valuesAndSeparators.Add ( separator );
+
+                value = this.ParseExpression ( );
+                valuesAndSeparators.Add ( value );
+            }
+
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+
+            var variables = new SeparatedSyntaxList<VariableExpressionSyntax> ( variablesAndSeparators.ToImmutable ( ) );
+            var values = new SeparatedSyntaxList<ExpressionSyntax> ( valuesAndSeparators.ToImmutable ( ) );
+            return new AssignmentStatementSyntax (
+                this._syntaxTree,
+                variables,
+                equalsToken,
+                values,
+                semicolonToken );
+        }
+
+        private CompoundAssignmentStatementSyntax ParseCompoundAssignment ( VariableExpressionSyntax variable )
+        {
+            Debug.Assert ( SyntaxFacts.IsCompoundAssignmentOperatorToken ( this.Current.Kind ) );
+            SyntaxToken assignmentOperatorToken = this.Next ( );
+            SyntaxKind kind = SyntaxFacts.GetCompoundAssignmentStatement ( assignmentOperatorToken.Kind ).Value;
+            ExpressionSyntax expression = this.ParseExpression ( );
+            Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
+            return new CompoundAssignmentStatementSyntax (
+                this._syntaxTree,
+                kind,
+                variable,
+                assignmentOperatorToken,
+                expression,
+                semicolonToken );
+        }
 
         public ExpressionSyntax ParseExpression ( ) =>
             this.ParseBinaryExpression ( );
@@ -130,12 +656,13 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             ExpressionSyntax left;
 
-            var unaryOperatorPrecedence = this.Current.Kind.GetUnaryOperatorPrecedence ( );
+            var unaryOperatorPrecedence = SyntaxFacts.GetUnaryOperatorPrecedence ( this.Current.Kind );
             if ( unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence )
             {
                 SyntaxToken operatorToken = this.Next ( );
+                SyntaxKind kind = SyntaxFacts.GetUnaryExpression ( operatorToken.Kind ).Value;
                 ExpressionSyntax operand = this.ParseBinaryExpression ( unaryOperatorPrecedence, operatorToken.Kind, true );
-                left = new UnaryExpressionSyntax ( this._syntaxTree, operatorToken, operand );
+                left = new UnaryExpressionSyntax ( this._syntaxTree, kind, operatorToken, operand );
             }
             else
             {
@@ -145,16 +672,17 @@ namespace Loretta.CodeAnalysis.Syntax
             while ( true )
             {
                 SyntaxKind operatorKind = this.Current.Kind;
-                var precedence = operatorKind.GetBinaryOperatorPrecedence ( );
-                var comparePrecedence = !isParentUnary && parentOperator == operatorKind && operatorKind.IsRightAssociative ( )
+                var precedence = SyntaxFacts.GetBinaryOperatorPrecedence ( operatorKind );
+                var comparePrecedence = !isParentUnary && parentOperator == operatorKind && SyntaxFacts.IsRightAssociative ( operatorKind )
                     ? precedence + 1
                     : precedence;
                 if ( precedence <= 0 || comparePrecedence <= parentPrecedence )
                     break;
 
                 SyntaxToken operatorToken = this.Next ( );
+                SyntaxKind kind = SyntaxFacts.GetBinaryExpression ( operatorToken.Kind ).Value;
                 ExpressionSyntax right = this.ParseBinaryExpression ( precedence, operatorKind, true );
-                left = new BinaryExpressionSyntax ( this._syntaxTree, left, operatorToken, right );
+                left = new BinaryExpressionSyntax ( this._syntaxTree, kind, left, operatorToken, right );
             }
 
             return left;
@@ -164,12 +692,15 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             return this.Current.Kind switch
             {
-                SyntaxKind.NilKeyword => this.ParseNilLiteralExpression ( ),
-                SyntaxKind.TrueKeyword or SyntaxKind.FalseKeyword => this.ParseBooleanLiteralExpression ( ),
-                SyntaxKind.NumberToken => this.ParseNumberLiteralExpression ( ),
-                SyntaxKind.ShortStringToken or SyntaxKind.LongStringToken => this.ParseStringLiteralExpression ( ),
+                SyntaxKind.NilKeyword
+                or SyntaxKind.TrueKeyword
+                or SyntaxKind.FalseKeyword
+                or SyntaxKind.NumberToken
+                or SyntaxKind.ShortStringToken
+                or SyntaxKind.LongStringToken => this.ParseLiteralExpression ( ),
                 SyntaxKind.DotDotDotToken => this.ParseVarArgExpression ( ),
-                SyntaxKind.FunctionKeyword when this.Lookahead.Kind == SyntaxKind.OpenParenthesisToken => this.ParseAnonymousFunctionDeclarationExpression ( ),
+                SyntaxKind.OpenBraceToken => this.ParseTableConstructorExpression ( ),
+                SyntaxKind.FunctionKeyword when this.Lookahead.Kind == SyntaxKind.OpenParenthesisToken => this.ParseAnonymousFunctionExpression ( ),
                 _ => this.ParsePrefixExpression ( ),
             };
         }
@@ -221,12 +752,19 @@ namespace Loretta.CodeAnalysis.Syntax
             return expression;
         }
 
-        private ExpressionSyntax ParseAnonymousFunctionDeclarationExpression ( )
+        private ExpressionSyntax ParseAnonymousFunctionExpression ( )
         {
             SyntaxToken functionKeywordToken = this.Match ( SyntaxKind.FunctionKeyword );
-            ParameterListSyntax? parameterList = this.ParseParameterList ( );
+            ParameterListSyntax parameterList = this.ParseParameterList ( );
+            ImmutableArray<StatementSyntax> body = this.ParseStatementList ( SyntaxKind.EndKeyword );
+            SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
 
-            throw new NotImplementedException ( );
+            return new AnonymousFunctionExpressionSyntax (
+                this._syntaxTree,
+                functionKeywordToken,
+                parameterList,
+                body,
+                endKeyword );
         }
 
         private NameExpressionSyntax ParseNameExpression ( )
@@ -260,8 +798,8 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             if ( this.Current.Kind is SyntaxKind.ShortStringToken or SyntaxKind.LongStringToken )
             {
-                StringLiteralExpressionSyntax stringLiteral = this.ParseStringLiteralExpression ( );
-                return new StringFunctionArgumentSyntax ( this._syntaxTree, stringLiteral );
+                LiteralExpressionSyntax literal = this.ParseLiteralExpression ( );
+                return new StringFunctionArgumentSyntax ( this._syntaxTree, literal );
             }
             else if ( this.Current.Kind is SyntaxKind.OpenBraceToken )
             {
@@ -274,7 +812,7 @@ namespace Loretta.CodeAnalysis.Syntax
             }
         }
 
-        private FunctionArgumentListSyntax ParseFunctionArgumentList ( )
+        private ExpressionListFunctionArgumentSyntax ParseFunctionArgumentList ( )
         {
             SyntaxToken openParenthesisToken = this.Match ( SyntaxKind.OpenParenthesisToken );
             ImmutableArray<SyntaxNode>.Builder argumentsAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( );
@@ -294,13 +832,12 @@ namespace Loretta.CodeAnalysis.Syntax
             }
             SyntaxToken closeParenthesisToken = this.Match ( SyntaxKind.CloseParenthesisToken );
 
-            return new FunctionArgumentListSyntax (
+            return new ExpressionListFunctionArgumentSyntax (
                 this._syntaxTree,
                 openParenthesisToken,
                 new SeparatedSyntaxList<ExpressionSyntax> ( argumentsAndSeparators.ToImmutable ( ) ),
                 closeParenthesisToken );
         }
-
 
         private ParameterListSyntax ParseParameterList ( )
         {
@@ -347,32 +884,11 @@ namespace Loretta.CodeAnalysis.Syntax
             return new VarArgExpressionSyntax ( this._syntaxTree, varargToken );
         }
 
-        private BooleanLiteralExpressionSyntax ParseBooleanLiteralExpression ( )
+        private LiteralExpressionSyntax ParseLiteralExpression ( )
         {
-            SyntaxToken keywordToken = this.Current.Kind == SyntaxKind.TrueKeyword
-                                       ? this.Match ( SyntaxKind.TrueKeyword )
-                                       : this.Match ( SyntaxKind.FalseKeyword );
-            return new BooleanLiteralExpressionSyntax ( this._syntaxTree, keywordToken );
-        }
-
-        private NilLiteralExpressionSyntax ParseNilLiteralExpression ( )
-        {
-            SyntaxToken nilToken = this.Match ( SyntaxKind.NilKeyword );
-            return new NilLiteralExpressionSyntax ( this._syntaxTree, nilToken );
-        }
-
-        private StringLiteralExpressionSyntax ParseStringLiteralExpression ( )
-        {
-            SyntaxToken stringToken = this.Current.Kind == SyntaxKind.LongStringToken
-                                      ? this.Match ( SyntaxKind.LongStringToken )
-                                      : this.Match ( SyntaxKind.ShortStringToken );
-            return new StringLiteralExpressionSyntax ( this._syntaxTree, stringToken );
-        }
-
-        private NumberLiteralExpressionSyntax ParseNumberLiteralExpression ( )
-        {
-            SyntaxToken number = this.Match ( SyntaxKind.NumberToken );
-            return new NumberLiteralExpressionSyntax ( this._syntaxTree, number );
+            SyntaxToken? token = this.Next ( );
+            SyntaxKind kind = SyntaxFacts.GetLiteralExpression ( token.Kind ).Value;
+            return new LiteralExpressionSyntax ( this._syntaxTree, kind, token );
         }
 
         private ParenthesizedExpressionSyntax ParseParenthesizedExpression ( )

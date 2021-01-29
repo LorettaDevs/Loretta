@@ -49,24 +49,6 @@ namespace Loretta.Generators.SyntaxKind
             isEnabledByDefault: true,
             customTags: new[] { WellKnownDiagnosticTags.NotConfigurable } );
 
-        private static readonly DiagnosticDescriptor TriviaAndNode = new (
-            id: "LO0004",
-            title: "A trivia kind can't also be a node",
-            messageFormat: "A trivia kind can't also be a node",
-            category: "Loretta.Generators",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true,
-            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable } );
-
-        private static readonly DiagnosticDescriptor TokenAndNode = new (
-            id: "LO0005",
-            title: "A token kind can't also be a node",
-            messageFormat: "A token kind can't also be a node",
-            category: "Loretta.Generators",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true,
-            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable } );
-
         public void Initialize ( GeneratorInitializationContext context )
         {
         }
@@ -81,28 +63,30 @@ namespace Loretta.Generators.SyntaxKind
             if ( syntaxKindType is null )
                 return;
 
-            var fields = syntaxKindType.GetMembers ( )
-                                       .OfType<IFieldSymbol> ( )
-                                       .ToImmutableArray ( );
-
-            ImmutableArray<KindInfo> kinds = MapToKindInfo ( context, fields );
-            if ( kinds.Length < 1 )
-            {
-                context.ReportDiagnostic ( Diagnostic.Create ( NoKinds, syntaxKindType.Locations.Single ( ) ) );
-                return;
-            }
-
             try
             {
+                var fields = syntaxKindType.GetMembers ( )
+                                           .OfType<IFieldSymbol> ( )
+                                           .ToImmutableArray ( );
+
+                ImmutableArray<KindInfo> kinds = MapToKindInfo ( context, fields );
+                if ( kinds.Length < 1 )
+                {
+                    context.ReportDiagnostic ( Diagnostic.Create ( NoKinds, syntaxKindType.Locations.Single ( ) ) );
+                    return;
+                }
+
                 GenerateSyntaxFacts ( context, syntaxKindType, kinds );
-                GenerateSyntaxVisitor ( context, syntaxKindType, kinds );
             }
             catch ( Exception ex )
             {
                 var syntaxKindFilePath = syntaxKindType.DeclaringSyntaxReferences.First ( ).SyntaxTree.FilePath;
                 var syntaxDirectory = Path.GetDirectoryName ( syntaxKindFilePath );
                 var filePath = Path.Combine ( syntaxDirectory, "exception.log" );
-                File.WriteAllText ( filePath, ex.ToString ( ) );
+                var contents = String.Join ( Environment.NewLine, new String ( '-', 30 ), ex.ToString ( ) );
+                File.AppendAllText ( filePath, contents );
+
+                throw;
             }
         }
 
@@ -145,15 +129,18 @@ namespace Loretta.Generators.SyntaxKind
                 compilation.GetTypeByMetadataName ( "Loretta.CodeAnalysis.Syntax.UnaryOperatorAttribute" );
             INamedTypeSymbol? binaryOperatorAttributeType =
                 compilation.GetTypeByMetadataName ( "Loretta.CodeAnalysis.Syntax.BinaryOperatorAttribute" );
-            INamedTypeSymbol? nodeAttributeType =
-                compilation.GetTypeByMetadataName ( "Loretta.CodeAnalysis.Syntax.NodeAttribute" );
+            INamedTypeSymbol? extraCategoriesAttributeType =
+                compilation.GetTypeByMetadataName ( "Loretta.CodeAnalysis.Syntax.ExtraCategoriesAttribute" );
+            INamedTypeSymbol? propertyAttributeType =
+                compilation.GetTypeByMetadataName ( "Loretta.CodeAnalysis.Syntax.PropertyAttribute" );
 
             if ( triviaAttributeType is null
                  || tokenAttributeType is null
                  || keywordAttributeType is null
                  || unaryOperatorAttributeType is null
                  || binaryOperatorAttributeType is null
-                 || nodeAttributeType is null )
+                 || extraCategoriesAttributeType is null
+                 || propertyAttributeType is null )
             {
                 return ImmutableArray<KindInfo>.Empty;
             }
@@ -169,8 +156,10 @@ namespace Loretta.Generators.SyntaxKind
                     GetOperatorInfo ( unaryOperatorAttributeType, field );
                 OperatorInfo? binaryOperatorInfo =
                     GetOperatorInfo ( binaryOperatorAttributeType, field );
-                NodeInfo? nodeInfo =
-                    GetNodeInfo ( nodeAttributeType, field );
+                ImmutableArray<String> extraCategories =
+                    GetExtraCategories ( extraCategoriesAttributeType, field );
+                ImmutableDictionary<String, TypedConstant> properties =
+                    GetProperties ( propertyAttributeType, field );
 
                 var hasErrors = false;
                 Location location = field.Locations.Single ( );
@@ -178,18 +167,6 @@ namespace Loretta.Generators.SyntaxKind
                 {
                     hasErrors = true;
                     context.ReportDiagnostic ( Diagnostic.Create ( TriviaAndToken, location ) );
-                }
-
-                if ( isTrivia && nodeInfo is not null )
-                {
-                    hasErrors = true;
-                    context.ReportDiagnostic ( Diagnostic.Create ( TriviaAndNode, location ) );
-                }
-
-                if ( tokenInfo is not null && nodeInfo is not null )
-                {
-                    hasErrors = true;
-                    context.ReportDiagnostic ( Diagnostic.Create ( TokenAndNode, location ) );
                 }
 
                 if ( tokenInfo is { IsKeyword: true, Text: null } )
@@ -213,7 +190,8 @@ namespace Loretta.Generators.SyntaxKind
                     tokenInfo,
                     unaryOperatorInfo,
                     binaryOperatorInfo,
-                    nodeInfo ) );
+                    extraCategories,
+                    properties ) );
             }
 
             return infos.ToImmutable ( );
@@ -253,20 +231,29 @@ namespace Loretta.Generators.SyntaxKind
             if ( attr is null )
                 return null;
 
-            var precedence = ( Int32 ) attr.ConstructorArguments.Single ( ).Value!;
-            return new OperatorInfo ( precedence );
+            var precedence = ( Int32 ) attr.ConstructorArguments[0].Value!;
+            var expression = attr.ConstructorArguments[1];
+            return new OperatorInfo ( precedence, expression );
         }
 
-        private static NodeInfo? GetNodeInfo (
-            INamedTypeSymbol nodeAttributeType,
-            IFieldSymbol field )
+        private static ImmutableArray<String> GetExtraCategories ( INamedTypeSymbol extraCategoriesAttributeType, IFieldSymbol field )
         {
-            AttributeData? attr = Utilities.GetAttribute ( field, nodeAttributeType );
+            AttributeData? attr = Utilities.GetAttribute ( field, extraCategoriesAttributeType );
             if ( attr is null )
-                return null;
+                return ImmutableArray<String>.Empty;
 
-            var nodeType = ( INamedTypeSymbol ) attr.ConstructorArguments.Single ( ).Value!;
-            return new NodeInfo ( nodeType );
+            var categories = attr.ConstructorArguments.Single ( ).Values.Select ( arg => ( String ) arg.Value! ).ToImmutableArray ( );
+            return categories;
+        }
+
+        private static ImmutableDictionary<String, TypedConstant> GetProperties ( INamedTypeSymbol propertyAttributeType, IFieldSymbol field )
+        {
+            ImmutableArray<AttributeData> attributes = Utilities.GetAttributes ( field, propertyAttributeType );
+            if ( attributes.IsEmpty )
+                return ImmutableDictionary<String, TypedConstant>.Empty;
+
+            IEnumerable<KeyValuePair<String, TypedConstant>> properties = attributes.Select ( attr => new KeyValuePair<String, TypedConstant> ( ( String ) attr.ConstructorArguments[0].Value!, attr.ConstructorArguments[1] ) );
+            return ImmutableDictionary.CreateRange ( properties );
         }
     }
 }

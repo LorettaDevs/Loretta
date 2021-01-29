@@ -1,9 +1,7 @@
-﻿using System.Collections.Immutable;
-
-namespace Loretta.CodeAnalysis.Syntax
+﻿namespace Loretta.CodeAnalysis.Syntax
 {
     /// <summary>
-    /// Represents a function parameter list.
+    /// Represents a function declaration's parameter list.
     /// </summary>
     public sealed partial class ParameterListSyntax : SyntaxNode
     {

@@ -629,8 +629,7 @@ namespace Loretta.CodeAnalysis.Syntax
                         this.Diagnostics.ReportLuajitIdentifierRulesNotSupportedInVersion ( location );
                     }
                     SyntaxKind kind = SyntaxFacts.GetKeywordKind ( text );
-                    Option<Object?> val = SyntaxFacts.GetKeywordValue ( kind );
-                    return (kind, val);
+                    return (kind, default);
                 }
 
                 #endregion Identifiers

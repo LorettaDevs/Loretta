@@ -5,15 +5,16 @@
     /// </summary>
     public sealed partial class UnaryExpressionSyntax : ExpressionSyntax
     {
-        internal UnaryExpressionSyntax ( SyntaxTree syntaxTree, SyntaxToken operatorToken, ExpressionSyntax operand )
+        internal UnaryExpressionSyntax ( SyntaxTree syntaxTree, SyntaxKind kind, SyntaxToken operatorToken, ExpressionSyntax operand )
             : base ( syntaxTree )
         {
+            this.Kind = kind;
             this.OperatorToken = operatorToken;
             this.Operand = operand;
         }
 
         /// <inheritdoc/>
-        public override SyntaxKind Kind => SyntaxKind.UnaryExpression;
+        public override SyntaxKind Kind { get; }
 
         /// <summary>
         /// The operator token.

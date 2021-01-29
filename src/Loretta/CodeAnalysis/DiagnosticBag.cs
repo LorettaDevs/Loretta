@@ -100,7 +100,10 @@ namespace Loretta.CodeAnalysis
             this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0016", "Hexadecimal string escapes are not supported in this lua version", location ) );
 
         internal void ReportAmbiguousFunctionCallOrNewStatement ( TextLocation location ) =>
-            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0017", "Syntax ambiguous between a function call and a new statement.", location ) );
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0017", "Syntax ambiguous between a function call and a new statement", location ) );
+
+        internal void ReportNonFunctionCallBeingUsedAsStatement ( TextLocation location ) =>
+            this.Report ( new Diagnostic ( DiagnosticSeverity.Error, "LUA0018", "Function calls are the only expressions that can be used as statements", location ) );
 
         /// <inheritdoc/>
         public IEnumerator<Diagnostic> GetEnumerator ( ) =>

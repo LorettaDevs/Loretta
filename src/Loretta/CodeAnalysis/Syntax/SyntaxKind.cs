@@ -4,6 +4,7 @@ namespace Loretta.CodeAnalysis.Syntax
 {
     public enum SyntaxKind
     {
+        None,
         BadToken,
 
         // Trivia
@@ -24,10 +25,13 @@ namespace Loretta.CodeAnalysis.Syntax
         [Token]
         EndOfFileToken,
         [Token]
+        [Property ( "LiteralExpression", NumericalLiteralExpression )]
         NumberToken,
         [Token]
+        [Property ( "LiteralExpression", StringLiteralExpression )]
         ShortStringToken,
         [Token]
+        [Property ( "LiteralExpression", StringLiteralExpression )]
         LongStringToken,
         [Token]
         IdentifierToken,
@@ -50,76 +54,97 @@ namespace Loretta.CodeAnalysis.Syntax
         [Token ( Text = "," )]
         CommaToken,
         [Token ( Text = "#" )]
-        [UnaryOperator ( precedence: 7 )]
+        [UnaryOperator ( precedence: 7, LengthExpression )]
         HashToken,
         [Token ( Text = "+" )]
-        [BinaryOperator ( precedence: 5 )]
+        [BinaryOperator ( precedence: 5, AddExpression )]
         PlusToken,
         [Token ( Text = "+=" )]
+        [ExtraCategories ( "CompoundAssignmentOperatorToken" )]
+        [Property ( "CompoundAssignmentOperator", PlusToken )]
+        [Property ( "CompoundAssignmentStatement", AddAssignmentStatement )]
         PlusEqualsToken,
         [Token ( Text = "-" )]
-        [UnaryOperator ( precedence: 7 ), BinaryOperator ( precedence: 5 )]
+        [UnaryOperator ( precedence: 7, UnaryMinusExpression ), BinaryOperator ( precedence: 5, SubtractExpression )]
         MinusToken,
         [Token ( Text = "-=" )]
+        [ExtraCategories ( "CompoundAssignmentOperatorToken" )]
+        [Property ( "CompoundAssignmentOperator", MinusToken )]
+        [Property ( "CompoundAssignmentStatement", SubtractAssignmentStatement )]
         MinusEqualsToken,
         [Token ( Text = "*" )]
-        [BinaryOperator ( precedence: 6 )]
+        [BinaryOperator ( precedence: 6, MultiplyExpression )]
         StarToken,
         [Token ( Text = "*=" )]
+        [ExtraCategories ( "CompoundAssignmentOperatorToken" )]
+        [Property ( "CompoundAssignmentOperator", StarToken )]
+        [Property ( "CompoundAssignmentStatement", MultiplyAssignmentStatement )]
         StartEqualsToken,
         [Token ( Text = "/" )]
-        [BinaryOperator ( precedence: 6 )]
+        [BinaryOperator ( precedence: 6, DivideExpression )]
         SlashToken,
         [Token ( Text = "/=" )]
+        [ExtraCategories ( "CompoundAssignmentOperatorToken" )]
+        [Property ( "CompoundAssignmentOperator", SlashToken )]
+        [Property ( "CompoundAssignmentStatement", DivideAssignmentStatement )]
         SlashEqualsToken,
         [Token ( Text = "^" )]
-        [BinaryOperator ( precedence: 8 )]
+        [BinaryOperator ( precedence: 8, ExponentiateExpression )]
         HatToken,
         [Token ( Text = "^=" )]
+        [ExtraCategories ( "CompoundAssignmentOperatorToken" )]
+        [Property ( "CompoundAssignmentOperator", HatToken )]
+        [Property ( "CompoundAssignmentStatement", ExponentiateAssignmentStatement )]
         HatEqualsToken,
         [Token ( Text = "%" )]
-        [BinaryOperator ( precedence: 6 )]
+        [BinaryOperator ( precedence: 6, ModuloExpression )]
         PercentToken,
         [Token ( Text = "%=" )]
+        [ExtraCategories ( "CompoundAssignmentOperatorToken" )]
+        [Property ( "CompoundAssignmentOperator", PercentToken )]
+        [Property ( "CompoundAssignmentStatement", ModuloAssignmentStatement )]
         PercentEqualsToken,
         [Token ( Text = "." )]
         DotToken,
         [Token ( Text = ".." )]
-        [BinaryOperator ( precedence: 4 )]
+        [BinaryOperator ( precedence: 4, ConcatExpression )]
         DotDotToken,
         [Token ( Text = "..." )]
         DotDotDotToken,
         [Token ( Text = "..=" )]
+        [ExtraCategories ( "CompoundAssignmentOperatorToken" )]
+        [Property ( "CompoundAssignmentOperator", DotDotToken )]
+        [Property ( "CompoundAssignmentStatement", ConcatAssignmentStatement )]
         DotDotEqualsToken,
         [Token ( Text = "=" )]
         EqualsToken,
         [Token ( Text = "==" )]
-        [BinaryOperator ( precedence: 3 )]
+        [BinaryOperator ( precedence: 3, EqualsExpression )]
         EqualsEqualsToken,
         // TODO: Add tilde token and unary operator
         [Token ( Text = "~=" )]
-        [BinaryOperator ( precedence: 3 )]
+        [BinaryOperator ( precedence: 3, NotEqualsExpression )]
         TildeEqualsToken,
         [Token ( Text = "!" )]
-        [UnaryOperator ( precedence: 7 )]
+        [UnaryOperator ( precedence: 7, LogicalNotExpression )]
         BangToken,
         [Token ( Text = "!=" )]
-        [BinaryOperator ( precedence: 3 )]
+        [BinaryOperator ( precedence: 3, NotEqualsExpression )]
         BangEqualsToken,
         [Token ( Text = "<" )]
-        [BinaryOperator ( precedence: 3 )]
+        [BinaryOperator ( precedence: 3, LessThanExpression )]
         LessThanToken,
         [Token ( Text = "<=" )]
-        [BinaryOperator ( precedence: 3 )]
+        [BinaryOperator ( precedence: 3, LessThanOrEqualExpression )]
         LessThanEqualsToken,
         [Token ( Text = "<<" )]
         // TODO: Add binary operator info
         LessThanLessThanToken,
         [Token ( Text = ">" )]
-        [BinaryOperator ( precedence: 3 )]
+        [BinaryOperator ( precedence: 3, GreaterThanExpression )]
         GreaterThanToken,
         [Token ( Text = ">=" )]
-        [BinaryOperator ( precedence: 3 )]
+        [BinaryOperator ( precedence: 3, GreaterThanOrEqualExpression )]
         GreaterThanEqualsToken,
         [Token ( Text = ">>" )]
         // TODO: Add binary operator info
@@ -128,13 +153,13 @@ namespace Loretta.CodeAnalysis.Syntax
         // TODO: Add binary operator info
         AmpersandToken,
         [Token ( Text = "&&" )]
-        [BinaryOperator ( precedence: 2 )]
+        [BinaryOperator ( precedence: 2, LogicalAndExpression )]
         AmpersandAmpersandToken,
         [Token ( Text = "|" )]
         // TODO: Add binary operator info
         PipeToken,
         [Token ( Text = "||" )]
-        [BinaryOperator ( precedence: 1 )]
+        [BinaryOperator ( precedence: 1, LogicalOrExpression )]
         PipePipeToken,
         [Token ( Text = "::" )]
         ColonColonToken,
@@ -175,13 +200,13 @@ namespace Loretta.CodeAnalysis.Syntax
         [Keyword ( "continue" )]
         ContinueKeyword,
         [Keyword ( "and" )]
-        [BinaryOperator ( precedence: 2 )]
+        [BinaryOperator ( precedence: 2, LogicalAndExpression )]
         AndKeyword,
         [Keyword ( "or" )]
-        [BinaryOperator ( precedence: 1 )]
+        [BinaryOperator ( precedence: 1, LogicalOrExpression )]
         OrKeyword,
         [Keyword ( "not" )]
-        [UnaryOperator ( precedence: 7 )]
+        [UnaryOperator ( precedence: 7, LogicalNotExpression )]
         NotKeyword,
         [Keyword ( "nil" )]
         NilKeyword,
@@ -190,54 +215,127 @@ namespace Loretta.CodeAnalysis.Syntax
         [Keyword ( "false" )]
         FalseKeyword,
 
-        // Nodes
-        [Node ( typeof ( CompilationUnitSyntax ) )]
-        CompilationUnit,
-        [Node ( typeof ( ParenthesizedExpressionSyntax ) )]
-        ParenthesizedExpression,
-        [Node ( typeof ( NumberLiteralExpressionSyntax ) )]
-        NumberLiteralExpression,
-        [Node ( typeof ( StringLiteralExpressionSyntax ) )]
-        StringLiteralExpression,
-        [Node ( typeof ( NilLiteralExpressionSyntax ) )]
-        NilLiteralExpression,
-        [Node ( typeof ( BooleanLiteralExpressionSyntax ) )]
-        BooleanLiteralExpression,
-        [Node ( typeof ( VarArgExpressionSyntax ) )]
-        VarArgExpression,
-        [Node ( typeof ( UnaryExpressionSyntax ) )]
-        UnaryExpression,
-        [Node ( typeof ( BinaryExpressionSyntax ) )]
-        BinaryExpression,
-        [Node ( typeof ( ParameterListSyntax ) )]
-        ParameterList,
-        [Node ( typeof ( VarArgParameterSyntax ) )]
-        VarArgParameter,
-        [Node ( typeof ( NameExpressionSyntax ) )]
-        NameExpression,
-        [Node ( typeof ( MemberAccessExpressionSyntax ) )]
-        MemberAccessExpression,
-        [Node ( typeof ( ElementAccessExpressionSyntax ) )]
-        ElementAccessExpression,
-        [Node ( typeof ( StringFunctionArgumentSyntax ) )]
-        StringFunctionArgument,
-        [Node ( typeof ( IdentifierKeyedTableFieldSyntax ) )]
-        IdentifierKeyedTableField,
-        [Node ( typeof ( ExpressionKeyedTableFieldSyntax ) )]
-        ExpressionKeyedTableField,
-        [Node ( typeof ( UnkeyedTableFieldSyntax ) )]
-        UnkeyedTableField,
-        [Node ( typeof ( TableConstructorExpressionSyntax ) )]
-        TableConstructorExpression,
-        [Node ( typeof ( TableConstructorFunctionArgumentSyntax ) )]
-        TableConstructorFunctionArgument,
-        [Node ( typeof ( FunctionArgumentListSyntax ) )]
-        FunctionArgumentList,
-        [Node ( typeof ( MethodCallExpressionSyntax ) )]
-        MethodCallExpression,
-        [Node ( typeof ( FunctionCallExpressionSyntax ) )]
-        FunctionCallExpression,
-        [Node ( typeof ( NamedParameterSyntax ) )]
+        // Parameters
         NamedParameter,
+        VarArgParameter,
+        ParameterList,
+
+        // Table Fields
+        IdentifierKeyedTableField,
+        ExpressionKeyedTableField,
+        UnkeyedTableField,
+
+        // Function Names
+        SimpleFunctionName,
+        MemberFunctionName,
+        MethodFunctionName,
+
+        // Function Call Arguments
+        StringFunctionArgument,
+        TableConstructorFunctionArgument,
+        ExpressionListFunctionArgument,
+
+        // Primary Expressions
+        AnonymousFunctionExpression,
+        TableConstructorExpression,
+        NumericalLiteralExpression,
+        StringLiteralExpression,
+        TrueLiteralExpression,
+        FalseLiteralExpression,
+        NilLiteralExpression,
+        VarArgExpression,
+        [ExtraCategories ( "VariableExpression" )]
+        NameExpression,
+
+        // Unary Expressions
+        [Property ( "UnaryExpressionOperatorTokenKind", MinusToken )]
+        UnaryMinusExpression,
+        [Property ( "UnaryExpressionOperatorTokenKind", NotKeyword )]
+        LogicalNotExpression,
+        [Property ( "UnaryExpressionOperatorTokenKind", HashToken )]
+        LengthExpression,
+
+        // Binary Expressions
+        [Property ( "BinaryExpressionOperatorTokenKind", PlusToken )]
+        AddExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", MinusToken )]
+        SubtractExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", StarToken )]
+        MultiplyExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", SlashToken )]
+        DivideExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", PercentToken )]
+        ModuloExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", DotDotToken )]
+        ConcatExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", EqualsEqualsToken )]
+        EqualsExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", TildeEqualsToken )]
+        NotEqualsExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", LessThanToken )]
+        LessThanExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", LessThanEqualsToken )]
+        LessThanOrEqualExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", GreaterThanToken )]
+        GreaterThanExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", GreaterThanEqualsToken )]
+        GreaterThanOrEqualExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", AndKeyword )]
+        LogicalAndExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", OrKeyword )]
+        LogicalOrExpression,
+        [Property ( "BinaryExpressionOperatorTokenKind", HatToken )]
+        ExponentiateExpression,
+
+        // Expressions
+        ParenthesizedExpression,
+        FunctionCallExpression,
+        [ExtraCategories ( "VariableExpression" )]
+        MemberAccessExpression,
+        [ExtraCategories ( "VariableExpression" )]
+        ElementAccessExpression,
+        MethodCallExpression,
+
+        // Assignment Statements
+        [Property ( "AssignmentStatementOperatorTokenKind", EqualsToken )]
+        AssignmentStatement,
+        [Property ( "AssignmentStatementOperatorTokenKind", PlusEqualsToken )]
+        AddAssignmentStatement,
+        [Property ( "AssignmentStatementOperatorTokenKind", MinusEqualsToken )]
+        SubtractAssignmentStatement,
+        [Property ( "AssignmentStatementOperatorTokenKind", StartEqualsToken )]
+        MultiplyAssignmentStatement,
+        [Property ( "AssignmentStatementOperatorTokenKind", SlashEqualsToken )]
+        DivideAssignmentStatement,
+        [Property ( "AssignmentStatementOperatorTokenKind", PercentEqualsToken )]
+        ModuloAssignmentStatement,
+        [Property ( "AssignmentStatementOperatorTokenKind", DotDotEqualsToken )]
+        ConcatAssignmentStatement,
+        [Property ( "AssignmentStatementOperatorTokenKind", HatEqualsToken )]
+        ExponentiateAssignmentStatement,
+
+        // Control Flow Statements
+        NumericForStatement,
+        GenericForStatement,
+        WhileStatement,
+        RepeatUntilStatement,
+        IfStatement,
+        ElseIfClause,
+        ElseClause,
+
+        // Jump Statements
+        GotoStatement,
+        BreakStatement,
+        ReturnStatement,
+        ContinueStatement,
+
+        // Statements
+        LocalVariableDeclarationStatement,
+        LocalFunctionDeclarationStatement,
+        FunctionDeclarationStatement,
+        DoStatement,
+        GotoLabelStatement,
+        ExpressionStatement,
+        CompilationUnit,
     }
 }

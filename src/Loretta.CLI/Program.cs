@@ -151,6 +151,19 @@ namespace Loretta.CLI
                 return;
             }
 
+            LuaOptions options = PresetEnumToPresetOptions ( preset );
+            var text = File.ReadAllText ( path );
+            var sourceText = SourceText.From ( text, path );
+            SyntaxTree syntaxTree;
+            using ( Logger!.BeginOperation ( "Parsing" ) )
+                syntaxTree = SyntaxTree.Parse ( options, sourceText );
+
+            var tw = new ConsoleTimingLoggerTextWriter ( Logger );
+            tw.WriteDiagnostics ( syntaxTree.Diagnostics );
+            Logger.Write ( "Press any key to continue..." );
+            Console.ReadKey ( true );
+            Logger.WriteLine ( "" );
+            syntaxTree.Root.PrettyPrintTo ( tw );
         }
 
         [Command ( "mp" ), Command ( "mass-parse" )]
@@ -162,6 +175,12 @@ namespace Loretta.CLI
                 MatchType = MatchType.Simple
             } ) )
                 .ToArray ( );
+
+            LuaOptions options = PresetEnumToPresetOptions ( preset );
+            foreach ( var file in files )
+            {
+
+            }
         }
 
         #region Memory Usage

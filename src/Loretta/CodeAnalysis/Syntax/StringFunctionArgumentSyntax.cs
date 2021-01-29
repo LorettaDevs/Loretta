@@ -5,10 +5,10 @@
     /// </summary>
     public sealed partial class StringFunctionArgumentSyntax : FunctionArgumentSyntax
     {
-        internal StringFunctionArgumentSyntax ( SyntaxTree syntaxTree, StringLiteralExpressionSyntax stringLiteral )
+        internal StringFunctionArgumentSyntax ( SyntaxTree syntaxTree, LiteralExpressionSyntax stringLiteral )
             : base ( syntaxTree )
         {
-            this.StringLiteral = stringLiteral;
+            this.Expression = stringLiteral;
         }
 
         /// <inheritdoc/>
@@ -17,6 +17,6 @@
         /// <summary>
         /// The string literal being passed as an argument.
         /// </summary>
-        public StringLiteralExpressionSyntax StringLiteral { get; }
+        public LiteralExpressionSyntax Expression { get; }
     }
 }

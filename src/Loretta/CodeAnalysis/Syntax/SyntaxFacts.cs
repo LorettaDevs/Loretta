@@ -13,31 +13,15 @@ namespace Loretta.CodeAnalysis.Syntax
         /// </summary>
         /// <param name="kind"></param>
         /// <returns></returns>
-        public static Boolean IsComment ( this SyntaxKind kind ) =>
+        public static Boolean IsComment ( SyntaxKind kind ) =>
             kind is SyntaxKind.SingleLineCommentTrivia or SyntaxKind.MultiLineCommentTrivia;
-
-        /// <summary>
-        /// Obtains the value of a keyword's <see cref="SyntaxKind"/> if any.
-        /// </summary>
-        /// <param name="kind"></param>
-        /// <returns></returns>
-        public static Option<Object?> GetKeywordValue ( SyntaxKind kind )
-        {
-            return kind switch
-            {
-                SyntaxKind.NilKeyword => null,
-                SyntaxKind.TrueKeyword => true,
-                SyntaxKind.FalseKeyword => false,
-                _ => Option.None<Object?> ( )
-            };
-        }
 
         /// <summary>
         /// Checks whether a given <see cref="SyntaxKind"/> is a right associative operator's.
         /// </summary>
         /// <param name="kind"></param>
         /// <returns></returns>
-        public static Boolean IsRightAssociative ( this SyntaxKind kind ) =>
+        public static Boolean IsRightAssociative ( SyntaxKind kind ) =>
             kind is SyntaxKind.HatToken;
     }
 }

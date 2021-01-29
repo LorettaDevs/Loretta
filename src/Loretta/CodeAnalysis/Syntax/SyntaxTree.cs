@@ -75,7 +75,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 expression = parser.ParseExpression ( );
 
                 SyntaxToken? eofToken = parser.Match ( SyntaxKind.EndOfFileToken );
-                root = new CompilationUnitSyntax ( syntaxTree, ImmutableArray<MemberSyntax>.Empty, eofToken );
+                root = new CompilationUnitSyntax ( syntaxTree, ImmutableArray<StatementSyntax>.Empty, eofToken );
                 diagnostics = parser.Diagnostics.ToImmutableArray ( );
             }
 
@@ -148,7 +148,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
                     if ( token.Kind == SyntaxKind.EndOfFileToken )
                     {
-                        root = new CompilationUnitSyntax ( syntaxTree, ImmutableArray<MemberSyntax>.Empty, token );
+                        root = new CompilationUnitSyntax ( syntaxTree, ImmutableArray<StatementSyntax>.Empty, token );
                         break;
                     }
                 }
@@ -291,7 +291,7 @@ namespace Loretta.CodeAnalysis.Syntax
             foreach ( SyntaxNode child in node.GetChildren ( ) )
             {
                 builder.Add ( child, node );
-                CreateParentsDictionary ( builder, node );
+                CreateParentsDictionary ( builder, child );
             }
         }
     }
