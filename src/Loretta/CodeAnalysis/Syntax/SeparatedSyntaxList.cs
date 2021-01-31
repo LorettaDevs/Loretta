@@ -41,6 +41,11 @@ namespace Loretta.CodeAnalysis.Syntax
         public Int32 Count => ( this._nodesAndSeparators.Length + 1 ) >> 1;
 
         /// <summary>
+        /// The number of separators in this list.
+        /// </summary>
+        public Int32 SeparatorCount => this._nodesAndSeparators.Length >> 1;
+
+        /// <summary>
         /// Checks whether this separated syntax list has a trailing separator.
         /// </summary>
         // If we have an even number of elements, then we have a trailing separator, otherwise, we don't.
