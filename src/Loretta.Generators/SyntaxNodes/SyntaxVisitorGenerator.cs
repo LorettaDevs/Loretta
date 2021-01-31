@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.Text;
 namespace Loretta.Generators.SyntaxNodes
 {
     [Generator]
-    public class SyntaxVisitorGenerator : SyntaxNodeGeneratorBase
+    public sealed class SyntaxVisitorGenerator : SyntaxNodeGeneratorBase
     {
         protected override void GenerateFiles (
             GeneratorExecutionContext context,

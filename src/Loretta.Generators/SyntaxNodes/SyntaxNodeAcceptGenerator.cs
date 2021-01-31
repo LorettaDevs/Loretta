@@ -12,7 +12,7 @@ using Microsoft.CodeAnalysis.Text;
 namespace Loretta.Generators.SyntaxNodes
 {
     [Generator]
-    public class SyntaxNodeAcceptGenerator : SyntaxNodeGeneratorBase
+    public sealed class SyntaxNodeAcceptGenerator : SyntaxNodeGeneratorBase
     {
         protected override void GenerateFiles (
             GeneratorExecutionContext context,
