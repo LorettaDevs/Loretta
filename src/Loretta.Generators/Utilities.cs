@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Loretta.Generators
 {
@@ -78,6 +81,37 @@ namespace Loretta.Generators
             symbol.GetAttributes ( )
                   .Where ( data => SymbolEqualityComparer.Default.Equals ( data.AttributeClass, attributeType ) )
                   .ToImmutableArray ( );
+
+        public static void DoVsCodeHack ( INamedTypeSymbol relatedSymbol, String fileName, SourceText sourceText )
+        {
+            // HACK
+            //
+            // Make generator work in VS Code. See src\Directory.Build.props for
+            // details.
+
+            var relatedFilePath = relatedSymbol.DeclaringSyntaxReferences.First ( ).SyntaxTree.FilePath;
+            var relatedDirectory = Path.GetDirectoryName ( relatedFilePath );
+            var filePath = Path.Combine ( relatedDirectory, fileName );
+
+            if ( File.Exists ( filePath ) )
+            {
+                var fileText = File.ReadAllText ( filePath );
+                var sourceFileText = SourceText.From ( fileText, Encoding.UTF8 );
+                if ( sourceText.ContentEquals ( sourceFileText ) )
+                    return;
+            }
+
+            using var writer = new StreamWriter ( filePath );
+            sourceText.Write ( writer );
+        }
+
+        public static IEnumerable<ITypeSymbol> AncestorsAndSelf ( ITypeSymbol topType, ITypeSymbol? limit = null )
+        {
+            for ( ITypeSymbol? type = topType; type != null && !SymbolEqualityComparer.Default.Equals ( type, limit ); type = type.BaseType )
+            {
+                yield return type;
+            }
+        }
 
         private static void GetAllTypes ( List<INamedTypeSymbol> result, INamespaceOrTypeSymbol symbol )
         {
