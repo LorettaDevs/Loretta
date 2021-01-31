@@ -99,6 +99,44 @@ namespace Loretta.CodeAnalysis.Syntax
         public Boolean IsMissing { get; }
 
         /// <inheritdoc/>
+        public override void Accept ( SyntaxVisitor syntaxVisitor ) =>
+            syntaxVisitor.VisitToken ( this );
+
+        /// <inheritdoc/>
+        public override TReturn? Accept<TReturn> ( SyntaxVisitor<TReturn> syntaxVisitor ) where TReturn : default =>
+            syntaxVisitor.VisitToken ( this );
+
+        /// <inheritdoc/>
         public override IEnumerable<SyntaxNode> GetChildren ( ) => Enumerable.Empty<SyntaxNode> ( );
+
+        /// <summary>
+        /// Generates a new token with the provided leading trivia.
+        /// </summary>
+        /// <param name="leadingTrivia"></param>
+        /// <returns></returns>
+        public SyntaxToken WithLeadingTrivia ( ImmutableArray<SyntaxTrivia> leadingTrivia ) =>
+            new SyntaxToken (
+                this.SyntaxTree,
+                this.Kind,
+                this.Position,
+                this.IsMissing ? default : this.Text,
+                this.Value,
+                leadingTrivia,
+                this.TrailingTrivia );
+
+        /// <summary>
+        /// Generates a new token but with the provided trailing trivia.
+        /// </summary>
+        /// <param name="trailingTrivia"></param>
+        /// <returns></returns>
+        public SyntaxToken WithTrailingTrivia ( ImmutableArray<SyntaxTrivia> trailingTrivia ) =>
+            new SyntaxToken (
+                this.SyntaxTree,
+                this.Kind,
+                this.Position,
+                this.IsMissing ? default : this.Text,
+                this.Value,
+                this.LeadingTrivia,
+                trailingTrivia );
     }
 }
