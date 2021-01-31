@@ -74,6 +74,23 @@ namespace Loretta.CodeAnalysis.Text
         public Boolean OverlapsWith ( TextSpan other ) =>
             this.Start < other.End && other.Start < this.End;
 
+        /// <summary>
+        /// Checks whether this span contains the provided position.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public Boolean Contains ( Int32 position ) =>
+            this.Start <= position && position < this.End;
+
+        /// <summary>
+        /// Checks whether this span contains the provided position
+        /// or if the position is the span's end.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public Boolean ContainsInclusive ( Int32 position ) =>
+            this.Start <= position && position <= this.End;
+
         /// <inheritdoc/>
         public override Boolean Equals ( Object? obj ) =>
             obj is TextSpan span && this.Equals ( span );
