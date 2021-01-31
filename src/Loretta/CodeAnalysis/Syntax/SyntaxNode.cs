@@ -219,5 +219,19 @@ namespace Loretta.CodeAnalysis.Syntax
             this.PrettyPrintTo ( writer );
             return writer.ToString ( );
         }
+
+        /// <summary>
+        /// The accept part of the visitor pattern.
+        /// </summary>
+        /// <param name="syntaxVisitor"></param>
+        public abstract void Accept ( SyntaxVisitor syntaxVisitor );
+
+        /// <summary>
+        /// The accept part of the visitor pattern.
+        /// </summary>
+        /// <typeparam name="TReturn"></typeparam>
+        /// <param name="syntaxVisitor"></param>
+        /// <returns></returns>
+        public abstract TReturn? Accept<TReturn> ( SyntaxVisitor<TReturn> syntaxVisitor );
     }
 }
