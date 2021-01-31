@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{208D0FDA-5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Tests", "test\Loretta.Tests\Loretta.Tests.csproj", "{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta.LanguageServer", "src\Loretta.LanguageServer\Loretta.LanguageServer.csproj", "{82562AED-ED6D-4B14-9395-6E4A37CDFF2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82562AED-ED6D-4B14-9395-6E4A37CDFF2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82562AED-ED6D-4B14-9395-6E4A37CDFF2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82562AED-ED6D-4B14-9395-6E4A37CDFF2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82562AED-ED6D-4B14-9395-6E4A37CDFF2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{76E3C4F5-99BD-48F1-A39C-8D2BAAC660C0} = {3F54E170-3225-440D-B723-FAF60D91124B}
 		{3ED120A7-5F1E-472F-A95F-FC5CC01C0B3E} = {3F54E170-3225-440D-B723-FAF60D91124B}
 		{F85D6BB4-6BD3-4079-AEC6-78B3077C2187} = {208D0FDA-5502-4B7F-818A-662186F45239}
+		{82562AED-ED6D-4B14-9395-6E4A37CDFF2C} = {3F54E170-3225-440D-B723-FAF60D91124B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2976112B-0D4A-472A-9FD3-DFA4FFD326D0}
