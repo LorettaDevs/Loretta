@@ -73,25 +73,36 @@ namespace Loretta.Generators
                     }
                     break;
 
+                    case SyntaxKind.RecordDeclaration:
                     case SyntaxKind.ClassDeclaration:
-                    {
-                        var ancestorClass = ( ClassDeclarationSyntax ) ancestor;
-                        if ( !ancestorClass.Modifiers.Any ( mod => mod.ValueText == "partial" ) )
-                            throw new InvalidOperationException ( "Type is contained within a non-partial class." );
-                        stack.Push ( new CurlyIndenter (
-                            textWriter,
-                            $"{String.Join ( " ", ancestorClass.Modifiers )} class {ancestorClass.Identifier}" ) );
-                    }
-                    break;
-
                     case SyntaxKind.StructDeclaration:
                     {
-                        var ancestorStruct = ( StructDeclarationSyntax ) ancestor;
-                        if ( !ancestorStruct.Modifiers.Any ( mod => mod.ValueText == "partial" ) )
+                        var ancestorDeclaration = ( TypeDeclarationSyntax ) ancestor;
+                        if ( !ancestorDeclaration.Modifiers.Any ( mod => mod.ValueText == "partial" ) )
                             throw new InvalidOperationException ( "Type is contained within a non-partial struct." );
+                        var nameBuilder = new StringBuilder ( );
+                        nameBuilder.Append ( String.Join ( " ", ancestorDeclaration.Modifiers ) );
+                        nameBuilder.Append ( ' ' );
+                        nameBuilder.Append ( ancestorDeclaration.Keyword );
+                        nameBuilder.Append ( ' ' );
+                        nameBuilder.Append ( ancestorDeclaration.Identifier );
+                        if ( ancestorDeclaration.TypeParameterList?.Parameters.Count > 0 )
+                        {
+                            nameBuilder.Append ( '<' );
+                            var isFirst = true;
+                            foreach ( TypeParameterSyntax parameter in ancestorDeclaration.TypeParameterList.Parameters )
+                            {
+                                if ( !isFirst )
+                                    nameBuilder.Append ( ", " );
+                                isFirst = false;
+                                nameBuilder.Append ( parameter.Identifier );
+                            }
+                            nameBuilder.Append ( '>' );
+                        }
+
                         stack.Push ( new CurlyIndenter (
                             textWriter,
-                            $"{String.Join ( " ", ancestorStruct.Modifiers.Where ( m => m.Kind ( ) != SyntaxKind.PartialKeyword ) )} partial struct {ancestorStruct.Identifier}" ) );
+                             nameBuilder.ToString ( ) ) );
                     }
                     break;
                 }
