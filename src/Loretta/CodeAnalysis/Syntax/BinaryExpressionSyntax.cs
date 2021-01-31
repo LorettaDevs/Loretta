@@ -5,7 +5,12 @@
     /// </summary>
     public sealed partial class BinaryExpressionSyntax : ExpressionSyntax
     {
-        internal BinaryExpressionSyntax ( SyntaxTree syntaxTree, SyntaxKind kind, ExpressionSyntax left, SyntaxToken operatorToken, ExpressionSyntax right )
+        internal BinaryExpressionSyntax (
+            SyntaxTree syntaxTree,
+            SyntaxKind kind,
+            ExpressionSyntax left,
+            SyntaxToken operatorToken,
+            ExpressionSyntax right )
             : base ( syntaxTree )
         {
             this.Kind = kind;
