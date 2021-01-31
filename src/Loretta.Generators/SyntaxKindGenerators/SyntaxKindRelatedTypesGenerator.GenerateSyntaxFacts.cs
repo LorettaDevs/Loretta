@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Loretta.Generators.SyntaxKind
+namespace Loretta.Generators.SyntaxKindGenerators
 {
     public sealed partial class SyntaxKindRelatedTypesGenerator
     {
@@ -141,7 +141,7 @@ namespace Loretta.Generators.SyntaxKind
             }
 
             context.AddSource ( "SyntaxFacts.g.cs", sourceText );
-            DoVsCodeHack ( syntaxKindType, "SyntaxFacts.g.cs", sourceText );
+            Utilities.DoVsCodeHack ( syntaxKindType, "SyntaxFacts.g.cs", sourceText );
         }
 
         private static void GenerateGetUnaryOperatorPrecedence ( ImmutableArray<KindInfo> kinds, IndentedTextWriter indentedTextWriter )

@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Loretta.Generators.SyntaxKind
+namespace Loretta.Generators.SyntaxKindGenerators
 {
     [Generator]
     public sealed partial class SyntaxKindRelatedTypesGenerator : ISourceGenerator
@@ -88,29 +88,6 @@ namespace Loretta.Generators.SyntaxKind
 
                 throw;
             }
-        }
-
-        private static void DoVsCodeHack ( INamedTypeSymbol syntaxKindType, String fileName, SourceText sourceText )
-        {
-            // HACK
-            //
-            // Make generator work in VS Code. See src\Directory.Build.props for
-            // details.
-
-            var syntaxKindFilePath = syntaxKindType.DeclaringSyntaxReferences.First ( ).SyntaxTree.FilePath;
-            var syntaxDirectory = Path.GetDirectoryName ( syntaxKindFilePath );
-            var filePath = Path.Combine ( syntaxDirectory, fileName );
-
-            if ( File.Exists ( filePath ) )
-            {
-                var fileText = File.ReadAllText ( filePath );
-                var sourceFileText = SourceText.From ( fileText, Encoding.UTF8 );
-                if ( sourceText.ContentEquals ( sourceFileText ) )
-                    return;
-            }
-
-            using var writer = new StreamWriter ( filePath );
-            sourceText.Write ( writer );
         }
 
         private static ImmutableArray<KindInfo> MapToKindInfo (

@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
-namespace Loretta.Generators.SyntaxKind
+namespace Loretta.Generators.SyntaxKindGenerators
 {
     internal readonly struct KindInfo
     {
