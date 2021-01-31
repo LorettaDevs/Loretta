@@ -8,18 +8,12 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed class SyntaxTrivia
     {
-        internal SyntaxTrivia ( SyntaxTree syntaxTree, SyntaxKind kind, Int32 position, ReadOnlyMemory<Char> text )
+        internal SyntaxTrivia ( SyntaxKind kind, Int32 position, ReadOnlyMemory<Char> text )
         {
-            this.SyntaxTree = syntaxTree;
             this.Kind = kind;
             this.Position = position;
             this.Text = text;
         }
-
-        /// <summary>
-        /// The tree this trivia belongs to.
-        /// </summary>
-        public SyntaxTree SyntaxTree { get; }
 
         /// <summary>
         /// This trivia's kind.

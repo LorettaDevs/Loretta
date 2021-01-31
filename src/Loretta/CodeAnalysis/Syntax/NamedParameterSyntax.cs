@@ -7,8 +7,7 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed partial class NamedParameterSyntax : ParameterSyntax
     {
-        internal NamedParameterSyntax ( SyntaxTree syntaxTree, SyntaxToken identifier )
-            : base ( syntaxTree )
+        internal NamedParameterSyntax ( SyntaxToken identifier )
         {
             this.Identifier = identifier;
         }

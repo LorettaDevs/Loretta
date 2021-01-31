@@ -9,12 +9,11 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class DoStatementSyntax : StatementSyntax
     {
         internal DoStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken doKeyword,
             ImmutableArray<StatementSyntax> body,
             SyntaxToken endKeyword,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.DoKeyword = doKeyword;
             this.Body = body;

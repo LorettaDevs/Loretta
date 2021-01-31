@@ -5,7 +5,7 @@
     /// </summary>
     public abstract class VariableExpressionSyntax : PrefixExpressionSyntax
     {
-        private protected VariableExpressionSyntax ( SyntaxTree syntaxTree ) : base ( syntaxTree )
+        private protected VariableExpressionSyntax ( )
         {
         }
     }

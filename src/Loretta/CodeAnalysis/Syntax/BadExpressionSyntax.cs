@@ -5,7 +5,7 @@
     /// </summary>
     public sealed partial class BadExpressionSyntax : PrefixExpressionSyntax
     {
-        internal BadExpressionSyntax ( SyntaxTree syntaxTree, SyntaxToken token ) : base ( syntaxTree )
+        internal BadExpressionSyntax ( SyntaxToken token )
         {
             this.Token = token;
         }

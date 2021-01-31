@@ -5,8 +5,11 @@
     /// </summary>
     public sealed partial class MethodCallExpressionSyntax : PrefixExpressionSyntax
     {
-        internal MethodCallExpressionSyntax ( SyntaxTree syntaxTree, PrefixExpressionSyntax expression, SyntaxToken colonToken, SyntaxToken identifier, FunctionArgumentSyntax argument )
-            : base ( syntaxTree )
+        internal MethodCallExpressionSyntax (
+            PrefixExpressionSyntax expression,
+            SyntaxToken colonToken,
+            SyntaxToken identifier,
+            FunctionArgumentSyntax argument )
         {
             this.Expression = expression;
             this.ColonToken = colonToken;

@@ -8,10 +8,9 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class ExpressionStatementSyntax : StatementSyntax
     {
         internal ExpressionStatementSyntax (
-            SyntaxTree syntaxTree,
             ExpressionSyntax expression,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.Expression = expression;
         }

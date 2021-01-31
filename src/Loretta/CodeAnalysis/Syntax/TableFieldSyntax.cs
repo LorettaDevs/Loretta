@@ -5,7 +5,7 @@
     /// </summary>
     public abstract class TableFieldSyntax : SyntaxNode
     {
-        private protected TableFieldSyntax ( SyntaxTree syntaxTree ) : base ( syntaxTree )
+        private protected TableFieldSyntax ( )
         {
         }
     }

@@ -9,14 +9,13 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class FunctionDeclarationStatementSyntax : StatementSyntax
     {
         internal FunctionDeclarationStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken functionKeyword,
             FunctionNameSyntax name,
             ParameterListSyntax parameters,
             ImmutableArray<StatementSyntax> body,
             SyntaxToken endKeyword,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.FunctionKeyword = functionKeyword;
             this.Name = name;

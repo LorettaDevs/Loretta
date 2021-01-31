@@ -6,11 +6,9 @@
     public sealed partial class ExpressionListFunctionArgumentSyntax : FunctionArgumentSyntax
     {
         internal ExpressionListFunctionArgumentSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken openParenthesisToken,
             SeparatedSyntaxList<ExpressionSyntax> expressions,
             SyntaxToken closeParenthesisToken )
-            : base ( syntaxTree )
 
         {
             this.OpenParenthesisToken = openParenthesisToken;

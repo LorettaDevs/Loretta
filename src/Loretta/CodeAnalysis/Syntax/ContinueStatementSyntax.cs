@@ -7,8 +7,8 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed partial class ContinueStatementSyntax : StatementSyntax
     {
-        internal ContinueStatementSyntax ( SyntaxTree syntaxTree, SyntaxToken continueKeyword, Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+        internal ContinueStatementSyntax ( SyntaxToken continueKeyword, Option<SyntaxToken> semicolonToken )
+            : base ( semicolonToken )
         {
             this.ContinueKeyword = continueKeyword;
         }

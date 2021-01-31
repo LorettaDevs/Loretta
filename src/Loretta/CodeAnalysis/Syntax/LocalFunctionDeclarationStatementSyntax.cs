@@ -9,7 +9,6 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class LocalFunctionDeclarationStatementSyntax : StatementSyntax
     {
         internal LocalFunctionDeclarationStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken localKeyword,
             SyntaxToken functionKeyword,
             SyntaxToken identifier,
@@ -17,7 +16,7 @@ namespace Loretta.CodeAnalysis.Syntax
             ImmutableArray<StatementSyntax> body,
             SyntaxToken endKeyword,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.LocalKeyword = localKeyword;
             this.FunctionKeyword = functionKeyword;

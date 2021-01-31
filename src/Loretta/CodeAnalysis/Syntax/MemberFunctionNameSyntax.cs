@@ -6,11 +6,9 @@
     public sealed partial class MemberFunctionNameSyntax : FunctionNameSyntax
     {
         internal MemberFunctionNameSyntax (
-            SyntaxTree syntaxTree,
             FunctionNameSyntax name,
             SyntaxToken dotToken,
             SyntaxToken identifier )
-            : base ( syntaxTree )
         {
             this.Name = name;
             this.DotToken = dotToken;

@@ -8,11 +8,10 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class GotoStatementSyntax : StatementSyntax
     {
         internal GotoStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken gotoKeyword,
             SyntaxToken labelName,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.GotoKeyword = gotoKeyword;
             this.LabelName = labelName;

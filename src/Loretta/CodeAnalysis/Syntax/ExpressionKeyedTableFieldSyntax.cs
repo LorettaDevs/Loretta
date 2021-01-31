@@ -6,13 +6,11 @@
     public sealed partial class ExpressionKeyedTableFieldSyntax : TableFieldSyntax
     {
         internal ExpressionKeyedTableFieldSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken openBracketToken,
             ExpressionSyntax key,
             SyntaxToken closeBracketToken,
             SyntaxToken equalsToken,
             ExpressionSyntax value )
-            : base ( syntaxTree )
         {
             this.OpenBracketToken = openBracketToken;
             this.Key = key;

@@ -8,11 +8,10 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class ReturnStatementSyntax : StatementSyntax
     {
         internal ReturnStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken returnKeyword,
             SeparatedSyntaxList<ExpressionSyntax> expressions,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.ReturnKeyword = returnKeyword;
             this.Expressions = expressions;

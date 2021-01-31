@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class UnaryExpressionSyntax : ExpressionSyntax
     {
-        internal UnaryExpressionSyntax ( SyntaxTree syntaxTree, SyntaxKind kind, SyntaxToken operatorToken, ExpressionSyntax operand )
-            : base ( syntaxTree )
+        internal UnaryExpressionSyntax ( SyntaxKind kind, SyntaxToken operatorToken, ExpressionSyntax operand )
         {
             this.Kind = kind;
             this.OperatorToken = operatorToken;

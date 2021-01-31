@@ -5,7 +5,7 @@
     /// </summary>
     public sealed partial class LiteralExpressionSyntax : ExpressionSyntax
     {
-        internal LiteralExpressionSyntax ( SyntaxTree syntaxTree, SyntaxKind kind, SyntaxToken token ) : base ( syntaxTree )
+        internal LiteralExpressionSyntax ( SyntaxKind kind, SyntaxToken token )
         {
             this.Kind = kind;
             this.Token = token;

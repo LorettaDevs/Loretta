@@ -5,10 +5,9 @@
     /// </summary>
     public sealed partial class StringFunctionArgumentSyntax : FunctionArgumentSyntax
     {
-        internal StringFunctionArgumentSyntax ( SyntaxTree syntaxTree, LiteralExpressionSyntax stringLiteral )
-            : base ( syntaxTree )
+        internal StringFunctionArgumentSyntax ( LiteralExpressionSyntax expression )
         {
-            this.Expression = stringLiteral;
+            this.Expression = expression;
         }
 
         /// <inheritdoc/>

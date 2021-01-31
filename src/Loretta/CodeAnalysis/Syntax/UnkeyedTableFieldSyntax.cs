@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class UnkeyedTableFieldSyntax : TableFieldSyntax
     {
-        internal UnkeyedTableFieldSyntax ( SyntaxTree syntaxTree, ExpressionSyntax value )
-            : base ( syntaxTree )
+        internal UnkeyedTableFieldSyntax ( ExpressionSyntax value )
         {
             this.Value = value;
         }

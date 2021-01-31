@@ -9,14 +9,13 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class WhileStatementSyntax : StatementSyntax
     {
         internal WhileStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken whileKeyword,
             ExpressionSyntax condition,
             SyntaxToken doKeyword,
             ImmutableArray<StatementSyntax> body,
             SyntaxToken endKeyword,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.WhileKeyword = whileKeyword;
             this.Condition = condition;

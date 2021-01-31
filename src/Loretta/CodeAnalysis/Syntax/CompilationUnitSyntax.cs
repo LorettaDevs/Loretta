@@ -7,8 +7,7 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed partial class CompilationUnitSyntax : SyntaxNode
     {
-        internal CompilationUnitSyntax ( SyntaxTree syntaxTree, ImmutableArray<StatementSyntax> members, SyntaxToken endOfFileToken )
-            : base ( syntaxTree )
+        internal CompilationUnitSyntax ( ImmutableArray<StatementSyntax> members, SyntaxToken endOfFileToken )
         {
             this.Members = members;
             this.EndOfFileToken = endOfFileToken;

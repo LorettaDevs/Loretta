@@ -10,7 +10,6 @@ namespace Loretta.CodeAnalysis.Syntax
 {
     internal sealed class Parser
     {
-        private readonly SyntaxTree _syntaxTree;
         private readonly LuaOptions _luaOptions;
         private readonly SourceText _text;
         private readonly ImmutableArray<SyntaxToken> _tokens;
@@ -43,7 +42,7 @@ namespace Loretta.CodeAnalysis.Syntax
                             foreach ( SyntaxTrivia lt in badToken.LeadingTrivia )
                                 leadingTrivia.Insert ( index++, lt );
 
-                            var trivia = new SyntaxTrivia ( syntaxTree, SyntaxKind.SkippedTextTrivia, badToken.Position, badToken.Text );
+                            var trivia = new SyntaxTrivia ( SyntaxKind.SkippedTextTrivia, badToken.Position, badToken.Text );
                             leadingTrivia.Insert ( index++, trivia );
 
                             foreach ( SyntaxTrivia tt in badToken.TrailingTrivia )
@@ -51,14 +50,13 @@ namespace Loretta.CodeAnalysis.Syntax
                         }
 
                         badTokens.Clear ( );
-                        token = new SyntaxToken ( token.SyntaxTree, token.Kind, token.Position, token.Text, token.Value, leadingTrivia.ToImmutable ( ), token.TrailingTrivia );
+                        token = new SyntaxToken ( token.Kind, token.Position, token.Text, token.Value, leadingTrivia.ToImmutable ( ), token.TrailingTrivia );
                     }
 
                     tokens.Add ( token );
                 }
             } while ( token.Kind != SyntaxKind.EndOfFileToken );
 
-            this._syntaxTree = syntaxTree;
             this._luaOptions = syntaxTree.Options;
             this._text = syntaxTree.Text;
             this._tokens = tokens.ToImmutable ( );
@@ -86,9 +84,11 @@ namespace Loretta.CodeAnalysis.Syntax
             if ( this.Current.Kind == kind )
                 return this.Next ( );
 
-            this.Diagnostics.ReportUnexpectedToken ( this.Current.Location, this.Current.Kind, kind );
+            this.Diagnostics.ReportUnexpectedToken (
+                new TextLocation ( this._text, this.Current.Span ),
+                this.Current.Kind,
+                kind );
             return new SyntaxToken (
-                this._syntaxTree,
                 kind,
                 this.Current.Position,
                 default,
@@ -104,7 +104,6 @@ namespace Loretta.CodeAnalysis.Syntax
                 // Transforms the continue keyword into an identifier token on-the-fly.
                 SyntaxToken continueKeyword = this.Next ( );
                 return new SyntaxToken (
-                    this._syntaxTree,
                     SyntaxKind.IdentifierToken,
                     continueKeyword.Position,
                     continueKeyword.Text,
@@ -126,7 +125,7 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             ImmutableArray<StatementSyntax> statements = this.ParseStatementList ( );
             SyntaxToken? endOfFileToken = this.Match ( SyntaxKind.EndOfFileToken );
-            return new CompilationUnitSyntax ( this._syntaxTree, statements, endOfFileToken );
+            return new CompilationUnitSyntax ( statements, endOfFileToken );
         }
 
         private ImmutableArray<StatementSyntax> ParseStatementList ( params SyntaxKind[] terminalKinds )
@@ -202,7 +201,7 @@ namespace Loretta.CodeAnalysis.Syntax
                     PrefixExpressionSyntax expression = this.ParsePrefixOrVariableExpression ( );
                     if ( expression.Kind is SyntaxKind.BadExpression )
                     {
-                        return new BadStatementSyntax ( this._syntaxTree, ( BadExpressionSyntax ) expression );
+                        return new BadStatementSyntax ( ( BadExpressionSyntax ) expression );
                     }
                     if ( this.Current.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken )
                     {
@@ -215,10 +214,9 @@ namespace Loretta.CodeAnalysis.Syntax
                     else
                     {
                         if ( expression.Kind is not ( SyntaxKind.FunctionCallExpression or SyntaxKind.MethodCallExpression ) )
-                            this.Diagnostics.ReportNonFunctionCallBeingUsedAsStatement ( expression.Location );
+                            this.Diagnostics.ReportNonFunctionCallBeingUsedAsStatement ( new TextLocation ( this._text, expression.Span ) );
                         Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
                         return new ExpressionStatementSyntax (
-                            this._syntaxTree,
                             expression,
                             semicolonToken );
                     }
@@ -267,7 +265,6 @@ namespace Loretta.CodeAnalysis.Syntax
                 var values = new SeparatedSyntaxList<ExpressionSyntax> ( expressionsAndSeparators.ToImmutable ( ) );
 
                 return new LocalVariableDeclarationStatementSyntax (
-                    this._syntaxTree,
                     localKeyword,
                     names,
                     equalsToken,
@@ -279,9 +276,10 @@ namespace Loretta.CodeAnalysis.Syntax
                 Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
 
                 return new LocalVariableDeclarationStatementSyntax (
-                    this._syntaxTree,
                     localKeyword,
                     names,
+                    default,
+                    default,
                     semicolonToken );
             }
         }
@@ -297,7 +295,6 @@ namespace Loretta.CodeAnalysis.Syntax
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
 
             return new LocalFunctionDeclarationStatementSyntax (
-                this._syntaxTree,
                 localKeyword,
                 functionKeyword,
                 identifier,
@@ -327,7 +324,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new NumericForStatementSyntax (
-                this._syntaxTree,
                 forKeyword,
                 identifier,
                 equalsToken,
@@ -382,7 +378,6 @@ namespace Loretta.CodeAnalysis.Syntax
             var identifiers = new SeparatedSyntaxList<SyntaxToken> ( identifiersAndSeparators.ToImmutable ( ) );
             var expressions = new SeparatedSyntaxList<ExpressionSyntax> ( expressionsAndSeparators.ToImmutable ( ) );
             return new GenericForStatementSyntax (
-                this._syntaxTree,
                 forKeyword,
                 identifiers,
                 inKeyword,
@@ -409,7 +404,6 @@ namespace Loretta.CodeAnalysis.Syntax
                 ImmutableArray<StatementSyntax> elseIfBody = this.ParseStatementList ( SyntaxKind.ElseIfKeyword, SyntaxKind.ElseKeyword, SyntaxKind.EndKeyword );
 
                 elseIfClausesBuilder.Add ( new ElseIfClauseSyntax (
-                    this._syntaxTree,
                     elseIfKeyword,
                     elseIfCondition,
                     elseIfThenKeyword,
@@ -421,7 +415,7 @@ namespace Loretta.CodeAnalysis.Syntax
             {
                 SyntaxToken elseKeyword = this.Match ( SyntaxKind.ElseKeyword );
                 ImmutableArray<StatementSyntax> elseBody = this.ParseStatementList ( SyntaxKind.EndKeyword );
-                elseClause = new ElseClauseSyntax ( this._syntaxTree, elseKeyword, elseBody );
+                elseClause = new ElseClauseSyntax ( elseKeyword, elseBody );
             }
 
             SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
@@ -429,7 +423,6 @@ namespace Loretta.CodeAnalysis.Syntax
 
             ImmutableArray<ElseIfClauseSyntax> elseIfClauses = elseIfClausesBuilder.ToImmutable ( );
             return new IfStatementSyntax (
-                this._syntaxTree,
                 ifKeyword,
                 condition,
                 thenKeyword,
@@ -448,7 +441,6 @@ namespace Loretta.CodeAnalysis.Syntax
             ExpressionSyntax condition = this.ParseExpression ( );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new RepeatUntilStatementSyntax (
-                this._syntaxTree,
                 repeatKeyword,
                 body,
                 untilKeyword,
@@ -465,7 +457,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new WhileStatementSyntax (
-                this._syntaxTree,
                 whileKeyword,
                 condition,
                 doKeyword,
@@ -481,7 +472,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new DoStatementSyntax (
-                this._syntaxTree,
                 doKeyword,
                 body,
                 endKeyword,
@@ -494,7 +484,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken labelName = this.MatchIdentifier ( );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new GotoStatementSyntax (
-                this._syntaxTree,
                 gotoKeyword,
                 labelName,
                 semicolonToken );
@@ -504,14 +493,14 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             SyntaxToken breakKeyword = this.Match ( SyntaxKind.BreakKeyword );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
-            return new BreakStatementSyntax ( this._syntaxTree, breakKeyword, semicolonToken );
+            return new BreakStatementSyntax ( breakKeyword, semicolonToken );
         }
 
         private ContinueStatementSyntax ParseContinueStatement ( )
         {
             SyntaxToken? continueKeyword = this.Match ( SyntaxKind.ContinueKeyword );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
-            return new ContinueStatementSyntax ( this._syntaxTree, continueKeyword, semicolonToken );
+            return new ContinueStatementSyntax ( continueKeyword, semicolonToken );
         }
 
         private GotoLabelStatementSyntax ParseGotoLabelStatement ( )
@@ -521,7 +510,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken rightDelimiterToken = this.Match ( SyntaxKind.ColonColonToken );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new GotoLabelStatementSyntax (
-                this._syntaxTree,
                 leftDelimiterToken,
                 identifier,
                 rightDelimiterToken,
@@ -537,7 +525,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new FunctionDeclarationStatementSyntax (
-                this._syntaxTree,
                 functionKeyword,
                 name,
                 parameters,
@@ -549,20 +536,20 @@ namespace Loretta.CodeAnalysis.Syntax
         private FunctionNameSyntax ParseFunctionName ( )
         {
             SyntaxToken identifier = this.MatchIdentifier ( );
-            FunctionNameSyntax name = new SimpleFunctionNameSyntax ( this._syntaxTree, identifier );
+            FunctionNameSyntax name = new SimpleFunctionNameSyntax ( identifier );
 
             while ( this.Current.Kind == SyntaxKind.DotToken )
             {
                 SyntaxToken dotToken = this.Match ( SyntaxKind.DotToken );
                 identifier = this.MatchIdentifier ( );
-                name = new MemberFunctionNameSyntax ( this._syntaxTree, name, dotToken, identifier );
+                name = new MemberFunctionNameSyntax ( name, dotToken, identifier );
             }
 
             if ( this.Current.Kind == SyntaxKind.ColonToken )
             {
                 SyntaxToken colonToken = this.Match ( SyntaxKind.ColonToken );
                 identifier = this.MatchIdentifier ( );
-                name = new MethodFunctionNameSyntax ( this._syntaxTree, name, colonToken, identifier );
+                name = new MethodFunctionNameSyntax ( name, colonToken, identifier );
             }
 
             return name;
@@ -592,7 +579,6 @@ namespace Loretta.CodeAnalysis.Syntax
             expressions ??= new SeparatedSyntaxList<ExpressionSyntax> ( ImmutableArray<SyntaxNode>.Empty );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new ReturnStatementSyntax (
-                this._syntaxTree,
                 returnKeyword,
                 expressions,
                 semicolonToken );
@@ -602,7 +588,7 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             ImmutableArray<SyntaxNode>.Builder variablesAndSeparators = ImmutableArray.CreateBuilder<SyntaxNode> ( 1 );
             if ( !SyntaxFacts.IsVariableExpression ( variable.Kind ) )
-                this.Diagnostics.ReportCannotBeAssignedTo ( variable.Location );
+                this.Diagnostics.ReportCannotBeAssignedTo ( new TextLocation ( this._text, variable.Span ) );
             variablesAndSeparators.Add ( variable );
             while ( this.Current.Kind == SyntaxKind.CommaToken )
             {
@@ -611,7 +597,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
                 variable = this.ParsePrefixOrVariableExpression ( );
                 if ( !SyntaxFacts.IsVariableExpression ( variable.Kind ) )
-                    this.Diagnostics.ReportCannotBeAssignedTo ( variable.Location );
+                    this.Diagnostics.ReportCannotBeAssignedTo ( new TextLocation ( this._text, variable.Span ) );
                 variablesAndSeparators.Add ( variable );
             }
 
@@ -634,7 +620,6 @@ namespace Loretta.CodeAnalysis.Syntax
             var variables = new SeparatedSyntaxList<PrefixExpressionSyntax> ( variablesAndSeparators.ToImmutable ( ) );
             var values = new SeparatedSyntaxList<ExpressionSyntax> ( valuesAndSeparators.ToImmutable ( ) );
             return new AssignmentStatementSyntax (
-                this._syntaxTree,
                 variables,
                 equalsToken,
                 values,
@@ -645,13 +630,12 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             Debug.Assert ( SyntaxFacts.IsCompoundAssignmentOperatorToken ( this.Current.Kind ) );
             if ( !SyntaxFacts.IsVariableExpression ( variable.Kind ) )
-                this.Diagnostics.ReportCannotBeAssignedTo ( variable.Location );
+                this.Diagnostics.ReportCannotBeAssignedTo ( new TextLocation ( this._text, variable.Span ) );
             SyntaxToken assignmentOperatorToken = this.Next ( );
             SyntaxKind kind = SyntaxFacts.GetCompoundAssignmentStatement ( assignmentOperatorToken.Kind ).Value;
             ExpressionSyntax expression = this.ParseExpression ( );
             Option<SyntaxToken> semicolonToken = this.TryMatchSemicolon ( );
             return new CompoundAssignmentStatementSyntax (
-                this._syntaxTree,
                 kind,
                 variable,
                 assignmentOperatorToken,
@@ -672,7 +656,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 SyntaxToken operatorToken = this.Next ( );
                 SyntaxKind kind = SyntaxFacts.GetUnaryExpression ( operatorToken.Kind ).Value;
                 ExpressionSyntax operand = this.ParseBinaryExpression ( unaryOperatorPrecedence, operatorToken.Kind, true );
-                left = new UnaryExpressionSyntax ( this._syntaxTree, kind, operatorToken, operand );
+                left = new UnaryExpressionSyntax ( kind, operatorToken, operand );
             }
             else
             {
@@ -692,7 +676,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 SyntaxToken operatorToken = this.Next ( );
                 SyntaxKind kind = SyntaxFacts.GetBinaryExpression ( operatorToken.Kind ).Value;
                 ExpressionSyntax right = this.ParseBinaryExpression ( precedence, operatorKind, false );
-                left = new BinaryExpressionSyntax ( this._syntaxTree, kind, left, operatorToken, right );
+                left = new BinaryExpressionSyntax ( kind, left, operatorToken, right );
             }
 
             return left;
@@ -729,7 +713,7 @@ namespace Loretta.CodeAnalysis.Syntax
             }
             else
             {
-                return new BadExpressionSyntax ( this._syntaxTree, this.Next ( ) );
+                return new BadExpressionSyntax ( this.Next ( ) );
             }
 
             var @continue = true;
@@ -773,7 +757,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken endKeyword = this.Match ( SyntaxKind.EndKeyword );
 
             return new AnonymousFunctionExpressionSyntax (
-                this._syntaxTree,
                 functionKeywordToken,
                 parameterList,
                 body,
@@ -783,14 +766,14 @@ namespace Loretta.CodeAnalysis.Syntax
         private NameExpressionSyntax ParseNameExpression ( )
         {
             SyntaxToken identifier = this.MatchIdentifier ( );
-            return new NameExpressionSyntax ( this._syntaxTree, identifier );
+            return new NameExpressionSyntax ( identifier );
         }
 
         private MemberAccessExpressionSyntax ParseMemberAccessExpression ( PrefixExpressionSyntax expression )
         {
             SyntaxToken dotSeparator = this.Match ( SyntaxKind.DotToken );
             SyntaxToken memberName = this.MatchIdentifier ( );
-            return new MemberAccessExpressionSyntax ( this._syntaxTree, expression, dotSeparator, memberName );
+            return new MemberAccessExpressionSyntax ( expression, dotSeparator, memberName );
         }
 
         private ElementAccessExpressionSyntax ParseElementAccessExpression ( PrefixExpressionSyntax expression )
@@ -800,7 +783,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken closeBracketToken = this.Match ( SyntaxKind.CloseBracketToken );
 
             return new ElementAccessExpressionSyntax (
-                this._syntaxTree,
                 expression,
                 openBracketToken,
                 elementExpression,
@@ -814,7 +796,6 @@ namespace Loretta.CodeAnalysis.Syntax
             FunctionArgumentSyntax arguments = this.ParseFunctionArgument ( );
 
             return new MethodCallExpressionSyntax (
-                this._syntaxTree,
                 expression,
                 colonToken,
                 identifier,
@@ -825,7 +806,6 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             FunctionArgumentSyntax arguments = this.ParseFunctionArgument ( );
             return new FunctionCallExpressionSyntax (
-                this._syntaxTree,
                 expression,
                 arguments );
         }
@@ -835,12 +815,12 @@ namespace Loretta.CodeAnalysis.Syntax
             if ( this.Current.Kind is SyntaxKind.ShortStringToken or SyntaxKind.LongStringToken )
             {
                 LiteralExpressionSyntax literal = this.ParseLiteralExpression ( );
-                return new StringFunctionArgumentSyntax ( this._syntaxTree, literal );
+                return new StringFunctionArgumentSyntax ( literal );
             }
             else if ( this.Current.Kind is SyntaxKind.OpenBraceToken )
             {
                 TableConstructorExpressionSyntax tableConstructor = this.ParseTableConstructorExpression ( );
-                return new TableConstructorFunctionArgumentSyntax ( this._syntaxTree, tableConstructor );
+                return new TableConstructorFunctionArgumentSyntax ( tableConstructor );
             }
             else
             {
@@ -869,7 +849,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken closeParenthesisToken = this.Match ( SyntaxKind.CloseParenthesisToken );
 
             return new ExpressionListFunctionArgumentSyntax (
-                this._syntaxTree,
                 openParenthesisToken,
                 new SeparatedSyntaxList<ExpressionSyntax> ( argumentsAndSeparators.ToImmutable ( ) ),
                 closeParenthesisToken );
@@ -886,13 +865,13 @@ namespace Loretta.CodeAnalysis.Syntax
                 if ( this.Current.Kind == SyntaxKind.DotDotDotToken )
                 {
                     SyntaxToken varArgToken = this.Match ( SyntaxKind.DotDotDotToken );
-                    var varArgparameter = new VarArgParameterSyntax ( this._syntaxTree, varArgToken );
+                    var varArgparameter = new VarArgParameterSyntax ( varArgToken );
                     nodesAndSeparators.Add ( varArgparameter );
                     break;
                 }
 
                 SyntaxToken identifier = this.MatchIdentifier ( );
-                var parameter = new NamedParameterSyntax ( this._syntaxTree, identifier );
+                var parameter = new NamedParameterSyntax ( identifier );
                 nodesAndSeparators.Add ( parameter );
 
                 if ( this.Current.Kind == SyntaxKind.CommaToken )
@@ -908,7 +887,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken closeParenthesisToken = this.Match ( SyntaxKind.CloseParenthesisToken );
 
             return new ParameterListSyntax (
-                this._syntaxTree,
                 openParenthesisToken,
                 new SeparatedSyntaxList<ParameterSyntax> ( nodesAndSeparators.ToImmutable ( ) ),
                 closeParenthesisToken );
@@ -917,14 +895,14 @@ namespace Loretta.CodeAnalysis.Syntax
         private VarArgExpressionSyntax ParseVarArgExpression ( )
         {
             SyntaxToken varargToken = this.Match ( SyntaxKind.DotDotDotToken );
-            return new VarArgExpressionSyntax ( this._syntaxTree, varargToken );
+            return new VarArgExpressionSyntax ( varargToken );
         }
 
         private LiteralExpressionSyntax ParseLiteralExpression ( )
         {
             SyntaxToken? token = this.Next ( );
             SyntaxKind kind = SyntaxFacts.GetLiteralExpression ( token.Kind ).Value;
-            return new LiteralExpressionSyntax ( this._syntaxTree, kind, token );
+            return new LiteralExpressionSyntax ( kind, token );
         }
 
         private ParenthesizedExpressionSyntax ParseParenthesizedExpression ( )
@@ -932,7 +910,7 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken open = this.Match ( SyntaxKind.OpenParenthesisToken );
             ExpressionSyntax expression = this.ParseExpression ( );
             SyntaxToken closing = this.Match ( SyntaxKind.CloseParenthesisToken );
-            return new ParenthesizedExpressionSyntax ( this._syntaxTree, open, expression, closing );
+            return new ParenthesizedExpressionSyntax ( open, expression, closing );
         }
 
         private TableConstructorExpressionSyntax ParseTableConstructorExpression ( )
@@ -959,7 +937,6 @@ namespace Loretta.CodeAnalysis.Syntax
             SyntaxToken closeBraceToken = this.Match ( SyntaxKind.CloseBraceToken );
 
             return new TableConstructorExpressionSyntax (
-                this._syntaxTree,
                 openBraceToken,
                 new SeparatedSyntaxList<TableFieldSyntax> ( fieldsAndSeparators.ToImmutable ( ) ),
                 closeBraceToken );
@@ -973,7 +950,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 SyntaxToken equalsToken = this.Match ( SyntaxKind.EqualsToken );
                 ExpressionSyntax value = this.ParseExpression ( );
 
-                return new IdentifierKeyedTableFieldSyntax ( this._syntaxTree, identifier, equalsToken, value );
+                return new IdentifierKeyedTableFieldSyntax ( identifier, equalsToken, value );
             }
             else if ( this.Current.Kind == SyntaxKind.OpenBracketToken )
             {
@@ -983,12 +960,12 @@ namespace Loretta.CodeAnalysis.Syntax
                 SyntaxToken equalsToken = this.Match ( SyntaxKind.EqualsToken );
                 ExpressionSyntax value = this.ParseExpression ( );
 
-                return new ExpressionKeyedTableFieldSyntax ( this._syntaxTree, openBracketToken, key, closeBracketToken, equalsToken, value );
+                return new ExpressionKeyedTableFieldSyntax ( openBracketToken, key, closeBracketToken, equalsToken, value );
             }
             else
             {
                 ExpressionSyntax value = this.ParseExpression ( );
-                return new UnkeyedTableFieldSyntax ( this._syntaxTree, value );
+                return new UnkeyedTableFieldSyntax ( value );
             }
         }
     }

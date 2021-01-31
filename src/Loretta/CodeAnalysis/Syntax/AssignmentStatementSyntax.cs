@@ -8,12 +8,11 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class AssignmentStatementSyntax : StatementSyntax
     {
         internal AssignmentStatementSyntax (
-            SyntaxTree syntaxTree,
             SeparatedSyntaxList<PrefixExpressionSyntax> variables,
             SyntaxToken equalsToken,
             SeparatedSyntaxList<ExpressionSyntax> values,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.Variables = variables;
             this.EqualsToken = equalsToken;

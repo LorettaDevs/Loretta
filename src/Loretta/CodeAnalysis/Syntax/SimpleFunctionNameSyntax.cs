@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class SimpleFunctionNameSyntax : FunctionNameSyntax
     {
-        internal SimpleFunctionNameSyntax ( SyntaxTree syntaxTree, SyntaxToken identifier )
-            : base ( syntaxTree )
+        internal SimpleFunctionNameSyntax ( SyntaxToken identifier )
         {
             this.Identifier = identifier;
         }

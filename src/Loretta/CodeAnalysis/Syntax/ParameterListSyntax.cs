@@ -5,8 +5,10 @@
     /// </summary>
     public sealed partial class ParameterListSyntax : SyntaxNode
     {
-        internal ParameterListSyntax ( SyntaxTree syntaxTree, SyntaxToken openParenthesisToken, SeparatedSyntaxList<ParameterSyntax> parameters, SyntaxToken closeParenthesisToken )
-            : base ( syntaxTree )
+        internal ParameterListSyntax (
+            SyntaxToken openParenthesisToken,
+            SeparatedSyntaxList<ParameterSyntax> parameters,
+            SyntaxToken closeParenthesisToken )
         {
             this.OpenParenthesisToken = openParenthesisToken;
             this.Parameters = parameters;

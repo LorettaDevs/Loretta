@@ -7,8 +7,8 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed partial class BreakStatementSyntax : StatementSyntax
     {
-        internal BreakStatementSyntax ( SyntaxTree syntaxTree, SyntaxToken breakKeyword, Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+        internal BreakStatementSyntax ( SyntaxToken breakKeyword, Option<SyntaxToken> semicolonToken )
+            : base ( semicolonToken )
         {
             this.BreakKeyword = breakKeyword;
         }

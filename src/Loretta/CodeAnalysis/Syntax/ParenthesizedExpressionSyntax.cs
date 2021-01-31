@@ -6,14 +6,12 @@
     public sealed partial class ParenthesizedExpressionSyntax : PrefixExpressionSyntax
     {
         internal ParenthesizedExpressionSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken openParenthesisToken,
             ExpressionSyntax expression,
             SyntaxToken closeParenthesisToken )
-            : base ( syntaxTree )
         {
             this.OpenParenthesisToken = openParenthesisToken;
-            this.InnerExpression = expression;
+            this.Expression = expression;
             this.CloseParenthesisToken = closeParenthesisToken;
         }
 
@@ -28,7 +26,7 @@
         /// <summary>
         /// The inner expression.
         /// </summary>
-        public ExpressionSyntax InnerExpression { get; }
+        public ExpressionSyntax Expression { get; }
 
         /// <summary>
         /// The closing parenthesis token.

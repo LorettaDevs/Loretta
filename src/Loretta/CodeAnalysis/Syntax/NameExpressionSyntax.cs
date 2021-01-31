@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class NameExpressionSyntax : VariableExpressionSyntax
     {
-        internal NameExpressionSyntax ( SyntaxTree syntaxTree, SyntaxToken identifier )
-            : base ( syntaxTree )
+        internal NameExpressionSyntax ( SyntaxToken identifier )
         {
             this.Identifier = identifier;
         }

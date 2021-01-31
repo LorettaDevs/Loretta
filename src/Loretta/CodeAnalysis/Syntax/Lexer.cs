@@ -17,7 +17,6 @@ namespace Loretta.CodeAnalysis.Syntax
 
         private Int32 _start;
         private readonly ImmutableArray<SyntaxTrivia>.Builder _triviaBuilder = ImmutableArray.CreateBuilder<SyntaxTrivia> ( );
-        private readonly SyntaxTree syntaxTree;
 
         public DiagnosticBag Diagnostics { get; }
 
@@ -27,7 +26,6 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public Lexer ( SyntaxTree syntaxTree )
         {
-            this.syntaxTree = syntaxTree;
             this._luaOptions = syntaxTree.Options;
             this._text = syntaxTree.Text;
             this._reader = this._text.GetReader ( );
@@ -50,7 +48,6 @@ namespace Loretta.CodeAnalysis.Syntax
                                              : this._text.AsMemory ( tokenStart, tokenLength );
 
             return new SyntaxToken (
-                this.syntaxTree,
                 tokenKind,
                 tokenStart,
                 tokenText,
@@ -213,7 +210,7 @@ namespace Loretta.CodeAnalysis.Syntax
             {
                 var length = this._reader.Position - this._start;
                 ReadOnlyMemory<Char> text = this._text.AsMemory ( this._start, length );
-                this._triviaBuilder.Add ( new SyntaxTrivia ( this.syntaxTree, kind, this._start, text ) );
+                this._triviaBuilder.Add ( new SyntaxTrivia ( kind, this._start, text ) );
             }
         }
 

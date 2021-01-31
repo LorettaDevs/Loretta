@@ -6,14 +6,12 @@
     public sealed partial class IdentifierKeyedTableFieldSyntax : TableFieldSyntax
     {
         internal IdentifierKeyedTableFieldSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken identifier,
-            SyntaxToken equals,
+            SyntaxToken equalsToken,
             ExpressionSyntax value )
-            : base ( syntaxTree )
         {
             this.Identifier = identifier;
-            this.EqualsToken = equals;
+            this.EqualsToken = equalsToken;
             this.Value = value;
         }
 

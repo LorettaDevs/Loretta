@@ -5,7 +5,7 @@
     /// </summary>
     public abstract class FunctionArgumentSyntax : SyntaxNode
     {
-        private protected FunctionArgumentSyntax ( SyntaxTree syntaxTree ) : base ( syntaxTree )
+        private protected FunctionArgumentSyntax ( )
         {
         }
     }

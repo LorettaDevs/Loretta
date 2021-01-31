@@ -15,7 +15,6 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <summary>
         /// Initializes a new syntax token.
         /// </summary>
-        /// <param name="syntaxTree"></param>
         /// <param name="kind"><inheritdoc cref="Kind" path="/summary"/></param>
         /// <param name="position"><inheritdoc cref="Position" path="/summary"/></param>
         /// <param name="text"><inheritdoc cref="Text" path="/summary"/></param>
@@ -23,14 +22,12 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <param name="leadingTrivia"><inheritdoc cref="LeadingTrivia" path="/summary"/></param>
         /// <param name="trailingTrivia"><inheritdoc cref="TrailingTrivia" path="/summary"/></param>
         internal SyntaxToken (
-            SyntaxTree syntaxTree,
             SyntaxKind kind,
             Int32 position,
             Option<ReadOnlyMemory<Char>> text,
             Option<Object?> value,
             ImmutableArray<SyntaxTrivia> leadingTrivia,
             ImmutableArray<SyntaxTrivia> trailingTrivia )
-            : base ( syntaxTree )
         {
             this.Kind = kind;
             this.Position = position;
@@ -116,7 +113,6 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <returns></returns>
         public SyntaxToken WithLeadingTrivia ( ImmutableArray<SyntaxTrivia> leadingTrivia ) =>
             new SyntaxToken (
-                this.SyntaxTree,
                 this.Kind,
                 this.Position,
                 this.IsMissing ? default : this.Text,
@@ -131,7 +127,6 @@ namespace Loretta.CodeAnalysis.Syntax
         /// <returns></returns>
         public SyntaxToken WithTrailingTrivia ( ImmutableArray<SyntaxTrivia> trailingTrivia ) =>
             new SyntaxToken (
-                this.SyntaxTree,
                 this.Kind,
                 this.Position,
                 this.IsMissing ? default : this.Text,

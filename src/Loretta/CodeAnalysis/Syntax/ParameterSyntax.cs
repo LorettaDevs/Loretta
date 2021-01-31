@@ -5,7 +5,7 @@
     /// </summary>
     public abstract class ParameterSyntax : SyntaxNode
     {
-        private protected ParameterSyntax ( SyntaxTree syntaxTree ) : base ( syntaxTree )
+        private protected ParameterSyntax ( )
         {
         }
     }

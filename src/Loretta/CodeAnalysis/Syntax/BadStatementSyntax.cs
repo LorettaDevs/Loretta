@@ -5,8 +5,8 @@
     /// </summary>
     public sealed partial class BadStatementSyntax : StatementSyntax
     {
-        internal BadStatementSyntax ( SyntaxTree syntaxTree, BadExpressionSyntax expression )
-            : base ( syntaxTree, default )
+        internal BadStatementSyntax ( BadExpressionSyntax expression )
+            : base ( default )
         {
             this.Expression = expression;
         }

@@ -7,8 +7,7 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed partial class ElseClauseSyntax : SyntaxNode
     {
-        internal ElseClauseSyntax ( SyntaxTree syntaxTree, SyntaxToken elseKeyword, ImmutableArray<StatementSyntax> elseBody )
-            : base ( syntaxTree )
+        internal ElseClauseSyntax ( SyntaxToken elseKeyword, ImmutableArray<StatementSyntax> elseBody )
         {
             this.ElseKeyword = elseKeyword;
             this.ElseBody = elseBody;

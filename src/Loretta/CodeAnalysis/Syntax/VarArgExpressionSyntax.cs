@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class VarArgExpressionSyntax : ExpressionSyntax
     {
-        internal VarArgExpressionSyntax ( SyntaxTree syntaxTree, SyntaxToken varArgToken )
-            : base ( syntaxTree )
+        internal VarArgExpressionSyntax ( SyntaxToken varArgToken )
         {
             this.VarArgToken = varArgToken;
         }

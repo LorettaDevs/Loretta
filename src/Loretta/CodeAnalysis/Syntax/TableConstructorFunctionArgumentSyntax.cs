@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class TableConstructorFunctionArgumentSyntax : FunctionArgumentSyntax
     {
-        internal TableConstructorFunctionArgumentSyntax ( SyntaxTree syntaxTree, TableConstructorExpressionSyntax tableConstructor )
-            : base ( syntaxTree )
+        internal TableConstructorFunctionArgumentSyntax ( TableConstructorExpressionSyntax tableConstructor )
         {
             this.TableConstructor = tableConstructor;
         }

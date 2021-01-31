@@ -9,7 +9,6 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class IfStatementSyntax : StatementSyntax
     {
         internal IfStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken ifKeyword,
             ExpressionSyntax condition,
             SyntaxToken thenKeyword,
@@ -18,7 +17,7 @@ namespace Loretta.CodeAnalysis.Syntax
             Option<ElseClauseSyntax> elseClause,
             SyntaxToken endKeyword,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.IfKeyword = ifKeyword;
             this.Condition = condition;

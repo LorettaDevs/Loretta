@@ -6,7 +6,7 @@
     /// </summary>
     public abstract class PrefixExpressionSyntax : ExpressionSyntax
     {
-        private protected PrefixExpressionSyntax ( SyntaxTree syntaxTree ) : base ( syntaxTree )
+        private protected PrefixExpressionSyntax ( )
         {
         }
     }

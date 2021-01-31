@@ -9,13 +9,12 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class RepeatUntilStatementSyntax : StatementSyntax
     {
         internal RepeatUntilStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken repeatKeyword,
             ImmutableArray<StatementSyntax> body,
             SyntaxToken untilKeyword,
             ExpressionSyntax condition,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.RepeatKeyword = repeatKeyword;
             this.Body = body;

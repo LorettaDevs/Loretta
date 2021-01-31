@@ -7,12 +7,12 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed partial class CompoundAssignmentStatementSyntax : StatementSyntax
     {
-        internal CompoundAssignmentStatementSyntax ( SyntaxTree syntaxTree, SyntaxKind kind, PrefixExpressionSyntax variable, SyntaxToken assignmentToken, ExpressionSyntax expression, Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+        internal CompoundAssignmentStatementSyntax ( SyntaxKind kind, PrefixExpressionSyntax variable, SyntaxToken assignmentOperatorToken, ExpressionSyntax expression, Option<SyntaxToken> semicolonToken )
+            : base ( semicolonToken )
         {
             this.Kind = kind;
             this.Variable = variable;
-            this.AssignmentOperatorToken = assignmentToken;
+            this.AssignmentOperatorToken = assignmentOperatorToken;
             this.Expression = expression;
         }
 

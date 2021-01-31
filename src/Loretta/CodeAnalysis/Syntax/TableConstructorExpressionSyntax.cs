@@ -6,11 +6,9 @@
     public sealed partial class TableConstructorExpressionSyntax : ExpressionSyntax
     {
         internal TableConstructorExpressionSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken openBraceToken,
             SeparatedSyntaxList<TableFieldSyntax> fields,
             SyntaxToken closeBraceToken )
-            : base ( syntaxTree )
         {
             this.OpenBraceToken = openBraceToken;
             this.Fields = fields;

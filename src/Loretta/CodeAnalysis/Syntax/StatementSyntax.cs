@@ -8,7 +8,7 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public abstract class StatementSyntax : SyntaxNode
     {
-        private protected StatementSyntax ( SyntaxTree syntaxTree, Option<SyntaxToken> semicolonToken ) : base ( syntaxTree )
+        private protected StatementSyntax ( Option<SyntaxToken> semicolonToken )
         {
             this.SemicolonToken = semicolonToken;
         }

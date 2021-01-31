@@ -9,7 +9,6 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class NumericForStatementSyntax : StatementSyntax
     {
         internal NumericForStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken forKeyword,
             SyntaxToken identifier,
             SyntaxToken equalsToken,
@@ -22,7 +21,7 @@ namespace Loretta.CodeAnalysis.Syntax
             ImmutableArray<StatementSyntax> body,
             SyntaxToken endKeyword,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.ForKeyword = forKeyword;
             this.Identifier = identifier;

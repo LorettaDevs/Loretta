@@ -8,31 +8,17 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class LocalVariableDeclarationStatementSyntax : StatementSyntax
     {
         internal LocalVariableDeclarationStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken localKeyword,
             SeparatedSyntaxList<NameExpressionSyntax> names,
-            SyntaxToken equalsToken,
-            SeparatedSyntaxList<ExpressionSyntax> values,
+            Option<SyntaxToken> equalsToken,
+            Option<SeparatedSyntaxList<ExpressionSyntax>> values,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.LocalKeyword = localKeyword;
             this.Names = names;
             this.EqualsToken = equalsToken;
             this.Values = values;
-        }
-
-        internal LocalVariableDeclarationStatementSyntax (
-            SyntaxTree syntaxTree,
-            SyntaxToken localKeyword,
-            SeparatedSyntaxList<NameExpressionSyntax> names,
-            Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
-        {
-            this.LocalKeyword = localKeyword;
-            this.Names = names;
-            this.EqualsToken = default;
-            this.Values = default;
         }
 
         /// <inheritdoc/>

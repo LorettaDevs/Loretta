@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class MemberAccessExpressionSyntax : VariableExpressionSyntax
     {
-        internal MemberAccessExpressionSyntax ( SyntaxTree syntaxTree, PrefixExpressionSyntax expression, SyntaxToken dotSeparator, SyntaxToken memberName )
-            : base ( syntaxTree )
+        internal MemberAccessExpressionSyntax ( PrefixExpressionSyntax expression, SyntaxToken dotSeparator, SyntaxToken memberName )
         {
             this.Expression = expression;
             this.DotSeparator = dotSeparator;

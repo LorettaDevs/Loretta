@@ -6,11 +6,9 @@
     public sealed partial class MethodFunctionNameSyntax : FunctionNameSyntax
     {
         internal MethodFunctionNameSyntax (
-            SyntaxTree syntaxTree,
             FunctionNameSyntax name,
             SyntaxToken colonToken,
             SyntaxToken identifier )
-            : base ( syntaxTree )
         {
             this.Name = name;
             this.ColonToken = colonToken;

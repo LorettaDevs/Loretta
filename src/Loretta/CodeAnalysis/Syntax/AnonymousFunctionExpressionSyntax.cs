@@ -8,14 +8,12 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class AnonymousFunctionExpressionSyntax : ExpressionSyntax
     {
         internal AnonymousFunctionExpressionSyntax (
-            SyntaxTree syntaxTree,
-            SyntaxToken functionKeywordToken,
+            SyntaxToken functionKeyword,
             ParameterListSyntax parameters,
             ImmutableArray<StatementSyntax> body,
             SyntaxToken endKeyword )
-            : base ( syntaxTree )
         {
-            this.FunctionKeyword = functionKeywordToken;
+            this.FunctionKeyword = functionKeyword;
             this.Parameters = parameters;
             this.Body = body;
             this.EndKeyword = endKeyword;

@@ -9,7 +9,6 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class GenericForStatementSyntax : StatementSyntax
     {
         internal GenericForStatementSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken forKeyword,
             SeparatedSyntaxList<SyntaxToken> identifiers,
             SyntaxToken inKeyword,
@@ -18,7 +17,7 @@ namespace Loretta.CodeAnalysis.Syntax
             ImmutableArray<StatementSyntax> body,
             SyntaxToken endKeyword,
             Option<SyntaxToken> semicolonToken )
-            : base ( syntaxTree, semicolonToken )
+            : base ( semicolonToken )
         {
             this.ForKeyword = forKeyword;
             this.Identifiers = identifiers;

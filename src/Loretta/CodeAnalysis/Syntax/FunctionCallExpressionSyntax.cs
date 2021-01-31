@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class FunctionCallExpressionSyntax : PrefixExpressionSyntax
     {
-        internal FunctionCallExpressionSyntax ( SyntaxTree syntaxTree, PrefixExpressionSyntax expression, FunctionArgumentSyntax argument )
-            : base ( syntaxTree )
+        internal FunctionCallExpressionSyntax ( PrefixExpressionSyntax expression, FunctionArgumentSyntax argument )
         {
             this.Expression = expression;
             this.Argument = argument;

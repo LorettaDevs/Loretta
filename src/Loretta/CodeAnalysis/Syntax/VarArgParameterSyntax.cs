@@ -5,8 +5,7 @@
     /// </summary>
     public sealed partial class VarArgParameterSyntax : ParameterSyntax
     {
-        internal VarArgParameterSyntax ( SyntaxTree syntaxTree, SyntaxToken varArgToken )
-            : base ( syntaxTree )
+        internal VarArgParameterSyntax ( SyntaxToken varArgToken )
         {
             this.VarArgToken = varArgToken;
         }

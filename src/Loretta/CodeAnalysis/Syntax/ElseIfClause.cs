@@ -8,12 +8,10 @@ namespace Loretta.CodeAnalysis.Syntax
     public sealed partial class ElseIfClauseSyntax : SyntaxNode
     {
         internal ElseIfClauseSyntax (
-            SyntaxTree syntaxTree,
             SyntaxToken elseIfKeyword,
             ExpressionSyntax condition,
             SyntaxToken thenKeyword,
             ImmutableArray<StatementSyntax> body )
-            : base ( syntaxTree )
         {
             this.ElseIfKeyword = elseIfKeyword;
             this.Condition = condition;

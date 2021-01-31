@@ -6,16 +6,14 @@
     public sealed partial class ElementAccessExpressionSyntax : VariableExpressionSyntax
     {
         internal ElementAccessExpressionSyntax (
-            SyntaxTree syntaxTree,
             PrefixExpressionSyntax expression,
             SyntaxToken openBracketToken,
-            ExpressionSyntax elementExpression,
+            ExpressionSyntax keyExpression,
             SyntaxToken closeBracketToken )
-            : base ( syntaxTree )
         {
             this.Expression = expression;
             this.OpenBracketToken = openBracketToken;
-            this.KeyExpression = elementExpression;
+            this.KeyExpression = keyExpression;
             this.CloseBracketToken = closeBracketToken;
         }
 
