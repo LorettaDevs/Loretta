@@ -113,6 +113,11 @@ namespace Loretta.Generators
             }
         }
 
+        public static String TypeToShortString ( INamedTypeSymbol typeSymbol ) =>
+            typeSymbol.TypeArguments.IsEmpty
+            ? typeSymbol.Name
+            : $"{typeSymbol.Name}<{String.Join ( ", ", typeSymbol.TypeArguments.Select ( t => TypeToShortString ( ( INamedTypeSymbol ) t ) ) )}>";
+
         private static void GetAllTypes ( List<INamedTypeSymbol> result, INamespaceOrTypeSymbol symbol )
         {
             if ( symbol is INamedTypeSymbol type )
