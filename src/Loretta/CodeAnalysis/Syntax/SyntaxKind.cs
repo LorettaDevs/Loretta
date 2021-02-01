@@ -25,12 +25,15 @@ namespace Loretta.CodeAnalysis.Syntax
         [Token]
         EndOfFileToken,
         [Token]
+        [ExtraCategories ( "LiteralToken" )]
         [Property ( "LiteralExpression", NumericalLiteralExpression )]
         NumberToken,
         [Token]
+        [ExtraCategories ( "LiteralToken" )]
         [Property ( "LiteralExpression", StringLiteralExpression )]
         ShortStringToken,
         [Token]
+        [ExtraCategories ( "LiteralToken" )]
         [Property ( "LiteralExpression", StringLiteralExpression )]
         LongStringToken,
         [Token]
@@ -209,10 +212,13 @@ namespace Loretta.CodeAnalysis.Syntax
         [UnaryOperator ( precedence: 7, LogicalNotExpression )]
         NotKeyword,
         [Keyword ( "nil" )]
+        [ExtraCategories ( "LiteralToken" )]
         NilKeyword,
         [Keyword ( "true" )]
+        [ExtraCategories ( "LiteralToken" )]
         TrueKeyword,
         [Keyword ( "false" )]
+        [ExtraCategories ( "LiteralToken" )]
         FalseKeyword,
 
         // Parameters
