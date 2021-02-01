@@ -42,7 +42,7 @@ namespace Loretta.CodeAnalysis.Syntax
                             foreach ( SyntaxTrivia lt in badToken.LeadingTrivia )
                                 leadingTrivia.Insert ( index++, lt );
 
-                            var trivia = new SyntaxTrivia ( SyntaxKind.SkippedTextTrivia, badToken.Position, badToken.Text );
+                            var trivia = new SyntaxTrivia ( SyntaxKind.SkippedTextTrivia, badToken.Position, badToken.Text.Value );
                             leadingTrivia.Insert ( index++, trivia );
 
                             foreach ( SyntaxTrivia tt in badToken.TrailingTrivia )
@@ -50,7 +50,7 @@ namespace Loretta.CodeAnalysis.Syntax
                         }
 
                         badTokens.Clear ( );
-                        token = new SyntaxToken ( token.Kind, token.Position, token.Text, token.Value, leadingTrivia.ToImmutable ( ), token.TrailingTrivia );
+                        token = new SyntaxToken ( token.Kind, token.Position, token.Text, token.Value, leadingTrivia.ToImmutable ( ), token.TrailingTrivia, false );
                     }
 
                     tokens.Add ( token );
@@ -88,13 +88,15 @@ namespace Loretta.CodeAnalysis.Syntax
                 new TextLocation ( this._text, this.Current.Span ),
                 this.Current.Kind,
                 kind );
+
             return new SyntaxToken (
                 kind,
                 this.Current.Position,
+                SyntaxFacts.GetText ( kind ) is { } txt ? txt.AsMemory ( ) : default,
                 default,
-                default,
-                ImmutableArray<SyntaxTrivia>.Empty,
-                ImmutableArray<SyntaxTrivia>.Empty );
+                SyntaxTrivia.Empty,
+                SyntaxTrivia.Empty,
+                true );
         }
 
         private SyntaxToken MatchIdentifier ( )
@@ -103,13 +105,7 @@ namespace Loretta.CodeAnalysis.Syntax
             {
                 // Transforms the continue keyword into an identifier token on-the-fly.
                 SyntaxToken continueKeyword = this.Next ( );
-                return new SyntaxToken (
-                    SyntaxKind.IdentifierToken,
-                    continueKeyword.Position,
-                    continueKeyword.Text,
-                    default,
-                    continueKeyword.LeadingTrivia,
-                    continueKeyword.TrailingTrivia );
+                return continueKeyword.WithKind ( SyntaxKind.IdentifierToken );
             }
             return this.Match ( SyntaxKind.IdentifierToken );
         }

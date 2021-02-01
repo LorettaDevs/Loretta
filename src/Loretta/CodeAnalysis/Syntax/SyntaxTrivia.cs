@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Syntax
@@ -8,6 +9,11 @@ namespace Loretta.CodeAnalysis.Syntax
     /// </summary>
     public sealed class SyntaxTrivia
     {
+        /// <summary>
+        /// An empty array of trivia.
+        /// </summary>
+        public static ImmutableArray<SyntaxTrivia> Empty => ImmutableArray<SyntaxTrivia>.Empty;
+
         internal SyntaxTrivia ( SyntaxKind kind, Int32 position, ReadOnlyMemory<Char> text )
         {
             this.Kind = kind;
