@@ -13,42 +13,6 @@ namespace Loretta.Generators.SyntaxKindGenerators
     [Generator]
     public sealed partial class SyntaxKindRelatedTypesGenerator : ISourceGenerator
     {
-        private static readonly DiagnosticDescriptor TriviaAndToken = new (
-            id: "LO0001",
-            title: "A trivia kind can't also be a token",
-            messageFormat: "A trivia kind can't also be a token",
-            category: "Loretta.Generators",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true,
-            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable } );
-
-        private static readonly DiagnosticDescriptor NoKinds = new (
-            id: "LO0002",
-            title: "No SyntaxKind with attributes found",
-            messageFormat: "No SyntaxKind with attributes found",
-            category: "Loretta.Generators",
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true,
-            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable } );
-
-        private static readonly DiagnosticDescriptor OperatorWithoutText = new (
-            id: "LO0003",
-            title: "An operator kind must have a non-empty and non-whitespace text associated with it",
-            messageFormat: "An operator kind must have a non-empty and non-whitespace text associated with it",
-            category: "Loretta.Generators",
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true,
-            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable } );
-
-        private static readonly DiagnosticDescriptor KeywordWithoutText = new (
-            id: "LO0003",
-            title: "A keyword kind must have a non-empty and non-whitespace text associated with it",
-            messageFormat: "A keyword kind must have a non-empty and non-whitespace text associated with it",
-            category: "Loretta.Generators",
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true,
-            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable } );
-
         public void Initialize ( GeneratorInitializationContext context )
         {
         }
@@ -72,7 +36,7 @@ namespace Loretta.Generators.SyntaxKindGenerators
                 ImmutableArray<KindInfo> kinds = MapToKindInfo ( context, fields );
                 if ( kinds.Length < 1 )
                 {
-                    context.ReportDiagnostic ( Diagnostic.Create ( NoKinds, syntaxKindType.Locations.Single ( ) ) );
+                    context.ReportDiagnostic ( Diagnostic.Create ( Diagnostics.NoSyntaxKindWithAttributesFound, syntaxKindType.Locations.Single ( ) ) );
                     return;
                 }
 
@@ -143,19 +107,19 @@ namespace Loretta.Generators.SyntaxKindGenerators
                 if ( isTrivia && tokenInfo is not null )
                 {
                     hasErrors = true;
-                    context.ReportDiagnostic ( Diagnostic.Create ( TriviaAndToken, location ) );
+                    context.ReportDiagnostic ( Diagnostic.Create ( Diagnostics.TriviaKindIsAlsoAToken, location ) );
                 }
 
                 if ( tokenInfo is { IsKeyword: true, Text: null } )
                 {
                     hasErrors = true;
-                    context.ReportDiagnostic ( Diagnostic.Create ( KeywordWithoutText, location ) );
+                    context.ReportDiagnostic ( Diagnostic.Create ( Diagnostics.KeywordKindWithoutText, location ) );
                 }
 
                 if ( ( unaryOperatorInfo is not null || binaryOperatorInfo is not null ) && String.IsNullOrWhiteSpace ( tokenInfo?.Text ) )
                 {
                     hasErrors = true;
-                    context.ReportDiagnostic ( Diagnostic.Create ( OperatorWithoutText, location ) );
+                    context.ReportDiagnostic ( Diagnostic.Create ( Diagnostics.OperatorKindWithoutText, location ) );
                 }
 
                 if ( hasErrors )
