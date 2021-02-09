@@ -9,15 +9,17 @@ namespace Loretta.Generators
     internal readonly struct CurlyIndenter : IDisposable
     {
         private readonly IndentedTextWriter _indentedTextWriter;
+        private readonly String _closingExtra;
 
         /// <summary>
         /// Default constructor that maked a tidies creation of the line before the opening curly
         /// </summary>
         /// <param name="indentedTextWriter">The writer to use</param>
         /// <param name="openingLine">any line to write before the curly</param>
-        public CurlyIndenter ( IndentedTextWriter indentedTextWriter, String openingLine = "" )
+        public CurlyIndenter ( IndentedTextWriter indentedTextWriter, String openingLine = "", String closingExtra = "" )
         {
             this._indentedTextWriter = indentedTextWriter;
+            this._closingExtra = closingExtra;
             if ( !String.IsNullOrWhiteSpace ( openingLine ) )
                 indentedTextWriter.WriteLine ( openingLine );
             indentedTextWriter.WriteLine ( "{" );
@@ -30,7 +32,15 @@ namespace Loretta.Generators
         public void Dispose ( )
         {
             this._indentedTextWriter.Indent--;
-            this._indentedTextWriter.WriteLine ( "}" );
+            if ( !String.IsNullOrEmpty ( this._closingExtra ) )
+            {
+                this._indentedTextWriter.Write ( "}" );
+                this._indentedTextWriter.WriteLine ( this._closingExtra );
+            }
+            else
+            {
+                this._indentedTextWriter.WriteLine ( "}" );
+            }
         }
     }
 }
