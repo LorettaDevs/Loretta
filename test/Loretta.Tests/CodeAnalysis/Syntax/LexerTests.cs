@@ -28,7 +28,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
+            Assert.Equal ( SyntaxKind.StringLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
@@ -52,7 +52,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
+            Assert.Equal ( SyntaxKind.StringLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
@@ -74,7 +74,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
+            Assert.Equal ( SyntaxKind.StringLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
@@ -96,7 +96,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( SyntaxKind.NumericLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( 0d, token.Value.Value );
 
@@ -116,7 +116,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( SyntaxKind.NumericLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( 0d, token.Value.Value );
 
@@ -136,7 +136,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( LuaOptions.All, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( SyntaxKind.NumericLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( 1d, token.Value.Value );
 
@@ -214,7 +214,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, numberText, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( SyntaxKind.NumericLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( numberText, StringComparison.Ordinal ) );
             Assert.Equal ( ( Double ) 0b1010, token.Value.Value );
 
@@ -234,7 +234,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, numberText, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( SyntaxKind.NumericLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( numberText, StringComparison.Ordinal ) );
             Assert.Equal ( 7d * 8d + 7d, token.Value.Value );
 
@@ -256,7 +256,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( SyntaxKind.NumericLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( HexFloat.DoubleFromHexString ( text ), token.Value.Value );
 
@@ -279,7 +279,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.NumberToken, token.Kind );
+            Assert.Equal ( SyntaxKind.NumericLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
@@ -372,7 +372,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             ImmutableArray<SyntaxToken> tokens = SyntaxTree.ParseTokens ( options, text, out ImmutableArray<Diagnostic> diagnostics );
 
             SyntaxToken token = Assert.Single ( tokens );
-            Assert.Equal ( SyntaxKind.ShortStringToken, token.Kind );
+            Assert.Equal ( SyntaxKind.StringLiteralToken, token.Kind );
             Assert.True ( token.Text.Span.Equals ( text, StringComparison.Ordinal ) );
             Assert.Equal ( value, token.Value.Value );
 
@@ -566,44 +566,44 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
                 #region Numbers
 
                 // Binary
-                new ShortToken ( SyntaxKind.NumberToken, "0b10", Option.Some<Double> ( 0b10 ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0b10_10", Option.Some<Double> ( 0b1010 ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0b10", Option.Some<Double> ( 0b10 ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0b10_10", Option.Some<Double> ( 0b1010 ) ),
 
                 // Octal
-                new ShortToken ( SyntaxKind.NumberToken, "0o77", Option.Some<Double> ( Convert.ToInt32 ( "77", 8 ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0o77_77", Option.Some<Double> ( Convert.ToInt32 ( "7777", 8 ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0o77", Option.Some<Double> ( Convert.ToInt32 ( "77", 8 ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0o77_77", Option.Some<Double> ( Convert.ToInt32 ( "7777", 8 ) ) ),
 
                 // Decimal
-                new ShortToken ( SyntaxKind.NumberToken, "1", 1d ),
-                new ShortToken ( SyntaxKind.NumberToken, "1.1", 1.1d ),
-                new ShortToken ( SyntaxKind.NumberToken, "1.1e10", 1.1e10d ),
-                new ShortToken ( SyntaxKind.NumberToken, ".1", .1d ),
-                new ShortToken ( SyntaxKind.NumberToken, ".1e10", .1e10d ),
-                new ShortToken ( SyntaxKind.NumberToken, "1_1", 11d ),
-                new ShortToken ( SyntaxKind.NumberToken, "1_1.1_1", 11.11d ),
-                new ShortToken ( SyntaxKind.NumberToken, "1_1.1_1e1_0", 11.11e10d ),
-                new ShortToken ( SyntaxKind.NumberToken, ".1_1", .11d ),
-                new ShortToken ( SyntaxKind.NumberToken, ".1_1e1_0", .11e10d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "1", 1d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "1.1", 1.1d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "1.1e10", 1.1e10d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, ".1", .1d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, ".1e10", .1e10d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "1_1", 11d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "1_1.1_1", 11.11d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "1_1.1_1e1_0", 11.11e10d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, ".1_1", .11d ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, ".1_1e1_0", .11e10d ),
 
                 // Hexadecimal
-                new ShortToken ( SyntaxKind.NumberToken, "0xf", HexFloat.DoubleFromHexString ( "0xf".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0xfp10", HexFloat.DoubleFromHexString ( "0xfp10".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0xf.f", HexFloat.DoubleFromHexString ( "0xf.f".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0xf.fp10", HexFloat.DoubleFromHexString ( "0xf.fp10".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0x.f", HexFloat.DoubleFromHexString ( "0x.f".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0x.fp10", HexFloat.DoubleFromHexString ( "0x.fp10".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0xf_f", HexFloat.DoubleFromHexString ( "0xf_f".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0xf_f.f_f", HexFloat.DoubleFromHexString ( "0xf_f.f_f".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0xf_f.f_fp1_0", HexFloat.DoubleFromHexString ( "0xf_f.f_fp1_0".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0x.f_f", HexFloat.DoubleFromHexString ( "0x.f_f".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0x.f_fp1_0", HexFloat.DoubleFromHexString ( "0x.f_fp1_0".Replace ( "_", "" ) ) ),
-                new ShortToken ( SyntaxKind.NumberToken, "0xf_fp1_0", HexFloat.DoubleFromHexString ( "0xf_fp1_0".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0xf", HexFloat.DoubleFromHexString ( "0xf".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0xfp10", HexFloat.DoubleFromHexString ( "0xfp10".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0xf.f", HexFloat.DoubleFromHexString ( "0xf.f".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0xf.fp10", HexFloat.DoubleFromHexString ( "0xf.fp10".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0x.f", HexFloat.DoubleFromHexString ( "0x.f".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0x.fp10", HexFloat.DoubleFromHexString ( "0x.fp10".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0xf_f", HexFloat.DoubleFromHexString ( "0xf_f".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0xf_f.f_f", HexFloat.DoubleFromHexString ( "0xf_f.f_f".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0xf_f.f_fp1_0", HexFloat.DoubleFromHexString ( "0xf_f.f_fp1_0".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0x.f_f", HexFloat.DoubleFromHexString ( "0x.f_f".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0x.f_fp1_0", HexFloat.DoubleFromHexString ( "0x.f_fp1_0".Replace ( "_", "" ) ) ),
+                new ShortToken ( SyntaxKind.NumericLiteralToken, "0xf_fp1_0", HexFloat.DoubleFromHexString ( "0xf_fp1_0".Replace ( "_", "" ) ) ),
 
                 #endregion Numbers
 
                 // Short strings
-                new ShortToken ( SyntaxKind.ShortStringToken, '\'' + shortStringContentText + '\'', shortStringContentValue ),
-                new ShortToken ( SyntaxKind.ShortStringToken, '"' + shortStringContentText + '"', shortStringContentValue ),
+                new ShortToken ( SyntaxKind.StringLiteralToken, '\'' + shortStringContentText + '\'', shortStringContentValue ),
+                new ShortToken ( SyntaxKind.StringLiteralToken, '"' + shortStringContentText + '"', shortStringContentValue ),
 
                 // Identifiers
                 new ShortToken ( SyntaxKind.IdentifierToken, "a" ),
@@ -633,7 +633,7 @@ fourth line \xFF.";
                                                        .Select ( n => new String ( '=', n ) )
                                                        .ToImmutableArray ( );
 
-            dynamicTokens.AddRange ( separators.Select ( sep => new ShortToken ( SyntaxKind.LongStringToken, $"[{sep}[{longStringContent}]{sep}]", longStringContent ) ) );
+            dynamicTokens.AddRange ( separators.Select ( sep => new ShortToken ( SyntaxKind.LongStringLiteralToken, $"[{sep}[{longStringContent}]{sep}]", longStringContent ) ) );
 
             #endregion Strings
 
@@ -681,19 +681,19 @@ fourth line \xFF.";
                 return true;
             if ( kindA is SyntaxKind.IdentifierToken && kindBIsKeyowrd )
                 return true;
-            if ( kindA is SyntaxKind.IdentifierToken && kindB is SyntaxKind.NumberToken )
+            if ( kindA is SyntaxKind.IdentifierToken && kindB is SyntaxKind.NumericLiteralToken )
                 return true;
-            if ( kindA is SyntaxKind.NumberToken && kindB is SyntaxKind.IdentifierToken )
+            if ( kindA is SyntaxKind.NumericLiteralToken && kindB is SyntaxKind.IdentifierToken )
                 return true;
-            if ( kindA is SyntaxKind.NumberToken && kindBIsKeyowrd )
+            if ( kindA is SyntaxKind.NumericLiteralToken && kindBIsKeyowrd )
                 return true;
-            if ( kindA is SyntaxKind.NumberToken && kindB is SyntaxKind.DotToken or SyntaxKind.DotDotToken or SyntaxKind.DotDotDotToken or SyntaxKind.DotDotEqualsToken )
+            if ( kindA is SyntaxKind.NumericLiteralToken && kindB is SyntaxKind.DotToken or SyntaxKind.DotDotToken or SyntaxKind.DotDotDotToken or SyntaxKind.DotDotEqualsToken )
                 return true;
-            if ( kindAIsKeyword && kindB is SyntaxKind.NumberToken )
+            if ( kindAIsKeyword && kindB is SyntaxKind.NumericLiteralToken )
                 return true;
-            if ( kindA is SyntaxKind.NumberToken && kindB is SyntaxKind.NumberToken )
+            if ( kindA is SyntaxKind.NumericLiteralToken && kindB is SyntaxKind.NumericLiteralToken )
                 return true;
-            if ( kindA is SyntaxKind.OpenBracketToken && kindB is SyntaxKind.OpenBracketToken or SyntaxKind.LongStringToken )
+            if ( kindA is SyntaxKind.OpenBracketToken && kindB is SyntaxKind.OpenBracketToken or SyntaxKind.LongStringLiteralToken )
                 return true;
             if ( kindA is SyntaxKind.ColonToken && kindB is SyntaxKind.ColonToken or SyntaxKind.ColonColonToken )
                 return true;
@@ -730,7 +730,7 @@ fourth line \xFF.";
             if ( kindA is SyntaxKind.PipeToken && kindB is SyntaxKind.PipeToken or SyntaxKind.PipePipeToken )
                 return true;
             // Dot can be the start of a number
-            if ( kindA is SyntaxKind.DotToken or SyntaxKind.DotDotToken or SyntaxKind.DotDotDotToken && kindB is SyntaxKind.NumberToken )
+            if ( kindA is SyntaxKind.DotToken or SyntaxKind.DotDotToken or SyntaxKind.DotDotDotToken && kindB is SyntaxKind.NumericLiteralToken )
                 return true;
             // Shebang
             if ( kindA is SyntaxKind.HashToken && kindB is SyntaxKind.BangToken or SyntaxKind.BangEqualsToken )
