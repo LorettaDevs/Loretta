@@ -53,7 +53,8 @@ namespace Loretta.CodeAnalysis.Syntax
                 tokenText,
                 tokenValue,
                 leadingTrivia,
-                trailingTrivia );
+                trailingTrivia,
+                false );
         }
 
         private ImmutableArray<SyntaxTrivia> ReadTrivia ( Boolean leading )
@@ -303,7 +304,7 @@ namespace Loretta.CodeAnalysis.Syntax
                             this.Diagnostics.ReportUnfinishedString ( location );
                         }
 
-                        return (SyntaxKind.LongStringToken, contents);
+                        return (SyntaxKind.StringLiteralToken, contents);
                     }
                     else
                     {
@@ -507,7 +508,7 @@ namespace Loretta.CodeAnalysis.Syntax
                             // Skip the prefix
                             this._reader.Advance ( 2 );
                             var val = this.ParseBinaryNumber ( );
-                            return (SyntaxKind.NumberToken, val);
+                            return (SyntaxKind.NumericLiteralToken, val);
                         }
 
                         // 0o[0-7_]+
@@ -516,7 +517,7 @@ namespace Loretta.CodeAnalysis.Syntax
                             // Skip the prefix
                             this._reader.Advance ( 2 );
                             var val = this.ParseOctalNumber ( );
-                            return (SyntaxKind.NumberToken, val);
+                            return (SyntaxKind.NumericLiteralToken, val);
                         }
 
                         // 0x(?:[A-Fa-f0-9]?[A-Fa-f0-9_]*)?\.(?:[A-Fa-f0-9][A-Fa-f0-9_]*)?(?:[pP][0-9]+)?
@@ -525,7 +526,7 @@ namespace Loretta.CodeAnalysis.Syntax
                             // Skip the prefix
                             this._reader.Advance ( 2 );
                             var val = this.ParseHexadecimalNumber ( );
-                            return (SyntaxKind.NumberToken, val);
+                            return (SyntaxKind.NumericLiteralToken, val);
                         }
                     }
 
@@ -544,7 +545,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 case '9':
                 {
                     var val = this.ParseDecimalNumber ( );
-                    return (SyntaxKind.NumberToken, val);
+                    return (SyntaxKind.NumericLiteralToken, val);
                 }
 
                 #endregion Numbers
@@ -553,7 +554,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 case '\'':
                 {
                     var val = this.ParseShortString ( );
-                    return (SyntaxKind.ShortStringToken, val);
+                    return (SyntaxKind.StringLiteralToken, val);
                 }
 
                 #endregion Literals
