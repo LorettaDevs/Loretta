@@ -91,8 +91,13 @@ namespace Loretta.Generators
 
             var relatedFilePath = relatedSymbol.DeclaringSyntaxReferences.First ( ).SyntaxTree.FilePath;
             var relatedDirectory = Path.GetDirectoryName ( relatedFilePath );
-            var filePath = Path.Combine ( relatedDirectory, fileName );
 
+            DoVsCodeHack ( relatedDirectory, fileName, sourceText );
+        }
+
+        public static void DoVsCodeHack ( String relatedDirectory, String fileName, SourceText sourceText )
+        {
+            var filePath = Path.Combine ( relatedDirectory, fileName );
             if ( File.Exists ( filePath ) )
             {
                 var fileText = File.ReadAllText ( filePath );
