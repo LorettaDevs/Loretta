@@ -197,7 +197,7 @@ namespace Loretta.Utilities
                     if ( ch is ' ' || CharUtils.IsCategoryInSet ( categoryFlagSet, Char.GetUnicodeCategory ( ch ) ) )
                         return ch.ToString ( );
                     else
-                        return $"\\x{( Int32 ) ch:X}";
+                        return $"\\u{( Int32 ) ch:X4}";
             }
         }
 
