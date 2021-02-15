@@ -5,7 +5,7 @@ namespace Loretta.CodeAnalysis.Syntax
     public enum SyntaxKind
     {
         None,
-        BadToken,
+        List,
 
         // Trivia
         [Trivia]
@@ -23,19 +23,17 @@ namespace Loretta.CodeAnalysis.Syntax
 
         // Tokens
         [Token]
+        BadToken,
+        [Token]
         EndOfFileToken,
         [Token]
         [ExtraCategories ( "LiteralToken" )]
         [Property ( "LiteralExpression", NumericalLiteralExpression )]
-        NumberToken,
+        NumericLiteralToken,
         [Token]
         [ExtraCategories ( "LiteralToken" )]
         [Property ( "LiteralExpression", StringLiteralExpression )]
-        ShortStringToken,
-        [Token]
-        [ExtraCategories ( "LiteralToken" )]
-        [Property ( "LiteralExpression", StringLiteralExpression )]
-        LongStringToken,
+        StringLiteralToken,
         [Token]
         IdentifierToken,
         [Token ( Text = "(" )]
