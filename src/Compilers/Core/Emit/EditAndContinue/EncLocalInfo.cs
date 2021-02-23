@@ -1,0 +1,102 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+#nullable disable
+
+using System;
+using System.Diagnostics;
+using Loretta.CodeAnalysis.CodeGen;
+using Loretta.Utilities;
+
+namespace Loretta.CodeAnalysis.Emit
+{
+    [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
+    internal struct EncLocalInfo : IEquatable<EncLocalInfo>
+    {
+        public readonly LocalSlotDebugInfo SlotInfo;
+        public readonly Cci.ITypeReference Type;
+        public readonly LocalSlotConstraints Constraints;
+        public readonly byte[] Signature;
+        public readonly bool isUnused;
+
+        public EncLocalInfo(byte[] signature)
+        {
+            RoslynDebug.Assert(signature != null);
+            RoslynDebug.Assert(signature.Length > 0);
+
+            this.SlotInfo = new LocalSlotDebugInfo(SynthesizedLocalKind.EmitterTemp, LocalDebugId.None);
+            this.Type = null;
+            this.Constraints = default(LocalSlotConstraints);
+            this.Signature = signature;
+            this.isUnused = true;
+        }
+
+        public EncLocalInfo(LocalSlotDebugInfo slotInfo, Cci.ITypeReference type, LocalSlotConstraints constraints, byte[] signature)
+        {
+            RoslynDebug.Assert(type != null);
+
+            this.SlotInfo = slotInfo;
+            this.Type = type;
+            this.Constraints = constraints;
+            this.Signature = signature;
+            this.isUnused = false;
+        }
+
+        public bool IsDefault
+        {
+            get { return this.Type == null && this.Signature == null; }
+        }
+
+        public bool IsUnused
+        {
+            get { return isUnused; }
+        }
+
+        public bool Equals(EncLocalInfo other)
+        {
+            RoslynDebug.Assert(this.Type != null);
+            RoslynDebug.Assert(other.Type != null);
+
+            return this.SlotInfo.Equals(other.SlotInfo) &&
+                   Cci.SymbolEquivalentEqualityComparer.Instance.Equals(this.Type, other.Type) &&
+                   this.Constraints == other.Constraints &&
+                   this.isUnused == other.isUnused;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is EncLocalInfo && Equals((EncLocalInfo)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            RoslynDebug.Assert(this.Type != null);
+
+            return Hash.Combine(this.SlotInfo.GetHashCode(),
+                   Hash.Combine(Cci.SymbolEquivalentEqualityComparer.Instance.GetHashCode(this.Type),
+                   Hash.Combine((int)this.Constraints,
+                   Hash.Combine(isUnused, 0))));
+        }
+
+        private string GetDebuggerDisplay()
+        {
+            if (this.IsDefault)
+            {
+                return "[default]";
+            }
+
+            if (this.isUnused)
+            {
+                return "[invalid]";
+            }
+
+            return string.Format("[Id={0}, SynthesizedKind={1}, Type={2}, Constraints={3}, Sig={4}]",
+                this.SlotInfo.Id,
+                this.SlotInfo.SynthesizedKind,
+                this.Type,
+                this.Constraints,
+                (this.Signature != null) ? BitConverter.ToString(this.Signature) : "null");
+        }
+    }
+}

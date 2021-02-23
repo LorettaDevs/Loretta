@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Licensed to the .NET Foundation under one or more agreements. The .NET Foundation licenses this file to you under the MIT license. See the LICENSE file in the project root for more information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Loretta.CodeAnalysis</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);COMPILERCORE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <ApplyNgenOptimization Condition="'$(TargetFramework)' == 'netstandard2.0'">partial</ApplyNgenOptimization>
+    <GeneratePerformanceSensitiveAttribute>true</GeneratePerformanceSensitiveAttribute>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- NuGet -->
+    <IsPackable>false</IsPackable>
+    <PackageId>Loretta.CodeAnalysis.Common</PackageId>
+    <PackageDescription>
+      A shared package used by Loretta.
+      Do not install this package manually, it will be added as a prerequisite by other packages that require it.
+    </PackageDescription>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Operations\OperationInterfaces.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+      Analyzers that will be used to analyze projects that references 
+      Loretta.CodeAnalysis project or Loretta.CodeAnalysis.Common package.
+      
+      Note: PrivateAssets="ContentFiles" ensures that projects referencing Loretta.CodeAnalysis.Common package 
+      will import everything but content files from Loretta.CodeAnalysis.Analyzers, specifically, analyzers.
+    -->
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0" PrivateAssets="ContentFiles" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
+    <PackageReference Include="System.Reflection.Metadata" Version="5.0.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.1" />
+    <PackageReference Include="Nullable" Version="1.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Need to include the PerformanceSensitiveAttribute definition in source build, since we can't get it from the analyzer package. -->
+    <!--<Compile Remove="InternalUtilities\PerformanceSensitiveAttribute.cs" />-->
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="CodeAnalysisResources.resx" GenerateSource="true">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CodeAnalysisResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Collections\Internal\Strings.resx" ClassName="Loretta.CodeAnalysis.Collections.Internal.SR">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CodeAnalysisResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CodeAnalysisResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Collections\Internal\Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

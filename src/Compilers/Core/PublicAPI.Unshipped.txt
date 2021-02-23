@@ -1,0 +1,32 @@
+Loretta.CodeAnalysis.GeneratorAttribute.GeneratorAttribute(string! firstLanguage, params string![]! additionalLanguages) -> void
+Loretta.CodeAnalysis.GeneratorAttribute.Languages.get -> string![]!
+Loretta.CodeAnalysis.GeneratorExecutionContext.SyntaxContextReceiver.get -> Loretta.CodeAnalysis.ISyntaxContextReceiver?
+Loretta.CodeAnalysis.GeneratorInitializationContext.RegisterForSyntaxNotifications(Loretta.CodeAnalysis.SyntaxContextReceiverCreator! receiverCreator) -> void
+Loretta.CodeAnalysis.GeneratorSyntaxContext
+Loretta.CodeAnalysis.GeneratorSyntaxContext.GeneratorSyntaxContext() -> void
+Loretta.CodeAnalysis.GeneratorSyntaxContext.Node.get -> Loretta.CodeAnalysis.SyntaxNode!
+Loretta.CodeAnalysis.GeneratorSyntaxContext.SemanticModel.get -> Loretta.CodeAnalysis.SemanticModel!
+Loretta.CodeAnalysis.IMethodSymbol.IsPartialDefinition.get -> bool
+Loretta.CodeAnalysis.ISyntaxContextReceiver
+Loretta.CodeAnalysis.ISyntaxContextReceiver.OnVisitSyntaxNode(Loretta.CodeAnalysis.GeneratorSyntaxContext context) -> void
+Loretta.CodeAnalysis.GeneratorInitializationContext.RegisterForPostInitialization(System.Action<Loretta.CodeAnalysis.GeneratorPostInitializationContext>! callback) -> void
+Loretta.CodeAnalysis.GeneratorPostInitializationContext
+Loretta.CodeAnalysis.GeneratorPostInitializationContext.AddSource(string! hintName, Loretta.CodeAnalysis.Text.SourceText! sourceText) -> void
+Loretta.CodeAnalysis.GeneratorPostInitializationContext.AddSource(string! hintName, string! source) -> void
+Loretta.CodeAnalysis.GeneratorPostInitializationContext.CancellationToken.get -> System.Threading.CancellationToken
+Loretta.CodeAnalysis.GeneratorPostInitializationContext.GeneratorPostInitializationContext() -> void
+Loretta.CodeAnalysis.ITypeSymbol.IsRecord.get -> bool
+Loretta.CodeAnalysis.Operations.OperationWalker<TArgument>
+Loretta.CodeAnalysis.Operations.OperationWalker<TArgument>.OperationWalker() -> void
+Loretta.CodeAnalysis.SymbolDisplayPartKind.RecordClassName = 31 -> Loretta.CodeAnalysis.SymbolDisplayPartKind
+const Loretta.CodeAnalysis.WellKnownDiagnosticTags.CompilationEnd = "CompilationEnd" -> string!
+Loretta.CodeAnalysis.SyntaxContextReceiverCreator
+static Loretta.CodeAnalysis.CaseInsensitiveComparison.Compare(System.ReadOnlySpan<char> left, System.ReadOnlySpan<char> right) -> int
+static Loretta.CodeAnalysis.CaseInsensitiveComparison.Equals(System.ReadOnlySpan<char> left, System.ReadOnlySpan<char> right) -> bool
+override Loretta.CodeAnalysis.Diagnostics.AnalyzerFileReference.GetGenerators(string! language) -> System.Collections.Immutable.ImmutableArray<Loretta.CodeAnalysis.ISourceGenerator!>
+override Loretta.CodeAnalysis.Diagnostics.AnalyzerFileReference.GetGeneratorsForAllLanguages() -> System.Collections.Immutable.ImmutableArray<Loretta.CodeAnalysis.ISourceGenerator!>
+override Loretta.CodeAnalysis.Operations.OperationWalker<TArgument>.DefaultVisit(Loretta.CodeAnalysis.IOperation! operation, TArgument argument) -> object?
+override Loretta.CodeAnalysis.Operations.OperationWalker<TArgument>.Visit(Loretta.CodeAnalysis.IOperation? operation, TArgument argument) -> object?
+virtual Loretta.CodeAnalysis.Diagnostics.AnalyzerReference.GetGenerators(string! language) -> System.Collections.Immutable.ImmutableArray<Loretta.CodeAnalysis.ISourceGenerator!>
+virtual Loretta.CodeAnalysis.Diagnostics.AnalyzerReference.GetGeneratorsForAllLanguages() -> System.Collections.Immutable.ImmutableArray<Loretta.CodeAnalysis.ISourceGenerator!>
+abstract Loretta.CodeAnalysis.Compilation.GetUsedAssemblyReferences(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Immutable.ImmutableArray<Loretta.CodeAnalysis.MetadataReference!>
