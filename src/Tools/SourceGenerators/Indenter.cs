@@ -15,18 +15,18 @@ namespace Loretta.Generators
         /// </summary>
         /// <param name="indentedTextWriter">The writer to use</param>
         /// <param name="openingLine">any line to write before the curly</param>
-        public Indenter ( IndentedTextWriter indentedTextWriter, String openingLine = "" )
+        public Indenter(IndentedTextWriter indentedTextWriter, string openingLine = "")
         {
-            this._indentedTextWriter = indentedTextWriter;
-            if ( !String.IsNullOrWhiteSpace ( openingLine ) )
-                indentedTextWriter.WriteLine ( openingLine );
+            _indentedTextWriter = indentedTextWriter;
+            if (!string.IsNullOrWhiteSpace(openingLine))
+                indentedTextWriter.WriteLine(openingLine);
             indentedTextWriter.Indent++;
         }
 
         /// <summary>
         /// When the variable goes out of scope the closing brace is injected and indentation reduced.
         /// </summary>
-        public void Dispose ( ) =>
-            this._indentedTextWriter.Indent--;
+        public void Dispose() =>
+            _indentedTextWriter.Indent--;
     }
 }

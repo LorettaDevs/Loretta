@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage ( "MicrosoftCodeAnalysisReleaseTracking", "RS2008:Enable analyzer release tracking", Scope = "namespaceanddescendants", Target = "~N:Loretta.Generators", Justification = "This is not a public analyzer." )]
+[assembly: SuppressMessage("MicrosoftCodeAnalysisReleaseTracking", "RS2008:Enable analyzer release tracking", Scope = "namespaceanddescendants", Target = "~N:Loretta.Generators", Justification = "This is not a public analyzer.")]
