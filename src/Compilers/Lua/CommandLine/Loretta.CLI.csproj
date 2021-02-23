@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Loretta\Loretta.csproj" />
+    <ProjectReference Include="..\Portable\Loretta.CodeAnalysis.Lua.csproj" />
   </ItemGroup>
 
   <ItemGroup>
