@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -26,15 +26,37 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="GParse" Version="5.0.0-alpha08" />
-    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
-    <PackageReference Include="Tsu" Version="2.1.1" />
+    <None Remove="Syntax\Syntax.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Syntax\Syntax.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Loretta.Generators\Loretta.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
+    <PackageReference Include="Tsu" Version="2.1.1" />
+    <PackageReference Include="GParse" Version="5.0.0-alpha08" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Tools\SourceGenerators\Loretta.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\Core\Loretta.CodeAnalysis.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LuaResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LuaResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="LuaResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LuaResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

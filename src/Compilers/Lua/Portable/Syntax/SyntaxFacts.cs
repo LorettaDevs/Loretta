@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Loretta.CodeAnalysis.Syntax
+﻿namespace Loretta.CodeAnalysis.Lua
 {
     /// <summary>
     /// A static class containing facts about Lua's Syntax.
@@ -12,7 +10,7 @@ namespace Loretta.CodeAnalysis.Syntax
         /// </summary>
         /// <param name="kind"></param>
         /// <returns></returns>
-        public static Boolean IsComment ( SyntaxKind kind ) =>
+        public static bool IsComment(SyntaxKind kind) =>
             kind is SyntaxKind.SingleLineCommentTrivia or SyntaxKind.MultiLineCommentTrivia;
 
         /// <summary>
@@ -20,7 +18,7 @@ namespace Loretta.CodeAnalysis.Syntax
         /// </summary>
         /// <param name="kind"></param>
         /// <returns></returns>
-        public static Boolean IsRightAssociative ( SyntaxKind kind ) =>
+        public static bool IsRightAssociative(SyntaxKind kind) =>
             kind is SyntaxKind.HatToken;
     }
 }

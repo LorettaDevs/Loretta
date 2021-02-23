@@ -2,38 +2,17 @@
 using System.Collections.Immutable;
 using Tsu;
 
-namespace Loretta
+namespace Loretta.CodeAnalysis.Lua
 {
     /// <summary>
-    /// The type of continue the lua flavor being parsed has.
+    /// The options used by Loretta to adapt to the syntax of the lua flavor being parsed.
     /// </summary>
-    public enum ContinueType
-    {
-        /// <summary>
-        /// No continue.
-        /// </summary>
-        None,
-
-        /// <summary>
-        /// Continue is a keyword.
-        /// </summary>
-        Keyword,
-
-        /// <summary>
-        /// Continue is a contextual keyword (is only a keyword when used as a statement).
-        /// </summary>
-        ContextualKeyword
-    }
-
-    /// <summary>
-    /// The options used by Loretta to adapt to the flavor of lua being parsed.
-    /// </summary>
-    public class LuaOptions : IEquatable<LuaOptions?>
+    public class LuaSyntaxOptions : IEquatable<LuaSyntaxOptions?>
     {
         /// <summary>
         /// The Lua 5.1 preset.
         /// </summary>
-        public static readonly LuaOptions Lua51 = new LuaOptions (
+        public static readonly LuaSyntaxOptions Lua51 = new LuaSyntaxOptions(
             acceptBinaryNumbers: false,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: false,
@@ -46,21 +25,21 @@ namespace Loretta
             acceptShebang: false,
             acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: false,
-            continueType: ContinueType.None );
+            continueType: ContinueType.None);
 
         /// <summary>
         /// The Lua 5.2 preset.
         /// </summary>
-        public static readonly LuaOptions Lua52 = Lua51.With (
+        public static readonly LuaSyntaxOptions Lua52 = Lua51.With(
             acceptEmptyStatements: true,
             acceptGoto: true,
             acceptHexEscapesInStrings: true,
-            acceptHexFloatLiterals: true );
+            acceptHexFloatLiterals: true);
 
         /// <summary>
         /// The LuaJIT preset.
         /// </summary>
-        public static readonly LuaOptions LuaJIT = new LuaOptions (
+        public static readonly LuaSyntaxOptions LuaJIT = new LuaSyntaxOptions(
             acceptBinaryNumbers: false,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: false,
@@ -73,20 +52,20 @@ namespace Loretta
             acceptShebang: false,
             acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: true,
-            continueType: ContinueType.None );
+            continueType: ContinueType.None);
 
         /// <summary>
         /// The GLua preset.
         /// </summary>
-        public static readonly LuaOptions GMod = LuaJIT.With (
+        public static readonly LuaSyntaxOptions GMod = LuaJIT.With(
             acceptCCommentSyntax: true,
             acceptCBooleanOperators: true,
-            continueType: ContinueType.Keyword );
+            continueType: ContinueType.Keyword);
 
         /// <summary>
         /// The Luau preset.
         /// </summary>
-        public static readonly LuaOptions Roblox = new LuaOptions (
+        public static readonly LuaSyntaxOptions Roblox = new LuaSyntaxOptions(
             acceptBinaryNumbers: true,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: true,
@@ -99,13 +78,13 @@ namespace Loretta
             acceptShebang: false,
             acceptUnderscoreInNumberLiterals: true,
             useLuaJitIdentifierRules: false,
-            continueType: ContinueType.ContextualKeyword );
+            continueType: ContinueType.ContextualKeyword);
 
         /// <summary>
         /// The preset that sets everything to true and continue to <see
         /// cref="ContinueType.ContextualKeyword" />.
         /// </summary>
-        public static readonly LuaOptions All = new LuaOptions (
+        public static readonly LuaSyntaxOptions All = new LuaSyntaxOptions(
             acceptBinaryNumbers: true,
             acceptCCommentSyntax: true,
             acceptCompoundAssignment: true,
@@ -118,12 +97,12 @@ namespace Loretta
             acceptShebang: true,
             acceptUnderscoreInNumberLiterals: true,
             useLuaJitIdentifierRules: true,
-            continueType: ContinueType.ContextualKeyword );
+            continueType: ContinueType.ContextualKeyword);
 
         /// <summary>
-        /// All presets that are preconfigured in <see cref="LuaOptions"/>.
+        /// All presets that are preconfigured in <see cref="LuaSyntaxOptions"/>.
         /// </summary>
-        public static ImmutableArray<LuaOptions> AllPresets { get; } = ImmutableArray.Create ( new[]
+        public static ImmutableArray<LuaSyntaxOptions> AllPresets { get; } = ImmutableArray.Create(new[]
         {
             Lua51,
             Lua52,
@@ -131,7 +110,7 @@ namespace Loretta
             GMod,
             Roblox,
             All
-        } );
+        });
 
         /// <summary>
         /// Initializes a new lua options set.
@@ -149,34 +128,34 @@ namespace Loretta
         /// <param name="acceptUnderscoreInNumberLiterals"><inheritdoc cref="AcceptUnderscoreInNumberLiterals" path="/summary" /></param>
         /// <param name="useLuaJitIdentifierRules"><inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" /></param>
         /// <param name="continueType"><inheritdoc cref="ContinueType" path="/summary" /></param>
-        public LuaOptions (
-            Boolean acceptBinaryNumbers,
-            Boolean acceptCCommentSyntax,
-            Boolean acceptCompoundAssignment,
-            Boolean acceptEmptyStatements,
-            Boolean acceptCBooleanOperators,
-            Boolean acceptGoto,
-            Boolean acceptHexEscapesInStrings,
-            Boolean acceptHexFloatLiterals,
-            Boolean acceptOctalNumbers,
-            Boolean acceptShebang,
-            Boolean acceptUnderscoreInNumberLiterals,
-            Boolean useLuaJitIdentifierRules,
-            ContinueType continueType )
+        public LuaSyntaxOptions(
+            bool acceptBinaryNumbers,
+            bool acceptCCommentSyntax,
+            bool acceptCompoundAssignment,
+            bool acceptEmptyStatements,
+            bool acceptCBooleanOperators,
+            bool acceptGoto,
+            bool acceptHexEscapesInStrings,
+            bool acceptHexFloatLiterals,
+            bool acceptOctalNumbers,
+            bool acceptShebang,
+            bool acceptUnderscoreInNumberLiterals,
+            bool useLuaJitIdentifierRules,
+            ContinueType continueType)
         {
-            this.AcceptBinaryNumbers = acceptBinaryNumbers;
-            this.AcceptCCommentSyntax = acceptCCommentSyntax;
-            this.AcceptCompoundAssignment = acceptCompoundAssignment;
-            this.AcceptEmptyStatements = acceptEmptyStatements;
-            this.AcceptCBooleanOperators = acceptCBooleanOperators;
-            this.AcceptGoto = acceptGoto;
-            this.AcceptHexEscapesInStrings = acceptHexEscapesInStrings;
-            this.AcceptHexFloatLiterals = acceptHexFloatLiterals;
-            this.AcceptOctalNumbers = acceptOctalNumbers;
-            this.AcceptShebang = acceptShebang;
-            this.AcceptUnderscoreInNumberLiterals = acceptUnderscoreInNumberLiterals;
-            this.UseLuaJitIdentifierRules = useLuaJitIdentifierRules;
-            this.ContinueType = continueType;
+            AcceptBinaryNumbers = acceptBinaryNumbers;
+            AcceptCCommentSyntax = acceptCCommentSyntax;
+            AcceptCompoundAssignment = acceptCompoundAssignment;
+            AcceptEmptyStatements = acceptEmptyStatements;
+            AcceptCBooleanOperators = acceptCBooleanOperators;
+            AcceptGoto = acceptGoto;
+            AcceptHexEscapesInStrings = acceptHexEscapesInStrings;
+            AcceptHexFloatLiterals = acceptHexFloatLiterals;
+            AcceptOctalNumbers = acceptOctalNumbers;
+            AcceptShebang = acceptShebang;
+            AcceptUnderscoreInNumberLiterals = acceptUnderscoreInNumberLiterals;
+            UseLuaJitIdentifierRules = useLuaJitIdentifierRules;
+            ContinueType = continueType;
         }
 
         /// <summary>
@@ -188,64 +167,64 @@ namespace Loretta
         /// a binary number, however the parsing process will still continue as if
         /// the number was a normal one.
         /// </remarks>
-        public Boolean AcceptBinaryNumbers { get; }
+        public bool AcceptBinaryNumbers { get; }
 
         /// <summary>
         /// Whether to accept C comment syntax (formats: "//..." and "/* ... */").
         /// </summary>
-        public Boolean AcceptCCommentSyntax { get; }
+        public bool AcceptCCommentSyntax { get; }
 
         /// <summary>
         /// Whether to accept compound assignment syntax (format: &lt;expr&gt; ("+=" | "-=" | "*=" |
         /// "/=" | "^=" | "%=" | "..=") &lt;expr&gt;).
         /// </summary>
-        public Boolean AcceptCompoundAssignment { get; }
+        public bool AcceptCompoundAssignment { get; }
 
         /// <summary>
         /// Whether to accept empty statements (lone semicolons).
         /// </summary>
-        public Boolean AcceptEmptyStatements { get; }
+        public bool AcceptEmptyStatements { get; }
 
         /// <summary>
         /// Whether to accept the C boolean operators (&amp;&amp;, ||, != and !).
         /// </summary>
-        public Boolean AcceptCBooleanOperators { get; }
+        public bool AcceptCBooleanOperators { get; }
 
         /// <summary>
         /// Whether to accept goto labels and statements.
         /// </summary>
-        public Boolean AcceptGoto { get; }
+        public bool AcceptGoto { get; }
 
         /// <summary>
         /// Whether to accept hexadecimal escapes in strings.
         /// </summary>
-        public Boolean AcceptHexEscapesInStrings { get; }
+        public bool AcceptHexEscapesInStrings { get; }
 
         /// <summary>
         /// Whether to accept hexadecimal floating point literals (format: /0x[a-fA-F0-9]+(\.[a-fA-F0-9])?([+-]?p[0-9]+)/).
         /// </summary>
-        public Boolean AcceptHexFloatLiterals { get; }
+        public bool AcceptHexFloatLiterals { get; }
 
         /// <summary>
         /// Whether to accept octal numbers (format: /0o[0-7]+/).
         /// </summary>
-        public Boolean AcceptOctalNumbers { get; }
+        public bool AcceptOctalNumbers { get; }
 
         /// <summary>
         /// Whether to accept shebangs (format: "#!...") (currently accepted anywhere inside the file).
         /// </summary>
-        public Boolean AcceptShebang { get; }
+        public bool AcceptShebang { get; }
 
         /// <summary>
         /// Whether to accept underscores in any number literals (will be ignored when parsing the number).
         /// </summary>
-        public Boolean AcceptUnderscoreInNumberLiterals { get; }
+        public bool AcceptUnderscoreInNumberLiterals { get; }
 
         /// <summary>
         /// Whether to use LuaJIT's identifier character rules (accepts any character greater than
         /// or equal to 0xF7).
         /// </summary>
-        public Boolean UseLuaJitIdentifierRules { get; }
+        public bool UseLuaJitIdentifierRules { get; }
 
         /// <summary>
         /// The type of continue to be recognized by the parser.
@@ -308,102 +287,103 @@ namespace Loretta
         /// cref="ContinueType" />.
         /// </param>
         /// <returns></returns>
-        public LuaOptions With (
-            Option<Boolean> acceptBinaryNumbers = default,
-            Option<Boolean> acceptCCommentSyntax = default,
-            Option<Boolean> acceptCompoundAssignment = default,
-            Option<Boolean> acceptEmptyStatements = default,
-            Option<Boolean> acceptCBooleanOperators = default,
-            Option<Boolean> acceptGoto = default,
-            Option<Boolean> acceptHexEscapesInStrings = default,
-            Option<Boolean> acceptHexFloatLiterals = default,
-            Option<Boolean> acceptOctalNumbers = default,
-            Option<Boolean> acceptShebang = default,
-            Option<Boolean> acceptUnderscoreInNumberLiterals = default,
-            Option<Boolean> useLuaJitIdentifierRules = default,
-            Option<ContinueType> continueType = default ) =>
-            new LuaOptions (
-                acceptBinaryNumbers.UnwrapOr ( this.AcceptBinaryNumbers ),
-                acceptCCommentSyntax.UnwrapOr ( this.AcceptCCommentSyntax ),
-                acceptCompoundAssignment.UnwrapOr ( this.AcceptCompoundAssignment ),
-                acceptEmptyStatements.UnwrapOr ( this.AcceptEmptyStatements ),
-                acceptCBooleanOperators.UnwrapOr ( this.AcceptCBooleanOperators ),
-                acceptGoto.UnwrapOr ( this.AcceptGoto ),
-                acceptHexEscapesInStrings.UnwrapOr ( this.AcceptHexEscapesInStrings ),
-                acceptHexFloatLiterals.UnwrapOr ( this.AcceptHexFloatLiterals ),
-                acceptOctalNumbers.UnwrapOr ( this.AcceptOctalNumbers ),
-                acceptShebang.UnwrapOr ( this.AcceptShebang ),
-                acceptUnderscoreInNumberLiterals.UnwrapOr ( this.AcceptUnderscoreInNumberLiterals ),
-                useLuaJitIdentifierRules.UnwrapOr ( this.UseLuaJitIdentifierRules ),
-                continueType.UnwrapOr ( this.ContinueType ) );
+        public LuaSyntaxOptions With(
+            Option<bool> acceptBinaryNumbers = default,
+            Option<bool> acceptCCommentSyntax = default,
+            Option<bool> acceptCompoundAssignment = default,
+            Option<bool> acceptEmptyStatements = default,
+            Option<bool> acceptCBooleanOperators = default,
+            Option<bool> acceptGoto = default,
+            Option<bool> acceptHexEscapesInStrings = default,
+            Option<bool> acceptHexFloatLiterals = default,
+            Option<bool> acceptOctalNumbers = default,
+            Option<bool> acceptShebang = default,
+            Option<bool> acceptUnderscoreInNumberLiterals = default,
+            Option<bool> useLuaJitIdentifierRules = default,
+            Option<ContinueType> continueType = default) =>
+            new LuaSyntaxOptions(
+                acceptBinaryNumbers.UnwrapOr(AcceptBinaryNumbers),
+                acceptCCommentSyntax.UnwrapOr(AcceptCCommentSyntax),
+                acceptCompoundAssignment.UnwrapOr(AcceptCompoundAssignment),
+                acceptEmptyStatements.UnwrapOr(AcceptEmptyStatements),
+                acceptCBooleanOperators.UnwrapOr(AcceptCBooleanOperators),
+                acceptGoto.UnwrapOr(AcceptGoto),
+                acceptHexEscapesInStrings.UnwrapOr(AcceptHexEscapesInStrings),
+                acceptHexFloatLiterals.UnwrapOr(AcceptHexFloatLiterals),
+                acceptOctalNumbers.UnwrapOr(AcceptOctalNumbers),
+                acceptShebang.UnwrapOr(AcceptShebang),
+                acceptUnderscoreInNumberLiterals.UnwrapOr(AcceptUnderscoreInNumberLiterals),
+                useLuaJitIdentifierRules.UnwrapOr(UseLuaJitIdentifierRules),
+                continueType.UnwrapOr(ContinueType));
 
         /// <inheritdoc/>
-        public override Boolean Equals ( Object? obj ) =>
-            this.Equals ( obj as LuaOptions );
+        public override bool Equals(object? obj) =>
+            Equals(obj as LuaSyntaxOptions);
 
         /// <inheritdoc/>
-        public Boolean Equals ( LuaOptions? other ) =>
-            other != null
-            && this.AcceptBinaryNumbers == other.AcceptBinaryNumbers
-            && this.AcceptCCommentSyntax == other.AcceptCCommentSyntax
-            && this.AcceptCompoundAssignment == other.AcceptCompoundAssignment
-            && this.AcceptEmptyStatements == other.AcceptEmptyStatements
-            && this.AcceptCBooleanOperators == other.AcceptCBooleanOperators
-            && this.AcceptGoto == other.AcceptGoto
-            && this.AcceptHexEscapesInStrings == other.AcceptHexEscapesInStrings
-            && this.AcceptHexFloatLiterals == other.AcceptHexFloatLiterals
-            && this.AcceptOctalNumbers == other.AcceptOctalNumbers
-            && this.AcceptShebang == other.AcceptShebang
-            && this.AcceptUnderscoreInNumberLiterals == other.AcceptUnderscoreInNumberLiterals
-            && this.UseLuaJitIdentifierRules == other.UseLuaJitIdentifierRules
-            && this.ContinueType == other.ContinueType;
+        public bool Equals(LuaSyntaxOptions? other)
+            => (object) this == other
+            || (other != null
+                && AcceptBinaryNumbers == other.AcceptBinaryNumbers
+                && AcceptCCommentSyntax == other.AcceptCCommentSyntax
+                && AcceptCompoundAssignment == other.AcceptCompoundAssignment
+                && AcceptEmptyStatements == other.AcceptEmptyStatements
+                && AcceptCBooleanOperators == other.AcceptCBooleanOperators
+                && AcceptGoto == other.AcceptGoto
+                && AcceptHexEscapesInStrings == other.AcceptHexEscapesInStrings
+                && AcceptHexFloatLiterals == other.AcceptHexFloatLiterals
+                && AcceptOctalNumbers == other.AcceptOctalNumbers
+                && AcceptShebang == other.AcceptShebang
+                && AcceptUnderscoreInNumberLiterals == other.AcceptUnderscoreInNumberLiterals
+                && UseLuaJitIdentifierRules == other.UseLuaJitIdentifierRules
+                && ContinueType == other.ContinueType);
 
         /// <inheritdoc/>
-        public override Int32 GetHashCode ( )
+        public override int GetHashCode()
         {
-            var hash = new HashCode ( );
-            hash.Add ( this.AcceptBinaryNumbers );
-            hash.Add ( this.AcceptCCommentSyntax );
-            hash.Add ( this.AcceptCompoundAssignment );
-            hash.Add ( this.AcceptEmptyStatements );
-            hash.Add ( this.AcceptCBooleanOperators );
-            hash.Add ( this.AcceptGoto );
-            hash.Add ( this.AcceptHexEscapesInStrings );
-            hash.Add ( this.AcceptHexFloatLiterals );
-            hash.Add ( this.AcceptOctalNumbers );
-            hash.Add ( this.AcceptShebang );
-            hash.Add ( this.AcceptUnderscoreInNumberLiterals );
-            hash.Add ( this.UseLuaJitIdentifierRules );
-            hash.Add ( this.ContinueType );
-            return hash.ToHashCode ( );
+            var hash = new HashCode();
+            hash.Add(AcceptBinaryNumbers);
+            hash.Add(AcceptCCommentSyntax);
+            hash.Add(AcceptCompoundAssignment);
+            hash.Add(AcceptEmptyStatements);
+            hash.Add(AcceptCBooleanOperators);
+            hash.Add(AcceptGoto);
+            hash.Add(AcceptHexEscapesInStrings);
+            hash.Add(AcceptHexFloatLiterals);
+            hash.Add(AcceptOctalNumbers);
+            hash.Add(AcceptShebang);
+            hash.Add(AcceptUnderscoreInNumberLiterals);
+            hash.Add(UseLuaJitIdentifierRules);
+            hash.Add(ContinueType);
+            return hash.ToHashCode();
         }
 
         /// <inheritdoc/>
-        public override String ToString ( )
+        public override string ToString()
         {
-            if ( this == Lua51 )
+            if (this == Lua51)
             {
                 return "Lua 5.1";
             }
-            else if ( this == Lua52 )
+            else if (this == Lua52)
             {
                 return "Lua 5.2";
             }
-            else if ( this == LuaJIT )
+            else if (this == LuaJIT)
             {
                 return "LuaJIT";
             }
-            else if ( this == GMod )
+            else if (this == GMod)
             {
                 return "GLua";
             }
-            else if ( this == Roblox )
+            else if (this == Roblox)
             {
                 return "Roblox";
             }
             else
             {
-                return $"{{ AcceptBinaryNumbers = {this.AcceptBinaryNumbers}, AcceptCCommentSyntax = {this.AcceptCCommentSyntax}, AcceptCompoundAssignment = {this.AcceptCompoundAssignment}, AcceptEmptyStatements = {this.AcceptEmptyStatements}, AcceptCBooleanOperators = {this.AcceptCBooleanOperators}, AcceptGoto = {this.AcceptGoto}, AcceptHexEscapesInStrings = {this.AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {this.AcceptHexFloatLiterals}, AcceptOctalNumbers = {this.AcceptOctalNumbers}, AcceptShebang = {this.AcceptShebang}, AcceptUnderscoreInNumberLiterals = {this.AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {this.UseLuaJitIdentifierRules}, ContinueType = {this.ContinueType} }}";
+                return $"{{ AcceptBinaryNumbers = {AcceptBinaryNumbers}, AcceptCCommentSyntax = {AcceptCCommentSyntax}, AcceptCompoundAssignment = {AcceptCompoundAssignment}, AcceptEmptyStatements = {AcceptEmptyStatements}, AcceptCBooleanOperators = {AcceptCBooleanOperators}, AcceptGoto = {AcceptGoto}, AcceptHexEscapesInStrings = {AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {AcceptHexFloatLiterals}, AcceptOctalNumbers = {AcceptOctalNumbers}, AcceptShebang = {AcceptShebang}, AcceptUnderscoreInNumberLiterals = {AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {UseLuaJitIdentifierRules}, ContinueType = {ContinueType} }}";
             }
         }
 
@@ -413,10 +393,10 @@ namespace Loretta
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static Boolean operator == ( LuaOptions? left, LuaOptions? right )
+        public static bool operator ==(LuaSyntaxOptions? left, LuaSyntaxOptions? right)
         {
-            if ( right is null ) return left is null;
-            return right.Equals ( left );
+            if (right is null) return left is null;
+            return left == (object) right || right.Equals(left);
         }
 
         /// <summary>
@@ -425,7 +405,7 @@ namespace Loretta
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static Boolean operator != ( LuaOptions? left, LuaOptions? right ) =>
-            !( left == right );
+        public static bool operator !=(LuaSyntaxOptions? left, LuaSyntaxOptions? right) =>
+            !(left == right);
     }
 }

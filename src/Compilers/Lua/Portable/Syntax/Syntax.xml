@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Tree Base="SyntaxNode">
+<Tree Root="LuaSyntaxNode">
 
-  <PredefinedNode Name="SyntaxToken" Base="SyntaxNode" />
+  <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
+  <PredefinedNode Name="StructuredTriviaSyntax" Base="LuaSyntaxNode" />
 
   <!-- Parameters -->
 
-  <AbstractNode Name="ParameterSyntax" Base="SyntaxNode">
+  <AbstractNode Name="ParameterSyntax" Base="LuaSyntaxNode">
     <DocComment>
       <summary>The base type for parameter nodes.</summary>
     </DocComment>
@@ -47,7 +48,7 @@
     </Field>
   </Node>
 
-  <Node Name="ParameterListSyntax" Base="SyntaxNode">
+  <Node Name="ParameterListSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>Represents a function declaration's parameter list.</summary>
     </TypeComment>
@@ -78,7 +79,7 @@
 
   <!-- Table Fields -->
 
-  <AbstractNode Name="TableFieldSyntax" Base="SyntaxNode">
+  <AbstractNode Name="TableFieldSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The base class for table fields.</summary>
     </TypeComment>
@@ -172,7 +173,7 @@
 
   <!-- Function Names -->
 
-  <AbstractNode Name="FunctionNameSyntax" Base="SyntaxNode">
+  <AbstractNode Name="FunctionNameSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The base class for function name nodes.</summary>
     </TypeComment>
@@ -261,7 +262,7 @@
 
   <!-- Function Arguments -->
 
-  <AbstractNode Name="FunctionArgumentSyntax" Base="SyntaxNode">
+  <AbstractNode Name="FunctionArgumentSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The base class for function arguments.</summary>
     </TypeComment>
@@ -333,7 +334,7 @@
 
   <!-- Expressions -->
 
-  <AbstractNode Name="ExpressionSyntax" Base="SyntaxNode">
+  <AbstractNode Name="ExpressionSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The base class for expressions.</summary>
     </TypeComment>
@@ -562,7 +563,7 @@
     </Field>
   </Node>
 
-  <Node Type="BinaryExpressionSyntax" Base="ExpressionSyntax">
+  <Node Name="BinaryExpressionSyntax" Base="ExpressionSyntax">
     <TypeComment>
       <summary>Represents a binary expression.</summary>
     </TypeComment>
@@ -711,7 +712,7 @@
 
   <!-- Statements -->
 
-  <AbstractNode Name="StatementSyntax" Base="SyntaxNode">
+  <AbstractNode Name="StatementSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The base class for statements.</summary>
     </TypeComment>
@@ -1090,7 +1091,7 @@
     </Field>
   </Node>
 
-  <Node Name="ElseIfClauseSyntax" Base="SyntaxNode">
+  <Node Name="ElseIfClauseSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>Represents an elseif clause.</summary>
     </TypeComment>
@@ -1124,7 +1125,7 @@
     </Field>
   </Node>
 
-  <Node Name="ElseClauseSyntax" Base="SyntaxNode">
+  <Node Name="ElseClauseSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>Represents an else clause.</summary>
     </TypeComment>
@@ -1513,7 +1514,7 @@
     </Field>
   </Node>
 
-  <Node Name="CompilationUnitSyntax" Type="SyntaxNode">
+  <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The node containing all of the file's contents.</summary>
     </TypeComment>
