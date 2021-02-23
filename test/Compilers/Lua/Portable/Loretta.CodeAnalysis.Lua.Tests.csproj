@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Loretta\Loretta.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Compilers\Lua\Portable\Loretta.CodeAnalysis.Lua.csproj" />
   </ItemGroup>
 
 </Project>
