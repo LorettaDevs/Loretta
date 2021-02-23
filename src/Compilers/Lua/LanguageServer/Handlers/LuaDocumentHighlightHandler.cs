@@ -29,6 +29,7 @@ namespace Loretta.LanguageServer.Handlers
 
         public override Task<DocumentHighlightContainer?> Handle ( DocumentHighlightParams request, CancellationToken cancellationToken )
         {
+            throw new NotImplementedException();
         }
     }
 }

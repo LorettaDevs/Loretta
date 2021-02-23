@@ -10,6 +10,6 @@ namespace Loretta.LanguageServer
 
     public class Server
     {
-        private readonly LanguageServer _server;
+        private readonly LanguageServer? _server;
     }
 }
