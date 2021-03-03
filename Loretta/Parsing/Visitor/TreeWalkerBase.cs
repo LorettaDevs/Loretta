@@ -175,7 +175,7 @@ namespace Loretta.Parsing.Visitor
         /// cref="CompoundAssignmentStatement.ValueExpression" /> by default.
         /// </summary>
         /// <param name="node">The compound assignment statement to walk into.</param>
-        public void VisitCompoundAssignmentStatement ( CompoundAssignmentStatement node )
+        public virtual void VisitCompoundAssignmentStatement ( CompoundAssignmentStatement node )
         {
             this.VisitNode ( node.Assignee );
             this.VisitNode ( node.ValueExpression );
@@ -383,7 +383,7 @@ namespace Loretta.Parsing.Visitor
         /// Walks into an empty statement. Does nothing by default.
         /// </summary>
         /// <param name="emptyStatement">The empty statement to walk into.</param>
-        public void VisitEmptyStatement ( EmptyStatement emptyStatement )
+        public virtual void VisitEmptyStatement ( EmptyStatement emptyStatement )
         {
         }
     }
