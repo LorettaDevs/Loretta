@@ -15,7 +15,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="syntaxOptions"></param>
         public LuaParseOptions(LuaSyntaxOptions syntaxOptions)
-            : base(SourceCodeKind.Regular, DocumentationMode.Parse)
+            : base(DocumentationMode.Parse)
         {
             _features = ImmutableDictionary<string, string>.Empty;
             SyntaxOptions = syntaxOptions;
@@ -31,26 +31,6 @@ namespace Loretta.CodeAnalysis.Lua
         /// The <see cref="LuaSyntaxOptions"/> to use when parsing.
         /// </summary>
         public LuaSyntaxOptions SyntaxOptions { get; private set; }
-
-        /// <summary>
-        /// <b><see cref="SourceCodeKind"/> does nothing currently.</b>
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new SourceCodeKind Kind
-        {
-            get => base.Kind;
-            private set => base.Kind = value;
-        }
-
-        /// <summary>
-        /// <b><see cref="SourceCodeKind"/> does nothing currently.</b>
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new SourceCodeKind SpecifiedKind
-        {
-            get => base.SpecifiedKind;
-            private set => base.SpecifiedKind = value;
-        }
 
         /// <summary>
         /// <b><see cref="DocumentationMode"/> does nothing currently.</b>
@@ -71,19 +51,7 @@ namespace Loretta.CodeAnalysis.Lua
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override IReadOnlyDictionary<string, string> Features => _features;
 
-        /// <summary>
-        /// <inheritdoc cref="ParseOptions.WithKind(SourceCodeKind)"/>
-        /// <b><see cref="SourceCodeKind"/> does nothing currently.</b>
-        /// </summary>
-        /// <param name="kind"><inheritdoc cref="ParseOptions.WithKind(SourceCodeKind)"/></param>
-        /// <returns><inheritdoc cref="ParseOptions.WithKind(SourceCodeKind)"/></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new LuaParseOptions WithKind(SourceCodeKind kind)
-        {
-            if (SpecifiedKind != kind)
-                return new LuaParseOptions(this) { SpecifiedKind = kind, Kind = kind.MapSpecifiedToEffectiveKind() };
-            return this;
-        }
+        public override IEnumerable<string> PreprocessorSymbolNames => throw new NotImplementedException();
 
         /// <summary>
         /// <inheritdoc cref="ParseOptions.WithDocumentationMode(DocumentationMode)"/>.
@@ -123,9 +91,6 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <inheritdoc/>
-        public override ParseOptions CommonWithKind(SourceCodeKind kind) => WithKind(kind);
-
-        /// <inheritdoc/>
         protected override ParseOptions CommonWithDocumentationMode(DocumentationMode documentationMode)
             => WithDocumentationMode(documentationMode);
 
@@ -138,6 +103,14 @@ namespace Loretta.CodeAnalysis.Lua
 
         /// <inheritdoc/>
         public bool Equals(LuaParseOptions? other) =>
-            (object) this == other || (other is not null && SyntaxOptions.Equals(other.SyntaxOptions));
+            ReferenceEquals(this, other)
+            || EqualsHelper(this)
+            || (other is not null && SyntaxOptions.Equals(other.SyntaxOptions));
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => Equals(obj as LuaParseOptions);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => HashCode.Combine(GetHashCodeHelper(), SyntaxOptions);
     }
 }
