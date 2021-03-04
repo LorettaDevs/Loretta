@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.Text;
 namespace Loretta.Generators.ErrorCode
 {
     [Generator]
-    public class ErrorFactsGenerator : GeneratorBase
+    public sealed class ErrorFactsGenerator : GeneratorBase
     {
         protected override void GenerateFiles(GeneratorExecutionContext context, CSharpCompilation compilation)
         {
