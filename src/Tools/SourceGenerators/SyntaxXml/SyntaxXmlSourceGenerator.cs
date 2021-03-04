@@ -19,7 +19,7 @@ using Microsoft.CodeAnalysis.Text;
 namespace Loretta.Generators.SyntaxXml
 {
     [Generator]
-    public sealed class SourceGenerator : CachingSourceGenerator
+    public sealed class SyntaxXmlSourceGenerator : AdditionalTextCachingSourceGenerator
     {
         private static readonly DiagnosticDescriptor s_MissingSyntaxXml = new DiagnosticDescriptor(
             "LSSG1001",

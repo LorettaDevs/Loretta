@@ -10,14 +10,14 @@ using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Loretta.Generators.SyntaxXml
+namespace Loretta.Generators
 {
-    public abstract class CachingSourceGenerator : ISourceGenerator
+    public abstract class AdditionalTextCachingSourceGenerator : ISourceGenerator
     {
         /// <summary>
         /// ⚠ This value may be accessed by multiple threads.
         /// </summary>
-        private static readonly WeakReference<CachedSourceGeneratorResult?> s_cachedResult = new(null);
+        private static readonly WeakReference<CachedResult?> s_cachedResult = new(null);
 
         protected abstract bool TryGetRelevantInput(
             in GeneratorExecutionContext context,
@@ -64,7 +64,7 @@ namespace Loretta.Generators.SyntaxXml
                 {
                     // Overwrite the cached result with the new result. This is an opportunistic cache, so as long as
                     // the write is atomic (which it is for SetTarget) synchronization is unnecessary.
-                    s_cachedResult.SetTarget(new CachedSourceGeneratorResult(currentChecksum, sources, relativePath));
+                    s_cachedResult.SetTarget(new CachedResult(currentChecksum, sources, relativePath));
                 }
                 else
                 {
@@ -97,7 +97,7 @@ namespace Loretta.Generators.SyntaxXml
             }
         }
 
-        private sealed record CachedSourceGeneratorResult(
+        private sealed record CachedResult(
             ImmutableArray<byte> Checksum,
             ImmutableArray<(string hintName, SourceText sourceText)> Sources,
             string RelativePath);
