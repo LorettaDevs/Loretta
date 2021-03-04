@@ -63,10 +63,16 @@ namespace Loretta.Generators.SyntaxKindGenerators
                              .GroupBy(t => t.key, t => (t.kind, t.value));
                     foreach (var propertyGroup in properties)
                     {
-                        var type = propertyGroup.Select(t => t.value.Type).Where(t => t is not null).Distinct().Single()!;
+                        var possibleTypes = propertyGroup.Select(t => t.value.Type).Where(t => t is not null).Distinct().ToImmutableArray();
+
+                        ITypeSymbol type;
+                        if (possibleTypes.Length > 1)
+                            type = context.Compilation.GetSpecialType(SpecialType.System_Object);
+                        else
+                            type = possibleTypes.Single()!;
 
                         writer.WriteLineNoTabs("");
-                        using (new CurlyIndenter(writer, $"public static Option<{type.Name}> Get{propertyGroup.Key}(SyntaxKind kind)"))
+                        using (new CurlyIndenter(writer, $"public static Option<{type}> Get{propertyGroup.Key}(SyntaxKind kind)"))
                         {
                             var values = propertyGroup.GroupBy(t => t.value, t => t.kind);
                             writer.WriteLine("return kind switch");
