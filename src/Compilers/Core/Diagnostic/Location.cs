@@ -5,7 +5,6 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Loretta.CodeAnalysis.Symbols;
 using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis
@@ -29,28 +28,12 @@ namespace Loretta.CodeAnalysis
         /// Returns true if the location represents a specific location in a source code file.
         /// </summary>
         [MemberNotNullWhen(true, nameof(SourceTree))]
-        public bool IsInSource { get { return SourceTree != null; } }
-
-        /// <summary>
-        /// Returns true if the location is in metadata.
-        /// </summary>
-        public bool IsInMetadata { get { return MetadataModuleInternal != null; } }
+        public bool IsInSource => SourceTree != null;
 
         /// <summary>
         /// The syntax tree this location is located in or <c>null</c> if not in a syntax tree.
         /// </summary>
-        public virtual SyntaxTree? SourceTree { get { return null; } }
-
-        /// <summary>
-        /// Returns the metadata module the location is associated with or <c>null</c> if the module is not available.
-        /// </summary>
-        /// <remarks>
-        /// Might return null even if <see cref="IsInMetadata"/> returns true. The module symbol might not be available anymore, 
-        /// for example, if the location is serialized and deserialized.
-        /// </remarks>
-        public IModuleSymbol? MetadataModule { get { return (IModuleSymbol?)MetadataModuleInternal?.GetISymbol(); } }
-
-        internal virtual IModuleSymbolInternal? MetadataModuleInternal { get { return null; } }
+        public virtual SyntaxTree? SourceTree => null;
 
         /// <summary>
         /// The location within the syntax tree that this location is associated with.
@@ -58,7 +41,7 @@ namespace Loretta.CodeAnalysis
         /// <remarks>
         /// If <see cref="IsInSource"/> returns False this method returns an empty <see cref="TextSpan"/> which starts at position 0.
         /// </remarks>
-        public virtual TextSpan SourceSpan { get { return default(TextSpan); } }
+        public virtual TextSpan SourceSpan => default;
 
         /// <summary>
         /// Gets the location in terms of path, line and column.
@@ -70,10 +53,7 @@ namespace Loretta.CodeAnalysis
         /// 
         /// The values are not affected by line mapping directives (#line in C# or #ExternalSource in VB).
         /// </returns>
-        public virtual FileLinePositionSpan GetLineSpan()
-        {
-            return default(FileLinePositionSpan);
-        }
+        public virtual FileLinePositionSpan GetLineSpan() => default;
 
         /// <summary>
         /// Gets the location in terms of path, line and column after applying source line mapping directives
@@ -83,10 +63,7 @@ namespace Loretta.CodeAnalysis
         /// <see cref="FileLinePositionSpan"/> that contains file, line and column information,
         /// or an invalid span (see <see cref="FileLinePositionSpan.IsValid"/>) if not available.
         /// </returns>
-        public virtual FileLinePositionSpan GetMappedLineSpan()
-        {
-            return default(FileLinePositionSpan);
-        }
+        public virtual FileLinePositionSpan GetMappedLineSpan() => default;
 
         // Derived classes should provide value equality semantics.
         public abstract override bool Equals(object? obj);
@@ -94,17 +71,10 @@ namespace Loretta.CodeAnalysis
 
         public override string ToString()
         {
-            string result = Kind.ToString();
+            var result = Kind.ToString();
             if (IsInSource)
             {
-                result += "(" + this.SourceTree?.FilePath + this.SourceSpan + ")";
-            }
-            else if (IsInMetadata)
-            {
-                if (this.MetadataModuleInternal != null)
-                {
-                    result += "(" + this.MetadataModuleInternal.Name + ")";
-                }
+                result += "(" + SourceTree?.FilePath + SourceSpan + ")";
             }
             else
             {
@@ -121,22 +91,15 @@ namespace Loretta.CodeAnalysis
 
         public static bool operator ==(Location? left, Location? right)
         {
-            if (object.ReferenceEquals(left, null))
-            {
-                return object.ReferenceEquals(right, null);
-            }
-
+            if (left is null) return right is null;
             return left.Equals(right);
         }
 
-        public static bool operator !=(Location? left, Location? right)
-        {
-            return !(left == right);
-        }
+        public static bool operator !=(Location? left, Location? right) => !(left == right);
 
         protected virtual string GetDebuggerDisplay()
         {
-            string result = this.GetType().Name;
+            var result = GetType().Name;
             var pos = GetLineSpan();
             if (pos.Path != null)
             {
@@ -150,7 +113,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// A location of kind LocationKind.None. 
         /// </summary>
-        public static Location None { get { return NoLocation.Singleton; } }
+        public static Location None => NoLocation.Singleton;
 
         /// <summary>
         /// Creates an instance of a <see cref="Location"/> for a span in a <see cref="SyntaxTree"/>.

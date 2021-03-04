@@ -9,8 +9,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using Loretta.Utilities;
-using System.Threading;
-using Loretta.CodeAnalysis.Symbols;
 
 namespace Loretta.CodeAnalysis
 {
@@ -76,10 +74,7 @@ namespace Loretta.CodeAnalysis
             return GetOrCreateDescriptor(errorCode, defaultSeverity, messageProvider);
         }
 
-        private static DiagnosticDescriptor GetOrCreateDescriptor(int errorCode, DiagnosticSeverity defaultSeverity, CommonMessageProvider messageProvider)
-        {
-            return ImmutableInterlocked.GetOrAdd(ref s_errorCodeToDescriptorMap, errorCode, code => CreateDescriptor(code, defaultSeverity, messageProvider));
-        }
+        private static DiagnosticDescriptor GetOrCreateDescriptor(int errorCode, DiagnosticSeverity defaultSeverity, CommonMessageProvider messageProvider) => ImmutableInterlocked.GetOrAdd(ref s_errorCodeToDescriptorMap, errorCode, code => CreateDescriptor(code, defaultSeverity, messageProvider));
 
         private static DiagnosticDescriptor CreateDescriptor(int errorCode, DiagnosticSeverity defaultSeverity, CommonMessageProvider messageProvider)
         {
@@ -107,7 +102,7 @@ namespace Loretta.CodeAnalysis
                 }
 
                 var type = arg.GetType();
-                if (type == typeof(string) || type == typeof(AssemblyIdentity))
+                if (type == typeof(string))
                 {
                     continue;
                 }
@@ -135,29 +130,23 @@ namespace Loretta.CodeAnalysis
         }
 
         // Create a copy of this instance with a explicit overridden severity
-        internal virtual DiagnosticInfo GetInstanceWithSeverity(DiagnosticSeverity severity)
-        {
-            return new DiagnosticInfo(this, severity);
-        }
+        internal virtual DiagnosticInfo GetInstanceWithSeverity(DiagnosticSeverity severity) => new DiagnosticInfo(this, severity);
 
         #region Serialization
 
         bool IObjectWritable.ShouldReuseInSerialization => false;
 
-        void IObjectWritable.WriteTo(ObjectWriter writer)
-        {
-            this.WriteTo(writer);
-        }
+        void IObjectWritable.WriteTo(ObjectWriter writer) => WriteTo(writer);
 
         protected virtual void WriteTo(ObjectWriter writer)
         {
             writer.WriteValue(_messageProvider);
-            writer.WriteUInt32((uint)_errorCode);
-            writer.WriteInt32((int)_effectiveSeverity);
-            writer.WriteInt32((int)_defaultSeverity);
+            writer.WriteUInt32((uint) _errorCode);
+            writer.WriteInt32((int) _effectiveSeverity);
+            writer.WriteInt32((int) _defaultSeverity);
 
-            int count = _arguments.Length;
-            writer.WriteUInt32((uint)count);
+            var count = _arguments.Length;
+            writer.WriteUInt32((uint) count);
 
             if (count > 0)
             {
@@ -170,16 +159,16 @@ namespace Loretta.CodeAnalysis
 
         protected DiagnosticInfo(ObjectReader reader)
         {
-            _messageProvider = (CommonMessageProvider)reader.ReadValue();
-            _errorCode = (int)reader.ReadUInt32();
-            _effectiveSeverity = (DiagnosticSeverity)reader.ReadInt32();
-            _defaultSeverity = (DiagnosticSeverity)reader.ReadInt32();
+            _messageProvider = (CommonMessageProvider) reader.ReadValue();
+            _errorCode = (int) reader.ReadUInt32();
+            _effectiveSeverity = (DiagnosticSeverity) reader.ReadInt32();
+            _defaultSeverity = (DiagnosticSeverity) reader.ReadInt32();
 
-            var count = (int)reader.ReadUInt32();
+            var count = (int) reader.ReadUInt32();
             if (count > 0)
             {
                 _arguments = new string[count];
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     _arguments[i] = reader.ReadString();
                 }
@@ -195,39 +184,21 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The error code, as an integer.
         /// </summary>
-        public int Code { get { return _errorCode; } }
+        public int Code => _errorCode;
 
-        public virtual DiagnosticDescriptor Descriptor
-        {
-            get
-            {
-                return GetOrCreateDescriptor(_errorCode, _defaultSeverity, _messageProvider);
-            }
-        }
+        public virtual DiagnosticDescriptor Descriptor => GetOrCreateDescriptor(_errorCode, _defaultSeverity, _messageProvider);
 
         /// <summary>
         /// Returns the effective severity of the diagnostic: whether this diagnostic is informational, warning, or error.
         /// If IsWarningsAsError is true, then this returns <see cref="DiagnosticSeverity.Error"/>, while <see cref="DefaultSeverity"/> returns <see cref="DiagnosticSeverity.Warning"/>.
         /// </summary>
-        public DiagnosticSeverity Severity
-        {
-            get
-            {
-                return _effectiveSeverity;
-            }
-        }
+        public DiagnosticSeverity Severity => _effectiveSeverity;
 
         /// <summary>
         /// Returns whether this diagnostic is informational, warning, or error by default, based on the error code.
         /// To get diagnostic's effective severity, use <see cref="Severity"/>.
         /// </summary>
-        public DiagnosticSeverity DefaultSeverity
-        {
-            get
-            {
-                return _defaultSeverity;
-            }
-        }
+        public DiagnosticSeverity DefaultSeverity => _defaultSeverity;
 
         /// <summary>
         /// Gets the warning level. This is 0 for diagnostics with severity <see cref="DiagnosticSeverity.Error"/>,
@@ -257,8 +228,8 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.DefaultSeverity == DiagnosticSeverity.Warning &&
-                    this.Severity == DiagnosticSeverity.Error;
+                return DefaultSeverity == DiagnosticSeverity.Warning &&
+                    Severity == DiagnosticSeverity.Error;
             }
         }
 
@@ -266,21 +237,9 @@ namespace Loretta.CodeAnalysis
         /// Get the diagnostic category for the given diagnostic code.
         /// Default category is <see cref="Diagnostic.CompilerDiagnosticCategory"/>.
         /// </summary>
-        public string Category
-        {
-            get
-            {
-                return _messageProvider.GetCategory(_errorCode);
-            }
-        }
+        public string Category => _messageProvider.GetCategory(_errorCode);
 
-        internal ImmutableArray<string> CustomTags
-        {
-            get
-            {
-                return GetCustomTags(_defaultSeverity);
-            }
-        }
+        internal ImmutableArray<string> CustomTags => GetCustomTags(_defaultSeverity);
 
         private static ImmutableArray<string> GetCustomTags(DiagnosticSeverity defaultSeverity)
         {
@@ -289,36 +248,22 @@ namespace Loretta.CodeAnalysis
                 s_compilerNonErrorCustomTags;
         }
 
-        internal bool IsNotConfigurable()
-        {
+        internal bool IsNotConfigurable() =>
             // Only compiler errors are non-configurable.
-            return _defaultSeverity == DiagnosticSeverity.Error;
-        }
+            _defaultSeverity == DiagnosticSeverity.Error;
 
         /// <summary>
         /// If a derived class has additional information about other referenced symbols, it can
         /// expose the locations of those symbols in a general way, so they can be reported along
         /// with the error.
         /// </summary>
-        public virtual IReadOnlyList<Location> AdditionalLocations
-        {
-            get
-            {
-                return SpecializedCollections.EmptyReadOnlyList<Location>();
-            }
-        }
+        public virtual IReadOnlyList<Location> AdditionalLocations => SpecializedCollections.EmptyReadOnlyList<Location>();
 
         /// <summary>
         /// Get the message id (for example "CS1001") for the message. This includes both the error number
         /// and a prefix identifying the source.
         /// </summary>
-        public virtual string MessageIdentifier
-        {
-            get
-            {
-                return _messageProvider.GetIdForErrorCode(_errorCode);
-            }
-        }
+        public virtual string MessageIdentifier => _messageProvider.GetIdForErrorCode(_errorCode);
 
         /// <summary>
         /// Get the text of the message in the given language.
@@ -326,7 +271,7 @@ namespace Loretta.CodeAnalysis
         public virtual string GetMessage(IFormatProvider? formatProvider = null)
         {
             // Get the message and fill in arguments.
-            string message = _messageProvider.LoadMessage(_errorCode, formatProvider as CultureInfo);
+            var message = _messageProvider.LoadMessage(_errorCode, formatProvider as CultureInfo);
             if (string.IsNullOrEmpty(message))
             {
                 return string.Empty;
@@ -337,27 +282,19 @@ namespace Loretta.CodeAnalysis
                 return message;
             }
 
-            return String.Format(formatProvider, message, GetArgumentsToUse(formatProvider));
+            return string.Format(formatProvider, message, GetArgumentsToUse(formatProvider));
         }
 
         protected object[] GetArgumentsToUse(IFormatProvider? formatProvider)
         {
             object[]? argumentsToUse = null;
-            for (int i = 0; i < _arguments.Length; i++)
+            for (var i = 0; i < _arguments.Length; i++)
             {
-                var embedded = _arguments[i] as DiagnosticInfo;
-                if (embedded != null)
+                if (_arguments[i] is DiagnosticInfo embedded)
                 {
                     argumentsToUse = InitializeArgumentListIfNeeded(argumentsToUse);
                     argumentsToUse[i] = embedded.GetMessage(formatProvider);
                     continue;
-                }
-
-                var symbol = _arguments[i] as ISymbol ?? (_arguments[i] as ISymbolInternal)?.GetISymbol();
-                if (symbol != null)
-                {
-                    argumentsToUse = InitializeArgumentListIfNeeded(argumentsToUse);
-                    argumentsToUse[i] = _messageProvider.GetErrorDisplayString(symbol);
                 }
             }
 
@@ -377,38 +314,26 @@ namespace Loretta.CodeAnalysis
             return newArguments;
         }
 
-        internal object[] Arguments
-        {
-            get { return _arguments; }
-        }
+        internal object[] Arguments => _arguments;
 
-        internal CommonMessageProvider MessageProvider
-        {
-            get { return _messageProvider; }
-        }
+        internal CommonMessageProvider MessageProvider => _messageProvider;
 
         // TODO (tomat): remove
-        public override string? ToString()
-        {
-            return ToString(null);
-        }
+        public override string? ToString() => ToString(null);
 
-        public string ToString(IFormatProvider? formatProvider)
-        {
-            return ((IFormattable)this).ToString(null, formatProvider);
-        }
+        public string ToString(IFormatProvider? formatProvider) => ((IFormattable) this).ToString(null, formatProvider);
 
         string IFormattable.ToString(string? format, IFormatProvider? formatProvider)
         {
-            return String.Format(formatProvider, "{0}: {1}",
-                _messageProvider.GetMessagePrefix(this.MessageIdentifier, this.Severity, this.IsWarningAsError, formatProvider as CultureInfo),
-                this.GetMessage(formatProvider));
+            return string.Format(formatProvider, "{0}: {1}",
+                _messageProvider.GetMessagePrefix(MessageIdentifier, Severity, IsWarningAsError, formatProvider as CultureInfo),
+                GetMessage(formatProvider));
         }
 
         public sealed override int GetHashCode()
         {
-            int hashCode = _errorCode;
-            for (int i = 0; i < _arguments.Length; i++)
+            var hashCode = _errorCode;
+            for (var i = 0; i < _arguments.Length; i++)
             {
                 hashCode = Hash.Combine(_arguments[i], hashCode);
             }
@@ -418,18 +343,16 @@ namespace Loretta.CodeAnalysis
 
         public sealed override bool Equals(object? obj)
         {
-            DiagnosticInfo? other = obj as DiagnosticInfo;
+            var result = false;
 
-            bool result = false;
-
-            if (other != null &&
+            if (obj is DiagnosticInfo other &&
                 other._errorCode == _errorCode &&
-                other.GetType() == this.GetType())
+                other.GetType() == GetType())
             {
                 if (_arguments.Length == other._arguments.Length)
                 {
                     result = true;
-                    for (int i = 0; i < _arguments.Length; i++)
+                    for (var i = 0; i < _arguments.Length; i++)
                     {
                         if (!object.Equals(_arguments[i], other._arguments[i]))
                         {
@@ -447,27 +370,20 @@ namespace Loretta.CodeAnalysis
         {
             // There aren't message resources for our internal error codes, so make
             // sure we don't call ToString for those.
-            switch (Code)
+            return Code switch
             {
-                case InternalErrorCode.Unknown:
-                    return "Unresolved DiagnosticInfo";
-
-                case InternalErrorCode.Void:
-                    return "Void DiagnosticInfo";
-
-                default:
-                    return ToString();
-            }
+                InternalErrorCode.Unknown => "Unresolved DiagnosticInfo",
+                InternalErrorCode.Void => "Void DiagnosticInfo",
+                _ => ToString(),
+            };
         }
 
         /// <summary>
         /// For a DiagnosticInfo that is lazily evaluated, this method evaluates it
         /// and returns a non-lazy DiagnosticInfo.
         /// </summary>
-        internal virtual DiagnosticInfo GetResolvedInfo()
-        {
+        internal virtual DiagnosticInfo GetResolvedInfo() =>
             // We should never call GetResolvedInfo on a non-lazy DiagnosticInfo
             throw ExceptionUtilities.Unreachable;
-        }
     }
 }

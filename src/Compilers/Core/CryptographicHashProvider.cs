@@ -27,106 +27,66 @@ namespace Loretta.CodeAnalysis
 
         internal ImmutableArray<byte> GetHash(AssemblyHashAlgorithm algorithmId)
         {
-            using (HashAlgorithm? algorithm = TryGetAlgorithm(algorithmId))
+            using var algorithm = TryGetAlgorithm(algorithmId);
+            // ERR_CryptoHashFailed has already been reported:
+            if (algorithm == null)
             {
-                // ERR_CryptoHashFailed has already been reported:
-                if (algorithm == null)
-                {
-                    return ImmutableArray.Create<byte>();
-                }
-
-                switch (algorithmId)
-                {
-                    case AssemblyHashAlgorithm.None:
-                    case AssemblyHashAlgorithm.Sha1:
-                        return GetHash(ref _lazySHA1Hash, algorithm);
-
-                    case AssemblyHashAlgorithm.Sha256:
-                        return GetHash(ref _lazySHA256Hash, algorithm);
-
-                    case AssemblyHashAlgorithm.Sha384:
-                        return GetHash(ref _lazySHA384Hash, algorithm);
-
-                    case AssemblyHashAlgorithm.Sha512:
-                        return GetHash(ref _lazySHA512Hash, algorithm);
-
-                    case AssemblyHashAlgorithm.MD5:
-                        return GetHash(ref _lazyMD5Hash, algorithm);
-
-                    default:
-                        throw ExceptionUtilities.UnexpectedValue(algorithmId);
-                }
+                return ImmutableArray.Create<byte>();
             }
+
+            return algorithmId switch
+            {
+                AssemblyHashAlgorithm.None
+                or AssemblyHashAlgorithm.Sha1 => GetHash(ref _lazySHA1Hash, algorithm),
+                AssemblyHashAlgorithm.Sha256 => GetHash(ref _lazySHA256Hash, algorithm),
+                AssemblyHashAlgorithm.Sha384 => GetHash(ref _lazySHA384Hash, algorithm),
+                AssemblyHashAlgorithm.Sha512 => GetHash(ref _lazySHA512Hash, algorithm),
+                AssemblyHashAlgorithm.MD5 => GetHash(ref _lazyMD5Hash, algorithm),
+                _ => throw ExceptionUtilities.UnexpectedValue(algorithmId),
+            };
         }
 
         internal static int GetHashSize(SourceHashAlgorithm algorithmId)
         {
-            switch (algorithmId)
+            return algorithmId switch
             {
-                case SourceHashAlgorithm.Sha1:
-                    return 160 / 8;
-
-                case SourceHashAlgorithm.Sha256:
-                    return 256 / 8;
-
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(algorithmId);
-            }
+                SourceHashAlgorithm.Sha1 => 160 / 8,
+                SourceHashAlgorithm.Sha256 => 256 / 8,
+                _ => throw ExceptionUtilities.UnexpectedValue(algorithmId),
+            };
         }
 
         internal static HashAlgorithm? TryGetAlgorithm(SourceHashAlgorithm algorithmId)
         {
-            switch (algorithmId)
+            return algorithmId switch
             {
-                case SourceHashAlgorithm.Sha1:
-                    return SHA1.Create();
-
-                case SourceHashAlgorithm.Sha256:
-                    return SHA256.Create();
-
-                default:
-                    return null;
-            }
+                SourceHashAlgorithm.Sha1 => SHA1.Create(),
+                SourceHashAlgorithm.Sha256 => SHA256.Create(),
+                _ => null,
+            };
         }
 
         internal static HashAlgorithmName GetAlgorithmName(SourceHashAlgorithm algorithmId)
         {
-            switch (algorithmId)
+            return algorithmId switch
             {
-                case SourceHashAlgorithm.Sha1:
-                    return HashAlgorithmName.SHA1;
-
-                case SourceHashAlgorithm.Sha256:
-                    return HashAlgorithmName.SHA256;
-
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(algorithmId);
-            }
+                SourceHashAlgorithm.Sha1 => HashAlgorithmName.SHA1,
+                SourceHashAlgorithm.Sha256 => HashAlgorithmName.SHA256,
+                _ => throw ExceptionUtilities.UnexpectedValue(algorithmId),
+            };
         }
 
         internal static HashAlgorithm? TryGetAlgorithm(AssemblyHashAlgorithm algorithmId)
         {
-            switch (algorithmId)
+            return algorithmId switch
             {
-                case AssemblyHashAlgorithm.None:
-                case AssemblyHashAlgorithm.Sha1:
-                    return SHA1.Create();
-
-                case AssemblyHashAlgorithm.Sha256:
-                    return SHA256.Create();
-
-                case AssemblyHashAlgorithm.Sha384:
-                    return SHA384.Create();
-
-                case AssemblyHashAlgorithm.Sha512:
-                    return SHA512.Create();
-
-                case AssemblyHashAlgorithm.MD5:
-                    return MD5.Create();
-
-                default:
-                    return null;
-            }
+                AssemblyHashAlgorithm.None or AssemblyHashAlgorithm.Sha1 => SHA1.Create(),
+                AssemblyHashAlgorithm.Sha256 => SHA256.Create(),
+                AssemblyHashAlgorithm.Sha384 => SHA384.Create(),
+                AssemblyHashAlgorithm.Sha512 => SHA512.Create(),
+                AssemblyHashAlgorithm.MD5 => MD5.Create(),
+                _ => null,
+            };
         }
 
         internal static bool IsSupportedAlgorithm(AssemblyHashAlgorithm algorithmId)
@@ -150,7 +110,7 @@ namespace Loretta.CodeAnalysis
         {
             if (lazyHash.IsDefault)
             {
-                ImmutableInterlocked.InterlockedCompareExchange(ref lazyHash, ComputeHash(algorithm), default(ImmutableArray<byte>));
+                ImmutableInterlocked.InterlockedCompareExchange(ref lazyHash, ComputeHash(algorithm), default);
             }
 
             return lazyHash;
@@ -163,19 +123,14 @@ namespace Loretta.CodeAnalysis
             if (stream != null)
             {
                 stream.Seek(0, SeekOrigin.Begin);
-                using (var hashProvider = SHA1.Create())
-                {
-                    return ImmutableArray.Create(hashProvider.ComputeHash(stream));
-                }
+                using var hashProvider = SHA1.Create();
+                return ImmutableArray.Create(hashProvider.ComputeHash(stream));
             }
 
             return ImmutableArray<byte>.Empty;
         }
 
-        internal static ImmutableArray<byte> ComputeSha1(ImmutableArray<byte> bytes)
-        {
-            return ComputeSha1(bytes.ToArray());
-        }
+        internal static ImmutableArray<byte> ComputeSha1(ImmutableArray<byte> bytes) => ComputeSha1(bytes.ToArray());
 
         internal static ImmutableArray<byte> ComputeSha1(byte[] bytes)
         {
@@ -213,9 +168,6 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        internal static ImmutableArray<byte> ComputeSourceHash(IEnumerable<Blob> bytes, SourceHashAlgorithm hashAlgorithm = SourceHashAlgorithmUtils.DefaultContentHashAlgorithm)
-        {
-            return ComputeHash(GetAlgorithmName(hashAlgorithm), bytes);
-        }
+        internal static ImmutableArray<byte> ComputeSourceHash(IEnumerable<Blob> bytes, SourceHashAlgorithm hashAlgorithm = SourceHashAlgorithmUtils.DefaultContentHashAlgorithm) => ComputeHash(GetAlgorithmName(hashAlgorithm), bytes);
     }
 }

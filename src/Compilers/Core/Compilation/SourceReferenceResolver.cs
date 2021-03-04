@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Loretta.CodeAnalysis.Text;
 
@@ -64,10 +63,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="resolvedPath">Path returned by <see cref="ResolveReference(string, string)"/>.</param>
         public virtual SourceText ReadText(string resolvedPath)
         {
-            using (var stream = OpenRead(resolvedPath))
-            {
-                return EncodedStringText.Create(stream);
-            }
+            using var stream = OpenRead(resolvedPath);
+            return EncodedStringText.Create(stream);
         }
     }
 }

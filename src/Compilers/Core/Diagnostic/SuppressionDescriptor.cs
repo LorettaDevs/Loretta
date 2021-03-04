@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using Loretta.CodeAnalysis.Diagnostics;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
@@ -40,7 +39,7 @@ namespace Loretta.CodeAnalysis
             string id,
             string suppressedDiagnosticId,
             string justification)
-            : this(id, suppressedDiagnosticId, (LocalizableString)justification)
+            : this(id, suppressedDiagnosticId, (LocalizableString) justification)
         {
         }
 
@@ -65,9 +64,9 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentException(CodeAnalysisResources.DiagnosticIdCantBeNullOrWhitespace, nameof(suppressedDiagnosticId));
             }
 
-            this.Id = id;
-            this.SuppressedDiagnosticId = suppressedDiagnosticId;
-            this.Justification = justification ?? throw new ArgumentNullException(nameof(justification));
+            Id = id;
+            SuppressedDiagnosticId = suppressedDiagnosticId;
+            Justification = justification ?? throw new ArgumentNullException(nameof(justification));
         }
 
         public bool Equals(SuppressionDescriptor? other)
@@ -79,35 +78,17 @@ namespace Loretta.CodeAnalysis
 
             return
                 other != null &&
-                this.Id == other.Id &&
-                this.SuppressedDiagnosticId == other.SuppressedDiagnosticId &&
-                this.Justification.Equals(other.Justification);
+                Id == other.Id &&
+                SuppressedDiagnosticId == other.SuppressedDiagnosticId &&
+                Justification.Equals(other.Justification);
         }
 
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as SuppressionDescriptor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as SuppressionDescriptor);
 
         public override int GetHashCode()
         {
-            return Hash.Combine(this.Id.GetHashCode(),
-                   Hash.Combine(this.SuppressedDiagnosticId.GetHashCode(), this.Justification.GetHashCode()));
-        }
-
-        /// <summary>
-        /// Returns a flag indicating if the suppression is disabled for the given <see cref="CompilationOptions"/>.
-        /// </summary>
-        /// <param name="compilationOptions">Compilation options</param>
-        internal bool IsDisabled(CompilationOptions compilationOptions)
-        {
-            if (compilationOptions == null)
-            {
-                throw new ArgumentNullException(nameof(compilationOptions));
-            }
-
-            return compilationOptions.SpecificDiagnosticOptions.TryGetValue(Id, out var reportDiagnostic) &&
-                reportDiagnostic == ReportDiagnostic.Suppress;
+            return Hash.Combine(Id.GetHashCode(),
+                   Hash.Combine(SuppressedDiagnosticId.GetHashCode(), Justification.GetHashCode()));
         }
     }
 }

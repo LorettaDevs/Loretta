@@ -21,9 +21,6 @@
     </PackageDescription>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Operations\OperationInterfaces.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <!--
       Analyzers that will be used to analyze projects that references 
       Loretta.CodeAnalysis project or Loretta.CodeAnalysis.Common package.
@@ -42,6 +39,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
   <ItemGroup>
     <!-- Need to include the PerformanceSensitiveAttribute definition in source build, since we can't get it from the analyzer package. -->

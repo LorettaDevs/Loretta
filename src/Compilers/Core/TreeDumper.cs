@@ -180,8 +180,7 @@ namespace Loretta.CodeAnalysis
                 return "(null)";
             }
 
-            var str = o as string;
-            if (str != null)
+            if (o is string str)
             {
                 return str;
             }
@@ -191,16 +190,9 @@ namespace Loretta.CodeAnalysis
                 return "(null)";
             }
 
-            var seq = o as IEnumerable;
-            if (seq != null)
+            if (o is IEnumerable seq)
             {
                 return string.Format("{{{0}}}", string.Join(", ", seq.Cast<object>().Select(DumperString).ToArray()));
-            }
-
-            var symbol = o as ISymbol;
-            if (symbol != null)
-            {
-                return symbol.ToDisplayString(SymbolDisplayFormat.TestFormat);
             }
 
             return o.ToString() ?? "";

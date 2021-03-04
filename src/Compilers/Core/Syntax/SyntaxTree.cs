@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
@@ -25,9 +24,6 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         protected internal static readonly ImmutableDictionary<string, ReportDiagnostic> EmptyDiagnosticOptions =
             ImmutableDictionary.Create<string, ReportDiagnostic>(CaseInsensitiveComparison.Comparer);
-
-        private ImmutableArray<byte> _lazyChecksum;
-        private SourceHashAlgorithm _lazyHashAlgorithm;
 
         /// <summary>
         /// The path of the source document file.
@@ -59,13 +55,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The options used by the parser to produce the syntax tree.
         /// </summary>
-        public ParseOptions Options
-        {
-            get
-            {
-                return this.OptionsCore;
-            }
-        }
+        public ParseOptions Options => OptionsCore;
 
         /// <summary>
         /// The options used by the parser to produce the syntax tree.
@@ -109,18 +99,12 @@ namespace Loretta.CodeAnalysis
         /// By default, the work associated with this method will be executed immediately on the current thread.
         /// Implementations that wish to schedule this work differently should override <see cref="GetTextAsync(CancellationToken)"/>.
         /// </remarks>
-        public virtual Task<SourceText> GetTextAsync(CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(this.TryGetText(out SourceText? text) ? text : this.GetText(cancellationToken));
-        }
+        public virtual Task<SourceText> GetTextAsync(CancellationToken cancellationToken = default) => Task.FromResult(TryGetText(out var text) ? text : GetText(cancellationToken));
 
         /// <summary>
         /// Gets the root of the syntax tree if it is available.
         /// </summary>
-        public bool TryGetRoot([NotNullWhen(true)] out SyntaxNode? root)
-        {
-            return TryGetRootCore(out root);
-        }
+        public bool TryGetRoot([NotNullWhen(true)] out SyntaxNode? root) => TryGetRootCore(out root);
 
         /// <summary>
         /// Gets the root of the syntax tree if it is available.
@@ -130,10 +114,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets the root node of the syntax tree, causing computation if necessary.
         /// </summary>
-        public SyntaxNode GetRoot(CancellationToken cancellationToken = default)
-        {
-            return GetRootCore(cancellationToken);
-        }
+        public SyntaxNode GetRoot(CancellationToken cancellationToken = default) => GetRootCore(cancellationToken);
 
         /// <summary>
         /// Gets the root node of the syntax tree, causing computation if necessary.
@@ -143,15 +124,11 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets the root node of the syntax tree asynchronously.
         /// </summary>
-        public Task<SyntaxNode> GetRootAsync(CancellationToken cancellationToken = default)
-        {
-            return GetRootAsyncCore(cancellationToken);
-        }
+        public Task<SyntaxNode> GetRootAsync(CancellationToken cancellationToken = default) => GetRootAsyncCore(cancellationToken);
 
         /// <summary>
         /// Gets the root node of the syntax tree asynchronously.
         /// </summary>
-        [SuppressMessage("Style", "VSTHRD200:Use \"Async\" suffix for async methods", Justification = "Public API.")]
         protected abstract Task<SyntaxNode> GetRootAsyncCore(CancellationToken cancellationToken);
 
         /// <summary>
@@ -232,10 +209,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="position">The position to check.</param>
         /// <param name="cancellationToken">The cancellation token.</param> 
-        public virtual LineVisibility GetLineVisibility(int position, CancellationToken cancellationToken = default)
-        {
-            return LineVisibility.Visible;
-        }
+        public virtual LineVisibility GetLineVisibility(int position, CancellationToken cancellationToken = default) => LineVisibility.Visible;
 
         /// <summary>
         /// Gets a FileLinePositionSpan for a TextSpan and the information whether this span is considered to be hidden or not. 
@@ -284,10 +258,8 @@ namespace Loretta.CodeAnalysis
         /// <see cref="System.Runtime.CompilerServices.CallerLineNumberAttribute"/>.
         /// </remarks>
         internal int GetDisplayLineNumber(TextSpan span)
-        {
-            // display line numbers are 1-based
-            return GetMappedLineSpan(span).StartLinePosition.Line + 1;
-        }
+             // display line numbers are 1-based
+             => GetMappedLineSpan(span).StartLinePosition.Line + 1;
 
         /// <summary>
         /// Are there any hidden regions in the tree?
@@ -332,26 +304,6 @@ namespace Loretta.CodeAnalysis
         public abstract IList<TextChange> GetChanges(SyntaxTree oldTree);
 
         /// <summary>
-        /// Gets the checksum + algorithm id to use in the PDB.
-        /// </summary>
-        internal Cci.DebugSourceInfo GetDebugSourceInfo()
-        {
-            if (_lazyChecksum.IsDefault)
-            {
-                var text = this.GetText();
-                _lazyChecksum = text.GetChecksum();
-                _lazyHashAlgorithm = text.ChecksumAlgorithm;
-            }
-
-            RoslynDebug.Assert(!_lazyChecksum.IsDefault);
-            RoslynDebug.Assert(_lazyHashAlgorithm != default(SourceHashAlgorithm));
-
-            // NOTE: If this tree is to be embedded, it's debug source info should have
-            // been obtained via EmbeddedText.GetDebugSourceInfo() and not here.
-            return new Cci.DebugSourceInfo(_lazyChecksum, _lazyHashAlgorithm);
-        }
-
-        /// <summary>
         /// Returns a new tree whose root and options are as specified and other properties are copied from the current tree.
         /// </summary>
         public abstract SyntaxTree WithRootAndOptions(SyntaxNode root, ParseOptions options);
@@ -370,22 +322,13 @@ namespace Loretta.CodeAnalysis
         /// on the language.
         /// </param>
         [Obsolete("Obsolete due to performance problems, use CompilationOptions.SyntaxTreeOptionsProvider instead", error: false)]
-        public virtual SyntaxTree WithDiagnosticOptions(ImmutableDictionary<string, ReportDiagnostic> options)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual SyntaxTree WithDiagnosticOptions(ImmutableDictionary<string, ReportDiagnostic> options) => throw new NotImplementedException();
 
         /// <summary>
-        /// Returns a <see cref="String" /> that represents the entire source text of this <see cref="SyntaxTree"/>.
+        /// Returns a <see cref="string" /> that represents the entire source text of this <see cref="SyntaxTree"/>.
         /// </summary>
-        public override string ToString()
-        {
-            return this.GetText(CancellationToken.None).ToString();
-        }
+        public override string ToString() => GetText(CancellationToken.None).ToString();
 
-        internal virtual bool SupportsLocations
-        {
-            get { return this.HasCompilationUnitRoot; }
-        }
+        internal virtual bool SupportsLocations => HasCompilationUnitRoot;
     }
 }

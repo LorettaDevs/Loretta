@@ -14,16 +14,9 @@ namespace Loretta.CodeAnalysis.Diagnostics
         /// </summary>
         public string Id { get; }
 
-        /// <summary>
-        /// If the diagnostic was suppressed by an attribute, then returns that attribute.
-        /// Otherwise, returns null.
-        /// </summary>
-        public AttributeData? Attribute { get; }
-
-        internal SuppressionInfo(string id, AttributeData? attribute)
+        internal SuppressionInfo(string id)
         {
             Id = id;
-            Attribute = attribute;
         }
     }
 }

@@ -318,7 +318,9 @@ namespace Loretta.Utilities
                 = new(() => new List<T>(20));
 
             private ReaderReferenceMap(List<T> values)
-                => _values = values;
+            {
+                _values = values;
+            }
 
             public static ReaderReferenceMap<T> Create()
                 => new(s_objectListPool.Allocate());
