@@ -52,7 +52,6 @@ namespace Loretta.Generators.SyntaxXml
             WriteGreenTypes();
             WriteGreenVisitors();
             WriteGreenRewriter();
-            WriteContextualGreenFactories();
             WriteStaticGreenFactories();
             CloseBlock();
         }
@@ -407,23 +406,6 @@ namespace Loretta.Generators.SyntaxXml
             CloseBlock();
         }
 
-        private void WriteContextualGreenFactories()
-        {
-            var nodes = Tree.Types.Where(n => n is not PredefinedNode and not AbstractNode).ToList();
-            WriteLine();
-            WriteLine("internal partial class ContextAwareSyntax");
-            OpenBlock();
-            WriteLine();
-            WriteLine("private SyntaxFactoryContext context;");
-
-            WriteLine();
-            WriteLine("public ContextAwareSyntax(SyntaxFactoryContext context)");
-            WriteLine("    => this.context = context;");
-
-            WriteGreenFactories(nodes, withSyntaxFactoryContext: true);
-            CloseBlock();
-        }
-
         private void WriteStaticGreenFactories()
         {
             var nodes = Tree.Types.Where(n => n is not PredefinedNode and not AbstractNode).ToList();
@@ -435,12 +417,12 @@ namespace Loretta.Generators.SyntaxXml
             CloseBlock();
         }
 
-        private void WriteGreenFactories(List<TreeType> nodes, bool withSyntaxFactoryContext = false)
+        private void WriteGreenFactories(List<TreeType> nodes)
         {
             foreach (var node in nodes.OfType<Node>())
             {
                 WriteLine();
-                WriteGreenFactory(node, withSyntaxFactoryContext);
+                WriteGreenFactory(node);
             }
         }
 
@@ -462,12 +444,12 @@ namespace Loretta.Generators.SyntaxXml
             Unindent();
         }
 
-        private void WriteGreenFactory(Node nd, bool withSyntaxFactoryContext = false)
+        private void WriteGreenFactory(Node nd)
         {
             var valueFields = nd.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
             var nodeFields = nd.Fields.Where(n => IsNodeOrNodeList(n.Type)).ToList();
 
-            Write($"public {(withSyntaxFactoryContext ? "" : "static ")}{nd.Name} {StripPost(nd.Name, "Syntax")}(");
+            Write($"public static {nd.Name} {StripPost(nd.Name, "Syntax")}(");
             WriteGreenFactoryParameters(nd);
             WriteLine(")");
             OpenBlock();
@@ -559,16 +541,9 @@ namespace Loretta.Generators.SyntaxXml
                 //int hash;
                 WriteLine("int hash;");
                 //SyntaxNode cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IdentifierName, identifier, this.context, out hash);
-                if (withSyntaxFactoryContext)
-                {
-                    Write("var cached = SyntaxNodeCache.TryGetNode((int)");
-                }
-                else
-                {
-                    Write("var cached = SyntaxNodeCache.TryGetNode((int)");
-                }
+                Write("var cached = SyntaxNodeCache.TryGetNode((int)");
 
-                WriteCtorArgList(nd, withSyntaxFactoryContext, valueFields, nodeFields);
+                WriteCtorArgList(nd, valueFields, nodeFields);
                 WriteLine(", out hash);");
                 //    if (cached != null) return (IdentifierNameSyntax)cached;
                 WriteLine($"if (cached != null) return ({nd.Name})cached;");
@@ -576,7 +551,7 @@ namespace Loretta.Generators.SyntaxXml
 
                 //var result = new IdentifierNameSyntax(SyntaxKind.IdentifierName, identifier);
                 Write($"var result = new {nd.Name}(");
-                WriteCtorArgList(nd, withSyntaxFactoryContext, valueFields, nodeFields);
+                WriteCtorArgList(nd, valueFields, nodeFields);
                 WriteLine(");");
                 //if (hash >= 0)
                 WriteLine("if (hash >= 0)");
@@ -595,7 +570,7 @@ namespace Loretta.Generators.SyntaxXml
             {
                 WriteLine();
                 Write($"return new {nd.Name}(");
-                WriteCtorArgList(nd, withSyntaxFactoryContext, valueFields, nodeFields);
+                WriteCtorArgList(nd, valueFields, nodeFields);
                 WriteLine(");");
             }
 
@@ -619,7 +594,7 @@ namespace Loretta.Generators.SyntaxXml
                 })));
         }
 
-        private void WriteCtorArgList(Node nd, bool withSyntaxFactoryContext, List<Field> valueFields, List<Field> nodeFields)
+        private void WriteCtorArgList(Node nd, List<Field> valueFields, List<Field> nodeFields)
         {
             Write(CommaJoin(
                 nd.Kinds.Count == 1 ? $"SyntaxKind.{nd.Kinds[0].Name}" : "kind",
@@ -628,8 +603,7 @@ namespace Loretta.Generators.SyntaxXml
                         ? $"{CamelCase(f.Name)}.Node"
                         : CamelCase(f.Name)),
                 // values are at end
-                valueFields.Select(f => CamelCase(f.Name)),
-                withSyntaxFactoryContext ? "this.context" : ""));
+                valueFields.Select(f => CamelCase(f.Name))));
         }
 
         private void WriteRedTypes()
