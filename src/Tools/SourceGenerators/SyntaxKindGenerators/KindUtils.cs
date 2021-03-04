@@ -227,44 +227,41 @@ namespace Loretta.CodeAnalysis.Lua
     /// Can be checked by the Is{CategoryName} methods in SyntaxFacts.
     /// All members of a category can also be retrieved by the Get{CategoryName} methods in SyntaxFacts.
     /// </summary>
-    [AttributeUsage ( AttributeTargets.Field, Inherited = false, AllowMultiple = false )]
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     internal sealed class ExtraCategoriesAttribute : Attribute
     {
-        public ExtraCategoriesAttribute ( params String[] extraCategories )
+        public ExtraCategoriesAttribute(params string[] extraCategories)
         {
-            this.Categories = extraCategories;
+            Categories = extraCategories;
         }
 
-        public String[] Categories { get; }
+        public string[] Categories { get; }
     }
 
     /// <summary>
     /// Properties associated with the enum value.
     /// Can be retrieved from the Get{Key} methods in SyntaxFacts.
     /// </summary>
-    [AttributeUsage ( AttributeTargets.Field, Inherited = false, AllowMultiple = true )]
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = true)]
     internal sealed class PropertyAttribute : Attribute
     {
-        public PropertyAttribute ( String key, Object value )
+        public PropertyAttribute(string key, object? value)
         {
-            this.Key = key;
-            this.Value = value;
+            Key = key;
+            Value = value;
         }
 
-        public String Key { get; }
-        public Object Value { get; }
+        public string Key { get; }
+        public object Value { get; }
     }
 
     /// <summary>
     /// The trivia indicator attribute.
     /// Indicates to the SyntaxFacts Source Generator that this <see cref=""SyntaxKind""/> is a trivia's.
     /// </summary>
-    [AttributeUsage ( AttributeTargets.Field, Inherited = false, AllowMultiple = false )]
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     internal sealed class TriviaAttribute : Attribute
     {
-        public TriviaAttribute ( )
-        {
-        }
     }
 
     /// <summary>
@@ -272,17 +269,13 @@ namespace Loretta.CodeAnalysis.Lua
     /// Indicates to the SyntaxFacts Source Generator that this <see cref=""SyntaxKind""/> is a token's.
     /// May optionally indicate a fixed text for the token.
     /// </summary>
-    [AttributeUsage ( AttributeTargets.Field, Inherited = false, AllowMultiple = false )]
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     internal sealed class TokenAttribute : Attribute
     {
-        public TokenAttribute ( )
-        {
-        }
-
         /// <summary>
         /// The <see cref=""SyntaxToken""/>'s fixed text.
         /// </summary>
-        public String? Text { get; set; }
+        public string? Text { get; set; }
     }
 
     /// <summary>
@@ -290,12 +283,12 @@ namespace Loretta.CodeAnalysis.Lua
     /// Indicates to the SyntaxFacts Source Generator that this <see cref=""SyntaxKind""/> is a keywords's
     /// and the keyword fixed text.
     /// </summary>
-    [AttributeUsage ( AttributeTargets.Field, Inherited = false, AllowMultiple = false )]
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     internal sealed class KeywordAttribute : Attribute
     {
-        public KeywordAttribute ( String text )
+        public KeywordAttribute(string text)
         {
-            this.Text = text;
+            Text = text;
         }
 
         /// <summary>
@@ -312,18 +305,18 @@ namespace Loretta.CodeAnalysis.Lua
     /// THIS DOES NOT IMPLY THE <see cref=""TokenAttribute""/>
     /// ATTRIBUTE.
     /// </summary>
-    [AttributeUsage ( AttributeTargets.Field, Inherited = false, AllowMultiple = false )]
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     internal sealed class UnaryOperatorAttribute : Attribute
     {
-        public UnaryOperatorAttribute ( Int32 precedence, SyntaxKind expressionKind )
+        public UnaryOperatorAttribute(int precedence, SyntaxKind expressionKind)
         {
-            this.Precedence = precedence;
+            Precedence = precedence;
         }
 
         /// <summary>
         /// The unary operator's precedence.
         /// </summary>
-        public Int32 Precedence { get; }
+        public int Precedence { get; }
     }
 
     /// <summary>
@@ -334,18 +327,18 @@ namespace Loretta.CodeAnalysis.Lua
     /// THIS DOES NOT IMPLY THE <see cref=""TokenAttribute""/>
     /// ATTRIBUTE.
     /// </summary>
-    [AttributeUsage ( AttributeTargets.Field, Inherited = false, AllowMultiple = false )]
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     internal sealed class BinaryOperatorAttribute : Attribute
     {
-        public BinaryOperatorAttribute ( Int32 precedence, SyntaxKind expressionKind )
+        public BinaryOperatorAttribute(int precedence, SyntaxKind expressionKind)
         {
-            this.Precedence = precedence;
+            Precedence = precedence;
         }
 
         /// <summary>
         /// The binary operator's precedence.
         /// </summary>
-        public Int32 Precedence { get; }
+        public int Precedence { get; }
     }
 }";
     }
