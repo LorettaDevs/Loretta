@@ -24,9 +24,8 @@ namespace Loretta.CodeAnalysis.Text
             string source,
             Encoding? encodingOpt,
             ImmutableArray<byte> checksum = default(ImmutableArray<byte>),
-            SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1,
-            ImmutableArray<byte> embeddedTextBlob = default(ImmutableArray<byte>))
-            : base(checksum, checksumAlgorithm, embeddedTextBlob)
+            SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
+            : base(checksum, checksumAlgorithm)
         {
             RoslynDebug.Assert(source != null);
 

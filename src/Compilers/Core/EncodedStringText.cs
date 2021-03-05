@@ -144,16 +144,14 @@ namespace Loretta.CodeAnalysis.Text
                     if (TryGetBytesFromStream(data, out ArraySegment<byte> bytes) && bytes.Offset == 0 && bytes.Array is object)
                     {
                         return SourceText.From(bytes.Array,
-                                               (int)data.Length,
+                                               (int) data.Length,
                                                encoding,
-                                               checksumAlgorithm,
-                                               throwIfBinaryDetected,
-                                               canBeEmbedded);
+                                               checksumAlgorithm);
                     }
                 }
             }
 
-            return SourceText.From(data, encoding, checksumAlgorithm, throwIfBinaryDetected, canBeEmbedded);
+            return SourceText.From(data, encoding, checksumAlgorithm, throwIfBinaryDetected);
         }
 
         /// <summary>

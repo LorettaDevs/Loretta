@@ -29,8 +29,8 @@ namespace Loretta.CodeAnalysis.Text
         private readonly int _length;
         private readonly Encoding? _encodingOpt;
 
-        internal LargeText(ImmutableArray<char[]> chunks, Encoding? encodingOpt, ImmutableArray<byte> checksum, SourceHashAlgorithm checksumAlgorithm, ImmutableArray<byte> embeddedTextBlob)
-            : base(checksum, checksumAlgorithm, embeddedTextBlob)
+        internal LargeText(ImmutableArray<char[]> chunks, Encoding? encodingOpt, ImmutableArray<byte> checksum, SourceHashAlgorithm checksumAlgorithm)
+            : base(checksum, checksumAlgorithm)
         {
             _chunks = chunks;
             _encodingOpt = encodingOpt;
@@ -47,11 +47,11 @@ namespace Loretta.CodeAnalysis.Text
         }
 
         internal LargeText(ImmutableArray<char[]> chunks, Encoding? encodingOpt, SourceHashAlgorithm checksumAlgorithm)
-            : this(chunks, encodingOpt, default(ImmutableArray<byte>), checksumAlgorithm, default(ImmutableArray<byte>))
+            : this(chunks, encodingOpt, default, checksumAlgorithm)
         {
         }
 
-        internal static SourceText Decode(Stream stream, Encoding encoding, SourceHashAlgorithm checksumAlgorithm, bool throwIfBinaryDetected, bool canBeEmbedded)
+        internal static SourceText Decode(Stream stream, Encoding encoding, SourceHashAlgorithm checksumAlgorithm, bool throwIfBinaryDetected)
         {
             stream.Seek(0, SeekOrigin.Begin);
 
@@ -72,8 +72,7 @@ namespace Loretta.CodeAnalysis.Text
                 // We must compute the checksum and embedded text blob now while we still have the original bytes in hand.
                 // We cannot re-encode to obtain checksum and blob as the encoding is not guaranteed to round-trip.
                 var checksum = CalculateChecksum(stream, checksumAlgorithm);
-                var embeddedTextBlob = canBeEmbedded ? EmbeddedText.CreateBlob(stream) : default(ImmutableArray<byte>);
-                return new LargeText(chunks, reader.CurrentEncoding, checksum, checksumAlgorithm, embeddedTextBlob);
+                return new LargeText(chunks, reader.CurrentEncoding, checksum, checksumAlgorithm);
             }
         }
 
