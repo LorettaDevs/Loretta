@@ -79,6 +79,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Provided documentation mode is unsupported or invalid: &apos;{0}&apos;..
+        /// </summary>
+        internal static string ERR_BadDocumentationMode {
+            get {
+                return ResourceManager.GetString("ERR_BadDocumentationMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Binary numeric literals are not supported in this lua version.
         /// </summary>
         internal static string ERR_BinaryNumericLiteralNotSupportedInVersion {
@@ -228,6 +237,15 @@ namespace Loretta.CodeAnalysis.Lua {
         internal static string ERR_UnfinishedString {
             get {
                 return ResourceManager.GetString("ERR_UnfinishedString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This method can only be used to create tokens - {0} is not a token kind..
+        /// </summary>
+        internal static string ThisMethodCanOnlyBeUsedToCreateTokens {
+            get {
+                return ResourceManager.GetString("ThisMethodCanOnlyBeUsedToCreateTokens", resourceCulture);
             }
         }
     }

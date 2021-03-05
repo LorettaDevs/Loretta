@@ -123,6 +123,10 @@
   <data name="ERR_BadCharacter" xml:space="preserve">
     <value>Bad character input: '{0}'</value>
   </data>
+  <data name="ERR_BadDocumentationMode" xml:space="preserve">
+    <value>Provided documentation mode is unsupported or invalid: '{0}'.</value>
+    <comment>0 is documentation mode</comment>
+  </data>
   <data name="ERR_BinaryNumericLiteralNotSupportedInVersion" xml:space="preserve">
     <value>Binary numeric literals are not supported in this lua version</value>
   </data>
@@ -174,5 +178,9 @@
   </data>
   <data name="ERR_UnfinishedString" xml:space="preserve">
     <value>Unfinished string</value>
+  </data>
+  <data name="ThisMethodCanOnlyBeUsedToCreateTokens" xml:space="preserve">
+    <value>This method can only be used to create tokens - {0} is not a token kind.</value>
+    <comment>0 is the token kind</comment>
   </data>
 </root>
