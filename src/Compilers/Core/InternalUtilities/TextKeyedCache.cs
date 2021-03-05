@@ -143,6 +143,36 @@ namespace Loretta.Utilities
             return null!;
         }
 
+        internal T? FindItem(ReadOnlySpan<char> span, int hashCode)
+        {
+            // get direct element reference to avoid extra range checks
+            ref var localSlot = ref _localTable[LocalIdxFromHash(hashCode)];
+
+            var text = localSlot.Text;
+
+            if (text != null && localSlot.HashCode == hashCode)
+            {
+                if (StringTable.TextEquals(text, span))
+                {
+                    return localSlot.Item;
+                }
+            }
+
+            SharedEntryValue? e = FindSharedEntry(span, hashCode);
+            if (e != null)
+            {
+                localSlot.HashCode = hashCode;
+                localSlot.Text = e.Text;
+
+                var tk = e.Item;
+                localSlot.Item = tk;
+
+                return tk;
+            }
+
+            return null!;
+        }
+
         private SharedEntryValue? FindSharedEntry(char[] chars, int start, int len, int hashCode)
         {
             var arr = _sharedTableInst;
@@ -179,9 +209,60 @@ namespace Loretta.Utilities
             return e;
         }
 
+        private SharedEntryValue? FindSharedEntry(ReadOnlySpan<char> span, int hashCode)
+        {
+            var arr = _sharedTableInst;
+            int idx = SharedIdxFromHash(hashCode);
+
+            SharedEntryValue? e = null;
+            int hash;
+
+            // we use quadratic probing here
+            // bucket positions are (n^2 + n)/2 relative to the masked hashcode
+            for (int i = 1; i < SharedBucketSize + 1; i++)
+            {
+                (hash, e) = arr[idx];
+
+                if (e != null)
+                {
+                    if (hash == hashCode && StringTable.TextEquals(e.Text, span))
+                    {
+                        break;
+                    }
+
+                    // this is not e we are looking for
+                    e = null;
+                }
+                else
+                {
+                    // once we see unfilled entry, the rest of the bucket will be empty
+                    break;
+                }
+
+                idx = (idx + i) & SharedSizeMask;
+            }
+
+            return e;
+        }
+
         internal void AddItem(char[] chars, int start, int len, int hashCode, T item)
         {
             var text = _strings.Add(chars, start, len);
+
+            // add to the shared table first (in case someone looks for same item)
+            var e = new SharedEntryValue(text, item);
+            AddSharedEntry(hashCode, e);
+
+            // add to the local table too
+            ref var localSlot = ref _localTable[LocalIdxFromHash(hashCode)];
+            localSlot.HashCode = hashCode;
+            localSlot.Text = text;
+            localSlot.Item = item;
+        }
+
+        internal void AddItem(ReadOnlySpan<char> span, int hashCode, T item)
+        {
+            var text = _strings.Add(span);
 
             // add to the shared table first (in case someone looks for same item)
             var e = new SharedEntryValue(text, item);
