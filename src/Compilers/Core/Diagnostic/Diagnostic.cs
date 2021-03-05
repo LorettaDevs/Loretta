@@ -520,7 +520,7 @@ namespace Loretta.CodeAnalysis
         /// Returns true if a diagnostic is not configurable, i.e. cannot be suppressed or filtered or have its severity changed.
         /// For example, compiler errors are always non-configurable.
         /// </summary>
-        internal virtual bool IsNotConfigurable() => AnalyzerManager.HasNotConfigurableTag(CustomTags);
+        internal virtual bool IsNotConfigurable() => CustomTags.Contains(WellKnownDiagnosticTags.NotConfigurable, StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Returns true if this is an error diagnostic which cannot be suppressed and is guaranteed to break the build.
