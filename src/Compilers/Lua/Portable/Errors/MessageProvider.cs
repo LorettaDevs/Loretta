@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -69,10 +67,6 @@ namespace Loretta.CodeAnalysis.Lua
         public override Diagnostic CreateDiagnostic(DiagnosticInfo info)
             => new LuaDiagnostic(info, Location.None);
 
-        public override string GetErrorDisplayString(ISymbol symbol)
-            => throw new NotSupportedException();
-
-        public override ReportDiagnostic GetDiagnosticReport(DiagnosticInfo diagnosticInfo, CompilationOptions options)
-            => ReportDiagnostic.Default;
+        public override int ERR_BadDocumentationMode => (int) ErrorCode.ERR_BadDocumentationMode;
     }
 }
