@@ -217,12 +217,15 @@ namespace Loretta.CodeAnalysis.Lua
         NotKeyword,
         [Keyword("nil")]
         [ExtraCategories("LiteralToken")]
+        [Property("ConstantValue", null)]
         NilKeyword,
         [Keyword("true")]
         [ExtraCategories("LiteralToken")]
+        [Property("ConstantValue", true)]
         TrueKeyword,
         [Keyword("false")]
         [ExtraCategories("LiteralToken")]
+        [Property("ConstantValue", false)]
         FalseKeyword,
 
         // Parameters
