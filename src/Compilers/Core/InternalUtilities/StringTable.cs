@@ -146,6 +146,40 @@ namespace Loretta.Utilities
             return AddItem(chars, start, len, hashCode);
         }
 
+        internal string Add(ReadOnlySpan<char> span)
+        {
+            var hashCode = Hash.GetFNVHashCode(span);
+
+            // capture array to avoid extra range checks
+            var arr = _localTable;
+            var idx = LocalIdxFromHash(hashCode);
+
+            var text = arr[idx].Text;
+
+            if (text != null && arr[idx].HashCode == hashCode)
+            {
+                var result = arr[idx].Text;
+                if (StringTable.TextEquals(result, span))
+                {
+                    return result;
+                }
+            }
+
+            string? shared = FindSharedEntry(span, hashCode);
+            if (shared != null)
+            {
+                // PERF: the following code does element-wise assignment of a struct
+                //       because current JIT produces better code compared to
+                //       arr[idx] = new Entry(...)
+                arr[idx].HashCode = hashCode;
+                arr[idx].Text = shared;
+
+                return shared;
+            }
+
+            return AddItem(span, hashCode);
+        }
+
         internal string Add(string chars, int start, int len)
         {
             var hashCode = Hash.GetFNVHashCode(chars, start, len);
@@ -300,6 +334,42 @@ namespace Loretta.Utilities
                 if (e != null)
                 {
                     if (hash == hashCode && TextEquals(e, chars.AsSpan(start, len)))
+                    {
+                        break;
+                    }
+
+                    // this is not e we are looking for
+                    e = null;
+                }
+                else
+                {
+                    // once we see unfilled entry, the rest of the bucket will be empty
+                    break;
+                }
+
+                idx = (idx + i) & SharedSizeMask;
+            }
+
+            return e;
+        }
+
+
+        private static string? FindSharedEntry(ReadOnlySpan<char> span, int hashCode)
+        {
+            var arr = s_sharedTable;
+            int idx = SharedIdxFromHash(hashCode);
+
+            string? e = null;
+            // we use quadratic probing here
+            // bucket positions are (n^2 + n)/2 relative to the masked hashcode
+            for (int i = 1; i < SharedBucketSize + 1; i++)
+            {
+                e = arr[idx].Text;
+                int hash = arr[idx].HashCode;
+
+                if (e != null)
+                {
+                    if (hash == hashCode && TextEquals(e, span))
                     {
                         break;
                     }
@@ -497,6 +567,13 @@ namespace Loretta.Utilities
         private string AddItem(char[] chars, int start, int len, int hashCode)
         {
             var text = new String(chars, start, len);
+            AddCore(text, hashCode);
+            return text;
+        }
+
+        private string AddItem(ReadOnlySpan<char> span, int hashCode)
+        {
+            var text = span.ToString();
             AddCore(text, hashCode);
             return text;
         }
