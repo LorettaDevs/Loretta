@@ -27,8 +27,6 @@
 
 
         // MessageProvider stuff
-        ERR_FailedToCreateTempFile = 1000,
-        ERR_MultipleAnalyzerConfigsInSameDir = 1001,
-        ERR_ExpectedSingleScript = 1002,
+        ERR_BadDocumentationMode = 1000,
     }
 }
