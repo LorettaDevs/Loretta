@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Loretta.Utilities;
+﻿using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
@@ -9,21 +6,21 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
     {
         public readonly string Text;
 
-        internal SyntaxTrivia(SyntaxKind kind, string text, DiagnosticInfo[]? diagnostics = null, SyntaxAnnotation[]? annotations = null)
+        internal SyntaxTrivia(
+            SyntaxKind kind,
+            string text,
+            DiagnosticInfo[]? diagnostics = null,
+            SyntaxAnnotation[]? annotations = null)
             : base(kind, diagnostics, annotations, text.Length)
         {
-            this.Text = text;
-            if (kind == SyntaxKind.PreprocessingMessageTrivia)
-            {
-                this.flags |= NodeFlags.ContainsSkippedText;
-            }
+            Text = text;
         }
 
         internal SyntaxTrivia(ObjectReader reader)
             : base(reader)
         {
-            this.Text = reader.ReadString();
-            this.FullWidth = this.Text.Length;
+            Text = reader.ReadString();
+            FullWidth = Text.Length;
         }
 
         static SyntaxTrivia()
@@ -33,102 +30,61 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public override bool IsTrivia => true;
 
-        internal override bool ShouldReuseInSerialization => this.Kind == SyntaxKind.WhitespaceTrivia &&
+        internal override bool ShouldReuseInSerialization => Kind == SyntaxKind.WhitespaceTrivia &&
                                                              FullWidth < Lexer.MaxCachedTokenSize;
 
         internal override void WriteTo(ObjectWriter writer)
         {
             base.WriteTo(writer);
-            writer.WriteString(this.Text);
+            writer.WriteString(Text);
         }
 
-        internal static SyntaxTrivia Create(SyntaxKind kind, string text)
-        {
-            return new SyntaxTrivia(kind, text);
-        }
+        internal static SyntaxTrivia Create(SyntaxKind kind, string text) => new SyntaxTrivia(kind, text);
 
-        public override string ToFullString()
-        {
-            return this.Text;
-        }
+        public override string ToFullString() => Text;
 
-        public override string ToString()
-        {
-            return this.Text;
-        }
+        public override string ToString() => Text;
 
-        internal override GreenNode GetSlot(int index)
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
+        internal override GreenNode GetSlot(int index) => throw ExceptionUtilities.Unreachable;
 
         public override int Width
         {
             get
             {
-                Debug.Assert(this.FullWidth == this.Text.Length);
-                return this.FullWidth;
+                RoslynDebug.Assert(FullWidth == Text.Length);
+                return FullWidth;
             }
         }
 
-        public override int GetLeadingTriviaWidth()
-        {
-            return 0;
-        }
+        public override int GetLeadingTriviaWidth() => 0;
 
-        public override int GetTrailingTriviaWidth()
-        {
-            return 0;
-        }
+        public override int GetTrailingTriviaWidth() => 0;
 
-        internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
-        {
-            return new SyntaxTrivia(this.Kind, this.Text, diagnostics, GetAnnotations());
-        }
+        internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics) => new SyntaxTrivia(Kind, Text, diagnostics, GetAnnotations());
 
-        internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
-        {
-            return new SyntaxTrivia(this.Kind, this.Text, GetDiagnostics(), annotations);
-        }
+        internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations) => new SyntaxTrivia(Kind, Text, GetDiagnostics(), annotations);
 
-        public override TResult Accept<TResult>(LuaSyntaxVisitor<TResult> visitor)
-        {
-            return visitor.VisitTrivia(this);
-        }
+        public override TResult Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) where TResult : default
+            => visitor.VisitTrivia(this);
 
-        public override void Accept(CSharpSyntaxVisitor visitor)
-        {
-            visitor.VisitTrivia(this);
-        }
+        public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitTrivia(this);
 
-        protected override void WriteTriviaTo(System.IO.TextWriter writer)
-        {
-            writer.Write(Text);
-        }
+        protected override void WriteTriviaTo(System.IO.TextWriter writer) => writer.Write(Text);
 
-        public static implicit operator CodeAnalysis.SyntaxTrivia(SyntaxTrivia trivia)
-        {
-            return new CodeAnalysis.SyntaxTrivia(token: default, trivia, position: 0, index: 0);
-        }
+        public static implicit operator CodeAnalysis.SyntaxTrivia(SyntaxTrivia trivia) =>
+            new CodeAnalysis.SyntaxTrivia(token: default, trivia, position: 0, index: 0);
 
         public override bool IsEquivalentTo(GreenNode? other)
         {
             if (!base.IsEquivalentTo(other))
-            {
                 return false;
-            }
 
-            if (this.Text != ((SyntaxTrivia) other).Text)
-            {
+            if (Text != ((SyntaxTrivia) other).Text)
                 return false;
-            }
 
             return true;
         }
 
-        internal override SyntaxNode CreateRed(SyntaxNode? parent, int position)
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
+        internal override SyntaxNode CreateRed(SyntaxNode? parent, int position) => throw ExceptionUtilities.Unreachable;
     }
 }
