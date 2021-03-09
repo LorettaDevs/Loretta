@@ -4,353 +4,548 @@ namespace Loretta.CodeAnalysis.Lua
 {
     public enum SyntaxKind : ushort
     {
-        None,
-        List,
+        None = 0,
+        List = GreenNode.ListKind,
 
         // Trivia
         [Trivia]
-        ShebangTrivia,
+        ShebangTrivia = 2,
         [Trivia]
-        SingleLineCommentTrivia,
+        SingleLineCommentTrivia = 3,
         [Trivia]
-        MultiLineCommentTrivia,
+        MultiLineCommentTrivia = 4,
         [Trivia]
-        WhitespaceTrivia,
+        WhitespaceTrivia = 5,
         [Trivia]
-        EndOfLineTrivia,
+        EndOfLineTrivia = 6,
         [Trivia]
-        SkippedTokensTrivia,
-        [Trivia]
-        [ExtraCategories("DocumentationCommentTrivia")]
-        SingleLineDocumentationCommentTrivia,
+        SkippedTokensTrivia = 7,
         [Trivia]
         [ExtraCategories("DocumentationCommentTrivia")]
-        MultiLineDocumentationCommentTrivia,
+        SingleLineDocumentationCommentTrivia = 8,
+        [Trivia]
+        [ExtraCategories("DocumentationCommentTrivia")]
+        MultiLineDocumentationCommentTrivia = 9,
 
         // Tokens
         [Token]
-        BadToken,
+        BadToken = 10,
         [Token]
-        EndOfFileToken,
+        EndOfFileToken = 11,
         [Token]
         [ExtraCategories("LiteralToken")]
         [Property("LiteralExpression", NumericalLiteralExpression)]
-        NumericLiteralToken,
+        NumericLiteralToken = 12,
         [Token]
         [ExtraCategories("LiteralToken")]
         [Property("LiteralExpression", StringLiteralExpression)]
-        StringLiteralToken,
+        StringLiteralToken = 13,
         [Token]
-        IdentifierToken,
+        IdentifierToken = 14,
+        /// <summary>
+        /// Represents the <c>(</c> token.
+        /// </summary>
         [Token(Text = "(")]
-        OpenParenthesisToken,
+        OpenParenthesisToken = 15,
+        /// <summary>
+        /// Represents the <c>)</c> token.
+        /// </summary>
         [Token(Text = ")")]
-        CloseParenthesisToken,
+        CloseParenthesisToken = 16,
+        /// <summary>
+        /// Represents the <c>[</c> token.
+        /// </summary>
         [Token(Text = "[")]
-        OpenBracketToken,
+        OpenBracketToken = 17,
+        /// <summary>
+        /// Represents the <c>]</c> token.
+        /// </summary>
         [Token(Text = "]")]
-        CloseBracketToken,
+        CloseBracketToken = 18,
+        /// <summary>
+        /// Represents the <c>{</c> token.
+        /// </summary>
         [Token(Text = "{")]
-        OpenBraceToken,
+        OpenBraceToken = 19,
+        /// <summary>
+        /// Represents the <c>}</c> token.
+        /// </summary>
         [Token(Text = "}")]
-        CloseBraceToken,
+        CloseBraceToken = 20,
+        /// <summary>
+        /// Represents the <c>;</c> token.
+        /// </summary>
         [Token(Text = ";")]
-        SemicolonToken,
+        SemicolonToken = 21,
+        /// <summary>
+        /// Represents the <c>:</c> token.
+        /// </summary>
         [Token(Text = ":")]
-        ColonToken,
+        ColonToken = 22,
+        /// <summary>
+        /// Represents the <c>,</c> token.
+        /// </summary>
         [Token(Text = ",")]
-        CommaToken,
+        CommaToken = 23,
+        /// <summary>
+        /// Represents the <c>#</c> token.
+        /// </summary>
         [Token(Text = "#")]
         [UnaryOperator(precedence: 7, LengthExpression)]
-        HashToken,
+        HashToken = 24,
+        /// <summary>
+        /// Represents the <c>+</c> token.
+        /// </summary>
         [Token(Text = "+")]
         [BinaryOperator(precedence: 5, AddExpression)]
-        PlusToken,
+        PlusToken = 25,
+        /// <summary>
+        /// Represents the <c>+=</c> token.
+        /// </summary>
         [Token(Text = "+=")]
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", PlusToken)]
         [Property("CompoundAssignmentStatement", AddAssignmentStatement)]
-        PlusEqualsToken,
+        PlusEqualsToken = 26,
+        /// <summary>
+        /// Represents the <c>-</c> token.
+        /// </summary>
         [Token(Text = "-")]
         [UnaryOperator(precedence: 7, UnaryMinusExpression), BinaryOperator(precedence: 5, SubtractExpression)]
-        MinusToken,
+        MinusToken = 27,
+        /// <summary>
+        /// Represents the <c>-=</c> token.
+        /// </summary>
         [Token(Text = "-=")]
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", MinusToken)]
         [Property("CompoundAssignmentStatement", SubtractAssignmentStatement)]
-        MinusEqualsToken,
+        MinusEqualsToken = 28,
+        /// <summary>
+        /// Represents the <c>*</c> token.
+        /// </summary>
         [Token(Text = "*")]
         [BinaryOperator(precedence: 6, MultiplyExpression)]
-        StarToken,
+        StarToken = 29,
+        /// <summary>
+        /// Represents the <c>*=</c> token.
+        /// </summary>
         [Token(Text = "*=")]
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", StarToken)]
         [Property("CompoundAssignmentStatement", MultiplyAssignmentStatement)]
-        StartEqualsToken,
+        StartEqualsToken = 30,
+        /// <summary>
+        /// Represents the <c>/</c> token.
+        /// </summary>
         [Token(Text = "/")]
         [BinaryOperator(precedence: 6, DivideExpression)]
-        SlashToken,
+        SlashToken = 31,
+        /// <summary>
+        /// Represents the <c>/=</c> token.
+        /// </summary>
         [Token(Text = "/=")]
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", SlashToken)]
         [Property("CompoundAssignmentStatement", DivideAssignmentStatement)]
-        SlashEqualsToken,
+        SlashEqualsToken = 32,
+        /// <summary>
+        /// Represents the <c>^</c> token.
+        /// </summary>
         [Token(Text = "^")]
         [BinaryOperator(precedence: 8, ExponentiateExpression)]
-        HatToken,
+        HatToken = 33,
+        /// <summary>
+        /// Represents the <c>^=</c> token.
+        /// </summary>
         [Token(Text = "^=")]
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", HatToken)]
         [Property("CompoundAssignmentStatement", ExponentiateAssignmentStatement)]
-        HatEqualsToken,
+        HatEqualsToken = 34,
+        /// <summary>
+        /// Represents the <c>%</c> token.
+        /// </summary>
         [Token(Text = "%")]
         [BinaryOperator(precedence: 6, ModuloExpression)]
-        PercentToken,
+        PercentToken = 35,
+        /// <summary>
+        /// Represents the <c>%=</c> token.
+        /// </summary>
         [Token(Text = "%=")]
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", PercentToken)]
         [Property("CompoundAssignmentStatement", ModuloAssignmentStatement)]
-        PercentEqualsToken,
+        PercentEqualsToken = 36,
+        /// <summary>
+        /// Represents the <c>.</c> token.
+        /// </summary>
         [Token(Text = ".")]
-        DotToken,
+        DotToken = 37,
+        /// <summary>
+        /// Represents the <c>..</c> token.
+        /// </summary>
         [Token(Text = "..")]
         [BinaryOperator(precedence: 4, ConcatExpression)]
-        DotDotToken,
+        DotDotToken = 38,
+        /// <summary>
+        /// Represents the <c>...</c> token.
+        /// </summary>
         [Token(Text = "...")]
-        DotDotDotToken,
+        DotDotDotToken = 39,
+        /// <summary>
+        /// Represents the <c>..=</c> token.
+        /// </summary>
         [Token(Text = "..=")]
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", DotDotToken)]
         [Property("CompoundAssignmentStatement", ConcatAssignmentStatement)]
-        DotDotEqualsToken,
+        DotDotEqualsToken = 40,
+        /// <summary>
+        /// Represents the <c>=</c> token.
+        /// </summary>
         [Token(Text = "=")]
-        EqualsToken,
+        EqualsToken = 41,
+        /// <summary>
+        /// Represents the <c>==</c> token.
+        /// </summary>
         [Token(Text = "==")]
         [BinaryOperator(precedence: 3, EqualsExpression)]
-        EqualsEqualsToken,
+        EqualsEqualsToken = 42,
         // TODO: Add tilde token and unary operator
+        /// <summary>
+        /// Represents the <c>~=</c> token.
+        /// </summary>
         [Token(Text = "~=")]
         [BinaryOperator(precedence: 3, NotEqualsExpression)]
-        TildeEqualsToken,
+        TildeEqualsToken = 43,
+        /// <summary>
+        /// Represents the <c>!</c> token.
+        /// </summary>
         [Token(Text = "!")]
         [UnaryOperator(precedence: 7, LogicalNotExpression)]
-        BangToken,
+        BangToken = 44,
+        /// <summary>
+        /// Represents the <c>!=</c> token.
+        /// </summary>
         [Token(Text = "!=")]
         [BinaryOperator(precedence: 3, NotEqualsExpression)]
-        BangEqualsToken,
+        BangEqualsToken = 45,
+        /// <summary>
+        /// Represents the <c>&lt;</c> token.
+        /// </summary>
         [Token(Text = "<")]
         [BinaryOperator(precedence: 3, LessThanExpression)]
-        LessThanToken,
+        LessThanToken = 46,
+        /// <summary>
+        /// Represents the <c>&lt;=</c> token.
+        /// </summary>
         [Token(Text = "<=")]
         [BinaryOperator(precedence: 3, LessThanOrEqualExpression)]
-        LessThanEqualsToken,
+        LessThanEqualsToken = 47,
+        /// <summary>
+        /// Represents the <c>&lt;&lt;</c> token. CURRENTLY UNSUPPORTED.
+        /// </summary>
         [Token(Text = "<<")]
         // TODO: Add binary operator info
-        LessThanLessThanToken,
+        LessThanLessThanToken = 48,
+        /// <summary>
+        /// Represents the <c>></c> token.
+        /// </summary>
         [Token(Text = ">")]
         [BinaryOperator(precedence: 3, GreaterThanExpression)]
-        GreaterThanToken,
+        GreaterThanToken = 49,
+        /// <summary>
+        /// Represents the <c>>=</c> token.
+        /// </summary>
         [Token(Text = ">=")]
         [BinaryOperator(precedence: 3, GreaterThanOrEqualExpression)]
-        GreaterThanEqualsToken,
+        GreaterThanEqualsToken = 50,
+        /// <summary>
+        /// Represents the <c>>></c> token. CURRENTLY UNSUPPORTED.
+        /// </summary>
         [Token(Text = ">>")]
         // TODO: Add binary operator info
-        GreaterThanGreaterThanToken,
+        GreaterThanGreaterThanToken = 51,
+        /// <summary>
+        /// Represents the <c>&amp;</c> token. CURRENTLY UNSUPPORTED.
+        /// </summary>
         [Token(Text = "&")]
         // TODO: Add binary operator info
-        AmpersandToken,
+        AmpersandToken = 52,
+        /// <summary>
+        /// Represents the <c>&amp;&amp;</c> token.
+        /// </summary>
         [Token(Text = "&&")]
         [BinaryOperator(precedence: 2, LogicalAndExpression)]
-        AmpersandAmpersandToken,
+        AmpersandAmpersandToken = 53,
+        /// <summary>
+        /// Represents the <c>|</c> token. CURRENTLY UNSUPPORTED.
+        /// </summary>
         [Token(Text = "|")]
         // TODO: Add binary operator info
-        PipeToken,
+        PipeToken = 54,
+        /// <summary>
+        /// Represents the <c>||</c> token.
+        /// </summary>
         [Token(Text = "||")]
         [BinaryOperator(precedence: 1, LogicalOrExpression)]
-        PipePipeToken,
+        PipePipeToken = 55,
+        /// <summary>
+        /// Represents the <c>::</c> token.
+        /// </summary>
         [Token(Text = "::")]
-        ColonColonToken,
+        ColonColonToken = 56,
 
         // Keywords
+        /// <summary>
+        /// Represents the <see langword="do"/> keyword.
+        /// </summary>
         [Keyword("do")]
-        DoKeyword,
+        DoKeyword = 500,
+        /// <summary>
+        /// Represents the <see langword="end"/> keyword.
+        /// </summary>
         [Keyword("end")]
-        EndKeyword,
+        EndKeyword = 501,
+        /// <summary>
+        /// Represents the <see langword="while"/> keyword.
+        /// </summary>
         [Keyword("while")]
-        WhileKeyword,
+        WhileKeyword = 502,
+        /// <summary>
+        /// Represents the <see langword="repeat"/> keyword.
+        /// </summary>
         [Keyword("repeat")]
-        RepeatKeyword,
+        RepeatKeyword = 503,
+        /// <summary>
+        /// Represents the <see langword="util"/> keyword.
+        /// </summary>
         [Keyword("until")]
-        UntilKeyword,
+        UntilKeyword = 504,
+        /// <summary>
+        /// Represents the <see langword="if"/> keyword.
+        /// </summary>
         [Keyword("if")]
-        IfKeyword,
+        IfKeyword = 505,
+        /// <summary>
+        /// Represents the <see langword="then"/> keyword.
+        /// </summary>
         [Keyword("then")]
-        ThenKeyword,
+        ThenKeyword = 506,
+        /// <summary>
+        /// Represents the <see langword="elseif"/> keyword.
+        /// </summary>
         [Keyword("elseif")]
-        ElseIfKeyword,
+        ElseIfKeyword = 507,
+        /// <summary>
+        /// Represents the <see langword="else"/> keyword.
+        /// </summary>
         [Keyword("else")]
-        ElseKeyword,
+        ElseKeyword = 508,
+        /// <summary>
+        /// Represents the <see langword="for"/> keyword.
+        /// </summary>
         [Keyword("for")]
-        ForKeyword,
+        ForKeyword = 509,
+        /// <summary>
+        /// Represents the <see langword="in"/> keyword.
+        /// </summary>
         [Keyword("in")]
-        InKeyword,
+        InKeyword = 510,
+        /// <summary>
+        /// Represents the <see langword="function"/> keyword.
+        /// </summary>
         [Keyword("function")]
-        FunctionKeyword,
+        FunctionKeyword = 511,
+        /// <summary>
+        /// Represents the <see langword="local"/> keyword.
+        /// </summary>
         [Keyword("local")]
-        LocalKeyword,
+        LocalKeyword = 512,
+        /// <summary>
+        /// Represents the <see langword="return"/> keyword.
+        /// </summary>
         [Keyword("return")]
-        ReturnKeyword,
+        ReturnKeyword = 513,
+        /// <summary>
+        /// Represents the <see langword="break"/> keyword.
+        /// </summary>
         [Keyword("break")]
-        BreakKeyword,
+        BreakKeyword = 514,
+        /// <summary>
+        /// Represents the <see langword="goto"/> keyword.
+        /// </summary>
         [Keyword("goto")]
-        GotoKeyword,
+        GotoKeyword = 515,
+        /// <summary>
+        /// Represents the <see langword="continue"/> keyword.
+        /// </summary>
         [Keyword("continue")]
-        ContinueKeyword,
+        ContinueKeyword = 516,
+        /// <summary>
+        /// Represents the <see langword="and"/> keyword.
+        /// </summary>
         [Keyword("and")]
         [BinaryOperator(precedence: 2, LogicalAndExpression)]
-        AndKeyword,
+        AndKeyword = 517,
+        /// <summary>
+        /// Represents the <see langword="or"/> keyword.
+        /// </summary>
         [Keyword("or")]
         [BinaryOperator(precedence: 1, LogicalOrExpression)]
-        OrKeyword,
+        OrKeyword = 518,
+        /// <summary>
+        /// Represents the <see langword="not"/> keyword.
+        /// </summary>
         [Keyword("not")]
         [UnaryOperator(precedence: 7, LogicalNotExpression)]
-        NotKeyword,
+        NotKeyword = 519,
+        /// <summary>
+        /// Represents the <see langword="nil"/> keyword.
+        /// </summary>
         [Keyword("nil")]
         [ExtraCategories("LiteralToken")]
         [Property("ConstantValue", null)]
-        NilKeyword,
+        NilKeyword = 520,
+        /// <summary>
+        /// Represents the <see langword="true"/> keyword.
+        /// </summary>
         [Keyword("true")]
         [ExtraCategories("LiteralToken")]
         [Property("ConstantValue", true)]
-        TrueKeyword,
+        TrueKeyword = 521,
+        /// <summary>
+        /// Represents the <see langword="false"/> keyword.
+        /// </summary>
         [Keyword("false")]
         [ExtraCategories("LiteralToken")]
         [Property("ConstantValue", false)]
-        FalseKeyword,
+        FalseKeyword = 522,
 
         // Parameters
-        NamedParameter,
-        VarArgParameter,
-        ParameterList,
+        NamedParameter = 1000,
+        VarArgParameter = 1001,
+        ParameterList = 1002,
 
         // Table Fields
-        IdentifierKeyedTableField,
-        ExpressionKeyedTableField,
-        UnkeyedTableField,
+        IdentifierKeyedTableField = 1003,
+        ExpressionKeyedTableField = 1004,
+        UnkeyedTableField = 1005,
 
         // Function Names
-        SimpleFunctionName,
-        MemberFunctionName,
-        MethodFunctionName,
+        SimpleFunctionName = 1006,
+        MemberFunctionName = 1007,
+        MethodFunctionName = 1008,
 
         // Function Call Arguments
-        StringFunctionArgument,
-        TableConstructorFunctionArgument,
-        ExpressionListFunctionArgument,
+        StringFunctionArgument = 1009,
+        TableConstructorFunctionArgument = 1010,
+        ExpressionListFunctionArgument = 1011,
 
         // Primary Expressions
-        AnonymousFunctionExpression,
-        TableConstructorExpression,
-        NumericalLiteralExpression,
-        StringLiteralExpression,
-        TrueLiteralExpression,
-        FalseLiteralExpression,
-        NilLiteralExpression,
-        VarArgExpression,
+        AnonymousFunctionExpression = 1012,
+        TableConstructorExpression = 1013,
+        NumericalLiteralExpression = 1014,
+        StringLiteralExpression = 1015,
+        TrueLiteralExpression = 1016,
+        FalseLiteralExpression = 1017,
+        NilLiteralExpression = 1018,
+        VarArgExpression = 1019,
         [ExtraCategories("VariableExpression")]
-        NameExpression,
+        NameExpression = 1020,
 
         // Unary Expressions
         [Property("UnaryExpressionOperatorTokenKind", MinusToken)]
-        UnaryMinusExpression,
+        UnaryMinusExpression = 1021,
         [Property("UnaryExpressionOperatorTokenKind", NotKeyword)]
-        LogicalNotExpression,
+        LogicalNotExpression = 1022,
         [Property("UnaryExpressionOperatorTokenKind", HashToken)]
-        LengthExpression,
+        LengthExpression = 1023,
 
         // Binary Expressions
         [Property("BinaryExpressionOperatorTokenKind", PlusToken)]
-        AddExpression,
+        AddExpression = 1024,
         [Property("BinaryExpressionOperatorTokenKind", MinusToken)]
-        SubtractExpression,
+        SubtractExpression = 1025,
         [Property("BinaryExpressionOperatorTokenKind", StarToken)]
-        MultiplyExpression,
+        MultiplyExpression = 1026,
         [Property("BinaryExpressionOperatorTokenKind", SlashToken)]
-        DivideExpression,
+        DivideExpression = 1027,
         [Property("BinaryExpressionOperatorTokenKind", PercentToken)]
-        ModuloExpression,
+        ModuloExpression = 1028,
         [Property("BinaryExpressionOperatorTokenKind", DotDotToken)]
-        ConcatExpression,
+        ConcatExpression = 1029,
         [Property("BinaryExpressionOperatorTokenKind", EqualsEqualsToken)]
-        EqualsExpression,
+        EqualsExpression = 1030,
         [Property("BinaryExpressionOperatorTokenKind", TildeEqualsToken)]
-        NotEqualsExpression,
+        NotEqualsExpression = 1031,
         [Property("BinaryExpressionOperatorTokenKind", LessThanToken)]
-        LessThanExpression,
+        LessThanExpression = 1032,
         [Property("BinaryExpressionOperatorTokenKind", LessThanEqualsToken)]
-        LessThanOrEqualExpression,
+        LessThanOrEqualExpression = 1033,
         [Property("BinaryExpressionOperatorTokenKind", GreaterThanToken)]
-        GreaterThanExpression,
+        GreaterThanExpression = 1034,
         [Property("BinaryExpressionOperatorTokenKind", GreaterThanEqualsToken)]
-        GreaterThanOrEqualExpression,
+        GreaterThanOrEqualExpression = 1035,
         [Property("BinaryExpressionOperatorTokenKind", AndKeyword)]
-        LogicalAndExpression,
+        LogicalAndExpression = 1036,
         [Property("BinaryExpressionOperatorTokenKind", OrKeyword)]
-        LogicalOrExpression,
+        LogicalOrExpression = 1037,
         [Property("BinaryExpressionOperatorTokenKind", HatToken)]
-        ExponentiateExpression,
+        ExponentiateExpression = 1038,
 
         // Expressions
-        BadExpression,
-        ParenthesizedExpression,
-        FunctionCallExpression,
+        BadExpression = 1039,
+        ParenthesizedExpression = 1040,
+        FunctionCallExpression = 1041,
         [ExtraCategories("VariableExpression")]
-        MemberAccessExpression,
+        MemberAccessExpression = 1042,
         [ExtraCategories("VariableExpression")]
-        ElementAccessExpression,
-        MethodCallExpression,
+        ElementAccessExpression = 1043,
+        MethodCallExpression = 1044,
 
         // Assignment Statements
         [Property("AssignmentStatementOperatorTokenKind", EqualsToken)]
-        AssignmentStatement,
+        AssignmentStatement = 1045,
         [Property("AssignmentStatementOperatorTokenKind", PlusEqualsToken)]
-        AddAssignmentStatement,
+        AddAssignmentStatement = 1046,
         [Property("AssignmentStatementOperatorTokenKind", MinusEqualsToken)]
-        SubtractAssignmentStatement,
+        SubtractAssignmentStatement = 1047,
         [Property("AssignmentStatementOperatorTokenKind", StartEqualsToken)]
-        MultiplyAssignmentStatement,
+        MultiplyAssignmentStatement = 1048,
         [Property("AssignmentStatementOperatorTokenKind", SlashEqualsToken)]
-        DivideAssignmentStatement,
+        DivideAssignmentStatement = 1049,
         [Property("AssignmentStatementOperatorTokenKind", PercentEqualsToken)]
-        ModuloAssignmentStatement,
+        ModuloAssignmentStatement = 1050,
         [Property("AssignmentStatementOperatorTokenKind", DotDotEqualsToken)]
-        ConcatAssignmentStatement,
+        ConcatAssignmentStatement = 1051,
         [Property("AssignmentStatementOperatorTokenKind", HatEqualsToken)]
-        ExponentiateAssignmentStatement,
+        ExponentiateAssignmentStatement = 1052,
 
         // Control Flow Statements
-        NumericForStatement,
-        GenericForStatement,
-        WhileStatement,
-        RepeatUntilStatement,
-        IfStatement,
-        ElseIfClause,
-        ElseClause,
+        NumericForStatement = 1053,
+        GenericForStatement = 1054,
+        WhileStatement = 1055,
+        RepeatUntilStatement = 1056,
+        IfStatement = 1057,
+        ElseIfClause = 1058,
+        ElseClause = 1059,
 
         // Jump Statements
-        GotoStatement,
-        BreakStatement,
-        ReturnStatement,
-        ContinueStatement,
+        GotoStatement = 1060,
+        BreakStatement = 1061,
+        ReturnStatement = 1062,
+        ContinueStatement = 1063,
 
         // Statements
-        BadStatement,
-        LocalVariableDeclarationStatement,
-        LocalFunctionDeclarationStatement,
-        FunctionDeclarationStatement,
-        DoStatement,
-        GotoLabelStatement,
-        ExpressionStatement,
-        CompilationUnit,
+        BadStatement = 1064,
+        LocalVariableDeclarationStatement = 1065,
+        LocalFunctionDeclarationStatement = 1066,
+        FunctionDeclarationStatement = 1067,
+        DoStatement = 1068,
+        GotoLabelStatement = 1069,
+        ExpressionStatement = 1070,
+        CompilationUnit = 1071,
     }
 }
