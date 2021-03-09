@@ -9,19 +9,18 @@ using Tsu;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
-    internal sealed class SyntaxParser
+    internal sealed class LanguageParser
     {
         private readonly LuaSyntaxOptions _luaOptions;
         private readonly SourceText _text;
         private readonly ImmutableArray<SyntaxToken> _tokens;
         private int _position;
 
-        public SyntaxParser(SyntaxTree syntaxTree)
+        public LanguageParser(Lexer lexer)
         {
             var tokens = ImmutableArray.CreateBuilder<SyntaxToken>();
             var badTokens = new List<SyntaxToken>();
 
-            var lexer = new Lexer(syntaxTree);
             SyntaxToken token;
             do
             {
