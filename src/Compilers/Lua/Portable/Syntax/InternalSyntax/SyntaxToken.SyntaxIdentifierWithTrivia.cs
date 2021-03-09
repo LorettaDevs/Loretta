@@ -17,10 +17,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal SyntaxIdentifierWithTrivia(
                 SyntaxKind contextualKind,
                 string text,
-                string valueText,
                 GreenNode? leading,
                 GreenNode? trailing)
-                : base(contextualKind, text, valueText)
+                : base(contextualKind, text)
             {
                 if (leading is not null)
                 {
@@ -37,12 +36,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal SyntaxIdentifierWithTrivia(
                 SyntaxKind contextualKind,
                 string text,
-                string valueText,
                 GreenNode? leading,
                 GreenNode? trailing,
                 DiagnosticInfo[]? diagnostics,
                 SyntaxAnnotation[]? annotations)
-                : base(contextualKind, text, valueText, diagnostics, annotations)
+                : base(contextualKind, text, diagnostics, annotations)
             {
                 if (leading is not null)
                 {
@@ -85,16 +83,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             public override GreenNode? GetTrailingTrivia() => _trailing;
 
             public override SyntaxToken TokenWithLeadingTrivia(GreenNode? trivia)
-                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, _valueText, trivia, _trailing);
+                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, trivia, _trailing);
 
             public override SyntaxToken TokenWithTrailingTrivia(GreenNode? trivia)
-                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, _valueText, _leading, trivia);
+                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, _leading, trivia);
 
             internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
-                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, _valueText, _leading, _trailing, diagnostics, GetAnnotations());
+                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, _leading, _trailing, diagnostics, GetAnnotations());
 
             internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
-                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, _valueText, _leading, _trailing, GetDiagnostics(), annotations);
+                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, _leading, _trailing, GetDiagnostics(), annotations);
         }
     }
 }

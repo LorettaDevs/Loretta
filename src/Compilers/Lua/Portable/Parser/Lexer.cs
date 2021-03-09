@@ -84,7 +84,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             switch (info.Kind)
             {
                 case SyntaxKind.IdentifierToken:
-                    token = SyntaxFactory.Identifier(info.ContextualKind, leadingNode, info.Text!, info.StringValue!, trailingNode);
+                    token = SyntaxFactory.Identifier(info.ContextualKind, leadingNode, info.Text!, trailingNode);
                     break;
 
                 case SyntaxKind.NumericLiteralToken:

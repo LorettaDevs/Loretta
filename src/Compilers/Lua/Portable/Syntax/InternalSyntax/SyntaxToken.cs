@@ -159,17 +159,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 }
             }
 
-            return new SyntaxIdentifierWithTrivia(SyntaxKind.IdentifierToken, text, text, leading, trailing);
+            return new SyntaxIdentifierWithTrivia(SyntaxKind.IdentifierToken, text, leading, trailing);
         }
 
-        internal static SyntaxToken Identifier(SyntaxKind contextualKind, GreenNode? leading, string text, string valueText, GreenNode? trailing)
+        internal static SyntaxToken Identifier(SyntaxKind contextualKind, GreenNode? leading, string text, GreenNode? trailing)
         {
-            if (contextualKind == SyntaxKind.IdentifierToken && valueText == text)
+            if (contextualKind == SyntaxKind.IdentifierToken)
             {
                 return Identifier(leading, text, trailing);
             }
 
-            return new SyntaxIdentifierWithTrivia(contextualKind, text, valueText, leading, trailing);
+            return new SyntaxIdentifierWithTrivia(contextualKind, text, leading, trailing);
         }
 
         internal static SyntaxToken WithValue<T>(SyntaxKind kind, string text, T value)

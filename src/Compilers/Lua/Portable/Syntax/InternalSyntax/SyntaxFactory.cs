@@ -111,13 +111,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             => SyntaxToken.CreateMissing(kind, leading, trailing);
 
         internal static SyntaxToken Identifier(string text)
-            => Identifier(SyntaxKind.IdentifierToken, null, text, text, null);
+            => Identifier(SyntaxKind.IdentifierToken, null, text, null);
 
         internal static SyntaxToken Identifier(GreenNode? leading, string text, GreenNode? trailing)
-            => Identifier(SyntaxKind.IdentifierToken, leading, text, text, trailing);
+            => Identifier(SyntaxKind.IdentifierToken, leading, text, trailing);
 
-        internal static SyntaxToken Identifier(SyntaxKind contextualKind, GreenNode? leading, string text, string valueText, GreenNode? trailing)
-            => SyntaxToken.Identifier(contextualKind, leading, text, valueText, trailing);
+        internal static SyntaxToken Identifier(SyntaxKind contextualKind, GreenNode? leading, string text, GreenNode? trailing)
+            => SyntaxToken.Identifier(contextualKind, leading, text, trailing);
 
         internal static SyntaxToken Literal(GreenNode? leading, string text, double value, GreenNode? trailing)
             => SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
