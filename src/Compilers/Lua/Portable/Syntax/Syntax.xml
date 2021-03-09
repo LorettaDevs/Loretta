@@ -286,7 +286,7 @@
     </Field>
   </Node>
 
-  <Node Name="TableConstructorFunctionArgumentSyntax" Base="FunctionArgumentSyntax">
+  <Node Name="TableConstructorFunctionArgumentSyntax" Base="FunctionArgumentSyntax" SkipConvenienceFactories="true">
     <TypeComment>
       <summary>Represents a table being passed as a function call's arguments.</summary>
     </TypeComment>
