@@ -36,9 +36,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 digits++;
             }
 
-            if (!_luaOptions.AcceptBinaryNumbers)
+            if (!Options.AcceptBinaryNumbers)
                 AddError(ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion);
-            if (!_luaOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
+            if (!Options.AcceptUnderscoreInNumberLiterals && hasUnderscores)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
             if (digits < 1)
             {
@@ -76,9 +76,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 digits++;
             }
 
-            if (!_luaOptions.AcceptOctalNumbers)
+            if (!Options.AcceptOctalNumbers)
                 AddError(ErrorCode.ERR_OctalNumericLiteralNotSupportedInVersion);
-            if (!_luaOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
+            if (!Options.AcceptUnderscoreInNumberLiterals && hasUnderscores)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
             if (digits < 1)
             {
@@ -119,7 +119,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var rawNum = _reader.ReadSpan(numLength);
                 Span<char> buff = stackalloc char[numLength];
 
-                if (!_luaOptions.AcceptUnderscoreInNumberLiterals && rawNum.IndexOf('_') >= 0)
+                if (!Options.AcceptUnderscoreInNumberLiterals && rawNum.IndexOf('_') >= 0)
                     AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
 
                 var buffIdx = 0;
@@ -140,7 +140,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 var rawNum = _reader.ReadString(numLength)!;
 
-                if (!_luaOptions.AcceptUnderscoreInNumberLiterals && rawNum.Contains('_'))
+                if (!Options.AcceptUnderscoreInNumberLiterals && rawNum.Contains('_'))
                     AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
 
                 return double.Parse(
@@ -172,7 +172,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 SkipDecimalDigits();
             }
 
-            if (isHexFloat && !_luaOptions.AcceptHexFloatLiterals)
+            if (isHexFloat && !Options.AcceptHexFloatLiterals)
                 AddError(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion);
 
             var numEnd = _reader.Position;
@@ -184,7 +184,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var rawNum = _reader.ReadSpan(numLength);
                 Span<char> buff = stackalloc char[numLength];
 
-                if (!_luaOptions.AcceptUnderscoreInNumberLiterals && rawNum.IndexOf('_') >= 0)
+                if (!Options.AcceptUnderscoreInNumberLiterals && rawNum.IndexOf('_') >= 0)
                     AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
 
                 var buffIdx = 0;
@@ -202,7 +202,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 var rawNum = _reader.ReadString(numLength)!;
 
-                if (!_luaOptions.AcceptUnderscoreInNumberLiterals && rawNum.Contains('_'))
+                if (!Options.AcceptUnderscoreInNumberLiterals && rawNum.Contains('_'))
                     AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
 
                 return HexFloat.DoubleFromHexString(rawNum.Replace("_", ""));

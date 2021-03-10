@@ -28,7 +28,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal double DoubleValue;
         }
 
-        private readonly LuaSyntaxOptions _luaOptions;
         private readonly LexerCache _cache;
         private readonly SyntaxListBuilder _leadingTriviaCache = new(10);
         private readonly SyntaxListBuilder _trailingTriviaCache = new(10);
@@ -46,7 +45,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             : base(text)
         {
             RoslynDebug.Assert(luaOptions is not null);
-            _luaOptions = luaOptions;
+            Options = luaOptions;
             _cache = new LexerCache();
             _createWhitespaceTriviaFunction = CreateWhitespaceTrivia;
         }
@@ -54,6 +53,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public int Length => _reader.Length;
 
         public int Position => _reader.Position;
+
+        public LuaSyntaxOptions Options { get; }
 
         public SyntaxToken Lex()
         {
@@ -153,7 +154,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             while (_reader.Peek() is not (null or '\n' or '\r'))
                                 _reader.Advance(1);
 
-                            if (!_luaOptions.AcceptCCommentSyntax)
+                            if (!Options.AcceptCCommentSyntax)
                                 AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
                             AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
                         }
@@ -167,7 +168,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             else
                                 _reader.Advance(2);
 
-                            if (!_luaOptions.AcceptCCommentSyntax)
+                            if (!Options.AcceptCCommentSyntax)
                                 AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
                             AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
                         }
@@ -240,7 +241,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             _reader.Advance(2);
                             _ = _reader.ReadSpanLine();
 
-                            if (!_luaOptions.AcceptShebang)
+                            if (!Options.AcceptShebang)
                                 AddError(ErrorCode.ERR_ShebangNotSupportedInLuaVersion);
                             AddTrivia(SyntaxFactory.Shebang(GetText(intern: false)), builder);
                             break;
@@ -727,7 +728,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     if (!_cache.TryGetKeywordKind(info.Text, out info.Kind))
                         info.ContextualKind = info.Kind = SyntaxKind.IdentifierToken;
 
-                    if (!_luaOptions.UseLuaJitIdentifierRules && info.Text.Any(ch => ch >= 0x7F))
+                    if (!Options.UseLuaJitIdentifierRules && info.Text.Any(ch => ch >= 0x7F))
                         AddError(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion);
                     return;
                 }
