@@ -123,6 +123,7 @@ namespace Loretta.Lexing.Modules
             switch ( reader.Peek ( ) )
             {
                 case 'x':
+                case 'X':
                 {
                     #region Hexadecimal number parsing
 
@@ -187,6 +188,7 @@ namespace Loretta.Lexing.Modules
                 }
 
                 case 'o' when this.LuaOptions.AcceptOctalNumbers:
+                case 'O' when this.LuaOptions.AcceptOctalNumbers:
                 {
                     #region Octal number parsing
 
@@ -228,6 +230,7 @@ namespace Loretta.Lexing.Modules
                 }
 
                 case 'b' when this.LuaOptions.AcceptBinaryNumbers:
+                case 'B' when this.LuaOptions.AcceptBinaryNumbers:
                 {
                     #region Binary number parsing
 
