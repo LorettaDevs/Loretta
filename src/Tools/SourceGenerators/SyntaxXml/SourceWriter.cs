@@ -51,7 +51,7 @@ namespace Loretta.Generators.SyntaxXml
             WriteGreenTypes();
             WriteGreenVisitors();
             WriteGreenRewriter();
-            WriteContextualGreenFactories();
+            //WriteContextualGreenFactories();
             WriteStaticGreenFactories();
             CloseBlock();
         }
@@ -102,20 +102,12 @@ namespace Loretta.Generators.SyntaxXml
                 WriteLine($"internal {node.Name}(SyntaxKind kind, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations)");
                 WriteLine("  : base(kind, diagnostics, annotations)");
                 OpenBlock();
-                if (node.Name == "DirectiveTriviaSyntax")
-                {
-                    WriteLine("this.flags |= NodeFlags.ContainsDirectives;");
-                }
                 CloseBlock();
                 WriteLine();
                 // ctor without diagnostics and annotations
                 WriteLine($"internal {node.Name}(SyntaxKind kind)");
                 WriteLine("  : base(kind)");
                 OpenBlock();
-                if (node.Name == "DirectiveTriviaSyntax")
-                {
-                    WriteLine("this.flags |= NodeFlags.ContainsDirectives;");
-                }
                 CloseBlock();
 
                 // object reader constructor
@@ -123,10 +115,6 @@ namespace Loretta.Generators.SyntaxXml
                 WriteLine($"protected {node.Name}(ObjectReader reader)");
                 WriteLine("  : base(reader)");
                 OpenBlock();
-                if (node.Name == "DirectiveTriviaSyntax")
-                {
-                    WriteLine("this.flags |= NodeFlags.ContainsDirectives;");
-                }
                 CloseBlock();
 
                 var valueFields = abstractNode.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
@@ -192,18 +180,18 @@ namespace Loretta.Generators.SyntaxXml
                 WriteCtorBody(valueFields, nodeFields);
                 CloseBlock();
 
-                // write constructor with async
-                WriteLine();
-                Write($"internal {node.Name}(SyntaxKind kind");
+                //// write constructor with async
+                //WriteLine();
+                //Write($"internal {node.Name}(SyntaxKind kind");
 
-                WriteGreenNodeConstructorArgs(nodeFields, valueFields);
+                //WriteGreenNodeConstructorArgs(nodeFields, valueFields);
 
-                WriteLine(", SyntaxFactoryContext context)");
-                WriteLine("  : base(kind)");
-                OpenBlock();
-                WriteLine("this.SetFactoryContext(context);");
-                WriteCtorBody(valueFields, nodeFields);
-                CloseBlock();
+                //WriteLine(", SyntaxFactoryContext context)");
+                //WriteLine("  : base(kind)");
+                //OpenBlock();
+                //WriteLine("this.SetFactoryContext(context);");
+                //WriteCtorBody(valueFields, nodeFields);
+                //CloseBlock();
 
                 // write constructor without diagnostics and annotations
                 WriteLine();
