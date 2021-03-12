@@ -607,6 +607,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     {
                         // 0b[01_]+
                         case 'b':
+                        case 'B':
                             // Skip the prefix
                             _reader.Advance(2);
                             info.Kind = SyntaxKind.NumericLiteralToken;
@@ -616,6 +617,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                         // 0o[0-7_]+
                         case 'o':
+                        case 'O':
                             // Skip the prefix
                             _reader.Advance(2);
                             info.Kind = SyntaxKind.NumericLiteralToken;
@@ -625,6 +627,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                         // 0x(?:[A-Fa-f0-9]?[A-Fa-f0-9_]*)?\.(?:[A-Fa-f0-9][A-Fa-f0-9_]*)?(?:[pP][0-9]+)?
                         case 'x':
+                        case 'X':
                             // Skip the prefix
                             _reader.Advance(2);
                             info.Kind = SyntaxKind.NumericLiteralToken;
@@ -727,6 +730,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     info.Text = info.StringValue = GetText(intern: true);
                     if (!_cache.TryGetKeywordKind(info.Text, out info.Kind))
                         info.ContextualKind = info.Kind = SyntaxKind.IdentifierToken;
+
+                    // Continue might be a contextual keyword or not a keyword at all so we have to check.
+                    if (info.Kind is SyntaxKind.ContinueKeyword && Options.ContinueType != ContinueType.Keyword)
+                    {
+                        info.Kind = SyntaxKind.IdentifierToken;
+                        if (Options.ContinueType == ContinueType.ContextualKeyword)
+                            info.ContextualKind = SyntaxKind.ContinueKeyword;
+                        info.Text = "continue";
+                    }
 
                     if (!Options.UseLuaJitIdentifierRules && info.Text.Any(ch => ch >= 0x7F))
                         AddError(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion);
