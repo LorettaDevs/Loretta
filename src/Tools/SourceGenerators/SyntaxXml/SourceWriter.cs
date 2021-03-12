@@ -36,7 +36,7 @@ namespace Loretta.Generators.SyntaxXml
             WriteLine("using System;");
             WriteLine("using System.Collections.Generic;");
             WriteLine("using System.Diagnostics.CodeAnalysis;");
-            WriteLine("using Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax;");
+            WriteLine("using Loretta.CodeAnalysis.Syntax.InternalSyntax;");
             WriteLine("using Loretta.Utilities;");
             WriteLine();
         }
@@ -51,6 +51,7 @@ namespace Loretta.Generators.SyntaxXml
             WriteGreenTypes();
             WriteGreenVisitors();
             WriteGreenRewriter();
+            WriteContextualGreenFactories();
             WriteStaticGreenFactories();
             CloseBlock();
         }
@@ -92,20 +93,44 @@ namespace Loretta.Generators.SyntaxXml
         {
             WriteComment(node.TypeComment, "");
 
-            if (node is AbstractNode)
+            if (node is AbstractNode abstractNode)
             {
-                var nd = (AbstractNode) node;
                 WriteLine($"internal abstract partial class {node.Name} : {node.Base}");
                 OpenBlock();
 
-                // ctor without diagnostics and annotations
-                WriteLine($"private protected {node.Name} ( SyntaxKind kind )");
-                WriteLine("  : base ( kind )");
+                // ctor with diagnostics and annotations
+                WriteLine($"internal {node.Name}(SyntaxKind kind, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations)");
+                WriteLine("  : base(kind, diagnostics, annotations)");
                 OpenBlock();
+                if (node.Name == "DirectiveTriviaSyntax")
+                {
+                    WriteLine("this.flags |= NodeFlags.ContainsDirectives;");
+                }
+                CloseBlock();
+                WriteLine();
+                // ctor without diagnostics and annotations
+                WriteLine($"internal {node.Name}(SyntaxKind kind)");
+                WriteLine("  : base(kind)");
+                OpenBlock();
+                if (node.Name == "DirectiveTriviaSyntax")
+                {
+                    WriteLine("this.flags |= NodeFlags.ContainsDirectives;");
+                }
                 CloseBlock();
 
-                var valueFields = nd.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
-                var nodeFields = nd.Fields.Where(n => IsNodeOrNodeList(n.Type)).ToList();
+                // object reader constructor
+                WriteLine();
+                WriteLine($"protected {node.Name}(ObjectReader reader)");
+                WriteLine("  : base(reader)");
+                OpenBlock();
+                if (node.Name == "DirectiveTriviaSyntax")
+                {
+                    WriteLine("this.flags |= NodeFlags.ContainsDirectives;");
+                }
+                CloseBlock();
+
+                var valueFields = abstractNode.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
+                var nodeFields = abstractNode.Fields.Where(n => IsNodeOrNodeList(n.Type)).ToList();
 
                 foreach (var field in nodeFields)
                 {
@@ -117,11 +142,11 @@ namespace Loretta.Generators.SyntaxXml
                         if (IsSeparatedNodeList(field.Type) ||
                             IsNodeList(field.Type))
                         {
-                            WriteLine($"public abstract {(field.New ? "new " : "")}Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} {field.Name} {{ get; }}");
+                            WriteLine($"public abstract {(IsNew(field) ? "new " : "")}Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} {field.Name} {{ get; }}");
                         }
                         else
                         {
-                            WriteLine($"public abstract {(field.New ? "new " : "")}{(GetFieldType(field, green: true))} {field.Name} {{ get; }}");
+                            WriteLine($"public abstract {(IsNew(field) ? "new " : "")}{(GetFieldType(field, green: true))} {field.Name} {{ get; }}");
                         }
                     }
                 }
@@ -131,15 +156,13 @@ namespace Loretta.Generators.SyntaxXml
                     WriteLine();
                     WriteComment(field.PropertyComment, "");
 
-                    WriteLine($"public abstract {(field.New ? "new " : "")}{field.Type} {field.Name} {{ get; }}");
+                    WriteLine($"public abstract {(IsNew(field) ? "new " : "")}{field.Type} {field.Name} {{ get; }}");
                 }
 
                 CloseBlock();
             }
-            else if (node is Node)
+            else if (node is Node nd)
             {
-                var nd = (Node) node;
-
                 WriteLine($"internal sealed partial class {node.Name} : {node.Base}");
                 OpenBlock();
 
@@ -157,14 +180,39 @@ namespace Loretta.Generators.SyntaxXml
                     WriteLine($"internal readonly {field.Type} {CamelCase(field.Name)};");
                 }
 
-                // write constructor without diagnostics and annotations
+                // write constructor with diagnostics and annotations
                 WriteLine();
-                Write($"internal {node.Name} ( SyntaxKind kind");
+                Write($"internal {node.Name}(SyntaxKind kind");
 
                 WriteGreenNodeConstructorArgs(nodeFields, valueFields);
 
-                WriteLine(" )");
-                WriteLine("  : base ( kind )");
+                WriteLine(", DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations)");
+                WriteLine("  : base(kind, diagnostics, annotations)");
+                OpenBlock();
+                WriteCtorBody(valueFields, nodeFields);
+                CloseBlock();
+
+                // write constructor with async
+                WriteLine();
+                Write($"internal {node.Name}(SyntaxKind kind");
+
+                WriteGreenNodeConstructorArgs(nodeFields, valueFields);
+
+                WriteLine(", SyntaxFactoryContext context)");
+                WriteLine("  : base(kind)");
+                OpenBlock();
+                WriteLine("this.SetFactoryContext(context);");
+                WriteCtorBody(valueFields, nodeFields);
+                CloseBlock();
+
+                // write constructor without diagnostics and annotations
+                WriteLine();
+                Write($"internal {node.Name}(SyntaxKind kind");
+
+                WriteGreenNodeConstructorArgs(nodeFields, valueFields);
+
+                WriteLine(")");
+                WriteLine("  : base(kind)");
                 OpenBlock();
                 WriteCtorBody(valueFields, nodeFields);
                 CloseBlock();
@@ -176,15 +224,15 @@ namespace Loretta.Generators.SyntaxXml
                     WriteComment(field.PropertyComment, "");
                     if (IsNodeList(field.Type))
                     {
-                        WriteLine($"public {OverrideOrNewModifier(field)}Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} {field.Name} => new Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} ( this.{CamelCase(field.Name)} );");
+                        WriteLine($"public {OverrideOrNewModifier(field)}Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} {field.Name} => new Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type}(this.{CamelCase(field.Name)});");
                     }
                     else if (IsSeparatedNodeList(field.Type))
                     {
-                        WriteLine($"public {OverrideOrNewModifier(field)}Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} {field.Name} => new Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} ( new Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode> ( this.{CamelCase(field.Name)} ) );");
+                        WriteLine($"public {OverrideOrNewModifier(field)}Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} {field.Name} => new Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type}(new Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>(this.{CamelCase(field.Name)}));");
                     }
                     else if (field.Type == "SyntaxNodeOrTokenList")
                     {
-                        WriteLine($"public {OverrideOrNewModifier(field)}Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode> {field.Name} => new Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode> ( this.{CamelCase(field.Name)} );");
+                        WriteLine($"public {OverrideOrNewModifier(field)}Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode> {field.Name} => new Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>(this.{CamelCase(field.Name)});");
                     }
                     else
                     {
@@ -200,24 +248,24 @@ namespace Loretta.Generators.SyntaxXml
 
                 // GetSlot
                 WriteLine();
-                Write("internal override GreenNode? GetSlot(int index) =>");
+                Write("internal override GreenNode? GetSlot(int index)");
 
                 if (nodeFields.Count == 0)
                 {
-                    WriteLine("null;");
+                    WriteLine(" => null;");
                 }
                 else if (nodeFields.Count == 1)
                 {
                     WriteLine();
                     Indent();
-                    WriteLine($"index == 0 ? this.{CamelCase(nodeFields[0].Name)} : null;");
+                    WriteLine($"=> index == 0 ? this.{CamelCase(nodeFields[0].Name)} : null;");
                     Unindent();
                 }
                 else
                 {
                     WriteLine();
                     Indent();
-                    WriteLine("index switch");
+                    WriteLine("=> index switch");
                     OpenBlock();
                     for (int i = 0, n = nodeFields.Count; i < n; i++)
                     {
@@ -230,12 +278,14 @@ namespace Loretta.Generators.SyntaxXml
                 }
 
                 WriteLine();
-                WriteLine("internal override SyntaxNode CreateRed ( SyntaxNode? parent, int position ) =>");
-                WriteLine($"    new Syntax.{node.Name} ( this, parent, position );");
+                WriteLine($"internal override SyntaxNode CreateRed(SyntaxNode? parent, int position) => new Lua.Syntax.{node.Name}(this, parent, position);");
 
                 WriteGreenAcceptMethods(nd);
                 WriteGreenUpdateMethod(nd);
+                WriteSetDiagnostics(nd);
+                WriteSetAnnotations(nd);
 
+                WriteGreenSerialization(nd);
                 CloseBlock();
             }
         }
@@ -253,6 +303,86 @@ namespace Loretta.Generators.SyntaxXml
             }
         }
 
+        private void WriteGreenSerialization(Node node)
+        {
+            var valueFields = node.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
+            var nodeFields = node.Fields.Where(n => IsNodeOrNodeList(n.Type)).ToList();
+
+            // object reader constructor
+            WriteLine();
+            WriteLine($"internal {node.Name}(ObjectReader reader)");
+            WriteLine("  : base(reader)");
+            OpenBlock();
+            WriteLine($"this.SlotCount = {nodeFields.Count};");
+
+            foreach (var field in nodeFields)
+            {
+                var type = GetFieldType(field, green: true);
+                WriteLine($"var {CamelCase(field.Name)} = ({type})reader.ReadValue();");
+
+                if (IsAnyList(field.Type) || IsOptional(field))
+                {
+                    WriteLine($"if ({CamelCase(field.Name)} != null)");
+                    OpenBlock();
+                    WriteLine($"AdjustFlagsAndWidth({CamelCase(field.Name)});");
+                    WriteLine($"this.{CamelCase(field.Name)} = {CamelCase(field.Name)};");
+                    CloseBlock();
+                }
+                else
+                {
+                    WriteLine($"AdjustFlagsAndWidth({CamelCase(field.Name)});");
+                    WriteLine($"this.{CamelCase(field.Name)} = {CamelCase(field.Name)};");
+                }
+            }
+
+            foreach (var field in valueFields)
+            {
+                WriteLine($"this.{CamelCase(field.Name)} = ({(GetFieldType(field, green: true))})reader.{(GetReaderMethod(GetFieldType(field, green: true)))}();");
+            }
+
+            CloseBlock();
+
+            // IWritable
+            WriteLine();
+            WriteLine("internal override void WriteTo(ObjectWriter writer)");
+            OpenBlock();
+            WriteLine("base.WriteTo(writer);");
+
+            foreach (var field in nodeFields)
+            {
+                WriteLine($"writer.WriteValue(this.{CamelCase(field.Name)});");
+            }
+
+            foreach (var field in valueFields)
+            {
+                var type = GetFieldType(field, green: true);
+                WriteLine($"writer.{GetWriterMethod(type)}(this.{CamelCase(field.Name)});");
+            }
+
+            CloseBlock();
+
+            // IReadable
+            WriteLine();
+            WriteLine($"static {node.Name}()");
+            OpenBlock();
+            WriteLine($"ObjectBinder.RegisterTypeReader(typeof({node.Name}), r => new {node.Name}(r));");
+            CloseBlock();
+        }
+
+        private static string GetWriterMethod(string type)
+            => type switch
+            {
+                "bool" => "WriteBoolean",
+                _ => throw new InvalidOperationException($"Type '{type}' not supported for object reader serialization."),
+            };
+
+        private static string GetReaderMethod(string type)
+            => type switch
+            {
+                "bool" => "ReadBoolean",
+                _ => throw new InvalidOperationException($"Type '{type}' not supported for object reader serialization."),
+            };
+
         private void WriteCtorBody(List<Field> valueFields, List<Field> nodeFields)
         {
             // constructor body
@@ -262,15 +392,15 @@ namespace Loretta.Generators.SyntaxXml
             {
                 if (IsAnyList(field.Type) || IsOptional(field))
                 {
-                    WriteLine($"if ( {CamelCase(field.Name)} != null )");
+                    WriteLine($"if ({CamelCase(field.Name)} != null)");
                     OpenBlock();
-                    WriteLine($"this.AdjustFlagsAndWidth ( {CamelCase(field.Name)} );");
+                    WriteLine($"this.AdjustFlagsAndWidth({CamelCase(field.Name)});");
                     WriteLine($"this.{CamelCase(field.Name)} = {CamelCase(field.Name)};");
                     CloseBlock();
                 }
                 else
                 {
-                    WriteLine($"this.AdjustFlagsAndWidth ( {CamelCase(field.Name)} );");
+                    WriteLine($"this.AdjustFlagsAndWidth({CamelCase(field.Name)});");
                     WriteLine($"this.{CamelCase(field.Name)} = {CamelCase(field.Name)};");
                 }
             }
@@ -279,6 +409,32 @@ namespace Loretta.Generators.SyntaxXml
             {
                 WriteLine($"this.{CamelCase(field.Name)} = {CamelCase(field.Name)};");
             }
+        }
+
+        private void WriteSetAnnotations(Node node)
+        {
+            WriteLine();
+            WriteLine("internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)");
+            Write($"    => new {node.Name}(");
+            Write(CommaJoin(
+                "this.Kind",
+                node.Fields.Select(f => $"this.{CamelCase(f.Name)}"),
+                "GetDiagnostics()",
+                "annotations"));
+            WriteLine(");");
+        }
+
+        private void WriteSetDiagnostics(Node node)
+        {
+            WriteLine();
+            WriteLine("internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)");
+            Write($"    => new {node.Name}(");
+            Write(CommaJoin(
+                "this.Kind",
+                node.Fields.Select(f => $"this.{CamelCase(f.Name)}"),
+                "diagnostics",
+                "GetAnnotations()"));
+            WriteLine(");");
         }
 
         private void WriteGreenAcceptMethods(Node node)
@@ -313,16 +469,16 @@ namespace Loretta.Generators.SyntaxXml
             WriteLine();
             Write($"public {node.Name} Update(");
             Write(CommaJoin(node.Fields.Select(f =>
-         {
-             var type =
-                 f.Type == "SyntaxNodeOrTokenList" ? "Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>" :
-                 f.Type == "SyntaxTokenList" ? "Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>" :
-                 IsNodeList(f.Type) ? "Loretta.CodeAnalysis.Syntax.InternalSyntax." + f.Type :
-                 IsSeparatedNodeList(f.Type) ? "Loretta.CodeAnalysis.Syntax.InternalSyntax." + f.Type :
-                 f.Type;
+            {
+                var type =
+                    f.Type == "SyntaxNodeOrTokenList" ? "Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>" :
+                    f.Type == "SyntaxTokenList" ? "Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>" :
+                    IsNodeList(f.Type) ? "Loretta.CodeAnalysis.Syntax.InternalSyntax." + f.Type :
+                    IsSeparatedNodeList(f.Type) ? "Loretta.CodeAnalysis.Syntax.InternalSyntax." + f.Type :
+                    f.Type;
 
-             return $"{type} {CamelCase(f.Name)}";
-         })));
+                return $"{type} {CamelCase(f.Name)}";
+            })));
             WriteLine(")");
             OpenBlock();
 
@@ -388,14 +544,14 @@ namespace Loretta.Generators.SyntaxXml
                 {
                     Write("=> node.Update(");
                     Write(CommaJoin(node.Fields.Select(f =>
-                 {
-                     if (IsAnyList(f.Type))
-                         return $"VisitList(node.{f.Name})";
-                     else if (IsNode(f.Type))
-                         return $"({f.Type})Visit(node.{f.Name})";
-                     else
-                         return $"node.{f.Name}";
-                 })));
+                    {
+                        if (IsAnyList(f.Type))
+                            return $"VisitList(node.{f.Name})";
+                        else if (IsNode(f.Type))
+                            return $"({f.Type})Visit(node.{f.Name})";
+                        else
+                            return $"node.{f.Name}";
+                    })));
                     WriteLine(");");
                 }
 
@@ -405,9 +561,26 @@ namespace Loretta.Generators.SyntaxXml
             CloseBlock();
         }
 
+        private void WriteContextualGreenFactories()
+        {
+            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode)).ToList();
+            WriteLine();
+            WriteLine("internal partial class ContextAwareSyntax");
+            OpenBlock();
+            WriteLine();
+            WriteLine("private SyntaxFactoryContext context;");
+
+            WriteLine();
+            WriteLine("public ContextAwareSyntax(SyntaxFactoryContext context)");
+            WriteLine("    => this.context = context;");
+
+            WriteGreenFactories(nodes, withSyntaxFactoryContext: true);
+            CloseBlock();
+        }
+
         private void WriteStaticGreenFactories()
         {
-            var nodes = Tree.Types.Where(n => n is not PredefinedNode and not AbstractNode).ToList();
+            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode)).ToList();
             WriteLine();
             WriteLine("internal static partial class SyntaxFactory");
             OpenBlock();
@@ -416,12 +589,12 @@ namespace Loretta.Generators.SyntaxXml
             CloseBlock();
         }
 
-        private void WriteGreenFactories(List<TreeType> nodes)
+        private void WriteGreenFactories(List<TreeType> nodes, bool withSyntaxFactoryContext = false)
         {
             foreach (var node in nodes.OfType<Node>())
             {
                 WriteLine();
-                WriteGreenFactory(node);
+                WriteGreenFactory(node, withSyntaxFactoryContext);
             }
         }
 
@@ -433,7 +606,7 @@ namespace Loretta.Generators.SyntaxXml
             WriteLine("=> new Type[]");
             OpenBlock();
 
-            var nodes = Tree.Types.Where(n => n is not PredefinedNode and not AbstractNode).ToList();
+            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode)).ToList();
             foreach (var node in nodes)
             {
                 WriteLine($"typeof({node.Name}),");
@@ -443,12 +616,12 @@ namespace Loretta.Generators.SyntaxXml
             Unindent();
         }
 
-        private void WriteGreenFactory(Node nd)
+        private void WriteGreenFactory(Node nd, bool withSyntaxFactoryContext = false)
         {
             var valueFields = nd.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
             var nodeFields = nd.Fields.Where(n => IsNodeOrNodeList(n.Type)).ToList();
 
-            Write($"public static {nd.Name} {StripPost(nd.Name, "Syntax")}(");
+            Write($"public {(withSyntaxFactoryContext ? "" : "static ")}{nd.Name} {StripPost(nd.Name, "Syntax")}(");
             WriteGreenFactoryParameters(nd);
             WriteLine(")");
             OpenBlock();
@@ -520,8 +693,6 @@ namespace Loretta.Generators.SyntaxXml
             if (nd.Name != "SkippedTokensTriviaSyntax" &&
                 nd.Name != "DocumentationCommentTriviaSyntax" &&
                 nd.Name != "IncompleteMemberSyntax" &&
-                nd.Name != "BadExpressionSyntax" &&
-                nd.Name != "BadStatementSyntax" &&
                 valueFields.Count + nodeFields.Count <= 3)
             {
                 //int hash;
@@ -540,9 +711,16 @@ namespace Loretta.Generators.SyntaxXml
                 //int hash;
                 WriteLine("int hash;");
                 //SyntaxNode cached = SyntaxNodeCache.TryGetNode(SyntaxKind.IdentifierName, identifier, this.context, out hash);
-                Write("var cached = SyntaxNodeCache.TryGetNode((int)");
+                if (withSyntaxFactoryContext)
+                {
+                    Write("var cached = LuaSyntaxNodeCache.TryGetNode((int)");
+                }
+                else
+                {
+                    Write("var cached = SyntaxNodeCache.TryGetNode((int)");
+                }
 
-                WriteCtorArgList(nd, valueFields, nodeFields);
+                WriteCtorArgList(nd, withSyntaxFactoryContext, valueFields, nodeFields);
                 WriteLine(", out hash);");
                 //    if (cached != null) return (IdentifierNameSyntax)cached;
                 WriteLine($"if (cached != null) return ({nd.Name})cached;");
@@ -550,7 +728,7 @@ namespace Loretta.Generators.SyntaxXml
 
                 //var result = new IdentifierNameSyntax(SyntaxKind.IdentifierName, identifier);
                 Write($"var result = new {nd.Name}(");
-                WriteCtorArgList(nd, valueFields, nodeFields);
+                WriteCtorArgList(nd, withSyntaxFactoryContext, valueFields, nodeFields);
                 WriteLine(");");
                 //if (hash >= 0)
                 WriteLine("if (hash >= 0)");
@@ -569,7 +747,7 @@ namespace Loretta.Generators.SyntaxXml
             {
                 WriteLine();
                 Write($"return new {nd.Name}(");
-                WriteCtorArgList(nd, valueFields, nodeFields);
+                WriteCtorArgList(nd, withSyntaxFactoryContext, valueFields, nodeFields);
                 WriteLine(");");
             }
 
@@ -593,7 +771,7 @@ namespace Loretta.Generators.SyntaxXml
                 })));
         }
 
-        private void WriteCtorArgList(Node nd, List<Field> valueFields, List<Field> nodeFields)
+        private void WriteCtorArgList(Node nd, bool withSyntaxFactoryContext, List<Field> valueFields, List<Field> nodeFields)
         {
             Write(CommaJoin(
                 nd.Kinds.Count == 1 ? $"SyntaxKind.{nd.Kinds[0].Name}" : "kind",
@@ -602,7 +780,8 @@ namespace Loretta.Generators.SyntaxXml
                         ? $"{CamelCase(f.Name)}.Node"
                         : CamelCase(f.Name)),
                 // values are at end
-                valueFields.Select(f => CamelCase(f.Name))));
+                valueFields.Select(f => CamelCase(f.Name)),
+                withSyntaxFactoryContext ? "this.context" : ""));
         }
 
         private void WriteRedTypes()
@@ -626,9 +805,8 @@ namespace Loretta.Generators.SyntaxXml
         {
             WriteComment(node.TypeComment, "");
 
-            if (node is AbstractNode)
+            if (node is AbstractNode abstractNode)
             {
-                var nd = (AbstractNode) node;
                 WriteLine($"public abstract partial class {node.Name} : {node.Base}");
                 OpenBlock();
                 WriteLine($"internal {node.Name}(InternalSyntax.LuaSyntaxNode green, SyntaxNode? parent, int position)");
@@ -636,8 +814,8 @@ namespace Loretta.Generators.SyntaxXml
                 OpenBlock();
                 CloseBlock();
 
-                var valueFields = nd.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
-                var nodeFields = GetNodeOrNodeListFields(nd);
+                var valueFields = abstractNode.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
+                var nodeFields = GetNodeOrNodeListFields(abstractNode);
 
                 foreach (var field in nodeFields)
                 {
@@ -731,9 +909,8 @@ namespace Loretta.Generators.SyntaxXml
 
                 CloseBlock();
             }
-            else if (node is Node)
+            else if (node is Node nd)
             {
-                var nd = (Node) node;
                 WriteComment($"<remarks>");
                 WriteComment($"<para>This node is associated with the following syntax kinds:</para>");
                 WriteComment($"<list type=\"bullet\">");
@@ -753,8 +930,7 @@ namespace Loretta.Generators.SyntaxXml
 
                 foreach (var field in nodeFields)
                 {
-                    if (field.Type is not "SyntaxToken"
-                        and not "SyntaxList<SyntaxToken>")
+                    if (field.Type is not ("SyntaxToken" or "SyntaxList<SyntaxToken>"))
                     {
                         if (IsSeparatedNodeList(field.Type) || field.Type == "SyntaxNodeOrTokenList")
                         {
@@ -865,14 +1041,14 @@ namespace Loretta.Generators.SyntaxXml
                     Write("internal override SyntaxNode? GetNodeSlot(int index)");
 
                     var relevantNodes = nodeFields.Select((field, index) => (field, index))
-                                                  .Where(t => t.field.Type is not "SyntaxToken" and not "SyntaxList<SyntaxToken>");
+                                                  .Where(t => t.field.Type is not ("SyntaxToken" or "SyntaxList<SyntaxToken>"));
                     if (!relevantNodes.Any())
                     {
                         WriteLine(" => null;");
                     }
                     else if (relevantNodes.Count() == 1)
                     {
-                        (var field, var index) = relevantNodes.Single();
+                        var (field, index) = relevantNodes.Single();
                         var whenTrue = index == 0
                             ? $"GetRedAtZero(ref this.{CamelCase(field.Name)})"
                             : $"GetRed(ref this.{CamelCase(field.Name)}, {index})";
@@ -886,7 +1062,7 @@ namespace Loretta.Generators.SyntaxXml
                         Indent();
                         WriteLine("=> index switch");
                         OpenBlock();
-                        foreach ((var field, var index) in relevantNodes)
+                        foreach (var (field, index) in relevantNodes)
                         {
                             var suffix = IsOptional(field) ? "" : "!";
                             if (index == 0)
@@ -911,14 +1087,14 @@ namespace Loretta.Generators.SyntaxXml
                     Write("internal override SyntaxNode? GetCachedSlot(int index)");
 
                     var relevantNodes = nodeFields.Select((field, index) => (field, index))
-                                                  .Where(t => t.field.Type is not "SyntaxToken" and not "SyntaxList<SyntaxToken>");
+                                                  .Where(t => t.field.Type is not ("SyntaxToken" or "SyntaxList<SyntaxToken>"));
                     if (!relevantNodes.Any())
                     {
                         WriteLine(" => null;");
                     }
                     else if (relevantNodes.Count() == 1)
                     {
-                        (var field, var index) = relevantNodes.Single();
+                        var (field, index) = relevantNodes.Single();
                         WriteLine($" => index == {index} ? this.{CamelCase(field.Name)} : null;");
                     }
                     else
@@ -927,7 +1103,7 @@ namespace Loretta.Generators.SyntaxXml
                         Indent();
                         WriteLine("=> index switch");
                         OpenBlock();
-                        foreach ((var field, var index) in relevantNodes)
+                        foreach (var (field, index) in relevantNodes)
                         {
                             WriteLine($"{index} => this.{CamelCase(field.Name)},");
                         }
@@ -957,10 +1133,10 @@ namespace Loretta.Generators.SyntaxXml
             return field.Type;
         }
 
-        private string GetChildPosition(int i)
+        private static string GetChildPosition(int i)
             => i == 0 ? "Position" : "GetChildPosition(" + i + ")";
 
-        private string GetChildIndex(int i)
+        private static string GetChildIndex(int i)
             => i == 0 ? "0" : "GetChildIndex(" + i + ")";
 
         private void WriteRedAcceptMethods(Node node)
@@ -1056,7 +1232,7 @@ namespace Loretta.Generators.SyntaxXml
                 var isNew = false;
                 if (IsOverride(field))
                 {
-                    (var baseType, var baseField) = GetHighestBaseTypeWithField(node, field.Name);
+                    var (baseType, baseField) = GetHighestBaseTypeWithField(node, field.Name);
                     if (baseType != null)
                     {
                         Write($"internal override {baseType.Name} With{field.Name}Core({GetRedPropertyType(baseField)} {CamelCase(field.Name)}) => With{field.Name}({CamelCase(field.Name)}");
@@ -1076,7 +1252,7 @@ namespace Loretta.Generators.SyntaxXml
 
                 // call update inside each setter
                 Write(CommaJoin(node.Fields.Select(f =>
-                 f == field ? CamelCase(f.Name) : $"this.{f.Name}")));
+                    f == field ? CamelCase(f.Name) : $"this.{f.Name}")));
                 WriteLine(");");
             }
         }
@@ -1162,7 +1338,7 @@ namespace Loretta.Generators.SyntaxXml
             var isNew = false;
             if (IsOverride(field))
             {
-                (var baseType, var baseField) = GetHighestBaseTypeWithField(node, field.Name);
+                var (baseType, baseField) = GetHighestBaseTypeWithField(node, field.Name);
                 if (baseType != null)
                 {
                     var baseArgType = GetElementType(baseField.Type);
@@ -1181,7 +1357,7 @@ namespace Loretta.Generators.SyntaxXml
             var isNew = false;
             if (IsOverride(field))
             {
-                (var baseType, var _) = GetHighestBaseTypeWithField(node, field.Name);
+                var (baseType, _) = GetHighestBaseTypeWithField(node, field.Name);
                 if (baseType != null)
                 {
                     WriteLine($"internal override {baseType.Name} Add{StripPost(field.Name, "Opt")}{referencedNodeField.Name}Core(params {argType}[] items) => Add{StripPost(field.Name, "Opt")}{referencedNodeField.Name}(items);");
@@ -1232,21 +1408,21 @@ namespace Loretta.Generators.SyntaxXml
                 {
                     Write("    => node.Update(");
                     Write(CommaJoin(node.Fields.Select(f =>
-                 {
-                     if (IsNodeOrNodeList(f.Type))
-                     {
-                         if (IsAnyList(f.Type))
-                             return $"VisitList(node.{f.Name})";
-                         else if (f.Type == "SyntaxToken")
-                             return $"VisitToken(node.{f.Name})";
-                         else if (IsOptional(f))
-                             return $"({(GetFieldType(f, green: false))})Visit(node.{f.Name})";
-                         else
-                             return $"({(GetFieldType(f, green: false))})Visit(node.{f.Name}) ?? throw new ArgumentNullException(\"{CamelCase(f.Name)}\")";
-                     }
+                    {
+                        if (IsNodeOrNodeList(f.Type))
+                        {
+                            if (IsAnyList(f.Type))
+                                return $"VisitList(node.{f.Name})";
+                            else if (f.Type == "SyntaxToken")
+                                return $"VisitToken(node.{f.Name})";
+                            else if (IsOptional(f))
+                                return $"({(GetFieldType(f, green: false))})Visit(node.{f.Name})";
+                            else
+                                return $"({(GetFieldType(f, green: false))})Visit(node.{f.Name}) ?? throw new ArgumentNullException(\"{CamelCase(f.Name)}\")";
+                        }
 
-                     return $"node.{f.Name}";
-                 })));
+                        return $"node.{f.Name}";
+                    })));
 
                     WriteLine(");");
                 }
@@ -1256,7 +1432,7 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteRedFactories()
         {
-            var nodes = Tree.Types.Where(n => n is not PredefinedNode and not AbstractNode).OfType<Node>().ToList();
+            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode)).OfType<Node>().ToList();
             WriteLine();
             WriteLine("public static partial class SyntaxFactory");
             OpenBlock();
@@ -1279,7 +1455,7 @@ namespace Loretta.Generators.SyntaxXml
         protected bool CanBeAutoCreated(Node node, Field field)
             => IsAutoCreatableToken(node, field) || IsAutoCreatableNode(field);
 
-        private bool IsAutoCreatableToken(Node node, Field field)
+        private static bool IsAutoCreatableToken(Node node, Field field)
         {
             return field.Type == "SyntaxToken"
                 && field.Kinds != null
@@ -1289,7 +1465,7 @@ namespace Loretta.Generators.SyntaxXml
         private bool IsAutoCreatableNode(Field field)
         {
             var referencedNode = GetNode(field.Type);
-            return (referencedNode != null && RequiredFactoryArgumentCount(referencedNode) == 0);
+            return referencedNode != null && RequiredFactoryArgumentCount(referencedNode) == 0;
         }
 
         private bool IsRequiredFactoryField(Node node, Field field) => (!IsOptional(field) && !IsAnyList(field.Type) && !CanBeAutoCreated(node, field)) || IsValueField(field);
@@ -1514,7 +1690,7 @@ namespace Loretta.Generators.SyntaxXml
             }
         }
 
-        private IEnumerable<Field> DetermineRedFactoryWithNoAutoCreatableTokenFields(Node nd) => nd.Fields.Where(f => !IsAutoCreatableToken(nd, f));
+        private static IEnumerable<Field> DetermineRedFactoryWithNoAutoCreatableTokenFields(Node nd) => nd.Fields.Where(f => !IsAutoCreatableToken(nd, f));
 
         // creates a factory without auto-creatable token arguments
         private void WriteRedFactoryWithNoAutoCreatableTokens(Node nd)
@@ -1605,7 +1781,7 @@ namespace Loretta.Generators.SyntaxXml
 
             var minimalFactoryfields = new HashSet<Field>(DetermineMinimalFactoryFields(nd));
 
-            if (withStringNames && minimalFactoryfields.Count(f => IsRequiredFactoryField(nd, f) && CanAutoConvertFromString(f)) == 0)
+            if (withStringNames && !minimalFactoryfields.Any(f => IsRequiredFactoryField(nd, f) && CanAutoConvertFromString(f)))
                 return; // no string-name overload necessary
 
             WriteLine();
@@ -1678,13 +1854,13 @@ namespace Loretta.Generators.SyntaxXml
             }
         }
 
-        private bool CanAutoConvertFromString(Field field) => IsIdentifierToken(field) || IsIdentifierNameSyntax(field);
+        private static bool CanAutoConvertFromString(Field field) => IsIdentifierToken(field) || IsIdentifierNameSyntax(field);
 
-        private bool IsIdentifierToken(Field field) => field.Type == "SyntaxToken" && field.Kinds != null && field.Kinds.Count == 1 && field.Kinds[0].Name == "IdentifierToken";
+        private static bool IsIdentifierToken(Field field) => field.Type == "SyntaxToken" && field.Kinds != null && field.Kinds.Count == 1 && field.Kinds[0].Name == "IdentifierToken";
 
-        private bool IsIdentifierNameSyntax(Field field) => field.Type == "IdentifierNameSyntax";
+        private static bool IsIdentifierNameSyntax(Field field) => field.Type == "IdentifierNameSyntax";
 
-        private string GetStringConverterMethod(Field field)
+        private static string GetStringConverterMethod(Field field)
         {
             if (IsIdentifierToken(field))
             {
