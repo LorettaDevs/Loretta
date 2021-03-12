@@ -1,4 +1,6 @@
-﻿namespace Loretta.CodeAnalysis.Lua
+﻿using System;
+
+namespace Loretta.CodeAnalysis.Lua
 {
     /// <summary>
     /// A static class containing facts about Lua's Syntax.
@@ -20,5 +22,31 @@
         /// <returns></returns>
         public static bool IsRightAssociative(SyntaxKind kind) =>
             kind is SyntaxKind.HatToken;
+
+        /// <summary>
+        /// Checks whether a given kind is a reserved keyword.
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="syntaxOptions"></param>
+        /// <returns></returns>
+        public static bool IsReservedKeyword(SyntaxKind actual, LuaSyntaxOptions syntaxOptions) =>
+            actual switch
+            {
+                SyntaxKind.ContinueKeyword => syntaxOptions.ContinueType == ContinueType.Keyword,
+                _ => IsKeyword(actual)
+            };
+
+        /// <summary>
+        /// Checks whether a given kind is a contextual keyword.
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <param name="syntaxOptions"></param>
+        /// <returns></returns>
+        public static bool IsContextualKeyword(SyntaxKind kind, LuaSyntaxOptions syntaxOptions) =>
+            kind switch
+            {
+                SyntaxKind.ContinueKeyword => syntaxOptions.ContinueType == ContinueType.ContextualKeyword,
+                _ => false
+            };
     }
 }
