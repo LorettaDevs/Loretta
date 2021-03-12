@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Loretta.CodeAnalysis.Lua
+{
+    /// <summary>
+    /// Represents a <see cref="LuaSyntaxNode"/> visitor that visits only the single
+    /// <see cref="LuaSyntaxNode"/> passed into its Visit method and produces a value
+    /// of the type specified by the <typeparamref name="TResult"/> parameter.
+    /// </summary>
+    /// <typeparam name="TResult">
+    /// The type of the return value this visitor's Visit method.
+    /// </typeparam>
+    public abstract partial class LuaSyntaxVisitor<TResult>
+    {
+        public virtual TResult? Visit(SyntaxNode? node)
+        {
+            if (node is not null)
+            {
+                return ((LuaSyntaxNode) node).Accept(this);
+            }
+
+            // should not come here too often so we will put this at the end of the method.
+            return default;
+        }
+
+        public virtual TResult? DefaultVisit(SyntaxNode node) => default;
+    }
+
+    /// <summary>
+    /// Represents a <see cref="LuaSyntaxNode"/> visitor that visits only the single LuaSyntaxNode
+    /// passed into its Visit method.
+    /// </summary>
+    public abstract partial class LuaSyntaxVisitor
+    {
+        public virtual void Visit(SyntaxNode? node)
+        {
+            if (node != null)
+            {
+                ((LuaSyntaxNode) node).Accept(this);
+            }
+        }
+
+        public virtual void DefaultVisit(SyntaxNode node)
+        {
+        }
+    }
+}
