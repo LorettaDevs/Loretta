@@ -118,7 +118,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                                 if (parsedCharInteger != char.MaxValue)
                                     parsed.Append(parsedCharInteger);
 
-                                if (!Options.AcceptHexEscapesInStrings)
+                                if (!Options.SyntaxOptions.AcceptHexEscapesInStrings)
                                     AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_HexStringEscapesNotSupportedInVersion);
                             }
                             break;

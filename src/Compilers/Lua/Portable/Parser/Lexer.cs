@@ -18,6 +18,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         // So it seems reasonable to limit the sizes to some round number like 42.
         internal const int MaxCachedTokenSize = 42;
 
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Not required here.")]
         private struct TokenInfo
         {
             // scanned values
@@ -41,7 +42,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return width;
         }
 
-        public Lexer(LuaSyntaxOptions luaOptions, SourceText text)
+        public Lexer(SourceText text, LuaParseOptions luaOptions)
             : base(text)
         {
             RoslynDebug.Assert(luaOptions is not null);
@@ -50,11 +51,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             _createWhitespaceTriviaFunction = CreateWhitespaceTrivia;
         }
 
-        public int Length => _reader.Length;
-
-        public int Position => _reader.Position;
-
-        public LuaSyntaxOptions Options { get; }
+        public LuaParseOptions Options { get; }
 
         public SyntaxToken Lex()
         {
@@ -802,9 +799,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return false;
         }
 
-        public void Dispose()
-        {
-            _cache.Free();
-        }
+        public void Dispose() => _cache.Free();
     }
 }
