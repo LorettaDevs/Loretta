@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GParse.IO;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
@@ -24,6 +23,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             _reader = new StringCodeReader(text.ToString());
             _strings = new StringTable();
         }
+
+        public int Length => _reader.Length;
+
+        public int Position => _reader.Position;
+
+        public void Restore(int position) => _reader.Restore(position);
 
         protected void Start()
         {
