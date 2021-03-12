@@ -315,10 +315,10 @@ namespace Loretta.Generators.SyntaxXml
             Write(CommaJoin(node.Fields.Select(f =>
          {
              var type =
-                 f.Type == "SyntaxNodeOrTokenList" ? "Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>" :
-                 f.Type == "SyntaxTokenList" ? "Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>" :
-                 IsNodeList(f.Type) ? "Microsoft.CodeAnalysis.Syntax.InternalSyntax." + f.Type :
-                 IsSeparatedNodeList(f.Type) ? "Microsoft.CodeAnalysis.Syntax.InternalSyntax." + f.Type :
+                 f.Type == "SyntaxNodeOrTokenList" ? "Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>" :
+                 f.Type == "SyntaxTokenList" ? "Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>" :
+                 IsNodeList(f.Type) ? "Loretta.CodeAnalysis.Syntax.InternalSyntax." + f.Type :
+                 IsSeparatedNodeList(f.Type) ? "Loretta.CodeAnalysis.Syntax.InternalSyntax." + f.Type :
                  f.Type;
 
              return $"{type} {CamelCase(f.Name)}";
@@ -584,8 +584,8 @@ namespace Loretta.Generators.SyntaxXml
                 {
                     var type = f.Type switch
                     {
-                        "SyntaxNodeOrTokenList" => "Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>",
-                        _ when IsSeparatedNodeList(f.Type) || IsNodeList(f.Type) => $"Microsoft.CodeAnalysis.Syntax.InternalSyntax.{f.Type}",
+                        "SyntaxNodeOrTokenList" => "Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>",
+                        _ when IsSeparatedNodeList(f.Type) || IsNodeList(f.Type) => $"Loretta.CodeAnalysis.Syntax.InternalSyntax.{f.Type}",
                         _ => GetFieldType(f, green: true),
                     };
 
