@@ -4,6 +4,12 @@
   <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
   <PredefinedNode Name="StructuredTriviaSyntax" Base="LuaSyntaxNode" />
 
+  <!-- Structured Trivia -->
+  <Node Name="SkippedTokensTriviaSyntax" Base="StructuredTriviaSyntax">
+    <Kind Name="SkippedTokensTrivia"/>
+    <Field Name="Tokens" Type="SyntaxList&lt;SyntaxToken&gt;"/>
+  </Node>
+
   <!-- Parameters -->
 
   <AbstractNode Name="ParameterSyntax" Base="LuaSyntaxNode">
@@ -1523,7 +1529,7 @@
         Creates a new <see cref="CompilationUnitSyntax" /> node.
       </summary>
     </FactoryComment>
-    <Kind Name="CompilationUnit" />
+    <Kind Name="CompilationUnitSyntax" />
     <Field Name="Statements" Type="SyntaxList&lt;StatementSyntax&gt;">
       <PropertyComment>
         <summary>The statements in the compilation unit.</summary>
