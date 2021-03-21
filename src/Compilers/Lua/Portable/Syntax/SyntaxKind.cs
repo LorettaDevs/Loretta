@@ -456,42 +456,60 @@ namespace Loretta.CodeAnalysis.Lua
         NameExpression = 1020,
 
         // Unary Expressions
+        [ExtraCategories("UnaryExpression")]
         [Property("UnaryExpressionOperatorTokenKind", MinusToken)]
         UnaryMinusExpression = 1021,
+        [ExtraCategories("UnaryExpression")]
         [Property("UnaryExpressionOperatorTokenKind", NotKeyword)]
         LogicalNotExpression = 1022,
+        [ExtraCategories("UnaryExpression")]
         [Property("UnaryExpressionOperatorTokenKind", HashToken)]
         LengthExpression = 1023,
 
         // Binary Expressions
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", PlusToken)]
         AddExpression = 1024,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", MinusToken)]
         SubtractExpression = 1025,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", StarToken)]
         MultiplyExpression = 1026,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", SlashToken)]
         DivideExpression = 1027,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", PercentToken)]
         ModuloExpression = 1028,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", DotDotToken)]
         ConcatExpression = 1029,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", EqualsEqualsToken)]
         EqualsExpression = 1030,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", TildeEqualsToken)]
         NotEqualsExpression = 1031,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", LessThanToken)]
         LessThanExpression = 1032,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", LessThanEqualsToken)]
         LessThanOrEqualExpression = 1033,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", GreaterThanToken)]
         GreaterThanExpression = 1034,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", GreaterThanEqualsToken)]
         GreaterThanOrEqualExpression = 1035,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", AndKeyword)]
         LogicalAndExpression = 1036,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", OrKeyword)]
         LogicalOrExpression = 1037,
+        [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", HatToken)]
         ExponentiateExpression = 1038,
 
@@ -508,18 +526,25 @@ namespace Loretta.CodeAnalysis.Lua
         // Assignment Statements
         [Property("AssignmentStatementOperatorTokenKind", EqualsToken)]
         AssignmentStatement = 1045,
+        [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", PlusEqualsToken)]
         AddAssignmentStatement = 1046,
+        [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", MinusEqualsToken)]
         SubtractAssignmentStatement = 1047,
+        [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", StartEqualsToken)]
         MultiplyAssignmentStatement = 1048,
+        [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", SlashEqualsToken)]
         DivideAssignmentStatement = 1049,
+        [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", PercentEqualsToken)]
         ModuloAssignmentStatement = 1050,
+        [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", DotDotEqualsToken)]
         ConcatAssignmentStatement = 1051,
+        [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", HatEqualsToken)]
         ExponentiateAssignmentStatement = 1052,
 
