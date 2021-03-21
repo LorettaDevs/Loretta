@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Tree Root="LuaSyntaxNode">
 
   <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
@@ -456,7 +456,7 @@
     </Field>
   </Node>
 
-  <AbstractNode Name="VariableExpressionSyntax" Base="ExpressionSyntax">
+  <AbstractNode Name="VariableExpressionSyntax" Base="PrefixExpressionSyntax">
     <TypeComment>
       <summary>The base class for variable expressions (values that can be assigned to).</summary>
     </TypeComment>
