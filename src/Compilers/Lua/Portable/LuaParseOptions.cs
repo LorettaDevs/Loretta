@@ -6,6 +6,9 @@ using Loretta.CodeAnalysis.PooledObjects;
 
 namespace Loretta.CodeAnalysis.Lua
 {
+    /// <summary>
+    /// This class stores several source parsing related options and offers access to their values.
+    /// </summary>
     public sealed class LuaParseOptions : ParseOptions, IEquatable<LuaParseOptions?>
     {
         private ImmutableDictionary<string, string> _features;
