@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Loretta.CodeAnalysis.Lua
+﻿namespace Loretta.CodeAnalysis.Lua
 {
     /// <summary>
     /// A static class containing facts about Lua's Syntax.
