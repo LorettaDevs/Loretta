@@ -1111,6 +1111,12 @@
         <summary>The else clause.</summary>
       </PropertyComment>
     </Field>
+    <Field Name="EndKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'end' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="EndKeyword" />
+    </Field>
     <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
       <PropertyComment>
         <summary>The semicolon at the end of the statement (if any).</summary>
