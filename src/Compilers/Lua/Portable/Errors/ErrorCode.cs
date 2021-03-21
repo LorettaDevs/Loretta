@@ -5,6 +5,7 @@
         Void = InternalErrorCode.Void,
         Unknonw = InternalErrorCode.Unknown,
 
+        // Lexer Errors
         ERR_InvalidStringEscape = 1,
         ERR_UnescapedLineBreakInString = 2,
         ERR_UnfinishedString = 3,
@@ -25,8 +26,16 @@
         ERR_NonFunctionCallBeingUsedAsStatement = 18,
         ERR_CannotBeAssignedTo = 19,
 
+        // Parser Errors
+        ERR_IdentifierExpectedKW = 1000,
+        ERR_IdentifierExpected = 1001,
+        ERR_SemicolonExpected = 1002,
+        ERR_CloseParenExpected = 1003,
+        ERR_LbraceExpected = 1004,
+        ERR_RbraceExpected = 1005,
+        ERR_SyntaxError = 1006,
 
         // MessageProvider stuff
-        ERR_BadDocumentationMode = 1000,
+        ERR_BadDocumentationMode = 2000,
     }
 }

@@ -115,6 +115,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ) expected.
+        /// </summary>
+        internal static string ERR_CloseParenExpected {
+            get {
+                return ResourceManager.GetString("ERR_CloseParenExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hexadecimal floating point numeric literals are not supported in this lua version.
         /// </summary>
         internal static string ERR_HexFloatLiteralNotSupportedInVersion {
@@ -133,6 +142,24 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Identifier expected.
+        /// </summary>
+        internal static string ERR_IdentifierExpected {
+            get {
+                return ResourceManager.GetString("ERR_IdentifierExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identifier expected; &apos;{1}&apos; is a keyword.
+        /// </summary>
+        internal static string ERR_IdentifierExpectedKW {
+            get {
+                return ResourceManager.GetString("ERR_IdentifierExpectedKW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid number.
         /// </summary>
         internal static string ERR_InvalidNumber {
@@ -147,6 +174,15 @@ namespace Loretta.CodeAnalysis.Lua {
         internal static string ERR_InvalidStringEscape {
             get {
                 return ResourceManager.GetString("ERR_InvalidStringEscape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to { expected.
+        /// </summary>
+        internal static string ERR_LbraceExpected {
+            get {
+                return ResourceManager.GetString("ERR_LbraceExpected", resourceCulture);
             }
         }
         
@@ -187,11 +223,38 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to } expected.
+        /// </summary>
+        internal static string ERR_RbraceExpected {
+            get {
+                return ResourceManager.GetString("ERR_RbraceExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ; expected.
+        /// </summary>
+        internal static string ERR_SemicolonExpected {
+            get {
+                return ResourceManager.GetString("ERR_SemicolonExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shebangs are not supported in this lua version.
         /// </summary>
         internal static string ERR_ShebangNotSupportedInLuaVersion {
             get {
                 return ResourceManager.GetString("ERR_ShebangNotSupportedInLuaVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Syntax error, &apos;{0}&apos; expected.
+        /// </summary>
+        internal static string ERR_SyntaxError {
+            get {
+                return ResourceManager.GetString("ERR_SyntaxError", resourceCulture);
             }
         }
         
@@ -246,6 +309,24 @@ namespace Loretta.CodeAnalysis.Lua {
         internal static string ThisMethodCanOnlyBeUsedToCreateTokens {
             get {
                 return ResourceManager.GetString("ThisMethodCanOnlyBeUsedToCreateTokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Loretta.CodeAnalysis.Lua.SyntaxFactory.Identifier to create identifier tokens..
+        /// </summary>
+        internal static string UseIdentifierToCreateIdentifiers {
+            get {
+                return ResourceManager.GetString("UseIdentifierToCreateIdentifiers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal to create numeric literal tokens..
+        /// </summary>
+        internal static string UseLiteralForNumeric {
+            get {
+                return ResourceManager.GetString("UseLiteralForNumeric", resourceCulture);
             }
         }
     }
