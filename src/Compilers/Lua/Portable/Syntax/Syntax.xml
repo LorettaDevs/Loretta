@@ -852,7 +852,7 @@
       </PropertyComment>
       <Kind Name="ForKeyword" />
     </Field>
-    <Field Name="Identifier" Type="SyntaxToken">
+    <Field Name="Identifier" Type="NameExpressionSyntax">
       <PropertyComment>
         <summary>The loop variable identifier.</summary>
       </PropertyComment>
@@ -940,7 +940,7 @@
       </PropertyComment>
       <Kind Name="ForKeyword" />
     </Field>
-    <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;SyntaxToken&gt;" MinCount="1">
+    <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;NameExpressionSyntax&gt;" MinCount="1">
       <PropertyComment>
         <summary>The list of loop variables.</summary>
       </PropertyComment>
@@ -1373,7 +1373,7 @@
       </PropertyComment>
       <Kind Name="FunctionKeyword" />
     </Field>
-    <Field Name="Name" Type="SyntaxToken">
+    <Field Name="Name" Type="NameExpressionSyntax">
       <PropertyComment>
         <summary>The function's name.</summary>
       </PropertyComment>
