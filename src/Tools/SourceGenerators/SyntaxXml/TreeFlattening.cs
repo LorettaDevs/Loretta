@@ -45,7 +45,7 @@ namespace Loretta.Generators.SyntaxXml
                         FlattenChildren(choice.Children, fields, makeOptional: true);
                         break;
                     case Sequence sequence:
-                        FlattenChildren(sequence.Children, fields, makeOptional);
+                        FlattenChildren(sequence.Children, fields, makeOptional || sequence.Optional);
                         break;
                     default:
                         throw new InvalidOperationException("Unknown child type.");
