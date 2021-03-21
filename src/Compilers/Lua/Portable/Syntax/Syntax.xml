@@ -682,6 +682,28 @@
     </Field>
   </Node>
 
+  <Node Name="FunctionCallExpressionSyntax" Base="PrefixExpressionSyntax">
+    <TypeComment>
+      <summary>Represents a function call expression.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="FunctionCallExpressionSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="FunctionCallExpression" />
+    <Field Name="Expression" Type="PrefixExpressionSyntax">
+      <PropertyComment>
+        <summary>The expression returning the function to be called.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="Argument" Type="FunctionArgumentSyntax">
+      <PropertyComment>
+        <summary>The function's arguments.</summary>
+      </PropertyComment>
+    </Field>
+  </Node>
+
   <Node Name="MethodCallExpressionSyntax" Base="PrefixExpressionSyntax">
     <TypeComment>
       <summary>Represents a method call (obj:method args...) expression.</summary>
