@@ -25,6 +25,7 @@
         ERR_AmbiguousFunctionCallOrNewStatement = 17,
         ERR_NonFunctionCallBeingUsedAsStatement = 18,
         ERR_CannotBeAssignedTo = 19,
+        ERR_DoubleOverflow = 20,
 
         // Parser Errors
         ERR_IdentifierExpectedKW = 1000,

@@ -124,6 +124,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Constant represents a value either too large or too small for a double precision floating-point number..
+        /// </summary>
+        internal static string ERR_DoubleOverflow {
+            get {
+                return ResourceManager.GetString("ERR_DoubleOverflow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hexadecimal floating point numeric literals are not supported in this lua version.
         /// </summary>
         internal static string ERR_HexFloatLiteralNotSupportedInVersion {
