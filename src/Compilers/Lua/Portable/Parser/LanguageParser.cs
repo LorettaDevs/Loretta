@@ -110,6 +110,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private StatementSyntax ParseStatementCore()
         {
+            if (IsIncremental && CurrentNode is Syntax.StatementSyntax)
+                return (StatementSyntax) EatNode();
+
             try
             {
                 _recursionDepth++;
