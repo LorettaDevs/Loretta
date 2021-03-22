@@ -1,13 +1,32 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Tree Root="LuaSyntaxNode">
 
   <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
   <PredefinedNode Name="StructuredTriviaSyntax" Base="LuaSyntaxNode" />
 
   <!-- Structured Trivia -->
+
   <Node Name="SkippedTokensTriviaSyntax" Base="StructuredTriviaSyntax">
     <Kind Name="SkippedTokensTrivia"/>
     <Field Name="Tokens" Type="SyntaxList&lt;SyntaxToken&gt;"/>
+  </Node>
+
+  <!-- Statement List -->
+  <Node Name="StatementListSyntax" Base="LuaSyntaxNode">
+    <TypeComment>
+      <summary>Represents a block of code.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="StatementListSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="StatementList" />
+    <Field Name="Statements" Type="SyntaxList&lt;StatementSyntax&gt;">
+      <PropertyComment>
+        <summary>The list of statements contained within this block.</summary>
+      </PropertyComment>
+    </Field>
   </Node>
 
   <!-- Parameters -->
@@ -369,7 +388,7 @@
         <summary>The list of parameters.</summary>
       </PropertyComment>
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The function's body.</summary>
       </PropertyComment>
@@ -905,7 +924,7 @@
       </PropertyComment>
       <Kind Name="DoKeyword" />
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The loop's body.</summary>
       </PropertyComment>
@@ -962,7 +981,7 @@
       </PropertyComment>
       <Kind Name="DoKeyword" />
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The loop's body.</summary>
       </PropertyComment>
@@ -1008,7 +1027,7 @@
       </PropertyComment>
       <Kind Name="DoKeyword" />
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The while's body.</summary>
       </PropertyComment>
@@ -1043,7 +1062,7 @@
       </PropertyComment>
       <Kind Name="RepeatKeyword" />
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The repeat until's body.</summary>
       </PropertyComment>
@@ -1096,7 +1115,7 @@
       </PropertyComment>
       <Kind Name="ThenKeyword" />
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The if's body.</summary>
       </PropertyComment>
@@ -1152,7 +1171,7 @@
       </PropertyComment>
       <Kind Name="ThenKeyword" />
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The elseif body.</summary>
       </PropertyComment>
@@ -1175,7 +1194,7 @@
       </PropertyComment>
       <Kind Name="ElseKeyword" />
     </Field>
-    <Field Name="ElseBody" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="ElseBody" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The else's body.</summary>
       </PropertyComment>
@@ -1390,7 +1409,7 @@
         <summary>The parameter list.</summary>
       </PropertyComment>
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The function's body.</summary>
       </PropertyComment>
@@ -1435,7 +1454,7 @@
         <summary>The function's parameters.</summary>
       </PropertyComment>
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The function's body.</summary>
       </PropertyComment>
@@ -1470,7 +1489,7 @@
       </PropertyComment>
       <Kind Name="DoStatement" />
     </Field>
-    <Field Name="Body" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The do's body.</summary>
       </PropertyComment>
@@ -1558,7 +1577,7 @@
       </summary>
     </FactoryComment>
     <Kind Name="CompilationUnitSyntax" />
-    <Field Name="Statements" Type="SyntaxList&lt;StatementSyntax&gt;">
+    <Field Name="Statements" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The statements in the compilation unit.</summary>
       </PropertyComment>
