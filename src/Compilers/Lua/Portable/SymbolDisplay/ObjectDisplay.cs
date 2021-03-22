@@ -43,6 +43,8 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
 
             if (type == typeof(double))
                 return FormatLiteral((double) obj, options);
+
+            return null;
         }
 
         /// <summary>
