@@ -86,10 +86,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             while (IsMakingProgress(ref progress))
             {
                 var kind = CurrentToken.Kind;
-                if (kind == SyntaxKind.EndOfFileToken || terminalKinds.Contains(kind))
+                if (kind == SyntaxKind.EndOfFileToken || terminalKinds.Length > 0 && terminalKinds.Contains(kind))
                     break;
 
-                var startToken = CurrentToken;
+                SyntaxToken? startToken = CurrentToken;
 
                 var statement = ParseStatement();
                 builder.Add(statement);
@@ -113,6 +113,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private StatementSyntax ParseStatementCore()
         {
+            _cancellationToken.ThrowIfCancellationRequested();
+
             if (IsIncremental && CurrentNode is Syntax.StatementSyntax)
                 return (StatementSyntax) EatNode();
 
