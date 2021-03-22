@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -477,7 +477,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private ContinueStatementSyntax ParseContinueStatement()
         {
-            var continueKeyword = EatContextualToken(SyntaxKind.ContinueKeyword);
+            RoslynDebug.Assert(Options.SyntaxOptions.ContinueType is ContinueType.ContextualKeyword or ContinueType.Keyword);
+            var continueKeyword = Options.SyntaxOptions.ContinueType == ContinueType.ContextualKeyword
+                ? EatContextualToken(SyntaxKind.ContinueKeyword)
+                : EatTokenWithPrejudice(SyntaxKind.ContinueKeyword);
             var semicolonToken = TryMatchSemicolon();
             return SyntaxFactory.ContinueStatement(continueKeyword, semicolonToken);
         }
