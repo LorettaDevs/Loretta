@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Tree Root="LuaSyntaxNode">
 
   <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
@@ -462,13 +462,13 @@
     </TypeComment>
   </AbstractNode>
 
-  <Node Name="NameExpressionSyntax" Base="VariableExpressionSyntax">
+  <Node Name="IdentifierNameSyntax" Base="VariableExpressionSyntax">
     <TypeComment>
       <summary>A name expression.</summary>
     </TypeComment>
     <FactoryComment>
       <summary>
-        Creates a new <see cref="NameExpressionSyntax" /> node.
+        Creates a new <see cref="IdentifierNameSyntax" /> node.
       </summary>
     </FactoryComment>
     <Kind Name="NameExpression" />
@@ -852,7 +852,7 @@
       </PropertyComment>
       <Kind Name="ForKeyword" />
     </Field>
-    <Field Name="Identifier" Type="NameExpressionSyntax">
+    <Field Name="Identifier" Type="IdentifierNameSyntax">
       <PropertyComment>
         <summary>The loop variable identifier.</summary>
       </PropertyComment>
@@ -940,7 +940,7 @@
       </PropertyComment>
       <Kind Name="ForKeyword" />
     </Field>
-    <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;NameExpressionSyntax&gt;" MinCount="1">
+    <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
       <PropertyComment>
         <summary>The list of loop variables.</summary>
       </PropertyComment>
@@ -1328,7 +1328,7 @@
       </PropertyComment>
       <Kind Name="LocalKeyword" />
     </Field>
-    <Field Name="Names" Type="SeparatedSyntaxList&lt;NameExpressionSyntax&gt;" MinCount="1">
+    <Field Name="Names" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
       <PropertyComment>
         <summary>The list of names being assigned to.</summary>
       </PropertyComment>
@@ -1379,7 +1379,7 @@
       </PropertyComment>
       <Kind Name="FunctionKeyword" />
     </Field>
-    <Field Name="Name" Type="NameExpressionSyntax">
+    <Field Name="Name" Type="IdentifierNameSyntax">
       <PropertyComment>
         <summary>The function's name.</summary>
       </PropertyComment>
