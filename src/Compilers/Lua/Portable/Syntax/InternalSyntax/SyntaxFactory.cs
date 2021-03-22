@@ -104,31 +104,34 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                    : SyntaxToken.WithValue(kind, leading, text, valueText, trailing);
         }
 
-        internal static SyntaxToken MissingToken(SyntaxKind kind)
-            => SyntaxToken.CreateMissing(kind, null, null);
+        internal static SyntaxToken MissingToken(SyntaxKind kind) =>
+            SyntaxToken.CreateMissing(kind, null, null);
 
-        internal static SyntaxToken MissingToken(GreenNode? leading, SyntaxKind kind, GreenNode? trailing)
-            => SyntaxToken.CreateMissing(kind, leading, trailing);
+        internal static SyntaxToken MissingToken(GreenNode? leading, SyntaxKind kind, GreenNode? trailing) =>
+            SyntaxToken.CreateMissing(kind, leading, trailing);
 
-        internal static SyntaxToken Identifier(string text)
-            => Identifier(SyntaxKind.IdentifierToken, null, text, null);
+        internal static SyntaxToken Identifier(string text) =>
+            Identifier(SyntaxKind.IdentifierToken, null, text, null);
 
-        internal static SyntaxToken Identifier(GreenNode? leading, string text, GreenNode? trailing)
-            => Identifier(SyntaxKind.IdentifierToken, leading, text, trailing);
+        internal static SyntaxToken Identifier(GreenNode? leading, string text, GreenNode? trailing) =>
+            Identifier(SyntaxKind.IdentifierToken, leading, text, trailing);
 
-        internal static SyntaxToken Identifier(SyntaxKind contextualKind, GreenNode? leading, string text, GreenNode? trailing)
-            => SyntaxToken.Identifier(contextualKind, leading, text, trailing);
+        internal static SyntaxToken Identifier(SyntaxKind contextualKind, GreenNode? leading, string text, GreenNode? trailing) =>
+            SyntaxToken.Identifier(contextualKind, leading, text, trailing);
 
-        internal static SyntaxToken Literal(GreenNode? leading, string text, double value, GreenNode? trailing)
-            => SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
+        internal static SyntaxToken Literal(GreenNode? leading, string text, double value, GreenNode? trailing) =>
+            SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
 
-        internal static SyntaxToken Literal(GreenNode? leading, string text, string value, GreenNode? trailing)
-            => SyntaxToken.WithValue(SyntaxKind.StringLiteralToken, leading, text, value, trailing);
+        internal static SyntaxToken Literal(GreenNode? leading, string text, string value, GreenNode? trailing) =>
+            SyntaxToken.WithValue(SyntaxKind.StringLiteralToken, leading, text, value, trailing);
 
-        internal static SyntaxToken Literal(GreenNode? leading, string text, SyntaxKind kind, string value, GreenNode? trailing)
-            => SyntaxToken.WithValue(kind, leading, text, value, trailing);
+        internal static SyntaxToken Literal(GreenNode? leading, string text, SyntaxKind kind, string value, GreenNode? trailing) =>
+            SyntaxToken.WithValue(kind, leading, text, value, trailing);
 
-        internal static SyntaxToken BadToken(GreenNode? leading, string text, GreenNode? trailing)
-            => SyntaxToken.WithValue(SyntaxKind.BadToken, leading, text, text, trailing);
+        internal static SyntaxToken BadToken(GreenNode? leading, string text, GreenNode? trailing) =>
+            SyntaxToken.WithValue(SyntaxKind.BadToken, leading, text, text, trailing);
+
+        internal static StatementListSyntax StatementList() =>
+            StatementList(default);
     }
 }
