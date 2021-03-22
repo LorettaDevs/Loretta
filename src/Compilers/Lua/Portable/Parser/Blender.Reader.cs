@@ -275,7 +275,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 kind switch
                 {
                     SyntaxKind.GreaterThanGreaterThanToken => true,
-                    _ => SyntaxFacts.IsContextualKeyword(kind, _lexer.Options),
+                    _ => SyntaxFacts.IsContextualKeyword(kind, _lexer.Options.SyntaxOptions),
                 };
 
             private BlendedNode CreateBlendedNode(Lua.LuaSyntaxNode node, SyntaxToken token)

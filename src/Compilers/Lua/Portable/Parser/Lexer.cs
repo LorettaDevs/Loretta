@@ -151,7 +151,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             while (_reader.Peek() is not (null or '\n' or '\r'))
                                 _reader.Advance(1);
 
-                            if (!Options.AcceptCCommentSyntax)
+                            if (!Options.SyntaxOptions.AcceptCCommentSyntax)
                                 AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
                             AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
                         }
@@ -165,7 +165,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             else
                                 _reader.Advance(2);
 
-                            if (!Options.AcceptCCommentSyntax)
+                            if (!Options.SyntaxOptions.AcceptCCommentSyntax)
                                 AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
                             AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
                         }
@@ -238,7 +238,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             _reader.Advance(2);
                             _ = _reader.ReadSpanLine();
 
-                            if (!Options.AcceptShebang)
+                            if (!Options.SyntaxOptions.AcceptShebang)
                                 AddError(ErrorCode.ERR_ShebangNotSupportedInLuaVersion);
                             AddTrivia(SyntaxFactory.Shebang(GetText(intern: false)), builder);
                             break;
@@ -373,16 +373,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         info.Kind = SyntaxKind.StringLiteralToken;
                         info.Text = GetText(intern: false);
                         info.StringValue = contents;
-                        return;
                     }
                     else
                     {
                         _reader.Advance(1);
                         info.Kind = SyntaxKind.OpenBracketToken;
-                        return;
                     }
+                    return;
                 }
-
 
                 case ']':
                     _reader.Advance(1);
@@ -729,15 +727,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         info.ContextualKind = info.Kind = SyntaxKind.IdentifierToken;
 
                     // Continue might be a contextual keyword or not a keyword at all so we have to check.
-                    if (info.Kind is SyntaxKind.ContinueKeyword && Options.ContinueType != ContinueType.Keyword)
+                    if (info.Kind is SyntaxKind.ContinueKeyword && Options.SyntaxOptions.ContinueType != ContinueType.Keyword)
                     {
                         info.Kind = SyntaxKind.IdentifierToken;
-                        if (Options.ContinueType == ContinueType.ContextualKeyword)
+                        if (Options.SyntaxOptions.ContinueType == ContinueType.ContextualKeyword)
                             info.ContextualKind = SyntaxKind.ContinueKeyword;
                         info.Text = "continue";
                     }
 
-                    if (!Options.UseLuaJitIdentifierRules && info.Text.Any(ch => ch >= 0x7F))
+                    if (!Options.SyntaxOptions.UseLuaJitIdentifierRules && info.Text.Any(ch => ch >= 0x7F))
                         AddError(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion);
                     return;
                 }
