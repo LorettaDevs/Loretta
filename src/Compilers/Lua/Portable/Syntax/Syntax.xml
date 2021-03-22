@@ -13,9 +13,9 @@
   <!-- Parameters -->
 
   <AbstractNode Name="ParameterSyntax" Base="LuaSyntaxNode">
-    <DocComment>
+    <TypeComment>
       <summary>The base type for parameter nodes.</summary>
-    </DocComment>
+    </TypeComment>
   </AbstractNode>
 
   <Node Name="NamedParameterSyntax" Base="ParameterSyntax">
