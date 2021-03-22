@@ -78,6 +78,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private StatementListSyntax ParseStatementList(params SyntaxKind[] terminalKinds)
         {
+            if (IsIncremental && CurrentNodeKind == SyntaxKind.StatementList)
+                return (StatementListSyntax) EatNode();
+
             var builder = _pool.Allocate<StatementSyntax>();
             var progress = -1;
             while (IsMakingProgress(ref progress))
@@ -761,8 +764,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 endKeyword);
         }
 
-        private IdentifierNameSyntax ParseIdentifierName() =>
-            SyntaxFactory.IdentifierName(EatToken(SyntaxKind.IdentifierToken));
+        private IdentifierNameSyntax ParseIdentifierName()
+        {
+            var currentNode = CurrentNode as Syntax.IdentifierNameSyntax;
+            if (IsIncremental
+                && CurrentNodeKind == SyntaxKind.IdentifierName
+                && currentNode is not null
+                // If the Kind is equal to the ContextualKind, then the token wasn't parsed as a contextual one
+                && currentNode.Identifier.Kind() == currentNode.Identifier.ContextualKind())
+            {
+                return (IdentifierNameSyntax) EatNode();
+            }
+
+            return SyntaxFactory.IdentifierName(EatToken(SyntaxKind.IdentifierToken));
+        }
 
         private MemberAccessExpressionSyntax ParseMemberAccessExpression(PrefixExpressionSyntax expression)
         {
@@ -807,6 +822,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private FunctionArgumentSyntax ParseFunctionArgument()
         {
+            if (IsIncremental && CurrentNode is Syntax.FunctionArgumentSyntax)
+                return (FunctionArgumentSyntax) EatNode();
+
             if (CurrentToken.Kind is SyntaxKind.StringLiteralToken)
             {
                 var literal = ParseLiteralExpression();
