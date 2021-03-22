@@ -453,7 +453,7 @@ namespace Loretta.CodeAnalysis.Lua
         NilLiteralExpression = 1018,
         VarArgExpression = 1019,
         [ExtraCategories("VariableExpression")]
-        NameExpression = 1020,
+        IdentifierName = 1020,
 
         // Unary Expressions
         [ExtraCategories("UnaryExpression")]

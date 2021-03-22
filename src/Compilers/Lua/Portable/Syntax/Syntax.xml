@@ -490,10 +490,10 @@
         Creates a new <see cref="IdentifierNameSyntax" /> node.
       </summary>
     </FactoryComment>
-    <Kind Name="NameExpression" />
-    <Field Name="Name" Type="SyntaxToken">
+    <Kind Name="IdentifierName" />
+    <Field Name="Identifier" Type="SyntaxToken">
       <PropertyComment>
-        <summary>The name.</summary>
+        <summary>The identifier.</summary>
       </PropertyComment>
     </Field>
   </Node>
