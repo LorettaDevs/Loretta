@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Loretta.CodeAnalysis.Lua.Utilities;
-using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal sealed partial class Lexer
     {
-        private void SkipDecimalDigits()
+        private void SkipDecimalDigits(StringBuilder builder)
         {
             char digit;
             while (CharUtils.IsDecimal(digit = _reader.Peek().GetValueOrDefault()) || digit == '_')
+            {
+                if (digit != '_')
+                    builder.Append(digit);
                 _reader.Advance(1);
+            }
         }
 
         private double ParseBinaryNumber()
@@ -94,125 +98,82 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return num;
         }
 
-        private double ParseDecimalNumber()
+        [SuppressMessage("Usage", "CA2249:Consider using 'string.Contains' instead of 'string.IndexOf'", Justification = "Not available in .NET Standard 2.0")]
+        private void ParseDecimalNumber(ref TokenInfo info)
         {
-            SkipDecimalDigits();
+            _builder.Clear();
+
+            SkipDecimalDigits(_builder);
             if (_reader.IsNext('.'))
             {
-                _reader.Advance(1);
-                SkipDecimalDigits();
+                _builder.Append(_reader.Read()!.Value);
+                SkipDecimalDigits(_builder);
                 if (CharUtils.AsciiLowerCase(_reader.Peek().GetValueOrDefault()) == 'e')
                 {
-                    _reader.Advance(1);
+                    _builder.Append(_reader.Read()!.Value);
                     if (_reader.IsNext('+') || _reader.IsNext('-'))
-                        _reader.Advance(1);
-                    SkipDecimalDigits();
+                        _builder.Append(_reader.Read()!.Value);
+                    SkipDecimalDigits(_builder);
                 }
             }
 
-            var numEnd = _reader.Position;
-            var numLength = numEnd - _start;
-
-            _reader.Restore(_start);
-            if (numLength < 255)
-            {
-                var rawNum = _reader.ReadSpan(numLength);
-                Span<char> buff = stackalloc char[numLength];
-
-                if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && rawNum.IndexOf('_') >= 0)
-                    AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
-
-                var buffIdx = 0;
-                for (var rawNumIdx = 0; rawNumIdx < numLength; rawNumIdx++)
-                {
-                    var ch = rawNum[rawNumIdx];
-                    if (ch == '_') continue;
-                    buff[buffIdx] = ch;
-                    buffIdx++;
-                }
-
-                return double.Parse(
-                    buff.Slice(0, buffIdx),
-                    NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent,
-                    CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                var rawNum = _reader.ReadString(numLength)!;
-
-                if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && rawNum.Contains('_'))
-                    AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
-
-                return double.Parse(
-                    rawNum.Replace("_", ""),
-                    NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent,
-                    CultureInfo.InvariantCulture);
-            }
+            info.Text = GetText(intern: true);
+            if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
+                AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+            if (!RealParser.TryParseDouble(Intern(_builder), out var result))
+                AddError(ErrorCode.ERR_DoubleOverflow);
+            info.DoubleValue = result;
         }
 
-        private double ParseHexadecimalNumber()
+        [SuppressMessage("Usage", "CA2249:Consider using 'string.Contains' instead of 'string.IndexOf'", Justification = "Not available in .NET Standard 2.0")]
+        private void ParseHexadecimalNumber(ref TokenInfo info)
         {
-            var numStart = _reader.Position;
-
+            _builder.Clear();
             skipHexDigits();
             var isHexFloat = false;
             if (_reader.IsNext('.'))
             {
                 isHexFloat = true;
-                _reader.Advance(1);
+                _builder.Append(_reader.Read()!.Value);
                 skipHexDigits();
             }
 
             if (CharUtils.AsciiLowerCase(_reader.Peek().GetValueOrDefault()) == 'p')
             {
                 isHexFloat = true;
-                _reader.Advance(1);
+                _builder.Append(_reader.Read()!.Value);
                 if (_reader.IsNext('+') || _reader.IsNext('-'))
-                    _reader.Advance(1);
-                SkipDecimalDigits();
+                    _builder.Append(_reader.Read()!.Value);
+                SkipDecimalDigits(_builder);
             }
 
             if (isHexFloat && !Options.SyntaxOptions.AcceptHexFloatLiterals)
                 AddError(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion);
 
-            var numEnd = _reader.Position;
-            var numLength = numEnd - numStart;
+            info.Text = GetText(intern: true);
+            if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
+                AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
 
-            _reader.Restore(numStart);
-            if (numLength < 255)
+            var result = 0d;
+            try
             {
-                var rawNum = _reader.ReadSpan(numLength);
-                Span<char> buff = stackalloc char[numLength];
-
-                if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && rawNum.IndexOf('_') >= 0)
-                    AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
-
-                var buffIdx = 0;
-                for (var rawNumIdx = 0; rawNumIdx < numLength; rawNumIdx++)
-                {
-                    var ch = rawNum[rawNumIdx];
-                    if (ch == '_') continue;
-                    buff[buffIdx] = ch;
-                    buffIdx++;
-                }
-
-                return HexFloat.DoubleFromHexString(buff.Slice(0, buffIdx));
+                result = HexFloat.DoubleFromHexString(Intern(_builder));
             }
-            else
+            catch (OverflowException)
             {
-                var rawNum = _reader.ReadString(numLength)!;
-
-                if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && rawNum.Contains('_'))
-                    AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
-
-                return HexFloat.DoubleFromHexString(rawNum.Replace("_", ""));
+                AddError(ErrorCode.ERR_DoubleOverflow);
             }
+            info.DoubleValue = result;
 
             void skipHexDigits()
             {
                 char digit;
                 while (CharUtils.IsHexadecimal(digit = _reader.Peek().GetValueOrDefault()) || digit == '_')
+                {
+                    if (digit != '_')
+                        _builder.Append(digit);
                     _reader.Advance(1);
+                }
             }
         }
     }

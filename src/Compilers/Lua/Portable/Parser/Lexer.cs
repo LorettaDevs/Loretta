@@ -627,8 +627,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             // Skip the prefix
                             _reader.Advance(2);
                             info.Kind = SyntaxKind.NumericLiteralToken;
-                            info.DoubleValue = ParseHexadecimalNumber();
-                            info.Text = GetText(intern: true);
+                            ParseHexadecimalNumber(ref info);
                             return;
                     }
 
@@ -645,8 +644,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case '8':
                 case '9':
                     info.Kind = SyntaxKind.NumericLiteralToken;
-                    info.DoubleValue = ParseDecimalNumber();
-                    info.Text = GetText(intern: true);
+                    ParseDecimalNumber(ref info);
                     return;
 
                 #endregion Numbers
