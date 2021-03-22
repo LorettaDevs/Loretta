@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using GParse.IO;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
@@ -114,6 +115,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         #region GetText
 
         protected string Intern(int start, int length) => _strings.Add(_text.ToString(new TextSpan(start, length)));
+
+        protected string Intern(StringBuilder builder) => _strings.Add(builder);
 
         protected string GetText(bool intern) => GetText(_start, _reader.Position - _start, intern);
 
