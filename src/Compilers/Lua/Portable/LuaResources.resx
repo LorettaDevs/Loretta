@@ -152,6 +152,9 @@
     <value>Identifier expected; '{1}' is a keyword</value>
     <comment>{1} is the actual value obtained</comment>
   </data>
+  <data name="ERR_InsufficientStack" xml:space="preserve">
+    <value>An expression is too long or complex to compile</value>
+  </data>
   <data name="ERR_InvalidNumber" xml:space="preserve">
     <value>Invalid number</value>
   </data>

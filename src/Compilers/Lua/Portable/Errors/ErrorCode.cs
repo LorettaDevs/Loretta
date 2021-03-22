@@ -34,6 +34,7 @@
         ERR_LbraceExpected = 1004,
         ERR_RbraceExpected = 1005,
         ERR_SyntaxError = 1006,
+        ERR_InsufficientStack = 1007,
 
         // MessageProvider stuff
         ERR_BadDocumentationMode = 2000,
