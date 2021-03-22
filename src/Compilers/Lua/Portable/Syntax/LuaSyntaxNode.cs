@@ -27,7 +27,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Used by structured trivia which has "parent == null", and therefore must know its
         /// SyntaxTree explicitly when created.
         /// </summary>
-        internal LuaSyntaxNode(GreenNode green, int position, SyntaxTree syntaxTree)
+        internal LuaSyntaxNode(GreenNode green, int position, SyntaxTree? syntaxTree)
             : base(green, position, syntaxTree)
         {
         }
