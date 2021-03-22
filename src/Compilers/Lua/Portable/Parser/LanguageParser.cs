@@ -76,7 +76,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return AddError(node, position, 0, ErrorCode.ERR_InsufficientStack);
         }
 
-        private SyntaxList<StatementSyntax> ParseStatementList(params SyntaxKind[] terminalKinds)
+        private StatementListSyntax ParseStatementList(params SyntaxKind[] terminalKinds)
         {
             var builder = _pool.Allocate<StatementSyntax>();
             var progress = -1;
@@ -96,7 +96,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 if (CurrentToken == startToken)
                     _ = EatToken();
             }
-            return _pool.ToListAndFree(builder);
+            return SyntaxFactory.StatementList(_pool.ToListAndFree(builder));
         }
 
         internal StatementSyntax ParseStatement()
