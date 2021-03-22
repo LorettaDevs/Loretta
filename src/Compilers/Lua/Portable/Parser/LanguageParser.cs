@@ -49,7 +49,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         internal TNode ParseWithStackGuard<TNode>(Func<TNode> parseFunc, Func<TNode> createEmptyNodeFunc) where TNode : LuaSyntaxNode
         {
-            // If this value is non-zero then we are nesting calls to ParseWithStackGuard which should not be 
+            // If this value is non-zero then we are nesting calls to ParseWithStackGuard which should not be
             // happening.  It's not a bug but it's inefficient and should be changed.
             RoslynDebug.Assert(_recursionDepth == 0);
 
@@ -200,9 +200,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             var localKeyword = EatToken(SyntaxKind.LocalKeyword);
             var namesAndSeparatorsBuilder =
-                _pool.AllocateSeparated<NameExpressionSyntax>();
+                _pool.AllocateSeparated<IdentifierNameSyntax>();
 
-            var name = ParseNameExpression();
+            var name = ParseIdentifierName();
             namesAndSeparatorsBuilder.Add(name);
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
@@ -210,7 +210,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var separator = EatToken(SyntaxKind.CommaToken);
                 namesAndSeparatorsBuilder.AddSeparator(separator);
 
-                name = ParseNameExpression();
+                name = ParseIdentifierName();
                 namesAndSeparatorsBuilder.Add(name);
             }
 
@@ -262,7 +262,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             var localKeyword = EatToken(SyntaxKind.LocalKeyword);
             var functionKeyword = EatToken(SyntaxKind.FunctionKeyword);
-            var identifier = ParseNameExpression();
+            var identifier = ParseIdentifierName();
             var parameters = ParseParameterList();
             var body = ParseStatementList(SyntaxKind.EndKeyword);
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
@@ -281,7 +281,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private NumericForStatementSyntax ParseNumericForStatement()
         {
             var forKeyword = EatToken(SyntaxKind.ForKeyword);
-            var identifier = ParseNameExpression();
+            var identifier = ParseIdentifierName();
             var equalsToken = EatToken(SyntaxKind.EqualsToken);
             var initialValue = ParseExpression();
             var finalValueCommaToken = EatToken(SyntaxKind.CommaToken);
@@ -317,16 +317,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var forKeyword = EatToken(SyntaxKind.ForKeyword);
 
             var identifiersAndSeparatorsBuilder =
-                _pool.AllocateSeparated<NameExpressionSyntax>();
+                _pool.AllocateSeparated<IdentifierNameSyntax>();
 
-            var identifier = ParseNameExpression();
+            var identifier = ParseIdentifierName();
             identifiersAndSeparatorsBuilder.Add(identifier);
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
             {
                 var separator = EatToken(SyntaxKind.CommaToken);
                 identifiersAndSeparatorsBuilder.AddSeparator(separator);
 
-                identifier = ParseNameExpression();
+                identifier = ParseIdentifierName();
                 identifiersAndSeparatorsBuilder.Add(identifier);
             }
 
@@ -702,7 +702,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else if (CurrentToken.Kind == SyntaxKind.IdentifierToken)
             {
-                expression = ParseNameExpression();
+                expression = ParseIdentifierName();
             }
             else
             {
@@ -755,11 +755,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 endKeyword);
         }
 
-        private NameExpressionSyntax ParseNameExpression()
-        {
-            var identifier = EatTokenWithPrejudice(SyntaxKind.IdentifierToken);
-            return SyntaxFactory.NameExpression(identifier);
-        }
+        private IdentifierNameSyntax ParseIdentifierName() =>
+            SyntaxFactory.IdentifierName(EatToken(SyntaxKind.IdentifierToken));
 
         private MemberAccessExpressionSyntax ParseMemberAccessExpression(PrefixExpressionSyntax expression)
         {
