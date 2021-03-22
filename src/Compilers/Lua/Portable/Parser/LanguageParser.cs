@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -13,8 +13,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
     internal sealed class LanguageParser : SyntaxParser
     {
         private readonly SyntaxListPool _pool = new SyntaxListPool();
-        private readonly ImmutableArray<SyntaxToken> _tokens;
-        private readonly int _position;
+        private int _recursionDepth;
 
         public LanguageParser(
             Lexer lexer,
@@ -32,11 +31,49 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return null;
         }
 
-        public CompilationUnitSyntax ParseCompilationUnit()
+        internal CompilationUnitSyntax ParseCompilationUnit()
+        {
+            return ParseWithStackGuard(
+                ParseCompilationUnitCore,
+                () => SyntaxFactory.CompilationUnit(
+                    SyntaxFactory.StatementList(),
+                    SyntaxFactory.Token(SyntaxKind.EndOfFileToken)));
+        }
+
+        internal CompilationUnitSyntax ParseCompilationUnitCore()
         {
             var statements = ParseStatementList();
             var endOfFileToken = EatTokenAsKind(SyntaxKind.EndOfFileToken);
             return SyntaxFactory.CompilationUnit(statements, endOfFileToken);
+        }
+
+        internal TNode ParseWithStackGuard<TNode>(Func<TNode> parseFunc, Func<TNode> createEmptyNodeFunc) where TNode : LuaSyntaxNode
+        {
+            // If this value is non-zero then we are nesting calls to ParseWithStackGuard which should not be 
+            // happening.  It's not a bug but it's inefficient and should be changed.
+            RoslynDebug.Assert(_recursionDepth == 0);
+
+            try
+            {
+                return parseFunc();
+            }
+            catch (InsufficientExecutionStackException)
+            {
+                return CreateForGlobalFailure(_lexer.Position, createEmptyNodeFunc());
+            }
+        }
+
+        private TNode CreateForGlobalFailure<TNode>(int position, TNode node) where TNode : LuaSyntaxNode
+        {
+            // Turn the complete input into a single skipped token. This avoids running the lexer, and therefore
+            // the preprocessor directive parser, which may itself run into the same problem that caused the
+            // original failure.
+            var builder = new SyntaxListBuilder(1);
+            builder.Add(SyntaxFactory.BadToken(null, _lexer.Text.ToString(), null));
+            var fileAsTrivia = SyntaxFactory.SkippedTokensTrivia(builder.ToList<SyntaxToken>());
+            node = AddLeadingSkippedSyntax(node, fileAsTrivia);
+            ForceEndOfFile(); // force the scanner to report that it is at the end of the input.
+            return AddError(node, position, 0, ErrorCode.ERR_InsufficientStack);
         }
 
         private SyntaxList<StatementSyntax> ParseStatementList(params SyntaxKind[] terminalKinds)
@@ -62,81 +99,100 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return _pool.ToListAndFree(builder);
         }
 
-        private StatementSyntax ParseStatement()
+        internal StatementSyntax ParseStatement()
         {
-            switch (CurrentToken.Kind)
+            _recursionDepth++;
+            StackGuard.EnsureSufficientExecutionStack(_recursionDepth);
+            var result = ParseStatementCore();
+            _recursionDepth--;
+            return result;
+        }
+
+        private StatementSyntax ParseStatementCore()
+        {
+            try
             {
-                case SyntaxKind.LocalKeyword:
-                    if (PeekToken(1).Kind is SyntaxKind.FunctionKeyword)
-                        return ParseLocalFunctionDeclarationStatement();
-                    else
-                        return ParseLocalVariableDeclarationStatement();
+                _recursionDepth++;
+                StackGuard.EnsureSufficientExecutionStack(_recursionDepth);
 
-                case SyntaxKind.ForKeyword:
-                    if (PeekToken(2).Kind == SyntaxKind.EqualsToken)
-                        return ParseNumericForStatement();
-                    else
-                        return ParseGenericForStatement();
-
-                case SyntaxKind.IfKeyword:
-                    return ParseIfStatement();
-
-                case SyntaxKind.RepeatKeyword:
-                    return ParseRepeatUntilStatement();
-
-                case SyntaxKind.WhileKeyword:
-                    return ParseWhileStatement();
-
-                case SyntaxKind.DoKeyword:
-                    return ParseDoStatement();
-
-                case SyntaxKind.GotoKeyword:
-                    return ParseGotoStatement();
-
-                case SyntaxKind.BreakKeyword:
-                    return ParseBreakStatement();
-
-                case SyntaxKind.ContinueKeyword:
-                    return ParseContinueStatement();
-
-                case SyntaxKind.ColonColonToken:
-                    return ParseGotoLabelStatement();
-
-                case SyntaxKind.FunctionKeyword:
-                    return ParseFunctionDeclarationStatement();
-
-                case SyntaxKind.ReturnKeyword:
-                    return ParseReturnStatement();
-
-                default:
+                switch (CurrentToken.Kind)
                 {
-                    if (CurrentToken.ContextualKind == SyntaxKind.ContinueKeyword)
+                    case SyntaxKind.LocalKeyword:
+                        if (PeekToken(1).Kind is SyntaxKind.FunctionKeyword)
+                            return ParseLocalFunctionDeclarationStatement();
+                        else
+                            return ParseLocalVariableDeclarationStatement();
+
+                    case SyntaxKind.ForKeyword:
+                        if (PeekToken(2).Kind == SyntaxKind.EqualsToken)
+                            return ParseNumericForStatement();
+                        else
+                            return ParseGenericForStatement();
+
+                    case SyntaxKind.IfKeyword:
+                        return ParseIfStatement();
+
+                    case SyntaxKind.RepeatKeyword:
+                        return ParseRepeatUntilStatement();
+
+                    case SyntaxKind.WhileKeyword:
+                        return ParseWhileStatement();
+
+                    case SyntaxKind.DoKeyword:
+                        return ParseDoStatement();
+
+                    case SyntaxKind.GotoKeyword:
+                        return ParseGotoStatement();
+
+                    case SyntaxKind.BreakKeyword:
+                        return ParseBreakStatement();
+
+                    case SyntaxKind.ContinueKeyword:
                         return ParseContinueStatement();
 
-                    var expression = ParsePrefixOrVariableExpression();
-                    if (expression.Kind is SyntaxKind.BadExpression)
-                    {
-                        var semicolon = TryMatchSemicolon();
-                        return SyntaxFactory.BadStatement((BadExpressionSyntax) expression, semicolon);
-                    }
+                    case SyntaxKind.ColonColonToken:
+                        return ParseGotoLabelStatement();
 
-                    if (CurrentToken.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken)
+                    case SyntaxKind.FunctionKeyword:
+                        return ParseFunctionDeclarationStatement();
+
+                    case SyntaxKind.ReturnKeyword:
+                        return ParseReturnStatement();
+
+                    default:
                     {
-                        return ParseAssignmentStatement(expression);
-                    }
-                    else if (SyntaxFacts.IsCompoundAssignmentOperatorToken(CurrentToken.Kind))
-                    {
-                        return ParseCompoundAssignment(expression);
-                    }
-                    else
-                    {
-                        var semicolonToken = TryMatchSemicolon();
-                        var node = SyntaxFactory.ExpressionStatement(expression, semicolonToken);
-                        if (expression.Kind is not (SyntaxKind.FunctionCallExpression or SyntaxKind.MethodCallExpression))
-                            node = AddError(node, ErrorCode.ERR_NonFunctionCallBeingUsedAsStatement);
-                        return node;
+                        if (CurrentToken.ContextualKind == SyntaxKind.ContinueKeyword)
+                            return ParseContinueStatement();
+
+                        var expression = ParsePrefixOrVariableExpression();
+                        if (expression.Kind is SyntaxKind.BadExpression)
+                        {
+                            var semicolon = TryMatchSemicolon();
+                            return SyntaxFactory.BadStatement((BadExpressionSyntax) expression, semicolon);
+                        }
+
+                        if (CurrentToken.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken)
+                        {
+                            return ParseAssignmentStatement(expression);
+                        }
+                        else if (SyntaxFacts.IsCompoundAssignmentOperatorToken(CurrentToken.Kind))
+                        {
+                            return ParseCompoundAssignment(expression);
+                        }
+                        else
+                        {
+                            var semicolonToken = TryMatchSemicolon();
+                            var node = SyntaxFactory.ExpressionStatement(expression, semicolonToken);
+                            if (expression.Kind is not (SyntaxKind.FunctionCallExpression or SyntaxKind.MethodCallExpression))
+                                node = AddError(node, ErrorCode.ERR_NonFunctionCallBeingUsedAsStatement);
+                            return node;
+                        }
                     }
                 }
+            }
+            finally
+            {
+                _recursionDepth--;
             }
         }
 
@@ -567,8 +623,22 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 semicolonToken);
         }
 
-        public ExpressionSyntax ParseExpression() =>
-            ParseBinaryExpression();
+        internal ExpressionSyntax ParseExpression() =>
+            ParseBinaryExpression(0, SyntaxKind.BadToken, false);
+
+        internal ExpressionSyntax ParseBinaryExpression(int parentPrecedence, SyntaxKind parentOperator, bool isParentUnary)
+        {
+            try
+            {
+                _recursionDepth++;
+                StackGuard.EnsureSufficientExecutionStack(_recursionDepth);
+                return ParseBinaryExpressionCore(parentPrecedence, parentOperator, isParentUnary);
+            }
+            finally
+            {
+                _recursionDepth--;
+            }
+        }
 
         private ExpressionSyntax ParseBinaryExpression(int parentPrecedence = 0, SyntaxKind parentOperator = SyntaxKind.BadToken, bool isParentUnary = false)
         {
