@@ -96,7 +96,7 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
             }
         }
 
-        public static double DoubleFromHexString(ReadOnlySpan<char> str)
+        public static double DoubleFromHexString(string str)
         {
             const int expBits = 11;    // bits for exponent
             const int maxBits = 53;    // significant bits (including implicit bit)
@@ -319,12 +319,12 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
             }
 
         Overflow:
-            var msg = n < 32 ? $"The given string (\"{str.ToString()}\") represents a value either too large or too small for a double precision floating-point number."
+            var msg = n < 32 ? $"The given string (\"{str}\") represents a value either too large or too small for a double precision floating-point number."
                              : "The given string represents a value either too large or too small for a double precision floating-point number.";
             throw new OverflowException(msg);
 
         InvalidFormat:
-            var errmsg = n < 32 ? $"The given hexadecimal string representation of a double precision floating-point number (\"{str.ToString()}\") is invalid."
+            var errmsg = n < 32 ? $"The given hexadecimal string representation of a double precision floating-point number (\"{str}\") is invalid."
                                 : "The given hexadecimal string representation of a double precision floating-point number is invalid.";
             throw new FormatException(errmsg);
         }
