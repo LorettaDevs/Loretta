@@ -643,7 +643,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
-        private ExpressionSyntax ParseBinaryExpression(int parentPrecedence = 0, SyntaxKind parentOperator = SyntaxKind.BadToken, bool isParentUnary = false)
+        private ExpressionSyntax ParseBinaryExpressionCore(int parentPrecedence, SyntaxKind parentOperator, bool isParentUnary)
         {
             ExpressionSyntax left;
 
