@@ -28,6 +28,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public int Position => _reader.Position;
 
+        public SourceText Text => _text;
+
         public void Restore(int position) => _reader.Restore(position);
 
         protected void Start()
