@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
 using Loretta.CodeAnalysis.Text;
@@ -29,9 +30,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal double DoubleValue;
         }
 
-        private readonly LexerCache _cache;
+        private readonly LexerCache _cache = new LexerCache();
         private readonly SyntaxListBuilder _leadingTriviaCache = new(10);
         private readonly SyntaxListBuilder _trailingTriviaCache = new(10);
+        private readonly StringBuilder _builder = new StringBuilder();
         private int _badTokenCount; // cumulative count of bad tokens produced
 
         private static int GetFullWidth(SyntaxListBuilder builder)
@@ -47,7 +49,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             RoslynDebug.Assert(luaOptions is not null);
             Options = luaOptions;
-            _cache = new LexerCache();
             _createWhitespaceTriviaFunction = CreateWhitespaceTrivia;
         }
 
