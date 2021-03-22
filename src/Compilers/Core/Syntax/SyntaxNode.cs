@@ -40,7 +40,7 @@ namespace Loretta.CodeAnalysis
         /// Used by structured trivia which has "parent == null", and therefore must know its
         /// SyntaxTree explicitly when created.
         /// </summary>
-        internal SyntaxNode(GreenNode green, int position, SyntaxTree syntaxTree)
+        internal SyntaxNode(GreenNode green, int position, SyntaxTree? syntaxTree)
             : this(green, null, position)
         {
             this._syntaxTree = syntaxTree;
