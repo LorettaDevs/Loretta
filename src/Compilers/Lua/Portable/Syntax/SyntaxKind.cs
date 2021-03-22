@@ -572,5 +572,6 @@ namespace Loretta.CodeAnalysis.Lua
         GotoLabelStatement = 1069,
         ExpressionStatement = 1070,
         CompilationUnit = 1071,
+        StatementList = 1072
     }
 }
