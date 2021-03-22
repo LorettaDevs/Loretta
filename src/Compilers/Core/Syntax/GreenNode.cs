@@ -896,7 +896,7 @@ namespace Loretta.CodeAnalysis
         }
         #endregion
 
-        public abstract SyntaxNode GetStructure(SyntaxTrivia parentTrivia);
+        public abstract SyntaxNode? GetStructure(SyntaxTrivia parentTrivia);
 
         #region Factories 
 
