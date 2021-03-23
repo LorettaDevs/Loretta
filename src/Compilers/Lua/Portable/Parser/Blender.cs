@@ -7,8 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using Loretta.CodeAnalysis.Text;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
@@ -22,7 +22,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// newPosition represents the position we are in the final SourceText.  As we consume and reuse
         /// nodes from the old tree we will update our position in the new text accordingly.
         /// Likewise, when we must lex tokens out of the new tree we will update as well.
-        /// 
+        ///
         /// NOTE(cyrusn): We do not need an oldPosition because it is redundant given the
         /// oldTreeCursor.  The oldPosition is implicitly defined by the position of the cursor.
         /// </summary>
@@ -31,7 +31,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public Blender(Lexer lexer, Lua.LuaSyntaxNode oldTree, IEnumerable<TextChangeRange> changes)
         {
-            Debug.Assert(lexer != null);
+            RoslynDebug.Assert(lexer != null);
             _lexer = lexer;
             _changes = ImmutableStack.Create<TextChangeRange>();
 
@@ -52,8 +52,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 var collapsed = TextChangeRange.Collapse(changes);
 
-                // extend the change to its affected range. This will make it easier 
-                // to filter out affected nodes since we will be able simply check 
+                // extend the change to its affected range. This will make it easier
+                // to filter out affected nodes since we will be able simply check
                 // if node intersects with a change.
                 var affectedRange = ExtendToAffectedRange(oldTree, collapsed);
                 _changes = _changes.Push(affectedRange);
@@ -81,9 +81,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             int newPosition,
             int changeDelta)
         {
-            Debug.Assert(lexer != null);
-            Debug.Assert(changes != null);
-            Debug.Assert(newPosition >= 0);
+            RoslynDebug.Assert(lexer != null);
+            RoslynDebug.Assert(changes != null);
+            RoslynDebug.Assert(newPosition >= 0);
             _lexer = lexer;
             _oldTreeCursor = oldTreeCursor;
             _changes = changes;
@@ -102,7 +102,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             // we will increase affected range of the change by the number of lookahead tokens
             // original code in Blender seem to imply the lookahead at the end of a node is 1 token
-            // max. TODO: 1 token lookahead seems a bit too optimistic. Increase if needed. 
+            // max. TODO: 1 token lookahead seems a bit too optimistic. Increase if needed.
             const int maxLookahead = 1;
 
             // check if change is not after the end. TODO: there should be an assert somewhere about
@@ -119,7 +119,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             for (var i = 0; start > 0 && i <= maxLookahead;)
             {
                 var token = oldTree.FindToken(start, findInsideTrivia: false);
-                Debug.Assert(token.Kind() != SyntaxKind.None, "how could we not get a real token back?");
+                RoslynDebug.Assert(token.Kind() != SyntaxKind.None, "how could we not get a real token back?");
 
                 start = Math.Max(0, token.Position - 1);
 

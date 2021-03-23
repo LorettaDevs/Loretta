@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
@@ -120,7 +118,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <remarks>This is used by the ExpressionEvaluator.</remarks>
         internal static SyntaxTree CreateForDebugger(LuaSyntaxNode root, SourceText text, LuaParseOptions options)
         {
-            Debug.Assert(root != null);
+            RoslynDebug.Assert(root != null);
 
             return new DebuggerSyntaxTree(root, text, options);
         }
@@ -135,7 +133,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         internal static SyntaxTree CreateWithoutClone(LuaSyntaxNode root)
         {
-            Debug.Assert(root != null);
+            RoslynDebug.Assert(root != null);
 
             return new ParsedSyntaxTree(
                 textOpt: null,

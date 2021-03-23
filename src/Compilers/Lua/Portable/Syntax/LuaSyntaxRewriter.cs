@@ -2,10 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Syntax;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua
 {
@@ -73,8 +73,8 @@ namespace Loretta.CodeAnalysis.Lua
             var trailingTrivia = node.GetTrailingTriviaCore();
 
             // Trivia is either null or a non-empty list (there's no such thing as an empty green list)
-            Debug.Assert(leadingTrivia == null || !leadingTrivia.IsList || leadingTrivia.SlotCount > 0);
-            Debug.Assert(trailingTrivia == null || !trailingTrivia.IsList || trailingTrivia.SlotCount > 0);
+            RoslynDebug.Assert(leadingTrivia == null || !leadingTrivia.IsList || leadingTrivia.SlotCount > 0);
+            RoslynDebug.Assert(trailingTrivia == null || !trailingTrivia.IsList || trailingTrivia.SlotCount > 0);
 
             if (leadingTrivia != null)
             {

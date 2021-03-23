@@ -5,8 +5,8 @@
 #nullable disable
 
 using System.Collections.Immutable;
-using System.Diagnostics;
 using Loretta.CodeAnalysis.Text;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
@@ -98,7 +98,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             private void SkipOldToken()
             {
-                Debug.Assert(!_oldTreeCursor.IsFinished);
+                RoslynDebug.Assert(!_oldTreeCursor.IsFinished);
 
                 // First, move down so that we're actually pointing at a token.  If we're already
                 // pointing at a token, then we'll just stay there.
@@ -129,7 +129,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             private BlendedNode ReadNewToken()
             {
-                Debug.Assert(_changeDelta > 0 || _oldTreeCursor.IsFinished);
+                RoslynDebug.Assert(_changeDelta > 0 || _oldTreeCursor.IsFinished);
 
                 // The new text is either behind the cursor, or the cursor is done.  In either event,
                 // we need to lex a real token from the stream.

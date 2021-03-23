@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Diagnostics;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax
 {
@@ -28,7 +28,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
         public static bool AreEquivalent(SyntaxNode? before, SyntaxNode? after, Func<SyntaxKind, bool>? ignoreChildNode, bool topLevel)
         {
-            Debug.Assert(!topLevel || ignoreChildNode == null);
+            RoslynDebug.Assert(!topLevel || ignoreChildNode == null);
 
             if (before == null || after == null)
             {
@@ -54,11 +54,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             // NOTE(cyrusn): Do we want to drill into trivia?  Can documentation ever affect the
             // global meaning of symbols?  This can happen in java with things like the "@obsolete"
-            // clause in doc comment.  However, i don't know if anything like that exists in C#. 
+            // clause in doc comment.  However, i don't know if anything like that exists in C#.
 
             // NOTE(cyrusn): I don't believe we need to examine skipped text.  It isn't relevant from
             // the perspective of global symbolic information.
-            Debug.Assert(before.RawKind == after.RawKind);
+            RoslynDebug.Assert(before.RawKind == after.RawKind);
 
             if (before.IsMissing != after.IsMissing)
             {
@@ -94,7 +94,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             if (before.IsToken)
             {
-                Debug.Assert(after.IsToken);
+                RoslynDebug.Assert(after.IsToken);
                 return AreTokensEquivalent(before, after);
             }
 

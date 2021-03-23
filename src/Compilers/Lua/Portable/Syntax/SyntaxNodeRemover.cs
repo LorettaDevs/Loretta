@@ -4,11 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Loretta.CodeAnalysis.Syntax;
 using Loretta.CodeAnalysis.Text;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax
 {
@@ -309,7 +309,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             private void AddTrivia(SyntaxToken token, SyntaxNode node)
             {
-                Debug.Assert(node.Parent is object);
+                RoslynDebug.Assert(node.Parent is object);
                 if ((_options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
                 {
                     AddResidualTrivia(token.LeadingTrivia);
@@ -342,7 +342,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             private void AddTrivia(SyntaxNode node, SyntaxToken token)
             {
-                Debug.Assert(node.Parent is object);
+                RoslynDebug.Assert(node.Parent is object);
                 if ((_options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
                 {
                     AddResidualTrivia(node.GetLeadingTrivia());

@@ -12,7 +12,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         internal StructuredTriviaSyntax(InternalSyntax.LuaSyntaxNode green, SyntaxNode parent, int position)
             : base(green, position, parent?.SyntaxTree)
         {
-            System.Diagnostics.Debug.Assert(parent == null || position >= 0);
+            RoslynDebug.Assert(parent == null || position >= 0);
         }
 
         internal static StructuredTriviaSyntax Create(SyntaxTrivia trivia)

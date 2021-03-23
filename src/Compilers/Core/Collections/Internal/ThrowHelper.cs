@@ -35,9 +35,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Collections.Internal
 {
@@ -269,7 +269,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                 case ExceptionArgument.destinationArray:
                     return "destinationArray";
                 default:
-                    Debug.Fail("The enum value is not defined, please check the ExceptionArgument Enum.");
+                    RoslynDebug.Fail("The enum value is not defined, please check the ExceptionArgument Enum.");
                     return "";
             }
         }
@@ -305,7 +305,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                 case ExceptionResource.InvalidOperation_IComparerFailed:
                     return SR.InvalidOperation_IComparerFailed;
                 default:
-                    Debug.Fail("The enum value is not defined, please check the ExceptionResource Enum.");
+                    RoslynDebug.Fail("The enum value is not defined, please check the ExceptionResource Enum.");
                     return "";
             }
         }
