@@ -304,7 +304,7 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unfinished long comment.
+        ///   Looks up a localized string similar to Unfinished multi-line comment.
         /// </summary>
         internal static string ERR_UnfinishedLongComment {
             get {

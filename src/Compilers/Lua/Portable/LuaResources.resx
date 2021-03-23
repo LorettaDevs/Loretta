@@ -203,7 +203,7 @@
     <comment>{0} is the actual kind and the {1} is the expected kind</comment>
   </data>
   <data name="ERR_UnfinishedLongComment" xml:space="preserve">
-    <value>Unfinished long comment</value>
+    <value>Unfinished multi-line comment</value>
   </data>
   <data name="ERR_UnfinishedString" xml:space="preserve">
     <value>Unfinished string</value>
