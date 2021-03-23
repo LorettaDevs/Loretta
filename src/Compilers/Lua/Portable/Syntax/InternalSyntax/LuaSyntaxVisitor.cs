@@ -1,15 +1,17 @@
-﻿namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
+﻿#nullable disable
+
+namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal abstract partial class LuaSyntaxVisitor<TResult>
     {
-        public virtual TResult? Visit(LuaSyntaxNode? node)
+        public virtual TResult Visit(LuaSyntaxNode node)
             => node is null ? default : node.Accept(this);
 
-        public virtual TResult? VisitToken(SyntaxToken token) => DefaultVisit(token);
+        public virtual TResult VisitToken(SyntaxToken token) => DefaultVisit(token);
 
-        public virtual TResult? VisitTrivia(SyntaxTrivia trivia) => DefaultVisit(trivia);
+        public virtual TResult VisitTrivia(SyntaxTrivia trivia) => DefaultVisit(trivia);
 
-        protected virtual TResult? DefaultVisit(LuaSyntaxNode node) => default;
+        protected virtual TResult DefaultVisit(LuaSyntaxNode node) => default;
     }
 
     internal abstract partial class LuaSyntaxVisitor
