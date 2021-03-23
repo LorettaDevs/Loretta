@@ -28,7 +28,7 @@ namespace Loretta.Generators
             SourceText inputText,
             out ImmutableArray<(string hintName, SourceText sourceText)> sources,
             out ImmutableArray<Diagnostic> diagnostics,
-            [NotNullWhen(true)] out string relativePath,
+            [NotNullWhen(true)] out string? relativePath,
             CancellationToken cancellationToken);
 
         public void Initialize(GeneratorInitializationContext context)
