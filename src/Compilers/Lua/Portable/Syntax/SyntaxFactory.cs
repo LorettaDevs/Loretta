@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Syntax;
+using Loretta.CodeAnalysis.Text;
 using InternalSyntax = Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -462,7 +464,7 @@ namespace Loretta.CodeAnalysis.Lua
             if (nodes != null)
             {
                 var enumerator = nodes.GetEnumerator();
-                SeparatedSyntaxListBuilder<TNode> builder = SeparatedSyntaxListBuilder<TNode>.Create();
+                var builder = SeparatedSyntaxListBuilder<TNode>.Create();
                 if (separators != null)
                 {
                     foreach (var token in separators)
@@ -583,5 +585,283 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static SyntaxTree SyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null) =>
             LuaSyntaxTree.Create((LuaSyntaxNode) root, (LuaParseOptions?) options, path, encoding);
+
+        /// <inheritdoc cref="LuaSyntaxTree.ParseText(string, LuaParseOptions?, string, Encoding?, CancellationToken)"/>
+        public static SyntaxTree ParseSyntaxTree(
+            string text,
+            ParseOptions? options = null,
+            string path = "",
+            Encoding? encoding = null,
+            CancellationToken cancellationToken = default) =>
+            LuaSyntaxTree.ParseText(text, (LuaParseOptions?) options, path, encoding, cancellationToken);
+
+        /// <inheritdoc cref="LuaSyntaxTree.ParseText(SourceText, LuaParseOptions?, string, CancellationToken)"/>
+        public static SyntaxTree ParseSyntaxTree(
+            SourceText text,
+            ParseOptions? options = null,
+            string path = "",
+            CancellationToken cancellationToken = default) =>
+            LuaSyntaxTree.ParseText(text, (LuaParseOptions?) options, path, cancellationToken);
+
+        /// <summary>
+        /// Parse a list of trivia rules for leading trivia.
+        /// </summary>
+        public static SyntaxTriviaList ParseLeadingTrivia(string text, int offset = 0) => ParseLeadingTrivia(text, LuaParseOptions.Default, offset);
+
+        /// <summary>
+        /// Parse a list of trivia rules for leading trivia.
+        /// </summary>
+        internal static SyntaxTriviaList ParseLeadingTrivia(string text, LuaParseOptions? options, int offset = 0)
+        {
+            using var lexer = MakeLexer(text, offset, options);
+            return lexer.LexSyntaxLeadingTrivia();
+        }
+
+        /// <summary>
+        /// Parse a list of trivia using the parsing rules for trailing trivia.
+        /// </summary>
+        public static SyntaxTriviaList ParseTrailingTrivia(string text, LuaParseOptions? options, int offset = 0)
+        {
+            using var lexer = MakeLexer(text, offset, options);
+            return lexer.LexSyntaxTrailingTrivia();
+        }
+
+        /// <summary>
+        /// Parse a Lua language token.
+        /// </summary>
+        /// <param name="text">The text of the token including leading and trailing trivia.</param>
+        /// <param name="offset">Optional offset into text.</param>
+        /// <param name="options">Parse options.</param>
+        public static SyntaxToken ParseToken(string text, int offset = 0, LuaParseOptions? options = null)
+        {
+            using var lexer = MakeLexer(text, offset, options);
+            return new SyntaxToken(lexer.Lex());
+        }
+
+        /// <summary>
+        /// Parse a sequence of Lua language tokens.
+        /// </summary>
+        /// <param name="text">The text of all the tokens.</param>
+        /// <param name="initialTokenPosition">An integer to use as the starting position of the first token.</param>
+        /// <param name="offset">Optional offset into text.</param>
+        /// <param name="options">Parse options.</param>
+        public static IEnumerable<SyntaxToken> ParseTokens(string text, int offset = 0, int initialTokenPosition = 0, LuaParseOptions? options = null)
+        {
+            using var lexer = MakeLexer(text, offset, options);
+            var position = initialTokenPosition;
+            while (true)
+            {
+                var token = lexer.Lex();
+                yield return new SyntaxToken(parent: null, token: token, position: position, index: 0);
+
+                position += token.FullWidth;
+
+                if (token.Kind == SyntaxKind.EndOfFileToken)
+                {
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parse an ExpressionSyntax node using the lowest precedence grammar rule for expressions.
+        /// </summary>
+        /// <param name="text">The text of the expression.</param>
+        /// <param name="offset">Optional offset into text.</param>
+        /// <param name="options">The optional parse options to use. If no options are specified default options are
+        /// used.</param>
+        /// <param name="consumeFullText">True if extra tokens in the input should be treated as an error</param>
+        public static ExpressionSyntax ParseExpression(string text, int offset = 0, LuaParseOptions? options = null, bool consumeFullText = true)
+        {
+            using var lexer = MakeLexer(text, offset, options);
+            using var parser = MakeParser(lexer);
+
+            var node = parser.ParseExpression();
+            if (consumeFullText) node = parser.ConsumeUnexpectedTokens(node);
+            return (ExpressionSyntax) node.CreateRed();
+        }
+
+        /// <summary>
+        /// Parse a StatementSyntaxNode using grammar rule for statements.
+        /// </summary>
+        /// <param name="text">The text of the statement.</param>
+        /// <param name="offset">Optional offset into text.</param>
+        /// <param name="options">The optional parse options to use. If no options are specified default options are
+        /// used.</param>
+        /// <param name="consumeFullText">True if extra tokens in the input should be treated as an error</param>
+        public static StatementSyntax ParseStatement(string text, int offset = 0, LuaParseOptions? options = null, bool consumeFullText = true)
+        {
+            using var lexer = MakeLexer(text, offset, options);
+            using var parser = MakeParser(lexer);
+            var node = parser.ParseStatement();
+            if (consumeFullText) node = parser.ConsumeUnexpectedTokens(node);
+            return (StatementSyntax) node.CreateRed();
+        }
+
+        /// <summary>
+        /// Parse a CompilationUnitSyntax using the grammar rule for an entire compilation unit (file). To produce a
+        /// SyntaxTree instance, use CSharpSyntaxTree.ParseText instead.
+        /// </summary>
+        /// <param name="text">The text of the compilation unit.</param>
+        /// <param name="offset">Optional offset into text.</param>
+        /// <param name="options">The optional parse options to use. If no options are specified default options are
+        /// used.</param>
+        public static CompilationUnitSyntax ParseCompilationUnit(string text, int offset = 0, LuaParseOptions? options = null)
+        {
+            // note that we do not need a "consumeFullText" parameter, because parsing a compilation unit always must
+            // consume input until the end-of-file
+            using var lexer = MakeLexer(text, offset, options);
+            using var parser = MakeParser(lexer);
+            var node = parser.ParseCompilationUnit();
+            return (CompilationUnitSyntax) node.CreateRed();
+        }
+
+        /// <summary>
+        /// Helper method for wrapping a string in a SourceText.
+        /// </summary>
+        private static SourceText MakeSourceText(string text, int offset) =>
+            SourceText.From(text, Encoding.UTF8).GetSubText(offset);
+
+        private static InternalSyntax.Lexer MakeLexer(string text, int offset, LuaParseOptions? options = null) =>
+            new InternalSyntax.Lexer(text: MakeSourceText(text, offset), options: options ?? LuaParseOptions.Default);
+
+        private static InternalSyntax.LanguageParser MakeParser(InternalSyntax.Lexer lexer) =>
+            new InternalSyntax.LanguageParser(lexer, oldTree: null, changes: null);
+
+        /// <summary>
+        /// Determines if two trees are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldTree">The original tree.</param>
+        /// <param name="newTree">The new tree.</param>
+        /// <param name="topLevel"> 
+        /// If true then the trees are equivalent if the contained nodes and tokens declaring
+        /// metadata visible symbolic information are equivalent, ignoring any differences of nodes inside method bodies
+        /// or initializer expressions, otherwise all nodes and tokens must be equivalent. 
+        /// </param>
+        public static bool AreEquivalent(SyntaxTree? oldTree, SyntaxTree? newTree, bool topLevel)
+        {
+            if (oldTree == null && newTree == null)
+            {
+                return true;
+            }
+
+            if (oldTree == null || newTree == null)
+            {
+                return false;
+            }
+
+            return SyntaxEquivalence.AreEquivalent(oldTree, newTree, ignoreChildNode: null, topLevel: topLevel);
+        }
+
+        /// <summary>
+        /// Determines if two syntax nodes are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldNode">The old node.</param>
+        /// <param name="newNode">The new node.</param>
+        /// <param name="topLevel"> 
+        /// If true then the nodes are equivalent if the contained nodes and tokens declaring
+        /// metadata visible symbolic information are equivalent, ignoring any differences of nodes inside method bodies
+        /// or initializer expressions, otherwise all nodes and tokens must be equivalent. 
+        /// </param>
+        public static bool AreEquivalent(SyntaxNode? oldNode, SyntaxNode? newNode, bool topLevel) =>
+            SyntaxEquivalence.AreEquivalent(oldNode, newNode, ignoreChildNode: null, topLevel: topLevel);
+
+        /// <summary>
+        /// Determines if two syntax nodes are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldNode">The old node.</param>
+        /// <param name="newNode">The new node.</param>
+        /// <param name="ignoreChildNode">
+        /// If specified called for every child syntax node (not token) that is visited during the comparison. 
+        /// If it returns true the child is recursively visited, otherwise the child and its subtree is disregarded.
+        /// </param>
+        public static bool AreEquivalent(SyntaxNode? oldNode, SyntaxNode? newNode, Func<SyntaxKind, bool>? ignoreChildNode = null) =>
+            SyntaxEquivalence.AreEquivalent(oldNode, newNode, ignoreChildNode: ignoreChildNode, topLevel: false);
+
+        /// <summary>
+        /// Determines if two syntax tokens are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldToken">The old token.</param>
+        /// <param name="newToken">The new token.</param>
+        public static bool AreEquivalent(SyntaxToken oldToken, SyntaxToken newToken) =>
+            SyntaxEquivalence.AreEquivalent(oldToken, newToken);
+
+        /// <summary>
+        /// Determines if two lists of tokens are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldList">The old token list.</param>
+        /// <param name="newList">The new token list.</param>
+        public static bool AreEquivalent(SyntaxTokenList oldList, SyntaxTokenList newList) =>
+            SyntaxEquivalence.AreEquivalent(oldList, newList);
+
+        /// <summary>
+        /// Determines if two lists of syntax nodes are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldList">The old list.</param>
+        /// <param name="newList">The new list.</param>
+        /// <param name="topLevel"> 
+        /// If true then the nodes are equivalent if the contained nodes and tokens declaring
+        /// metadata visible symbolic information are equivalent, ignoring any differences of nodes inside method bodies
+        /// or initializer expressions, otherwise all nodes and tokens must be equivalent. 
+        /// </param>
+        public static bool AreEquivalent<TNode>(SyntaxList<TNode> oldList, SyntaxList<TNode> newList, bool topLevel)
+            where TNode : LuaSyntaxNode =>
+            SyntaxEquivalence.AreEquivalent(oldList.Node, newList.Node, null, topLevel);
+
+        /// <summary>
+        /// Determines if two lists of syntax nodes are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldList">The old list.</param>
+        /// <param name="newList">The new list.</param>
+        /// <param name="ignoreChildNode">
+        /// If specified called for every child syntax node (not token) that is visited during the comparison. 
+        /// If it returns true the child is recursively visited, otherwise the child and its subtree is disregarded.
+        /// </param>
+        public static bool AreEquivalent<TNode>(SyntaxList<TNode> oldList, SyntaxList<TNode> newList, Func<SyntaxKind, bool>? ignoreChildNode = null)
+            where TNode : SyntaxNode =>
+            SyntaxEquivalence.AreEquivalent(oldList.Node, newList.Node, ignoreChildNode, topLevel: false);
+
+        /// <summary>
+        /// Determines if two lists of syntax nodes are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldList">The old list.</param>
+        /// <param name="newList">The new list.</param>
+        /// <param name="topLevel"> 
+        /// If true then the nodes are equivalent if the contained nodes and tokens declaring
+        /// metadata visible symbolic information are equivalent, ignoring any differences of nodes inside method bodies
+        /// or initializer expressions, otherwise all nodes and tokens must be equivalent. 
+        /// </param>
+        public static bool AreEquivalent<TNode>(SeparatedSyntaxList<TNode> oldList, SeparatedSyntaxList<TNode> newList, bool topLevel)
+            where TNode : SyntaxNode =>
+            SyntaxEquivalence.AreEquivalent(oldList.Node, newList.Node, null, topLevel);
+
+        /// <summary>
+        /// Determines if two lists of syntax nodes are the same, disregarding trivia differences.
+        /// </summary>
+        /// <param name="oldList">The old list.</param>
+        /// <param name="newList">The new list.</param>
+        /// <param name="ignoreChildNode">
+        /// If specified called for every child syntax node (not token) that is visited during the comparison. 
+        /// If it returns true the child is recursively visited, otherwise the child and its subtree is disregarded.
+        /// </param>
+        public static bool AreEquivalent<TNode>(SeparatedSyntaxList<TNode> oldList, SeparatedSyntaxList<TNode> newList, Func<SyntaxKind, bool>? ignoreChildNode = null)
+            where TNode : SyntaxNode =>
+            SyntaxEquivalence.AreEquivalent(oldList.Node, newList.Node, ignoreChildNode, topLevel: false);
+
+        /// <summary>
+        /// Creates a new <see cref="StatementListSyntax"/> instance.
+        /// </summary>
+        /// <param name="statements"></param>
+        /// <returns></returns>
+        public static StatementListSyntax StatementList(params StatementSyntax[] statements) =>
+            StatementList(List(statements));
+
+        /// <summary>
+        /// Creates a new <see cref="StatementListSyntax"/> instance.
+        /// </summary>
+        /// <param name="statements"></param>
+        /// <returns></returns>
+        public static StatementListSyntax StatementList(IEnumerable<StatementSyntax> statements) =>
+            StatementList(List(statements));
     }
 }
