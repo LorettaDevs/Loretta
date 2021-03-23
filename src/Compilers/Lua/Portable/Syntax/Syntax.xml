@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Tree Root="SyntaxNode">
 
   <PredefinedNode Name="LuaSyntaxNode" Base="SyntaxNode" />
@@ -450,8 +450,7 @@
         <summary>The literal token.</summary>
       </PropertyComment>
       <Kind Name="NumericLiteralToken" />
-      <Kind Name="ShortStringLiteralToken" />
-      <Kind Name="LongStringLiteralToken" />
+      <Kind Name="StringLiteralToken" />
       <Kind Name="TrueKeyword" />
       <Kind Name="FalseKeyword" />
       <Kind Name="NilKeyword" />
