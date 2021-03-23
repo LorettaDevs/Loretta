@@ -1630,7 +1630,7 @@ namespace Loretta.Generators.SyntaxXml
             if (IsOptional(field) || IsAnyList(field.Type))
             {
                 var type = GetRedPropertyType(field);
-                return type == "SyntaxTokenList" ? "default(SyntaxTokenList)" : "default";
+                return type == "SyntaxTokenList" ? "default(SyntaxTokenList)" : $"default({type})";
             }
             else if (field.Type == "SyntaxToken")
             {
