@@ -44,11 +44,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return width;
         }
 
-        public Lexer(SourceText text, LuaParseOptions luaOptions)
+        public Lexer(SourceText text, LuaParseOptions options)
             : base(text)
         {
-            RoslynDebug.Assert(luaOptions is not null);
-            Options = luaOptions;
+            RoslynDebug.Assert(options is not null);
+            Options = options;
             _createWhitespaceTriviaFunction = CreateWhitespaceTrivia;
         }
 
@@ -66,6 +66,28 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             LexSyntaxTrivia(isTrailing: true, _trailingTriviaCache);
 
             return Create(ref info, _leadingTriviaCache, _trailingTriviaCache, errors);
+        }
+
+        internal SyntaxTriviaList LexSyntaxLeadingTrivia()
+        {
+            _leadingTriviaCache.Clear();
+            LexSyntaxTrivia(isTrailing: false, _leadingTriviaCache);
+            return new SyntaxTriviaList(
+                default,
+                _leadingTriviaCache.ToListNode(),
+                position: 0,
+                index: 0);
+        }
+
+        internal SyntaxTriviaList LexSyntaxTrailingTrivia()
+        {
+            _trailingTriviaCache.Clear();
+            LexSyntaxTrivia(isTrailing: true, _trailingTriviaCache);
+            return new SyntaxTriviaList(
+                default,
+                _trailingTriviaCache.ToListNode(),
+                position: 0,
+                index: 0);
         }
 
         private static SyntaxToken Create(
