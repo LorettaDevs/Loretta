@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.Utilities;
 
@@ -303,7 +304,8 @@ namespace Loretta.CodeAnalysis.Lua
             Func<SyntaxToken, SyntaxToken, SyntaxToken>? computeReplacementToken = null,
             IEnumerable<SyntaxTrivia>? trivia = null,
             Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia>? computeReplacementTrivia = null)
-            => SyntaxReplacer.Replace(this, nodes, computeReplacementNode, tokens, computeReplacementToken, trivia, computeReplacementTrivia).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
+            =>
+            SyntaxReplacer.Replace(this, nodes, computeReplacementNode, tokens, computeReplacementToken, trivia, computeReplacementTrivia).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
         protected internal override SyntaxNode ReplaceNodeInListCore(SyntaxNode originalNode, IEnumerable<SyntaxNode> replacementNodes)
             => SyntaxReplacer.ReplaceNodeInList(this, originalNode, replacementNodes).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
