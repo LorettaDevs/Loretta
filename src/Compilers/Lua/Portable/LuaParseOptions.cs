@@ -11,6 +11,11 @@ namespace Loretta.CodeAnalysis.Lua
     /// </summary>
     public sealed class LuaParseOptions : ParseOptions, IEquatable<LuaParseOptions?>
     {
+        /// <summary>
+        /// The default parse options.
+        /// </summary>
+        public static LuaParseOptions Default { get; } = new LuaParseOptions(LuaSyntaxOptions.All);
+
         private ImmutableDictionary<string, string> _features;
 
         /// <summary>
