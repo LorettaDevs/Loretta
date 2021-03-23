@@ -162,7 +162,7 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             {
                 if (isVerbatim)
                 {
-                    if (!TryFastGetVerbatimEquals(value, out var startDelimiter, out endDelimiter!))
+                    if (!TryFastGetVerbatimEquals(value.AsSpan(), out var startDelimiter, out endDelimiter!))
                         (startDelimiter, endDelimiter) = SlowGetVerbatimEquals(value);
                     builder.Append(startDelimiter);
                 }
@@ -230,7 +230,8 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             equalsBuilder.Insert(0, "=", 61); // The fast get verbatim equals can handle up to 60 equals.
 
             string startDelimiter, endDelimiter;
-            while (value.Contains(startDelimiter = $"[{equalsBuilder}[", StringComparison.Ordinal) || value.Contains(endDelimiter = $"]{equalsBuilder}]", StringComparison.Ordinal))
+            while (value.IndexOf(startDelimiter = $"[{equalsBuilder}[", StringComparison.Ordinal) >= 0
+                   || value.IndexOf(endDelimiter = $"]{equalsBuilder}]", StringComparison.Ordinal) >= 0)
                 equalsBuilder.Append('=');
 
             return (startDelimiter, endDelimiter);
