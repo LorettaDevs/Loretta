@@ -13,7 +13,7 @@ namespace Loretta.CodeAnalysis.Lua
         private const string s_descriptionSuffix = "_Description";
         private static readonly Lazy<ImmutableDictionary<ErrorCode, string>> s_categoriesMap = new Lazy<ImmutableDictionary<ErrorCode, string>>(CreateCategoriesMap);
 
-        private static string GetId(ErrorCode errorCode) =>
+        public static string GetId(ErrorCode errorCode) =>
             MessageProvider.Instance.GetIdForErrorCode((int) errorCode);
 
         private static ImmutableDictionary<ErrorCode, string> CreateCategoriesMap()
