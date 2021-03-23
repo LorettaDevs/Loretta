@@ -21,12 +21,12 @@ namespace Loretta.Utilities
         /// <inheritdoc cref="RoslynDebug.Assert(bool)"/>
         [Conditional("DEBUG")]
         public static void Assert([DoesNotReturnIf(false)] bool b) =>
-            RoslynDebug.Assert(b);
+            Debug.Assert(b);
 
         /// <inheritdoc cref="RoslynDebug.Assert(bool, string)"/>
         [Conditional("DEBUG")]
         public static void Assert([DoesNotReturnIf(false)] bool b, string message) =>
-            RoslynDebug.Assert(b, message);
+            Debug.Assert(b, message);
 
         [Conditional("DEBUG")]
         public static void AssertNotNull<T>([NotNull] T value) =>
