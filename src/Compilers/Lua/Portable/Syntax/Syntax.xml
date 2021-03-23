@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Tree Root="SyntaxNode">
 
   <PredefinedNode Name="LuaSyntaxNode" Base="SyntaxNode" />
@@ -1576,7 +1576,7 @@
         Creates a new <see cref="CompilationUnitSyntax" /> node.
       </summary>
     </FactoryComment>
-    <Kind Name="CompilationUnitSyntax" />
+    <Kind Name="CompilationUnit" />
     <Field Name="Statements" Type="StatementListSyntax">
       <PropertyComment>
         <summary>The statements in the compilation unit.</summary>
