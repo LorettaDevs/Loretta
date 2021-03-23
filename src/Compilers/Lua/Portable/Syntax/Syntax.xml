@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Tree Root="LuaSyntaxNode">
+<Tree Root="SyntaxNode">
 
+  <PredefinedNode Name="LuaSyntaxNode" Base="SyntaxNode" />
   <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
   <PredefinedNode Name="StructuredTriviaSyntax" Base="LuaSyntaxNode" />
 
@@ -1522,7 +1523,7 @@
       <PropertyComment>
         <summary>The delimiter on the left of the name.</summary>
       </PropertyComment>
-      <Kind Name="GotoLabelDelimiter" />
+      <Kind Name="ColonColonToken" />
     </Field>
     <Field Name="Identifier" Type="SyntaxToken">
       <PropertyComment>
@@ -1534,7 +1535,7 @@
       <PropertyComment>
         <summary>The delimiter on the right of the name.</summary>
       </PropertyComment>
-      <Kind Name="GotoLabelDelimiter" />
+      <Kind Name="ColonColonToken" />
     </Field>
     <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
       <PropertyComment>
