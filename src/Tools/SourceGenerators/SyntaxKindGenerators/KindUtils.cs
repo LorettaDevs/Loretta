@@ -252,7 +252,7 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         public string Key { get; }
-        public object Value { get; }
+        public object? Value { get; }
     }
 
     /// <summary>
