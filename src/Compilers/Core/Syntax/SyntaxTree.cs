@@ -19,12 +19,6 @@ namespace Loretta.CodeAnalysis
     public abstract class SyntaxTree
     {
         /// <summary>
-        /// Cached value for empty <see cref="DiagnosticOptions"/>.
-        /// </summary>
-        protected internal static readonly ImmutableDictionary<string, ReportDiagnostic> EmptyDiagnosticOptions =
-            ImmutableDictionary.Create<string, ReportDiagnostic>(CaseInsensitiveComparison.Comparer);
-
-        /// <summary>
         /// The path of the source document file.
         /// </summary>
         /// <remarks>
@@ -60,16 +54,6 @@ namespace Loretta.CodeAnalysis
         /// The options used by the parser to produce the syntax tree.
         /// </summary>
         protected abstract ParseOptions OptionsCore { get; }
-
-        /// <summary>
-        /// Option to specify custom behavior for each warning in this tree.
-        /// </summary>
-        /// <returns>
-        /// A map from diagnostic ID to diagnostic reporting level. The diagnostic
-        /// ID string may be case insensitive depending on the language.
-        /// </returns>
-        [Obsolete("Obsolete due to performance problems, use CompilationOptions.SyntaxTreeOptionsProvider instead", error: false)]
-        public virtual ImmutableDictionary<string, ReportDiagnostic> DiagnosticOptions => EmptyDiagnosticOptions;
 
         /// <summary>
         /// The length of the text of the syntax tree.
@@ -311,17 +295,6 @@ namespace Loretta.CodeAnalysis
         /// Returns a new tree whose <see cref="FilePath"/> is the specified node and other properties are copied from the current tree.
         /// </summary>
         public abstract SyntaxTree WithFilePath(string path);
-
-        /// <summary>
-        /// Returns a new tree whose <see cref="DiagnosticOptions" /> are the specified value and other properties are copied
-        /// from the current tree.
-        /// </summary>
-        /// <param name="options">
-        /// A mapping from diagnostic id to diagnostic reporting level. The diagnostic ID may be case-sensitive depending
-        /// on the language.
-        /// </param>
-        [Obsolete("Obsolete due to performance problems, use CompilationOptions.SyntaxTreeOptionsProvider instead", error: false)]
-        public virtual SyntaxTree WithDiagnosticOptions(ImmutableDictionary<string, ReportDiagnostic> options) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns a <see cref="string" /> that represents the entire source text of this <see cref="SyntaxTree"/>.
