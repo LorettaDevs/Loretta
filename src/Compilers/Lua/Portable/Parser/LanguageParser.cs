@@ -17,8 +17,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public LanguageParser(
             Lexer lexer,
-            Lua.LuaSyntaxNode oldTree,
-            IEnumerable<TextChangeRange> changes,
+            Lua.LuaSyntaxNode? oldTree,
+            IEnumerable<TextChangeRange>? changes,
             CancellationToken cancellationToken = default)
             : base(lexer, oldTree, changes, preLexIfNotIncremental: true, cancellationToken: cancellationToken)
         {
@@ -89,7 +89,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 if (kind == SyntaxKind.EndOfFileToken || terminalKinds.Length > 0 && terminalKinds.Contains(kind))
                     break;
 
-                SyntaxToken? startToken = CurrentToken;
+                var startToken = CurrentToken;
 
                 var statement = ParseStatement();
                 builder.Add(statement);
@@ -671,7 +671,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var pos = -1;
             while (IsMakingProgress(ref pos))
             {
-                SyntaxKind operatorKind = CurrentToken.Kind;
+                var operatorKind = CurrentToken.Kind;
                 var precedence = SyntaxFacts.GetBinaryOperatorPrecedence(operatorKind);
                 var comparePrecedence = !isParentUnary && parentOperator == operatorKind && SyntaxFacts.IsRightAssociative(operatorKind)
                     ? precedence + 1
@@ -915,7 +915,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private LiteralExpressionSyntax ParseLiteralExpression()
         {
-            SyntaxToken? token = EatToken();
+            var token = EatToken();
             var kind = SyntaxFacts.GetLiteralExpression(token.Kind).Value;
             return SyntaxFactory.LiteralExpression(kind, token);
         }
@@ -982,6 +982,22 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var value = ParseExpression();
                 return SyntaxFactory.UnkeyedTableField(value);
             }
+        }
+
+        internal TNode ConsumeUnexpectedTokens<TNode>(TNode node) where TNode : LuaSyntaxNode
+        {
+            if (CurrentToken.Kind == SyntaxKind.EndOfFileToken) return node;
+
+            var builder = _pool.Allocate<SyntaxToken>();
+            while (CurrentToken.Kind != SyntaxKind.EndOfFileToken)
+            {
+                builder.Add(EatToken());
+            }
+            var trailingTrash = _pool.ToListAndFree(builder);
+            
+            node = AddError(node, ErrorCode.ERR_UnexpectedToken, trailingTrash[0]!.ToString());
+            node = AddTrailingSkippedSyntax(node, trailingTrash.Node);
+            return node;
         }
     }
 }
