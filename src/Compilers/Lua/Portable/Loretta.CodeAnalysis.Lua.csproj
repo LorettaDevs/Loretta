@@ -32,6 +32,9 @@
   <ItemGroup>
     <AdditionalFiles Include="Syntax\Syntax.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Tests" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
