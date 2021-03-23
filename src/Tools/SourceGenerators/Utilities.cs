@@ -97,17 +97,24 @@ namespace Loretta.Generators
 
         public static void DoVsCodeHack(string relatedDirectory, string fileName, SourceText sourceText)
         {
-            var filePath = Path.Combine(relatedDirectory, fileName);
-            if (File.Exists(filePath))
+            try
             {
-                var fileText = File.ReadAllText(filePath);
-                var sourceFileText = SourceText.From(fileText, Encoding.UTF8);
-                if (sourceText.ContentEquals(sourceFileText))
-                    return;
-            }
+                var filePath = Path.Combine(relatedDirectory, fileName);
+                if (File.Exists(filePath))
+                {
+                    var fileText = File.ReadAllText(filePath);
+                    var sourceFileText = SourceText.From(fileText, Encoding.UTF8);
+                    if (sourceText.ContentEquals(sourceFileText))
+                        return;
+                }
 
-            using var writer = new StreamWriter(filePath);
-            sourceText.Write(writer);
+                using var writer = new StreamWriter(filePath);
+                sourceText.Write(writer);
+            }
+            catch (Exception)
+            {
+                return; // We don't really care if the VSCode hack fails.
+            }
         }
 
         public static IEnumerable<ITypeSymbol> AncestorsAndSelf(ITypeSymbol topType, ITypeSymbol? limit = null)
