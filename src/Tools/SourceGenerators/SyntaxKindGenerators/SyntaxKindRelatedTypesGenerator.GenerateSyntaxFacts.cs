@@ -74,11 +74,11 @@ namespace Loretta.Generators.SyntaxKindGenerators
                     {
                         var possibleTypes = propertyGroup.Select(t => t.value.Type).Where(t => t is not null).Distinct().ToImmutableArray();
 
-                        ITypeSymbol type;
+                        string type;
                         if (possibleTypes.Length > 1)
-                            type = context.Compilation.GetSpecialType(SpecialType.System_Object);
+                            type = context.Compilation.GetSpecialType(SpecialType.System_Object) + "?";
                         else
-                            type = possibleTypes.Single()!;
+                            type = possibleTypes.Single()!.ToString();
 
                         writer.WriteLineNoTabs("");
                         using (new CurlyIndenter(writer, $"public static Option<{type}> Get{propertyGroup.Key}(SyntaxKind kind)"))
