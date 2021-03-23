@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Loretta.CodeAnalysis.Lua.Syntax;
 
 namespace Loretta.CodeAnalysis.Lua
 {
+    /// <summary>
+    /// Extension methods for the Lua syntax.
+    /// </summary>
     public static class SyntaxExtensions
     {
-
         /// <summary>
         /// Creates a new syntax token with all whitespace and end of line trivia replaced with
         /// regularly formatted trivia.
@@ -56,6 +59,11 @@ namespace Loretta.CodeAnalysis.Lua
             bool elasticTrivia = false) =>
             SyntaxNormalizer.Normalize(list, indentation, eol, elasticTrivia);
 
+        /// <summary>
+        /// Creates a <see cref="SyntaxTriviaList"/> from an <see cref="IEnumerable{T}"/> of <see cref="SyntaxTrivia"/>.
+        /// </summary>
+        /// <param name="sequence"></param>
+        /// <returns></returns>
         public static SyntaxTriviaList ToSyntaxTriviaList(this IEnumerable<SyntaxTrivia> sequence) =>
             SyntaxFactory.TriviaList(sequence);
     }

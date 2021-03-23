@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Tests" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="CodeAnalysisResources.resx" GenerateSource="true">
