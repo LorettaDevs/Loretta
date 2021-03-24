@@ -80,7 +80,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 {
                     var offset = 3;
                     while (offset < text.Length && text[offset] == '=') offset++;
-                    return text[offset] == '[';
+                    return offset < text.Length && text[offset] == '[';
                 }
                 return false;
             }
