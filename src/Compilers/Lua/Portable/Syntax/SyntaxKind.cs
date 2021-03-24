@@ -27,78 +27,66 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories("DocumentationCommentTrivia")]
         MultiLineDocumentationCommentTrivia = 9,
 
-        // Tokens
+        // Textless Tokens
         [Token]
-        BadToken = 10,
-        [Token]
-        EndOfFileToken = 11,
-        [Token]
-        [ExtraCategories("LiteralToken")]
-        [Property("LiteralExpression", NumericalLiteralExpression)]
-        NumericLiteralToken = 12,
-        [Token]
-        [ExtraCategories("LiteralToken")]
-        [Property("LiteralExpression", StringLiteralExpression)]
-        StringLiteralToken = 13,
-        [Token]
-        IdentifierToken = 14,
+        EndOfFileToken = 10,
         /// <summary>
         /// Represents the <c>(</c> token.
         /// </summary>
         [Token(Text = "(")]
-        OpenParenthesisToken = 15,
+        OpenParenthesisToken = 11,
         /// <summary>
         /// Represents the <c>)</c> token.
         /// </summary>
         [Token(Text = ")")]
-        CloseParenthesisToken = 16,
+        CloseParenthesisToken = 12,
         /// <summary>
         /// Represents the <c>[</c> token.
         /// </summary>
         [Token(Text = "[")]
-        OpenBracketToken = 17,
+        OpenBracketToken = 13,
         /// <summary>
         /// Represents the <c>]</c> token.
         /// </summary>
         [Token(Text = "]")]
-        CloseBracketToken = 18,
+        CloseBracketToken = 14,
         /// <summary>
         /// Represents the <c>{</c> token.
         /// </summary>
         [Token(Text = "{")]
-        OpenBraceToken = 19,
+        OpenBraceToken = 15,
         /// <summary>
         /// Represents the <c>}</c> token.
         /// </summary>
         [Token(Text = "}")]
-        CloseBraceToken = 20,
+        CloseBraceToken = 16,
         /// <summary>
         /// Represents the <c>;</c> token.
         /// </summary>
         [Token(Text = ";")]
-        SemicolonToken = 21,
+        SemicolonToken = 17,
         /// <summary>
         /// Represents the <c>:</c> token.
         /// </summary>
         [Token(Text = ":")]
-        ColonToken = 22,
+        ColonToken = 18,
         /// <summary>
         /// Represents the <c>,</c> token.
         /// </summary>
         [Token(Text = ",")]
-        CommaToken = 23,
+        CommaToken = 19,
         /// <summary>
         /// Represents the <c>#</c> token.
         /// </summary>
         [Token(Text = "#")]
         [UnaryOperator(precedence: 7, LengthExpression)]
-        HashToken = 24,
+        HashToken = 20,
         /// <summary>
         /// Represents the <c>+</c> token.
         /// </summary>
         [Token(Text = "+")]
         [BinaryOperator(precedence: 5, AddExpression)]
-        PlusToken = 25,
+        PlusToken = 21,
         /// <summary>
         /// Represents the <c>+=</c> token.
         /// </summary>
@@ -106,13 +94,13 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", PlusToken)]
         [Property("CompoundAssignmentStatement", AddAssignmentStatement)]
-        PlusEqualsToken = 26,
+        PlusEqualsToken = 22,
         /// <summary>
         /// Represents the <c>-</c> token.
         /// </summary>
         [Token(Text = "-")]
         [UnaryOperator(precedence: 7, UnaryMinusExpression), BinaryOperator(precedence: 5, SubtractExpression)]
-        MinusToken = 27,
+        MinusToken = 23,
         /// <summary>
         /// Represents the <c>-=</c> token.
         /// </summary>
@@ -120,13 +108,13 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", MinusToken)]
         [Property("CompoundAssignmentStatement", SubtractAssignmentStatement)]
-        MinusEqualsToken = 28,
+        MinusEqualsToken = 24,
         /// <summary>
         /// Represents the <c>*</c> token.
         /// </summary>
         [Token(Text = "*")]
         [BinaryOperator(precedence: 6, MultiplyExpression)]
-        StarToken = 29,
+        StarToken = 25,
         /// <summary>
         /// Represents the <c>*=</c> token.
         /// </summary>
@@ -134,13 +122,13 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", StarToken)]
         [Property("CompoundAssignmentStatement", MultiplyAssignmentStatement)]
-        StartEqualsToken = 30,
+        StartEqualsToken = 26,
         /// <summary>
         /// Represents the <c>/</c> token.
         /// </summary>
         [Token(Text = "/")]
         [BinaryOperator(precedence: 6, DivideExpression)]
-        SlashToken = 31,
+        SlashToken = 27,
         /// <summary>
         /// Represents the <c>/=</c> token.
         /// </summary>
@@ -148,13 +136,13 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", SlashToken)]
         [Property("CompoundAssignmentStatement", DivideAssignmentStatement)]
-        SlashEqualsToken = 32,
+        SlashEqualsToken = 28,
         /// <summary>
         /// Represents the <c>^</c> token.
         /// </summary>
         [Token(Text = "^")]
         [BinaryOperator(precedence: 8, ExponentiateExpression)]
-        HatToken = 33,
+        HatToken = 29,
         /// <summary>
         /// Represents the <c>^=</c> token.
         /// </summary>
@@ -162,13 +150,13 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", HatToken)]
         [Property("CompoundAssignmentStatement", ExponentiateAssignmentStatement)]
-        HatEqualsToken = 34,
+        HatEqualsToken = 30,
         /// <summary>
         /// Represents the <c>%</c> token.
         /// </summary>
         [Token(Text = "%")]
         [BinaryOperator(precedence: 6, ModuloExpression)]
-        PercentToken = 35,
+        PercentToken = 31,
         /// <summary>
         /// Represents the <c>%=</c> token.
         /// </summary>
@@ -176,23 +164,23 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", PercentToken)]
         [Property("CompoundAssignmentStatement", ModuloAssignmentStatement)]
-        PercentEqualsToken = 36,
+        PercentEqualsToken = 32,
         /// <summary>
         /// Represents the <c>.</c> token.
         /// </summary>
         [Token(Text = ".")]
-        DotToken = 37,
+        DotToken = 33,
         /// <summary>
         /// Represents the <c>..</c> token.
         /// </summary>
         [Token(Text = "..")]
         [BinaryOperator(precedence: 4, ConcatExpression)]
-        DotDotToken = 38,
+        DotDotToken = 34,
         /// <summary>
         /// Represents the <c>...</c> token.
         /// </summary>
         [Token(Text = "...")]
-        DotDotDotToken = 39,
+        DotDotDotToken = 35,
         /// <summary>
         /// Represents the <c>..=</c> token.
         /// </summary>
@@ -200,102 +188,102 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories("CompoundAssignmentOperatorToken")]
         [Property("CompoundAssignmentOperator", DotDotToken)]
         [Property("CompoundAssignmentStatement", ConcatAssignmentStatement)]
-        DotDotEqualsToken = 40,
+        DotDotEqualsToken = 36,
         /// <summary>
         /// Represents the <c>=</c> token.
         /// </summary>
         [Token(Text = "=")]
-        EqualsToken = 41,
+        EqualsToken = 37,
         /// <summary>
         /// Represents the <c>==</c> token.
         /// </summary>
         [Token(Text = "==")]
         [BinaryOperator(precedence: 3, EqualsExpression)]
-        EqualsEqualsToken = 42,
+        EqualsEqualsToken = 38,
         // TODO: Add tilde token and unary operator
         /// <summary>
         /// Represents the <c>~=</c> token.
         /// </summary>
         [Token(Text = "~=")]
         [BinaryOperator(precedence: 3, NotEqualsExpression)]
-        TildeEqualsToken = 43,
+        TildeEqualsToken = 39,
         /// <summary>
         /// Represents the <c>!</c> token.
         /// </summary>
         [Token(Text = "!")]
         [UnaryOperator(precedence: 7, LogicalNotExpression)]
-        BangToken = 44,
+        BangToken = 40,
         /// <summary>
         /// Represents the <c>!=</c> token.
         /// </summary>
         [Token(Text = "!=")]
         [BinaryOperator(precedence: 3, NotEqualsExpression)]
-        BangEqualsToken = 45,
+        BangEqualsToken = 41,
         /// <summary>
         /// Represents the <c>&lt;</c> token.
         /// </summary>
         [Token(Text = "<")]
         [BinaryOperator(precedence: 3, LessThanExpression)]
-        LessThanToken = 46,
+        LessThanToken = 42,
         /// <summary>
         /// Represents the <c>&lt;=</c> token.
         /// </summary>
         [Token(Text = "<=")]
         [BinaryOperator(precedence: 3, LessThanOrEqualExpression)]
-        LessThanEqualsToken = 47,
+        LessThanEqualsToken = 43,
         /// <summary>
         /// Represents the <c>&lt;&lt;</c> token. CURRENTLY UNSUPPORTED.
         /// </summary>
         [Token(Text = "<<")]
         // TODO: Add binary operator info
-        LessThanLessThanToken = 48,
+        LessThanLessThanToken = 44,
         /// <summary>
         /// Represents the <c>></c> token.
         /// </summary>
         [Token(Text = ">")]
         [BinaryOperator(precedence: 3, GreaterThanExpression)]
-        GreaterThanToken = 49,
+        GreaterThanToken = 45,
         /// <summary>
         /// Represents the <c>>=</c> token.
         /// </summary>
         [Token(Text = ">=")]
         [BinaryOperator(precedence: 3, GreaterThanOrEqualExpression)]
-        GreaterThanEqualsToken = 50,
+        GreaterThanEqualsToken = 46,
         /// <summary>
         /// Represents the <c>>></c> token. CURRENTLY UNSUPPORTED.
         /// </summary>
         [Token(Text = ">>")]
         // TODO: Add binary operator info
-        GreaterThanGreaterThanToken = 51,
+        GreaterThanGreaterThanToken = 47,
         /// <summary>
         /// Represents the <c>&amp;</c> token. CURRENTLY UNSUPPORTED.
         /// </summary>
         [Token(Text = "&")]
         // TODO: Add binary operator info
-        AmpersandToken = 52,
+        AmpersandToken = 48,
         /// <summary>
         /// Represents the <c>&amp;&amp;</c> token.
         /// </summary>
         [Token(Text = "&&")]
         [BinaryOperator(precedence: 2, LogicalAndExpression)]
-        AmpersandAmpersandToken = 53,
+        AmpersandAmpersandToken = 49,
         /// <summary>
         /// Represents the <c>|</c> token. CURRENTLY UNSUPPORTED.
         /// </summary>
         [Token(Text = "|")]
         // TODO: Add binary operator info
-        PipeToken = 54,
+        PipeToken = 50,
         /// <summary>
         /// Represents the <c>||</c> token.
         /// </summary>
         [Token(Text = "||")]
         [BinaryOperator(precedence: 1, LogicalOrExpression)]
-        PipePipeToken = 55,
+        PipePipeToken = 51,
         /// <summary>
         /// Represents the <c>::</c> token.
         /// </summary>
         [Token(Text = "::")]
-        ColonColonToken = 56,
+        ColonColonToken = 52,
 
         // Keywords
         /// <summary>
@@ -423,155 +411,169 @@ namespace Loretta.CodeAnalysis.Lua
         [Property("ConstantValue", false)]
         FalseKeyword = 522,
 
+        // Tokens with Text
+        [Token]
+        BadToken = 1000,
+        [Token]
+        [ExtraCategories("LiteralToken")]
+        [Property("LiteralExpression", NumericalLiteralExpression)]
+        NumericLiteralToken = 1001,
+        [Token]
+        [ExtraCategories("LiteralToken")]
+        [Property("LiteralExpression", StringLiteralExpression)]
+        StringLiteralToken = 1002,
+        [Token]
+        IdentifierToken = 1003,
+
         // Parameters
-        NamedParameter = 1000,
-        VarArgParameter = 1001,
-        ParameterList = 1002,
+        NamedParameter = 2000,
+        VarArgParameter = 2001,
+        ParameterList = 2002,
 
         // Table Fields
-        IdentifierKeyedTableField = 1003,
-        ExpressionKeyedTableField = 1004,
-        UnkeyedTableField = 1005,
+        IdentifierKeyedTableField = 2003,
+        ExpressionKeyedTableField = 2004,
+        UnkeyedTableField = 2005,
 
         // Function Names
-        SimpleFunctionName = 1006,
-        MemberFunctionName = 1007,
-        MethodFunctionName = 1008,
+        SimpleFunctionName = 2006,
+        MemberFunctionName = 2007,
+        MethodFunctionName = 2008,
 
         // Function Call Arguments
-        StringFunctionArgument = 1009,
-        TableConstructorFunctionArgument = 1010,
-        ExpressionListFunctionArgument = 1011,
+        StringFunctionArgument = 2009,
+        TableConstructorFunctionArgument = 2010,
+        ExpressionListFunctionArgument = 2011,
 
         // Primary Expressions
-        AnonymousFunctionExpression = 1012,
-        TableConstructorExpression = 1013,
-        NumericalLiteralExpression = 1014,
-        StringLiteralExpression = 1015,
-        TrueLiteralExpression = 1016,
-        FalseLiteralExpression = 1017,
-        NilLiteralExpression = 1018,
-        VarArgExpression = 1019,
+        AnonymousFunctionExpression = 2012,
+        TableConstructorExpression = 2013,
+        NumericalLiteralExpression = 2014,
+        StringLiteralExpression = 2015,
+        TrueLiteralExpression = 2016,
+        FalseLiteralExpression = 2017,
+        NilLiteralExpression = 2018,
+        VarArgExpression = 2019,
         [ExtraCategories("VariableExpression")]
-        IdentifierName = 1020,
+        IdentifierName = 2020,
 
         // Unary Expressions
         [ExtraCategories("UnaryExpression")]
         [Property("UnaryExpressionOperatorTokenKind", MinusToken)]
-        UnaryMinusExpression = 1021,
+        UnaryMinusExpression = 2021,
         [ExtraCategories("UnaryExpression")]
         [Property("UnaryExpressionOperatorTokenKind", NotKeyword)]
-        LogicalNotExpression = 1022,
+        LogicalNotExpression = 2022,
         [ExtraCategories("UnaryExpression")]
         [Property("UnaryExpressionOperatorTokenKind", HashToken)]
-        LengthExpression = 1023,
+        LengthExpression = 2023,
 
         // Binary Expressions
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", PlusToken)]
-        AddExpression = 1024,
+        AddExpression = 2024,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", MinusToken)]
-        SubtractExpression = 1025,
+        SubtractExpression = 2025,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", StarToken)]
-        MultiplyExpression = 1026,
+        MultiplyExpression = 2026,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", SlashToken)]
-        DivideExpression = 1027,
+        DivideExpression = 2027,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", PercentToken)]
-        ModuloExpression = 1028,
+        ModuloExpression = 2028,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", DotDotToken)]
-        ConcatExpression = 1029,
+        ConcatExpression = 2029,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", EqualsEqualsToken)]
-        EqualsExpression = 1030,
+        EqualsExpression = 2030,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", TildeEqualsToken)]
-        NotEqualsExpression = 1031,
+        NotEqualsExpression = 2031,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", LessThanToken)]
-        LessThanExpression = 1032,
+        LessThanExpression = 2032,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", LessThanEqualsToken)]
-        LessThanOrEqualExpression = 1033,
+        LessThanOrEqualExpression = 2033,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", GreaterThanToken)]
-        GreaterThanExpression = 1034,
+        GreaterThanExpression = 2034,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", GreaterThanEqualsToken)]
-        GreaterThanOrEqualExpression = 1035,
+        GreaterThanOrEqualExpression = 2035,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", AndKeyword)]
-        LogicalAndExpression = 1036,
+        LogicalAndExpression = 2036,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", OrKeyword)]
-        LogicalOrExpression = 1037,
+        LogicalOrExpression = 2037,
         [ExtraCategories("BinaryExpression")]
         [Property("BinaryExpressionOperatorTokenKind", HatToken)]
-        ExponentiateExpression = 1038,
+        ExponentiateExpression = 2038,
 
         // Expressions
-        BadExpression = 1039,
-        ParenthesizedExpression = 1040,
-        FunctionCallExpression = 1041,
+        BadExpression = 2039,
+        ParenthesizedExpression = 2040,
+        FunctionCallExpression = 2041,
         [ExtraCategories("VariableExpression")]
-        MemberAccessExpression = 1042,
+        MemberAccessExpression = 2042,
         [ExtraCategories("VariableExpression")]
-        ElementAccessExpression = 1043,
-        MethodCallExpression = 1044,
+        ElementAccessExpression = 2043,
+        MethodCallExpression = 2044,
 
         // Assignment Statements
         [Property("AssignmentStatementOperatorTokenKind", EqualsToken)]
-        AssignmentStatement = 1045,
+        AssignmentStatement = 2045,
         [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", PlusEqualsToken)]
-        AddAssignmentStatement = 1046,
+        AddAssignmentStatement = 2046,
         [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", MinusEqualsToken)]
-        SubtractAssignmentStatement = 1047,
+        SubtractAssignmentStatement = 2047,
         [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", StartEqualsToken)]
-        MultiplyAssignmentStatement = 1048,
+        MultiplyAssignmentStatement = 2048,
         [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", SlashEqualsToken)]
-        DivideAssignmentStatement = 1049,
+        DivideAssignmentStatement = 2049,
         [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", PercentEqualsToken)]
-        ModuloAssignmentStatement = 1050,
+        ModuloAssignmentStatement = 2050,
         [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", DotDotEqualsToken)]
-        ConcatAssignmentStatement = 1051,
+        ConcatAssignmentStatement = 2051,
         [ExtraCategories("CompoundAssignmentStatement")]
         [Property("AssignmentStatementOperatorTokenKind", HatEqualsToken)]
-        ExponentiateAssignmentStatement = 1052,
+        ExponentiateAssignmentStatement = 2052,
 
         // Control Flow Statements
-        NumericForStatement = 1053,
-        GenericForStatement = 1054,
-        WhileStatement = 1055,
-        RepeatUntilStatement = 1056,
-        IfStatement = 1057,
-        ElseIfClause = 1058,
-        ElseClause = 1059,
+        NumericForStatement = 2053,
+        GenericForStatement = 2054,
+        WhileStatement = 2055,
+        RepeatUntilStatement = 2056,
+        IfStatement = 2057,
+        ElseIfClause = 2058,
+        ElseClause = 2059,
 
         // Jump Statements
-        GotoStatement = 1060,
-        BreakStatement = 1061,
-        ReturnStatement = 1062,
-        ContinueStatement = 1063,
+        GotoStatement = 2060,
+        BreakStatement = 2061,
+        ReturnStatement = 2062,
+        ContinueStatement = 2063,
 
         // Statements
-        BadStatement = 1064,
-        LocalVariableDeclarationStatement = 1065,
-        LocalFunctionDeclarationStatement = 1066,
-        FunctionDeclarationStatement = 1067,
-        DoStatement = 1068,
-        GotoLabelStatement = 1069,
-        ExpressionStatement = 1070,
-        CompilationUnit = 1071,
-        StatementList = 1072
+        BadStatement = 2064,
+        LocalVariableDeclarationStatement = 2065,
+        LocalFunctionDeclarationStatement = 2066,
+        FunctionDeclarationStatement = 2067,
+        DoStatement = 2068,
+        GotoLabelStatement = 2069,
+        ExpressionStatement = 2070,
+        CompilationUnit = 2071,
+        StatementList = 2072
     }
 }

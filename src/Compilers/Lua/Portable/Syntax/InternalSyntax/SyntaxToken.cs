@@ -68,17 +68,26 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         internal static SyntaxToken Create(SyntaxKind kind)
         {
+            SyntaxToken token;
             if (kind > LastTokenWithWellKnownText)
             {
                 if (!SyntaxFacts.IsToken(kind))
                     throw new ArgumentException(string.Format(LuaResources.ThisMethodCanOnlyBeUsedToCreateTokens, kind), nameof(kind));
-                return CreateMissing(kind, null, null);
+                token = CreateMissing(kind, null, null);
             }
-            return s_tokensWithNoTrivia[(int) kind].Value;
+            else
+            {
+                token = s_tokensWithNoTrivia[(int) kind].Value;
+            }
+
+            RoslynDebug.Assert(token is not null);
+            return token;
         }
 
         internal static SyntaxToken Create(SyntaxKind kind, GreenNode? leading, GreenNode? trailing)
         {
+            SyntaxToken token;
+
             if (kind > LastTokenWithWellKnownText)
             {
                 if (!SyntaxFacts.IsToken(kind))
@@ -86,29 +95,46 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     throw new ArgumentException(string.Format(LuaResources.ThisMethodCanOnlyBeUsedToCreateTokens, kind), nameof(kind));
                 }
 
-                return CreateMissing(kind, leading, trailing);
+                token = CreateMissing(kind, leading, trailing);
+                goto ret;
             }
 
             if (leading == null)
             {
                 if (trailing == null)
-                    return s_tokensWithNoTrivia[(int) kind].Value;
+                {
+                    token = s_tokensWithNoTrivia[(int) kind].Value;
+                    goto ret;
+                }
                 else if (trailing == SyntaxFactory.Space)
-                    return s_tokensWithSingleTrailingSpace[(int) kind].Value;
+                {
+                    token = s_tokensWithSingleTrailingSpace[(int) kind].Value;
+                    goto ret;
+                }
                 else if (trailing == SyntaxFactory.CarriageReturnLineFeed)
-                    return s_tokensWithSingleTrailingCRLF[(int) kind].Value;
+                {
+                    token = s_tokensWithSingleTrailingCRLF[(int) kind].Value;
+                    goto ret;
+                }
             }
 
             if (leading == SyntaxFactory.ElasticZeroSpace && trailing == SyntaxFactory.ElasticZeroSpace)
-                return s_tokensWithElasticTrivia[(int) kind].Value;
+            {
+                token = s_tokensWithElasticTrivia[(int) kind].Value;
+                goto ret;
+            }
 
-            return new SyntaxTokenWithTrivia(kind, leading, trailing);
+            token = new SyntaxTokenWithTrivia(kind, leading, trailing);
+
+        ret:
+            RoslynDebug.Assert(token is not null);
+            return token;
         }
 
         internal static SyntaxToken CreateMissing(SyntaxKind kind, GreenNode? leading, GreenNode? trailing)
             => new MissingTokenWithTrivia(kind, leading, trailing);
 
-        internal const SyntaxKind FirstTokenWithWellKnownText = SyntaxKind.OpenParenthesisToken;
+        internal const SyntaxKind FirstTokenWithWellKnownText = SyntaxKind.EndOfFileToken;
         internal const SyntaxKind LastTokenWithWellKnownText = SyntaxKind.FalseKeyword;
 
         // For now we don't have enough tokens to warrant excluding the leading elements
