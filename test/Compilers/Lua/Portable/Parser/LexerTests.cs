@@ -24,14 +24,14 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             return tokens.ToImmutableArray();
         }
 
-        private static void AssertDiagnostic(Diagnostic diagnostic, ErrorCode code, TextSpan span, params object[] args)
+        private static void AssertDiagnostic(DiagnosticInfo diagnostic, ErrorCode code, TextSpan span, params object[] args)
         {
-            Assert.Equal(ErrorFacts.GetId(code), diagnostic.Id);
+            Assert.Equal(ErrorFacts.GetId(code), diagnostic.MessageIdentifier);
             var message = ErrorFacts.GetMessage(code, null);
             if (args.Length > 0 || message.Contains("{0}", StringComparison.Ordinal))
                 message = string.Format(message, args);
             Assert.Equal(message, diagnostic.GetMessage());
-            Assert.Equal(span, diagnostic.Location.SourceSpan);
+            Assert.Equal(span, new TextSpan(((SyntaxDiagnosticInfo) diagnostic).Offset, ((SyntaxDiagnosticInfo) diagnostic).Width));
 
         }
 
@@ -53,7 +53,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(text, token.Text);
             Assert.Equal(value, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_InvalidStringEscape, new TextSpan(escapePosition, escapeLength));
         }
 
@@ -75,7 +75,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(text, token.Text);
             Assert.Equal(value, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_UnescapedLineBreakInString, new TextSpan(lineBreakPosition, lineBreakLength));
         }
 
@@ -95,7 +95,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(text, token.Text);
             Assert.Equal(value, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_UnfinishedString, new TextSpan(0, text.Length));
         }
 
@@ -115,7 +115,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(text, token.Text);
             Assert.Equal(0d, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_InvalidNumber, new TextSpan(0, text.Length));
         }
 
@@ -133,7 +133,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(text, token.Text);
             Assert.Equal(0d, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_NumericLiteralTooLarge, new TextSpan(0, text.Length));
         }
 
@@ -169,7 +169,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(SyntaxKind.MultiLineCommentTrivia, commentTrivia.Kind());
             Assert.Equal(text, commentTrivia.ToFullString());
 
-            var diagnostic = Assert.Single(commentTrivia.GetDiagnostics());
+            var diagnostic = Assert.Single(commentTrivia.UnderlyingNode!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_UnfinishedLongComment, new TextSpan(0, text.Length));
             Assert.False(eof.ContainsDiagnostics);
         }
@@ -210,7 +210,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(SyntaxKind.ShebangTrivia, trivia.Kind());
             Assert.Equal(shebang, trivia.ToFullString());
 
-            var diagnostic = Assert.Single(trivia.GetDiagnostics());
+            var diagnostic = Assert.Single(trivia.UnderlyingNode!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_ShebangNotSupportedInLuaVersion, new TextSpan(0, shebang.Length));
             Assert.False(eof.ContainsDiagnostics);
         }
@@ -230,7 +230,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(numberText, token.Text);
             Assert.Equal((double) 0b1010, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion, new TextSpan(0, numberText.Length));
         }
 
@@ -249,7 +249,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(numberText, token.Text);
             Assert.Equal(7d * 8d + 7d, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_OctalNumericLiteralNotSupportedInVersion, new TextSpan(0, numberText.Length));
         }
 
@@ -269,7 +269,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(text, token.Text);
             Assert.Equal(HexFloat.DoubleFromHexString(text), token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion, new TextSpan(0, text.Length));
         }
 
@@ -290,7 +290,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(text, token.Text);
             Assert.Equal(value, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion, new TextSpan(0, text.Length));
         }
 
@@ -313,7 +313,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
                 trivia.Kind());
             Assert.Equal(text, trivia.ToFullString());
 
-            var diagnostic = Assert.Single(trivia.GetDiagnostics());
+            var diagnostic = Assert.Single(trivia.UnderlyingNode!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_CCommentsNotSupportedInVersion, new TextSpan(0, text.Length));
         }
 
@@ -336,7 +336,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(SyntaxKind.IdentifierToken, token.Kind());
             Assert.Equal(text, token.Text);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, new TextSpan(0, text.Length));
         }
 
@@ -354,7 +354,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(SyntaxKind.BadToken, token.Kind());
             Assert.Equal(text, token.Text);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_BadCharacter, new TextSpan(0, text.Length), text);
         }
 
@@ -375,7 +375,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             Assert.Equal(text, token.Text);
             Assert.Equal(value, token.Value);
 
-            var diagnostic = Assert.Single(token.GetDiagnostics());
+            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, new TextSpan(escapePosition, escapeLength));
         }
 
