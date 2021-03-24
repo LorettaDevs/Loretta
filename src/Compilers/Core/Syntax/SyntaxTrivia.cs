@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
@@ -20,6 +21,8 @@ namespace Loretta.CodeAnalysis
     [StructLayout(LayoutKind.Auto)]
     public readonly struct SyntaxTrivia : IEquatable<SyntaxTrivia>
     {
+        private static readonly Func<DiagnosticInfo, Diagnostic> s_createDiagnosticWithoutLocation = Diagnostic.Create;
+
         internal static readonly Func<SyntaxTrivia, bool> Any = t => true;
 
         internal SyntaxTrivia(in SyntaxToken token, GreenNode? triviaNode, int position, int index)
@@ -292,7 +295,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxTrivia WithAdditionalAnnotations(params SyntaxAnnotation[] annotations)
         {
-            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>)annotations);
+            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
         }
 
         /// <summary>
@@ -321,7 +324,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxTrivia WithoutAnnotations(params SyntaxAnnotation[] annotations)
         {
-            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>)annotations);
+            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
         }
 
         /// <summary>
@@ -408,7 +411,7 @@ namespace Loretta.CodeAnalysis
         public Location GetLocation()
         {
             // https://github.com/dotnet/roslyn/issues/40773
-            return this.SyntaxTree!.GetLocation(this.Span);
+            return SyntaxTree != null ? SyntaxTree.GetLocation(this.Span) : Location.None;
         }
 
         /// <summary>
@@ -418,8 +421,23 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<Diagnostic> GetDiagnostics()
         {
+            if (UnderlyingNode is null)
+            {
+                return SpecializedCollections.EmptyEnumerable<Diagnostic>();
+            }
+
             // https://github.com/dotnet/roslyn/issues/40773
-            return this.SyntaxTree!.GetDiagnostics(this);
+            var tree = SyntaxTree;
+            if (tree is null)
+            {
+                var diagnostics = UnderlyingNode.GetDiagnostics();
+
+                return diagnostics.Length == 0
+                    ? SpecializedCollections.EmptyEnumerable<Diagnostic>()
+                    : diagnostics.Select(s_createDiagnosticWithoutLocation);
+            }
+
+            return tree.GetDiagnostics(this);
         }
 
         /// <summary>
