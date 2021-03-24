@@ -87,9 +87,7 @@ namespace Loretta.CodeAnalysis.Lua
                 {
                     Interlocked.CompareExchange(
                         ref s_resourceManager,
-                        new System.Resources.ResourceManager(
-                            typeof(LuaResources).FullName!,
-                            typeof(ErrorCode).GetType().Assembly),
+                        LuaResources.ResourceManager,
                         null);
                 }
                 return s_resourceManager;
