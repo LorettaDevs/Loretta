@@ -336,7 +336,7 @@ namespace Loretta.Generators.SyntaxKindGenerators
                 writer.WriteLine("#endregion Keywords");
 
                 writer.WriteLineNoTabs("");
-                writer.WriteLine("_ => null,");
+                writer.WriteLine("_ => string.Empty,");
             }
         }
 
