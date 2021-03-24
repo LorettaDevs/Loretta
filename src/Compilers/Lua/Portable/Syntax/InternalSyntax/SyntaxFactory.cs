@@ -79,7 +79,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 if (text.StartsWith("--[", StringComparison.Ordinal))
                 {
                     var offset = 3;
-                    while (text[offset] == '=') offset++;
+                    while (offset < text.Length && text[offset] == '=') offset++;
                     return text[offset] == '[';
                 }
                 return false;
