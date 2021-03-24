@@ -58,7 +58,7 @@ namespace Loretta.CodeAnalysis.Lua
                     var leadingWidthAlreadyCounted = node.IsToken ? node.GetLeadingTriviaWidth() : 0;
 
                     // don't produce locations outside of tree span
-                    RoslynDebug.Assert(_syntaxTree is object);
+                    RoslynDebug.Assert(_syntaxTree is not null);
                     var length = _syntaxTree.GetRoot().FullSpan.Length;
                     var spanStart = Math.Min(_position - leadingWidthAlreadyCounted + sdi.Offset, length);
                     var spanWidth = Math.Min(spanStart + sdi.Width, length) - spanStart;
@@ -108,7 +108,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public Diagnostic Current
         {
-            get { RoslynDebug.Assert(_current is object); return _current; }
+            get { RoslynDebug.Assert(_current is not null); return _current; }
         }
 
         private struct NodeIteration

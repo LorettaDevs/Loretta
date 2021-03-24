@@ -309,7 +309,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             private void AddTrivia(SyntaxToken token, SyntaxNode node)
             {
-                RoslynDebug.Assert(node.Parent is object);
+                RoslynDebug.Assert(node.Parent is not null);
                 if ((_options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
                 {
                     AddResidualTrivia(token.LeadingTrivia);
@@ -342,7 +342,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             private void AddTrivia(SyntaxNode node, SyntaxToken token)
             {
-                RoslynDebug.Assert(node.Parent is object);
+                RoslynDebug.Assert(node.Parent is not null);
                 if ((_options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
                 {
                     AddResidualTrivia(node.GetLeadingTrivia());
