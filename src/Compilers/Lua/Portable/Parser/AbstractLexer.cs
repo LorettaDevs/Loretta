@@ -31,6 +31,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public SourceText Text => _text;
 
+        protected int LexemeStart => _start;
+
+        protected int LexemeLength => Position - LexemeStart;
+
         public void Restore(int position) => _reader.Restore(position);
 
         protected void Start()
@@ -73,9 +77,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected void AddError(int position, int width, ErrorCode code, params object[] args) => AddError(MakeError(position, width, code, args));
 
-        protected void AddError(ErrorCode code) => AddError(MakeError(code));
+        protected void AddError(ErrorCode code) => AddError(MakeError(0, LexemeLength, code));
 
-        protected void AddError(ErrorCode code, params object[] args) => AddError(MakeError(code, args));
+        protected void AddError(ErrorCode code, params object[] args) => AddError(MakeError(0, LexemeLength, code, args));
 
         protected void AddError(SyntaxDiagnosticInfo error)
         {
@@ -89,6 +93,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 _errors.Add(error);
             }
         }
+
+        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code) => new SyntaxDiagnosticInfo(code);
+
+        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code, params object[] args) => new SyntaxDiagnosticInfo(code, args);
 
         protected SyntaxDiagnosticInfo MakeError(int position, int width, ErrorCode code)
         {
@@ -104,10 +112,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private int GetOffsetFromPosition(int position) => position > _start ? position - _start : position;
 
-        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code) => new SyntaxDiagnosticInfo(code);
-
-        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code, params object[] args) => new SyntaxDiagnosticInfo(code, args);
-
         #endregion AddError
 
         #endregion Error Handling
@@ -118,7 +122,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected string Intern(StringBuilder builder) => _strings.Add(builder);
 
-        protected string GetText(bool intern) => GetText(_start, _reader.Position - _start, intern);
+        protected string GetText(bool intern) => GetText(LexemeStart, LexemeLength, intern);
 
         protected string GetText(int start, int length, bool intern)
         {
