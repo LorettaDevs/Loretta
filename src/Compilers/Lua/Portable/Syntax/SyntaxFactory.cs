@@ -606,23 +606,30 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// Parse a list of trivia rules for leading trivia.
         /// </summary>
-        public static SyntaxTriviaList ParseLeadingTrivia(string text, int offset = 0) => ParseLeadingTrivia(text, LuaParseOptions.Default, offset);
+        public static SyntaxTriviaList ParseLeadingTrivia(string text, LuaParseOptions? options, int offset = 0) =>
+            ParseLeadingTrivia(MakeSourceText(text, offset), options);
 
         /// <summary>
         /// Parse a list of trivia rules for leading trivia.
         /// </summary>
-        internal static SyntaxTriviaList ParseLeadingTrivia(string text, LuaParseOptions? options, int offset = 0)
+        public static SyntaxTriviaList ParseLeadingTrivia(SourceText text, LuaParseOptions? options)
         {
-            using var lexer = MakeLexer(text, offset, options);
+            using var lexer = MakeLexer(text, options);
             return lexer.LexSyntaxLeadingTrivia();
         }
 
         /// <summary>
         /// Parse a list of trivia using the parsing rules for trailing trivia.
         /// </summary>
-        public static SyntaxTriviaList ParseTrailingTrivia(string text, LuaParseOptions? options, int offset = 0)
+        public static SyntaxTriviaList ParseTrailingTrivia(string text, LuaParseOptions? options, int offset = 0) =>
+            ParseTrailingTrivia(MakeSourceText(text, offset), options);
+
+        /// <summary>
+        /// Parse a list of trivia using the parsing rules for trailing trivia.
+        /// </summary>
+        public static SyntaxTriviaList ParseTrailingTrivia(SourceText text, LuaParseOptions? options)
         {
-            using var lexer = MakeLexer(text, offset, options);
+            using var lexer = MakeLexer(text, options);
             return lexer.LexSyntaxTrailingTrivia();
         }
 
@@ -632,9 +639,17 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">The text of the token including leading and trailing trivia.</param>
         /// <param name="offset">Optional offset into text.</param>
         /// <param name="options">Parse options.</param>
-        public static SyntaxToken ParseToken(string text, int offset = 0, LuaParseOptions? options = null)
+        public static SyntaxToken ParseToken(string text, int offset = 0, LuaParseOptions? options = null) =>
+            ParseToken(MakeSourceText(text, offset), options);
+
+        /// <summary>
+        /// Parse a Lua language token.
+        /// </summary>
+        /// <param name="text">The text of the token including leading and trailing trivia.</param>
+        /// <param name="options">Parse options.</param>
+        public static SyntaxToken ParseToken(SourceText text, LuaParseOptions? options = null)
         {
-            using var lexer = MakeLexer(text, offset, options);
+            using var lexer = MakeLexer(text, options);
             return new SyntaxToken(lexer.Lex());
         }
 
@@ -645,9 +660,18 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="initialTokenPosition">An integer to use as the starting position of the first token.</param>
         /// <param name="offset">Optional offset into text.</param>
         /// <param name="options">Parse options.</param>
-        public static IEnumerable<SyntaxToken> ParseTokens(string text, int offset = 0, int initialTokenPosition = 0, LuaParseOptions? options = null)
+        public static IEnumerable<SyntaxToken> ParseTokens(string text, int offset = 0, int initialTokenPosition = 0, LuaParseOptions? options = null) =>
+            ParseTokens(MakeSourceText(text, offset), initialTokenPosition, options);
+
+        /// <summary>
+        /// Parse a sequence of Lua language tokens.
+        /// </summary>
+        /// <param name="text">The text of all the tokens.</param>
+        /// <param name="initialTokenPosition">An integer to use as the starting position of the first token.</param>
+        /// <param name="options">Parse options.</param>
+        public static IEnumerable<SyntaxToken> ParseTokens(SourceText text, int initialTokenPosition = 0, LuaParseOptions? options = null)
         {
-            using var lexer = MakeLexer(text, offset, options);
+            using var lexer = MakeLexer(text, options);
             var position = initialTokenPosition;
             while (true)
             {
@@ -671,9 +695,19 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="options">The optional parse options to use. If no options are specified default options are
         /// used.</param>
         /// <param name="consumeFullText">True if extra tokens in the input should be treated as an error</param>
-        public static ExpressionSyntax ParseExpression(string text, int offset = 0, LuaParseOptions? options = null, bool consumeFullText = true)
+        public static ExpressionSyntax ParseExpression(string text, int offset = 0, LuaParseOptions? options = null, bool consumeFullText = true) =>
+            ParseExpression(MakeSourceText(text, offset), options, consumeFullText);
+
+        /// <summary>
+        /// Parse an ExpressionSyntax node using the lowest precedence grammar rule for expressions.
+        /// </summary>
+        /// <param name="text">The text of the expression.</param>
+        /// <param name="options">The optional parse options to use. If no options are specified default options are
+        /// used.</param>
+        /// <param name="consumeFullText">True if extra tokens in the input should be treated as an error</param>
+        public static ExpressionSyntax ParseExpression(SourceText text, LuaParseOptions? options = null, bool consumeFullText = true)
         {
-            using var lexer = MakeLexer(text, offset, options);
+            using var lexer = MakeLexer(text, options);
             using var parser = MakeParser(lexer);
 
             var node = parser.ParseExpression();
@@ -689,9 +723,19 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="options">The optional parse options to use. If no options are specified default options are
         /// used.</param>
         /// <param name="consumeFullText">True if extra tokens in the input should be treated as an error</param>
-        public static StatementSyntax ParseStatement(string text, int offset = 0, LuaParseOptions? options = null, bool consumeFullText = true)
+        public static StatementSyntax ParseStatement(string text, int offset = 0, LuaParseOptions? options = null, bool consumeFullText = true) =>
+            ParseStatement(MakeSourceText(text, offset), options, consumeFullText);
+
+        /// <summary>
+        /// Parse a StatementSyntaxNode using grammar rule for statements.
+        /// </summary>
+        /// <param name="text">The text of the statement.</param>
+        /// <param name="options">The optional parse options to use. If no options are specified default options are
+        /// used.</param>
+        /// <param name="consumeFullText">True if extra tokens in the input should be treated as an error</param>
+        public static StatementSyntax ParseStatement(SourceText text, LuaParseOptions? options = null, bool consumeFullText = true)
         {
-            using var lexer = MakeLexer(text, offset, options);
+            using var lexer = MakeLexer(text, options);
             using var parser = MakeParser(lexer);
             var node = parser.ParseStatement();
             if (consumeFullText) node = parser.ConsumeUnexpectedTokens(node);
@@ -699,18 +743,30 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
-        /// Parse a CompilationUnitSyntax using the grammar rule for an entire compilation unit (file). To produce a
-        /// SyntaxTree instance, use CSharpSyntaxTree.ParseText instead.
+        /// Parse a <see cref="CompilationUnitSyntax"/> using the grammar rule for an entire compilation unit (file). To produce a
+        /// <see cref="CodeAnalysis.SyntaxTree"/> instance, use <see cref="LuaSyntaxTree.ParseText(string, LuaParseOptions?, string, Encoding?, CancellationToken)"/>
+        /// instead.
         /// </summary>
         /// <param name="text">The text of the compilation unit.</param>
         /// <param name="offset">Optional offset into text.</param>
         /// <param name="options">The optional parse options to use. If no options are specified default options are
         /// used.</param>
-        public static CompilationUnitSyntax ParseCompilationUnit(string text, int offset = 0, LuaParseOptions? options = null)
+        public static CompilationUnitSyntax ParseCompilationUnit(string text, int offset = 0, LuaParseOptions? options = null) =>
+            ParseCompilationUnit(MakeSourceText(text, offset), options);
+
+        /// <summary>
+        /// Parse a <see cref="CompilationUnitSyntax"/> using the grammar rule for an entire compilation unit (file). To produce a
+        /// <see cref="CodeAnalysis.SyntaxTree"/> instance, use <see cref="LuaSyntaxTree.ParseText(SourceText, LuaParseOptions?, string, CancellationToken)"/>
+        /// instead.
+        /// </summary>
+        /// <param name="text">The text of the compilation unit.</param>
+        /// <param name="options">The optional parse options to use. If no options are specified default options are
+        /// used.</param>
+        public static CompilationUnitSyntax ParseCompilationUnit(SourceText text, LuaParseOptions? options = null)
         {
             // note that we do not need a "consumeFullText" parameter, because parsing a compilation unit always must
             // consume input until the end-of-file
-            using var lexer = MakeLexer(text, offset, options);
+            using var lexer = MakeLexer(text, options);
             using var parser = MakeParser(lexer);
             var node = parser.ParseCompilationUnit();
             return (CompilationUnitSyntax) node.CreateRed();
@@ -722,8 +778,8 @@ namespace Loretta.CodeAnalysis.Lua
         private static SourceText MakeSourceText(string text, int offset) =>
             SourceText.From(text, Encoding.UTF8).GetSubText(offset);
 
-        private static InternalSyntax.Lexer MakeLexer(string text, int offset, LuaParseOptions? options = null) =>
-            new InternalSyntax.Lexer(text: MakeSourceText(text, offset), options: options ?? LuaParseOptions.Default);
+        private static InternalSyntax.Lexer MakeLexer(SourceText text, LuaParseOptions? options = null) =>
+            new InternalSyntax.Lexer(text: text, options: options ?? LuaParseOptions.Default);
 
         private static InternalSyntax.LanguageParser MakeParser(InternalSyntax.Lexer lexer) =>
             new InternalSyntax.LanguageParser(lexer, oldTree: null, changes: null);
