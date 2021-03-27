@@ -1,38 +1,37 @@
 ﻿#define LARGE_TESTS
+//#define LARGE_TESTS_DEBUG
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
 using Loretta.CodeAnalysis;
-using Loretta.CodeAnalysis.Lua;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
 using Tsu;
 using Xunit;
 
-namespace Loretta.Tests.CodeAnalysis.Syntax
+namespace Loretta.CodeAnalysis.Lua.Tests.Syntax
 {
     public class LexerTests
     {
         private static ImmutableArray<SyntaxToken> ParseTokens(string text, LuaSyntaxOptions? options = null, bool includeEndOfFile = false)
         {
             var parseOptions = new LuaParseOptions(options ?? LuaSyntaxOptions.All);
-            var tokens = SyntaxFactory.ParseTokens(text, options: parseOptions);
-            if (!includeEndOfFile)
-                tokens = tokens.SkipLast(1);
-            return tokens.ToImmutableArray();
+            var tokens = SyntaxFactory.ParseTokens(text, options: parseOptions).ToImmutableArray();
+            Assert.True(tokens[^1].Kind() == SyntaxKind.EndOfFileToken, "Last element of the token list was not an EOF token.");
+            return tokens.RemoveAt(tokens.Length - 1);
         }
 
         private static void AssertDiagnostic(DiagnosticInfo diagnostic, ErrorCode code, TextSpan span, params object[] args)
         {
             Assert.Equal(ErrorFacts.GetId(code), diagnostic.MessageIdentifier);
-            var message = ErrorFacts.GetMessage(code, null);
+            var message = ErrorFacts.GetMessage(code, CultureInfo.InvariantCulture);
             if (args.Length > 0 || message.Contains("{0}", StringComparison.Ordinal))
                 message = string.Format(message, args);
             Assert.Equal(message, diagnostic.GetMessage());
             Assert.Equal(span, new TextSpan(((SyntaxDiagnosticInfo) diagnostic).Offset, ((SyntaxDiagnosticInfo) diagnostic).Width));
-
         }
 
         [Theory]
@@ -171,7 +170,6 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             var diagnostic = Assert.Single(commentTrivia.UnderlyingNode!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_UnfinishedLongComment, new TextSpan(0, text.Length));
-            Assert.False(eof.ContainsDiagnostics);
         }
 
         [Theory]
@@ -212,7 +210,6 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
             var diagnostic = Assert.Single(trivia.UnderlyingNode!.GetDiagnostics());
             AssertDiagnostic(diagnostic, ErrorCode.ERR_ShebangNotSupportedInLuaVersion, new TextSpan(0, shebang.Length));
-            Assert.False(eof.ContainsDiagnostics);
         }
 
         [Fact]
@@ -302,7 +299,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
         public void Lexer_EmitsDiagnosticWhen_CCommentIsFound_And_LuaSyntaxOptionsAcceptCCommentsIsFalse(string text)
         {
             LuaSyntaxOptions options = LuaSyntaxOptions.All.With(acceptCCommentSyntax: false);
-            var tokens = ParseTokens(text, options: options);
+            var tokens = ParseTokens(text, options: options, includeEndOfFile: true);
 
             var eof = Assert.Single(tokens);
             var trivia = Assert.Single(eof.LeadingTrivia);
@@ -423,7 +420,7 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
         public void Lexer_Covers_AllTokens()
         {
             var tokenKinds = Enum.GetValues<SyntaxKind>()
-                                 .Where(k => k.IsToken() || k.IsTrivia());
+                                 .Where(k => SyntaxFacts.IsToken(k) || SyntaxFacts.IsTrivia(k));
 
             var testedTokenKinds = GetTokens().Concat(GetTrivia())
                                               .Select(t => t.Kind);
@@ -526,30 +523,39 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
 
         public static IEnumerable<object[]> GetTokensData() =>
             from token in GetTokens()
+#if LARGE_TESTS_DEBUG
+            let options = LuaSyntaxOptions.All
+#else
             from options in LuaSyntaxOptions.AllPresets
-                //let options = LuaOptions.All
+#endif
             select new object[] { options, token };
 
         public static IEnumerable<object[]> GetTriviaData() =>
             from trivia in GetTrivia()
+#if LARGE_TESTS_DEBUG
+            let options = LuaSyntaxOptions.All
+#else
             from options in LuaSyntaxOptions.AllPresets
-                //let options = LuaOptions.All
+#endif
             select new object[] { options, trivia };
 
         public static IEnumerable<object[]> GetTokenPairsData() =>
             from pair in GetTokenPairs()
+#if LARGE_TESTS_DEBUG
+            let options = LuaSyntaxOptions.All
+#else
             from options in LuaSyntaxOptions.AllPresets
-                //let options = LuaOptions.LuaJIT
+#endif
             select new object[] { options, pair.tokenA, pair.tokenB };
 
         public static IEnumerable<object[]> GetTokenPairsWithSeparatorsData() =>
             from tuple in GetTokenPairsWithSeparators()
+#if LARGE_TESTS_DEBUG
+            let options = LuaSyntaxOptions.All
+#else
             from options in LuaSyntaxOptions.AllPresets
-                //let options = LuaOptions.LuaJIT
+#endif
             select new object[] { options, tuple.tokenA, tuple.separator, tuple.tokenB };
-
-        public static IEnumerable<object[]> GetAllPresetsData() =>
-            LuaSyntaxOptions.AllPresets.Select(option => new object[] { option });
 
         private static IEnumerable<ShortToken> GetTokens()
         {
@@ -557,12 +563,12 @@ namespace Loretta.Tests.CodeAnalysis.Syntax
             const string shortStringContentValue = "hi\n\r\r\n\a\b\f\n\r\t\v\\'\"\0\xA\xFF\xF\xFF";
             var fixedTokens = from kind in Enum.GetValues<SyntaxKind>()
                               let text = SyntaxFacts.GetText(kind)
-                              where text is not null
+                              where !string.IsNullOrEmpty(text)
                               select new ShortToken(kind, text);
 
             var dynamicTokens = new List<ShortToken>
             {
-#region Numbers
+                #region Numbers
 
                 // Binary
                 new ShortToken ( SyntaxKind.NumericLiteralToken, "0b10", Option.Some<double> ( 0b10 ) ),
@@ -675,7 +681,6 @@ aaa
                 new ShortToken ( SyntaxKind.MultiLineCommentTrivia, @"--[====[
 aaa
 ]====]" ),
-                // Longs comments can't be used as separators because of the minus token.
             };
         }
 
@@ -686,8 +691,8 @@ aaa
             if (kindBText is null)
                 throw new ArgumentNullException(nameof(kindBText));
 
-            var kindAIsKeyword = kindA.IsKeyword();
-            var kindBIsKeyowrd = kindB.IsKeyword();
+            var kindAIsKeyword = SyntaxFacts.IsKeyword(kindA);
+            var kindBIsKeyowrd = SyntaxFacts.IsKeyword(kindB);
 
             if (kindA is SyntaxKind.IdentifierToken && kindB is SyntaxKind.IdentifierToken)
                 return true;
@@ -779,7 +784,6 @@ aaa
             select (tokenA, separator, tokenB);
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Intended")]
     public readonly struct ShortDiagnostic
     {
         public readonly string Id;
