@@ -19,6 +19,12 @@ namespace Loretta.CodeAnalysis
     public abstract class SyntaxTree
     {
         /// <summary>
+        /// Cached value for empty <see cref="DiagnosticOptions"/>.
+        /// </summary>
+        protected internal static readonly ImmutableDictionary<string, ReportDiagnostic> EmptyDiagnosticOptions =
+            ImmutableDictionary.Create<string, ReportDiagnostic>(CaseInsensitiveComparison.Comparer);
+
+        /// <summary>
         /// The path of the source document file.
         /// </summary>
         /// <remarks>
