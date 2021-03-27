@@ -4,10 +4,11 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Loretta.CodeAnalysis;
-using Loretta.CodeAnalysis.Syntax;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Text;
-using Loretta.IO;
 using Tsu.CLI.Commands;
 using Tsu.CLI.Commands.Errors;
 using Tsu.Numerics;
@@ -17,63 +18,61 @@ namespace Loretta.CLI
 {
     public static class Program
     {
-        private static Boolean ShouldRun;
-        private static ConsoleTimingLogger? Logger;
+        private static readonly ConsoleTimingLogger s_logger = new ConsoleTimingLogger();
+        private static bool s_shouldRun;
 
-        public static void Main ( )
+        public static void Main()
         {
-            var commandManager = new ConsoleCommandManager ( );
-            commandManager.LoadCommands ( typeof ( Program ), null );
-            commandManager.AddHelpCommand ( );
+            var commandManager = new ConsoleCommandManager();
+            commandManager.LoadCommands(typeof(Program), null);
+            commandManager.AddHelpCommand();
 
-            Logger = new ConsoleTimingLogger ( );
-
-            ShouldRun = true;
-            while ( ShouldRun )
+            s_shouldRun = true;
+            while (s_shouldRun)
             {
                 try
                 {
-                    Logger.Write ( $"{Environment.CurrentDirectory}> " );
-                    commandManager.Execute ( Logger.ReadLine ( ) );
+                    s_logger.Write($"{Environment.CurrentDirectory}> ");
+                    commandManager.Execute(s_logger.ReadLine());
                 }
-                catch ( NonExistentCommandException ex )
+                catch (NonExistentCommandException ex)
                 {
-                    Logger.LogError ( "Unexistent command '{0}'. Use the 'help' command to list all commands.", ex.Command );
+                    s_logger.LogError("Unexistent command '{0}'. Use the 'help' command to list all commands.", ex.Command);
                 }
-                catch ( CommandInvocationException ex )
+                catch (CommandInvocationException ex)
                 {
-                    Logger.LogError ( "Error while executing '{0}': {1}\n{2}", ex.Command, ex.Message, ex.StackTrace! );
+                    s_logger.LogError("Error while executing '{0}': {1}\n{2}", ex.Command, ex.Message, ex.StackTrace!);
                 }
             }
         }
 
-        [Command ( "q" ), Command ( "quit" ), Command ( "exit" )]
-        public static void Quit ( ) => ShouldRun = false;
+        [Command("q"), Command("quit"), Command("exit")]
+        public static void Quit() => s_shouldRun = false;
 
         #region Current Directory Management
 
-        [Command ( "cd" )]
-        public static void ChangeDirectory ( String relativePath )
+        [Command("cd")]
+        public static void ChangeDirectory(string relativePath)
         {
             try
             {
-                Environment.CurrentDirectory = Path.GetFullPath ( Path.Combine ( Environment.CurrentDirectory, relativePath ) );
+                Environment.CurrentDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, relativePath));
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
-                Logger!.LogError ( "Error while changing directory: {0}", ex );
+                s_logger.LogError("Error while changing directory: {0}", ex);
             }
         }
 
-        [Command ( "ls" )]
-        public static void ListSymbols ( )
+        [Command("ls")]
+        public static void ListSymbols()
         {
-            var di = new DirectoryInfo ( Environment.CurrentDirectory );
-            foreach ( DirectoryInfo directoryInfo in di.EnumerateDirectories ( ) )
-                Logger!.WriteLine ( $"./{directoryInfo.Name}/" );
+            var di = new DirectoryInfo(Environment.CurrentDirectory);
+            foreach (var directoryInfo in di.EnumerateDirectories())
+                s_logger.WriteLine($"./{directoryInfo.Name}/");
 
-            foreach ( FileInfo fileInfo in di.EnumerateFiles ( ) )
-                Logger!.WriteLine ( $"./{fileInfo.Name}" );
+            foreach (var fileInfo in di.EnumerateFiles())
+                s_logger.WriteLine($"./{fileInfo.Name}");
         }
 
         #endregion Current Directory Management
@@ -88,185 +87,192 @@ namespace Loretta.CLI
             All,
         }
 
-        private static LuaOptions PresetEnumToPresetOptions ( LuaOptionsPreset preset )
+        private static LuaParseOptions PresetEnumToPresetOptions(LuaOptionsPreset preset)
         {
-            return preset switch
+            return new LuaParseOptions(preset switch
             {
-                LuaOptionsPreset.Lua51 => LuaOptions.Lua51,
-                LuaOptionsPreset.Lua52 => LuaOptions.Lua52,
-                LuaOptionsPreset.LuaJIT => LuaOptions.LuaJIT,
-                LuaOptionsPreset.GMod => LuaOptions.GMod,
-                LuaOptionsPreset.Roblox => LuaOptions.Roblox,
-                LuaOptionsPreset.All => LuaOptions.All,
-                _ => throw new InvalidOperationException ( ),
-            };
+                LuaOptionsPreset.Lua51 => LuaSyntaxOptions.Lua51,
+                LuaOptionsPreset.Lua52 => LuaSyntaxOptions.Lua52,
+                LuaOptionsPreset.LuaJIT => LuaSyntaxOptions.LuaJIT,
+                LuaOptionsPreset.GMod => LuaSyntaxOptions.GMod,
+                LuaOptionsPreset.Roblox => LuaSyntaxOptions.Roblox,
+                LuaOptionsPreset.All => LuaSyntaxOptions.All,
+                _ => throw new InvalidOperationException(),
+            });
         }
 
         public enum ASTVisitors
         {
-            ConstantFolder,
-            RawStringRewriter,
-            UselessAssignmentRemover,
-            SimpleInliner,
-            AllTillNothingMoreToDo
         }
 
-        [Command ( "l" ), Command ( "lex" )]
-        public static void Lex ( LuaOptionsPreset preset, String path, Boolean printTokens = false )
+        [Command("l"), Command("lex")]
+        public static void Lex(LuaOptionsPreset preset, string path, bool printTokens = false)
         {
-            if ( !File.Exists ( path ) )
+            if (!File.Exists(path))
             {
-                Logger!.LogError ( "Provided path does not exist." );
+                s_logger.LogError("Provided path does not exist.");
                 return;
             }
 
-            LuaOptions options = PresetEnumToPresetOptions ( preset );
-            var text = File.ReadAllText ( path );
-            var sourceText = SourceText.From ( text, path );
+            var options = PresetEnumToPresetOptions(preset);
+            SourceText sourceText;
+            using (var stream = File.OpenRead(path))
+                sourceText = SourceText.From(stream, Encoding.UTF8);
+
             ImmutableArray<SyntaxToken> tokens;
-            ImmutableArray<Diagnostic> diagnostics;
-            using ( Logger!.BeginOperation ( "Lexing" ) )
-                tokens = SyntaxTree.ParseTokens ( options, sourceText, out diagnostics, includeEndOfFile: true );
+            using (s_logger.BeginOperation("Lexing"))
+                tokens = SyntaxFactory.ParseTokens(sourceText, options: options).ToImmutableArray();
 
-            Logger!.LogInformation ( $"{tokens.Length} tokens lexed." );
-            var tw = new ConsoleTimingLoggerTextWriter ( Logger );
-            if ( printTokens )
+            s_logger.LogInformation($"{tokens.Length} tokens lexed.");
+            if (printTokens)
             {
-                foreach ( SyntaxToken token in tokens )
-                {
-                    token.PrettyPrintTo ( tw );
-                }
+                var tokenNodes = tokens.Select(t => LuaTreeDumperConverter.Convert(t, true));
+                var rootNode = new TreeDumperNode("Root", null, tokenNodes);
+                s_logger.WriteLine(TreeDumper.DumpCompact(rootNode));
             }
-
-            tw.WriteDiagnostics ( diagnostics );
         }
 
-        [Command ( "p" ), Command ( "parse" )]
-        public static void Parse ( LuaOptionsPreset preset, String path, params ASTVisitors[] visitors )
+        [Command("p"), Command("parse")]
+        public static void Parse(LuaOptionsPreset preset, string path)
         {
-            if ( !File.Exists ( path ) )
+            if (!File.Exists(path))
             {
-                Logger!.LogError ( "Provided path does not exist." );
+                s_logger.LogError("Provided path does not exist.");
                 return;
             }
 
-            LuaOptions options = PresetEnumToPresetOptions ( preset );
-            var sourceText = SourceText.Load ( path );
-            SyntaxTree syntaxTree;
-            using ( Logger!.BeginOperation ( "Parsing" ) )
-                syntaxTree = SyntaxTree.Parse ( options, sourceText );
+            var options = PresetEnumToPresetOptions(preset);
+            SourceText sourceText;
+            using (var stream = File.OpenRead(path))
+                sourceText = SourceText.From(stream, Encoding.UTF8);
 
-            var tw = new ConsoleTimingLoggerTextWriter ( Logger );
-            tw.WriteDiagnostics ( syntaxTree.Diagnostics );
-            Logger.Write ( "Press any key to continue..." );
-            Console.ReadKey ( true );
-            Logger.WriteLine ( "" );
-            syntaxTree.Root.PrettyPrintTo ( tw );
+            LuaSyntaxTree syntaxTree;
+            using (s_logger.BeginOperation("Parsing"))
+                syntaxTree = (LuaSyntaxTree) LuaSyntaxTree.ParseText(sourceText, options: options, path: path);
+
+            var diagnostics = syntaxTree.GetDiagnostics();
+            foreach (var diagnostic in diagnostics)
+                s_logger.WriteLine(diagnostic.ToString());
+            s_logger.Write("Press any key to continue...");
+            Console.ReadKey(true);
+            s_logger.WriteLine("");
+            s_logger.WriteLine(TreeDumper.DumpCompact(LuaTreeDumperConverter.Convert(syntaxTree.GetRoot())));
         }
 
-        [Command ( "e" ), Command ( "expr" ), Command ( "expression" )]
+        [Command("e"), Command("expr"), Command("expression")]
         [RawInput]
-        public static void ParseExpression ( String input )
+        public static void ParseExpression(string input)
         {
-            var presetName = input.Substring ( 0, input.IndexOf ( ' ' ) );
-            var code = input.Substring ( input.IndexOf ( ' ' ) + 1 );
-            LuaOptions options = PresetEnumToPresetOptions ( Enum.Parse<LuaOptionsPreset> ( presetName, true ) );
-            var text = SourceText.From ( code, "Console" );
+            var presetName = input.Substring(0, input.IndexOf(' '));
+            var code = input[(input.IndexOf(' ') + 1)..];
+            var options = PresetEnumToPresetOptions(Enum.Parse<LuaOptionsPreset>(presetName, true));
+            var text = SourceText.From(code, Console.InputEncoding);
 
-            ExpressionSyntax expr = SyntaxTree.ParseExpression ( options, text, out ImmutableArray<Diagnostic> diagnostics );
-            var tw = new ConsoleTimingLoggerTextWriter ( Logger! );
-            expr.PrettyPrintTo ( tw );
-            tw.WriteDiagnostics ( diagnostics );
+            var expr = SyntaxFactory.ParseExpression(text, options);
+            var diagnostics = expr.GetDiagnostics();
+            foreach (var diagnostic in diagnostics)
+                s_logger.WriteLine(diagnostic.ToString());
+            s_logger.WriteLine(TreeDumper.DumpCompact(LuaTreeDumperConverter.Convert(expr)));
         }
 
-        [Command ( "mp" ), Command ( "mass-parse" )]
-        public static void MassParse ( LuaOptionsPreset preset, params String[] patterns )
+        [Command("mp"), Command("mass-parse")]
+        public static void MassParse(LuaOptionsPreset preset, params string[] patterns)
         {
-            var files = patterns.SelectMany ( pattern => Directory.EnumerateFiles ( ".", pattern, new EnumerationOptions
+            var files = patterns.SelectMany(pattern => Directory.EnumerateFiles(".", pattern, new EnumerationOptions
             {
                 IgnoreInaccessible = true,
                 MatchType = MatchType.Simple
-            } ) )
-                .ToArray ( );
+            }))
+                .ToArray();
 
-            LuaOptions options = PresetEnumToPresetOptions ( preset );
-            foreach ( var file in files )
+            var options = PresetEnumToPresetOptions(preset);
+            foreach (var file in files)
             {
-                var sourceText = SourceText.Load ( file );
-                var stopwatch = Stopwatch.StartNew ( );
-                var tree = SyntaxTree.Parse ( options, sourceText );
-                stopwatch.Stop ( );
-                Logger!.WriteLine ( $"{file}: {Duration.Format ( stopwatch.ElapsedTicks )}" );
-                if ( !tree.Diagnostics.IsEmpty )
-                    Logger.LogError ( "Diagnostics were emitted." );
+                SourceText sourceText;
+                using (var stream = File.OpenRead(file))
+                    sourceText = SourceText.From(stream, Encoding.UTF8);
+
+                var stopwatch = Stopwatch.StartNew();
+                var tree = LuaSyntaxTree.ParseText(sourceText, options, file);
+                stopwatch.Stop();
+                s_logger.WriteLine($"{file}: {Duration.Format(stopwatch.ElapsedTicks)}");
+                if (!tree.GetRoot().ContainsDiagnostics)
+                    s_logger.LogError("Diagnostics were emitted.");
             }
         }
 
-        [Command ( "cls" ), Command ( "clear" )]
-        public static void Clear ( ) =>
-            Console.Clear ( );
+        [Command("cls"), Command("clear")]
+        public static void Clear() =>
+            Console.Clear();
 
         #region Memory Usage
 
-        private static readonly Process CurrentProc = Process.GetCurrentProcess ( );
-        private static readonly Stack<(Int64 gcMemory, Int64 processMemory)> MemoryStack = new Stack<(Int64 gcMemory, Int64 processMemory)> ( );
+        private static readonly Process s_currentProc = Process.GetCurrentProcess();
+        private static readonly Stack<(long gcMemory, long processMemory)> s_memoryStack = new Stack<(long gcMemory, long processMemory)>();
 
-        [Command ( "m" ), Command ( "mem" )]
-        public static void PrintMemoryUsage ( )
+        [Command("m"), Command("mem")]
+        public static void PrintMemoryUsage()
         {
-            var gcmem = GC.GetTotalMemory ( false );
-            var procmem = CurrentProc.PrivateMemorySize64;
-            Logger!.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( gcmem )}" );
-            Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( procmem )}" );
+            var gcmem = GC.GetTotalMemory(false);
+            var procmem = s_currentProc.PrivateMemorySize64;
+            s_logger.WriteLine($"Memory usage according to GC:       {FileSize.Format(gcmem)}");
+            s_logger.WriteLine($"Memory usage according to Process:  {FileSize.Format(procmem)}");
         }
 
-        [Command ( "mpush" ), Command ( "memory-push" )]
-        public static void PushMemoryUsage ( )
+        [Command("mpush"), Command("memory-push")]
+        public static void PushMemoryUsage()
         {
-            var gcmem = GC.GetTotalMemory ( false );
-            var procmem = CurrentProc.PrivateMemorySize64;
-            Logger!.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( gcmem )}" );
-            Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( procmem )}" );
-            MemoryStack.Push ( (gcmem, procmem) );
-            Logger.WriteLine ( "Memory usage pushed to stack." );
+            var gcmem = GC.GetTotalMemory(false);
+            var procmem = s_currentProc.PrivateMemorySize64;
+            s_logger.WriteLine($"Memory usage according to GC:       {FileSize.Format(gcmem)}");
+            s_logger.WriteLine($"Memory usage according to Process:  {FileSize.Format(procmem)}");
+            s_memoryStack.Push((gcmem, procmem));
+            s_logger.WriteLine("Memory usage pushed to stack.");
         }
 
-        [Command ( "mcomp" ), Command ( "memory-compare" )]
-        public static void CompareMemoryUsage ( )
+        [Command("mcomp"), Command("memory-compare")]
+        public static void CompareMemoryUsage()
         {
-            var currgcmem = GC.GetTotalMemory ( false );
-            var currprocmem = CurrentProc.PrivateMemorySize64;
-            Logger!.WriteLine ( $"Memory usage according to GC:       {FileSize.Format ( currgcmem )}" );
-            Logger.WriteLine ( $"Memory usage according to Process:  {FileSize.Format ( currprocmem )}" );
+            var currgcmem = GC.GetTotalMemory(false);
+            var currprocmem = s_currentProc.PrivateMemorySize64;
+            s_logger.WriteLine($"Memory usage according to GC:       {FileSize.Format(currgcmem)}");
+            s_logger.WriteLine($"Memory usage according to Process:  {FileSize.Format(currprocmem)}");
 
-            if ( MemoryStack.Count == 0 )
+            if (s_memoryStack.Count == 0)
             {
-                Logger.LogError ( "Nothing on memory stack to compare to." );
+                s_logger.LogError("Nothing on memory stack to compare to.");
                 return;
             }
 
-            (var oldgcmem, var oldprocmem) = MemoryStack.Peek ( );
+            (var oldgcmem, var oldprocmem) = s_memoryStack.Peek();
             (var Δgcmem, var Δprocmem) = (currgcmem - oldgcmem, currprocmem - oldprocmem);
-            Logger.WriteLine ( $"ΔMemory usage according to GC:      {( Δgcmem < 0 ? $"-{FileSize.Format ( -Δgcmem )}" : FileSize.Format ( Δgcmem ) )}" );
-            Logger.WriteLine ( $"ΔMemory usage according to Process: {( Δprocmem < 0 ? $"-{FileSize.Format ( -Δprocmem )}" : FileSize.Format ( Δprocmem ) )}" );
+            s_logger.WriteLine($"ΔMemory usage according to GC:      {(Δgcmem < 0 ? $"-{FileSize.Format(-Δgcmem)}" : FileSize.Format(Δgcmem))}");
+            s_logger.WriteLine($"ΔMemory usage according to Process: {(Δprocmem < 0 ? $"-{FileSize.Format(-Δprocmem)}" : FileSize.Format(Δprocmem))}");
         }
 
-        [Command ( "mpop" ), Command ( "memory-pop" )]
-        public static void PopMemoryUsage ( )
+        [Command("mpop"), Command("memory-pop")]
+        public static void PopMemoryUsage()
         {
-            if ( MemoryStack.Count == 0 )
+            if (s_memoryStack.Count == 0)
             {
-                Logger!.LogError ( "Nothing on memory stack to pop." );
+                s_logger.LogError("Nothing on memory stack to pop.");
                 return;
             }
 
-            CompareMemoryUsage ( );
-            MemoryStack.Pop ( );
+            CompareMemoryUsage();
+            s_memoryStack.Pop();
         }
 
-        [Command ( "gc" )]
-        [HelpDescription ( "Invokes the garbage collector" )]
-        public static void InvokeGC ( ) => GC.Collect ( );
+        [Command("gc")]
+        [HelpDescription("Invokes the garbage collector")]
+        public static void InvokeGC()
+        {
+            for (var idx = 0; idx < 1000; idx++)
+            {
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true, compacting: true);
+                GC.WaitForPendingFinalizers();
+            }
+        }
 
         #endregion Memory Usage
     }
