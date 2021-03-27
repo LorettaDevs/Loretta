@@ -20,12 +20,12 @@ namespace Loretta.CodeAnalysis.Lua
         EndOfLineTrivia = 6,
         [Trivia]
         SkippedTokensTrivia = 7,
-        [Trivia]
-        [ExtraCategories("DocumentationCommentTrivia")]
-        SingleLineDocumentationCommentTrivia = 8,
-        [Trivia]
-        [ExtraCategories("DocumentationCommentTrivia")]
-        MultiLineDocumentationCommentTrivia = 9,
+        //[Trivia]
+        //[ExtraCategories("DocumentationCommentTrivia")]
+        //SingleLineDocumentationCommentTrivia = 8,
+        //[Trivia]
+        //[ExtraCategories("DocumentationCommentTrivia")]
+        //MultiLineDocumentationCommentTrivia = 9,
 
         // Textless Tokens
         [Token]

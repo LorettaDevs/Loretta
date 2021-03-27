@@ -58,7 +58,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public override bool IsStructuredTrivia => this is StructuredTriviaSyntax;
         public override bool IsSkippedTokensTrivia => Kind == SyntaxKind.SkippedTokensTrivia;
-        public override bool IsDocumentationCommentTrivia => SyntaxFacts.IsDocumentationCommentTrivia(Kind);
 
         public SyntaxToken? GetFirstToken() => (SyntaxToken?) GetFirstTerminal();
 
