@@ -33,7 +33,9 @@
     <AdditionalFiles Include="Syntax\Syntax.xml" />
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Tests" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Syntax.UnitTests" />
+    <InternalsVisibleTo Include="Loretta.CLI" />
   </ItemGroup>
 
   <ItemGroup>
