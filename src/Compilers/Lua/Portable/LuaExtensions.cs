@@ -109,7 +109,7 @@ namespace Loretta.CodeAnalysis
         internal static SyntaxToken FirstOrDefault(this SyntaxTokenList list, SyntaxKind kind)
         {
             var index = list.IndexOf(kind);
-            return (index >= 0) ? list[index] : default(SyntaxToken);
+            return (index >= 0) ? list[index] : default;
         }
     }
 }
@@ -273,7 +273,13 @@ namespace Loretta.CodeAnalysis.Lua
 
         #region SyntaxTree
 
-        public static Syntax.CompilationUnitSyntax GetCompilationUnitRoot(this SyntaxTree tree, CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Obtains the root as a <see cref="Syntax.CompilationUnitSyntax"/>.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static Syntax.CompilationUnitSyntax GetCompilationUnitRoot(this SyntaxTree tree, CancellationToken cancellationToken = default)
             => (Syntax.CompilationUnitSyntax) tree.GetRoot(cancellationToken);
 
         #endregion SyntaxTree
