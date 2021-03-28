@@ -108,13 +108,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 _builder.Append(_reader.Read()!.Value);
                 SkipDecimalDigits(_builder);
-                if (CharUtils.AsciiLowerCase(_reader.Peek().GetValueOrDefault()) == 'e')
-                {
+            }
+
+            if (CharUtils.AsciiLowerCase(_reader.Peek().GetValueOrDefault()) == 'e')
+            {
+                _builder.Append(_reader.Read()!.Value);
+                if (_reader.IsNext('+') || _reader.IsNext('-'))
                     _builder.Append(_reader.Read()!.Value);
-                    if (_reader.IsNext('+') || _reader.IsNext('-'))
-                        _builder.Append(_reader.Read()!.Value);
-                    SkipDecimalDigits(_builder);
-                }
+                SkipDecimalDigits(_builder);
             }
 
             info.Text = GetText(intern: true);
