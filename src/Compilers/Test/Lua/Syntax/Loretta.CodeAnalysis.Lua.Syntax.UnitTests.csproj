@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Loretta.CodeAnalysis.csproj" />
     <ProjectReference Include="..\..\..\Lua\Portable\Loretta.CodeAnalysis.Lua.csproj" />
+    <ProjectReference Include="..\..\Core\Loretta.CodeAnalysis.Test.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

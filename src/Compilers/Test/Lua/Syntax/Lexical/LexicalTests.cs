@@ -1,10 +1,10 @@
-﻿#define LARGE_TESTS
-//#define LARGE_TESTS_DEBUG
+﻿//#define LARGE_TESTS_DEBUG
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Loretta.CodeAnalysis.Text;
+using Loretta.Test.Utilities;
 using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
@@ -41,7 +41,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Fact]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Short")]
+        [Trait("Duration", "Very Short")]
         public void Lexer_Lexes_ShebangsOnlyOnFileStart()
         {
             const string shebang = "#!/bin/bash";
@@ -98,10 +98,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
             Assert.Empty(untestedTokenKinds);
         }
 
-#if LARGE_TESTS
         [Theory]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Medium")]
+        [Trait("Duration", "Short")]
         [MemberData(nameof(GetTokensData))]
         public void Lexer_Lexes_Token(LuaSyntaxOptions options, ShortToken expectedToken)
         {
@@ -112,12 +111,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
             if (expectedToken.Value.IsSome)
                 Assert.Equal(expectedToken.Value.Value, token.Value);
         }
-#endif
 
-#if LARGE_TESTS
         [Theory]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Medium")]
+        [Trait("Duration", "Short")]
         [MemberData(nameof(GetTriviaData))]
         public void Lexer_Lexes_Trivia(LuaSyntaxOptions options, ShortToken expectedTrivia)
         {
@@ -127,12 +124,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
             Assert.Equal(expectedTrivia.Text, actualTrivia.ToFullString());
             Assert.Equal(expectedTrivia.Span, actualTrivia.Span);
         }
-#endif
 
-#if LARGE_TESTS
-        [Theory]
+        [ConditionalTheory(typeof(RunLongLexerTests))]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Long")]
+        [Trait("Duration", "Medium")]
         [MemberData(nameof(GetTokenPairsData))]
         public void Lexer_Lexes_TokenPairs(LuaSyntaxOptions options, ShortToken tokenA, ShortToken tokenB)
         {
@@ -148,10 +143,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
             Assert.Equal(tokenB.Span, tokens[1].Span);
             Assert.Equal(SyntaxKind.EndOfFileToken, tokens[2].Kind());
         }
-#endif
 
-#if LARGE_TESTS
-        [Theory]
+        [ConditionalTheory(typeof(RunLongLexerTests))]
         [Trait("Category", "Lexer/Output")]
         [Trait("Duration", "Very Long")]
         [MemberData(nameof(GetTokenPairsWithSeparatorsData))]
@@ -180,7 +173,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
             Assert.Equal(SyntaxKind.EndOfFileToken, tokens[2].Kind());
         }
-#endif
 
         public static IEnumerable<object[]> GetTokensData() =>
 #if LARGE_TESTS_DEBUG
