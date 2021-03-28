@@ -55,7 +55,21 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
             }
 
             // Decimal
-            foreach (var text in new[] { "1", "1.1", "1.1e10", ".1", ".1e10", "1_1", "1_1.1_1", "1_1.1_1e1_0", ".1_1", ".1_1e1_0" })
+            foreach (var text in new[]
+            {
+                "1",
+                "1e10",
+                "1.1",
+                "1.1e10",
+                ".1",
+                ".1e10",
+                "1_1",
+                "1_1e1_0",
+                "1_1.1_1",
+                "1_1.1_1e1_0",
+                ".1_1",
+                ".1_1e1_0"
+            })
             {
                 yield return new ShortToken(
                     SyntaxKind.NumericLiteralToken,
