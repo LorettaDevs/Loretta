@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 {
-    public class LexerTests
+    public class LexicalErrorTests
     {
         private static ImmutableArray<SyntaxToken> ParseTokens(string text, LuaSyntaxOptions? options = null, bool includeEndOfFile = false)
         {
@@ -31,7 +31,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("\"some\\ltext\"", "sometext", 5, 2)]
         [InlineData("'some\\ltext'", "sometext", 5, 2)]
         [InlineData("\"some\\xGtext\"", "someGtext", 5, 2)]
@@ -53,7 +52,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("\"some\ntext\"", "some\ntext", 5, 1)]
         [InlineData("'some\ntext'", "some\ntext", 5, 1)]
         [InlineData("\"some\rtext\"", "some\rtext", 5, 1)]
@@ -75,7 +73,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("\"text", "text")]
         [InlineData("'text", "text")]
         [InlineData("\"text'", "text'")]
@@ -95,7 +92,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("0b")]
         [InlineData("0b_")]
         [InlineData("0o")]
@@ -115,7 +111,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("0b10000000000000000000000000000000000000000000000000000000000000000")]
         [InlineData("0o1000000000000000000000")]
         public void Lexer_EmitsDiagnosticsOn_LargeNumbers(string text)
@@ -133,7 +128,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("0b00000000000000000000000000000000000000000000000000000000000000001")]
         [InlineData("0o0000000000000000000001")]
         public void Lexer_DoesNot_CountNumberDigitsNaively(string text)
@@ -150,7 +144,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("/* hi")]
         [InlineData("--[[ hi")]
         [InlineData("--[=[ hi")]
@@ -169,7 +162,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Short")]
         [InlineData("--[")]
         [InlineData("--[=")]
         [InlineData("--[==")]
@@ -191,7 +183,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         public void Lexer_EmitsDiagnosticWhen_ShebangIsFound_And_LuaSyntaxOptionsAcceptShebangIsFalse()
         {
             const string shebang = "#!/bin/bash";
@@ -209,7 +200,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         public void Lexer_EmitsDiagnosticWhen_BinaryNumberIsFound_And_LuaSyntaxOptionsAcceptBinaryNumbersIsFalse()
         {
             const string numberText = "0b1010";
@@ -228,7 +218,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         public void Lexer_EmitsDiagnosticWhen_OctalNumberIsFound_And_LuaSyntaxOptionsAcceptOctalNumbersIsFalse()
         {
             const string numberText = "0o77";
@@ -247,7 +236,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("0xff.ff")]
         [InlineData("0xffp10")]
         [InlineData("0xff.ffp10")]
@@ -267,7 +255,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("0b1010_1010", 0b1010_1010)]
         [InlineData("0o7070_7070", 14913080d)]
         [InlineData("10_10.10_10", 10_10.10_10d)]
@@ -288,7 +275,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("// hi")]
         [InlineData("/* hi */")]
         public void Lexer_EmitsDiagnosticWhen_CCommentIsFound_And_LuaSyntaxOptionsAcceptCCommentsIsFalse(string text)
@@ -311,7 +297,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("🅱")]
         [InlineData("\ufeff"  /* ZERO WIDTH NO-BREAK SPACE */ )]
         [InlineData("\u206b"  /* ACTIVATE SYMMETRIC SWAPPING */ )]
@@ -334,7 +319,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("$")]
         [InlineData("\\")]
         [InlineData("?")]
@@ -352,7 +336,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [Trait("Duration", "Short")]
         [InlineData("\"hello\\xAthere\"", "hello\xAthere", 6, 3)]
         [InlineData("'hello\\xAthere'", "hello\xAthere", 6, 3)]
         [InlineData("\"hello\\xFFthere\"", "hello\xFFthere", 6, 4)]

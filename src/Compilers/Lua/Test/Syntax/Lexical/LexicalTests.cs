@@ -41,7 +41,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Fact]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Very Short")]
         public void Lexer_Lexes_ShebangsOnlyOnFileStart()
         {
             const string shebang = "#!/bin/bash";
@@ -78,7 +77,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Fact]
         [Trait("Category", "Lexer/Lexer_Tests")]
-        [Trait("Duration", "Very Short")]
         public void Lexer_Covers_AllTokens()
         {
             var tokenKinds = Enum.GetValues(typeof(SyntaxKind))
@@ -100,7 +98,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Short")]
         [MemberData(nameof(GetTokensData))]
         public void Lexer_Lexes_Token(LuaSyntaxOptions options, ShortToken expectedToken)
         {
@@ -114,7 +111,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [Theory]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Short")]
         [MemberData(nameof(GetTriviaData))]
         public void Lexer_Lexes_Trivia(LuaSyntaxOptions options, ShortToken expectedTrivia)
         {
@@ -127,7 +123,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [ConditionalTheory(typeof(RunLongLexerTests))]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Medium")]
         [MemberData(nameof(GetTokenPairsData))]
         public void Lexer_Lexes_TokenPairs(LuaSyntaxOptions options, ShortToken tokenA, ShortToken tokenB)
         {
@@ -146,7 +141,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 
         [ConditionalTheory(typeof(RunLongLexerTests))]
         [Trait("Category", "Lexer/Output")]
-        [Trait("Duration", "Very Long")]
         [MemberData(nameof(GetTokenPairsWithSeparatorsData))]
         public void Lexer_Lexes_TokenPairs_WithSeparators(
             LuaSyntaxOptions options,
