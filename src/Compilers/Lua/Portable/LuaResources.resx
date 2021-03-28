@@ -168,7 +168,7 @@
     <value>{ expected</value>
   </data>
   <data name="ERR_LuajitIdentifierRulesNotSupportedInVersion" xml:space="preserve">
-    <value>Characters with value above 0x7F are not supported in this lua version</value>
+    <value>Identifiers containing characters with value above 0x7F are not supported in this lua version</value>
   </data>
   <data name="ERR_NonFunctionCallBeingUsedAsStatement" xml:space="preserve">
     <value>Function calls are the only expressions that can be used as statements</value>
