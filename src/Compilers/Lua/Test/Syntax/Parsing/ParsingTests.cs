@@ -4,13 +4,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Lua.Test.Utilities;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Loretta.CodeAnalysis.Lua.UnitTests
+namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing
 {
     public abstract class ParsingTests : LuaTestBase
     {
@@ -49,9 +48,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             return false;
         }
 
-        public static void ParseAndValidate(string text, params DiagnosticDescription[] expectedErrors)
+        public static void ParseAndValidate(string text, LuaSyntaxOptions? options = null, params DiagnosticDescription[] expectedErrors)
         {
-            var parsedTree = ParseWithRoundTripCheck(text);
+            var parsedTree = ParseWithRoundTripCheck(text, new(options ?? LuaSyntaxOptions.All));
             var actualErrors = parsedTree.GetDiagnostics();
             actualErrors.Verify(expectedErrors);
         }
