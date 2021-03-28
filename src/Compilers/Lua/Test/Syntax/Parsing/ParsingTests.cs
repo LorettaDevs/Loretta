@@ -19,7 +19,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
         public ParsingTests(ITestOutputHelper output)
         {
-            this._output = output;
+            _output = output;
         }
 
         public override void Dispose()
@@ -55,7 +55,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             actualErrors.Verify(expectedErrors);
         }
 
-        public static void ParseAndValidate(string text, CSharpParseOptions options, params DiagnosticDescription[] expectedErrors)
+        public static void ParseAndValidate(string text, LuaParseOptions options, params DiagnosticDescription[] expectedErrors)
         {
             var parsedTree = ParseWithRoundTripCheck(text, options: options);
             var actualErrors = parsedTree.GetDiagnostics();
@@ -69,21 +69,15 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             actualErrors.Take(1).Verify(expectedFirstError);
         }
 
-        protected virtual SyntaxTree ParseTree(string text, CSharpParseOptions? options) => SyntaxFactory.ParseSyntaxTree(text, options);
+        protected virtual SyntaxTree ParseTree(string text, LuaParseOptions? options) => SyntaxFactory.ParseSyntaxTree(text, options);
 
-        public CompilationUnitSyntax ParseFile(string text, CSharpParseOptions? parseOptions = null) =>
+        public CompilationUnitSyntax ParseFile(string text, LuaParseOptions? parseOptions = null) =>
             SyntaxFactory.ParseCompilationUnit(text, options: parseOptions);
 
-        internal CompilationUnitSyntax ParseFileExperimental(string text, MessageID feature) =>
-            ParseFile(text, parseOptions: TestOptions.Regular.WithExperimental(feature));
-
-        protected virtual CSharpSyntaxNode ParseNode(string text, CSharpParseOptions? options) =>
+        protected virtual LuaSyntaxNode ParseNode(string text, LuaParseOptions? options) =>
             ParseTree(text, options).GetCompilationUnitRoot();
 
-        internal void UsingStatement(string text, params DiagnosticDescription[] expectedErrors)
-        {
-            UsingStatement(text, options: null, expectedErrors);
-        }
+        internal void UsingStatement(string text, params DiagnosticDescription[] expectedErrors) => UsingStatement(text, options: null, expectedErrors);
 
         internal void UsingStatement(string text, ParseOptions? options, params DiagnosticDescription[] expectedErrors)
         {
@@ -95,10 +89,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             UsingNode(node);
         }
 
-        internal void UsingDeclaration(string text, ParseOptions options, params DiagnosticDescription[] expectedErrors)
-        {
-            UsingDeclaration(text, offset: 0, options, consumeFullText: true, expectedErrors: expectedErrors);
-        }
+        internal void UsingDeclaration(string text, ParseOptions options, params DiagnosticDescription[] expectedErrors) => UsingDeclaration(text, offset: 0, options, consumeFullText: true, expectedErrors: expectedErrors);
 
         internal void UsingDeclaration(string text, int offset = 0, ParseOptions? options = null, bool consumeFullText = true, params DiagnosticDescription[] expectedErrors)
         {
@@ -115,12 +106,10 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             UsingNode(node);
         }
 
-        internal void UsingExpression(string text, ParseOptions? options, params DiagnosticDescription[] expectedErrors)
-        {
+        internal void UsingExpression(string text, ParseOptions? options, params DiagnosticDescription[] expectedErrors) =>
             UsingNode(text, SyntaxFactory.ParseExpression(text, options: options), expectedErrors);
-        }
 
-        protected void UsingNode(string text, CSharpSyntaxNode node, DiagnosticDescription[] expectedErrors)
+        protected void UsingNode(string text, LuaSyntaxNode node, DiagnosticDescription[] expectedErrors)
         {
             // we validate the text roundtrips
             Assert.Equal(text, node.ToFullString());
@@ -129,15 +118,13 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             UsingNode(node);
         }
 
-        internal void UsingExpression(string text, params DiagnosticDescription[] expectedErrors)
-        {
+        internal void UsingExpression(string text, params DiagnosticDescription[] expectedErrors) =>
             UsingExpression(text, options: null, expectedErrors);
-        }
 
         /// <summary>
         /// Parses given string and initializes a depth-first preorder enumerator.
         /// </summary>
-        protected SyntaxTree UsingTree(string text, CSharpParseOptions? options = null)
+        protected SyntaxTree UsingTree(string text, LuaParseOptions? options = null)
         {
             VerifyEnumeratorConsumed();
             var tree = ParseTree(text, options);
@@ -151,14 +138,14 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         /// <summary>
         /// Parses given string and initializes a depth-first preorder enumerator.
         /// </summary>
-        protected CSharpSyntaxNode UsingNode(string text)
+        protected LuaSyntaxNode UsingNode(string text)
         {
             var root = ParseNode(text, options: null);
             UsingNode(root);
             return root;
         }
 
-        protected CSharpSyntaxNode UsingNode(string text, CSharpParseOptions options, params DiagnosticDescription[] expectedErrors)
+        protected LuaSyntaxNode UsingNode(string text, LuaParseOptions options, params DiagnosticDescription[] expectedErrors)
         {
             var node = ParseNode(text, options);
             UsingNode(text, node, expectedErrors);
@@ -168,7 +155,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         /// <summary>
         /// Initializes a depth-first preorder enumerator for the given node.
         /// </summary>
-        protected void UsingNode(CSharpSyntaxNode root)
+        protected void UsingNode(LuaSyntaxNode root)
         {
             VerifyEnumeratorConsumed();
             _node = root;
@@ -211,7 +198,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             try
             {
                 Assert.True(_treeEnumerator!.MoveNext());
-                SyntaxNodeOrToken current = _treeEnumerator.Current;
+                var current = _treeEnumerator.Current;
                 Assert.Equal(kind, current.Kind());
                 Assert.True(current.IsMissing);
                 return current;
@@ -236,7 +223,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             }
         }
 
-        private IEnumerable<SyntaxNodeOrToken> EnumerateNodes(CSharpSyntaxNode node, bool dump)
+        private IEnumerable<SyntaxNodeOrToken> EnumerateNodes(LuaSyntaxNode node, bool dump)
         {
             Print(node, dump);
             yield return node;
