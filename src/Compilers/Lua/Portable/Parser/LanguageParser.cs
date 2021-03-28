@@ -89,15 +89,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 if (kind == SyntaxKind.EndOfFileToken || terminalKinds.Length > 0 && terminalKinds.Contains(kind))
                     break;
 
-                var startToken = CurrentToken;
-
                 var statement = ParseStatement();
                 builder.Add(statement);
-
-                // If ParseStatement did not consume any tokens, we have to advance ourselves
-                // otherwise we get stuck in an infinite loop.
-                if (CurrentToken == startToken)
-                    _ = EatToken();
             }
             return SyntaxFactory.StatementList(_pool.ToListAndFree(builder));
         }
@@ -768,10 +761,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private IdentifierNameSyntax ParseIdentifierName()
         {
-            var currentNode = CurrentNode as Syntax.IdentifierNameSyntax;
+            Syntax.IdentifierNameSyntax? currentNode;
             if (IsIncremental
                 && CurrentNodeKind == SyntaxKind.IdentifierName
-                && currentNode is not null
+                && (currentNode = CurrentNode as Syntax.IdentifierNameSyntax) is not null
                 // If the Kind is equal to the ContextualKind, then the token wasn't parsed as a contextual one
                 && currentNode.Identifier.Kind() == currentNode.Identifier.ContextualKind())
             {
@@ -994,7 +987,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 builder.Add(EatToken());
             }
             var trailingTrash = _pool.ToListAndFree(builder);
-            
+
             node = AddError(node, ErrorCode.ERR_UnexpectedToken, trailingTrash[0]!.ToString());
             node = AddTrailingSkippedSyntax(node, trailingTrash.Node);
             return node;
