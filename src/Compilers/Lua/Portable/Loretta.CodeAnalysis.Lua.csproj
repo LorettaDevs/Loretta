@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DebugType>Full</DebugType>
   </PropertyGroup>
-  
+
   <!-- Package data -->
   <PropertyGroup>
     <Version>0.1.3</Version>
@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Syntax.UnitTests" />
     <InternalsVisibleTo Include="Loretta.CLI" />
   </ItemGroup>
@@ -46,7 +47,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Tools\SourceGenerators\Loretta.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\Core\Loretta.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

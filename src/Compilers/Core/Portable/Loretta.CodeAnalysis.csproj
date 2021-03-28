@@ -42,9 +42,10 @@
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua" />
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
     <InternalsVisibleTo Include="Loretta.CLI" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Syntax.UnitTests" />
   </ItemGroup>
   <ItemGroup>

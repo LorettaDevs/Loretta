@@ -4,9 +4,8 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0;net472</TargetFrameworks>
-    <IsShipping>false</IsShipping>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Loretta.CodeAnalysis.csproj" />
-    <ProjectReference Include="..\..\Lua\Portable\Loretta.CodeAnalysis.Lua.csproj" />
+    <ProjectReference Include="..\..\..\Lua\Portable\Loretta.CodeAnalysis.Lua.csproj" />
+    <ProjectReference Include="..\..\Portable\Loretta.CodeAnalysis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

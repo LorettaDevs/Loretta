@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0;net472</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Core\Test\Utilities\Loretta.CodeAnalysis.Test.Utilities.csproj" />
+    <ProjectReference Include="..\..\Portable\Loretta.CodeAnalysis.Lua.csproj" />
+  </ItemGroup>
+
+</Project>
