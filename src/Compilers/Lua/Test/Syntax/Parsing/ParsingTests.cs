@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Loretta.CodeAnalysis.Lua.Syntax;
+using Loretta.CodeAnalysis.Lua.Test.Utilities;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests
 {
-    public abstract class ParsingTests : CommonTestBase
+    public abstract class ParsingTests : LuaTestBase
     {
         private LuaSyntaxNode? _node;
         private IEnumerator<SyntaxNodeOrToken>? _treeEnumerator;
@@ -71,7 +72,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
         protected virtual SyntaxTree ParseTree(string text, LuaParseOptions? options) => SyntaxFactory.ParseSyntaxTree(text, options);
 
-        public CompilationUnitSyntax ParseFile(string text, LuaParseOptions? parseOptions = null) =>
+        public static CompilationUnitSyntax ParseFile(string text, LuaParseOptions? parseOptions = null) =>
             SyntaxFactory.ParseCompilationUnit(text, options: parseOptions);
 
         protected virtual LuaSyntaxNode ParseNode(string text, LuaParseOptions? options) =>
@@ -79,7 +80,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
         internal void UsingStatement(string text, params DiagnosticDescription[] expectedErrors) => UsingStatement(text, options: null, expectedErrors);
 
-        internal void UsingStatement(string text, ParseOptions? options, params DiagnosticDescription[] expectedErrors)
+        internal void UsingStatement(string text, LuaParseOptions? options, params DiagnosticDescription[] expectedErrors)
         {
             var node = SyntaxFactory.ParseStatement(text, options: options);
             // we validate the text roundtrips
@@ -89,24 +90,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             UsingNode(node);
         }
 
-        internal void UsingDeclaration(string text, ParseOptions options, params DiagnosticDescription[] expectedErrors) => UsingDeclaration(text, offset: 0, options, consumeFullText: true, expectedErrors: expectedErrors);
-
-        internal void UsingDeclaration(string text, int offset = 0, ParseOptions? options = null, bool consumeFullText = true, params DiagnosticDescription[] expectedErrors)
-        {
-            var node = SyntaxFactory.ParseMemberDeclaration(text, offset, options, consumeFullText);
-            Debug.Assert(node is object);
-            if (consumeFullText)
-            {
-                // we validate the text roundtrips
-                Assert.Equal(text, node.ToFullString());
-            }
-
-            var actualErrors = node.GetDiagnostics();
-            actualErrors.Verify(expectedErrors);
-            UsingNode(node);
-        }
-
-        internal void UsingExpression(string text, ParseOptions? options, params DiagnosticDescription[] expectedErrors) =>
+        internal void UsingExpression(string text, LuaParseOptions? options, params DiagnosticDescription[] expectedErrors) =>
             UsingNode(text, SyntaxFactory.ParseExpression(text, options: options), expectedErrors);
 
         protected void UsingNode(string text, LuaSyntaxNode node, DiagnosticDescription[] expectedErrors)
