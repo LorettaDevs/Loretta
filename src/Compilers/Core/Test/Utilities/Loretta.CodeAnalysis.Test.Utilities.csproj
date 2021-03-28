@@ -6,7 +6,12 @@
     <OutputType>Library</OutputType>
     <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0;net472</TargetFrameworks>
     <IsPackable>false</IsPackable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Syntax.UnitTests" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DiffPlex" Version="1.7.0" />
