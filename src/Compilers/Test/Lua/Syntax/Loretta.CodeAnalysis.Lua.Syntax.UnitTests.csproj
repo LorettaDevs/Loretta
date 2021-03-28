@@ -1,8 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <TargetFrameworks>net472</TargetFrameworks>
+  </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-
+    <TargetFrameworks>$(TargetFrameworks);net5.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -23,6 +26,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Loretta.CodeAnalysis.csproj" />
     <ProjectReference Include="..\..\..\Lua\Portable\Loretta.CodeAnalysis.Lua.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Parsing\" />
   </ItemGroup>
 
 </Project>
