@@ -68,20 +68,6 @@ namespace Loretta.CodeAnalysis.Lua
         public override Diagnostic CreateDiagnostic(DiagnosticInfo info)
             => new LuaDiagnostic(info, Location.None);
 
-        public override ReportDiagnostic GetDiagnosticReport(DiagnosticInfo diagnosticInfo, CompilationOptions options) =>
-            LuaDiagnosticFilter.GetDiagnosticReport(
-                diagnosticInfo.Severity,
-                true,
-                diagnosticInfo.MessageIdentifier,
-                diagnosticInfo.WarningLevel,
-                Location.None,
-                options.WarningLevel,
-                options.GeneralDiagnosticOption,
-                options.SpecificDiagnosticOptions,
-                options.SyntaxTreeOptionsProvider,
-                CancellationToken.None,
-                out _);
-
         public override int ERR_BadDocumentationMode => (int) ErrorCode.ERR_BadDocumentationMode;
     }
 }

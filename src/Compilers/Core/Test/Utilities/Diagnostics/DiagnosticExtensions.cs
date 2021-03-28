@@ -76,31 +76,6 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        public static TCompilation VerifyDiagnostics<TCompilation>(this TCompilation c, params DiagnosticDescription[] expected)
-            where TCompilation : Compilation
-        {
-            var diagnostics = c.GetDiagnostics();
-            diagnostics.Verify(expected);
-            return c;
-        }
-
-        /// <summary>
-        /// Given a set of compiler or <see cref="DiagnosticAnalyzer"/> generated <paramref name="diagnostics"/>, returns the effective diagnostics after applying the below filters:
-        /// 1) <see cref="CompilationOptions.SpecificDiagnosticOptions"/> specified for the given <paramref name="compilation"/>.
-        /// 2) <see cref="CompilationOptions.GeneralDiagnosticOption"/> specified for the given <paramref name="compilation"/>.
-        /// 3) Diagnostic suppression through applied <see cref="System.Diagnostics.CodeAnalysis.SuppressMessageAttribute"/>.
-        /// 4) Pragma directives for the given <paramref name="compilation"/>.
-        /// </summary>
-        public static IEnumerable<Diagnostic> GetEffectiveDiagnostics(this Compilation compilation, IEnumerable<Diagnostic> diagnostics)
-        {
-            foreach (var diagnostic in diagnostics)
-            {
-                var effective = compilation.Options.FilterDiagnostic(diagnostic, CancellationToken.None);
-                if (effective is not null)
-                    yield return effective;
-            }
-        }
-
         public static string Concat(this string[] str) => string.Concat(str);
 
         public static string Inspect(this Diagnostic e) =>

@@ -19,8 +19,6 @@ namespace Loretta.Test.Utilities
 
         public override string GetMessagePrefix(string id, DiagnosticSeverity severity, bool isWarningAsError, CultureInfo culture) => throw new NotImplementedException();
 
-        public override ReportDiagnostic GetDiagnosticReport(DiagnosticInfo diagnosticInfo, CompilationOptions options) => throw new NotImplementedException();
-
         public override DiagnosticSeverity GetSeverity(int code) => throw new NotImplementedException();
 
         public override string LoadMessage(int code, CultureInfo language) => throw new NotImplementedException();
