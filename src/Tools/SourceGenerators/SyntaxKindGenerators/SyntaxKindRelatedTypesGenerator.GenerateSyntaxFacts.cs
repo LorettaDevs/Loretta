@@ -81,7 +81,7 @@ namespace Loretta.Generators.SyntaxKindGenerators
                             type = possibleTypes.Single()!.ToString();
 
                         writer.WriteLineNoTabs("");
-                        using (new CurlyIndenter(writer, $"public static Option<{type}> Get{propertyGroup.Key}(SyntaxKind kind)"))
+                        using (new CurlyIndenter(writer, $"public static partial Option<{type}> Get{propertyGroup.Key}(SyntaxKind kind)"))
                         {
                             var values = propertyGroup.GroupBy(t => t.value, t => t.kind);
                             writer.WriteLine("return kind switch");
@@ -119,7 +119,8 @@ namespace Loretta.Generators.SyntaxKindGenerators
                     writer.WriteLineNoTabs("");
 
                     // Extra Categories
-                    var extraCategories = kinds.SelectMany(kind => kind.ExtraCategories.Select(cat => (cat, kind))).GroupBy(t => t.cat, t => t.kind);
+                    var extraCategories = kinds.SelectMany(kind => kind.ExtraCategories.Select(cat => (cat, kind)))
+                                               .GroupBy(t => t.cat, t => t.kind);
                     foreach (var group in extraCategories)
                     {
                         writer.WriteLineNoTabs("");
