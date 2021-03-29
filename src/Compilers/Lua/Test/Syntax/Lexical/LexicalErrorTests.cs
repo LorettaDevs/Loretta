@@ -1,145 +1,143 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.Globalization;
-using Loretta.CodeAnalysis.Lua.Utilities;
-using Loretta.CodeAnalysis.Text;
+﻿using Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing;
+using Loretta.CodeAnalysis.Lua.Test.Utilities;
+using Loretta.CodeAnalysis.Test.Utilities;
 using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
 {
-    public class LexicalErrorTests
+    public class LexicalErrorTests : LuaTestBase
     {
-        private static ImmutableArray<SyntaxToken> ParseTokens(string text, LuaSyntaxOptions? options = null, bool includeEndOfFile = false)
+        private static void ParseAndValidate(string text, LuaSyntaxOptions? options = null, params DiagnosticDescription[] expectedErrors) =>
+            ParsingTests.ParseAndValidate(text, options, expectedErrors);
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsOn_InvalidEscapes()
         {
-            var parseOptions = new LuaParseOptions(options ?? LuaSyntaxOptions.All);
-            var tokens = SyntaxFactory.ParseTokens(text, options: parseOptions).ToImmutableArray();
-            if (includeEndOfFile)
-                return tokens;
-            Assert.True(tokens[^1].Kind() == SyntaxKind.EndOfFileToken, "Last element of the token list was not an EOF token.");
-            return tokens.RemoveAt(tokens.Length - 1);
+            const string source = @"
+local str = ""some\ltext""
+local str = 'some\ltext'
+local str = ""some\xGtext""
+local str = 'some\xGtext'
+local str = ""some\300text""
+local str = 'some\300text'
+";
+            ParseAndValidate(source, null,
+                // (2,18): error LUA0001: Invalid string escape
+                // local str = "some\ltext"
+                Diagnostic(ErrorCode.ERR_InvalidStringEscape, @"\l").WithLocation(2, 18),
+                // (3,18): error LUA0001: Invalid string escape
+                // local str = 'some\ltext'
+                Diagnostic(ErrorCode.ERR_InvalidStringEscape, @"\l").WithLocation(3, 18),
+                // (4,18): error LUA0001: Invalid string escape
+                // local str = "some\xGtext"
+                Diagnostic(ErrorCode.ERR_InvalidStringEscape, @"\x").WithLocation(4, 18),
+                // (5,18): error LUA0001: Invalid string escape
+                // local str = 'some\xGtext'
+                Diagnostic(ErrorCode.ERR_InvalidStringEscape, @"\x").WithLocation(5, 18),
+                // (6,18): error LUA0001: Invalid string escape
+                // local str = "some\300text"
+                Diagnostic(ErrorCode.ERR_InvalidStringEscape, @"\300").WithLocation(6, 18),
+                // (7,18): error LUA0001: Invalid string escape
+                // local str = 'some\300text'
+                Diagnostic(ErrorCode.ERR_InvalidStringEscape, @"\300").WithLocation(7, 18));
         }
 
-        private static void AssertDiagnostic(DiagnosticInfo diagnostic, ErrorCode code, TextSpan span, params object[] args)
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+
+        public void Lexer_EmitsDiagnosticsOn_StringWithLineBreak()
         {
-            Assert.Equal(ErrorFacts.GetId(code), diagnostic.MessageIdentifier);
-            var message = ErrorFacts.GetMessage(code, CultureInfo.InvariantCulture);
-            if (args.Length > 0 || message.IndexOf("{0}", StringComparison.Ordinal) >= 0)
-                message = string.Format(message, args);
-            Assert.Equal(message, diagnostic.GetMessage());
-            Assert.Equal(span, new TextSpan(((SyntaxDiagnosticInfo) diagnostic).Offset, ((SyntaxDiagnosticInfo) diagnostic).Width));
+            const string source = @"
+local str1 = ""some" + "\n" + @"text""
+local str2 = 'some" + "\n" + @"text'
+local str3 = ""some" + "\r" + @"text""
+local str4 = 'some" + "\r" + @"text'
+local str5 = ""some" + "\r\n" + @"text""
+local str6 = 'some" + "\r\n" + @"text'
+";
+            ParseAndValidate(source, null,
+                // (2,19): error LUA0002: Unescaped line break in string
+                // local str1 = "some\ntext"
+                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\n").WithLocation(2, 19),
+                // (4,19): error LUA0002: Unescaped line break in string
+                // local str2 = 'some\ntext'
+                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\n").WithLocation(4, 19),
+                // (6,19): error LUA0002: Unescaped line break in string
+                // local str3 = "some\rtext"
+                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\r").WithLocation(6, 19),
+                // (8,19): error LUA0002: Unescaped line break in string
+                // local str4 = 'some\rtext'
+                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\r").WithLocation(8, 19),
+                // (10,19): error LUA0002: Unescaped line break in string
+                // local str5 = "some\r\ntext"
+                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\r\n").WithLocation(10, 19),
+                // (12,19): error LUA0002: Unescaped line break in string
+                // local str6 = 'some\r\ntext'
+                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\r\n").WithLocation(12, 19));
         }
 
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("\"some\\ltext\"", "sometext", 5, 2)]
-        [InlineData("'some\\ltext'", "sometext", 5, 2)]
-        [InlineData("\"some\\xGtext\"", "someGtext", 5, 2)]
-        [InlineData("'some\\xGtext'", "someGtext", 5, 2)]
-        [InlineData("\"some\\300text\"", "sometext", 5, 4)]
-        [InlineData("'some\\300text'", "sometext", 5, 4)]
-        public void Lexer_EmitsDiagnosticsOn_InvalidEscapes(string text, string value, int escapePosition, int escapeLength)
+        [InlineData("\"text")]
+        [InlineData("'text")]
+        [InlineData("\"text'")]
+        [InlineData("'text\"")]
+        public void Lexer_EmitsDiagnosticsOn_UnterminatedShortString(string text)
         {
-            var tokens = ParseTokens(text);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind());
-            Assert.Equal(text, token.Text);
-            Assert.Equal(value, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_InvalidStringEscape, new TextSpan(escapePosition, escapeLength));
+            var srcText = "local str = " + text;
+            ParseAndValidate(srcText, null,
+                Diagnostic(ErrorCode.ERR_UnfinishedString, text).WithLocation(1, 13));
         }
 
-        [Theory]
+        [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("\"some\ntext\"", "some\ntext", 5, 1)]
-        [InlineData("'some\ntext'", "some\ntext", 5, 1)]
-        [InlineData("\"some\rtext\"", "some\rtext", 5, 1)]
-        [InlineData("'some\rtext'", "some\rtext", 5, 1)]
-        [InlineData("\"some\r\ntext\"", "some\r\ntext", 5, 2)]
-        [InlineData("'some\r\ntext'", "some\r\ntext", 5, 2)]
-        public void Lexer_EmitsDiagnosticsOn_StringWithLineBreak(string text, string value, int lineBreakPosition, int lineBreakLength)
+        public void Lexer_EmitsDiagnosticsOn_InvalidNumbers()
         {
-            var tokens = ParseTokens(text);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind());
-            Assert.Equal(text, token.ToFullString());
-            Assert.Equal(value, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_UnescapedLineBreakInString, new TextSpan(lineBreakPosition, lineBreakLength));
+            const string srcText = @"
+local num1 = 0b
+local num2 = 0b_
+local num3 = 0o
+local num4 = 0o_
+";
+            ParseAndValidate(srcText, null,
+                // (2,14): error LUA0004: Invalid number
+                // local num1 = 0b
+                Diagnostic(ErrorCode.ERR_InvalidNumber, "0b").WithLocation(2, 14),
+                // (3,14): error LUA0004: Invalid number
+                // local num2 = 0b_
+                Diagnostic(ErrorCode.ERR_InvalidNumber, "0b_").WithLocation(3, 14),
+                // (4,14): error LUA0004: Invalid number
+                // local num3 = 0o
+                Diagnostic(ErrorCode.ERR_InvalidNumber, "0o").WithLocation(4, 14),
+                // (5,14): error LUA0004: Invalid number
+                // local num4 = 0o_
+                Diagnostic(ErrorCode.ERR_InvalidNumber, "0o_").WithLocation(5, 14));
         }
 
-        [Theory]
+        [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("\"text", "text")]
-        [InlineData("'text", "text")]
-        [InlineData("\"text'", "text'")]
-        [InlineData("'text\"", "text\"")]
-        public void Lexer_EmitsDiagnosticsOn_UnterminatedShortString(string text, string value)
+        public void Lexer_EmitsDiagnosticsOn_LargeNumbersAndOverflows()
         {
-            var tokens = ParseTokens(text);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind());
-            Assert.Equal(text, token.Text);
-            Assert.Equal(value, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_UnfinishedString, new TextSpan(0, text.Length));
-        }
-
-        [Theory]
-        [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("0b")]
-        [InlineData("0b_")]
-        [InlineData("0o")]
-        [InlineData("0o_")]
-        public void Lexer_EmitsDiagnosticsOn_InvalidNumbers(string text)
-        {
-            var tokens = ParseTokens(text);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
-            Assert.Equal(text, token.Text);
-            Assert.Equal(0d, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_InvalidNumber, new TextSpan(0, text.Length));
-        }
-
-        [Theory]
-        [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("0b10000000000000000000000000000000000000000000000000000000000000000")]
-        [InlineData("0o1000000000000000000000")]
-        public void Lexer_EmitsDiagnosticsOn_LargeNumbers(string text)
-        {
-            var tokens = ParseTokens(text);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
-            Assert.Equal(text, token.Text);
-            Assert.Equal(0d, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_NumericLiteralTooLarge, new TextSpan(0, text.Length));
-        }
-
-        [Theory]
-        [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("0b00000000000000000000000000000000000000000000000000000000000000001")]
-        [InlineData("0o0000000000000000000001")]
-        public void Lexer_DoesNot_CountNumberDigitsNaively(string text)
-        {
-            var tokens = ParseTokens(text);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
-            Assert.Equal(text, token.Text);
-            Assert.Equal(1d, token.Value);
-
-            Assert.False(token.ContainsDiagnostics);
+            const string srcText = @"
+local num1 = 0b10000000000000000000000000000000000000000000000000000000000000000
+local num2 = 0o1000000000000000000000
+local num3 = 1e999999
+local num4 = 0x1p999999
+";
+            ParseAndValidate(srcText, null,
+                // (2,14): error LUA0005: Numeric literal is too large
+                // local num1 = 0b10000000000000000000000000000000000000000000000000000000000000000
+                Diagnostic(ErrorCode.ERR_NumericLiteralTooLarge, "0b10000000000000000000000000000000000000000000000000000000000000000").WithLocation(2, 14),
+                // (3,14): error LUA0005: Numeric literal is too large
+                // local num2 = 0o1000000000000000000000
+                Diagnostic(ErrorCode.ERR_NumericLiteralTooLarge, "0o1000000000000000000000").WithLocation(3, 14),
+                // (4,14): error LUA0020: Constant represents a value either too large or too small for a double precision floating-point number.
+                // local num3 = 1e999999
+                Diagnostic(ErrorCode.ERR_DoubleOverflow, "1e999999").WithLocation(4, 14),
+                // (5,14): error LUA0020: Constant represents a value either too large or too small for a double precision floating-point number.
+                // local num4 = 0x1p999999
+                Diagnostic(ErrorCode.ERR_DoubleOverflow, "0x1p999999").WithLocation(5, 14));
         }
 
         [Theory]
@@ -149,209 +147,200 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
         [InlineData("--[=[ hi")]
         public void Lexer_EmitsDiagnosticOn_UnfinishedLongComment(string text)
         {
-            var tokens = ParseTokens(text, includeEndOfFile: true);
-
-            var eof = Assert.Single(tokens);
-            var commentTrivia = Assert.Single(eof.LeadingTrivia);
-            Assert.Equal(SyntaxKind.MultiLineCommentTrivia, commentTrivia.Kind());
-            Assert.Equal(text, commentTrivia.ToFullString());
-
-            var diagnostic = Assert.Single(commentTrivia.UnderlyingNode!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_UnfinishedLongComment, new TextSpan(0, text.Length));
-        }
-
-        [Theory]
-        [Trait("Category", "Lexer/Output")]
-        [InlineData("--[")]
-        [InlineData("--[=")]
-        [InlineData("--[==")]
-        [InlineData("--[ [")]
-        [InlineData("--[= [")]
-        [InlineData("--[= =[")]
-        public void Lexer_DoesNot_IdentifyLongCommentsNaively(string text)
-        {
-            var tokens = ParseTokens(text, includeEndOfFile: true);
-
-            var eof = Assert.Single(tokens);
-            var trivia = Assert.Single(eof.LeadingTrivia);
-            Assert.Equal(SyntaxKind.SingleLineCommentTrivia, trivia.Kind());
-            Assert.Equal(text, trivia.ToFullString());
-
-            Assert.False(trivia.ContainsDiagnostics);
-            Assert.False(eof.ContainsDiagnostics);
+            ParseAndValidate(text, null,
+                // (1,1): error LUA0006: Unfinished multi-line comment
+                // ...
+                Diagnostic(ErrorCode.ERR_UnfinishedLongComment, text).WithLocation(1, 1));
         }
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
         public void Lexer_EmitsDiagnosticWhen_ShebangIsFound_And_LuaSyntaxOptionsAcceptShebangIsFalse()
         {
-            const string shebang = "#!/bin/bash";
-            var options = LuaSyntaxOptions.All.With(acceptShebang: false);
-            var tokens = ParseTokens(shebang, options: options, includeEndOfFile: true);
-
-            var eof = Assert.Single(tokens);
-            var trivia = Assert.Single(eof.LeadingTrivia);
-            Assert.Equal(SyntaxKind.ShebangTrivia, trivia.Kind());
-            Assert.Equal(shebang, trivia.ToFullString());
-
-            var diagnostic = Assert.Single(trivia.UnderlyingNode!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_ShebangNotSupportedInLuaVersion, new TextSpan(0, shebang.Length));
+            const string srcText = "#!/bin/bash";
+            ParseAndValidate(srcText, LuaSyntaxOptions.All.With(acceptShebang: false),
+                // (1,1): error LUA0007: Shebangs are not supported in this lua version
+                // #!/bin/bash
+                Diagnostic(ErrorCode.ERR_ShebangNotSupportedInLuaVersion, srcText).WithLocation(1, 1));
         }
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
         public void Lexer_EmitsDiagnosticWhen_BinaryNumberIsFound_And_LuaSyntaxOptionsAcceptBinaryNumbersIsFalse()
         {
-            const string numberText = "0b1010";
-
-            var options = LuaSyntaxOptions.All.With(acceptBinaryNumbers: false);
-            var tokens = ParseTokens(numberText, options: options);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
-            Assert.Equal(numberText, token.Text);
-            Assert.Equal((double) 0b1010, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion, new TextSpan(0, numberText.Length));
+            const string srcText = "local num = 0b1010";
+            ParseAndValidate(srcText, LuaSyntaxOptions.All.With(acceptBinaryNumbers: false),
+                // (1,13): error LUA0008: Binary numeric literals are not supported in this lua version
+                // local num = 0b1010
+                Diagnostic(ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion, "0b1010").WithLocation(1, 13));
         }
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
         public void Lexer_EmitsDiagnosticWhen_OctalNumberIsFound_And_LuaSyntaxOptionsAcceptOctalNumbersIsFalse()
         {
-            const string numberText = "0o77";
-
-            var options = LuaSyntaxOptions.All.With(acceptOctalNumbers: false);
-            var tokens = ParseTokens(numberText, options: options);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
-            Assert.Equal(numberText, token.Text);
-            Assert.Equal(7d * 8d + 7d, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_OctalNumericLiteralNotSupportedInVersion, new TextSpan(0, numberText.Length));
+            const string srcText = "local num = 0o77";
+            ParseAndValidate(srcText, LuaSyntaxOptions.All.With(acceptOctalNumbers: false),
+                // (1,13): error LUA0009: Octal numeric literals are not supported in this lua version
+                // local num = 0o77
+                Diagnostic(ErrorCode.ERR_OctalNumericLiteralNotSupportedInVersion, "0o77").WithLocation(1, 13));
         }
 
-        [Theory]
+        [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("0xff.ff")]
-        [InlineData("0xffp10")]
-        [InlineData("0xff.ffp10")]
-        public void Lexer_EmitsDiagnosticWhen_HexFloatIsFound_And_LuaSyntaxOptionsAcceptHexFloatIsFalse(string text)
+        public void Lexer_EmitsDiagnosticWhen_HexFloatIsFound_And_LuaSyntaxOptionsAcceptHexFloatIsFalse()
         {
-            var options = LuaSyntaxOptions.All.With(acceptHexFloatLiterals: false);
-            var tokens = ParseTokens(text, options: options);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
-            Assert.Equal(text, token.Text);
-            Assert.Equal(HexFloat.DoubleFromHexString(text), token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion, new TextSpan(0, text.Length));
+            const string srcText = @"
+local num1 = 0xff.ff
+local num2 = 0xffp10
+local num3 = 0xff.ffp10
+";
+            ParseAndValidate(srcText, LuaSyntaxOptions.All.With(acceptHexFloatLiterals: false),
+                // (2,14): error LUA0010: Hexadecimal floating point numeric literals are not supported in this lua version
+                // local num1 = 0xff.ff
+                Diagnostic(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion, "0xff.ff").WithLocation(2, 14),
+                // (3,14): error LUA0010: Hexadecimal floating point numeric literals are not supported in this lua version
+                // local num2 = 0xffp10
+                Diagnostic(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion, "0xffp10").WithLocation(3, 14),
+                // (4,14): error LUA0010: Hexadecimal floating point numeric literals are not supported in this lua version
+                // local num3 = 0xff.ffp10
+                Diagnostic(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion, "0xff.ffp10").WithLocation(4, 14));
         }
 
-        [Theory]
+        [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("0b1010_1010", 0b1010_1010)]
-        [InlineData("0o7070_7070", 14913080d)]
-        [InlineData("10_10.10_10", 10_10.10_10d)]
-        [InlineData("0xf_f", 0xF_F)]
-        public void Lexer_EmitsDiagnosticWhen_UnderscoreInNumberIsFound_And_LuaSyntaxOptionsAcceptUnderscoresInNumbersIsFalse(string text, double value)
+        public void Lexer_EmitsDiagnosticWhen_UnderscoreInNumberIsFound_And_LuaSyntaxOptionsAcceptUnderscoresInNumbersIsFalse()
         {
-            var options = LuaSyntaxOptions.All.With(acceptUnderscoreInNumberLiterals: false);
-            var tokens = ParseTokens(text, options: options);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
-            Assert.Equal(text, token.Text);
-            Assert.Equal(value, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion, new TextSpan(0, text.Length));
+            const string srcText = @"
+local num1 = 0b1010_1010
+local num2 = 0o7070_7070
+local num3 = 10_10.10_10
+local num4 = 0xf_f
+";
+            ParseAndValidate(srcText, LuaSyntaxOptions.All.With(acceptUnderscoreInNumberLiterals: false),
+                // (2,14): error LUA0011: Underscores in numeric literals are not supported in this lua version
+                // local num1 = 0b1010_1010
+                Diagnostic(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion, "0b1010_1010").WithLocation(2, 14),
+                // (3,14): error LUA0011: Underscores in numeric literals are not supported in this lua version
+                // local num2 = 0o7070_7070
+                Diagnostic(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion, "0o7070_7070").WithLocation(3, 14),
+                // (4,14): error LUA0011: Underscores in numeric literals are not supported in this lua version
+                // local num3 = 10_10.10_10
+                Diagnostic(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion, "10_10.10_10").WithLocation(4, 14),
+                // (5,14): error LUA0011: Underscores in numeric literals are not supported in this lua version
+                // local num4 = 0xf_f
+                Diagnostic(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion, "0xf_f").WithLocation(5, 14));
         }
 
-        [Theory]
+        [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("// hi")]
-        [InlineData("/* hi */")]
-        public void Lexer_EmitsDiagnosticWhen_CCommentIsFound_And_LuaSyntaxOptionsAcceptCCommentsIsFalse(string text)
+        public void Lexer_EmitsDiagnosticWhen_CCommentIsFound_And_LuaSyntaxOptionsAcceptCCommentsIsFalse()
         {
-            var options = LuaSyntaxOptions.All.With(acceptCCommentSyntax: false);
-            var tokens = ParseTokens(text, options: options, includeEndOfFile: true);
-
-            var eof = Assert.Single(tokens);
-            var trivia = Assert.Single(eof.LeadingTrivia);
-            Assert.Equal(
-                text.StartsWith("//", StringComparison.Ordinal)
-                ? SyntaxKind.SingleLineCommentTrivia
-                : SyntaxKind.MultiLineCommentTrivia,
-                trivia.Kind());
-            Assert.Equal(text, trivia.ToFullString());
-
-            var diagnostic = Assert.Single(trivia.UnderlyingNode!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_CCommentsNotSupportedInVersion, new TextSpan(0, text.Length));
+            const string source = @"// hi
+/* hi */";
+            ParseAndValidate(source, LuaSyntaxOptions.All.With(acceptCCommentSyntax: false),
+                // (1,1): error LUA0012: C comments are not supported in this lua version
+                // // hi
+                Diagnostic(ErrorCode.ERR_CCommentsNotSupportedInVersion, "// hi").WithLocation(1, 1),
+                // (2,1): error LUA0012: C comments are not supported in this lua version
+                // /* hi */
+                Diagnostic(ErrorCode.ERR_CCommentsNotSupportedInVersion, "/* hi */").WithLocation(2, 1));
         }
 
-        [Theory]
+        [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("🅱")]
-        [InlineData("\ufeff"  /* ZERO WIDTH NO-BREAK SPACE */ )]
-        [InlineData("\u206b"  /* ACTIVATE SYMMETRIC SWAPPING */ )]
-        [InlineData("\u202a"  /* LEFT-TO-RIGHT EMBEDDING */ )]
-        [InlineData("\u206a"  /* INHIBIT SYMMETRIC SWAPPING */ )]
-        [InlineData("\u200e"  /* LEFT-TO-RIGHT MARK */ )]
-        [InlineData("\u200c"  /* ZERO WIDTH NON-JOINER */ )]
-        public void Lexer_EmitsDiagnosticWhen_IdentifiersWithCharactersAbove0x7FAreFound_And_LuaSyntaxOptionsUseLuajitIdentifierRulesIsFalse(string text)
+        public void Lexer_EmitsDiagnosticWhen_IdentifiersWithCharactersAbove0x7FAreFound_And_LuaSyntaxOptionsUseLuajitIdentifierRulesIsFalse()
         {
-            var options = LuaSyntaxOptions.All.With(useLuaJitIdentifierRules: false);
-            var tokens = ParseTokens(text, options: options);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.IdentifierToken, token.Kind());
-            Assert.Equal(text, token.Text);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, new TextSpan(0, text.Length));
+            const string srcText = "local 🅱 = 1\r\n"
+                                   + "local \ufeff = 1 -- ZERO WIDTH NO-BREAK SPACE\r\n"
+                                   + "local \u206b = 1 -- ACTIVATE SYMMETRIC SWAPPING\r\n"
+                                   + "local \u202a = 1 -- LEFT-TO-RIGHT EMBEDDING\r\n"
+                                   + "local \u206a = 1 -- INHIBIT SYMMETRIC SWAPPING\r\n"
+                                   + "local \u200e = 1 -- LEFT-TO-RIGHT MARK\r\n"
+                                   + "local \u200c = 1 -- ZERO WIDTH NON-JOINER";
+            ParseAndValidate(srcText, LuaSyntaxOptions.All.With(useLuaJitIdentifierRules: false),
+                // (1,7): error LUA0013: Identifiers containing characters with value above 0x7F are not supported in this lua version
+                // local 🅱 = 1
+                Diagnostic(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, "🅱").WithLocation(1, 7),
+                // (2,7): error LUA0013: Identifiers containing characters with value above 0x7F are not supported in this lua version
+                // local ? = 1 -- ZERO WIDTH NO-BREAK SPACE
+                Diagnostic(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, "\ufeff").WithLocation(2, 7),
+                // (3,7): error LUA0013: Identifiers containing characters with value above 0x7F are not supported in this lua version
+                // local ? = 1 -- ACTIVATE SYMMETRIC SWAPPING
+                Diagnostic(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, "\u206b").WithLocation(3, 7),
+                // (4,7): error LUA0013: Identifiers containing characters with value above 0x7F are not supported in this lua version
+                // local ? = 1 -- LEFT-TO-RIGHT EMBEDDING
+                Diagnostic(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, "\u202a").WithLocation(4, 7),
+                // (5,7): error LUA0013: Identifiers containing characters with value above 0x7F are not supported in this lua version
+                // local ? = 1 -- INHIBIT SYMMETRIC SWAPPING
+                Diagnostic(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, "\u206a").WithLocation(5, 7),
+                // (6,7): error LUA0013: Identifiers containing characters with value above 0x7F are not supported in this lua version
+                // local ? = 1 -- LEFT-TO-RIGHT MARK
+                Diagnostic(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, "\u200e").WithLocation(6, 7),
+                // (7,7): error LUA0013: Identifiers containing characters with value above 0x7F are not supported in this lua version
+                // local ? = 1 -- ZERO WIDTH NON-JOINER
+                Diagnostic(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, "\u200c").WithLocation(7, 7));
         }
 
-        [Theory]
+        [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("$")]
-        [InlineData("\\")]
-        [InlineData("?")]
-        public void Lexer_EmitsDiagnosticWhen_BadCharactersAreFound(string text)
+        public void Lexer_EmitsDiagnosticWhen_BadCharactersAreFound()
         {
-            var tokens = ParseTokens(text);
-
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.BadToken, token.Kind());
-            Assert.Equal(text, token.Text);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_BadCharacter, new TextSpan(0, text.Length), text);
+            const string source = @"$\?";
+            ParseAndValidate(source, null,
+                // (1,1): error LUA0014: Bad character input: '$'
+                // $\?
+                Diagnostic(ErrorCode.ERR_BadCharacter, "$").WithArguments("$").WithLocation(1, 1),
+                // (1,2): error LUA0014: Bad character input: '\'
+                // $\?
+                Diagnostic(ErrorCode.ERR_BadCharacter, @"\").WithArguments(@"\").WithLocation(1, 2),
+                // (1,3): error LUA0014: Bad character input: '?'
+                // $\?
+                Diagnostic(ErrorCode.ERR_BadCharacter, "?").WithArguments("?").WithLocation(1, 3));
         }
 
-        [Theory]
+        [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        [InlineData("\"hello\\xAthere\"", "hello\xAthere", 6, 3)]
-        [InlineData("'hello\\xAthere'", "hello\xAthere", 6, 3)]
-        [InlineData("\"hello\\xFFthere\"", "hello\xFFthere", 6, 4)]
-        [InlineData("'hello\\xFFthere'", "hello\xFFthere", 6, 4)]
-        public void Lexer_EmitsDiagnosticsWhen_HexEscapesAreFound_And_LuaSyntaxOptionsAcceptHexEscapesIsFalse(string text, string value, int escapePosition, int escapeLength)
+        public void Lexer_EmitsDiagnosticsWhen_HexEscapesAreFound_And_LuaSyntaxOptionsAcceptHexEscapesIsFalse()
         {
+            const string srcText = @"
+local str1 = ""hello\xAthere""
+local str2 = 'hello\xAthere'
+local str3 = ""hello\xFFthere""
+local str4 = 'hello\xFFthere'
+";
             var options = LuaSyntaxOptions.All.With(acceptHexEscapesInStrings: false);
-            var tokens = ParseTokens(text, options: options);
+            ParseAndValidate(srcText, options,
+                // (2,20): error LUA0016: Hexadecimal string escapes are not supported in this lua version
+                // local str1 = "hello\xAthere"
+                Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xA").WithLocation(2, 20),
+                // (3,20): error LUA0016: Hexadecimal string escapes are not supported in this lua version
+                // local str2 = 'hello\xAthere'
+                Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xA").WithLocation(3, 20),
+                // (4,20): error LUA0016: Hexadecimal string escapes are not supported in this lua version
+                // local str3 = "hello\xFFthere"
+                Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xFF").WithLocation(4, 20),
+                // (5,20): error LUA0016: Hexadecimal string escapes are not supported in this lua version
+                // local str4 = 'hello\xFFthere'
+                Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xFF").WithLocation(5, 20));
+        }
 
-            var token = Assert.Single(tokens);
-            Assert.Equal(SyntaxKind.StringLiteralToken, token.Kind());
-            Assert.Equal(text, token.Text);
-            Assert.Equal(value, token.Value);
-
-            var diagnostic = Assert.Single(token.Node!.GetDiagnostics());
-            AssertDiagnostic(diagnostic, ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, new TextSpan(escapePosition, escapeLength));
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsMultipleDiagnosticsWhen_MultipleHexEscapesAreFound_And_LuaSyntaxOptionsAcceptHexEscapesIsFalse()
+        {
+            const string source = @"local str = 'hello\xAFthere\xBFgood\xCFfriend'";
+            var options = LuaSyntaxOptions.All.With(acceptHexEscapesInStrings: false);
+            ParseAndValidate(source, options,
+                // (1,19): error LUA0016: Hexadecimal string escapes are not supported in this lua version
+                // local str = 'hello\xAFthere\xBFgood\xCFfriend'
+                Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xAF").WithLocation(1, 19),
+                // (1,28): error LUA0016: Hexadecimal string escapes are not supported in this lua version
+                // local str = 'hello\xAFthere\xBFgood\xCFfriend'
+                Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xBF").WithLocation(1, 28),
+                // (1,36): error LUA0016: Hexadecimal string escapes are not supported in this lua version
+                // local str = 'hello\xAFthere\xBFgood\xCFfriend'
+                Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xCF").WithLocation(1, 36));
         }
     }
 }
