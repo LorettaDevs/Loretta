@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Test.Utilities;
 using Xunit;
@@ -37,6 +38,40 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
                 Assert.True(false, "No tokens were lexed");
             }
             return result;
+        }
+
+        [Theory]
+        [Trait("Category", "Lexer/Diagnostics")]
+        [InlineData("0b00000000000000000000000000000000000000000000000000000000000000001")]
+        [InlineData("0o0000000000000000000001")]
+        public void Lexer_DoesNot_CountNumberDigitsNaively(string text)
+        {
+            var token = LexToken(text);
+            Assert.NotEqual(default, token);
+            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
+            Assert.Equal(1d, token.Value);
+            Assert.Equal(text, token.Text);
+            Assert.Equal(text.Length, token.FullWidth);
+            Assert.Empty(token.ErrorsAndWarnings());
+        }
+
+        [Theory]
+        [Trait("Category", "Lexer/Output")]
+        [InlineData("--[")]
+        [InlineData("--[=")]
+        [InlineData("--[==")]
+        [InlineData("--[ [")]
+        [InlineData("--[= [")]
+        [InlineData("--[= =[")]
+        public void Lexer_DoesNot_IdentifyLongCommentsNaively(string text)
+        {
+            var eof = LexToken(text);
+            var trivia = Assert.Single(eof.LeadingTrivia);
+            Assert.Equal(SyntaxKind.SingleLineCommentTrivia, trivia.Kind());
+            Assert.Equal(text, trivia.ToFullString());
+
+            Assert.False(trivia.ContainsDiagnostics);
+            Assert.False(eof.ContainsDiagnostics);
         }
 
         [Fact]
