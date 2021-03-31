@@ -394,21 +394,21 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         [Keyword("nil")]
         [ExtraCategories("LiteralToken")]
-        [Property("ConstantValue", null)]
+        [Property("LiteralExpression", NilLiteralExpression)]
         NilKeyword = 520,
         /// <summary>
         /// Represents the <see langword="true"/> keyword.
         /// </summary>
         [Keyword("true")]
         [ExtraCategories("LiteralToken")]
-        [Property("ConstantValue", true)]
+        [Property("LiteralExpression", TrueLiteralExpression)]
         TrueKeyword = 521,
         /// <summary>
         /// Represents the <see langword="false"/> keyword.
         /// </summary>
         [Keyword("false")]
         [ExtraCategories("LiteralToken")]
-        [Property("ConstantValue", false)]
+        [Property("LiteralExpression", FalseLiteralExpression)]
         FalseKeyword = 522,
 
         // Tokens with Text
@@ -450,8 +450,11 @@ namespace Loretta.CodeAnalysis.Lua
         TableConstructorExpression = 2013,
         NumericalLiteralExpression = 2014,
         StringLiteralExpression = 2015,
+        [Property("ConstantValue", true)]
         TrueLiteralExpression = 2016,
+        [Property("ConstantValue", false)]
         FalseLiteralExpression = 2017,
+        [Property("ConstantValue", null)]
         NilLiteralExpression = 2018,
         VarArgExpression = 2019,
         [ExtraCategories("VariableExpression")]
