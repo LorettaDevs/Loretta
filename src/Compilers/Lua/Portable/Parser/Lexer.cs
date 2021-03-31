@@ -521,14 +521,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     info.Kind = SyntaxKind.HashToken;
                     return;
 
-                case '~':
-                    if (_reader.IsAt('=', 1))
-                    {
-                        _reader.Advance(2);
-                        info.Kind = SyntaxKind.TildeEqualsToken;
-                        return;
-                    }
-                    break;
+                case '~' when _reader.IsAt('=', 1):
+                    _reader.Advance(2);
+                    info.Kind = SyntaxKind.TildeEqualsToken;
+                    return;
 
                 case '>':
                     switch (_reader.Peek(1))
