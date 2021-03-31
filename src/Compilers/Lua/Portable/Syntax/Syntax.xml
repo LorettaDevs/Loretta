@@ -1567,6 +1567,24 @@
     </Field>
   </Node>
 
+  <Node Name="EmtpyStatementSyntax" Base="StatementSyntax">
+    <TypeComment>
+      <summary>An empty statement.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="EmtpyStatementSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="EmtpyStatement" />
+    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+      <PropertyComment>
+        <summary>The semicolon at the end of the statement (if any).</summary>
+      </PropertyComment>
+      <Kind Name="SemicolonToken" />
+    </Field>
+  </Node>
+
   <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The node containing all of the file's contents.</summary>

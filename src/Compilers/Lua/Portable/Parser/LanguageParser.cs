@@ -160,6 +160,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     case SyntaxKind.ReturnKeyword:
                         return ParseReturnStatement();
 
+                    case SyntaxKind.SemicolonToken when Options.SyntaxOptions.AcceptEmptyStatements:
+                        return SyntaxFactory.EmtpyStatement(EatToken(SyntaxKind.SemicolonToken));
+
                     default:
                     {
                         if (CurrentToken.ContextualKind == SyntaxKind.ContinueKeyword)

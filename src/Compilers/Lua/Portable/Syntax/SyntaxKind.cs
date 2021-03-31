@@ -573,7 +573,10 @@ namespace Loretta.CodeAnalysis.Lua
         DoStatement = 2068,
         GotoLabelStatement = 2069,
         ExpressionStatement = 2070,
-        CompilationUnit = 2071,
-        StatementList = 2072
+        StatementList = 2072,
+        EmtpyStatement = 2073,
+
+        // Other types of nodes
+        CompilationUnit = 3001,
     }
 }
