@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Loretta.CodeAnalysis.PooledObjects;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua
 {
@@ -59,8 +61,6 @@ namespace Loretta.CodeAnalysis.Lua
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override IReadOnlyDictionary<string, string> Features => _features;
 
-        public override IEnumerable<string> PreprocessorSymbolNames => throw new NotImplementedException();
-
         /// <summary>
         /// <inheritdoc cref="ParseOptions.WithDocumentationMode(DocumentationMode)"/>.
         /// <b><see cref="CodeAnalysis.DocumentationMode"/> does nothing currently.</b>
@@ -110,15 +110,14 @@ namespace Loretta.CodeAnalysis.Lua
             => ValidateOptions(builder, MessageProvider.Instance);
 
         /// <inheritdoc/>
-        public bool Equals(LuaParseOptions? other) =>
+        public bool Equals([NotNullWhen(true)] LuaParseOptions? other) =>
             ReferenceEquals(this, other)
-            || EqualsHelper(this)
-            || (other is not null && SyntaxOptions.Equals(other.SyntaxOptions));
+            || (EqualsHelper(other) && SyntaxOptions.Equals(other.SyntaxOptions));
 
         /// <inheritdoc/>
         public override bool Equals(object? obj) => Equals(obj as LuaParseOptions);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(GetHashCodeHelper(), SyntaxOptions);
+        public override int GetHashCode() => Hash.Combine(SyntaxOptions, GetHashCodeHelper());
     }
 }

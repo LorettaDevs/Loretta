@@ -81,11 +81,6 @@ namespace Loretta.CodeAnalysis
             get;
         }
 
-        /// <summary>
-        /// Names of defined preprocessor symbols.
-        /// </summary>
-        public abstract IEnumerable<string> PreprocessorSymbolNames { get; }
-
         public abstract override bool Equals(object? obj);
 
         protected bool EqualsHelper([NotNullWhen(true)] ParseOptions? other)
@@ -97,18 +92,16 @@ namespace Loretta.CodeAnalysis
 
             return
                 DocumentationMode == other.DocumentationMode &&
-                Features.SequenceEqual(other.Features) &&
-                (PreprocessorSymbolNames == null ? other.PreprocessorSymbolNames == null : PreprocessorSymbolNames.SequenceEqual(other.PreprocessorSymbolNames, StringComparer.Ordinal));
+                Features.SequenceEqual(other.Features);
         }
 
         public abstract override int GetHashCode();
 
         protected int GetHashCodeHelper()
         {
-            return HashCode.Combine(
-                DocumentationMode,
-                HashFeatures(Features),
-                Hash.CombineValues(PreprocessorSymbolNames, StringComparer.Ordinal));
+            return Hash.Combine(
+                (int) DocumentationMode,
+                HashFeatures(Features));
         }
 
         private static int HashFeatures(IReadOnlyDictionary<string, string> features)
