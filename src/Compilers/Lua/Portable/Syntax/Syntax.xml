@@ -154,7 +154,7 @@
       <PropertyComment>
         <summary>The opening bracket token.</summary>
       </PropertyComment>
-      <Kind Name="OpenParenthesisToken" />
+      <Kind Name="OpenBracketToken" />
     </Field>
     <Field Name="Key" Type="ExpressionSyntax">
       <PropertyComment>
@@ -165,7 +165,7 @@
       <PropertyComment>
         <summary>The closing bracket token.</summary>
       </PropertyComment>
-      <Kind Name="CloseParenthesisToken" />
+      <Kind Name="CloseBracketToken" />
     </Field>
     <Field Name="EqualsToken" Type="SyntaxToken">
       <PropertyComment>
@@ -1487,7 +1487,7 @@
       <PropertyComment>
         <summary>The 'do' keyword.</summary>
       </PropertyComment>
-      <Kind Name="DoStatement" />
+      <Kind Name="DoKeyword" />
     </Field>
     <Field Name="Body" Type="StatementListSyntax">
       <PropertyComment>
