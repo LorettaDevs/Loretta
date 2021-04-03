@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Loretta.CodeAnalysis.Lua.StatisticsCollector": {
+      "commandName": "Project",
+      "commandLineArgs": "--warmup-count 2 --include-token-stats *.lua",
+      "workingDirectory": "B:\\Data\\Lua\\files"
+    }
+  }
+}
