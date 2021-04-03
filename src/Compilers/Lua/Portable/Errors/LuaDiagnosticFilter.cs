@@ -18,6 +18,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="warningLevelOption">The maximum warning level to allow. Diagnostics with a higher warning level will be filtered out.</param>
         /// <param name="generalDiagnosticOption">How warning diagnostics should be reported</param>
         /// <param name="specificDiagnosticOptions">How specific diagnostics should be reported</param>
+        /// <param name="syntaxTreeOptions"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns>A diagnostic updated to reflect the options, or null if it has been filtered out</returns>
         internal static Diagnostic? Filter(
             Diagnostic d,
