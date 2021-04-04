@@ -297,6 +297,17 @@ namespace Loretta.CodeAnalysis.Lua
         /// <inheritdoc/>
         protected override SyntaxTree SyntaxTreeCore => SyntaxTree;
 
+        /// <summary>
+        /// Replaces child nodes.
+        /// </summary>
+        /// <typeparam name="TNode"></typeparam>
+        /// <param name="nodes"></param>
+        /// <param name="computeReplacementNode"></param>
+        /// <param name="tokens"></param>
+        /// <param name="computeReplacementToken"></param>
+        /// <param name="trivia"></param>
+        /// <param name="computeReplacementTrivia"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode ReplaceCore<TNode>(
             IEnumerable<TNode>? nodes = null,
             Func<TNode, TNode, SyntaxNode>? computeReplacementNode = null,
@@ -307,30 +318,88 @@ namespace Loretta.CodeAnalysis.Lua
             =>
             SyntaxReplacer.Replace(this, nodes, computeReplacementNode, tokens, computeReplacementToken, trivia, computeReplacementTrivia).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Replaces a node in a list.
+        /// </summary>
+        /// <param name="originalNode"></param>
+        /// <param name="replacementNodes"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode ReplaceNodeInListCore(SyntaxNode originalNode, IEnumerable<SyntaxNode> replacementNodes)
             => SyntaxReplacer.ReplaceNodeInList(this, originalNode, replacementNodes).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Inserts a node into a list.
+        /// </summary>
+        /// <param name="nodeInList"></param>
+        /// <param name="nodesToInsert"></param>
+        /// <param name="insertBefore"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode InsertNodesInListCore(SyntaxNode nodeInList, IEnumerable<SyntaxNode> nodesToInsert, bool insertBefore)
             => SyntaxReplacer.InsertNodeInList(this, nodeInList, nodesToInsert, insertBefore).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Replaces a token in a list.
+        /// </summary>
+        /// <param name="originalToken"></param>
+        /// <param name="newTokens"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode ReplaceTokenInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens)
             => SyntaxReplacer.ReplaceTokenInList(this, originalToken, newTokens).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Inserts a token into a list.
+        /// </summary>
+        /// <param name="originalToken"></param>
+        /// <param name="newTokens"></param>
+        /// <param name="insertBefore"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode InsertTokensInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens, bool insertBefore)
             => SyntaxReplacer.InsertTokenInList(this, originalToken, newTokens, insertBefore).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Replaces a trivia in a list.
+        /// </summary>
+        /// <param name="originalTrivia"></param>
+        /// <param name="newTrivia"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode ReplaceTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia)
             => SyntaxReplacer.ReplaceTriviaInList(this, originalTrivia, newTrivia).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Inserts a trivia into a list.
+        /// </summary>
+        /// <param name="originalTrivia"></param>
+        /// <param name="newTrivia"></param>
+        /// <param name="insertBefore"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode InsertTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia, bool insertBefore)
             => SyntaxReplacer.InsertTriviaInList(this, originalTrivia, newTrivia, insertBefore).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Removes child nodes.
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode? RemoveNodesCore(IEnumerable<SyntaxNode> nodes, SyntaxRemoveOptions options)
             => SyntaxNodeRemover.RemoveNodes(this, nodes.Cast<LuaSyntaxNode>(), options).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Normalizes the whitespace in the node.
+        /// </summary>
+        /// <param name="indentation"></param>
+        /// <param name="eol"></param>
+        /// <param name="elasticTrivia"></param>
+        /// <returns></returns>
         protected internal override SyntaxNode NormalizeWhitespaceCore(string indentation, string eol, bool elasticTrivia)
             => SyntaxNormalizer.Normalize(this, indentation, eol, elasticTrivia).AsRootOfNewTreeWithOptionsFrom(SyntaxTree);
 
+        /// <summary>
+        /// Checks whether this node is equivalent to another.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="topLevel"></param>
+        /// <returns></returns>
         protected override bool IsEquivalentToCore(SyntaxNode node, bool topLevel = false)
             => SyntaxFactory.AreEquivalent(this, (LuaSyntaxNode) node, topLevel);
 

@@ -14,6 +14,7 @@ namespace Loretta.CodeAnalysis.Lua
     /// </typeparam>
     public abstract partial class LuaSyntaxVisitor<TResult>
     {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public virtual TResult? Visit(SyntaxNode? node)
         {
             if (node is not null)
@@ -26,6 +27,7 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         public virtual TResult? DefaultVisit(SyntaxNode node) => default;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
     /// <summary>
@@ -34,6 +36,7 @@ namespace Loretta.CodeAnalysis.Lua
     /// </summary>
     public abstract partial class LuaSyntaxVisitor
     {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public virtual void Visit(SyntaxNode? node)
         {
             if (node != null)
@@ -45,5 +48,6 @@ namespace Loretta.CodeAnalysis.Lua
         public virtual void DefaultVisit(SyntaxNode node)
         {
         }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }
