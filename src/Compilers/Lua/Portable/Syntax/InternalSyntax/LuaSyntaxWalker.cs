@@ -47,8 +47,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// <param name="node"></param>
         protected override void DefaultVisit(LuaSyntaxNode node)
         {
-            var childCnt = node.ChildNodesAndTokens().Count;
-            var i = 0;
             foreach (var child in node.ChildNodesAndTokens())
             {
                 if (child.IsToken)
