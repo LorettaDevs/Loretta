@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax
@@ -13,6 +14,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         private LuaTreeDumperConverter(bool includeDiagnostics = false) : base(SyntaxWalkerDepth.StructuredTrivia)
         {
             _includeDiagnostics = includeDiagnostics;
+            _childrenStack.Push(new List<TreeDumperNode?>());
         }
 
         public static TreeDumperNode Convert(SyntaxNode node, bool includeDiagnostics = false)
@@ -57,7 +59,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             var children = WithNewList(base.VisitToken, token);
             if (_includeDiagnostics)
                 children = Concat(children, GetDiagnosticsNode(token.GetDiagnostics()));
-            Add(new TreeDumperNode(token.Kind().ToString(), token.ValueText, children));
+            Add(new TreeDumperNode(token.Kind().ToString(), ObjectDisplay.FormatPrimitive(token.ValueText, ObjectDisplayOptions.EscapeNonPrintableCharacters), children));
         }
 
         public override void VisitLeadingTrivia(SyntaxToken token)
@@ -80,7 +82,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 var diagnosticNode = GetDiagnosticsNode(trivia.GetDiagnostics());
                 children = diagnosticNode is null ? null : SpecializedCollections.SingletonEnumerable(diagnosticNode);
             }
-            Add(new TreeDumperNode(trivia.Kind().ToString(), trivia.ToFullString(), children));
+            Add(new TreeDumperNode(trivia.Kind().ToString(), ObjectDisplay.FormatPrimitive(trivia.ToFullString(), ObjectDisplayOptions.EscapeNonPrintableCharacters), children));
         }
 
         private IEnumerable<TreeDumperNode>? WithNewList(Action action)
