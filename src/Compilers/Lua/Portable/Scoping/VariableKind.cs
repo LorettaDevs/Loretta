@@ -8,14 +8,18 @@
         /// <summary>
         /// A local variable.
         /// </summary>
-        LocalVariable,
+        Local,
         /// <summary>
         /// A global variable.
         /// </summary>
-        GlobalVariable,
+        Global,
         /// <summary>
         /// A function parameter.
         /// </summary>
-        Parameter
+        Parameter,
+        /// <summary>
+        /// A loop iteration variable.
+        /// </summary>
+        Iteration,
     }
 }

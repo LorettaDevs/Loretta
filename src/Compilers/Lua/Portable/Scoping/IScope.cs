@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -19,7 +20,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// The syntax node that originated this scope.
         /// Not supported for the global scope.
         /// </summary>
-        SyntaxReference Node { get; }
+        SyntaxNode? Node { get; }
 
         /// <summary>
         /// The parent scope (if any).
@@ -48,19 +49,24 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal interface IScopeInternal : IScope
     {
-        bool TryGetVariable(string name, [NotNullWhen(true)] out IVariable? variable);
-        IVariable GetOrCreateVariable(VariableKind kind, string name, SyntaxReference? declaration = null);
-        IVariable CreateVariable(VariableKind kind, string name, SyntaxReference? declaration = null);
+        bool TryGetVariable(string name, [NotNullWhen(true)] out IVariableInternal? variable);
+        IVariableInternal GetOrCreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null);
+        IVariableInternal CreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null);
+        void AddCapturedVariable(IVariableInternal variable);
+
+        bool TryGetLabel(string name, [NotNullWhen(true)] out IGotoLabelInternal? label);
+        IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax label);
+        IGotoLabelInternal CreateLabel(string name, GotoLabelStatementSyntax label);
     }
 
     internal class Scope : IScopeInternal
     {
-        private readonly IDictionary<string, IVariable> _variables = new Dictionary<string, IVariable>(StringComparer.Ordinal);
-        private readonly IList<IVariable> _declaredVariables = new List<IVariable>();
-        private readonly IList<IVariable> _capturedVariables = new List<IVariable>();
-        private readonly IDictionary<string, IGotoLabel> _labels = new Dictionary<string, IGotoLabel>(StringComparer.Ordinal);
+        private readonly IDictionary<string, IVariableInternal> _variables = new Dictionary<string, IVariableInternal>(StringComparer.Ordinal);
+        private readonly ISet<IVariableInternal> _declaredVariables = new HashSet<IVariableInternal>();
+        private readonly ISet<IVariableInternal> _capturedVariables = new HashSet<IVariableInternal>();
+        private readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringComparer.Ordinal);
 
-        public Scope(ScopeKind kind, SyntaxReference node, IScopeInternal? parent)
+        public Scope(ScopeKind kind, SyntaxNode? node, IScopeInternal? parent)
         {
             Kind = kind;
             Node = node ?? throw new ArgumentNullException(nameof(node));
@@ -72,43 +78,84 @@ namespace Loretta.CodeAnalysis.Lua
 
         public ScopeKind Kind { get; }
 
-        public SyntaxReference Node { get; }
+        public SyntaxNode Node { get; }
 
         public IScopeInternal? Parent { get; }
 
         IScope? IScope.Parent => Parent;
 
-        public IEnumerable<IVariable> DeclaredVariables { get; }
+        public IEnumerable<IVariableInternal> DeclaredVariables { get; }
 
-        public IEnumerable<IVariable> CapturedVariables { get; }
+        IEnumerable<IVariable> IScope.DeclaredVariables => DeclaredVariables;
 
-        public IEnumerable<IGotoLabel> GotoLabels { get; }
+        public IEnumerable<IVariableInternal> CapturedVariables { get; }
 
-        public bool TryGetVariable(string name, [NotNullWhen(true)] out IVariable? variable) =>
-            _variables.TryGetValue(name, out variable)
-            || Parent?.TryGetVariable(name, out variable) is true;
+        IEnumerable<IVariable> IScope.CapturedVariables => CapturedVariables;
 
-        public IVariable GetOrCreateVariable(VariableKind kind, string name, SyntaxReference? declaration = null)
+        public IEnumerable<IGotoLabelInternal> GotoLabels { get; }
+
+        IEnumerable<IGotoLabel> IScope.GotoLabels => GotoLabels;
+
+        public bool TryGetVariable(string name, [NotNullWhen(true)] out IVariableInternal? variable) =>
+            _variables.TryGetValue(name, out variable) || Parent?.TryGetVariable(name, out variable) is true;
+
+        public IVariableInternal GetOrCreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null)
         {
-            RoslynDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.GlobalVariable);
+            RoslynDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
             RoslynDebug.Assert(!string.IsNullOrEmpty(name));
 
             if (!TryGetVariable(name, out var variable))
                 variable = CreateVariable(kind, name, declaration);
 
+            _capturedVariables.Add(variable);
             RoslynDebug.Assert(variable.Kind == kind);
             return variable;
         }
 
-        public IVariable CreateVariable(VariableKind kind, string name, SyntaxReference? declaration = null)
+        public IVariableInternal CreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null)
         {
-            RoslynDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.GlobalVariable);
+            RoslynDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
             RoslynDebug.Assert(!string.IsNullOrEmpty(name));
 
             var variable = new Variable(kind, this, name, declaration);
             _variables[name] = variable;
             _declaredVariables.Add(variable);
             return variable;
+        }
+
+        public void AddCapturedVariable(IVariableInternal variable)
+        {
+            if (_declaredVariables.Contains(variable))
+                return;
+            if (Kind == ScopeKind.Function)
+            {
+                _capturedVariables.Add(variable);
+                variable.AddCapturingScope(this);
+            }
+            variable.AddReferencingScope(this);
+            Parent?.AddCapturedVariable(variable);
+        }
+
+        public bool TryGetLabel(string name, [NotNullWhen(true)] out IGotoLabelInternal? label) =>
+            _labels.TryGetValue(name, out label)
+            || (Kind == ScopeKind.Block && Parent?.TryGetLabel(name, out label) is true);
+
+        public IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax labelSyntax)
+        {
+            RoslynDebug.Assert(!string.IsNullOrEmpty(name));
+            RoslynDebug.AssertNotNull(labelSyntax);
+
+            if (!TryGetLabel(name, out var label))
+                label = CreateLabel(name, labelSyntax);
+
+            return label;
+        }
+
+        public IGotoLabelInternal CreateLabel(string name, GotoLabelStatementSyntax labelSyntax)
+        {
+            var label = new GotoLabel(name, labelSyntax);
+            _labels[name] = label;
+            return label;
         }
     }
 }

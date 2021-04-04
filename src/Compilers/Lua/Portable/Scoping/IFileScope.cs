@@ -8,24 +8,28 @@
         /// <summary>
         /// The implicit <c>args</c> that's available in all files.
         /// </summary>
-        public IVariable ArgsVariable { get; }
+        IVariable ArgsVariable { get; }
 
         /// <summary>
         /// The implicit vararg that's available in all files
         /// </summary>
-        public IVariable VarArgParameter { get; }
+        IVariable VarArgParameter { get; }
     }
 
     internal class FileScope : Scope, IFileScope
     {
-        public FileScope(ScopeKind kind, SyntaxReference node, IScopeInternal? parent) : base(kind, node, parent)
+        public FileScope(SyntaxNode node, IScopeInternal? parent) : base(ScopeKind.File, node, parent)
         {
             ArgsVariable = CreateVariable(VariableKind.Parameter, "args");
             VarArgParameter = CreateVariable(VariableKind.Parameter, "...");
         }
 
-        public IVariable ArgsVariable { get; }
+        public IVariableInternal ArgsVariable { get; }
 
-        public IVariable VarArgParameter { get; }
+        IVariable IFileScope.ArgsVariable => ArgsVariable;
+
+        public IVariableInternal VarArgParameter { get; }
+
+        IVariable IFileScope.VarArgParameter => VarArgParameter;
     }
 }

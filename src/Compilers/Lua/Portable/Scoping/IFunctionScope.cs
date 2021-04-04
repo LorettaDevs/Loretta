@@ -16,21 +16,25 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal interface IFunctionScopeInternal : IScopeInternal, IFunctionScope
     {
-        void AddParameter(string name, SyntaxReference declaration);
+        IVariableInternal AddParameter(string name, SyntaxNode declaration);
     }
 
     internal class FunctionScope : Scope, IFunctionScopeInternal
     {
         private readonly IList<IVariable> _parameters = new List<IVariable>();
 
-        public FunctionScope(ScopeKind kind, SyntaxReference node, IScopeInternal? parent) : base(kind, node, parent)
+        public FunctionScope(SyntaxNode node, IScopeInternal? parent) : base(ScopeKind.Function, node, parent)
         {
             Parameters = SpecializedCollections.ReadOnlyEnumerable(_parameters);
         }
 
         public IEnumerable<IVariable> Parameters { get; }
 
-        public void AddParameter(string name, SyntaxReference declaration) =>
-            _parameters.Add(CreateVariable(VariableKind.Parameter, name, declaration));
+        public IVariableInternal AddParameter(string name, SyntaxNode declaration)
+        {
+            var parameter = CreateVariable(VariableKind.Parameter, name, declaration);
+            _parameters.Add(parameter);
+            return parameter;
+        }
     }
 }

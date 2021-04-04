@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -16,40 +17,40 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The label's location.
         /// </summary>
-        SyntaxReference Location { get; }
+        GotoLabelStatementSyntax LabelSyntax { get; }
 
         /// <summary>
         /// The nodes that jump to this label.
         /// </summary>
-        IEnumerable<SyntaxReference> Jumps { get; }
+        IEnumerable<GotoStatementSyntax> JumpSyntaxes { get; }
     }
 
     internal interface IGotoLabelInternal : IGotoLabel
     {
-        void AddJump(SyntaxReference jump);
+        void AddJump(GotoStatementSyntax jump);
     }
 
     internal class GotoLabel : IGotoLabelInternal
     {
-        private readonly IList<SyntaxReference> _jumps = new List<SyntaxReference>();
+        private readonly IList<GotoStatementSyntax> _jumps = new List<GotoStatementSyntax>();
 
-        public GotoLabel(string name, SyntaxReference location)
+        public GotoLabel(string name, GotoLabelStatementSyntax label)
         {
             RoslynDebug.Assert(!string.IsNullOrEmpty(name));
-            RoslynDebug.AssertNotNull(location);
+            RoslynDebug.AssertNotNull(label);
 
             Name = name;
-            Location = location;
-            Jumps = SpecializedCollections.ReadOnlyEnumerable(_jumps);
+            LabelSyntax = label;
+            JumpSyntaxes = SpecializedCollections.ReadOnlyEnumerable(_jumps);
         }
 
         public string Name { get; }
 
-        public SyntaxReference Location { get; }
+        public GotoLabelStatementSyntax LabelSyntax { get; }
 
-        public IEnumerable<SyntaxReference> Jumps { get; }
+        public IEnumerable<GotoStatementSyntax> JumpSyntaxes { get; }
 
-        public void AddJump(SyntaxReference jump)
+        public void AddJump(GotoStatementSyntax jump)
         {
             RoslynDebug.AssertNotNull(jump);
             _jumps.Add(jump);
