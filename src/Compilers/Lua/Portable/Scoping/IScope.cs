@@ -69,7 +69,7 @@ namespace Loretta.CodeAnalysis.Lua
         public Scope(ScopeKind kind, SyntaxNode? node, IScopeInternal? parent)
         {
             Kind = kind;
-            Node = node ?? throw new ArgumentNullException(nameof(node));
+            Node = node;
             Parent = parent;
             DeclaredVariables = SpecializedCollections.ReadOnlyEnumerable(_declaredVariables);
             CapturedVariables = SpecializedCollections.ReadOnlyEnumerable(_capturedVariables);
@@ -78,7 +78,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public ScopeKind Kind { get; }
 
-        public SyntaxNode Node { get; }
+        public SyntaxNode? Node { get; }
 
         public IScopeInternal? Parent { get; }
 
