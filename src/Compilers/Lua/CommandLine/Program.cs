@@ -157,6 +157,12 @@ namespace Loretta.CLI
             Console.ReadKey(true);
             s_logger.WriteLine("");
             s_logger.WriteLine(TreeDumper.DumpCompact(LuaTreeDumperConverter.Convert(syntaxTree.GetRoot())));
+
+            var script = new Script(ImmutableArray.Create<SyntaxTree>(syntaxTree));
+            var global = script.RootScope;
+            s_logger.WriteLine("Global variables:");
+            foreach (var variable in global.DeclaredVariables)
+                s_logger.WriteLine($"    {variable.Kind} {variable.Name}");
         }
 
         [Command("e"), Command("expr"), Command("expression")]
