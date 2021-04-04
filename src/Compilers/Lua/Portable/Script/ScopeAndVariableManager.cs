@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Loretta.CodeAnalysis.Lua.Syntax;
 
 namespace Loretta.CodeAnalysis.Lua
 {
@@ -58,13 +57,17 @@ namespace Loretta.CodeAnalysis.Lua
         {
             var node = tree.GetRoot();
             var fileScope = new FileScope(node, rootScope);
-            var walker = new ScopeAndVariableWalker(
+            var scopesAndVariableWalker = new ScopeAndVariableWalker(
                 rootScope,
                 fileScope,
                 variable,
-                scopes,
-                labels);
-            walker.Visit(node);
+                scopes);
+            scopesAndVariableWalker.Visit(node);
+            var labelWalker = new GotoLabelWalker(scopes, labels);
+            labelWalker.Visit(node);
+            var gotoWalker = new GotoWalker(scopes, labels);
+            gotoWalker.Visit(node);
+
         }
     }
 }

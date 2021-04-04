@@ -13,28 +13,24 @@ namespace Loretta.CodeAnalysis.Lua
             private readonly FileScope _fileScope;
             private readonly IDictionary<SyntaxNode, IVariable> _variables;
             private readonly IDictionary<SyntaxNode, IScope> _scopes;
-            private readonly IDictionary<SyntaxNode, IGotoLabel> _labels;
             private readonly Stack<IScopeInternal> _scopeStack = new Stack<IScopeInternal>();
 
             public ScopeAndVariableWalker(
                 Scope rootScope,
                 FileScope fileScope,
                 IDictionary<SyntaxNode, IVariable> variables,
-                IDictionary<SyntaxNode, IScope> scopes,
-                IDictionary<SyntaxNode, IGotoLabel> labels)
+                IDictionary<SyntaxNode, IScope> scopes)
                 : base(SyntaxWalkerDepth.Node)
             {
                 RoslynDebug.AssertNotNull(rootScope);
                 RoslynDebug.AssertNotNull(fileScope);
                 RoslynDebug.AssertNotNull(variables);
                 RoslynDebug.AssertNotNull(scopes);
-                RoslynDebug.AssertNotNull(labels);
 
                 _rootScope = rootScope;
                 _fileScope = fileScope;
                 _variables = variables;
                 _scopes = scopes;
-                _labels = labels;
                 _scopeStack.Push(rootScope);
                 _scopeStack.Push(fileScope);
             }
@@ -258,13 +254,6 @@ namespace Loretta.CodeAnalysis.Lua
                 }
             }
 
-            public override void VisitGotoStatement(GotoStatementSyntax node)
-            {
-                RoslynDebug.Assert(Scope.TryGetLabel(node.LabelName.Text, out var label));
-                _labels[node] = label;
-                label.AddJump(node);
-            }
-
             public override void VisitLocalVariableDeclarationStatement(LocalVariableDeclarationStatementSyntax node)
             {
                 foreach (var values in node.Values)
@@ -325,12 +314,6 @@ namespace Loretta.CodeAnalysis.Lua
                 {
                     PopScope(scope);
                 }
-            }
-
-            public override void VisitGotoLabelStatement(GotoLabelStatementSyntax node)
-            {
-                var label = Scope.CreateLabel(node.Identifier.Text, node);
-                _labels[node] = label;
             }
         }
     }
