@@ -79,24 +79,10 @@ namespace Loretta.CodeAnalysis.Lua
         public static partial Option<SyntaxKind> GetLiteralExpression(SyntaxKind kind);
 
         /// <summary>
-        /// Obtains the operator token's kind from the unary expression node kind.
+        /// Obtains the operator token's kind from the expression node kind.
         /// </summary>
         /// <param name="kind">The unary expression node's kind.</param>
         /// <returns></returns>
-        public static partial Option<SyntaxKind> GetUnaryExpressionOperatorTokenKind(SyntaxKind kind);
-
-        /// <summary>
-        /// Obtains the operator token's kind from the binary expression node kind.
-        /// </summary>
-        /// <param name="kind">The binary expression node's kind.</param>
-        /// <returns></returns>
-        public static partial Option<SyntaxKind> GetBinaryExpressionOperatorTokenKind(SyntaxKind kind);
-
-        /// <summary>
-        /// Obtains the operator token's kind from the assignment expression node kind.
-        /// </summary>
-        /// <param name="kind"></param>
-        /// <returns></returns>
-        public static partial Option<SyntaxKind> GetAssignmentStatementOperatorTokenKind(SyntaxKind kind);
+        public static partial Option<SyntaxKind> GetOperatorTokenKind(SyntaxKind kind);
     }
 }

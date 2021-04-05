@@ -2,6 +2,66 @@
 
 namespace Loretta.CodeAnalysis.Lua
 {
+    internal static class SyntaxKindCategory
+    {
+        /// <summary>
+        /// Documentation comment kinds.
+        /// </summary>
+        public const string DocumentationCommentTrivia = nameof(DocumentationCommentTrivia);
+        /// <summary>
+        /// Tokens that can be used as the assignment operator in compound assignments.
+        /// </summary>
+        public const string CompoundAssignmentOperatorToken = nameof(CompoundAssignmentOperatorToken);
+        /// <summary>
+        /// Tokens that result in literal expressions.
+        /// </summary>
+        public const string LiteralToken = nameof(LiteralToken);
+        /// <summary>
+        /// Kinds that belong to <see cref="Syntax.VariableExpressionSyntax"/>.
+        /// </summary>
+        public const string VariableExpression = nameof(VariableExpression);
+        /// <summary>
+        /// Kinds that belong to <see cref="Syntax.UnaryExpressionSyntax"/>.
+        /// </summary>
+        public const string UnaryExpression = nameof(UnaryExpression);
+        /// <summary>
+        /// Kinds that belong to <see cref="Syntax.BinaryExpressionSyntax"/>.
+        /// </summary>
+        public const string BinaryExpression = nameof(BinaryExpression);
+        /// <summary>
+        /// Kinds that belong to function expressions or declarations.
+        /// </summary>
+        public const string FunctionExpressionOrDeclaration = nameof(FunctionExpressionOrDeclaration);
+        /// <summary>
+        /// Kinds that belong to compound assignment statements.
+        /// </summary>
+        public const string CompoundAssignmentStatement = nameof(CompoundAssignmentStatement);
+    }
+
+    internal static class SyntaxKindProperty
+    {
+        /// <summary>
+        /// The operator token that is the operation done by the compound assignment token/expression kind that has this property.
+        /// </summary>
+        public const string CompoundAssignmentOperator = nameof(CompoundAssignmentOperator);
+        /// <summary>
+        /// The compound assignment expression that the operator token that contains this property results into.
+        /// </summary>
+        public const string CompoundAssignmentStatement = nameof(CompoundAssignmentStatement);
+        /// <summary>
+        /// The kind of the expression the literal token that has this property results into.
+        /// </summary>
+        public const string LiteralExpression = nameof(LiteralExpression);
+        /// <summary>
+        /// The value the literal that has this property results into.
+        /// </summary>
+        public const string ConstantValue = nameof(ConstantValue);
+        /// <summary>
+        /// The kind of the operator token that results in the expression that contains this property.
+        /// </summary>
+        public const string OperatorTokenKind = nameof(OperatorTokenKind);
+    }
+
     public enum SyntaxKind : ushort
     {
         None = 0,
@@ -21,10 +81,10 @@ namespace Loretta.CodeAnalysis.Lua
         [Trivia]
         SkippedTokensTrivia = 7,
         //[Trivia]
-        //[ExtraCategories("DocumentationCommentTrivia")]
+        //[ExtraCategories(SyntaxKindCategory.DocumentationCommentTrivia)]
         //SingleLineDocumentationCommentTrivia = 8,
         //[Trivia]
-        //[ExtraCategories("DocumentationCommentTrivia")]
+        //[ExtraCategories(SyntaxKindCategory.DocumentationCommentTrivia)]
         //MultiLineDocumentationCommentTrivia = 9,
 
         // Textless Tokens
@@ -91,9 +151,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>+=</c> token.
         /// </summary>
         [Token(Text = "+=")]
-        [ExtraCategories("CompoundAssignmentOperatorToken")]
-        [Property("CompoundAssignmentOperator", PlusToken)]
-        [Property("CompoundAssignmentStatement", AddAssignmentStatement)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentOperator, PlusToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentStatement, AddAssignmentStatement)]
         PlusEqualsToken = 22,
         /// <summary>
         /// Represents the <c>-</c> token.
@@ -105,9 +165,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>-=</c> token.
         /// </summary>
         [Token(Text = "-=")]
-        [ExtraCategories("CompoundAssignmentOperatorToken")]
-        [Property("CompoundAssignmentOperator", MinusToken)]
-        [Property("CompoundAssignmentStatement", SubtractAssignmentStatement)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentOperator, MinusToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentStatement, SubtractAssignmentStatement)]
         MinusEqualsToken = 24,
         /// <summary>
         /// Represents the <c>*</c> token.
@@ -119,9 +179,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>*=</c> token.
         /// </summary>
         [Token(Text = "*=")]
-        [ExtraCategories("CompoundAssignmentOperatorToken")]
-        [Property("CompoundAssignmentOperator", StarToken)]
-        [Property("CompoundAssignmentStatement", MultiplyAssignmentStatement)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentOperator, StarToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentStatement, MultiplyAssignmentStatement)]
         StartEqualsToken = 26,
         /// <summary>
         /// Represents the <c>/</c> token.
@@ -133,9 +193,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>/=</c> token.
         /// </summary>
         [Token(Text = "/=")]
-        [ExtraCategories("CompoundAssignmentOperatorToken")]
-        [Property("CompoundAssignmentOperator", SlashToken)]
-        [Property("CompoundAssignmentStatement", DivideAssignmentStatement)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentOperator, SlashToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentStatement, DivideAssignmentStatement)]
         SlashEqualsToken = 28,
         /// <summary>
         /// Represents the <c>^</c> token.
@@ -147,9 +207,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>^=</c> token.
         /// </summary>
         [Token(Text = "^=")]
-        [ExtraCategories("CompoundAssignmentOperatorToken")]
-        [Property("CompoundAssignmentOperator", HatToken)]
-        [Property("CompoundAssignmentStatement", ExponentiateAssignmentStatement)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentOperator, HatToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentStatement, ExponentiateAssignmentStatement)]
         HatEqualsToken = 30,
         /// <summary>
         /// Represents the <c>%</c> token.
@@ -161,9 +221,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>%=</c> token.
         /// </summary>
         [Token(Text = "%=")]
-        [ExtraCategories("CompoundAssignmentOperatorToken")]
-        [Property("CompoundAssignmentOperator", PercentToken)]
-        [Property("CompoundAssignmentStatement", ModuloAssignmentStatement)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentOperator, PercentToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentStatement, ModuloAssignmentStatement)]
         PercentEqualsToken = 32,
         /// <summary>
         /// Represents the <c>.</c> token.
@@ -185,9 +245,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>..=</c> token.
         /// </summary>
         [Token(Text = "..=")]
-        [ExtraCategories("CompoundAssignmentOperatorToken")]
-        [Property("CompoundAssignmentOperator", DotDotToken)]
-        [Property("CompoundAssignmentStatement", ConcatAssignmentStatement)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentOperator, DotDotToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentStatement, ConcatAssignmentStatement)]
         DotDotEqualsToken = 36,
         /// <summary>
         /// Represents the <c>=</c> token.
@@ -393,34 +453,34 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <see langword="nil"/> keyword.
         /// </summary>
         [Keyword("nil")]
-        [ExtraCategories("LiteralToken")]
-        [Property("LiteralExpression", NilLiteralExpression)]
+        [ExtraCategories(SyntaxKindCategory.LiteralToken)]
+        [Property(SyntaxKindProperty.LiteralExpression, NilLiteralExpression)]
         NilKeyword = 520,
         /// <summary>
         /// Represents the <see langword="true"/> keyword.
         /// </summary>
         [Keyword("true")]
-        [ExtraCategories("LiteralToken")]
-        [Property("LiteralExpression", TrueLiteralExpression)]
+        [ExtraCategories(SyntaxKindCategory.LiteralToken)]
+        [Property(SyntaxKindProperty.LiteralExpression, TrueLiteralExpression)]
         TrueKeyword = 521,
         /// <summary>
         /// Represents the <see langword="false"/> keyword.
         /// </summary>
         [Keyword("false")]
-        [ExtraCategories("LiteralToken")]
-        [Property("LiteralExpression", FalseLiteralExpression)]
+        [ExtraCategories(SyntaxKindCategory.LiteralToken)]
+        [Property(SyntaxKindProperty.LiteralExpression, FalseLiteralExpression)]
         FalseKeyword = 522,
 
         // Tokens with Text
         [Token]
         BadToken = 1000,
         [Token]
-        [ExtraCategories("LiteralToken")]
-        [Property("LiteralExpression", NumericalLiteralExpression)]
+        [ExtraCategories(SyntaxKindCategory.LiteralToken)]
+        [Property(SyntaxKindProperty.LiteralExpression, NumericalLiteralExpression)]
         NumericLiteralToken = 1001,
         [Token]
-        [ExtraCategories("LiteralToken")]
-        [Property("LiteralExpression", StringLiteralExpression)]
+        [ExtraCategories(SyntaxKindCategory.LiteralToken)]
+        [Property(SyntaxKindProperty.LiteralExpression, StringLiteralExpression)]
         StringLiteralToken = 1002,
         [Token]
         IdentifierToken = 1003,
@@ -446,111 +506,112 @@ namespace Loretta.CodeAnalysis.Lua
         ExpressionListFunctionArgument = 2011,
 
         // Primary Expressions
+        [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
         AnonymousFunctionExpression = 2012,
         TableConstructorExpression = 2013,
         NumericalLiteralExpression = 2014,
         StringLiteralExpression = 2015,
-        [Property("ConstantValue", true)]
+        [Property(SyntaxKindProperty.ConstantValue, true)]
         TrueLiteralExpression = 2016,
-        [Property("ConstantValue", false)]
+        [Property(SyntaxKindProperty.ConstantValue, false)]
         FalseLiteralExpression = 2017,
-        [Property("ConstantValue", null)]
+        [Property(SyntaxKindProperty.ConstantValue, null)]
         NilLiteralExpression = 2018,
         VarArgExpression = 2019,
-        [ExtraCategories("VariableExpression")]
+        [ExtraCategories(SyntaxKindCategory.VariableExpression)]
         IdentifierName = 2020,
 
         // Unary Expressions
-        [ExtraCategories("UnaryExpression")]
-        [Property("UnaryExpressionOperatorTokenKind", MinusToken)]
+        [ExtraCategories(SyntaxKindCategory.UnaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, MinusToken)]
         UnaryMinusExpression = 2021,
-        [ExtraCategories("UnaryExpression")]
-        [Property("UnaryExpressionOperatorTokenKind", NotKeyword)]
+        [ExtraCategories(SyntaxKindCategory.UnaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, NotKeyword)]
         LogicalNotExpression = 2022,
-        [ExtraCategories("UnaryExpression")]
-        [Property("UnaryExpressionOperatorTokenKind", HashToken)]
+        [ExtraCategories(SyntaxKindCategory.UnaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, HashToken)]
         LengthExpression = 2023,
 
         // Binary Expressions
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", PlusToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, PlusToken)]
         AddExpression = 2024,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", MinusToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, MinusToken)]
         SubtractExpression = 2025,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", StarToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, StarToken)]
         MultiplyExpression = 2026,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", SlashToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, SlashToken)]
         DivideExpression = 2027,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", PercentToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, PercentToken)]
         ModuloExpression = 2028,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", DotDotToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, DotDotToken)]
         ConcatExpression = 2029,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", EqualsEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, EqualsEqualsToken)]
         EqualsExpression = 2030,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", TildeEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, TildeEqualsToken)]
         NotEqualsExpression = 2031,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", LessThanToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, LessThanToken)]
         LessThanExpression = 2032,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", LessThanEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, LessThanEqualsToken)]
         LessThanOrEqualExpression = 2033,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", GreaterThanToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, GreaterThanToken)]
         GreaterThanExpression = 2034,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", GreaterThanEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, GreaterThanEqualsToken)]
         GreaterThanOrEqualExpression = 2035,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", AndKeyword)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, AndKeyword)]
         LogicalAndExpression = 2036,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", OrKeyword)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, OrKeyword)]
         LogicalOrExpression = 2037,
-        [ExtraCategories("BinaryExpression")]
-        [Property("BinaryExpressionOperatorTokenKind", HatToken)]
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, HatToken)]
         ExponentiateExpression = 2038,
 
         // Expressions
         BadExpression = 2039,
         ParenthesizedExpression = 2040,
         FunctionCallExpression = 2041,
-        [ExtraCategories("VariableExpression")]
+        [ExtraCategories(SyntaxKindCategory.VariableExpression)]
         MemberAccessExpression = 2042,
-        [ExtraCategories("VariableExpression")]
+        [ExtraCategories(SyntaxKindCategory.VariableExpression)]
         ElementAccessExpression = 2043,
         MethodCallExpression = 2044,
 
         // Assignment Statements
-        [Property("AssignmentStatementOperatorTokenKind", EqualsToken)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, EqualsToken)]
         AssignmentStatement = 2045,
-        [ExtraCategories("CompoundAssignmentStatement")]
-        [Property("AssignmentStatementOperatorTokenKind", PlusEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, PlusEqualsToken)]
         AddAssignmentStatement = 2046,
-        [ExtraCategories("CompoundAssignmentStatement")]
-        [Property("AssignmentStatementOperatorTokenKind", MinusEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, MinusEqualsToken)]
         SubtractAssignmentStatement = 2047,
-        [ExtraCategories("CompoundAssignmentStatement")]
-        [Property("AssignmentStatementOperatorTokenKind", StartEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, StartEqualsToken)]
         MultiplyAssignmentStatement = 2048,
-        [ExtraCategories("CompoundAssignmentStatement")]
-        [Property("AssignmentStatementOperatorTokenKind", SlashEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, SlashEqualsToken)]
         DivideAssignmentStatement = 2049,
-        [ExtraCategories("CompoundAssignmentStatement")]
-        [Property("AssignmentStatementOperatorTokenKind", PercentEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, PercentEqualsToken)]
         ModuloAssignmentStatement = 2050,
-        [ExtraCategories("CompoundAssignmentStatement")]
-        [Property("AssignmentStatementOperatorTokenKind", DotDotEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, DotDotEqualsToken)]
         ConcatAssignmentStatement = 2051,
-        [ExtraCategories("CompoundAssignmentStatement")]
-        [Property("AssignmentStatementOperatorTokenKind", HatEqualsToken)]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, HatEqualsToken)]
         ExponentiateAssignmentStatement = 2052,
 
         // Control Flow Statements
@@ -571,7 +632,9 @@ namespace Loretta.CodeAnalysis.Lua
         // Statements
         BadStatement = 2064,
         LocalVariableDeclarationStatement = 2065,
+        [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
         LocalFunctionDeclarationStatement = 2066,
+        [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
         FunctionDeclarationStatement = 2067,
         DoStatement = 2068,
         GotoLabelStatement = 2069,
