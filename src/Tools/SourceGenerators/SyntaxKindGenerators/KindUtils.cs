@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
 namespace Loretta.Generators.SyntaxKindGenerators
@@ -114,9 +116,9 @@ namespace Loretta.Generators.SyntaxKindGenerators
                 var binaryOperatorInfo =
                     GetOperatorInfo(binaryOperatorAttributeType, field);
                 var extraCategories =
-                    GetExtraCategories(extraCategoriesAttributeType, field);
+                    GetExtraCategories(extraCategoriesAttributeType, field, context);
                 var properties =
-                    GetProperties(propertyAttributeType, field);
+                    GetProperties(propertyAttributeType, field, context);
 
                 var hasErrors = false;
                 var location = field.Locations.Single();
@@ -193,21 +195,59 @@ namespace Loretta.Generators.SyntaxKindGenerators
             return new OperatorInfo(precedence, expression);
         }
 
-        private static ImmutableArray<string> GetExtraCategories(INamedTypeSymbol extraCategoriesAttributeType, IFieldSymbol field)
+        private static ImmutableArray<string> GetExtraCategories(
+            INamedTypeSymbol extraCategoriesAttributeType,
+            IFieldSymbol field,
+            GeneratorExecutionContext context)
         {
             var attr = Utilities.GetAttribute(field, extraCategoriesAttributeType);
             if (attr is null)
                 return ImmutableArray<string>.Empty;
 
+            if (attr.ApplicationSyntaxReference is not null)
+            {
+                var attrSyntax = (AttributeSyntax) attr.ApplicationSyntaxReference!.GetSyntax(context.CancellationToken);
+                if (attrSyntax.ArgumentList is not null)
+                {
+                    foreach (var arg in attrSyntax.ArgumentList!.Arguments)
+                    {
+                        if (arg.Expression is not MemberAccessExpressionSyntax member
+                            || member.Expression is not SimpleNameSyntax baseName
+                            || !baseName.Identifier.Text.Equals("SyntaxKindCategory", StringComparison.Ordinal))
+                        {
+                            context.ReportDiagnostic(Diagnostic.Create(Diagnostics.CategoryNotInConstantClass, arg.GetLocation()));
+                        }
+                    }
+                }
+            }
+
             var categories = attr.ConstructorArguments.Single().Values.Select(arg => (string) arg.Value!).ToImmutableArray();
             return categories;
         }
 
-        private static ImmutableDictionary<string, TypedConstant> GetProperties(INamedTypeSymbol propertyAttributeType, IFieldSymbol field)
+        private static ImmutableDictionary<string, TypedConstant> GetProperties(INamedTypeSymbol propertyAttributeType, IFieldSymbol field, GeneratorExecutionContext context)
         {
             var attributes = Utilities.GetAttributes(field, propertyAttributeType);
             if (attributes.IsEmpty)
                 return ImmutableDictionary<string, TypedConstant>.Empty;
+
+            foreach (var attribute in attributes)
+            {
+                if (attribute.ApplicationSyntaxReference is null)
+                    continue;
+
+                var attrSyntax = (AttributeSyntax) attribute.ApplicationSyntaxReference.GetSyntax(context.CancellationToken);
+                if (attrSyntax.ArgumentList is null)
+                    continue;
+
+                var arg = attrSyntax.ArgumentList.Arguments.First();
+                if (arg.Expression is not MemberAccessExpressionSyntax member
+                        || member.Expression is not SimpleNameSyntax baseName
+                        || !baseName.Identifier.Text.Equals("SyntaxKindProperty", StringComparison.Ordinal))
+                {
+                    context.ReportDiagnostic(Diagnostic.Create(Diagnostics.PropertyNotInConstantClass, arg.GetLocation()));
+                }
+            }
 
             var properties = attributes.Select(attr => new KeyValuePair<string, TypedConstant>((string) attr.ConstructorArguments[0].Value!, attr.ConstructorArguments[1]));
             return ImmutableDictionary.CreateRange(properties);

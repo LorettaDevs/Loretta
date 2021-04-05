@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using Microsoft.CodeAnalysis;
 
 namespace Loretta.Generators
 {
@@ -50,6 +51,22 @@ namespace Loretta.Generators
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
             customTags: notConfigurableTags);
+
+        public static readonly DiagnosticDescriptor CategoryNotInConstantClass = new DiagnosticDescriptor(
+            id: "LOSK0006",
+            title: "Syntax categories should be in SyntaxKindCategory",
+            messageFormat: "Syntax categories should be in the SyntaxKindCategory constants class",
+            category: "Loretta.Generators.SyntaxKind",
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true);
+
+        public static readonly DiagnosticDescriptor PropertyNotInConstantClass = new DiagnosticDescriptor(
+            id: "LOSK0007",
+            title: "Syntax properties should be in SyntaxKindProperty",
+            messageFormat: "Syntax properties should be in the SyntaxKindProperty constants class",
+            category: "Loretta.Generators.SyntaxKind",
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true);
 
         public static readonly DiagnosticDescriptor SyntaxXmlNotFound = new DiagnosticDescriptor(
             id: "LOSX0001",
