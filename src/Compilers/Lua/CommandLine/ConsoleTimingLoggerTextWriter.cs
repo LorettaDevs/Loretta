@@ -7,20 +7,20 @@ namespace Loretta.CLI
 {
     internal class ConsoleTimingLoggerTextWriter : TextWriter
     {
-        private readonly ConsoleTimingLogger logger;
+        private readonly ConsoleTimingLogger _logger;
 
-        public ConsoleTimingLoggerTextWriter ( ConsoleTimingLogger logger )
+        public ConsoleTimingLoggerTextWriter(ConsoleTimingLogger logger)
         {
-            this.logger = logger;
+            this._logger = logger;
         }
 
         public override Encoding Encoding => Console.OutputEncoding;
 
-        public override void Write ( Char value ) => this.logger.Write ( value );
-        public override void Write ( String? value ) => this.logger.Write ( value ?? "" );
+        public override void Write(char value) => _logger.Write(value);
+        public override void Write(string? value) => _logger.Write(value ?? "");
 
-        public override void WriteLine ( ) => this.logger.WriteLine ( "" );
-        public override void WriteLine ( Char value ) => this.logger.WriteLine ( value );
-        public override void WriteLine ( String? value ) => this.logger.WriteLine ( value ?? "" );
+        public override void WriteLine() => _logger.WriteLine("");
+        public override void WriteLine(char value) => _logger.WriteLine(value);
+        public override void WriteLine(string? value) => _logger.WriteLine(value ?? "");
     }
 }
