@@ -44,7 +44,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{B48CF6EF-B0EE-4E75-B482-962E0B94332F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loretta.CodeAnalysis.Lua.StatisticsCollector", "src\Tools\Loretta.CodeAnalysis.Lua.StatisticsCollector\Loretta.CodeAnalysis.Lua.StatisticsCollector.csproj", "{1B47A562-62F8-4CC8-8F1F-E3BF0D32B32D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CodeAnalysis.Lua.StatisticsCollector", "src\Tools\Loretta.CodeAnalysis.Lua.StatisticsCollector\Loretta.CodeAnalysis.Lua.StatisticsCollector.csproj", "{1B47A562-62F8-4CC8-8F1F-E3BF0D32B32D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".notes", ".notes", "{60D59258-7EF1-46C7-973C-A65484BCC447}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -196,6 +198,7 @@ Global
 		{F5174B96-5AC7-4508-8619-B8452ED0BAF5} = {87DABD33-4B9E-4E07-A20D-CB4DB6D049D2}
 		{B48CF6EF-B0EE-4E75-B482-962E0B94332F} = {C487233C-597B-4FF3-8061-1B321E556E74}
 		{1B47A562-62F8-4CC8-8F1F-E3BF0D32B32D} = {87DABD33-4B9E-4E07-A20D-CB4DB6D049D2}
+		{60D59258-7EF1-46C7-973C-A65484BCC447} = {8A9DF973-E520-48BC-95C0-23477FD4AFCC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44571FC4-549C-4D10-B763-5382A430C7AC}
