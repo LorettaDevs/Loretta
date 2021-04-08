@@ -150,13 +150,18 @@ namespace Loretta.CLI
             using (s_logger.BeginOperation("Parsing"))
                 syntaxTree = (LuaSyntaxTree) LuaSyntaxTree.ParseText(sourceText, options: options, path: path);
 
+            LuaSyntaxNode formattedNode;
+            using (s_logger.BeginOperation("Format"))
+                formattedNode = syntaxTree.GetRoot().NormalizeWhitespace();
+
             var diagnostics = syntaxTree.GetDiagnostics();
             foreach (var diagnostic in diagnostics)
                 s_logger.WriteLine(diagnostic.ToString());
             s_logger.Write("Press any key to continue...");
             Console.ReadKey(true);
             s_logger.WriteLine("");
-            s_logger.WriteLine(TreeDumper.DumpCompact(LuaTreeDumperConverter.Convert(syntaxTree.GetRoot())));
+            formattedNode.WriteTo(new ConsoleTimingLoggerTextWriter(s_logger));
+            s_logger.WriteLine("");
 
             var script = new Script(ImmutableArray.Create<SyntaxTree>(syntaxTree));
             var global = script.RootScope;
@@ -178,7 +183,10 @@ namespace Loretta.CLI
             var diagnostics = expr.GetDiagnostics();
             foreach (var diagnostic in diagnostics)
                 s_logger.WriteLine(diagnostic.ToString());
-            s_logger.WriteLine(TreeDumper.DumpCompact(LuaTreeDumperConverter.Convert(expr)));
+
+            expr = expr.NormalizeWhitespace();
+            expr.WriteTo(new ConsoleTimingLoggerTextWriter(s_logger));
+            s_logger.WriteLine("");
         }
 
         [Command("mp"), Command("mass-parse")]
