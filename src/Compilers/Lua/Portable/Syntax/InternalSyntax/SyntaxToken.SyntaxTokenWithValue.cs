@@ -56,6 +56,18 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             public override object? Value => _value;
 
             public override string? ValueText => Convert.ToString(_value, CultureInfo.InvariantCulture);
+
+            public override SyntaxToken TokenWithLeadingTrivia(GreenNode? trivia) =>
+                new SyntaxTokenWithValueAndTrivia<T>(Kind, _text, _value, trivia, null, GetDiagnostics(), GetAnnotations());
+
+            public override SyntaxToken TokenWithTrailingTrivia(GreenNode? trivia) =>
+                new SyntaxTokenWithValueAndTrivia<T>(Kind, _text, _value, null, trivia, GetDiagnostics(), GetAnnotations());
+
+            internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics) =>
+                new SyntaxTokenWithValue<T>(Kind, _text, _value, diagnostics, GetAnnotations());
+
+            internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations) =>
+                new SyntaxTokenWithValue<T>(Kind, _text, _value, GetDiagnostics(), annotations);
         }
     }
 }

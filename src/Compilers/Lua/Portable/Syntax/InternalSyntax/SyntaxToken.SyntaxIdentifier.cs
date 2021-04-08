@@ -45,7 +45,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             public override string ValueText => _name;
 
             public override SyntaxToken TokenWithLeadingTrivia(GreenNode? trivia)
-                => new SyntaxTokenWithTrivia(Kind, trivia, null, GetDiagnostics(), GetAnnotations());
+                => new SyntaxIdentifierWithTrivia(Kind, _name, trivia, null, GetDiagnostics(), GetAnnotations());
 
             public override SyntaxToken TokenWithTrailingTrivia(GreenNode? trivia)
                 => new SyntaxIdentifierWithTrailingTrivia(_name, trivia, GetDiagnostics(), GetAnnotations());

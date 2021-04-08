@@ -44,10 +44,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             public override SyntaxKind ContextualKind => _contextualKind;
 
             public override SyntaxToken TokenWithLeadingTrivia(GreenNode? trivia)
-                => new SyntaxTokenWithTrivia(Kind, trivia, null, GetDiagnostics(), GetAnnotations());
+                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, trivia, null, GetDiagnostics(), GetAnnotations());
 
             public override SyntaxToken TokenWithTrailingTrivia(GreenNode? trivia)
-                => new SyntaxTokenWithTrivia(Kind, null, trivia, GetDiagnostics(), GetAnnotations());
+                => new SyntaxIdentifierWithTrivia(_contextualKind, _name, null, trivia, GetDiagnostics(), GetAnnotations());
 
             internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
                 => new SyntaxIdentifierExtended(_contextualKind, _name, diagnostics, GetAnnotations());
