@@ -35,11 +35,9 @@ namespace Loretta.CodeAnalysis.Lua
         IEnumerable<IVariable> DeclaredVariables { get; }
 
         /// <summary>
-        /// Contains the variables that are captured by this scope.
-        /// Variables captured by the scope are variables that weren't declared
-        /// on the scope but are used in it.
+        /// Variables that are referenced by this scope.
         /// </summary>
-        IEnumerable<IVariable> CapturedVariables { get; }
+        IEnumerable<IVariable> ReferencedVariables { get; }
 
         /// <summary>
         /// The goto labels contained within this scope.
@@ -52,7 +50,7 @@ namespace Loretta.CodeAnalysis.Lua
         bool TryGetVariable(string name, [NotNullWhen(true)] out IVariableInternal? variable);
         IVariableInternal GetOrCreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null);
         IVariableInternal CreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null);
-        void AddCapturedVariable(IVariableInternal variable);
+        void AddReferencedVariable(IVariableInternal variable);
 
         bool TryGetLabel(string name, [NotNullWhen(true)] out IGotoLabelInternal? label);
         IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax label);
@@ -61,10 +59,10 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal class Scope : IScopeInternal
     {
-        private readonly IDictionary<string, IVariableInternal> _variables = new Dictionary<string, IVariableInternal>(StringComparer.Ordinal);
-        private readonly ISet<IVariableInternal> _declaredVariables = new HashSet<IVariableInternal>();
-        private readonly ISet<IVariableInternal> _capturedVariables = new HashSet<IVariableInternal>();
-        private readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringComparer.Ordinal);
+        protected readonly IDictionary<string, IVariableInternal> _variables = new Dictionary<string, IVariableInternal>(StringComparer.Ordinal);
+        protected readonly ISet<IVariableInternal> _declaredVariables = new HashSet<IVariableInternal>();
+        protected readonly ISet<IVariableInternal> _referencedVariables = new HashSet<IVariableInternal>();
+        protected readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringComparer.Ordinal);
 
         public Scope(ScopeKind kind, SyntaxNode? node, IScopeInternal? parent)
         {
@@ -72,7 +70,7 @@ namespace Loretta.CodeAnalysis.Lua
             Node = node;
             Parent = parent;
             DeclaredVariables = SpecializedCollections.ReadOnlyEnumerable(_declaredVariables);
-            CapturedVariables = SpecializedCollections.ReadOnlyEnumerable(_capturedVariables);
+            ReferencedVariables = SpecializedCollections.ReadOnlyEnumerable(_referencedVariables);
             GotoLabels = SpecializedCollections.ReadOnlyEnumerable(_labels.Values);
         }
 
@@ -88,9 +86,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         IEnumerable<IVariable> IScope.DeclaredVariables => DeclaredVariables;
 
-        public IEnumerable<IVariableInternal> CapturedVariables { get; }
+        public IEnumerable<IVariableInternal> ReferencedVariables { get; }
 
-        IEnumerable<IVariable> IScope.CapturedVariables => CapturedVariables;
+        IEnumerable<IVariable> IScope.ReferencedVariables => ReferencedVariables;
 
         public IEnumerable<IGotoLabelInternal> GotoLabels { get; }
 
@@ -107,7 +105,7 @@ namespace Loretta.CodeAnalysis.Lua
             if (!TryGetVariable(name, out var variable))
                 variable = CreateVariable(kind, name, declaration);
 
-            _capturedVariables.Add(variable);
+            _referencedVariables.Add(variable);
             RoslynDebug.Assert(variable.Kind == kind);
             return variable;
         }
@@ -123,16 +121,12 @@ namespace Loretta.CodeAnalysis.Lua
             return variable;
         }
 
-        public void AddCapturedVariable(IVariableInternal variable)
+        public virtual void AddReferencedVariable(IVariableInternal variable)
         {
             if (_declaredVariables.Contains(variable))
                 return;
-            if (Kind == ScopeKind.Function)
-            {
-                _capturedVariables.Add(variable);
-                variable.AddCapturingScope(this);
-            }
-            Parent?.AddCapturedVariable(variable);
+            _referencedVariables.Add(variable);
+            Parent?.AddReferencedVariable(variable);
         }
 
         public bool TryGetLabel(string name, [NotNullWhen(true)] out IGotoLabelInternal? label) =>

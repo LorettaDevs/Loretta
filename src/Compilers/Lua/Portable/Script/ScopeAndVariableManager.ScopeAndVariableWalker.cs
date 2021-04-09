@@ -95,7 +95,7 @@ namespace Loretta.CodeAnalysis.Lua
                 _variables[node] = variable;
                 variable.AddReadLocation(node);
                 variable.AddReferencingScope(Scope);
-                Scope.AddCapturedVariable(variable);
+                Scope.AddReferencedVariable(variable);
             }
 
             public override void VisitIdentifierName(IdentifierNameSyntax node)
@@ -104,7 +104,7 @@ namespace Loretta.CodeAnalysis.Lua
                 _variables[node] = variable;
                 variable.AddReadLocation(node);
                 variable.AddReferencingScope(Scope);
-                Scope.AddCapturedVariable(variable);
+                Scope.AddReferencedVariable(variable);
             }
 
             public override void VisitAssignmentStatement(AssignmentStatementSyntax node)
@@ -121,7 +121,7 @@ namespace Loretta.CodeAnalysis.Lua
                         _variables[assignee] = variable;
                         variable.AddWriteLocation(node);
                         variable.AddReferencingScope(Scope);
-                        Scope.AddCapturedVariable(variable);
+                        Scope.AddReferencedVariable(variable);
                     }
                     else
                     {
@@ -141,7 +141,7 @@ namespace Loretta.CodeAnalysis.Lua
                     _variables[identifierName] = variable;
                     variable.AddWriteLocation(node);
                     variable.AddReferencingScope(Scope);
-                    Scope.AddCapturedVariable(variable);
+                    Scope.AddReferencedVariable(variable);
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace Loretta.CodeAnalysis.Lua
                     _variables[name] = variable;
                     variable.AddWriteLocation(node);
                     variable.AddReferencingScope(Scope);
-                    Scope.AddCapturedVariable(variable);
+                    Scope.AddReferencedVariable(variable);
                 }
             }
 
@@ -278,7 +278,7 @@ namespace Loretta.CodeAnalysis.Lua
                 _variables[node.Name] = variable;
                 variable.AddWriteLocation(node);
                 variable.AddReferencingScope(Scope);
-                Scope.AddCapturedVariable(variable);
+                Scope.AddReferencedVariable(variable);
 
                 var scope = CreateFunctionScope(node);
                 try
