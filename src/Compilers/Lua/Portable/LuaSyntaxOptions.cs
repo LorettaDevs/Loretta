@@ -25,6 +25,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptShebang: false,
             acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: false,
+            acceptBitwiseOperators: false,
             continueType: ContinueType.None);
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptShebang: false,
             acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: true,
+            acceptBitwiseOperators: false,
             continueType: ContinueType.None);
 
         /// <summary>
@@ -78,6 +80,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptShebang: false,
             acceptUnderscoreInNumberLiterals: true,
             useLuaJitIdentifierRules: false,
+            acceptBitwiseOperators: true,
             continueType: ContinueType.ContextualKeyword);
 
         /// <summary>
@@ -97,6 +100,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptShebang: true,
             acceptUnderscoreInNumberLiterals: true,
             useLuaJitIdentifierRules: true,
+            acceptBitwiseOperators: true,
             continueType: ContinueType.ContextualKeyword);
 
         /// <summary>
@@ -127,6 +131,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="acceptShebang"><inheritdoc cref="AcceptShebang" path="/summary" /></param>
         /// <param name="acceptUnderscoreInNumberLiterals"><inheritdoc cref="AcceptUnderscoreInNumberLiterals" path="/summary" /></param>
         /// <param name="useLuaJitIdentifierRules"><inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" /></param>
+        /// <param name="acceptBitwiseOperators"><inheritdoc cref="AcceptBitwiseOperators" path="/summary"/></param>
         /// <param name="continueType"><inheritdoc cref="ContinueType" path="/summary" /></param>
         public LuaSyntaxOptions(
             bool acceptBinaryNumbers,
@@ -141,6 +146,7 @@ namespace Loretta.CodeAnalysis.Lua
             bool acceptShebang,
             bool acceptUnderscoreInNumberLiterals,
             bool useLuaJitIdentifierRules,
+            bool acceptBitwiseOperators,
             ContinueType continueType)
         {
             AcceptBinaryNumbers = acceptBinaryNumbers;
@@ -155,6 +161,7 @@ namespace Loretta.CodeAnalysis.Lua
             AcceptShebang = acceptShebang;
             AcceptUnderscoreInNumberLiterals = acceptUnderscoreInNumberLiterals;
             UseLuaJitIdentifierRules = useLuaJitIdentifierRules;
+            AcceptBitwiseOperators = acceptBitwiseOperators;
             ContinueType = continueType;
         }
 
@@ -287,6 +294,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// <inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" /> If None uses the value of
         /// <see cref="UseLuaJitIdentifierRules" />.
         /// </param>
+        /// <param name="acceptBitwiseOperators">
+        /// <inheritdoc cref="AcceptBitwiseOperators" path="/summary"/> If None uses the value of
+        /// <see cref="AcceptBitwiseOperators"/>.
+        /// </param>
         /// <param name="continueType">
         /// <inheritdoc cref="ContinueType" path="/summary" /> If None uses the value of <see
         /// cref="ContinueType" />.
@@ -305,6 +316,7 @@ namespace Loretta.CodeAnalysis.Lua
             Option<bool> acceptShebang = default,
             Option<bool> acceptUnderscoreInNumberLiterals = default,
             Option<bool> useLuaJitIdentifierRules = default,
+            Option<bool> acceptBitwiseOperators = default,
             Option<ContinueType> continueType = default) =>
             new LuaSyntaxOptions(
                 acceptBinaryNumbers.UnwrapOr(AcceptBinaryNumbers),
@@ -319,6 +331,7 @@ namespace Loretta.CodeAnalysis.Lua
                 acceptShebang.UnwrapOr(AcceptShebang),
                 acceptUnderscoreInNumberLiterals.UnwrapOr(AcceptUnderscoreInNumberLiterals),
                 useLuaJitIdentifierRules.UnwrapOr(UseLuaJitIdentifierRules),
+                acceptBitwiseOperators.UnwrapOr(AcceptBitwiseOperators),
                 continueType.UnwrapOr(ContinueType));
 
         /// <inheritdoc/>
@@ -341,6 +354,7 @@ namespace Loretta.CodeAnalysis.Lua
                 && AcceptShebang == other.AcceptShebang
                 && AcceptUnderscoreInNumberLiterals == other.AcceptUnderscoreInNumberLiterals
                 && UseLuaJitIdentifierRules == other.UseLuaJitIdentifierRules
+                && AcceptBitwiseOperators == other.AcceptBitwiseOperators
                 && ContinueType == other.ContinueType);
 
         /// <inheritdoc/>
@@ -359,6 +373,7 @@ namespace Loretta.CodeAnalysis.Lua
             hash.Add(AcceptShebang);
             hash.Add(AcceptUnderscoreInNumberLiterals);
             hash.Add(UseLuaJitIdentifierRules);
+            hash.Add(AcceptBitwiseOperators);
             hash.Add(ContinueType);
             return hash.ToHashCode();
         }
@@ -392,7 +407,7 @@ namespace Loretta.CodeAnalysis.Lua
             }
             else
             {
-                return $"{{ AcceptBinaryNumbers = {AcceptBinaryNumbers}, AcceptCCommentSyntax = {AcceptCCommentSyntax}, AcceptCompoundAssignment = {AcceptCompoundAssignment}, AcceptEmptyStatements = {AcceptEmptyStatements}, AcceptCBooleanOperators = {AcceptCBooleanOperators}, AcceptGoto = {AcceptGoto}, AcceptHexEscapesInStrings = {AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {AcceptHexFloatLiterals}, AcceptOctalNumbers = {AcceptOctalNumbers}, AcceptShebang = {AcceptShebang}, AcceptUnderscoreInNumberLiterals = {AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {UseLuaJitIdentifierRules}, ContinueType = {ContinueType} }}";
+                return $"{{ AcceptBinaryNumbers = {AcceptBinaryNumbers}, AcceptCCommentSyntax = {AcceptCCommentSyntax}, AcceptCompoundAssignment = {AcceptCompoundAssignment}, AcceptEmptyStatements = {AcceptEmptyStatements}, AcceptCBooleanOperators = {AcceptCBooleanOperators}, AcceptGoto = {AcceptGoto}, AcceptHexEscapesInStrings = {AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {AcceptHexFloatLiterals}, AcceptOctalNumbers = {AcceptOctalNumbers}, AcceptShebang = {AcceptShebang}, AcceptUnderscoreInNumberLiterals = {AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {UseLuaJitIdentifierRules}, AcceptBitwiseOperators = {AcceptBitwiseOperators}, ContinueType = {ContinueType} }}";
             }
         }
 
