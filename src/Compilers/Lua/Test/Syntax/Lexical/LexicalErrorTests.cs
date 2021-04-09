@@ -348,10 +348,10 @@ local str4 = 'hello\xFFthere'
         {
             const string source = "local a = 1\n\rlocal b = 2\n\rlocal c = 3";
             ParseAndValidate(source, null,
-                // (1,12): warning LUA0022: This line break (\n\r) may affect error reporting in lua
+                // (1,12): warning LUA0022: This line break (\n\r) may affect error reporting between the editor and lua
                 // local a = 1
                 Diagnostic(ErrorCode.WRN_LineBreakMayAffectErrorReporting, "\n\r").WithLocation(1, 12),
-                // (3,12): warning LUA0022: This line break (\n\r) may affect error reporting in lua
+                // (3,12): warning LUA0022: This line break (\n\r) may affect error reporting between the editor and lua
                 // local b = 2
                 Diagnostic(ErrorCode.WRN_LineBreakMayAffectErrorReporting, "\n\r").WithLocation(3, 12));
         }

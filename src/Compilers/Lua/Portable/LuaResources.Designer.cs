@@ -358,7 +358,7 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This line break (\n\r) may affect error reporting in lua.
+        ///   Looks up a localized string similar to This line break (\n\r) may affect error reporting between the editor and lua.
         /// </summary>
         internal static string WRN_LineBreakMayAffectErrorReporting {
             get {
@@ -367,7 +367,7 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lua considers &apos;\n\r&apos; a single line break so error reporting between Loretta and Lua may differ; use \n, \r or \r\n instead.
+        ///   Looks up a localized string similar to Lua considers &apos;\n\r&apos; a single line break so error reporting between the editor and Lua may differ; use \n, \r or \r\n instead.
         /// </summary>
         internal static string WRN_LineBreakMayAffectErrorReporting_Description {
             get {
