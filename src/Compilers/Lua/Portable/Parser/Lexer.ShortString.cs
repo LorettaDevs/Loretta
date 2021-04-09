@@ -8,7 +8,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
     {
         private string ParseShortString()
         {
-            var parsed = new StringBuilder();
+            _builder.Clear();
             var delim = _reader.Read()!.Value;
             RoslynDebug.Assert(delim is '"' or '\'');
 
@@ -30,68 +30,68 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                                 if (_reader.IsAt('\n', 1))
                                 {
                                     _reader.Advance(2);
-                                    parsed.Append("\r\n");
+                                    _builder.Append("\r\n");
                                 }
                                 else
                                 {
                                     _reader.Advance(1);
-                                    parsed.Append('\r');
+                                    _builder.Append('\r');
                                 }
                                 break;
 
                             case 'a':
                                 _reader.Advance(1);
-                                parsed.Append('\a');
+                                _builder.Append('\a');
                                 break;
 
                             case 'b':
                                 _reader.Advance(1);
-                                parsed.Append('\b');
+                                _builder.Append('\b');
                                 break;
 
                             case 'f':
                                 _reader.Advance(1);
-                                parsed.Append('\f');
+                                _builder.Append('\f');
                                 break;
 
                             case 'n':
                                 _reader.Advance(1);
-                                parsed.Append('\n');
+                                _builder.Append('\n');
                                 break;
 
                             case 'r':
                                 _reader.Advance(1);
-                                parsed.Append('\r');
+                                _builder.Append('\r');
                                 break;
 
                             case 't':
                                 _reader.Advance(1);
-                                parsed.Append('\t');
+                                _builder.Append('\t');
                                 break;
 
                             case 'v':
                                 _reader.Advance(1);
-                                parsed.Append('\v');
+                                _builder.Append('\v');
                                 break;
 
                             case '\\':
                                 _reader.Advance(1);
-                                parsed.Append('\\');
+                                _builder.Append('\\');
                                 break;
 
                             case '\n':
                                 _reader.Advance(1);
-                                parsed.Append('\n');
+                                _builder.Append('\n');
                                 break;
 
                             case '\'':
                                 _reader.Advance(1);
-                                parsed.Append('\'');
+                                _builder.Append('\'');
                                 break;
 
                             case '"':
                                 _reader.Advance(1);
-                                parsed.Append('"');
+                                _builder.Append('"');
                                 break;
 
                             case '0':
@@ -107,7 +107,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             {
                                 var parsedCharInteger = parseDecimalInteger(escapeStart);
                                 if (parsedCharInteger != char.MaxValue)
-                                    parsed.Append(parsedCharInteger);
+                                    _builder.Append(parsedCharInteger);
                                 break;
                             }
 
@@ -116,7 +116,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                                 _reader.Advance(1);
                                 var parsedCharInteger = parseHexadecimalInteger(escapeStart);
                                 if (parsedCharInteger != char.MaxValue)
-                                    parsed.Append(parsedCharInteger);
+                                    _builder.Append(parsedCharInteger);
 
                                 if (!Options.SyntaxOptions.AcceptHexEscapesInStrings)
                                     AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_HexStringEscapesNotSupportedInVersion);
@@ -141,12 +141,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         if (_reader.IsAt('\n', 1))
                         {
                             _reader.Advance(2);
-                            parsed.Append("\r\n");
+                            _builder.Append("\r\n");
                         }
                         else
                         {
                             _reader.Advance(1);
-                            parsed.Append('\r');
+                            _builder.Append('\r');
                         }
 
                         AddError(charStart, _reader.Position - charStart, ErrorCode.ERR_UnescapedLineBreakInString);
@@ -156,7 +156,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     case '\n':
                     {
                         _reader.Advance(1);
-                        parsed.Append('\n');
+                        _builder.Append('\n');
 
                         AddError(charStart, _reader.Position - charStart, ErrorCode.ERR_UnescapedLineBreakInString);
                     }
@@ -164,7 +164,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                     default:
                         _reader.Advance(1);
-                        parsed.Append(peek);
+                        _builder.Append(peek);
                         break;
                 }
             }
@@ -178,7 +178,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 AddError(ErrorCode.ERR_UnfinishedString);
             }
 
-            return parsed.ToString();
+            return _builder.ToString();
 
             char parseDecimalInteger(int start)
             {
