@@ -161,8 +161,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 // to help debugging
                 _previousToken = token;
             }
-
-            return token;
         }
 
         private SyntaxTriviaList RewriteTrivia(
