@@ -356,5 +356,32 @@ namespace Loretta.CodeAnalysis.Lua {
                 return ResourceManager.GetString("UseLiteralForNumeric", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This line break (\n\r) may affect error reporting in lua.
+        /// </summary>
+        internal static string WRN_LineBreakMayAffectErrorReporting {
+            get {
+                return ResourceManager.GetString("WRN_LineBreakMayAffectErrorReporting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lua considers &apos;\n\r&apos; a single line break so error reporting between Loretta and Lua may differ; use \n, \r or \r\n instead.
+        /// </summary>
+        internal static string WRN_LineBreakMayAffectErrorReporting_Description {
+            get {
+                return ResourceManager.GetString("WRN_LineBreakMayAffectErrorReporting_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line break may affect error reporting.
+        /// </summary>
+        internal static string WRN_LineBreakMayAffectErrorReporting_Title {
+            get {
+                return ResourceManager.GetString("WRN_LineBreakMayAffectErrorReporting_Title", resourceCulture);
+            }
+        }
     }
 }

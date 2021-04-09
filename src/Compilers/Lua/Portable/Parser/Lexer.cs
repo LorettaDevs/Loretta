@@ -213,7 +213,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                     case '\n':
                         _reader.Advance(1);
-                        AddTrivia(SyntaxFactory.LineFeed, builder);
+                        if (_reader.IsNext('\r'))
+                        {
+                            _reader.Advance(1);
+                            AddError(ErrorCode.WRN_LineBreakMayAffectErrorReporting);
+                            AddTrivia(SyntaxFactory.EndOfLine("\n\r"), builder);
+                        }
+                        else
+                        {
+                            AddTrivia(SyntaxFactory.LineFeed, builder);
+                        }
                         if (isTrailing)
                             return;
                         break;
