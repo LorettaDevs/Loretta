@@ -12,7 +12,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
     internal sealed partial class Lexer : AbstractLexer, IDisposable
     {
-        private const int TriviaListInitialCapacity = 8;
         // Maximum size of tokens/trivia that we cache and use in quick scanner.
         // From what I see in our own codebase, tokens longer then 40-50 chars are 
         // not very common. 
@@ -531,6 +530,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     else
                     {
                         _reader.Advance(1);
+                        if (!Options.SyntaxOptions.AcceptBitwiseOperators)
+                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.TildeToken;
                         return;
                     }
@@ -545,6 +546,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                         case '>':
                             _reader.Advance(2);
+                            if (!Options.SyntaxOptions.AcceptBitwiseOperators)
+                                AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                             info.Kind = SyntaxKind.GreaterThanGreaterThanToken;
                             return;
 
@@ -564,6 +567,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                         case '<':
                             _reader.Advance(2);
+                            if (!Options.SyntaxOptions.AcceptBitwiseOperators)
+                                AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                             info.Kind = SyntaxKind.LessThanLessThanToken;
                             return;
 
@@ -583,6 +588,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     else
                     {
                         _reader.Advance(1);
+                        if (!Options.SyntaxOptions.AcceptBitwiseOperators)
+                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.AmpersandToken;
                         return;
                     }
@@ -597,6 +604,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     else
                     {
                         _reader.Advance(1);
+                        if (!Options.SyntaxOptions.AcceptBitwiseOperators)
+                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.PipeToken;
                         return;
                     }

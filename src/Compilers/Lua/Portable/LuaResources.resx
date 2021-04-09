@@ -130,6 +130,9 @@
   <data name="ERR_BinaryNumericLiteralNotSupportedInVersion" xml:space="preserve">
     <value>Binary numeric literals are not supported in this lua version</value>
   </data>
+  <data name="ERR_BitwiseOperatorsNotSupportedInVersion" xml:space="preserve">
+    <value>Bitwise operators are not supported in this lua version</value>
+  </data>
   <data name="ERR_CannotBeAssignedTo" xml:space="preserve">
     <value>This expression cannot be assigned to</value>
   </data>

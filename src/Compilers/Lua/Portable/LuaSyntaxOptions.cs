@@ -227,6 +227,11 @@ namespace Loretta.CodeAnalysis.Lua
         public bool UseLuaJitIdentifierRules { get; }
 
         /// <summary>
+        /// Whether to error when encountering 5.3 bitise operators.
+        /// </summary>
+        public bool AcceptBitwiseOperators { get; }
+
+        /// <summary>
         /// The type of continue to be recognized by the parser.
         /// </summary>
         public ContinueType ContinueType { get; }

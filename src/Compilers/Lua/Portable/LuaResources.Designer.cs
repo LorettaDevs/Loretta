@@ -97,6 +97,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bitwise operators are not supported in this lua version.
+        /// </summary>
+        internal static string ERR_BitwiseOperatorsNotSupportedInVersion {
+            get {
+                return ResourceManager.GetString("ERR_BitwiseOperatorsNotSupportedInVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This expression cannot be assigned to.
         /// </summary>
         internal static string ERR_CannotBeAssignedTo {
