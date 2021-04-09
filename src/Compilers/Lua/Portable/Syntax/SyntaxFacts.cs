@@ -136,6 +136,8 @@ namespace Loretta.CodeAnalysis.Lua
             // Shebang
             if (kindA is SyntaxKind.HashToken && kindB is SyntaxKind.BangToken or SyntaxKind.BangEqualsToken)
                 return true;
+            if (kindA is SyntaxKind.TildeToken && kindB is SyntaxKind.EqualsToken or SyntaxKind.EqualsEqualsToken)
+                return true;
 
             return false;
         }

@@ -139,13 +139,13 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>#</c> token.
         /// </summary>
         [Token(Text = "#")]
-        [UnaryOperator(precedence: 7, LengthExpression)]
+        [UnaryOperator(precedence: 12, LengthExpression)]
         HashToken = 20,
         /// <summary>
         /// Represents the <c>+</c> token.
         /// </summary>
         [Token(Text = "+")]
-        [BinaryOperator(precedence: 5, AddExpression)]
+        [BinaryOperator(precedence: 10, AddExpression)]
         PlusToken = 21,
         /// <summary>
         /// Represents the <c>+=</c> token.
@@ -159,7 +159,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>-</c> token.
         /// </summary>
         [Token(Text = "-")]
-        [UnaryOperator(precedence: 7, UnaryMinusExpression), BinaryOperator(precedence: 5, SubtractExpression)]
+        [UnaryOperator(precedence: 12, UnaryMinusExpression), BinaryOperator(precedence: 10, SubtractExpression)]
         MinusToken = 23,
         /// <summary>
         /// Represents the <c>-=</c> token.
@@ -173,7 +173,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>*</c> token.
         /// </summary>
         [Token(Text = "*")]
-        [BinaryOperator(precedence: 6, MultiplyExpression)]
+        [BinaryOperator(precedence: 11, MultiplyExpression)]
         StarToken = 25,
         /// <summary>
         /// Represents the <c>*=</c> token.
@@ -187,7 +187,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>/</c> token.
         /// </summary>
         [Token(Text = "/")]
-        [BinaryOperator(precedence: 6, DivideExpression)]
+        [BinaryOperator(precedence: 11, DivideExpression)]
         SlashToken = 27,
         /// <summary>
         /// Represents the <c>/=</c> token.
@@ -201,7 +201,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>^</c> token.
         /// </summary>
         [Token(Text = "^")]
-        [BinaryOperator(precedence: 8, ExponentiateExpression)]
+        [BinaryOperator(precedence: 14, ExponentiateExpression)]
         HatToken = 29,
         /// <summary>
         /// Represents the <c>^=</c> token.
@@ -215,7 +215,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>%</c> token.
         /// </summary>
         [Token(Text = "%")]
-        [BinaryOperator(precedence: 6, ModuloExpression)]
+        [BinaryOperator(precedence: 11, ModuloExpression)]
         PercentToken = 31,
         /// <summary>
         /// Represents the <c>%=</c> token.
@@ -234,7 +234,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>..</c> token.
         /// </summary>
         [Token(Text = "..")]
-        [BinaryOperator(precedence: 4, ConcatExpression)]
+        [BinaryOperator(precedence: 9, ConcatExpression)]
         DotDotToken = 34,
         /// <summary>
         /// Represents the <c>...</c> token.
@@ -271,7 +271,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>!</c> token.
         /// </summary>
         [Token(Text = "!")]
-        [UnaryOperator(precedence: 7, LogicalNotExpression)]
+        [UnaryOperator(precedence: 12, LogicalNotExpression)]
         BangToken = 40,
         /// <summary>
         /// Represents the <c>!=</c> token.
@@ -292,10 +292,10 @@ namespace Loretta.CodeAnalysis.Lua
         [BinaryOperator(precedence: 3, LessThanOrEqualExpression)]
         LessThanEqualsToken = 43,
         /// <summary>
-        /// Represents the <c>&lt;&lt;</c> token. CURRENTLY UNSUPPORTED.
+        /// Represents the <c>&lt;&lt;</c> token.
         /// </summary>
         [Token(Text = "<<")]
-        // TODO: Add binary operator info
+        [BinaryOperator(precedence: 7, LeftShiftExpression)]
         LessThanLessThanToken = 44,
         /// <summary>
         /// Represents the <c>></c> token.
@@ -310,16 +310,16 @@ namespace Loretta.CodeAnalysis.Lua
         [BinaryOperator(precedence: 3, GreaterThanOrEqualExpression)]
         GreaterThanEqualsToken = 46,
         /// <summary>
-        /// Represents the <c>>></c> token. CURRENTLY UNSUPPORTED.
+        /// Represents the <c>>></c> token.
         /// </summary>
         [Token(Text = ">>")]
-        // TODO: Add binary operator info
+        [BinaryOperator(precedence: 7, RightShiftExpression)]
         GreaterThanGreaterThanToken = 47,
         /// <summary>
-        /// Represents the <c>&amp;</c> token. CURRENTLY UNSUPPORTED.
+        /// Represents the <c>&amp;</c> token.
         /// </summary>
         [Token(Text = "&")]
-        // TODO: Add binary operator info
+        [BinaryOperator(precedence: 6, BitwiseAndExpression)]
         AmpersandToken = 48,
         /// <summary>
         /// Represents the <c>&amp;&amp;</c> token.
@@ -328,10 +328,10 @@ namespace Loretta.CodeAnalysis.Lua
         [BinaryOperator(precedence: 2, LogicalAndExpression)]
         AmpersandAmpersandToken = 49,
         /// <summary>
-        /// Represents the <c>|</c> token. CURRENTLY UNSUPPORTED.
+        /// Represents the <c>|</c> token.
         /// </summary>
         [Token(Text = "|")]
-        // TODO: Add binary operator info
+        [BinaryOperator(precedence: 4, BitwiseOrExpression)]
         PipeToken = 50,
         /// <summary>
         /// Represents the <c>||</c> token.
@@ -344,6 +344,12 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         [Token(Text = "::")]
         ColonColonToken = 52,
+        /// <summary>
+        /// Represents the <c>~</c> token.
+        /// </summary>
+        [Token(Text = "~")]
+        [UnaryOperator(precedence: 12, BitwiseNotExpression), BinaryOperator(precedence: 5, ExclusiveOrExpression)]
+        TildeToken = 53,
 
         // Keywords
         /// <summary>
@@ -447,7 +453,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <see langword="not"/> keyword.
         /// </summary>
         [Keyword("not")]
-        [UnaryOperator(precedence: 7, LogicalNotExpression)]
+        [UnaryOperator(precedence: 12, LogicalNotExpression)]
         NotKeyword = 519,
         /// <summary>
         /// Represents the <see langword="nil"/> keyword.
@@ -531,6 +537,9 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.UnaryExpression)]
         [Property(SyntaxKindProperty.OperatorTokenKind, HashToken)]
         LengthExpression = 2023,
+        [ExtraCategories(SyntaxKindCategory.UnaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, TildeToken)]
+        BitwiseNotExpression = 2074,
 
         // Binary Expressions
         [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
@@ -578,6 +587,21 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
         [Property(SyntaxKindProperty.OperatorTokenKind, HatToken)]
         ExponentiateExpression = 2038,
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, PipeToken)]
+        BitwiseOrExpression = 2075,
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, AmpersandToken)]
+        BitwiseAndExpression = 2076,
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, GreaterThanGreaterThanToken)]
+        RightShiftExpression = 2077,
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, LessThanLessThanToken)]
+        LeftShiftExpression = 2078,
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, TildeToken)]
+        ExclusiveOrExpression = 2079,
 
         // Expressions
         BadExpression = 2039,

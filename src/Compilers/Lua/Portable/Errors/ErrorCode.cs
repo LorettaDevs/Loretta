@@ -26,6 +26,7 @@
         ERR_NonFunctionCallBeingUsedAsStatement = 18,
         ERR_CannotBeAssignedTo = 19,
         ERR_DoubleOverflow = 20,
+        ERR_BitwiseOperatorsNotSupportedInVersion = 21,
 
         // Parser Errors
         ERR_IdentifierExpectedKW = 1000,
