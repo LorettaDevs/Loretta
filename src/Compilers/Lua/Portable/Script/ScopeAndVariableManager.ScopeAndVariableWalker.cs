@@ -94,6 +94,7 @@ namespace Loretta.CodeAnalysis.Lua
                     variable = _fileScope.VarArgParameter; // This is redundant.
                 _variables[node] = variable;
                 variable.AddReadLocation(node);
+                variable.AddReferencingScope(Scope);
                 Scope.AddCapturedVariable(variable);
             }
 
@@ -102,6 +103,7 @@ namespace Loretta.CodeAnalysis.Lua
                 var variable = GetVariableOrCreateGlobal(node.Name);
                 _variables[node] = variable;
                 variable.AddReadLocation(node);
+                variable.AddReferencingScope(Scope);
                 Scope.AddCapturedVariable(variable);
             }
 
@@ -118,6 +120,7 @@ namespace Loretta.CodeAnalysis.Lua
                         var variable = GetVariableOrCreateGlobal(identifierName.Name);
                         _variables[assignee] = variable;
                         variable.AddWriteLocation(node);
+                        variable.AddReferencingScope(Scope);
                         Scope.AddCapturedVariable(variable);
                     }
                     else
@@ -137,6 +140,7 @@ namespace Loretta.CodeAnalysis.Lua
                     var variable = GetVariableOrCreateGlobal(identifierName.Name);
                     _variables[identifierName] = variable;
                     variable.AddWriteLocation(node);
+                    variable.AddReferencingScope(Scope);
                     Scope.AddCapturedVariable(variable);
                 }
                 else
@@ -263,6 +267,7 @@ namespace Loretta.CodeAnalysis.Lua
                     var variable = Scope.CreateVariable(VariableKind.Local, name.Name, node);
                     _variables[name] = variable;
                     variable.AddWriteLocation(node);
+                    variable.AddReferencingScope(Scope);
                     Scope.AddCapturedVariable(variable);
                 }
             }
@@ -272,6 +277,7 @@ namespace Loretta.CodeAnalysis.Lua
                 var variable = Scope.CreateVariable(VariableKind.Local, node.Name.Name, node);
                 _variables[node.Name] = variable;
                 variable.AddWriteLocation(node);
+                variable.AddReferencingScope(Scope);
                 Scope.AddCapturedVariable(variable);
 
                 var scope = CreateFunctionScope(node);

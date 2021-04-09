@@ -132,7 +132,6 @@ namespace Loretta.CodeAnalysis.Lua
                 _capturedVariables.Add(variable);
                 variable.AddCapturingScope(this);
             }
-            variable.AddReferencingScope(this);
             Parent?.AddCapturedVariable(variable);
         }
 
