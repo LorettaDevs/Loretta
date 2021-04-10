@@ -7,6 +7,10 @@ namespace Loretta.CodeAnalysis.Lua
     /// <summary>
     /// The options used by Loretta to adapt to the syntax of the lua flavor being parsed.
     /// </summary>
+    /// <remarks>
+    /// Otherwise when noted, "Accept" in this class means not generating an error when parsing,
+    /// but the syntax behind the option will still be parsed normally.
+    /// </remarks>
     public class LuaSyntaxOptions : IEquatable<LuaSyntaxOptions?>
     {
         /// <summary>
