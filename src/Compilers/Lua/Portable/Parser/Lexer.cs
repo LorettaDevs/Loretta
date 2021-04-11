@@ -143,9 +143,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 switch (peek)
                 {
                     case '-':
-                        if (_reader.IsAt('-', 1))
+                        if (_reader.IsAt(1, '-'))
                         {
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             if (TryReadLongString(out _, out var closingNotFound))
                             {
                                 if (closingNotFound)
@@ -155,7 +155,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             else
                             {
                                 while (_reader.Peek() is not (null or '\n' or '\r'))
-                                    _reader.Advance(1);
+                                    _reader.Position += 1;
                                 AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
                             }
                         }
@@ -166,25 +166,25 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         break;
 
                     case '/':
-                        if (_reader.IsAt('/', 1))
+                        if (_reader.IsAt(1, '/'))
                         {
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             while (_reader.Peek() is not (null or '\n' or '\r'))
-                                _reader.Advance(1);
+                                _reader.Position += 1;
 
                             if (!Options.SyntaxOptions.AcceptCCommentSyntax)
                                 AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
                             AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
                         }
-                        else if (_reader.IsAt('*', 1))
+                        else if (_reader.IsAt(1, '*'))
                         {
-                            _reader.Advance(2);
-                            _ = _reader.ReadSpanUntil("*/");
+                            _reader.Position += 2;
+                            _reader.SkipUntil("*/");
 
                             if (!_reader.IsNext("*/"))
                                 AddError(ErrorCode.ERR_UnfinishedLongComment);
                             else
-                                _reader.Advance(2);
+                                _reader.Position += 2;
 
                             if (!Options.SyntaxOptions.AcceptCCommentSyntax)
                                 AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
@@ -197,10 +197,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         break;
 
                     case '\r':
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         if (_reader.Peek() == '\n')
                         {
-                            _reader.Advance(1);
+                            _reader.Position += 1;
                             AddTrivia(SyntaxFactory.CarriageReturnLineFeed, builder);
                         }
                         else
@@ -212,10 +212,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         break;
 
                     case '\n':
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         if (_reader.IsNext('\r'))
                         {
-                            _reader.Advance(1);
+                            _reader.Position += 1;
                             AddError(ErrorCode.WRN_LineBreakMayAffectErrorReporting);
                             AddTrivia(SyntaxFactory.EndOfLine("\n\r"), builder);
                         }
@@ -231,14 +231,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     case '\t':
                     {
                         // Skip first char as we know it's whitespace.
-                        _reader.Advance(1);
+                        _reader.Position += 1;
 
                         char ch;
                         while ((ch = _reader.Peek().GetValueOrDefault()) != '\r'
                                 && ch != '\n'
                                 && char.IsWhiteSpace(ch))
                         {
-                            _reader.Advance(1);
+                            _reader.Position += 1;
                         }
 
                         var width = _reader.Position - _start;
@@ -260,10 +260,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
 
                     case '#':
-                        if (_reader.Position == 0 && _reader.IsAt('!', 1))
+                        if (_reader.Position == 0 && _reader.IsAt(1, '!'))
                         {
-                            _reader.Advance(2);
-                            _ = _reader.ReadSpanLine();
+                            _reader.Position += 2;
+                            _reader.SkipUntilLineBreak();
 
                             if (!Options.SyntaxOptions.AcceptShebang)
                                 AddError(ErrorCode.ERR_ShebangNotSupportedInLuaVersion);
@@ -319,23 +319,23 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     if (peek1 == '.')
                     {
                         // \.\.\.
-                        if (_reader.IsAt('.', 2))
+                        if (_reader.IsAt(2, '.'))
                         {
-                            _reader.Advance(3);
+                            _reader.Position += 3;
                             info.Kind = SyntaxKind.DotDotDotToken;
                             return;
                         }
                         // \.\.=
-                        else if (_reader.IsAt('=', 2))
+                        else if (_reader.IsAt(2, '='))
                         {
-                            _reader.Advance(3);
+                            _reader.Position += 3;
                             info.Kind = SyntaxKind.DotDotEqualsToken;
                             return;
                         }
                         // \.\.
                         else
                         {
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             info.Kind = SyntaxKind.DotDotToken;
                             return;
                         }
@@ -348,32 +348,32 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     // \.
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.DotToken;
                         return;
                     }
                 }
 
                 case ';':
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     info.Kind = SyntaxKind.SemicolonToken;
                     return;
 
                 case ',':
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     info.Kind = SyntaxKind.CommaToken;
                     return;
 
                 case ':':
-                    if (_reader.IsAt(':', 1))
+                    if (_reader.IsAt(1, ':'))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.ColonColonToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.ColonToken;
                         return;
                     }
@@ -381,12 +381,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 #endregion Punctuation
 
                 case '(':
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     info.Kind = SyntaxKind.OpenParenthesisToken;
                     return;
 
                 case ')':
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     info.Kind = SyntaxKind.CloseParenthesisToken;
                     return;
 
@@ -403,142 +403,142 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.OpenBracketToken;
                     }
                     return;
                 }
 
                 case ']':
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     info.Kind = SyntaxKind.CloseBracketToken;
                     return;
 
                 case '{':
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     info.Kind = SyntaxKind.OpenBraceToken;
                     return;
 
                 case '}':
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     info.Kind = SyntaxKind.CloseBraceToken;
                     return;
 
                 #region Operators
 
                 case '+':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.PlusEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.PlusToken;
                         return;
                     }
 
                 case '-':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.MinusEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.MinusToken;
                         return;
                     }
 
                 case '*':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.StartEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.StarToken;
                         return;
                     }
 
                 case '/':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.SlashEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.SlashToken;
                         return;
                     }
 
                 case '^':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.HatEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.HatToken;
                         return;
                     }
 
                 case '%':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.PercentEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.PercentToken;
                         return;
                     }
 
                 case '=':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.EqualsEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.EqualsToken;
                         return;
                     }
 
                 case '#':
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     info.Kind = SyntaxKind.HashToken;
                     return;
 
                 case '~':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.TildeEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         if (!Options.SyntaxOptions.AcceptBitwiseOperators)
                             AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.TildeToken;
@@ -549,19 +549,19 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     switch (_reader.Peek(1))
                     {
                         case '=':
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             info.Kind = SyntaxKind.GreaterThanEqualsToken;
                             return;
 
                         case '>':
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             if (!Options.SyntaxOptions.AcceptBitwiseOperators)
                                 AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                             info.Kind = SyntaxKind.GreaterThanGreaterThanToken;
                             return;
 
                         default:
-                            _reader.Advance(1);
+                            _reader.Position += 1;
                             info.Kind = SyntaxKind.GreaterThanToken;
                             return;
                     }
@@ -570,33 +570,33 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     switch (_reader.Peek(1))
                     {
                         case '=':
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             info.Kind = SyntaxKind.LessThanEqualsToken;
                             return;
 
                         case '<':
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             if (!Options.SyntaxOptions.AcceptBitwiseOperators)
                                 AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                             info.Kind = SyntaxKind.LessThanLessThanToken;
                             return;
 
                         default:
-                            _reader.Advance(1);
+                            _reader.Position += 1;
                             info.Kind = SyntaxKind.LessThanToken;
                             return;
                     }
 
                 case '&':
-                    if (_reader.IsAt('&', 1))
+                    if (_reader.IsAt(1, '&'))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.AmpersandAmpersandToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         if (!Options.SyntaxOptions.AcceptBitwiseOperators)
                             AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.AmpersandToken;
@@ -604,15 +604,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
 
                 case '|':
-                    if (_reader.IsAt('|', 1))
+                    if (_reader.IsAt(1, '|'))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.PipePipeToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         if (!Options.SyntaxOptions.AcceptBitwiseOperators)
                             AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.PipeToken;
@@ -620,15 +620,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
 
                 case '!':
-                    if (_reader.IsAt('=', 1))
+                    if (_reader.IsAt(1, '='))
                     {
-                        _reader.Advance(2);
+                        _reader.Position += 2;
                         info.Kind = SyntaxKind.BangEqualsToken;
                         return;
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Kind = SyntaxKind.BangToken;
                         return;
                     }
@@ -646,7 +646,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         case 'b':
                         case 'B':
                             // Skip the prefix
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             info.DoubleValue = ParseBinaryNumber();
                             info.Text = GetText(intern: true);
@@ -656,7 +656,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         case 'o':
                         case 'O':
                             // Skip the prefix
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             info.DoubleValue = ParseOctalNumber();
                             info.Text = GetText(intern: true);
@@ -666,7 +666,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         case 'x':
                         case 'X':
                             // Skip the prefix
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             ParseHexadecimalNumber(ref info);
                             return;
@@ -758,9 +758,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case '_':
                 {
                     // We've already checked that the first letter is a valid identifier char. No need to re-check.
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     while (CharUtils.IsValidTrailingIdentifierChar(_reader.Peek().GetValueOrDefault()))
-                        _reader.Advance(1);
+                        _reader.Position += 1;
 
                     info.Text = info.StringValue = GetText(intern: true);
                     if (!_cache.TryGetKeywordKind(info.Text, out info.Kind))
@@ -794,7 +794,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
                     else
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         info.Text = GetText(intern: true);
                     }
                     AddError(ErrorCode.ERR_BadCharacter, info.Text);
@@ -809,14 +809,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             closingNotFound = true;
             var start = _reader.Position;
             if (_reader.IsNext('[')
-                 && (_reader.IsAt('=', 1)
-                      || _reader.IsAt('[', 1)))
+                 && (_reader.IsAt(1, '=')
+                      || _reader.IsAt(1, '[')))
             {
-                _reader.Advance(1);
+                _reader.Position += 1;
                 var equalSigns = _reader.ReadStringWhile(ch => ch == '=');
                 if (_reader.IsNext('['))
                 {
-                    _reader.Advance(1);
+                    _reader.Position += 1;
 
                     var closing = $"]{equalSigns}]";
                     contents = _reader.ReadStringUntil(closing);
@@ -824,13 +824,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     if (_reader.IsNext(closing))
                     {
                         closingNotFound = false;
-                        _reader.Advance(closing.Length);
+                        _reader.Position += closing.Length;
                     }
 
                     return true;
                 }
 
-                _reader.Restore(start);
+                _reader.Position = start;
             }
 
             contents = null;

@@ -14,7 +14,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 if (digit != '_')
                     builder.Append(digit);
-                _reader.Advance(1);
+                _reader.Position += 1;
             }
         }
 
@@ -22,7 +22,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             // Skip leading 0s
             while (_reader.Peek().GetValueOrDefault() == '0')
-                _reader.Advance(1);
+                _reader.Position += 1;
 
             var num = 0L;
             var digits = 0;
@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             char digit;
             while (CharUtils.IsInRange('0', digit = _reader.Peek().GetValueOrDefault(), '1') || digit == '_')
             {
-                _reader.Advance(1);
+                _reader.Position += 1;
                 if (digit == '_')
                 {
                     hasUnderscores = true;
@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             // Skip leading 0s
             while (_reader.Peek().GetValueOrDefault() == '0')
-                _reader.Advance(1);
+                _reader.Position += 1;
 
             var num = 0L;
             var digits = 0;
@@ -70,7 +70,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             char digit;
             while (CharUtils.IsInRange('0', digit = _reader.Peek().GetValueOrDefault(), '7') || digit == '_')
             {
-                _reader.Advance(1);
+                _reader.Position += 1;
                 if (digit == '_')
                 {
                     hasUnderscores = true;
@@ -173,7 +173,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 {
                     if (digit != '_')
                         _builder.Append(digit);
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                 }
             }
         }

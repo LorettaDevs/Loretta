@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using GParse.IO;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
 
@@ -9,7 +8,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
     internal class AbstractLexer
     {
         protected readonly SourceText _text;
-        protected readonly ICodeReader _reader;
+        protected readonly SourceTextReader _reader;
         private readonly StringTable _strings;
 
         private List<SyntaxDiagnosticInfo>? _errors;
@@ -21,7 +20,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             _text = text;
             // TODO: Either make an SourceTextCodeReader or reimplement the
             // Lexer without the ICodeReader.
-            _reader = new StringCodeReader(text.ToString());
+            _reader = new SourceTextReader(text);
             _strings = new StringTable();
         }
 
@@ -35,7 +34,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected int LexemeLength => Position - LexemeStart;
 
-        public void Restore(int position) => _reader.Restore(position);
+        public void Restore(int position) => _reader.Position = position;
 
         protected void Start()
         {
