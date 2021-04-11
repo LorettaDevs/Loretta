@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using GParse.IO;
 using Loretta.CodeAnalysis.Text;
@@ -6,10 +7,10 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
-    internal class AbstractLexer
+    internal class AbstractLexer : IDisposable
     {
         protected readonly SourceText _text;
-        protected readonly ICodeReader _reader;
+        protected readonly SourceTextReader _reader;
         private readonly StringTable _strings;
 
         private List<SyntaxDiagnosticInfo>? _errors;
@@ -21,8 +22,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             _text = text;
             // TODO: Either make an SourceTextCodeReader or reimplement the
             // Lexer without the ICodeReader.
-            _reader = new StringCodeReader(text.ToString());
+            _reader = new SourceTextReader(text);
             _strings = new StringTable();
+        }
+
+        public virtual void Dispose()
+        {
+            _reader.Dispose();
         }
 
         public int Length => _reader.Length;
@@ -35,7 +41,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected int LexemeLength => Position - LexemeStart;
 
-        public void Restore(int position) => _reader.Restore(position);
+        public void Restore(int position) => _reader.Position = position;
 
         protected void Start()
         {
@@ -167,7 +173,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     break;
             }
 
-            return intern ? Intern(start, length) : _text.ToString(new TextSpan(start, length));
+            if (intern)
+            {
+                if (!_reader.TryGetInternedText(_strings, start, length, out var str))
+                    str = Intern(start, length);
+                return str;
+            }
+
+            return _text.ToString(new TextSpan(start, length));
         }
 
         #endregion GetText

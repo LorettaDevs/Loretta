@@ -22,76 +22,81 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     case '\\':
                     {
                         var escapeStart = _reader.Position;
-                        _reader.Advance(1);
+                        _reader.Position += 1;
 
                         switch (_reader.Peek())
                         {
                             case '\r':
-                                if (_reader.IsAt('\n', 1))
+                                if (_reader.IsAt(1, '\n'))
                                 {
-                                    _reader.Advance(2);
+                                    _reader.Position += 2;
                                     _builder.Append("\r\n");
                                 }
                                 else
                                 {
-                                    _reader.Advance(1);
+                                    _reader.Position += 1;
                                     _builder.Append('\r');
                                 }
                                 break;
 
                             case 'a':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\a');
                                 break;
 
                             case 'b':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\b');
                                 break;
 
                             case 'f':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\f');
                                 break;
 
                             case 'n':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\n');
                                 break;
 
                             case 'r':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\r');
                                 break;
 
                             case 't':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\t');
                                 break;
 
                             case 'v':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\v');
                                 break;
 
                             case '\\':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\\');
                                 break;
 
                             case '\n':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\n');
                                 break;
 
                             case '\'':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('\'');
                                 break;
 
                             case '"':
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 _builder.Append('"');
+                                break;
+
+                            case 'z':
+                                _reader.Position += 1;
+                                _reader.SkipWhile(c => c is '\f' or '\n' or '\r' or '\t' or '\v' or ' ');
                                 break;
 
                             case '0':
@@ -113,7 +118,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                             case 'x':
                             {
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 var parsedCharInteger = parseHexadecimalInteger(escapeStart);
                                 if (parsedCharInteger != char.MaxValue)
                                     _builder.Append(parsedCharInteger);
@@ -126,7 +131,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             default:
                             {
                                 // Skip the character after the escape.
-                                _reader.Advance(1);
+                                _reader.Position += 1;
                                 AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_InvalidStringEscape);
                             }
                             break;
@@ -138,14 +143,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                     case '\r':
                     {
-                        if (_reader.IsAt('\n', 1))
+                        if (_reader.IsAt(1, '\n'))
                         {
-                            _reader.Advance(2);
+                            _reader.Position += 2;
                             _builder.Append("\r\n");
                         }
                         else
                         {
-                            _reader.Advance(1);
+                            _reader.Position += 1;
                             _builder.Append('\r');
                         }
 
@@ -155,7 +160,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                     case '\n':
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         _builder.Append('\n');
 
                         AddError(charStart, _reader.Position - charStart, ErrorCode.ERR_UnescapedLineBreakInString);
@@ -163,7 +168,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     break;
 
                     default:
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         _builder.Append(peek);
                         break;
                 }
@@ -171,7 +176,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             if (_reader.IsNext(delim))
             {
-                _reader.Advance(1);
+                _reader.Position += 1;
             }
             else
             {
@@ -187,7 +192,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 char ch;
                 while (readChars < 3 && CharUtils.IsDecimal(ch = _reader.Peek().GetValueOrDefault()))
                 {
-                    _reader.Advance(1);
+                    _reader.Position += 1;
                     num = (num * 10) + (ch - '0');
                     readChars++;
                 }
@@ -210,12 +215,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     var peek = _reader.Peek().GetValueOrDefault();
                     if (CharUtils.IsDecimal(peek))
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         num = (byte) ((num << 4) | (peek - '0'));
                     }
                     else if (CharUtils.IsHexadecimal(peek))
                     {
-                        _reader.Advance(1);
+                        _reader.Position += 1;
                         num = (byte) ((num << 4) | (10 + CharUtils.AsciiLowerCase(peek) - 'a'));
                     }
                     else
