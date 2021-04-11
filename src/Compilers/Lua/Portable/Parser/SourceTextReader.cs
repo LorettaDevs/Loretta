@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
-using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
@@ -155,7 +152,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 return ReadToEnd();
 
             var length = idx - Position;
-            string value = _sourceText.ToString(new TextSpan(Position, length));
+            var value = _sourceText.ToString(new TextSpan(Position, length));
             Position = idx;
             return value;
         }
@@ -167,7 +164,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 return ReadToEnd();
 
             var length = strEnd - Position;
-            string value = _sourceText.ToString(new TextSpan(Position, length));
+            var value = _sourceText.ToString(new TextSpan(Position, length));
             Position = strEnd;
             return value;
         }
@@ -175,7 +172,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public string ReadToEnd()
         {
             var length = Length - Position;
-            string value = _sourceText.ToString(new TextSpan(Position, length));
+            var value = _sourceText.ToString(new TextSpan(Position, length));
             Position = Length;
             return value;
         }
