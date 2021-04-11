@@ -7,7 +7,7 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
-    internal class SourceTextReader : IDisposable
+    internal class SourceTextReader
     {
         private readonly SourceText _sourceText;
         private int _position = 0;
@@ -15,10 +15,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public SourceTextReader(SourceText sourceText)
         {
             _sourceText = sourceText;
-        }
-
-        public void Dispose()
-        {
         }
 
         /// <summary>

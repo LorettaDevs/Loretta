@@ -7,7 +7,7 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
-    internal class AbstractLexer : IDisposable
+    internal class AbstractLexer
     {
         protected readonly SourceText _text;
         protected readonly SourceTextReader _reader;
@@ -24,11 +24,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             // Lexer without the ICodeReader.
             _reader = new SourceTextReader(text);
             _strings = new StringTable();
-        }
-
-        public virtual void Dispose()
-        {
-            _reader.Dispose();
         }
 
         public int Length => _reader.Length;

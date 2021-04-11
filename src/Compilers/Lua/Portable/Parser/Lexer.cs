@@ -837,10 +837,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return false;
         }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-            _cache.Free();
-        }
+        public void Dispose() => _cache.Free();
     }
 }
