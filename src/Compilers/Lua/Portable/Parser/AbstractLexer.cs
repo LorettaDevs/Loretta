@@ -173,14 +173,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     break;
             }
 
-            if (intern)
-            {
-                if (!_reader.TryGetInternedText(_strings, start, length, out var str))
-                    str = Intern(start, length);
-                return str;
-            }
-
-            return _text.ToString(new TextSpan(start, length));
+            return intern ? Intern(start, length) : _text.ToString(new TextSpan(start, length));
         }
 
         #endregion GetText
