@@ -43,7 +43,6 @@
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
     <PackageReference Include="Tsu" Version="2.1.1" />
-    <PackageReference Include="GParse" Version="5.0.0-alpha08" />
   </ItemGroup>
 
   <ItemGroup>
