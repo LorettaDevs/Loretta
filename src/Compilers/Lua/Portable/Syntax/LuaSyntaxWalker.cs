@@ -51,7 +51,7 @@ namespace Loretta.CodeAnalysis.Lua
             var childCnt = node.ChildNodesAndTokens().Count;
             var i = 0;
 
-            do
+            while (i < childCnt)
             {
                 var child = ChildSyntaxList.ItemInternal((LuaSyntaxNode) node, i);
                 i++;
@@ -71,7 +71,7 @@ namespace Loretta.CodeAnalysis.Lua
                         VisitToken(child.AsToken());
                     }
                 }
-            } while (i < childCnt);
+            }
         }
 
         /// <summary>
