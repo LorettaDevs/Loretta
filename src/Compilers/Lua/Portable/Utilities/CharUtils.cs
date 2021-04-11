@@ -11,7 +11,6 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
     /// A general character utility class.
     /// </summary>
     internal static class CharUtils
-
     {
         /// <summary>
         /// Checks whether the provided <paramref name="value" /> is in the range [<paramref
@@ -126,6 +125,18 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsAlphaNumeric(char ch) =>
             IsDecimal(ch) || IsAlpha(ch);
+
+        /// <summary>
+        /// Checks whether the provided character is whitespace
+        /// </summary>
+        /// <param name="ch"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsWhitespace(char ch) =>
+            // basically checks [ \t\n\v\f\r]
+            // which simplifies to: [ \t-\r]
+            // which is what has been implemented here.
+            ch == ' ' || IsInRange('\t', ch, '\r');
 
         /// <summary>
         /// Checks whether the provided character is a valid first identifier character.

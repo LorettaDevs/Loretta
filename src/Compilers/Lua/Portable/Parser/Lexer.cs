@@ -227,8 +227,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             return;
                         break;
 
-                    case ' ':
                     case '\t':
+                    case '\v':
+                    case '\f':
+                    case ' ':
                     {
                         // Skip first char as we know it's whitespace.
                         _reader.Position += 1;
@@ -236,7 +238,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         char ch;
                         while ((ch = _reader.Peek().GetValueOrDefault()) != '\r'
                                 && ch != '\n'
-                                && char.IsWhiteSpace(ch))
+                                && CharUtils.IsWhitespace(ch))
                         {
                             _reader.Position += 1;
                         }
@@ -274,12 +276,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         {
                             return;
                         }
-
-                    default:
-                        if (char.IsWhiteSpace(peek))
-                            goto case ' ';
-                        else
-                            return;
                 }
             }
         }

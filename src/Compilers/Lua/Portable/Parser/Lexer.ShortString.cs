@@ -96,7 +96,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                             case 'z':
                                 _reader.Position += 1;
-                                _reader.SkipWhile(c => c is '\f' or '\n' or '\r' or '\t' or '\v' or ' ');
+                                _reader.SkipWhile(static c => CharUtils.IsWhitespace(c));
                                 break;
 
                             case '0':
