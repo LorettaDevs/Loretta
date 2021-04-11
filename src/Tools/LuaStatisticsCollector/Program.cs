@@ -86,8 +86,8 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
                 .WithDegreeOfParallelism(Environment.ProcessorCount * 2)
                 .Select(file =>
                 {
-                    using var reader = file.OpenText();
-                    return new SourceFile(file.Name, SourceText.From(reader.ReadToEnd(), Encoding.UTF8));
+                    using var stream = file.OpenRead();
+                    return new SourceFile(file.Name, SourceText.From(stream, Encoding.UTF8));
                 })
                 .ToImmutableArray();
             s_totalFiles = files.Length;
