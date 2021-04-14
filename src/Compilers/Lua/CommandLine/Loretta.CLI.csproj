@@ -18,7 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="samples\*.lua">
+    <None Update="samples\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="binaries\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
