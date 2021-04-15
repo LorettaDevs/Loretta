@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Experimental;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Text;
 using Tsu.CLI.Commands;
@@ -135,7 +136,7 @@ namespace Loretta.CLI
         }
 
         [Command("p"), Command("parse")]
-        public static void Parse(LuaOptionsPreset preset, string path)
+        public static void Parse(LuaOptionsPreset preset, string path, bool constantFold = false, bool printTree = false)
         {
             if (!File.Exists(path))
             {
@@ -152,9 +153,15 @@ namespace Loretta.CLI
             using (s_logger.BeginOperation("Parsing"))
                 syntaxTree = (LuaSyntaxTree) LuaSyntaxTree.ParseText(sourceText, options: options, path: path);
 
-            LuaSyntaxNode formattedNode;
+            SyntaxNode rootNode = syntaxTree.GetRoot();
+            if (constantFold)
+            {
+                using (s_logger.BeginOperation("Constant Folding"))
+                    rootNode = rootNode.FoldConstants();
+            }
+
             using (s_logger.BeginOperation("Format"))
-                formattedNode = syntaxTree.GetRoot().NormalizeWhitespace();
+                rootNode = rootNode.NormalizeWhitespace();
 
             var diagnostics = syntaxTree.GetDiagnostics();
             foreach (var diagnostic in diagnostics)
@@ -162,8 +169,16 @@ namespace Loretta.CLI
             s_logger.Write("Press any key to continue...");
             Console.ReadKey(true);
             s_logger.WriteLine("");
-            formattedNode.WriteTo(new ConsoleTimingLoggerTextWriter(s_logger));
-            s_logger.WriteLine("");
+
+            if (printTree)
+            {
+                s_logger.WriteLine(TreeDumper.DumpCompact(LuaTreeDumperConverter.Convert(rootNode)));
+            }
+            else
+            {
+                rootNode.WriteTo(new ConsoleTimingLoggerTextWriter(s_logger));
+                s_logger.WriteLine("");
+            }
 
             var script = new Script(ImmutableArray.Create<SyntaxTree>(syntaxTree));
             var global = script.RootScope;
