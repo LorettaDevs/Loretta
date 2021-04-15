@@ -48,6 +48,7 @@
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Syntax.UnitTests" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.StatisticsCollector" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Experimental" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="CodeAnalysisResources.resx" GenerateSource="true">
