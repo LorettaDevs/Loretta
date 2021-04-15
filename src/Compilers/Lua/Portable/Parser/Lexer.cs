@@ -276,6 +276,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         {
                             return;
                         }
+                    default:
+                        return;
                 }
             }
         }
