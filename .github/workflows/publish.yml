@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Release
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup .NET Core 2.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.1.x
+        env:
+          DOTNET_INSTALL_DIR: C:\Program Files\dotnet
+      - name: Setup .NET 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+        env:
+          DOTNET_INSTALL_DIR: C:\Program Files\dotnet
+      - name: Setup .NET 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+        env:
+          DOTNET_INSTALL_DIR: C:\Program Files\dotnet
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --configuration Release --no-build
+      - name: Generate NuGet packages
+        run: dotnet pack --configuration Release --output ./packages --no-restore --include-symbols -p:SymbolPackageFormat=snupkg
+      - name: Publish packages
+        run: |
+          Get-ChildItem -Path ./packages/ -Filter *.nupkg -File -Name | ForEach-Object {
+            dotnet nuget push ./packages/$_ --source github --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+          }
+        shell: pwsh
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
