@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
-using System.Data;
+using System.IO;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
@@ -362,8 +362,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 return false;
 
             // 'a.b' instead of 'a . b' and 'a:b' instead of 'a : b'
-            if (nextToken.Kind() is SyntaxKind.DotToken or SyntaxKind.SemicolonToken)
+            if (nextToken.Kind() is SyntaxKind.DotToken or SyntaxKind.SemicolonToken
+                || token.Kind() is SyntaxKind.DotToken or SyntaxKind.SemicolonToken)
+            {
                 return false;
+            }
 
             // '::a::' instead of ':: a ::'
             if (token.IsKind(SyntaxKind.ColonColonToken) || nextToken.IsKind(SyntaxKind.ColonColonToken))
