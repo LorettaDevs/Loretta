@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.Utilities;
 using static Loretta.CodeAnalysis.Lua.SyntaxFactory;
 
 namespace Loretta.CodeAnalysis.Lua.Experimental
 {
-    internal class ConstantFolder : LuaSyntaxRewriter
+    internal partial class ConstantFolder : LuaSyntaxRewriter
     {
         public static SyntaxNode Fold(SyntaxNode input)
         {
@@ -16,6 +17,14 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
 
         private ConstantFolder()
         {
+        }
+
+        public override SyntaxNode? VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
+        {
+            var innerExpr = (ExpressionSyntax) Visit(node.Expression)!;
+            if (innerExpr is ParenthesizedExpressionSyntax innerParenthesized)
+                return innerParenthesized;
+            return node.Update(node.OpenParenthesisToken, innerExpr, node.CloseParenthesisToken);
         }
 
         public override SyntaxNode? VisitUnaryExpression(UnaryExpressionSyntax node)
@@ -120,15 +129,15 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                         Literal(leftStr + rightStr));
                 }
 
-                case SyntaxKind.EqualsExpression when HasEFlag(leftFlags, ExpressionFlags.IsConstant)
-                    && HasEFlag(rightFlags, ExpressionFlags.IsConstant):
+                case SyntaxKind.EqualsExpression when HasEFlag(leftFlags, ExpressionFlags.IsScalar)
+                    && HasEFlag(rightFlags, ExpressionFlags.IsScalar):
                 {
                     var result = exprEquals(left, right, leftFlags, rightFlags);
                     return LiteralExpression(result ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
                 }
 
-                case SyntaxKind.NotEqualsExpression when HasEFlag(leftFlags, ExpressionFlags.IsConstant)
-                    && HasEFlag(rightFlags, ExpressionFlags.IsConstant):
+                case SyntaxKind.NotEqualsExpression when HasEFlag(leftFlags, ExpressionFlags.IsScalar)
+                    && HasEFlag(rightFlags, ExpressionFlags.IsScalar):
                 {
                     var result = !exprEquals(left, right, leftFlags, rightFlags);
                     return LiteralExpression(result ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
@@ -230,43 +239,83 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             }
         }
 
-        private enum ExpressionFlags : byte
+        public override SyntaxNode? VisitMemberAccessExpression(MemberAccessExpressionSyntax node)
         {
-            None = 0,
-            IsNil = 1 << 0,
-            IsNum = 1 << 1,
-            IsStr = 1 << 2,
-            IsBool = 1 << 3,
-            IsTbl = 1 << 4,
-            IsTruthy = 1 << 5,
-            IsFalsey = 1 << 6,
-            IsConstTbl = 1 << 7,
+            var expression = (ExpressionSyntax) Visit(node.Expression);
+            if (HasEFlag(expression, ExpressionFlags.IsConstantTable))
+            {
+                var table = (TableConstructorExpressionSyntax) GetInnerExpression(expression);
+                foreach (var field in table.Fields.Reverse())
+                {
+                    if (field.IsKind(SyntaxKind.IdentifierKeyedTableField))
+                    {
+                        var typedField = (IdentifierKeyedTableFieldSyntax) field;
+                        if (string.Equals(typedField.Identifier.Text, node.MemberName.Text, StringComparison.Ordinal))
+                            return typedField.Value;
+                    }
+                    else if (field.IsKind(SyntaxKind.ExpressionKeyedTableField))
+                    {
+                        var typedField = (ExpressionKeyedTableFieldSyntax) field;
+                        if (HasEFlag(typedField.Key, ExpressionFlags.IsStr)
+                            && string.Equals(GetValue<string>(typedField.Key), node.MemberName.Text, StringComparison.Ordinal))
+                        {
+                            return typedField.Value;
+                        }
+                    }
+                }
+            }
 
-            CanConvertToBool = IsTruthy | IsFalsey,
-            IsConstant = IsNil | IsNum | IsStr | IsBool,
+            var baseExpr = expression is PrefixExpressionSyntax prefix
+                ? prefix
+                : ParenthesizedExpression(expression);
+            return node.Update(baseExpr, node.DotSeparator, node.MemberName);
+        }
+
+        public override SyntaxNode? VisitElementAccessExpression(ElementAccessExpressionSyntax node)
+        {
+            var baseExpression = (ExpressionSyntax) Visit(node.Expression);
+            var keyExpression = (ExpressionSyntax) Visit(node.KeyExpression);
+
+            if (HasEFlag(baseExpression, ExpressionFlags.IsConstantTable)
+                && HasEFlag(keyExpression, ExpressionFlags.IsScalar))
+            {
+                var table = (TableConstructorExpressionSyntax) GetInnerExpression(baseExpression);
+                foreach (var field in table.Fields.Reverse())
+                {
+                    if (field.IsKind(SyntaxKind.IdentifierKeyedTableField))
+                    {
+                        var typedField = (IdentifierKeyedTableFieldSyntax) field;
+                        if (HasEFlag(keyExpression, ExpressionFlags.IsStr)
+                            && string.Equals(
+                                GetValue<string>(keyExpression),
+                                typedField.Identifier.Text,
+                                StringComparison.Ordinal))
+                        {
+                            return typedField.Value;
+                        }
+                    }
+
+                    if (field.IsKind(SyntaxKind.ExpressionKeyedTableField))
+                    {
+                        var typedField = (ExpressionKeyedTableFieldSyntax) field;
+                        if (typedField.Key.IsEquivalentTo(keyExpression))
+                        {
+                            return typedField.Value;
+                        }
+                    }
+                }
+            }
+
+            var basePrefixExpr = baseExpression is PrefixExpressionSyntax prefix
+                ? prefix
+                : ParenthesizedExpression(baseExpression);
+            return node.Update(basePrefixExpr, node.OpenBracketToken, keyExpression, node.CloseBracketToken);
         }
 
         private static SyntaxNode GetInnerExpression(SyntaxNode node) =>
             node.IsKind(SyntaxKind.ParenthesizedExpression)
             ? GetInnerExpression(((ParenthesizedExpressionSyntax) node).Expression)
             : node;
-
-        private static ExpressionFlags GetFlags(SyntaxNode node)
-        {
-            node = GetInnerExpression(node);
-            RoslynDebug.Assert(node is ExpressionSyntax);
-
-            var flags = ExpressionFlags.None;
-            if (node.IsKind(SyntaxKind.NumericalLiteralExpression))
-                flags |= ExpressionFlags.IsNum;
-            if (node.IsKind(SyntaxKind.StringLiteralExpression))
-                flags |= ExpressionFlags.IsStr;
-            if (CanConvertToBoolean(node))
-                flags |= IsFalsey(node) ? ExpressionFlags.IsFalsey : ExpressionFlags.IsTruthy;
-            return flags;
-        }
-
-        private static bool HasEFlag(ExpressionFlags flags, ExpressionFlags wantedFlag) => (flags & wantedFlag) != 0;
 
         /// <summary>
         /// Checks whether we can statically convert this to a boolean (function calls, indexing
@@ -301,19 +350,6 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             return node.Kind() is SyntaxKind.NilLiteralExpression or SyntaxKind.FalseLiteralExpression;
         }
 
-        private static bool TryConvertToBool(SyntaxNode node, out bool value)
-        {
-            var innerNode = GetInnerExpression(node);
-            if (CanConvertToBoolean(innerNode))
-            {
-                value = !IsFalsey(innerNode);
-                return true;
-            }
-
-            value = false;
-            return false;
-        }
-
         /// <summary>
         /// Obtains the value from the provided node as a <see cref="LiteralExpressionSyntax"/>.
         /// </summary>
@@ -341,6 +377,19 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             return value == converted;
         }
 
+        private static bool TryConvertToBool(SyntaxNode node, out bool value)
+        {
+            var innerNode = GetInnerExpression(node);
+            if (CanConvertToBoolean(innerNode))
+            {
+                value = !IsFalsey(innerNode);
+                return true;
+            }
+
+            value = false;
+            return false;
+        }
+
         private static bool TryConvertToDouble(long value, out double converted)
         {
             converted = value;
@@ -348,8 +397,16 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         }
     }
 
+    /// <summary>
+    /// Experimental code exposed through extension methods.
+    /// </summary>
     public static partial class SyntaxExtensions
     {
+        /// <summary>
+        /// Runs constant folding on the tree rooted by the provided node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public static SyntaxNode FoldConstants(this SyntaxNode node) =>
             ConstantFolder.Fold(node);
     }
