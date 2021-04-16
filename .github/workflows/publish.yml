@@ -41,7 +41,7 @@ jobs:
       - name: Publish packages
         run: |
           Get-ChildItem -Path ./packages/ -Filter *.nupkg -File -Name | ForEach-Object {
-            dotnet nuget push ./packages/$_ --source github --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+            dotnet nuget push ./packages/$_ --source "https://nuget.pkg.github.com/GGG-KILLER/index.json" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
           }
         shell: pwsh
       - name: Create Release
