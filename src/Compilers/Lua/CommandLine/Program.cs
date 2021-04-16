@@ -20,7 +20,7 @@ namespace Loretta.CLI
     public static class Program
     {
         private static readonly ConsoleTimingLogger s_logger = new ConsoleTimingLogger();
-        private static bool s_shouldRun;
+        private static bool s_shouldRun, s_printCurrentDir = true;
 
         public static void Main()
         {
@@ -33,7 +33,9 @@ namespace Loretta.CLI
             {
                 try
                 {
-                    s_logger.Write($"{Environment.CurrentDirectory}> ");
+                    if (s_printCurrentDir)
+                        s_logger.Write(Environment.CurrentDirectory);
+                    s_logger.Write("> ");
                     commandManager.Execute(s_logger.ReadLine());
                 }
                 catch (NonExistentCommandException ex)
@@ -45,6 +47,24 @@ namespace Loretta.CLI
                     s_logger.LogError("Error while executing '{0}': {1}\n{2}", ex.Command, ex.Message, ex.StackTrace!);
                 }
             }
+        }
+
+        [Command("s"), Command("set")]
+        public static void Set(string key, string value)
+        {
+            switch (key.ToLower().Replace("-", ""))
+            {
+                case "printcurrentdir":
+                    s_printCurrentDir = toBool(value);
+                    break;
+            }
+
+            static bool toBool(string str) => str switch
+            {
+                "true" or "on" or "yes" => true,
+                "flase" or "off" or "no" => false,
+                _ => throw new InvalidOperationException("Unrecognized value.")
+            };
         }
 
         [Command("q"), Command("quit"), Command("exit")]
@@ -191,9 +211,18 @@ namespace Loretta.CLI
         [RawInput]
         public static void ParseExpression(string input)
         {
+            var options = LuaParseOptions.Default;
+            string code;
             var presetName = input.Substring(0, input.IndexOf(' '));
-            var code = input[(input.IndexOf(' ') + 1)..];
-            var options = PresetEnumToPresetOptions(Enum.Parse<LuaOptionsPreset>(presetName, true));
+            if (Enum.TryParse<LuaOptionsPreset>(presetName, true, out var presetEnum))
+            {
+                code = input[(input.IndexOf(' ') + 1)..];
+                options = PresetEnumToPresetOptions(Enum.Parse<LuaOptionsPreset>(presetName, true));
+            }
+            else
+            {
+                code = input;
+            }
             var text = SourceText.From(code, Console.InputEncoding);
 
             var expr = SyntaxFactory.ParseExpression(text, options);
@@ -201,6 +230,7 @@ namespace Loretta.CLI
             foreach (var diagnostic in diagnostics)
                 s_logger.WriteLine(diagnostic.ToString());
 
+            expr = (ExpressionSyntax) expr.FoldConstants();
             expr = expr.NormalizeWhitespace();
             expr.WriteTo(new ConsoleTimingLoggerTextWriter(s_logger));
             s_logger.WriteLine("");
