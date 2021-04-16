@@ -52,6 +52,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CodeAnalysis.Lua.St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CodeAnalysis.Lua.Experimental", "src\Compilers\Lua\Experimental\Loretta.CodeAnalysis.Lua.Experimental.csproj", "{CF56CBC0-B235-44E5-A15F-34D9AD8BB50F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{DA213632-8774-47C8-97B7-BC1C55F6E519}"
+	ProjectSection(SolutionItems) = preProject
+		build\LibraryProject.props = build\LibraryProject.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{1557BD9C-CD01-4A4A-8697-1E47EFBE0F67}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{4444A40B-FAEF-4F74-BE00-99C53E9335BC}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build-and-test.yml = .github\workflows\build-and-test.yml
+		.github\workflows\publish.yml = .github\workflows\publish.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -229,6 +242,9 @@ Global
 		{DBCD42A6-8932-4E8D-97B7-7C3481D5DC86} = {87DABD33-4B9E-4E07-A20D-CB4DB6D049D2}
 		{51B95952-5BA5-4508-8E70-3D6AB280C830} = {87DABD33-4B9E-4E07-A20D-CB4DB6D049D2}
 		{CF56CBC0-B235-44E5-A15F-34D9AD8BB50F} = {58330A29-7B99-4F95-A05E-F74BB1294132}
+		{DA213632-8774-47C8-97B7-BC1C55F6E519} = {8A9DF973-E520-48BC-95C0-23477FD4AFCC}
+		{1557BD9C-CD01-4A4A-8697-1E47EFBE0F67} = {8A9DF973-E520-48BC-95C0-23477FD4AFCC}
+		{4444A40B-FAEF-4F74-BE00-99C53E9335BC} = {1557BD9C-CD01-4A4A-8697-1E47EFBE0F67}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44571FC4-549C-4D10-B763-5382A430C7AC}
