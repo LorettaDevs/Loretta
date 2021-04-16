@@ -1,0 +1,49 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+    <!-- Treat all non-nullable reference types warnings as errors (as it should be). -->
+    <WarningsAsErrors>CS8600;CS8601;CS8602;CS8603;CS8604;CS8605;CS8607;CS8608;CS8609;CS8610;CS8611;CS8612;CS8613;CS8614;CS8615;CS8616;CS8617;CS8618;CS8619;CS8620;CS8621;CS8622;CS8624;CS8625;CS8629;CS8631;CS8633;CS8634;CS8643;CS8644;CS8645;CS8655;CS8667;CS8670;CS8714</WarningsAsErrors>
+
+  </PropertyGroup>
+
+  <!-- Compilation props -->
+  <PropertyGroup>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <!-- Package props -->
+  <PropertyGroup>
+    <Authors>GGG KILLER</Authors>
+    <Copyright>GGG KILLER © 2021</Copyright>
+    <Version>0.2.4</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <RepositoryUrl>https://github.com/GGG-KILLER/Loretta</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <PackageTags>parser;lexer;parsing;lexing;tokenizer;tokenizing</PackageTags>
+    <PackageProjectUrl>https://github.com/GGG-KILLER/Loretta</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+    <!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

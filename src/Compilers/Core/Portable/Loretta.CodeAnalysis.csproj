@@ -1,25 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Licensed to the .NET Foundation under one or more agreements. The .NET Foundation licenses this file to you under the MIT license. See the LICENSE file in the project root for more information. -->
 <Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../../../build/LibraryProject.props" />
+
+  <PropertyGroup>
+    <!-- NuGet -->
+    <PackageId>Loretta.CodeAnalysis.Common</PackageId>
+    <Description>
+      A shared package used by Loretta.
+      Do not install this package manually, it will be added as a prerequisite by other packages that require it.
+    </Description>
+  </PropertyGroup>
+
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>Loretta.CodeAnalysis</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);COMPILERCORE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <ApplyNgenOptimization Condition="'$(TargetFramework)' == 'netstandard2.0'">partial</ApplyNgenOptimization>
     <GeneratePerformanceSensitiveAttribute>true</GeneratePerformanceSensitiveAttribute>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-
-    <!-- NuGet -->
-    <IsPackable>false</IsPackable>
-    <PackageId>Loretta.CodeAnalysis.Common</PackageId>
-    <PackageDescription>
-      A shared package used by Loretta.
-      Do not install this package manually, it will be added as a prerequisite by other packages that require it.
-    </PackageDescription>
   </PropertyGroup>
+
   <ItemGroup>
     <!--
       Analyzers that will be used to analyze projects that references 

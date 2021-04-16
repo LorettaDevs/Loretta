@@ -1,10 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="../../../../build/LibraryProject.props" />
+
+  <!-- Package data -->
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>Loretta.CodeAnalysis.Lua.Experimental</PackageId>
+    <Description>Experimental code that might become part of Loretta.CodeAnalysis.Lua.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <DebugType>Full</DebugType>
   </PropertyGroup>
 
