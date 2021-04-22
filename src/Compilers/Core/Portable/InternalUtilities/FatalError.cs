@@ -79,11 +79,10 @@ namespace Loretta.CodeAnalysis.ErrorReporting
             => exception is OperationCanceledException && cancellationToken.IsCancellationRequested;
 
         /// <summary>
-        /// Use in an exception filter to report a fatal error. 
-        /// Unless the exception is <see cref="OperationCanceledException"/> 
-        /// it calls <see cref="Handler"/>. The exception is passed through (the method returns false).
+        /// Use in an exception filter to report a fatal error (by calling <see cref="Handler"/>), unless the
+        /// operation has been cancelled. The exception is never caught.
         /// </summary>
-        /// <returns>False to avoid catching the exception.</returns>
+        /// <returns><see langword="false"/> to avoid catching the exception.</returns>
         [DebuggerHidden]
         public static bool ReportAndPropagateUnlessCanceled(Exception exception)
         {
@@ -96,15 +95,27 @@ namespace Loretta.CodeAnalysis.ErrorReporting
         }
 
         /// <summary>
-        /// Use in an exception filter to report a fatal error. 
-        /// Calls <see cref="Handler"/> unless the operation has been cancelled. 
-        /// The exception is passed through (the method returns false).
+        /// <para>Use in an exception filter to report a fatal error (by calling <see cref="Handler"/>), unless the
+        /// operation has been cancelled at the request of <paramref name="contextCancellationToken"/>. The exception is
+        /// never caught.</para>
+        ///
+        /// <para>Cancellable operations are only expected to throw <see cref="OperationCanceledException"/> if the
+        /// applicable <paramref name="contextCancellationToken"/> indicates cancellation is requested by setting
+        /// <see cref="CancellationToken.IsCancellationRequested"/>. Unexpected cancellation, i.e. an
+        /// <see cref="OperationCanceledException"/> which occurs without <paramref name="contextCancellationToken"/>
+        /// requesting cancellation, is treated as an error by this method.</para>
+        ///
+        /// <para>This method does not require <see cref="OperationCanceledException.CancellationToken"/> to match
+        /// <paramref name="contextCancellationToken"/>, provided cancellation is expected per the previous
+        /// paragraph.</para>
         /// </summary>
-        /// <returns>False to avoid catching the exception.</returns>
+        /// <param name="contextCancellationToken">A <see cref="CancellationToken"/> which will have
+        /// <see cref="CancellationToken.IsCancellationRequested"/> set if cancellation is expected.</param>
+        /// <returns><see langword="false"/> to avoid catching the exception.</returns>
         [DebuggerHidden]
-        public static bool ReportAndPropagateUnlessCanceled(Exception exception, CancellationToken cancellationToken)
+        public static bool ReportAndPropagateUnlessCanceled(Exception exception, CancellationToken contextCancellationToken)
         {
-            if (IsCurrentOperationBeingCancelled(exception, cancellationToken))
+            if (IsCurrentOperationBeingCancelled(exception, contextCancellationToken))
             {
                 return false;
             }
@@ -113,11 +124,11 @@ namespace Loretta.CodeAnalysis.ErrorReporting
         }
 
         /// <summary>
-        /// Use in an exception filter to report a non-fatal error. 
-        /// Unless the exception is <see cref="OperationCanceledException"/> 
-        /// it calls <see cref="NonFatalHandler"/>. The exception isn't passed through (the method returns true).
+        /// Use in an exception filter to report a non-fatal error (by calling <see cref="NonFatalHandler"/>) and catch
+        /// the exception, unless the operation was cancelled.
         /// </summary>
-        /// <returns>True to catch the exception.</returns>
+        /// <returns><see langword="true"/> to catch the exception if the non-fatal error was reported; otherwise,
+        /// <see langword="false"/> to propagate the exception if the operation was cancelled.</returns>
         [DebuggerHidden]
         public static bool ReportAndCatchUnlessCanceled(Exception exception)
         {
@@ -130,15 +141,28 @@ namespace Loretta.CodeAnalysis.ErrorReporting
         }
 
         /// <summary>
-        /// Use in an exception filter to report a non-fatal error. 
-        /// Calls <see cref="NonFatalHandler"/> unless the operation has been cancelled. 
-        /// The exception isn't passed through (the method returns true).
+        /// <para>Use in an exception filter to report a non-fatal error (by calling <see cref="NonFatalHandler"/>) and
+        /// catch the exception, unless the operation was cancelled at the request of
+        /// <paramref name="contextCancellationToken"/>.</para>
+        ///
+        /// <para>Cancellable operations are only expected to throw <see cref="OperationCanceledException"/> if the
+        /// applicable <paramref name="contextCancellationToken"/> indicates cancellation is requested by setting
+        /// <see cref="CancellationToken.IsCancellationRequested"/>. Unexpected cancellation, i.e. an
+        /// <see cref="OperationCanceledException"/> which occurs without <paramref name="contextCancellationToken"/>
+        /// requesting cancellation, is treated as an error by this method.</para>
+        ///
+        /// <para>This method does not require <see cref="OperationCanceledException.CancellationToken"/> to match
+        /// <paramref name="contextCancellationToken"/>, provided cancellation is expected per the previous
+        /// paragraph.</para>
         /// </summary>
-        /// <returns>True to catch the exception.</returns>
+        /// <param name="contextCancellationToken">A <see cref="CancellationToken"/> which will have
+        /// <see cref="CancellationToken.IsCancellationRequested"/> set if cancellation is expected.</param>
+        /// <returns><see langword="true"/> to catch the exception if the non-fatal error was reported; otherwise,
+        /// <see langword="false"/> to propagate the exception if the operation was cancelled.</returns>
         [DebuggerHidden]
-        public static bool ReportAndCatchUnlessCanceled(Exception exception, CancellationToken cancellationToken)
+        public static bool ReportAndCatchUnlessCanceled(Exception exception, CancellationToken contextCancellationToken)
         {
-            if (IsCurrentOperationBeingCancelled(exception, cancellationToken))
+            if (IsCurrentOperationBeingCancelled(exception, contextCancellationToken))
             {
                 return false;
             }
@@ -147,10 +171,10 @@ namespace Loretta.CodeAnalysis.ErrorReporting
         }
 
         /// <summary>
-        /// Use in an exception filter to report a fatal error.
-        /// Calls <see cref="Handler"/> and passes the exception through (the method returns false).
+        /// Use in an exception filter to report a fatal error without catching the exception.
+        /// The error is reported by calling <see cref="Handler"/>.
         /// </summary>
-        /// <returns>False to avoid catching the exception.</returns>
+        /// <returns><see langword="false"/> to avoid catching the exception.</returns>
         [DebuggerHidden]
         public static bool ReportAndPropagate(Exception exception)
         {

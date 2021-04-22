@@ -16,6 +16,7 @@ namespace Loretta.Utilities
 {
     using System.Collections.Immutable;
     using System.Threading.Tasks;
+    using Loretta.CodeAnalysis.Collections;
 #if COMPILERCORE
     using Resources = CodeAnalysisResources;
 #elif CODE_STYLE
@@ -112,7 +113,7 @@ namespace Loretta.Utilities
         public void WriteBoolean(bool value) => _writer.Write(value);
         public void WriteByte(byte value) => _writer.Write(value);
         // written as ushort because BinaryWriter fails on chars that are unicode surrogates
-        public void WriteChar(char ch) => _writer.Write((ushort)ch);
+        public void WriteChar(char ch) => _writer.Write((ushort) ch);
         public void WriteDecimal(decimal value) => _writer.Write(value);
         public void WriteDouble(double value) => _writer.Write(value);
         public void WriteSingle(float value) => _writer.Write(value);
@@ -153,7 +154,7 @@ namespace Loretta.Utilities
 
             if (value == null)
             {
-                _writer.Write((byte)EncodingKind.Null);
+                _writer.Write((byte) EncodingKind.Null);
                 return;
             }
 
@@ -174,60 +175,60 @@ namespace Loretta.Utilities
                 // have a primitive type we're serializing out.
                 if (value.GetType() == typeof(int))
                 {
-                    WriteEncodedInt32((int)value);
+                    WriteEncodedInt32((int) value);
                 }
                 else if (value.GetType() == typeof(double))
                 {
-                    _writer.Write((byte)EncodingKind.Float8);
-                    _writer.Write((double)value);
+                    _writer.Write((byte) EncodingKind.Float8);
+                    _writer.Write((double) value);
                 }
                 else if (value.GetType() == typeof(bool))
                 {
-                    _writer.Write((byte)((bool)value ? EncodingKind.Boolean_True : EncodingKind.Boolean_False));
+                    _writer.Write((byte) ((bool) value ? EncodingKind.Boolean_True : EncodingKind.Boolean_False));
                 }
                 else if (value.GetType() == typeof(char))
                 {
-                    _writer.Write((byte)EncodingKind.Char);
-                    _writer.Write((ushort)(char)value);  // written as ushort because BinaryWriter fails on chars that are unicode surrogates
+                    _writer.Write((byte) EncodingKind.Char);
+                    _writer.Write((ushort) (char) value);  // written as ushort because BinaryWriter fails on chars that are unicode surrogates
                 }
                 else if (value.GetType() == typeof(byte))
                 {
-                    _writer.Write((byte)EncodingKind.UInt8);
-                    _writer.Write((byte)value);
+                    _writer.Write((byte) EncodingKind.UInt8);
+                    _writer.Write((byte) value);
                 }
                 else if (value.GetType() == typeof(short))
                 {
-                    _writer.Write((byte)EncodingKind.Int16);
-                    _writer.Write((short)value);
+                    _writer.Write((byte) EncodingKind.Int16);
+                    _writer.Write((short) value);
                 }
                 else if (value.GetType() == typeof(long))
                 {
-                    _writer.Write((byte)EncodingKind.Int64);
-                    _writer.Write((long)value);
+                    _writer.Write((byte) EncodingKind.Int64);
+                    _writer.Write((long) value);
                 }
                 else if (value.GetType() == typeof(sbyte))
                 {
-                    _writer.Write((byte)EncodingKind.Int8);
-                    _writer.Write((sbyte)value);
+                    _writer.Write((byte) EncodingKind.Int8);
+                    _writer.Write((sbyte) value);
                 }
                 else if (value.GetType() == typeof(float))
                 {
-                    _writer.Write((byte)EncodingKind.Float4);
-                    _writer.Write((float)value);
+                    _writer.Write((byte) EncodingKind.Float4);
+                    _writer.Write((float) value);
                 }
                 else if (value.GetType() == typeof(ushort))
                 {
-                    _writer.Write((byte)EncodingKind.UInt16);
-                    _writer.Write((ushort)value);
+                    _writer.Write((byte) EncodingKind.UInt16);
+                    _writer.Write((ushort) value);
                 }
                 else if (value.GetType() == typeof(uint))
                 {
-                    WriteEncodedUInt32((uint)value);
+                    WriteEncodedUInt32((uint) value);
                 }
                 else if (value.GetType() == typeof(ulong))
                 {
-                    _writer.Write((byte)EncodingKind.UInt64);
-                    _writer.Write((ulong)value);
+                    _writer.Write((byte) EncodingKind.UInt64);
+                    _writer.Write((ulong) value);
                 }
                 else
                 {
@@ -236,21 +237,21 @@ namespace Loretta.Utilities
             }
             else if (value.GetType() == typeof(decimal))
             {
-                _writer.Write((byte)EncodingKind.Decimal);
-                _writer.Write((decimal)value);
+                _writer.Write((byte) EncodingKind.Decimal);
+                _writer.Write((decimal) value);
             }
             else if (value.GetType() == typeof(DateTime))
             {
-                _writer.Write((byte)EncodingKind.DateTime);
-                _writer.Write(((DateTime)value).ToBinary());
+                _writer.Write((byte) EncodingKind.DateTime);
+                _writer.Write(((DateTime) value).ToBinary());
             }
             else if (value.GetType() == typeof(string))
             {
-                WriteStringValue((string)value);
+                WriteStringValue((string) value);
             }
             else if (type.IsArray)
             {
-                var instance = (Array)value;
+                var instance = (Array) value;
 
                 if (instance.Rank > 1)
                 {
@@ -280,20 +281,20 @@ namespace Loretta.Utilities
             switch (length)
             {
                 case 0:
-                    _writer.Write((byte)EncodingKind.Array_0);
+                    _writer.Write((byte) EncodingKind.Array_0);
                     break;
                 case 1:
-                    _writer.Write((byte)EncodingKind.Array_1);
+                    _writer.Write((byte) EncodingKind.Array_1);
                     break;
                 case 2:
-                    _writer.Write((byte)EncodingKind.Array_2);
+                    _writer.Write((byte) EncodingKind.Array_2);
                     break;
                 case 3:
-                    _writer.Write((byte)EncodingKind.Array_3);
+                    _writer.Write((byte) EncodingKind.Array_3);
                     break;
                 default:
-                    _writer.Write((byte)EncodingKind.Array);
-                    WriteCompressedUInt((uint)length);
+                    _writer.Write((byte) EncodingKind.Array);
+                    WriteCompressedUInt((uint) length);
                     break;
             }
 
@@ -322,7 +323,7 @@ namespace Loretta.Utilities
         {
             if (value == null)
             {
-                _writer.Write((byte)EncodingKind.Null);
+                _writer.Write((byte) EncodingKind.Null);
                 return;
             }
 
@@ -333,21 +334,21 @@ namespace Loretta.Utilities
         {
             if (v >= 0 && v <= 10)
             {
-                _writer.Write((byte)((int)EncodingKind.Int32_0 + v));
+                _writer.Write((byte) ((int) EncodingKind.Int32_0 + v));
             }
             else if (v >= 0 && v < byte.MaxValue)
             {
-                _writer.Write((byte)EncodingKind.Int32_1Byte);
-                _writer.Write((byte)v);
+                _writer.Write((byte) EncodingKind.Int32_1Byte);
+                _writer.Write((byte) v);
             }
             else if (v >= 0 && v < ushort.MaxValue)
             {
-                _writer.Write((byte)EncodingKind.Int32_2Bytes);
-                _writer.Write((ushort)v);
+                _writer.Write((byte) EncodingKind.Int32_2Bytes);
+                _writer.Write((ushort) v);
             }
             else
             {
-                _writer.Write((byte)EncodingKind.Int32);
+                _writer.Write((byte) EncodingKind.Int32);
                 _writer.Write(v);
             }
         }
@@ -356,21 +357,21 @@ namespace Loretta.Utilities
         {
             if (v >= 0 && v <= 10)
             {
-                _writer.Write((byte)((int)EncodingKind.UInt32_0 + v));
+                _writer.Write((byte) ((int) EncodingKind.UInt32_0 + v));
             }
             else if (v >= 0 && v < byte.MaxValue)
             {
-                _writer.Write((byte)EncodingKind.UInt32_1Byte);
-                _writer.Write((byte)v);
+                _writer.Write((byte) EncodingKind.UInt32_1Byte);
+                _writer.Write((byte) v);
             }
             else if (v >= 0 && v < ushort.MaxValue)
             {
-                _writer.Write((byte)EncodingKind.UInt32_2Bytes);
-                _writer.Write((ushort)v);
+                _writer.Write((byte) EncodingKind.UInt32_2Bytes);
+                _writer.Write((ushort) v);
             }
             else
             {
-                _writer.Write((byte)EncodingKind.UInt32);
+                _writer.Write((byte) EncodingKind.UInt32);
                 _writer.Write(v);
             }
         }
@@ -380,15 +381,17 @@ namespace Loretta.Utilities
         /// </summary>
         private struct WriterReferenceMap
         {
-            private readonly Dictionary<object, int> _valueToIdMap;
+            // PERF: Use segmented collection to avoid Large Object Heap allocations during serialization.
+            // https://github.com/dotnet/roslyn/issues/43401
+            private readonly SegmentedDictionary<object, int> _valueToIdMap;
             private readonly bool _valueEquality;
             private int _nextId;
 
-            private static readonly ObjectPool<Dictionary<object, int>> s_referenceDictionaryPool =
-                new(() => new Dictionary<object, int>(128, ReferenceEqualityComparer.Instance));
+            private static readonly ObjectPool<SegmentedDictionary<object, int>> s_referenceDictionaryPool =
+                new(() => new SegmentedDictionary<object, int>(128, ReferenceEqualityComparer.Instance));
 
-            private static readonly ObjectPool<Dictionary<object, int>> s_valueDictionaryPool =
-                new(() => new Dictionary<object, int>(128));
+            private static readonly ObjectPool<SegmentedDictionary<object, int>> s_valueDictionaryPool =
+                new(() => new SegmentedDictionary<object, int>(128));
 
             public WriterReferenceMap(bool valueEquality)
             {
@@ -397,7 +400,7 @@ namespace Loretta.Utilities
                 _nextId = 0;
             }
 
-            private static ObjectPool<Dictionary<object, int>> GetDictionaryPool(bool valueEquality)
+            private static ObjectPool<SegmentedDictionary<object, int>> GetDictionaryPool(bool valueEquality)
                 => valueEquality ? s_valueDictionaryPool : s_referenceDictionaryPool;
 
             public void Dispose()
@@ -435,12 +438,12 @@ namespace Loretta.Utilities
         {
             if (value <= (byte.MaxValue >> 2))
             {
-                _writer.Write((byte)value);
+                _writer.Write((byte) value);
             }
             else if (value <= (ushort.MaxValue >> 2))
             {
-                byte byte0 = (byte)(((value >> 8) & 0xFFu) | Byte2Marker);
-                byte byte1 = (byte)(value & 0xFFu);
+                byte byte0 = (byte) (((value >> 8) & 0xFFu) | Byte2Marker);
+                byte byte1 = (byte) (value & 0xFFu);
 
                 // high-bytes to low-bytes
                 _writer.Write(byte0);
@@ -448,10 +451,10 @@ namespace Loretta.Utilities
             }
             else if (value <= (uint.MaxValue >> 2))
             {
-                byte byte0 = (byte)(((value >> 24) & 0xFFu) | Byte4Marker);
-                byte byte1 = (byte)((value >> 16) & 0xFFu);
-                byte byte2 = (byte)((value >> 8) & 0xFFu);
-                byte byte3 = (byte)(value & 0xFFu);
+                byte byte0 = (byte) (((value >> 24) & 0xFFu) | Byte4Marker);
+                byte byte1 = (byte) ((value >> 16) & 0xFFu);
+                byte byte2 = (byte) ((value >> 8) & 0xFFu);
+                byte byte3 = (byte) (value & 0xFFu);
 
                 // high-bytes to low-bytes
                 _writer.Write(byte0);
@@ -469,7 +472,7 @@ namespace Loretta.Utilities
         {
             if (value == null)
             {
-                _writer.Write((byte)EncodingKind.Null);
+                _writer.Write((byte) EncodingKind.Null);
             }
             else
             {
@@ -478,17 +481,17 @@ namespace Loretta.Utilities
                     RoslynDebug.Assert(id >= 0);
                     if (id <= byte.MaxValue)
                     {
-                        _writer.Write((byte)EncodingKind.StringRef_1Byte);
-                        _writer.Write((byte)id);
+                        _writer.Write((byte) EncodingKind.StringRef_1Byte);
+                        _writer.Write((byte) id);
                     }
                     else if (id <= ushort.MaxValue)
                     {
-                        _writer.Write((byte)EncodingKind.StringRef_2Bytes);
-                        _writer.Write((ushort)id);
+                        _writer.Write((byte) EncodingKind.StringRef_2Bytes);
+                        _writer.Write((ushort) id);
                     }
                     else
                     {
-                        _writer.Write((byte)EncodingKind.StringRef_4Bytes);
+                        _writer.Write((byte) EncodingKind.StringRef_4Bytes);
                         _writer.Write(id);
                     }
                 }
@@ -501,21 +504,21 @@ namespace Loretta.Utilities
                         // Usual case - the string can be encoded as UTF8:
                         // We can use the UTF8 encoding of the binary writer.
 
-                        _writer.Write((byte)EncodingKind.StringUtf8);
+                        _writer.Write((byte) EncodingKind.StringUtf8);
                         _writer.Write(value);
                     }
                     else
                     {
-                        _writer.Write((byte)EncodingKind.StringUtf16);
+                        _writer.Write((byte) EncodingKind.StringUtf16);
 
                         // This is rare, just allocate UTF16 bytes for simplicity.
-                        byte[] bytes = new byte[(uint)value.Length * sizeof(char)];
+                        byte[] bytes = new byte[(uint) value.Length * sizeof(char)];
                         fixed (char* valuePtr = value)
                         {
-                            Marshal.Copy((IntPtr)valuePtr, bytes, 0, bytes.Length);
+                            Marshal.Copy((IntPtr) valuePtr, bytes, 0, bytes.Length);
                         }
 
-                        WriteCompressedUInt((uint)value.Length);
+                        WriteCompressedUInt((uint) value.Length);
                         _writer.Write(bytes);
                     }
                 }
@@ -529,20 +532,20 @@ namespace Loretta.Utilities
             switch (length)
             {
                 case 0:
-                    _writer.Write((byte)EncodingKind.Array_0);
+                    _writer.Write((byte) EncodingKind.Array_0);
                     break;
                 case 1:
-                    _writer.Write((byte)EncodingKind.Array_1);
+                    _writer.Write((byte) EncodingKind.Array_1);
                     break;
                 case 2:
-                    _writer.Write((byte)EncodingKind.Array_2);
+                    _writer.Write((byte) EncodingKind.Array_2);
                     break;
                 case 3:
-                    _writer.Write((byte)EncodingKind.Array_3);
+                    _writer.Write((byte) EncodingKind.Array_3);
                     break;
                 default:
-                    _writer.Write((byte)EncodingKind.Array);
-                    this.WriteCompressedUInt((uint)length);
+                    _writer.Write((byte) EncodingKind.Array);
+                    this.WriteCompressedUInt((uint) length);
                     break;
             }
 
@@ -568,7 +571,7 @@ namespace Loretta.Utilities
                     // don't blow the stack.  'LongRunning' ensures that we get a dedicated thread
                     // to do this work.  That way we don't end up blocking the threadpool.
                     var task = Task.Factory.StartNew(
-                        a => WriteArrayValues((Array)a!),
+                        a => WriteArrayValues((Array) a!),
                         array,
                         _cancellationToken,
                         TaskCreationOptions.LongRunning,
@@ -608,22 +611,22 @@ namespace Loretta.Utilities
             // optimization for type underlying binary writer knows about
             if (type == typeof(byte))
             {
-                _writer.Write((byte[])instance);
+                _writer.Write((byte[]) instance);
             }
             else if (type == typeof(char))
             {
-                _writer.Write((char[])instance);
+                _writer.Write((char[]) instance);
             }
             else if (type == typeof(string))
             {
                 // optimization for string which object writer has
                 // its own optimization to reduce repeated string
-                WriteStringArrayElements((string[])instance);
+                WriteStringArrayElements((string[]) instance);
             }
             else if (type == typeof(bool))
             {
                 // optimization for bool array
-                WriteBooleanArrayElements((bool[])instance);
+                WriteBooleanArrayElements((bool[]) instance);
             }
             else
             {
@@ -631,34 +634,34 @@ namespace Loretta.Utilities
                 switch (kind)
                 {
                     case EncodingKind.Int8:
-                        WriteInt8ArrayElements((sbyte[])instance);
+                        WriteInt8ArrayElements((sbyte[]) instance);
                         return;
                     case EncodingKind.Int16:
-                        WriteInt16ArrayElements((short[])instance);
+                        WriteInt16ArrayElements((short[]) instance);
                         return;
                     case EncodingKind.Int32:
-                        WriteInt32ArrayElements((int[])instance);
+                        WriteInt32ArrayElements((int[]) instance);
                         return;
                     case EncodingKind.Int64:
-                        WriteInt64ArrayElements((long[])instance);
+                        WriteInt64ArrayElements((long[]) instance);
                         return;
                     case EncodingKind.UInt16:
-                        WriteUInt16ArrayElements((ushort[])instance);
+                        WriteUInt16ArrayElements((ushort[]) instance);
                         return;
                     case EncodingKind.UInt32:
-                        WriteUInt32ArrayElements((uint[])instance);
+                        WriteUInt32ArrayElements((uint[]) instance);
                         return;
                     case EncodingKind.UInt64:
-                        WriteUInt64ArrayElements((ulong[])instance);
+                        WriteUInt64ArrayElements((ulong[]) instance);
                         return;
                     case EncodingKind.Float4:
-                        WriteFloat4ArrayElements((float[])instance);
+                        WriteFloat4ArrayElements((float[]) instance);
                         return;
                     case EncodingKind.Float8:
-                        WriteFloat8ArrayElements((double[])instance);
+                        WriteFloat8ArrayElements((double[]) instance);
                         return;
                     case EncodingKind.Decimal:
-                        WriteDecimalArrayElements((decimal[])instance);
+                        WriteDecimalArrayElements((decimal[]) instance);
                         return;
                     default:
                         throw ExceptionUtilities.UnexpectedValue(kind);
@@ -773,25 +776,25 @@ namespace Loretta.Utilities
         private void WritePrimitiveType(Type type, EncodingKind kind)
         {
             RoslynDebug.Assert(s_typeMap[type] == kind);
-            _writer.Write((byte)kind);
+            _writer.Write((byte) kind);
         }
 
         public void WriteType(Type type)
         {
-            _writer.Write((byte)EncodingKind.Type);
+            _writer.Write((byte) EncodingKind.Type);
             this.WriteString(type.AssemblyQualifiedName);
         }
 
         private void WriteKnownType(Type type)
         {
-            _writer.Write((byte)EncodingKind.Type);
+            _writer.Write((byte) EncodingKind.Type);
             this.WriteInt32(_binderSnapshot.GetTypeId(type));
         }
 
         public void WriteEncoding(Encoding? encoding)
         {
             var kind = GetEncodingKind(encoding);
-            WriteByte((byte)kind);
+            WriteByte((byte) kind);
 
             if (kind == EncodingKind.EncodingName)
             {
@@ -853,17 +856,17 @@ namespace Loretta.Utilities
                 RoslynDebug.Assert(id >= 0);
                 if (id <= byte.MaxValue)
                 {
-                    _writer.Write((byte)EncodingKind.ObjectRef_1Byte);
-                    _writer.Write((byte)id);
+                    _writer.Write((byte) EncodingKind.ObjectRef_1Byte);
+                    _writer.Write((byte) id);
                 }
                 else if (id <= ushort.MaxValue)
                 {
-                    _writer.Write((byte)EncodingKind.ObjectRef_2Bytes);
-                    _writer.Write((ushort)id);
+                    _writer.Write((byte) EncodingKind.ObjectRef_2Bytes);
+                    _writer.Write((ushort) id);
                 }
                 else
                 {
-                    _writer.Write((byte)EncodingKind.ObjectRef_4Bytes);
+                    _writer.Write((byte) EncodingKind.ObjectRef_4Bytes);
                     _writer.Write(id);
                 }
             }
@@ -888,7 +891,7 @@ namespace Loretta.Utilities
                     // don't blow the stack.  'LongRunning' ensures that we get a dedicated thread
                     // to do this work.  That way we don't end up blocking the threadpool.
                     var task = Task.Factory.StartNew(
-                        obj => WriteObjectWorker((IObjectWritable)obj!),
+                        obj => WriteObjectWorker((IObjectWritable) obj!),
                         writable,
                         _cancellationToken,
                         TaskCreationOptions.LongRunning,
@@ -918,7 +921,7 @@ namespace Loretta.Utilities
             _objectReferenceMap.Add(writable, writable.ShouldReuseInSerialization);
 
             // emit object header up front
-            _writer.Write((byte)EncodingKind.Object);
+            _writer.Write((byte) EncodingKind.Object);
 
             // Directly write out the type-id for this object.  i.e. no need to write out the 'Type'
             // tag since we just wrote out the 'Object' tag
@@ -966,11 +969,11 @@ namespace Loretta.Utilities
                 { typeof(decimal), EncodingKind.Decimal },
             };
 
-            var temp = new Type[(int)EncodingKind.Last];
+            var temp = new Type[(int) EncodingKind.Last];
 
             foreach (var kvp in s_typeMap)
             {
-                temp[(int)kvp.Value] = kvp.Key;
+                temp[(int) kvp.Value] = kvp.Key;
             }
 
             s_reverseTypeMap = ImmutableArray.Create(temp);

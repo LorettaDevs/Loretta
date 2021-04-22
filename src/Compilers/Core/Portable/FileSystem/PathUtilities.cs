@@ -435,6 +435,35 @@ namespace Loretta.Utilities
             return root + relativePath;
         }
 
+        /// <summary>
+        /// Combines paths with the same semantics as <see cref="Path.Combine(string, string)"/>
+        /// but does not throw on null paths or paths with invalid characters.
+        /// </summary>
+        /// <param name="root">First path: absolute, relative, or null.</param>
+        /// <param name="path">Second path: absolute, relative, or null.</param>
+        /// <returns>
+        /// The combined paths. If <paramref name="path"/> contains an absolute path, returns <paramref name="path"/>.
+        /// </returns>
+        /// <remarks>
+        /// Relative and absolute paths treated the same as <see cref="Path.Combine(string, string)"/>.
+        /// </remarks>
+        [return: NotNullIfNotNull("path")]
+        public static string? CombinePaths(string? root, string? path)
+        {
+            if (RoslynString.IsNullOrEmpty(root))
+            {
+                return path;
+            }
+
+            if (RoslynString.IsNullOrEmpty(path))
+            {
+                return root;
+            }
+
+            return IsAbsolute(path) ? path : CombinePathsUnchecked(root, path);
+        }
+
+
         private static string RemoveTrailingDirectorySeparator(string path)
         {
             if (path.Length > 0 && IsDirectorySeparator(path[path.Length - 1]))
@@ -646,7 +675,7 @@ namespace Loretta.Utilities
                 {
                     if (!IsDirectorySeparator(ch))
                     {
-                        hc = Hash.Combine((int)char.ToUpperInvariant(ch), hc);
+                        hc = Hash.Combine((int) char.ToUpperInvariant(ch), hc);
                     }
                 }
             }

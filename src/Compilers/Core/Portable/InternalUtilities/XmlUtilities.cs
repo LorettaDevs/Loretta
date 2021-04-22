@@ -26,7 +26,7 @@ namespace Loretta.Utilities
             {
                 XContainer temp = new XElement("temp");
                 temp.Add(node);
-                copy = temp.LastNode;
+                copy = temp.LastNode!;
                 temp.RemoveNodes();
             }
 

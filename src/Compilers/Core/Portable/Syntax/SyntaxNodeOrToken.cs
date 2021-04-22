@@ -410,7 +410,7 @@ namespace Loretta.CodeAnalysis
 
         public SyntaxNodeOrToken WithLeadingTrivia(params SyntaxTrivia[] trivia)
         {
-            return WithLeadingTrivia((IEnumerable<SyntaxTrivia>)trivia);
+            return WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
         public SyntaxNodeOrToken WithTrailingTrivia(IEnumerable<SyntaxTrivia> trivia)
@@ -430,7 +430,7 @@ namespace Loretta.CodeAnalysis
 
         public SyntaxNodeOrToken WithTrailingTrivia(params SyntaxTrivia[] trivia)
         {
-            return WithTrailingTrivia((IEnumerable<SyntaxTrivia>)trivia);
+            return WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
         /// <summary>
@@ -615,7 +615,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxNodeOrToken WithAdditionalAnnotations(params SyntaxAnnotation[] annotations)
         {
-            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>)annotations);
+            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
         }
 
         /// <summary>
@@ -646,7 +646,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxNodeOrToken WithoutAnnotations(params SyntaxAnnotation[] annotations)
         {
-            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>)annotations);
+            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
         }
 
         /// <summary>
@@ -756,6 +756,12 @@ namespace Loretta.CodeAnalysis
 
             return (thisUnderlying == otherUnderlying) || (thisUnderlying != null && thisUnderlying.IsEquivalentTo(otherUnderlying));
         }
+
+        /// <summary>
+        /// See <see cref="SyntaxNode.IsIncrementallyIdenticalTo"/> and <see cref="SyntaxToken.IsIncrementallyIdenticalTo"/>.
+        /// </summary>
+        public bool IsIncrementallyIdenticalTo(SyntaxNodeOrToken other)
+            => this.UnderlyingNode != null && this.UnderlyingNode == other.UnderlyingNode;
 
         /// <summary>
         /// Returns a new <see cref="SyntaxNodeOrToken"/> that wraps the supplied token.
