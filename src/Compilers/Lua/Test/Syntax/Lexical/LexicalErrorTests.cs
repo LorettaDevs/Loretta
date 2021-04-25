@@ -344,6 +344,7 @@ local str4 = 'hello\xFFthere'
         }
 
         [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
         public void Lexer_EmitsWarning_ForExoticLineBreak()
         {
             const string source = "local a = 1\n\rlocal b = 2\n\rlocal c = 3";
@@ -357,11 +358,13 @@ local str4 = 'hello\xFFthere'
         }
 
         [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
         public void Lexer_EmitsDiagnosticsWhen_WhitespaceEscapesAreFound_And_LuaSyntaxOptionsAcceptWhitespaceEscapeIsFalse()
         {
             const string source = "local a = \"aaa\\z    aaaa\"\r\n" +
                 "local b = 'aaa\\z    aaaa'";
-            ParseAndValidate(source, null,
+            var options = LuaSyntaxOptions.All.With(acceptWhitespaceEscape: false);
+            ParseAndValidate(source, options,
                 // (1,15): error LUA0023: The whitespace escape ('\z') is not supported in this lua version.
                 // local a = "aaa\z    aaaa"
                 Diagnostic(ErrorCode.ERR_WhitespaceEscapeNotSupportedInVersion, @"\z    ").WithLocation(1, 15),
