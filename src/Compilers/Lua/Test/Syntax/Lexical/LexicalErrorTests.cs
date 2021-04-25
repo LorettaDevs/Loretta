@@ -355,5 +355,19 @@ local str4 = 'hello\xFFthere'
                 // local b = 2
                 Diagnostic(ErrorCode.WRN_LineBreakMayAffectErrorReporting, "\n\r").WithLocation(3, 12));
         }
+
+        [Fact]
+        public void Lexer_EmitsDiagnosticsWhen_WhitespaceEscapesAreFound_And_LuaSyntaxOptionsAcceptWhitespaceEscapeIsFalse()
+        {
+            const string source = "local a = \"aaa\\z    aaaa\"\r\n" +
+                "local b = 'aaa\\z    aaaa'";
+            ParseAndValidate(source, null,
+                // (1,15): error LUA0023: The whitespace escape ('\z') is not supported in this lua version.
+                // local a = "aaa\z    aaaa"
+                Diagnostic(ErrorCode.ERR_WhitespaceEscapeNotSupportedInVersion, @"\z    ").WithLocation(1, 15),
+                // (2,15): error LUA0023: The whitespace escape ('\z') is not supported in this lua version.
+                // local b = 'aaa\z    aaaa'
+                Diagnostic(ErrorCode.ERR_WhitespaceEscapeNotSupportedInVersion, @"\z    ").WithLocation(2, 15));
+        }
     }
 }
