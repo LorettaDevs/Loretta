@@ -331,6 +331,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The whitespace escape (&apos;\z&apos;) is not supported in this lua version..
+        /// </summary>
+        internal static string ERR_WhitespaceEscapeNotSupportedInVersion {
+            get {
+                return ResourceManager.GetString("ERR_WhitespaceEscapeNotSupportedInVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This method can only be used to create tokens - {0} is not a token kind..
         /// </summary>
         internal static string ThisMethodCanOnlyBeUsedToCreateTokens {

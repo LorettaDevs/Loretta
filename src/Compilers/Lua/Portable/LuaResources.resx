@@ -211,6 +211,9 @@
   <data name="ERR_UnfinishedString" xml:space="preserve">
     <value>Unfinished string</value>
   </data>
+  <data name="ERR_WhitespaceEscapeNotSupportedInVersion" xml:space="preserve">
+    <value>The whitespace escape ('\z') is not supported in this lua version.</value>
+  </data>
   <data name="ThisMethodCanOnlyBeUsedToCreateTokens" xml:space="preserve">
     <value>This method can only be used to create tokens - {0} is not a token kind.</value>
     <comment>{0} is the token kind</comment>
