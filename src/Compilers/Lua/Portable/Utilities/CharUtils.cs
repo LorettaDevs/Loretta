@@ -38,7 +38,6 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
         /// in the provided (sorted and flattened) list.
         /// </summary>
         /// <param name="idx">The index found by binary search.</param>
-        /// 
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool InnerIsInRangesIndexCheck(int idx) =>
