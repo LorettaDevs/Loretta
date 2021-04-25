@@ -28,6 +28,7 @@
         ERR_DoubleOverflow = 20,
         ERR_BitwiseOperatorsNotSupportedInVersion = 21,
         WRN_LineBreakMayAffectErrorReporting = 22,
+        ERR_WhitespaceEscapeNotSupportedInVersion = 23,
 
         // Parser Errors
         ERR_IdentifierExpectedKW = 1000,
