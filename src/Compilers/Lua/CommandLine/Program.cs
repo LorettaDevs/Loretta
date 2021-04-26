@@ -49,23 +49,43 @@ namespace Loretta.CLI
             }
         }
 
+        #region Settings
+
+        [Command("@cd")]
+        public static void SetPrintCurrentDir(string value)
+        {
+            switch (value.ToLowerInvariant())
+            {
+                case "true":
+                case "on":
+                case "yes":
+                    s_printCurrentDir = true;
+                    break;
+
+                case "false":
+                case "off":
+                case "no":
+                    s_printCurrentDir = false;
+                    break;
+
+                default:
+                    s_logger.LogError("Invalid print current dir setting: {0}", value);
+                    break;
+            }
+        }
+
         [Command("s"), Command("set")]
         public static void Set(string key, string value)
         {
             switch (key.ToLower().Replace("-", ""))
             {
                 case "printcurrentdir":
-                    s_printCurrentDir = toBool(value);
+                    SetPrintCurrentDir(value);
                     break;
             }
-
-            static bool toBool(string str) => str switch
-            {
-                "true" or "on" or "yes" => true,
-                "false" or "off" or "no" => false,
-                _ => throw new InvalidOperationException("Unrecognized value.")
-            };
         }
+
+        #endregion Settings
 
         [Command("q"), Command("quit"), Command("exit")]
         public static void Quit() => s_shouldRun = false;
