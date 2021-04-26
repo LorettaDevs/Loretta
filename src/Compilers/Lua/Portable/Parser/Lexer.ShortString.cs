@@ -132,11 +132,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             break;
 
                             default:
-                            {
                                 // Skip the character after the escape.
                                 _reader.Position += 1;
                                 AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_InvalidStringEscape);
-                            }
                             break;
                         }
                     }
