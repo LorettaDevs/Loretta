@@ -62,7 +62,7 @@ namespace Loretta.CLI
             static bool toBool(string str) => str switch
             {
                 "true" or "on" or "yes" => true,
-                "flase" or "off" or "no" => false,
+                "false" or "off" or "no" => false,
                 _ => throw new InvalidOperationException("Unrecognized value.")
             };
         }
