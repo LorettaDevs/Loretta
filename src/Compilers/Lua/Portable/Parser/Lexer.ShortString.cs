@@ -255,18 +255,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             string parseUnicodeEscape(int start)
             {
-                if (_reader.Peek() is not '{')
-                    AddError(start, _reader.Position - start, ErrorCode.ERR_UnicodeEscapeMissingOpenBrace);
-                else
+                var missingOpeningBrace = _reader.Peek() is not '{';
+                if (!missingOpeningBrace)
                     _reader.Position += 1;
 
                 var codepoint = parseHexadecimalNumber(start, 16, ErrorCode.ERR_HexDigitExpected);
 
-                if (_reader.Peek() is not '}')
-                    AddError(start, _reader.Position - start, ErrorCode.ERR_UnicodeEscapeMissingCloseBrace);
-                else
+                var missingClosingBrace = _reader.Peek() is not '}';
+                if (!missingClosingBrace)
                     _reader.Position += 1;
 
+                if (missingOpeningBrace)
+                    AddError(start, _reader.Position - start, ErrorCode.ERR_UnicodeEscapeMissingOpenBrace);
+                if (missingClosingBrace)
+                    AddError(start, _reader.Position - start, ErrorCode.ERR_UnicodeEscapeMissingCloseBrace);
                 if (codepoint > 0x10FFFF)
                 {
                     AddError(start, _reader.Position - start, ErrorCode.ERR_EscapeTooLarge, "10FFFF");
