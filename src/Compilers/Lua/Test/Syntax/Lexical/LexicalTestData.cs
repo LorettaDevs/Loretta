@@ -105,9 +105,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
             #region Strings
 
             const string shortStringContentText = "hi\\\n\\\r\\\r\n\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\"\\0\\10"
-                + "\\255\\xF\\xFF\\z    \t\t\r\n\\\\a";
+                + "\\255\\xF\\xFF\\z    \t\t\r\n\\t\\r\\n\\u{F}\\u{FF}\\u{FFF}\\u{D800}\\u{10FFFF}";
             const string shortStringContentValue = "hi\n\r\r\n\a\b\f\n\r\t\v\\'\"\0\xA"
-                + "\xFF\xF\xFF\\a";
+                + "\xFF\xF\xFF\t\r\n\u000F\u00FF\u0FFF\uD800\U0010FFFF";
 
             // Short strings
             foreach (var quote in new[] { '\'', '"' })
