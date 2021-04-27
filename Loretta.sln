@@ -65,6 +65,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{4444A40B-FAEF-4F74-BE00-99C53E9335BC}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build-and-test.yml = .github\workflows\build-and-test.yml
+		.github\workflows\long-lexer-tests.yml = .github\workflows\long-lexer-tests.yml
 		.github\workflows\publish.yml = .github\workflows\publish.yml
 	EndProjectSection
 EndProject
