@@ -4,7 +4,7 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    name: Build and Test on ${{ matrix.os }}
+    name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -41,5 +41,13 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
-      - name: Test
+      - name: Verify if Lexer has Changed
+        uses: tj-actions/verify-changed-files@v6
+        id: verify_lexer_changed
+        with:
+          files: |
+            Lexer(\..*)?.cs$
+      - name: Run Full Lexer Tests
+        env:
+          LORETTA_LONG_LEXER_TESTS: ${{ steps.verify_lexer_changed.outputs.files_changed }}
         run: dotnet test --configuration Release --no-build
