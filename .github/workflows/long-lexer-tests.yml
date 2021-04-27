@@ -3,10 +3,12 @@ name: Long Running Lexer Tests
 on:
   push:
     paths:
-      - '**/Lexer*.cs'
+      - '**/Parser/Lexer*.cs'
+      - '**/Test/Syntax/Lexical/**'
   pull_request:
     paths:
-      - '**/Lexer*.cs'
+      - '**/Parser/Lexer*.cs'
+      - '**/Test/Syntax/Lexical/**'
   workflow_dispatch:
 
 jobs:
