@@ -124,7 +124,7 @@
     <value>Bad character input: '{0}'</value>
   </data>
   <data name="ERR_BadDocumentationMode" xml:space="preserve">
-    <value>Provided documentation mode is unsupported or invalid: '{0}'.</value>
+    <value>Provided documentation mode is unsupported or invalid: '{0}'</value>
     <comment>0 is documentation mode</comment>
   </data>
   <data name="ERR_BinaryNumericLiteralNotSupportedInVersion" xml:space="preserve">
@@ -143,7 +143,14 @@
     <value>) expected</value>
   </data>
   <data name="ERR_DoubleOverflow" xml:space="preserve">
-    <value>Constant represents a value either too large or too small for a double precision floating-point number.</value>
+    <value>Constant represents a value either too large or too small for a double precision floating-point number</value>
+  </data>
+  <data name="ERR_EscapeTooLarge" xml:space="preserve">
+    <value>Escape is too large, the limit is {0}</value>
+    <comment>{0} is the numerical limit</comment>
+  </data>
+  <data name="ERR_HexDigitExpected" xml:space="preserve">
+    <value>Hexadecimal digit expected</value>
   </data>
   <data name="ERR_HexFloatLiteralNotSupportedInVersion" xml:space="preserve">
     <value>Hexadecimal floating point numeric literals are not supported in this lua version</value>
@@ -211,8 +218,17 @@
   <data name="ERR_UnfinishedString" xml:space="preserve">
     <value>Unfinished string</value>
   </data>
+  <data name="ERR_UnicodeEscapeMissingCloseBrace" xml:space="preserve">
+    <value>Unicode escape must have a closing brace ('}') after the hexadecimal number</value>
+  </data>
+  <data name="ERR_UnicodeEscapeMissingOpenBrace" xml:space="preserve">
+    <value>Unicode escape must have an opening brace ('{') after '\u'</value>
+  </data>
+  <data name="ERR_UnicodeEscapesNotSupportedLuaInVersion" xml:space="preserve">
+    <value>Unicode escapes are not supported in this lua version</value>
+  </data>
   <data name="ERR_WhitespaceEscapeNotSupportedInVersion" xml:space="preserve">
-    <value>The whitespace escape ('\z') is not supported in this lua version.</value>
+    <value>The whitespace escape ('\z') is not supported in this lua version</value>
   </data>
   <data name="ThisMethodCanOnlyBeUsedToCreateTokens" xml:space="preserve">
     <value>This method can only be used to create tokens - {0} is not a token kind.</value>
