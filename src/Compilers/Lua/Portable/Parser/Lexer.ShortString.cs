@@ -273,6 +273,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     codepoint = 0x10FFFF;
                 }
 
+                // Return the codepoint itself if it's in the BMP.
+                // NOTE: It *is* technically incorrect to consider a surrogate
+                // an Unicode codepoint but Lua accepts it so we do it as well.
+                if (codepoint <= 0xFFFF)
+                    return char.ToString((char) codepoint);
+
                 return char.ConvertFromUtf32((int) codepoint);
             }
         }
