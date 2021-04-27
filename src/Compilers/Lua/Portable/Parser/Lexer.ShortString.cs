@@ -227,12 +227,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     if (CharUtils.IsDecimal(peek))
                     {
                         _reader.Position += 1;
-                        num = (byte) ((num << 4) | (uint) (peek - '0'));
+                        num = (num << 4) | (uint) (peek - '0');
                     }
                     else if (CharUtils.IsHexadecimal(peek))
                     {
                         _reader.Position += 1;
-                        num = (byte) ((num << 4) | (uint) (10 + CharUtils.AsciiLowerCase(peek) - 'a'));
+                        num = (num << 4) | (uint) (10 + CharUtils.AsciiLowerCase(peek) - 'a');
                     }
                     else
                     {
