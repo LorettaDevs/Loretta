@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Loretta.CodeAnalysis.Lua.Utilities;
+﻿using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
@@ -122,7 +121,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             case 'x':
                             {
                                 _reader.Position += 1;
-                                var parsedCharInteger = parseHexadecimalInteger(escapeStart);
+                                var parsedCharInteger = parseHexadecimalEscapeInteger(escapeStart);
                                 if (parsedCharInteger != char.MaxValue)
                                     _builder.Append(parsedCharInteger);
 
@@ -131,11 +130,22 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             }
                             break;
 
+                            case 'u':
+                            {
+                                _reader.Position += 1;
+                                var parsed = parseUnicodeEscape(escapeStart);
+                                _builder.Append(parsed);
+
+                                if (!Options.SyntaxOptions.AcceptUnicodeEscape)
+                                    AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_UnicodeEscapesNotSupportedLuaInVersion);
+                            }
+                            break;
+
                             default:
                                 // Skip the character after the escape.
                                 _reader.Position += 1;
                                 AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_InvalidStringEscape);
-                            break;
+                                break;
                         }
                     }
                     break;
@@ -207,22 +217,22 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 return (char) num;
             }
 
-            char parseHexadecimalInteger(int start)
+            ulong parseHexadecimalNumber(int start, int maxDigits, ErrorCode lessThanZeroErrorCode)
             {
                 var readChars = 0;
-                var num = (byte) 0;
-                while (readChars < 2)
+                var num = 0L;
+                while (readChars < maxDigits)
                 {
                     var peek = _reader.Peek().GetValueOrDefault();
                     if (CharUtils.IsDecimal(peek))
                     {
                         _reader.Position += 1;
-                        num = (byte) ((num << 4) | (peek - '0'));
+                        num = (byte) ((num << 4) | (uint) (peek - '0'));
                     }
                     else if (CharUtils.IsHexadecimal(peek))
                     {
                         _reader.Position += 1;
-                        num = (byte) ((num << 4) | (10 + CharUtils.AsciiLowerCase(peek) - 'a'));
+                        num = (byte) ((num << 4) | (uint) (10 + CharUtils.AsciiLowerCase(peek) - 'a'));
                     }
                     else
                     {
@@ -233,11 +243,37 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 if (readChars < 1)
                 {
-                    AddError(start, _reader.Position - start, ErrorCode.ERR_InvalidStringEscape);
-                    return char.MaxValue;
+                    AddError(start, _reader.Position - start, lessThanZeroErrorCode);
+                    return 0UL;
                 }
 
-                return (char) num;
+                return (ulong) num;
+            }
+
+            char parseHexadecimalEscapeInteger(int start) =>
+                (char) parseHexadecimalNumber(start, 2, ErrorCode.ERR_InvalidStringEscape);
+
+            string parseUnicodeEscape(int start)
+            {
+                if (_reader.Peek() is not '{')
+                    AddError(start, _reader.Position - start, ErrorCode.ERR_UnicodeEscapeMissingOpenBrace);
+                else
+                    _reader.Position += 1;
+
+                var codepoint = parseHexadecimalNumber(start, 16, ErrorCode.ERR_HexDigitExpected);
+
+                if (_reader.Peek() is not '}')
+                    AddError(start, _reader.Position - start, ErrorCode.ERR_UnicodeEscapeMissingCloseBrace);
+                else
+                    _reader.Position += 1;
+
+                if (codepoint > 0x10FFFF)
+                {
+                    AddError(start, _reader.Position - start, ErrorCode.ERR_EscapeTooLarge, "10FFFF");
+                    codepoint = 0x10FFFF;
+                }
+
+                return char.ConvertFromUtf32((int) codepoint);
             }
         }
     }
