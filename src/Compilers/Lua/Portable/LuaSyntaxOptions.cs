@@ -31,6 +31,7 @@ namespace Loretta.CodeAnalysis.Lua
             useLuaJitIdentifierRules: false,
             acceptBitwiseOperators: false,
             acceptWhitespaceEscape: false,
+            acceptUnicodeEscape: false,
             continueType: ContinueType.None);
 
         /// <summary>
@@ -47,12 +48,13 @@ namespace Loretta.CodeAnalysis.Lua
         /// The Lua 5.3 preset.
         /// </summary>
         public static readonly LuaSyntaxOptions Lua53 = Lua52.With(
-            acceptBitwiseOperators: true);
+            acceptBitwiseOperators: true,
+            acceptUnicodeEscape: true);
 
         /// <summary>
-        /// The LuaJIT preset.
+        /// The LuaJIT 2.0 preset.
         /// </summary>
-        public static readonly LuaSyntaxOptions LuaJIT = new LuaSyntaxOptions(
+        public static readonly LuaSyntaxOptions LuaJIT20 = new LuaSyntaxOptions(
             acceptBinaryNumbers: false,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: false,
@@ -66,13 +68,21 @@ namespace Loretta.CodeAnalysis.Lua
             acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: true,
             acceptBitwiseOperators: false,
-            acceptWhitespaceEscape: false,
+            acceptWhitespaceEscape: true,
+            acceptUnicodeEscape: false,
             continueType: ContinueType.None);
+
+        /// <summary>
+        /// The LuaJIT 2.1-beta3 preset.
+        /// </summary>
+        public static readonly LuaSyntaxOptions LuaJIT21 = LuaJIT20.With(
+            acceptBinaryNumbers: true,
+            acceptUnicodeEscape: true);
 
         /// <summary>
         /// The GLua preset.
         /// </summary>
-        public static readonly LuaSyntaxOptions GMod = LuaJIT.With(
+        public static readonly LuaSyntaxOptions GMod = LuaJIT20.With(
             acceptCCommentSyntax: true,
             acceptCBooleanOperators: true,
             continueType: ContinueType.Keyword);
@@ -95,6 +105,7 @@ namespace Loretta.CodeAnalysis.Lua
             useLuaJitIdentifierRules: false,
             acceptBitwiseOperators: true,
             acceptWhitespaceEscape: true,
+            acceptUnicodeEscape: true,
             continueType: ContinueType.ContextualKeyword);
 
         /// <summary>
@@ -116,6 +127,7 @@ namespace Loretta.CodeAnalysis.Lua
             useLuaJitIdentifierRules: true,
             acceptBitwiseOperators: true,
             acceptWhitespaceEscape: true,
+            acceptUnicodeEscape: true,
             continueType: ContinueType.ContextualKeyword);
 
         /// <summary>
@@ -125,7 +137,9 @@ namespace Loretta.CodeAnalysis.Lua
         {
             Lua51,
             Lua52,
-            LuaJIT,
+            Lua53,
+            LuaJIT20,
+            LuaJIT21,
             GMod,
             Roblox,
             All
@@ -148,6 +162,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="useLuaJitIdentifierRules"><inheritdoc cref="UseLuaJitIdentifierRules" path="/summary" /></param>
         /// <param name="acceptBitwiseOperators"><inheritdoc cref="AcceptBitwiseOperators" path="/summary"/></param>
         /// <param name="acceptWhitespaceEscape"><inheritdoc cref="AcceptWhitespaceEscape" path="/summary"/></param>
+        /// <param name="acceptUnicodeEscape"><inheritdoc cref="AcceptUnicodeEscape" path="/summary"/></param>
         /// <param name="continueType"><inheritdoc cref="ContinueType" path="/summary" /></param>
         public LuaSyntaxOptions(
             bool acceptBinaryNumbers,
@@ -164,6 +179,7 @@ namespace Loretta.CodeAnalysis.Lua
             bool useLuaJitIdentifierRules,
             bool acceptBitwiseOperators,
             bool acceptWhitespaceEscape,
+            bool acceptUnicodeEscape,
             ContinueType continueType)
         {
             AcceptBinaryNumbers = acceptBinaryNumbers;
@@ -180,6 +196,7 @@ namespace Loretta.CodeAnalysis.Lua
             UseLuaJitIdentifierRules = useLuaJitIdentifierRules;
             AcceptBitwiseOperators = acceptBitwiseOperators;
             AcceptWhitespaceEscape = acceptWhitespaceEscape;
+            AcceptUnicodeEscape = acceptUnicodeEscape;
             ContinueType = continueType;
         }
 
@@ -262,6 +279,11 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptWhitespaceEscape { get; }
 
         /// <summary>
+        /// Whether to <b>not</b> error when encountering Unicode (<c>\u{XXX}</c>) escapes.
+        /// </summary>
+        public bool AcceptUnicodeEscape { get; }
+
+        /// <summary>
         /// The type of continue to be recognized by the parser.
         /// </summary>
         public ContinueType ContinueType { get; }
@@ -325,6 +347,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// <inheritdoc cref="AcceptWhitespaceEscape" path="/summary"/> If None uses the value of
         /// <see cref="AcceptWhitespaceEscape"/>.
         /// </param>
+        /// <param name="acceptUnicodeEscape">
+        /// <inheritdoc cref="AcceptUnicodeEscape" path="/summary"/> If None uses the value of
+        /// <see cref="AcceptUnicodeEscape"/>.
+        /// </param>
         /// <param name="continueType">
         /// <inheritdoc cref="ContinueType" path="/summary" /> If None uses the value of <see
         /// cref="ContinueType" />.
@@ -345,6 +371,7 @@ namespace Loretta.CodeAnalysis.Lua
             Option<bool> useLuaJitIdentifierRules = default,
             Option<bool> acceptBitwiseOperators = default,
             Option<bool> acceptWhitespaceEscape = default,
+            Option<bool> acceptUnicodeEscape = default,
             Option<ContinueType> continueType = default) =>
             new LuaSyntaxOptions(
                 acceptBinaryNumbers.UnwrapOr(AcceptBinaryNumbers),
@@ -361,6 +388,7 @@ namespace Loretta.CodeAnalysis.Lua
                 useLuaJitIdentifierRules.UnwrapOr(UseLuaJitIdentifierRules),
                 acceptBitwiseOperators.UnwrapOr(AcceptBitwiseOperators),
                 acceptWhitespaceEscape.UnwrapOr(AcceptWhitespaceEscape),
+                acceptUnicodeEscape.UnwrapOr(AcceptUnicodeEscape),
                 continueType.UnwrapOr(ContinueType));
 
         /// <inheritdoc/>
@@ -424,7 +452,7 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 return "Lua 5.3";
             }
-            else if (this == LuaJIT)
+            else if (this == LuaJIT20)
             {
                 return "LuaJIT";
             }
