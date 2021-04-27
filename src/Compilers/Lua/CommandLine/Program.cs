@@ -124,7 +124,7 @@ namespace Loretta.CLI
         {
             Lua51,
             Lua52,
-            Lua53
+            Lua53,
             LuaJIT20,
             LuaJIT21,
             GMod,
