@@ -372,5 +372,47 @@ local str4 = 'hello\xFFthere'
                 // local b = 'aaa\z    aaaa'
                 Diagnostic(ErrorCode.ERR_WhitespaceEscapeNotSupportedInVersion, @"\z    ").WithLocation(2, 15));
         }
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsWhen_InvalidUnicodeEscapesAreFound()
+        {
+            const string source = "local a = '\\u{}'\r\nlocal b = '\\uFEBF}'\r\nlocal c = '\\u{FEBF'\r\nlocal d = '\\uFEBF'\r\nlocal e = '\\u{1100000}'";
+            ParseAndValidate(source, null,
+                // (1,12): error LUA0027: Hexadecimal digit expected
+                // local a = '\u{}'
+                Diagnostic(ErrorCode.ERR_HexDigitExpected, @"\u{").WithLocation(1, 12),
+                // (2,12): error LUA0024: Unicode escape must have an opening brace ('{') after '\u'
+                // local b = '\uFEBF}'
+                Diagnostic(ErrorCode.ERR_UnicodeEscapeMissingOpenBrace, @"\uFEBF}").WithLocation(2, 12),
+                // (3,12): error LUA0025: Unicode escape must have a closing brace ('}') after the hexadecimal number
+                // local c = '\u{FEBF'
+                Diagnostic(ErrorCode.ERR_UnicodeEscapeMissingCloseBrace, @"\u{FEBF").WithLocation(3, 12),
+                // (4,12): error LUA0024: Unicode escape must have an opening brace ('{') after '\u'
+                // local d = '\uFEBF'
+                Diagnostic(ErrorCode.ERR_UnicodeEscapeMissingOpenBrace, @"\uFEBF").WithLocation(4, 12),
+                // (4,12): error LUA0025: Unicode escape must have a closing brace ('}') after the hexadecimal number
+                // local d = '\uFEBF'
+                Diagnostic(ErrorCode.ERR_UnicodeEscapeMissingCloseBrace, @"\uFEBF").WithLocation(4, 12),
+                // (5,12): error LUA0026: Escape is too large, the limit is 10FFFF
+                // local e = '\u{1100000}'
+                Diagnostic(ErrorCode.ERR_EscapeTooLarge, @"\u{1100000}").WithArguments("10FFFF").WithLocation(5, 12));
+        }
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsWhen_UnicodeEscapesAreFound_And_LuaSyntaxOptionsAcceptUnicodeEscapeIsFalse()
+        {
+            const string source = "local a = \"\\u{FEBE}\"\r\n" +
+                "local b = '\\u{FEBE}'";
+            var options = LuaSyntaxOptions.All.With(acceptUnicodeEscape: false);
+            ParseAndValidate(source, options,
+                // (1,12): error LUA0028: Unicode escapes are not supported in this lua version
+                // local a = "\u{FEBE}"
+                Diagnostic(ErrorCode.ERR_UnicodeEscapesNotSupportedLuaInVersion, @"\u{FEBE}").WithLocation(1, 12),
+                // (2,12): error LUA0028: Unicode escapes are not supported in this lua version
+                // local b = '\u{FEBE}'
+                Diagnostic(ErrorCode.ERR_UnicodeEscapesNotSupportedLuaInVersion, @"\u{FEBE}").WithLocation(2, 12));
+        }
     }
 }

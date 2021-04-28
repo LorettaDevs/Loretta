@@ -79,7 +79,7 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provided documentation mode is unsupported or invalid: &apos;{0}&apos;..
+        ///   Looks up a localized string similar to Provided documentation mode is unsupported or invalid: &apos;{0}&apos;.
         /// </summary>
         internal static string ERR_BadDocumentationMode {
             get {
@@ -133,11 +133,29 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Constant represents a value either too large or too small for a double precision floating-point number..
+        ///   Looks up a localized string similar to Constant represents a value either too large or too small for a double precision floating-point number.
         /// </summary>
         internal static string ERR_DoubleOverflow {
             get {
                 return ResourceManager.GetString("ERR_DoubleOverflow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escape is too large, the limit is {0}.
+        /// </summary>
+        internal static string ERR_EscapeTooLarge {
+            get {
+                return ResourceManager.GetString("ERR_EscapeTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hexadecimal digit expected.
+        /// </summary>
+        internal static string ERR_HexDigitExpected {
+            get {
+                return ResourceManager.GetString("ERR_HexDigitExpected", resourceCulture);
             }
         }
         
@@ -331,7 +349,34 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The whitespace escape (&apos;\z&apos;) is not supported in this lua version..
+        ///   Looks up a localized string similar to Unicode escape must have a closing brace (&apos;}&apos;) after the hexadecimal number.
+        /// </summary>
+        internal static string ERR_UnicodeEscapeMissingCloseBrace {
+            get {
+                return ResourceManager.GetString("ERR_UnicodeEscapeMissingCloseBrace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unicode escape must have an opening brace (&apos;{&apos;) after &apos;\u&apos;.
+        /// </summary>
+        internal static string ERR_UnicodeEscapeMissingOpenBrace {
+            get {
+                return ResourceManager.GetString("ERR_UnicodeEscapeMissingOpenBrace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unicode escapes are not supported in this lua version.
+        /// </summary>
+        internal static string ERR_UnicodeEscapesNotSupportedLuaInVersion {
+            get {
+                return ResourceManager.GetString("ERR_UnicodeEscapesNotSupportedLuaInVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The whitespace escape (&apos;\z&apos;) is not supported in this lua version.
         /// </summary>
         internal static string ERR_WhitespaceEscapeNotSupportedInVersion {
             get {

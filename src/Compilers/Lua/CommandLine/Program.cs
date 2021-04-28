@@ -124,7 +124,9 @@ namespace Loretta.CLI
         {
             Lua51,
             Lua52,
-            LuaJIT,
+            Lua53,
+            LuaJIT20,
+            LuaJIT21,
             GMod,
             Roblox,
             All,
@@ -136,7 +138,9 @@ namespace Loretta.CLI
             {
                 LuaOptionsPreset.Lua51 => LuaSyntaxOptions.Lua51,
                 LuaOptionsPreset.Lua52 => LuaSyntaxOptions.Lua52,
-                LuaOptionsPreset.LuaJIT => LuaSyntaxOptions.LuaJIT,
+                LuaOptionsPreset.Lua53 => LuaSyntaxOptions.Lua53,
+                LuaOptionsPreset.LuaJIT20 => LuaSyntaxOptions.LuaJIT20,
+                LuaOptionsPreset.LuaJIT21 => LuaSyntaxOptions.LuaJIT21,
                 LuaOptionsPreset.GMod => LuaSyntaxOptions.GMod,
                 LuaOptionsPreset.Roblox => LuaSyntaxOptions.Roblox,
                 LuaOptionsPreset.All => LuaSyntaxOptions.All,

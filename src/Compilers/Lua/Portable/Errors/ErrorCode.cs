@@ -29,6 +29,11 @@
         ERR_BitwiseOperatorsNotSupportedInVersion = 21,
         WRN_LineBreakMayAffectErrorReporting = 22,
         ERR_WhitespaceEscapeNotSupportedInVersion = 23,
+        ERR_UnicodeEscapeMissingOpenBrace = 24,
+        ERR_UnicodeEscapeMissingCloseBrace = 25,
+        ERR_EscapeTooLarge = 26,
+        ERR_HexDigitExpected = 27,
+        ERR_UnicodeEscapesNotSupportedLuaInVersion = 28,
 
         // Parser Errors
         ERR_IdentifierExpectedKW = 1000,
