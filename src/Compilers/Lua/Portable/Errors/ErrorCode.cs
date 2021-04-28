@@ -3,7 +3,7 @@
     internal enum ErrorCode
     {
         Void = InternalErrorCode.Void,
-        Unknonw = InternalErrorCode.Unknown,
+        Unknown = InternalErrorCode.Unknown,
 
         // Lexer Errors
         ERR_InvalidStringEscape = 1,

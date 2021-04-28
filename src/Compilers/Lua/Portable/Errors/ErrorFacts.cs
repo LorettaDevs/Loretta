@@ -35,7 +35,7 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 return InternalDiagnosticSeverity.Void;
             }
-            else if (code == ErrorCode.Unknonw)
+            else if (code == ErrorCode.Unknown)
             {
                 return InternalDiagnosticSeverity.Unknown;
             }
