@@ -87,7 +87,7 @@ namespace Loretta.CodeAnalysis.Lua
         //[ExtraCategories(SyntaxKindCategory.DocumentationCommentTrivia)]
         //MultiLineDocumentationCommentTrivia = 9,
 
-        // Textless Tokens
+        // Fixed-text Tokens
         [Token]
         EndOfFileToken = 10,
         /// <summary>
@@ -351,6 +351,8 @@ namespace Loretta.CodeAnalysis.Lua
         [UnaryOperator(precedence: 12, BitwiseNotExpression), BinaryOperator(precedence: 5, ExclusiveOrExpression)]
         TildeToken = 53,
 
+        // Big gap 53-500 (insert new fixed-text tokens here)
+
         // Keywords
         /// <summary>
         /// Represents the <see langword="do"/> keyword.
@@ -477,6 +479,8 @@ namespace Loretta.CodeAnalysis.Lua
         [Property(SyntaxKindProperty.LiteralExpression, FalseLiteralExpression)]
         FalseKeyword = 522,
 
+        // Big gap 522-1000 (insert new keywords here)
+
         // Tokens with Text
         [Token]
         BadToken = 1000,
@@ -490,6 +494,8 @@ namespace Loretta.CodeAnalysis.Lua
         StringLiteralToken = 1002,
         [Token]
         IdentifierToken = 1003,
+
+        // Big gap 1003-2000 (insert new tokens with text here)
 
         // Parameters
         NamedParameter = 2000,
@@ -662,6 +668,8 @@ namespace Loretta.CodeAnalysis.Lua
         ExpressionStatement = 2070,
         StatementList = 2072,
         EmtpyStatement = 2073,
+
+        // Big gap 2073-3001 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,
