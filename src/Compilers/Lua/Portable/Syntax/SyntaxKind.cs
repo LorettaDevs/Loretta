@@ -517,11 +517,8 @@ namespace Loretta.CodeAnalysis.Lua
         TableConstructorExpression = 2013,
         NumericalLiteralExpression = 2014,
         StringLiteralExpression = 2015,
-        [Property(SyntaxKindProperty.ConstantValue, true)]
         TrueLiteralExpression = 2016,
-        [Property(SyntaxKindProperty.ConstantValue, false)]
         FalseLiteralExpression = 2017,
-        [Property(SyntaxKindProperty.ConstantValue, null)]
         NilLiteralExpression = 2018,
         VarArgExpression = 2019,
         [ExtraCategories(SyntaxKindCategory.VariableExpression)]

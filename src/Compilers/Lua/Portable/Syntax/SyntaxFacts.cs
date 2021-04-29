@@ -143,6 +143,22 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
+        /// Obtains the constant value of the token kind.
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        public static Option<object?> GetConstantValue(SyntaxKind kind)
+        {
+            return kind switch
+            {
+                SyntaxKind.TrueLiteralExpression => Boxes.BoxedTrue,
+                SyntaxKind.FalseLiteralExpression => Boxes.BoxedFalse,
+                SyntaxKind.NilLiteralExpression => null,
+                _ => default
+            };
+        }
+
+        /// <summary>
         /// Obtains the kind of the operator of the compound assignment operator.
         /// </summary>
         /// <param name="kind">The the compound operator kind.</param>
@@ -156,13 +172,6 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="kind"></param>
         /// <returns></returns>
         public static partial Option<SyntaxKind> GetCompoundAssignmentStatement(SyntaxKind kind);
-
-        /// <summary>
-        /// Obtains the constant value of the token kind.
-        /// </summary>
-        /// <param name="kind"></param>
-        /// <returns></returns>
-        public static partial Option<object?> GetConstantValue(SyntaxKind kind);
 
         /// <summary>
         /// Obtains the kind of the literal expression node from the token kind.
