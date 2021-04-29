@@ -129,7 +129,7 @@ namespace Loretta.CodeAnalysis.Lua
         internal static bool IsLuaKind(int rawKind)
         {
             const int FirstLuaKind = (int) SyntaxKind.ShebangTrivia;
-            const int LastLuaKind = (int) SyntaxKind.StatementList;
+            const int LastLuaKind = (int) SyntaxKind.CompilationUnit;
 
             // in the range [FirstLuaKind, LastLuaKind]
             return unchecked((uint) (rawKind - FirstLuaKind)) <= (LastLuaKind - FirstLuaKind);
