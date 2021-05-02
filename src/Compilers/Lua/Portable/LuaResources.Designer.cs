@@ -322,7 +322,7 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unexpected token {0}, expected {1}.
+        ///   Looks up a localized string similar to Unexpected token &apos;{0}&apos;.
         /// </summary>
         internal static string ERR_UnexpectedToken {
             get {

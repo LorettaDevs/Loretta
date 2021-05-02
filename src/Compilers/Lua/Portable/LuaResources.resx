@@ -209,8 +209,8 @@
     <value>Unescaped line break in string</value>
   </data>
   <data name="ERR_UnexpectedToken" xml:space="preserve">
-    <value>Unexpected token {0}, expected {1}</value>
-    <comment>{0} is the actual kind and the {1} is the expected kind</comment>
+    <value>Unexpected token '{0}'</value>
+    <comment>{0} is the actual kind</comment>
   </data>
   <data name="ERR_UnfinishedLongComment" xml:space="preserve">
     <value>Unfinished multi-line comment</value>
