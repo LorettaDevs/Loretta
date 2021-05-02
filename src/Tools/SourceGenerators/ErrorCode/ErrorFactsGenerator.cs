@@ -94,7 +94,6 @@ namespace Loretta.Generators.ErrorCode
             }
 
             context.AddSource("ErrorFacts.g.cs", sourceText);
-            Utilities.DoVsCodeHack(errorCodeType, "ErrorFacts.g.cs", sourceText);
         }
     }
 }

@@ -8,6 +8,12 @@
     <Description>A GLua/Lua lexer, parser, code analysis, transformation and generation library.</Description>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Enable output of generated files back into our Generated directory -->
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Syntax\Syntax.xml" />
   </ItemGroup>
@@ -46,6 +52,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LuaResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Generated\" />
+    <!-- Don't include the output from a previous source generator execution into future runs; the */** trick here ensures that there's
+         at least one subdirectory, which is our key that it's coming from a source generator as opposed to something that is coming from
+         some other tool. -->
+    <Compile Remove="$(CompilerGeneratedFilesOutputPath)/*/**/*.cs" />
   </ItemGroup>
 
 </Project>

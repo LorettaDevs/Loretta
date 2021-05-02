@@ -90,10 +90,7 @@ namespace Loretta.Generators
             ImmutableArray<(string hintName, SourceText sourceText)> sources)
         {
             foreach (var (hintName, sourceText) in sources)
-            {
                 context.AddSource(hintName, sourceText);
-                Utilities.DoVsCodeHack(relativePath, hintName, sourceText);
-            }
         }
 
         private sealed record CachedResult(

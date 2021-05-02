@@ -82,41 +82,6 @@ namespace Loretta.Generators
                   .Where(data => SymbolEqualityComparer.Default.Equals(data.AttributeClass, attributeType))
                   .ToImmutableArray();
 
-        public static void DoVsCodeHack(INamedTypeSymbol relatedSymbol, string fileName, SourceText sourceText)
-        {
-            // HACK
-            //
-            // Make generator work in VS Code. See src\Directory.Build.props for
-            // details.
-
-            var relatedFilePath = relatedSymbol.DeclaringSyntaxReferences.First().SyntaxTree.FilePath;
-            var relatedDirectory = Path.GetDirectoryName(relatedFilePath);
-
-            DoVsCodeHack(relatedDirectory, fileName, sourceText);
-        }
-
-        public static void DoVsCodeHack(string relatedDirectory, string fileName, SourceText sourceText)
-        {
-            try
-            {
-                var filePath = Path.Combine(relatedDirectory, fileName);
-                if (File.Exists(filePath))
-                {
-                    var fileText = File.ReadAllText(filePath);
-                    var sourceFileText = SourceText.From(fileText, Encoding.UTF8);
-                    if (sourceText.ContentEquals(sourceFileText))
-                        return;
-                }
-
-                using var writer = new StreamWriter(filePath);
-                sourceText.Write(writer);
-            }
-            catch (Exception)
-            {
-                return; // We don't really care if the VSCode hack fails.
-            }
-        }
-
         public static IEnumerable<ITypeSymbol> AncestorsAndSelf(ITypeSymbol topType, ITypeSymbol? limit = null)
         {
             for (var type = topType; type != null && !SymbolEqualityComparer.Default.Equals(type, limit); type = type.BaseType)

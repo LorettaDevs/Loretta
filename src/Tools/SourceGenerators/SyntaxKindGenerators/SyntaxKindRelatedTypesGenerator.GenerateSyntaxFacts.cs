@@ -147,7 +147,6 @@ namespace Loretta.Generators.SyntaxKindGenerators
             }
 
             context.AddSource("SyntaxFacts.g.cs", sourceText);
-            Utilities.DoVsCodeHack(syntaxKindType, "SyntaxFacts.g.cs", sourceText);
         }
 
         private static void GenerateMinMaxLength(IEnumerable<KindInfo> kinds, SourceWriter writer, string typeName)

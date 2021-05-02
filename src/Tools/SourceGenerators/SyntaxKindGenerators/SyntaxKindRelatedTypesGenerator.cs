@@ -24,7 +24,6 @@ namespace Loretta.Generators.SyntaxKindGenerators
                 throw new Exception("syntaxKindType is null.");
 
             context.AddSource("SyntaxKindAttributes.g.cs", KindUtils.SyntaxKindAttributesText);
-            Utilities.DoVsCodeHack(syntaxKindType, "SyntaxKindAttributes.g.cs", KindUtils.SyntaxKindAttributesText);
 
             var kinds = KindUtils.GetKindInfos(context, compilation);
             if (kinds is null)
