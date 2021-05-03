@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Loretta.Generators.SyntaxKindGenerators
+namespace Loretta.Generators.SyntaxKindGenerator
 {
     internal class KindList : IReadOnlyList<KindInfo>
     {

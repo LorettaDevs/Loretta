@@ -1,4 +1,4 @@
-﻿namespace Loretta.Generators.SyntaxKindGenerators
+﻿namespace Loretta.Generators.SyntaxKindGenerator
 {
     internal readonly struct TokenInfo
     {

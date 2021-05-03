@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace Loretta.Generators.SyntaxKindGenerators
+namespace Loretta.Generators.SyntaxKindGenerator
 {
     internal readonly struct OperatorInfo
     {

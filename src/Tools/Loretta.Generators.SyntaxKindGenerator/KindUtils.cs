@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Loretta.Generators.SyntaxKindGenerators
+namespace Loretta.Generators.SyntaxKindGenerator
 {
     internal static class KindUtils
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Loretta.Generators.SyntaxKindGenerators
+namespace Loretta.Generators.SyntaxKindGenerator
 {
     [Generator]
     public sealed partial class SyntaxKindRelatedTypesGenerator : ISourceGenerator
