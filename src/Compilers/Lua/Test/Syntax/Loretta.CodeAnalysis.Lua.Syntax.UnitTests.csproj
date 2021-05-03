@@ -6,6 +6,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(TargetFrameworks);net5.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
