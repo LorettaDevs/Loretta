@@ -13,13 +13,6 @@
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Syntax\Syntax.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="Syntax\Syntax.xml" />
-  </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
@@ -38,7 +31,6 @@
     <ProjectReference Include="..\..\..\Tools\SourceGenerators\Loretta.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="LuaResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -54,8 +46,10 @@
     </EmbeddedResource>
   </ItemGroup>
 
+
   <ItemGroup>
-    <Folder Include="Generated\" />
+    <AdditionalFiles Include="Syntax\Syntax.xml" />
+    <None Include="Syntax\Syntax.xsd" />
     <!-- Don't include the output from a previous source generator execution into future runs; the */** trick here ensures that there's
          at least one subdirectory, which is our key that it's coming from a source generator as opposed to something that is coming from
          some other tool. -->
