@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable enable
@@ -141,12 +141,6 @@ namespace Loretta.Generators.SyntaxXml
             }
             catch (Exception ex)
             {
-                var syntaxXmlFilePath = input.Path;
-                var syntaxDirectory = Path.GetDirectoryName(syntaxXmlFilePath);
-                var filePath = Path.Combine(syntaxDirectory, "exception.log");
-                var contents = string.Join(Environment.NewLine, new string('-', 30), ex.ToString());
-                File.AppendAllText(filePath, contents);
-
                 sources = default;
                 diagnostics = ImmutableArray.Create(Diagnostic.Create(
                     s_SyntaxXmlException,
