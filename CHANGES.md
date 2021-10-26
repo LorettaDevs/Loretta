@@ -6,11 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Add parameterless ctor of `Script` and `Script.Empty` for easier creation of empty scripts.
 - Add support for `SimpleFunctionName` in variable handling (local vars didn't have a write added to them and a global wasn't created if a local with the same name didn't exist).
+- Add `SyntaxFacts.IsOperatorToken`, `SyntaxFacts.IsUnaryOperatorToken` and `SyntaxFacts.IsBinaryOperatorToken`.
 
 ### Fixed
 - Fix jumps to non-existent labels (labels that don't have a `::label::`) not creating a new label.
 - Fix jumps to a goto label not being added to the `IGotoLabel`.
+
+### Changed
+- Configure `IFileScope`, `IFunctionScope`, `IGotoLabel`, `IScope` and `IVariable` to only allow internal implementations.
+- Make `IGotoLabel.LabelSyntax` nullable to account for the case where the label has no declarations.
 
 ## v0.2.4
 ### Added
