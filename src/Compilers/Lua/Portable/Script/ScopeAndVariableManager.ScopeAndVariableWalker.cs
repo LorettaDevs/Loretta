@@ -295,7 +295,20 @@ namespace Loretta.CodeAnalysis.Lua
 
             public override void VisitFunctionDeclarationStatement(FunctionDeclarationStatementSyntax node)
             {
-                Visit(node.Name);
+                if (node.Name.IsKind(SyntaxKind.SimpleFunctionName))
+                {
+                    var simpleName = (SimpleFunctionNameSyntax) node.Name;
+                    var variable = GetVariableOrCreateGlobal(simpleName.Name.Text);
+                    _variables[node.Name] = variable;
+                    variable.AddWriteLocation(node);
+                    variable.AddReferencingScope(Scope);
+                    Scope.AddReferencedVariable(variable);
+                }
+                else
+                {
+                    Visit(node.Name);
+                }
+
                 var scope = CreateFunctionScope(node);
                 try
                 {
