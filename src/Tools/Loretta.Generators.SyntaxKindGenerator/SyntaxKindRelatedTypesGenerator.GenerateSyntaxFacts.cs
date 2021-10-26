@@ -313,7 +313,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             writer.WriteLine("/// Gets the predefined text that corresponds to the provided syntax kind.");
             writer.WriteLine("/// </summary>");
             writer.WriteLine("/// <param name=\"kind\">The kind to obtain the text for.</param>");
-            writer.WriteLine("/// <returns>The text corresponding to the provided kind or <see cref=\"string.Emtpy\" /> if none.</returns>");
+            writer.WriteLine("/// <returns>The text corresponding to the provided kind or <see cref=\"string.Empty\" /> if none.</returns>");
             using (writer.Indenter("public static string GetText (SyntaxKind kind) =>"))
             using (writer.CurlyIndenter("kind switch", ";"))
             {
