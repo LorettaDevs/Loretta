@@ -422,7 +422,7 @@ namespace Loretta.CodeAnalysis.Collections
 ConcurrentOperation:
             ThrowHelper.ThrowInvalidOperationException_ConcurrentOperationsNotSupported();
 ReturnFound:
-            ref var value = ref entry._value;
+            ref TValue value = ref entry._value;
 Return:
             return ref value;
 ReturnNotFound:
