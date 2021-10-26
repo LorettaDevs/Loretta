@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -55,8 +55,8 @@ namespace Loretta.CodeAnalysis.Lua
         void AddReferencedVariable(IVariableInternal variable);
 
         bool TryGetLabel(string name, [NotNullWhen(true)] out IGotoLabelInternal? label);
-        IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax label);
-        IGotoLabelInternal CreateLabel(string name, GotoLabelStatementSyntax label);
+        IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null);
+        IGotoLabelInternal CreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null);
     }
 
     internal class Scope : IScopeInternal
@@ -135,7 +135,7 @@ namespace Loretta.CodeAnalysis.Lua
             _labels.TryGetValue(name, out label)
             || (Kind == ScopeKind.Block && Parent?.TryGetLabel(name, out label) is true);
 
-        public IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax labelSyntax)
+        public IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null)
         {
             RoslynDebug.Assert(!string.IsNullOrEmpty(name));
             RoslynDebug.AssertNotNull(labelSyntax);
@@ -146,7 +146,7 @@ namespace Loretta.CodeAnalysis.Lua
             return label;
         }
 
-        public IGotoLabelInternal CreateLabel(string name, GotoLabelStatementSyntax labelSyntax)
+        public IGotoLabelInternal CreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null)
         {
             var label = new GotoLabel(name, labelSyntax);
             _labels[name] = label;
