@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Add support for `SimpleFunctionName` in variable handling (local vars didn't have a write added to them and a global wasn't created if a local with the same name didn't exist).
+- Fix jumps to non-existent labels (labels that don't have a `::label::`) not creating a new label.
 - Fix jumps to a goto label not being added to the `IGotoLabel`.
 
 ## v0.2.4
