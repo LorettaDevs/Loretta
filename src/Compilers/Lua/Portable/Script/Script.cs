@@ -8,6 +8,11 @@ namespace Loretta.CodeAnalysis.Lua
     /// </summary>
     public sealed class Script
     {
+        /// <summary>
+        /// An empty script with no syntax trees.
+        /// </summary>
+        public static Script Empty { get; } = new Script(ImmutableArray<SyntaxTree>.Empty);
+
         private readonly ScopeAndVariableManager _scopeAndVariableManager;
 
         /// <summary>
