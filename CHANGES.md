@@ -1,5 +1,12 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## [Unreleased]
 - Add support for `SimpleFunctionName` in variable handling (local vars didn't have a write added to them and a global wasn't created if a local with the same name didn't exist).
+- Fix jumps to a goto label not being added to the `IGotoLabel`.
 
 ## v0.2.4
 - [Breaking] Changed what is accepted as whitespace to not be unicode-aware (as lua isn't);
