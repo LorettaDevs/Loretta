@@ -11,9 +11,16 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// An empty script with no syntax trees.
         /// </summary>
-        public static Script Empty { get; } = new Script(ImmutableArray<SyntaxTree>.Empty);
+        public static Script Empty { get; } = new Script();
 
         private readonly ScopeAndVariableManager _scopeAndVariableManager;
+
+        /// <summary>
+        /// Initializes an empty script.
+        /// </summary>
+        public Script() : this(ImmutableArray<SyntaxTree>.Empty)
+        {
+        }
 
         /// <summary>
         /// Initializes a new script.

@@ -27,6 +27,15 @@ namespace Loretta.CodeAnalysis.Lua
         private static State CalculateState(ImmutableArray<SyntaxTree> trees)
         {
             var rootScope = new Scope(ScopeKind.Global, null, null);
+            if (trees.IsDefaultOrEmpty)
+            {
+                return new State(
+                    rootScope,
+                    ImmutableDictionary<SyntaxNode, IVariable>.Empty,
+                    ImmutableDictionary<SyntaxNode, IScope>.Empty,
+                    ImmutableDictionary<SyntaxNode, IGotoLabel>.Empty);
+            }
+
             var variables = ImmutableDictionary.CreateBuilder<SyntaxNode, IVariable>();
             var scopes = ImmutableDictionary.CreateBuilder<SyntaxNode, IScope>();
             var labels = ImmutableDictionary.CreateBuilder<SyntaxNode, IGotoLabel>();
