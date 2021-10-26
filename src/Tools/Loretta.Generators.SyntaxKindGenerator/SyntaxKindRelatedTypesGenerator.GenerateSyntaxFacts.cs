@@ -116,6 +116,11 @@ namespace Loretta.Generators.SyntaxKindGenerator
                     // Generate IsToken
                     GenerateIsX(kinds, writer, "Token", kind => kind.TokenInfo is not null);
 
+                    // Generate Is(Unary|Binary)Operator
+                    GenerateIsX(kinds, writer, "OperatorToken", kind => kind.UnaryOperatorInfo is not null || kind.BinaryOperatorInfo is not null);
+                    GenerateIsX(kinds, writer, "UnaryOperatorToken", kind => kind.UnaryOperatorInfo is not null);
+                    GenerateIsX(kinds, writer, "BinaryOperatorToken", kind => kind.BinaryOperatorInfo is not null);
+
                     writer.WriteLineNoTabs("");
 
                     // Extra Categories
