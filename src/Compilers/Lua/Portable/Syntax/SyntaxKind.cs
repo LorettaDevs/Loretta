@@ -260,7 +260,6 @@ namespace Loretta.CodeAnalysis.Lua
         [Token(Text = "==")]
         [BinaryOperator(precedence: 3, EqualsExpression)]
         EqualsEqualsToken = 38,
-        // TODO: Add tilde token and unary operator
         /// <summary>
         /// Represents the <c>~=</c> token.
         /// </summary>

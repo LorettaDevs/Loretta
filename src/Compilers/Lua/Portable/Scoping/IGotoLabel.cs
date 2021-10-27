@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.Utilities;
 
@@ -7,6 +8,7 @@ namespace Loretta.CodeAnalysis.Lua
     /// <summary>
     /// The interface for a goto label.
     /// </summary>
+    [InternalImplementationOnly]
     public interface IGotoLabel
     {
         /// <summary>
@@ -17,7 +19,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The label's location.
         /// </summary>
-        GotoLabelStatementSyntax LabelSyntax { get; }
+        GotoLabelStatementSyntax? LabelSyntax { get; }
 
         /// <summary>
         /// The nodes that jump to this label.
@@ -34,10 +36,9 @@ namespace Loretta.CodeAnalysis.Lua
     {
         private readonly IList<GotoStatementSyntax> _jumps = new List<GotoStatementSyntax>();
 
-        public GotoLabel(string name, GotoLabelStatementSyntax label)
+        public GotoLabel(string name, GotoLabelStatementSyntax? label)
         {
             RoslynDebug.Assert(!string.IsNullOrEmpty(name));
-            RoslynDebug.AssertNotNull(label);
 
             Name = name;
             LabelSyntax = label;
@@ -46,7 +47,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public string Name { get; }
 
-        public GotoLabelStatementSyntax LabelSyntax { get; }
+        public GotoLabelStatementSyntax? LabelSyntax { get; }
 
         public IEnumerable<GotoStatementSyntax> JumpSyntaxes { get; }
 

@@ -141,12 +141,6 @@ namespace Loretta.Generators.SyntaxXml
             }
             catch (Exception ex)
             {
-                var syntaxXmlFilePath = input.Path;
-                var syntaxDirectory = Path.GetDirectoryName(syntaxXmlFilePath);
-                var filePath = Path.Combine(syntaxDirectory, "exception.log");
-                var contents = string.Join(Environment.NewLine, new string('-', 30), ex.ToString());
-                File.AppendAllText(filePath, contents);
-
                 sources = default;
                 diagnostics = ImmutableArray.Create(Diagnostic.Create(
                     s_SyntaxXmlException,
@@ -154,86 +148,6 @@ namespace Loretta.Generators.SyntaxXml
                     ex.ToString()));
                 relativePath = null;
                 return false;
-            }
-        }
-
-        private sealed class SourceTextReader : TextReader
-        {
-            private readonly SourceText _sourceText;
-            private int _position;
-
-            public SourceTextReader(SourceText sourceText)
-            {
-                _sourceText = sourceText;
-                _position = 0;
-            }
-
-            public override int Peek()
-            {
-                if (_position == _sourceText.Length)
-                {
-                    return -1;
-                }
-
-                return _sourceText[_position];
-            }
-
-            public override int Read()
-            {
-                if (_position == _sourceText.Length)
-                {
-                    return -1;
-                }
-
-                return _sourceText[_position++];
-            }
-
-            public override int Read(char[] buffer, int index, int count)
-            {
-                var charsToCopy = Math.Min(count, _sourceText.Length - _position);
-                _sourceText.CopyTo(_position, buffer, index, charsToCopy);
-                _position += charsToCopy;
-                return charsToCopy;
-            }
-        }
-
-        private sealed class StringBuilderReader : TextReader
-        {
-            private readonly StringBuilder _stringBuilder;
-            private int _position;
-
-            public StringBuilderReader(StringBuilder stringBuilder)
-            {
-                _stringBuilder = stringBuilder;
-                _position = 0;
-            }
-
-            public override int Peek()
-            {
-                if (_position == _stringBuilder.Length)
-                {
-                    return -1;
-                }
-
-                return _stringBuilder[_position];
-            }
-
-            public override int Read()
-            {
-                if (_position == _stringBuilder.Length)
-                {
-                    return -1;
-                }
-
-                return _stringBuilder[_position++];
-            }
-
-            public override int Read(char[] buffer, int index, int count)
-            {
-                var charsToCopy = Math.Min(count, _stringBuilder.Length - _position);
-                _stringBuilder.CopyTo(_position, buffer, index, charsToCopy);
-                _position += charsToCopy;
-                return charsToCopy;
             }
         }
     }

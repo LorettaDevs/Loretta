@@ -116,6 +116,11 @@ namespace Loretta.Generators.SyntaxKindGenerator
                     // Generate IsToken
                     GenerateIsX(kinds, writer, "Token", kind => kind.TokenInfo is not null);
 
+                    // Generate Is(Unary|Binary)Operator
+                    GenerateIsX(kinds, writer, "OperatorToken", kind => kind.UnaryOperatorInfo is not null || kind.BinaryOperatorInfo is not null);
+                    GenerateIsX(kinds, writer, "UnaryOperatorToken", kind => kind.UnaryOperatorInfo is not null);
+                    GenerateIsX(kinds, writer, "BinaryOperatorToken", kind => kind.BinaryOperatorInfo is not null);
+
                     writer.WriteLineNoTabs("");
 
                     // Extra Categories
@@ -313,7 +318,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             writer.WriteLine("/// Gets the predefined text that corresponds to the provided syntax kind.");
             writer.WriteLine("/// </summary>");
             writer.WriteLine("/// <param name=\"kind\">The kind to obtain the text for.</param>");
-            writer.WriteLine("/// <returns>The text corresponding to the provided kind or <see cref=\"string.Emtpy\" /> if none.</returns>");
+            writer.WriteLine("/// <returns>The text corresponding to the provided kind or <see cref=\"string.Empty\" /> if none.</returns>");
             using (writer.Indenter("public static string GetText (SyntaxKind kind) =>"))
             using (writer.CurlyIndenter("kind switch", ";"))
             {

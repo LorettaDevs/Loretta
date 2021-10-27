@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.Utilities;
 
@@ -6,24 +7,23 @@ namespace Loretta.CodeAnalysis.Lua
 {
     internal partial class ScopeAndVariableManager
     {
-        private class GotoLabelWalker : LuaSyntaxWalker
+        private class GotoLabelWalker : BaseWalker
         {
-            private readonly IDictionary<SyntaxNode, IScope> _scopes;
             private readonly IDictionary<SyntaxNode, IGotoLabel> _labels;
 
-            public GotoLabelWalker(IDictionary<SyntaxNode, IScope> scopes, IDictionary<SyntaxNode, IGotoLabel> labels)
-                : base(SyntaxWalkerDepth.Node)
+            public GotoLabelWalker(
+                IDictionary<SyntaxNode, IScope> scopes,
+                IDictionary<SyntaxNode, IGotoLabel> labels)
+                : base(scopes)
             {
-                RoslynDebug.AssertNotNull(scopes);
                 RoslynDebug.AssertNotNull(labels);
 
-                _scopes = scopes;
                 _labels = labels;
             }
 
             public override void VisitGotoLabelStatement(GotoLabelStatementSyntax node)
             {
-                var scope = (IScopeInternal) _scopes[node.Parent!];
+                var scope = FindScope(node) ?? throw new System.Exception("Scope not found for node.");
                 var label = scope.CreateLabel(node.Identifier.Text, node);
                 _labels[node] = label;
             }

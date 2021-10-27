@@ -6,6 +6,10 @@
     <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>

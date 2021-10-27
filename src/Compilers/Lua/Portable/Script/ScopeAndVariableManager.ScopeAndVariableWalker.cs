@@ -7,12 +7,11 @@ namespace Loretta.CodeAnalysis.Lua
 {
     internal partial class ScopeAndVariableManager
     {
-        private class ScopeAndVariableWalker : LuaSyntaxWalker
+        private class ScopeAndVariableWalker : BaseWalker
         {
             private readonly Scope _rootScope;
             private readonly FileScope _fileScope;
             private readonly IDictionary<SyntaxNode, IVariable> _variables;
-            private readonly IDictionary<SyntaxNode, IScope> _scopes;
             private readonly Stack<IScopeInternal> _scopeStack = new Stack<IScopeInternal>();
 
             public ScopeAndVariableWalker(
@@ -20,7 +19,7 @@ namespace Loretta.CodeAnalysis.Lua
                 FileScope fileScope,
                 IDictionary<SyntaxNode, IVariable> variables,
                 IDictionary<SyntaxNode, IScope> scopes)
-                : base(SyntaxWalkerDepth.Node)
+                : base(scopes)
             {
                 RoslynDebug.AssertNotNull(rootScope);
                 RoslynDebug.AssertNotNull(fileScope);
@@ -30,12 +29,12 @@ namespace Loretta.CodeAnalysis.Lua
                 _rootScope = rootScope;
                 _fileScope = fileScope;
                 _variables = variables;
-                _scopes = scopes;
                 _scopeStack.Push(rootScope);
                 _scopeStack.Push(fileScope);
             }
 
             private IScopeInternal Scope => _scopeStack.Peek();
+
             private IFunctionScopeInternal CreateFunctionScope(SyntaxNode node)
             {
                 var scope = new FunctionScope(node, _scopeStack.Peek());
@@ -43,6 +42,7 @@ namespace Loretta.CodeAnalysis.Lua
                 _scopeStack.Push(scope);
                 return scope;
             }
+
             private IScopeInternal CreateBlockScope(SyntaxNode node)
             {
                 var scope = new Scope(ScopeKind.Block, node, _scopeStack.Peek());
@@ -50,19 +50,24 @@ namespace Loretta.CodeAnalysis.Lua
                 _scopeStack.Push(scope);
                 return scope;
             }
+
             private IScopeInternal PopScope(IScopeInternal scope)
             {
                 var poppedScope = _scopeStack.Pop();
-                RoslynDebug.Assert((object) poppedScope == scope);
+                RoslynDebug.Assert(poppedScope == scope);
                 return poppedScope;
             }
+
             private IVariableInternal GetVariableOrCreateGlobal(string name)
             {
                 if (!Scope.TryGetVariable(name, out var variable))
                     variable = _rootScope.CreateVariable(VariableKind.Global, name);
                 return variable;
             }
-            private static IVariableInternal CreateParameter(IFunctionScopeInternal scope, ParameterSyntax parameter)
+
+            private static IVariableInternal CreateParameter(
+                IFunctionScopeInternal scope,
+                ParameterSyntax parameter)
             {
                 var name = parameter.Kind() switch
                 {
@@ -293,9 +298,25 @@ namespace Loretta.CodeAnalysis.Lua
                 }
             }
 
+            public override void VisitSimpleFunctionName(SimpleFunctionNameSyntax node)
+            {
+                var variable = GetVariableOrCreateGlobal(node.Name.Text);
+                _variables[node] = variable;
+
+                // There *has* to be a function decl parent, but don't freak out if there isn't.
+                var functionDecl = node.FirstAncestorOrSelf<FunctionDeclarationStatementSyntax>();
+                if (functionDecl is not null)
+                    _variables[functionDecl.Name] = variable;
+
+                variable.AddWriteLocation(node);
+                variable.AddReferencingScope(Scope);
+                Scope.AddReferencedVariable(variable);
+            }
+
             public override void VisitFunctionDeclarationStatement(FunctionDeclarationStatementSyntax node)
             {
                 Visit(node.Name);
+
                 var scope = CreateFunctionScope(node);
                 try
                 {
