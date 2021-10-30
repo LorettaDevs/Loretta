@@ -36,12 +36,12 @@ jobs:
           dotnet-version: 6.0.x
           include-prerelease: True
         env:
-          DOTNET_INSTALL_DIR: ${{ matrix.installDir }}
+          DOTNET_INSTALL_DIR: C:\Program Files\dotnet
       - name: Install dependencies
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
-      - name: Test
+      - name: Run Tests
         run: dotnet test --configuration Release --no-build
       - name: Generate NuGet packages
         run: dotnet pack --configuration Release --output ./packages --no-restore --include-symbols -p:SymbolPackageFormat=snupkg
