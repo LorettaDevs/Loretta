@@ -45,7 +45,7 @@ The `NormalizeWhitespace` method replaces all whitespace and and end of line tri
 ### Accessing scope information
 If you'd like to get scoping and variable information, create a new `Script` from your `SyntaxTree`s and then do one of the following:
 - Access `Script.RootScope` to get the global scope;
-- Call [`Script.GetScope(SyntaxNode)`](#using-scopes) to get an `IScope`;
+- Call [`Script.GetScope(SyntaxNode)`](#using-scopes) or [`Script.FindScope(SyntaxNode, ScopeKind)`](#using-scopes) to get an `IScope`;
 - Call [`Script.GetVariable(SyntaxNode)`](#using-variables) to get an `IVariable`;
 - Call [`Script.GetLabel(SyntaxNode)`](#using-labels) on a `GotoStatementSyntax` or a `GotoLabelStatementSyntax` to get an `IGotoLabel`;
 
