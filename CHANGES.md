@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add parameterless ctor of `Script` and `Script.Empty` for easier creation of empty scripts.
 - Add support for `SimpleFunctionName` in variable handling (local vars didn't have a write added to them and a global wasn't created if a local with the same name didn't exist).
 - Add `SyntaxFacts.IsOperatorToken`, `SyntaxFacts.IsUnaryOperatorToken` and `SyntaxFacts.IsBinaryOperatorToken`.
+- Add `Script.FindScope`.
 
 ### Fixed
 - Fix jumps to non-existent labels (labels that don't have a `::label::`) not creating a new label.

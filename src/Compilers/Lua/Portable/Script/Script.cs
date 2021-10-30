@@ -54,6 +54,50 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
+        /// Attempts to find the outermost scope of the provided kind (or a more generic one).
+        /// </summary>
+        /// <param name="node">The node to search from.</param>
+        /// <param name="kind">The kind to search for.</param>
+        /// <returns></returns>
+        /// <remarks>
+        ///   The kind parameter searches for a scope of the provided kind or a more generic one as in the following list:
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.Block"/> searches for: <see cref="ScopeKind.Block"/>,
+        ///         <see cref="ScopeKind.Function"/>, <see cref="ScopeKind.File"/>, <see cref="ScopeKind.Global"/>.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.Function"/> searches for: <see cref="ScopeKind.Function"/>,
+        ///         <see cref="ScopeKind.File"/>, <see cref="ScopeKind.Global"/>.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.File"/> searches for: <see cref="ScopeKind.File"/>, <see cref="ScopeKind.Global"/>.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description><see cref="ScopeKind.Global"/> searches for itself.</description>
+        ///     </item>
+        ///   </list>
+        /// </remarks>
+        public IScope? FindScope(SyntaxNode node, ScopeKind kind = ScopeKind.Block)
+        {
+            var scopes = _scopeAndVariableManager.GetLazyState().Scopes;
+
+            foreach (var ancestor in node.AncestorsAndSelf())
+            {
+                if (scopes.TryGetValue(ancestor, out var scope) && scope.Kind <= kind)
+                    return scope;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Get the variable for the provided node.
         /// </summary>
         /// <param name="node"></param>
