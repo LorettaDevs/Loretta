@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
+using System.Linq;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
@@ -266,7 +267,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
 
         private bool IsLastTokenOnLine(SyntaxToken token) =>
-            token.Parent is not null && token.Parent.GetLastToken() == token;
+            token.TrailingTrivia.Any(SyntaxKind.EndOfLineTrivia) || token.GetNextToken().LeadingTrivia.Any(SyntaxKind.EndOfLineTrivia);
 
         private int LineBreaksBetween(SyntaxToken currentToken, SyntaxToken nextToken)
         {
@@ -577,10 +578,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             }
         }
 
-        private static bool IsMultiLineNode(SyntaxNode node)
-        {
-            var lineSpan = node.GetLocation().GetLineSpan();
-            return lineSpan.StartLinePosition.Line != lineSpan.EndLinePosition.Line;
-        }
+        private static bool IsMultiLineNode(SyntaxNode node) =>
+            node.DescendantTrivia().Any(trivia => trivia.IsKind(SyntaxKind.EndOfLineTrivia));
     }
 }
