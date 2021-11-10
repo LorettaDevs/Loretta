@@ -362,8 +362,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 return false;
 
             // 'a.b' instead of 'a . b' and 'a:b' instead of 'a : b'
-            if (nextToken.Kind() is SyntaxKind.DotToken or SyntaxKind.SemicolonToken
-                || token.Kind() is SyntaxKind.DotToken or SyntaxKind.SemicolonToken)
+            if (nextToken.Kind() is SyntaxKind.DotToken or SyntaxKind.ColonToken
+                || token.Kind() is SyntaxKind.DotToken or SyntaxKind.ColonToken)
             {
                 return false;
             }
