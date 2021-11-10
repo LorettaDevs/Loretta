@@ -303,12 +303,10 @@ namespace Loretta.CodeAnalysis.Lua
                 var variable = GetVariableOrCreateGlobal(node.Name.Text);
                 _variables[node] = variable;
 
-                // There *has* to be a function decl parent, but don't freak out if there isn't.
-                var functionDecl = node.FirstAncestorOrSelf<FunctionDeclarationStatementSyntax>();
-                if (functionDecl is not null)
-                    _variables[functionDecl.Name] = variable;
-
-                variable.AddWriteLocation(node);
+                if (node.Parent is FunctionDeclarationStatementSyntax)
+                    variable.AddWriteLocation(node);
+                else
+                    variable.AddReadLocation(node);
                 variable.AddReferencingScope(Scope);
                 Scope.AddReferencedVariable(variable);
             }
