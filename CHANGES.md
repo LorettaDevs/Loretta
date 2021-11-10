@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix multiple line breaks being inserted when formatting.
 - Fix line breaks not being added after single line comments.
 - Fix formatting of `[` and `]` (`a[a]` was being turned into `a [ a ]`).
+- Fix empty table formatting (`{}` instead of `{ }`).
 
 ## v0.2.5
 ### Added

@@ -387,6 +387,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 return false;
             }
 
+            // '{}' instead of '{ }'
+            if (token.IsKind(SyntaxKind.OpenBraceToken) && nextToken.IsKind(SyntaxKind.CloseBraceToken))
+                return false;
+
             return true;
         }
 
