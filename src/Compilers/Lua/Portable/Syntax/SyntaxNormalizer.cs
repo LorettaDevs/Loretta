@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
-using System.IO;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
@@ -552,6 +551,36 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         {
             AddLineBreaksAfterToken(node.Parameters.CloseParenthesisToken, 1);
             return base.VisitAnonymousFunctionExpression(node);
+        }
+
+        public override SyntaxNode? VisitTableConstructorExpression(TableConstructorExpressionSyntax node)
+        {
+            if ((node.Fields.Count == 1 && IsMultiLineNode(node.Fields.First()))
+                || node.Fields.Count > 1)
+            {
+                AddLineBreaksAfterToken(node.OpenBraceToken, 1);
+                foreach (var sep in node.Fields.GetSeparators())
+                    AddLineBreaksAfterToken(sep, 1);
+                if (node.Fields.Count != node.Fields.SeparatorCount)
+                    AddLineBreaksAfterToken(node.Fields.Last().GetLastToken(), 1);
+
+                var openBraceToken = VisitToken(node.OpenBraceToken);
+                _indentationDepth++;
+                var fields = VisitList(node.Fields);
+                _indentationDepth--;
+                var closeBraceToken = VisitToken(node.CloseBraceToken);
+                return node.Update(openBraceToken, fields, closeBraceToken);
+            }
+            else
+            {
+                return base.VisitTableConstructorExpression(node);
+            }
+        }
+
+        private static bool IsMultiLineNode(SyntaxNode node)
+        {
+            var lineSpan = node.GetLocation().GetLineSpan();
+            return lineSpan.StartLinePosition.Line != lineSpan.EndLinePosition.Line;
         }
     }
 }
