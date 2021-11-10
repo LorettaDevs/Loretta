@@ -9,11 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add better formatting for tables when they're multiline.
 
 ### Fixed
+#### Scoping
 - Fix `SimpleFunctionName` handling to:
   - Not always add it as a write when it's part of a composite name.
   - Not assign the simple name variable to the entire name when it's a composite one.
+
+#### Formatting
 - Fix formatting of `:` (`a:b` was being turned into `a : b`).
 - Fix multiple line breaks being inserted when formatting.
+- Fix line breaks not being added after single line comments.
 
 ## v0.2.5
 ### Added

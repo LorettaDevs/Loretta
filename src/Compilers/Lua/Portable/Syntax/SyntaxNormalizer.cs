@@ -190,8 +190,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
                     // check if there's a separator or a line break needed between the trivia itself
                     var tokenParent = trivia.Token.Parent;
-                    var needsSeparator = (currentTriviaList.Count > 0 && NeedsSeparatorBetween(currentTriviaList.Last()) && !EndsInLineBreak(currentTriviaList.Last()))
-                                           || (currentTriviaList.Count == 0 && isTrailing);
+                    var needsSeparator = currentTriviaList.Count == 0 && isTrailing;
                     var needsLineBreak = NeedsLineBreakBefore(trivia) || (currentTriviaList.Count > 0 && NeedsLineBreakBetween(currentTriviaList.Last(), trivia, isTrailing));
 
                     if (needsLineBreak && !_afterLineBreak)
@@ -205,7 +204,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                     {
                         if (!_afterIndentation && NeedsIndentAfterLineBreak(trivia))
                         {
-                            currentTriviaList.Add(GetIndentation(GetIndentationDepth(trivia)));
+                            currentTriviaList.Add(GetIndentation(GetIndentationDepth()));
                             _afterIndentation = true;
                         }
                     }
@@ -224,6 +223,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                     else
                     {
                         currentTriviaList.Add(trivia);
+                    }
+
+                    if (NeedsLineBreakAfter(trivia))
+                    {
+                        if (!isTrailing)
+                        {
+                            currentTriviaList.Add(GetEndOfLine());
+                            _afterLineBreak = true;
+                            _afterIndentation = false;
+                        }
+                    }
+                    else
+                    {
+                        _afterLineBreak = EndsInLineBreak(trivia);
                     }
                 } // end foreach
 
@@ -266,8 +279,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             }
         }
 
-        private bool IsLastTokenOnLine(SyntaxToken token) =>
-            token.TrailingTrivia.Any(SyntaxKind.EndOfLineTrivia) || token.GetNextToken().LeadingTrivia.Any(SyntaxKind.EndOfLineTrivia);
+        private static bool IsLastTokenOnLine(SyntaxToken token) =>
+            token.TrailingTrivia.Last().IsKind(SyntaxKind.EndOfLineTrivia);
 
         private int LineBreaksBetween(SyntaxToken currentToken, SyntaxToken nextToken)
         {
@@ -286,14 +299,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             return _indentationDepth;
         }
 
-        private int GetIndentationDepth(SyntaxTrivia trivia) => GetIndentationDepth();
-
         private SyntaxTrivia GetSpace() => _useElasticTrivia ? SyntaxFactory.ElasticSpace : SyntaxFactory.Space;
 
         private SyntaxTrivia GetEndOfLine() => _eolTrivia;
-
-        // Left here for the case we add preprocessor directives or something similar
-        private static bool NeedsSeparatorBetween(SyntaxTrivia trivia) => false;
 
         private static bool NeedsLineBreakBetween(SyntaxTrivia trivia, SyntaxTrivia nextTrivia, bool isTrailingTrivia)
         {
