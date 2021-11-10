@@ -380,6 +380,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (token.IsKind(SyntaxKind.ColonColonToken) || nextToken.IsKind(SyntaxKind.ColonColonToken))
                 return false;
 
+            // `a[a]` instead of `a [ a ]`
+            if (nextToken.Kind() is SyntaxKind.OpenBracketToken or SyntaxKind.CloseBracketToken
+                || token.Kind() is SyntaxKind.OpenBracketToken)
+            {
+                return false;
+            }
+
             return true;
         }
 
