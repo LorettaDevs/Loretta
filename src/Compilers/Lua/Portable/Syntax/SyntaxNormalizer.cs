@@ -350,7 +350,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 return false;
 
             // generally 'a + b', needs to go here to make it 'b + (a + b)' instead of 'b +(a + b)'
-            if (token.Parent is BinaryExpressionSyntax || nextToken.Parent is BinaryExpressionSyntax or ParenthesizedExpressionSyntax)
+            if (token.Parent is BinaryExpressionSyntax || nextToken.Parent is BinaryExpressionSyntax)
                 return true;
 
             // '(a' instead of '( a'

@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix line breaks not being added after single line comments.
 - Fix formatting of `[` and `]` (`a[a]` was being turned into `a [ a ]`).
 - Fix empty table formatting (`{}` instead of `{ }`).
+- Fix excessive spacing around parenthesis.
 
 #### Syntax
 - Fix missing `SyntaxKind`s for `UnaryExpressionSyntax` and `BinaryExpressionSyntax` in `Syntax.xml`.
