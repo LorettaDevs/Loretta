@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix formatting of `[` and `]` (`a[a]` was being turned into `a [ a ]`).
 - Fix empty table formatting (`{}` instead of `{ }`).
 
+#### Syntax
+- Fix missing `SyntaxKind`s for `UnaryExpressionSyntax` and `BinaryExpressionSyntax` in `Syntax.xml`.
+
 ## v0.2.5
 ### Added
 - Add parameterless ctor of `Script` and `Script.Empty` for easier creation of empty scripts.

@@ -570,17 +570,19 @@
         Creates a new <see cref="UnaryExpressionSyntax" /> node.
       </summary>
     </FactoryComment>
-    <Kind Name="UnaryMinusExpression" />
-    <Kind Name="LogicalNotExpression" />
+    <Kind Name="BitwiseNotExpression" />
     <Kind Name="LengthExpression" />
+    <Kind Name="LogicalNotExpression" />
+    <Kind Name="UnaryMinusExpression" />
     <Field Name="OperatorToken" Type="SyntaxToken">
       <PropertyComment>
         <summary>The operator token.</summary>
       </PropertyComment>
-      <Kind Name="MinusToken" />
-      <Kind Name="NotKeyword" />
       <Kind Name="BangToken" />
       <Kind Name="HashToken" />
+      <Kind Name="MinusToken" />
+      <Kind Name="NotKeyword" />
+      <Kind Name="TildeToken" />
     </Field>
     <Field Name="Operand" Type="ExpressionSyntax">
       <PropertyComment>
@@ -599,20 +601,25 @@
       </summary>
     </FactoryComment>
     <Kind Name="AddExpression" />
-    <Kind Name="SubtractExpression" />
-    <Kind Name="MultiplyExpression" />
-    <Kind Name="DivideExpression" />
-    <Kind Name="ModuloExpression" />
+    <Kind Name="BitwiseAndExpression" />
+    <Kind Name="BitwiseOrExpression" />
     <Kind Name="ConcatExpression" />
+    <Kind Name="DivideExpression" />
     <Kind Name="EqualsExpression" />
-    <Kind Name="NotEqualsExpression" />
-    <Kind Name="LessThanExpression" />
-    <Kind Name="LessThanOrEqualExpression" />
+    <Kind Name="ExclusiveOrExpression" />
+    <Kind Name="ExponentiateExpression" />
     <Kind Name="GreaterThanExpression" />
     <Kind Name="GreaterThanOrEqualExpression" />
+    <Kind Name="LeftShiftExpression" />
+    <Kind Name="LessThanExpression" />
+    <Kind Name="LessThanOrEqualExpression" />
     <Kind Name="LogicalAndExpression" />
     <Kind Name="LogicalOrExpression" />
-    <Kind Name="ExponentiateExpression" />
+    <Kind Name="ModuloExpression" />
+    <Kind Name="MultiplyExpression" />
+    <Kind Name="NotEqualsExpression" />
+    <Kind Name="RightShiftExpression" />
+    <Kind Name="SubtractExpression" />
     <Field Name="Left" Type="ExpressionSyntax">
       <PropertyComment>
         <summary>The expression on the left side of the operator.</summary>
@@ -622,24 +629,29 @@
       <PropertyComment>
         <summary>The operator token.</summary>
       </PropertyComment>
-      <Kind Name="PlusToken" />
-      <Kind Name="MinusToken" />
-      <Kind Name="StarToken" />
-      <Kind Name="SlashToken" />
-      <Kind Name="PercentToken" />
+      <Kind Name="AmpersandAmpersandToken" />
+      <Kind Name="AmpersandToken" />
+      <Kind Name="AndKeyword" />
+      <Kind Name="BangEqualsToken" />
       <Kind Name="DotDotToken" />
       <Kind Name="EqualsEqualsToken" />
-      <Kind Name="TildeEqualsToken" />
-      <Kind Name="BangEqualsToken" />
-      <Kind Name="LessThanToken" />
-      <Kind Name="LessThanEqualsToken" />
-      <Kind Name="GreaterThanToken" />
       <Kind Name="GreaterThanEqualsToken" />
-      <Kind Name="AndKeyword" />
-      <Kind Name="AmpersandAmpersandToken" />
-      <Kind Name="OrKeyword" />
-      <Kind Name="PipePipeToken" />
+      <Kind Name="GreaterThanGreaterThanToken" />
+      <Kind Name="GreaterThanToken" />
       <Kind Name="HatToken" />
+      <Kind Name="LessThanEqualsToken" />
+      <Kind Name="LessThanLessThanToken" />
+      <Kind Name="LessThanToken" />
+      <Kind Name="MinusToken" />
+      <Kind Name="OrKeyword" />
+      <Kind Name="PercentToken" />
+      <Kind Name="PipePipeToken" />
+      <Kind Name="PipeToken" />
+      <Kind Name="PlusToken" />
+      <Kind Name="SlashToken" />
+      <Kind Name="StarToken" />
+      <Kind Name="TildeEqualsToken" />
+      <Kind Name="TildeToken" />
     </Field>
     <Field Name="Right" Type="ExpressionSyntax">
       <PropertyComment>
