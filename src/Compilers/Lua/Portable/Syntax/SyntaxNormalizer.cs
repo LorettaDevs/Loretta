@@ -280,7 +280,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
 
         private static bool IsLastTokenOnLine(SyntaxToken token) =>
-            token.TrailingTrivia.Last().IsKind(SyntaxKind.EndOfLineTrivia);
+            token.TrailingTrivia.Any() && token.TrailingTrivia.Last().IsKind(SyntaxKind.EndOfLineTrivia);
 
         private int LineBreaksBetween(SyntaxToken currentToken, SyntaxToken nextToken)
         {
