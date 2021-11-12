@@ -28,12 +28,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup .NET Core 2.1
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 2.1.x
-        env:
-          DOTNET_INSTALL_DIR: ${{ matrix.installDir }}
       - name: Setup .NET 3.1
         uses: actions/setup-dotnet@v1
         with:
