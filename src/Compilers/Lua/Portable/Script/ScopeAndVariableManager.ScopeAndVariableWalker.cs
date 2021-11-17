@@ -38,7 +38,7 @@ namespace Loretta.CodeAnalysis.Lua
             private IFunctionScopeInternal CreateFunctionScope(SyntaxNode node)
             {
                 var scope = new FunctionScope(node, _scopeStack.Peek());
-                _scopes[node] = scope;
+                _scopes.Add(node, scope);
                 _scopeStack.Push(scope);
                 return scope;
             }
@@ -46,7 +46,7 @@ namespace Loretta.CodeAnalysis.Lua
             private IScopeInternal CreateBlockScope(SyntaxNode node)
             {
                 var scope = new Scope(ScopeKind.Block, node, _scopeStack.Peek());
-                _scopes[node] = scope;
+                _scopes.Add(node, scope);
                 _scopeStack.Push(scope);
                 return scope;
             }
