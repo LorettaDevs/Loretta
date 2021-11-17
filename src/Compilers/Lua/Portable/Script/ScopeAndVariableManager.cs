@@ -65,10 +65,8 @@ namespace Loretta.CodeAnalysis.Lua
             IDictionary<SyntaxNode, IGotoLabel> labels)
         {
             var node = tree.GetRoot();
-            var fileScope = new FileScope(node, rootScope);
             var scopesAndVariableWalker = new ScopeAndVariableWalker(
                 rootScope,
-                fileScope,
                 variable,
                 scopes);
             scopesAndVariableWalker.Visit(node);

@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Add validation for `default` immutable arrays of syntax trees in `Script`.
+- `FileScope`s are now only generated for `CompilationUnitSyntax`es.
+
+
+### Fixed
+- Fix `FindScope` not returning anything for root statements.
+- Fix `CompilationUnitSyntax`es not having any associated scopes.
 
 ## v0.2.6
 ### Added

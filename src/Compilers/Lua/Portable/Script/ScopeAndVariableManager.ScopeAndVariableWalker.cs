@@ -10,34 +10,37 @@ namespace Loretta.CodeAnalysis.Lua
         private class ScopeAndVariableWalker : BaseWalker
         {
             private readonly Scope _rootScope;
-            private readonly FileScope _fileScope;
             private readonly IDictionary<SyntaxNode, IVariable> _variables;
             private readonly Stack<IScopeInternal> _scopeStack = new Stack<IScopeInternal>();
 
             public ScopeAndVariableWalker(
                 Scope rootScope,
-                FileScope fileScope,
                 IDictionary<SyntaxNode, IVariable> variables,
                 IDictionary<SyntaxNode, IScope> scopes)
                 : base(scopes)
             {
                 RoslynDebug.AssertNotNull(rootScope);
-                RoslynDebug.AssertNotNull(fileScope);
                 RoslynDebug.AssertNotNull(variables);
                 RoslynDebug.AssertNotNull(scopes);
 
                 _rootScope = rootScope;
-                _fileScope = fileScope;
                 _variables = variables;
                 _scopeStack.Push(rootScope);
-                _scopeStack.Push(fileScope);
             }
 
             private IScopeInternal Scope => _scopeStack.Peek();
 
+            private IFileScopeInternal CreateFileScope(SyntaxNode node)
+            {
+                var scope = new FileScope(node, Scope);
+                _scopes.Add(node, scope);
+                _scopeStack.Push(scope);
+                return scope;
+            }
+
             private IFunctionScopeInternal CreateFunctionScope(SyntaxNode node)
             {
-                var scope = new FunctionScope(node, _scopeStack.Peek());
+                var scope = new FunctionScope(node, Scope);
                 _scopes.Add(node, scope);
                 _scopeStack.Push(scope);
                 return scope;
@@ -45,7 +48,7 @@ namespace Loretta.CodeAnalysis.Lua
 
             private IScopeInternal CreateBlockScope(SyntaxNode node)
             {
-                var scope = new Scope(ScopeKind.Block, node, _scopeStack.Peek());
+                var scope = new Scope(ScopeKind.Block, node, Scope);
                 _scopes.Add(node, scope);
                 _scopeStack.Push(scope);
                 return scope;
@@ -78,6 +81,19 @@ namespace Loretta.CodeAnalysis.Lua
                 return scope.AddParameter(name, parameter);
             }
 
+            public override void VisitCompilationUnit(CompilationUnitSyntax node)
+            {
+                var scope = CreateFileScope(node);
+                try
+                {
+                    Visit(node.Statements);
+                }
+                finally
+                {
+                    PopScope(scope);
+                }
+            }
+
             public override void VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax node)
             {
                 var scope = CreateFunctionScope(node);
@@ -95,8 +111,7 @@ namespace Loretta.CodeAnalysis.Lua
 
             public override void VisitVarArgExpression(VarArgExpressionSyntax node)
             {
-                if (!Scope.TryGetVariable("...", out var variable))
-                    variable = _fileScope.VarArgParameter; // This is redundant.
+                var variable = GetVariableOrCreateGlobal("...");
                 _variables[node] = variable;
                 variable.AddReadLocation(node);
                 variable.AddReferencingScope(Scope);
