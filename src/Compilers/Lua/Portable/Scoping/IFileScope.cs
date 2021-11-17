@@ -19,7 +19,11 @@ namespace Loretta.CodeAnalysis.Lua
         IVariable VarArgParameter { get; }
     }
 
-    internal class FileScope : Scope, IFileScope
+    internal interface IFileScopeInternal : IScopeInternal, IFileScope
+    {
+    }
+
+    internal class FileScope : Scope, IFileScopeInternal
     {
         public FileScope(SyntaxNode node, IScopeInternal? parent) : base(ScopeKind.File, node, parent)
         {
