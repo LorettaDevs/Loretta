@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections.Immutable;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -26,8 +26,14 @@ namespace Loretta.CodeAnalysis.Lua
         /// Initializes a new script.
         /// </summary>
         /// <param name="syntaxTrees"></param>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <paramref name="syntaxTrees"/> is a default array.
+        /// </exception>
         public Script(ImmutableArray<SyntaxTree> syntaxTrees)
         {
+            if (syntaxTrees.IsDefault)
+                throw new ArgumentException("Provided syntax trees array must not be a default one.", nameof(syntaxTrees));
+
             SyntaxTrees = syntaxTrees;
             _scopeAndVariableManager = new ScopeAndVariableManager(syntaxTrees);
         }
@@ -60,7 +66,11 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="kind">The kind to search for.</param>
         /// <returns></returns>
         /// <remarks>
-        ///   The kind parameter searches for a scope of the provided kind or a more generic one as in the following list:
+        ///   <para>
+        ///     If the tree that contains the provided node does not have a <see cref="Syntax.CompilationUnitSyntax"/>, statements on the file
+        ///     root <b>will not have a scope</b>.
+        ///   </para>
+        ///   <para>The kind parameter searches for a scope of the provided kind or a more generic one as in the following list:</para>
         ///   <list type="bullet">
         ///     <item>
         ///       <description>
