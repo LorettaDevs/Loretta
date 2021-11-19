@@ -100,7 +100,7 @@ namespace Loretta.CodeAnalysis.Lua
                 try
                 {
                     foreach (var parameter in node.Parameters.Parameters)
-                        CreateParameter(scope, parameter);
+                        _variables.Add(parameter, CreateParameter(scope, parameter));
                     Visit(node.Body);
                 }
                 finally
@@ -304,7 +304,7 @@ namespace Loretta.CodeAnalysis.Lua
                 try
                 {
                     foreach (var parameter in node.Parameters.Parameters)
-                        CreateParameter(scope, parameter);
+                        _variables.Add(parameter, CreateParameter(scope, parameter));
                     Visit(node.Body);
                 }
                 finally
@@ -334,7 +334,7 @@ namespace Loretta.CodeAnalysis.Lua
                 try
                 {
                     foreach (var parameter in node.Parameters.Parameters)
-                        CreateParameter(scope, parameter);
+                        _variables.Add(parameter, CreateParameter(scope, parameter));
                     Visit(node.Body);
                 }
                 finally

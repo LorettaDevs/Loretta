@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Fix parameters not having an `IVariable` associated with them.
+
 ## v0.2.7-beta.1
 ### Added
 - Add note about non-`CompilationUnitSyntax` rooted trees in `Script`.
