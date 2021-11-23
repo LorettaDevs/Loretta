@@ -112,7 +112,7 @@ namespace Loretta.CodeAnalysis.Lua
             public override void VisitVarArgExpression(VarArgExpressionSyntax node)
             {
                 var variable = GetVariableOrCreateGlobal("...");
-                _variables[node] = variable;
+                _variables.Add(node, variable);
                 variable.AddReadLocation(node);
                 variable.AddReferencingScope(Scope);
                 Scope.AddReferencedVariable(variable);
@@ -121,7 +121,7 @@ namespace Loretta.CodeAnalysis.Lua
             public override void VisitIdentifierName(IdentifierNameSyntax node)
             {
                 var variable = GetVariableOrCreateGlobal(node.Name);
-                _variables[node] = variable;
+                _variables.Add(node, variable);
                 variable.AddReadLocation(node);
                 variable.AddReferencingScope(Scope);
                 Scope.AddReferencedVariable(variable);
@@ -138,7 +138,7 @@ namespace Loretta.CodeAnalysis.Lua
                     if (assignee is IdentifierNameSyntax identifierName)
                     {
                         var variable = GetVariableOrCreateGlobal(identifierName.Name);
-                        _variables[assignee] = variable;
+                        _variables.Add(assignee, variable);
                         variable.AddWriteLocation(node);
                         variable.AddReferencingScope(Scope);
                         Scope.AddReferencedVariable(variable);
@@ -158,7 +158,7 @@ namespace Loretta.CodeAnalysis.Lua
                 if (node.Variable is IdentifierNameSyntax identifierName)
                 {
                     var variable = GetVariableOrCreateGlobal(identifierName.Name);
-                    _variables[identifierName] = variable;
+                    _variables.Add(identifierName, variable);
                     variable.AddWriteLocation(node);
                     variable.AddReferencingScope(Scope);
                     Scope.AddReferencedVariable(variable);
@@ -180,7 +180,7 @@ namespace Loretta.CodeAnalysis.Lua
                 try
                 {
                     var variable = scope.CreateVariable(VariableKind.Iteration, node.Identifier.Name, node);
-                    _variables[node.Identifier] = variable;
+                    _variables.Add(node.Identifier, variable);
                     Visit(node.Body);
                 }
                 finally
@@ -199,7 +199,7 @@ namespace Loretta.CodeAnalysis.Lua
                     foreach (var identifierName in node.Identifiers)
                     {
                         var variable = scope.CreateVariable(VariableKind.Iteration, identifierName.Name, node);
-                        _variables[identifierName] = variable;
+                        _variables.Add(identifierName, variable);
                     }
                     Visit(node.Body);
                 }
@@ -285,7 +285,7 @@ namespace Loretta.CodeAnalysis.Lua
                 foreach (var name in node.Names)
                 {
                     var variable = Scope.CreateVariable(VariableKind.Local, name.Name, node);
-                    _variables[name] = variable;
+                    _variables.Add(name, variable);
                     variable.AddWriteLocation(node);
                     variable.AddReferencingScope(Scope);
                     Scope.AddReferencedVariable(variable);
@@ -295,7 +295,7 @@ namespace Loretta.CodeAnalysis.Lua
             public override void VisitLocalFunctionDeclarationStatement(LocalFunctionDeclarationStatementSyntax node)
             {
                 var variable = Scope.CreateVariable(VariableKind.Local, node.Name.Name, node);
-                _variables[node.Name] = variable;
+                _variables.Add(node.Name, variable);
                 variable.AddWriteLocation(node);
                 variable.AddReferencingScope(Scope);
                 Scope.AddReferencedVariable(variable);
@@ -316,7 +316,7 @@ namespace Loretta.CodeAnalysis.Lua
             public override void VisitSimpleFunctionName(SimpleFunctionNameSyntax node)
             {
                 var variable = GetVariableOrCreateGlobal(node.Name.Text);
-                _variables[node] = variable;
+                _variables.Add(node, variable);
 
                 if (node.Parent is FunctionDeclarationStatementSyntax)
                     variable.AddWriteLocation(node);
