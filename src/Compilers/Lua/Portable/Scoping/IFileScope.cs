@@ -11,7 +11,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The implicit <c>args</c> that's available in all files.
         /// </summary>
-        IVariable ArgsVariable { get; }
+        IVariable ArgVariable { get; }
 
         /// <summary>
         /// The implicit vararg that's available in all files
@@ -27,13 +27,13 @@ namespace Loretta.CodeAnalysis.Lua
     {
         public FileScope(SyntaxNode node, IScopeInternal? parent) : base(ScopeKind.File, node, parent)
         {
-            ArgsVariable = CreateVariable(VariableKind.Parameter, "args");
+            ArgVariable = CreateVariable(VariableKind.Parameter, "arg");
             VarArgParameter = CreateVariable(VariableKind.Parameter, "...");
         }
 
-        public IVariableInternal ArgsVariable { get; }
+        public IVariableInternal ArgVariable { get; }
 
-        IVariable IFileScope.ArgsVariable => ArgsVariable;
+        IVariable IFileScope.ArgVariable => ArgVariable;
 
         public IVariableInternal VarArgParameter { get; }
 
