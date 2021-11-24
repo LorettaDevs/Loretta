@@ -80,6 +80,10 @@ namespace Loretta.CodeAnalysis.Lua
                 };
                 return scope.AddParameter(name, parameter);
             }
+            private static IVariableInternal CreateParameter(
+                IFunctionScopeInternal scope,
+                string name) =>
+                scope.AddParameter(name, null);
 
             public override void VisitCompilationUnit(CompilationUnitSyntax node)
             {
@@ -333,6 +337,8 @@ namespace Loretta.CodeAnalysis.Lua
                 var scope = CreateFunctionScope(node);
                 try
                 {
+                    if (node.Name.IsKind(SyntaxKind.MethodFunctionName))
+                        CreateParameter(scope, "self");
                     foreach (var parameter in node.Parameters.Parameters)
                         _variables.Add(parameter, CreateParameter(scope, parameter));
                     Visit(node.Body);

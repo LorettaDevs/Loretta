@@ -25,7 +25,7 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal interface IFunctionScopeInternal : IScopeInternal, IFunctionScope
     {
-        IVariableInternal AddParameter(string name, SyntaxNode declaration);
+        IVariableInternal AddParameter(string name, SyntaxNode? declaration);
     }
 
     internal class FunctionScope : Scope, IFunctionScopeInternal
@@ -47,7 +47,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         IEnumerable<IVariable> IFunctionScope.CapturedVariables => CapturedVariables;
 
-        public IVariableInternal AddParameter(string name, SyntaxNode declaration)
+        public IVariableInternal AddParameter(string name, SyntaxNode? declaration)
         {
             var parameter = CreateVariable(VariableKind.Parameter, name, declaration);
             _parameters.Add(parameter);
