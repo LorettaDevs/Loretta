@@ -316,8 +316,10 @@ namespace Loretta.CLI
                     },
                     EnableRaisingEvents = true
                 };
+#pragma warning disable CA1416 // Validate platform compatibility
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                     proc.StartInfo.LoadUserProfile = true;
+#pragma warning restore CA1416 // Validate platform compatibility
                 proc.OutputDataReceived += (_, args) =>
                 {
                     if (args.Data is not null)
@@ -378,8 +380,10 @@ namespace Loretta.CLI
                     },
                     EnableRaisingEvents = true
                 };
+#pragma warning disable CA1416 // Validate platform compatibility
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                     proc.StartInfo.LoadUserProfile = true;
+#pragma warning restore CA1416 // Validate platform compatibility
                 proc.OutputDataReceived += (_, args) =>
                 {
                     if (args.Data is not null)
