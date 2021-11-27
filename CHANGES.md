@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Removed
+- Removed unused classes we got when vendoring Roslyn, of which, the following were public:
+	- `Loretta.CodeAnalysis.SourceFileResolver`;
+	- `Loretta.CodeAnalysis.AnalyzerConfig`;
+	- `Loretta.CodeAnalysis.AnalyzerConfigOptionsResult`;
+	- `Loretta.CodeAnalysis.AnalyzerConfigSet`;
+	- `Loretta.CodeAnalysis.ErrorLogOptions`;
+	- `Loretta.CodeAnalysis.SarifVersion`;
+	- `Loretta.CodeAnalysis.SarifVersionFacts`.
+- The following references were removed:
+	- `Microsoft.CodeAnalysis.Analyzers`;
+	- `System.Reflection.Metadata`.
+- The following references were removed for the .NET Core 3.1 build:
+	- `System.Collections.Immutable`;
+	- `System.Memory`;
+	- `System.Runtime.CompilerServices.Unsafe`;
+	- `System.Threading.Tasks.Extensions`.
 
 ## v0.2.7-beta.2
 ### Added

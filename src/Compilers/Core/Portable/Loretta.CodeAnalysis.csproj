@@ -25,19 +25,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--
-      Analyzers that will be used to analyze projects that references 
-      Loretta.CodeAnalysis project or Loretta.CodeAnalysis.Common package.
-      
-      Note: PrivateAssets="ContentFiles" ensures that projects referencing Loretta.CodeAnalysis.Common package 
-      will import everything but content files from Loretta.CodeAnalysis.Analyzers, specifically, analyzers.
-    -->
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0" PrivateAssets="ContentFiles" />
-    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
-    <PackageReference Include="System.Memory" Version="4.5.4" />
-    <PackageReference Include="System.Reflection.Metadata" Version="5.0.0" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+    <PackageReference Include="System.Memory" Version="4.5.4" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.1" />
     <PackageReference Include="Nullable" Version="1.3.0">
       <PrivateAssets>all</PrivateAssets>
@@ -45,6 +36,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="Loretta.CLI" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
@@ -54,6 +46,7 @@
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.StatisticsCollector" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Experimental" />
   </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Update="CodeAnalysisResources.resx" GenerateSource="true">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -64,6 +57,7 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
   <ItemGroup>
     <Compile Update="CodeAnalysisResources.Designer.cs">
       <DesignTime>True</DesignTime>

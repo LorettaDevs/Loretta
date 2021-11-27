@@ -5,7 +5,6 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection.Metadata;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
@@ -178,26 +177,6 @@ namespace Loretta.CodeAnalysis
         public bool IsBad => Discriminator == ConstantValueTypeDiscriminator.Bad;
 
         public bool IsNull => ReferenceEquals(this, Nil);
-
-        public void Serialize(BlobBuilder writer)
-        {
-            switch (Discriminator)
-            {
-                case ConstantValueTypeDiscriminator.Boolean:
-                    writer.WriteBoolean(BooleanValue);
-                    break;
-
-                case ConstantValueTypeDiscriminator.Double:
-                    writer.WriteDouble(DoubleValue);
-                    break;
-
-                case ConstantValueTypeDiscriminator.Int64:
-                    writer.WriteInt64(Int64Value);
-                    break;
-
-                default: throw ExceptionUtilities.UnexpectedValue(Discriminator);
-            }
-        }
 
         public override string ToString()
         {
