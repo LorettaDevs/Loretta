@@ -103,5 +103,5 @@ They have everything from [`IScope`s](#IScope) and also:
 ##### `IFileScope`
 `IFileScope`s are scopes for entire files (`LuaSyntaxTree`s).
 They have everything from [`IScope`s](#IScope) and also:
-- `IFileScope.ArgsVariable` - The implicit `args` variable available in all lua script files;
+- `IFileScope.ArgVariable` - The implicit `arg` variable available in all lua script files;
 - `IFileScope.VarArgParameter` - The implicit vararg parameter available in all lua script files.
