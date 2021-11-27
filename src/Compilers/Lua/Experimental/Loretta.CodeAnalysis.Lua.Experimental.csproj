@@ -8,10 +8,6 @@
     <Description>Experimental code that might become part of Loretta.CodeAnalysis.Lua.</Description>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <DebugType>Full</DebugType>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Portable\Loretta.CodeAnalysis.Lua.csproj" />
   </ItemGroup>
