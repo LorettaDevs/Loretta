@@ -15,21 +15,9 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
 5. Lua 5.3 bitwise operators.
 
 ## Installing Loretta v0.2
-We have a MyGet feed with prebuild binaries: https://www.myget.org/gallery/loretta
-To use it, add the following feed to your `nuget.config`: `https://www.myget.org/F/loretta/api/v3/index.json`
-
-`nuget.config` example:
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <!--To inherit the global NuGet package sources remove the <clear/> line below -->
-    <clear />
-    <add key="nuget" value="https://api.nuget.org/v3/index.json" />
-    <add key="loretta" value="https://www.myget.org/F/loretta/api/v3/index.json" />
-  </packageSources>
-</configuration>
-```
+We have two NuGet packages:
+- Main Package: [![Loretta.CodeAnalysis.Lua (with prereleases)](https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua.svg)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua/)
+- Experimental Package: [![Loretta.CodeAnalysis.Lua (with prereleases)](https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua.Experimental.svg)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua.Experimental/)
 
 ## Using Loretta v0.2
 
