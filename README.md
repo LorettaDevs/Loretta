@@ -16,8 +16,13 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
 
 ## Installing Loretta v0.2
 We have two NuGet packages:
-- Main Package: [![Loretta.CodeAnalysis.Lua (with prereleases)](https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua.svg)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua/)
-- Experimental Package: [![Loretta.CodeAnalysis.Lua (with prereleases)](https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua.Experimental.svg)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua.Experimental/)
+| Package      | Stable                                                                                                                                                                                                     | Latest                                                                                                                                                                                                               |
+|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Main         | [![Loretta.CodeAnalysis.Lua](https://img.shields.io/nuget/v/Loretta.CodeAnalysis.Lua?style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua)                                        | [![Loretta.CodeAnalysis.Lua](https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua?style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua/latest)                                        |
+| Experimental | [![Loretta.CodeAnalysis.Lua.Experimental](https://img.shields.io/nuget/v/Loretta.CodeAnalysis.Lua.Experimental?style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua.Experimental) | [![Loretta.CodeAnalysis.Lua.Experimental](https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua.Experimental?style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua.Experimental/latest) |
+
+The experimental package currently contains the following experimental features:
+- Constant Folder.
 
 ## Using Loretta v0.2
 
