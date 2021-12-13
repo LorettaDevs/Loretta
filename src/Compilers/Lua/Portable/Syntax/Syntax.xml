@@ -404,7 +404,7 @@
 
   <Node Name="TableConstructorExpressionSyntax" Base="ExpressionSyntax">
     <TypeComment>
-      <summary>Represents a table constructor expresion.</summary>
+      <summary>Represents a table constructor expression.</summary>
     </TypeComment>
     <FactoryComment>
       <summary>
