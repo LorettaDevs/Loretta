@@ -26,11 +26,11 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
             base.VisitAssignmentStatement(node);
         }
 
-        public override void VisitEmtpyStatement(EmtpyStatementSyntax node)
+        public override void VisitEmptyStatement(EmptyStatementSyntax node)
         {
             if (!_featureStatisticsBuilder.HasEmptyStatements)
                 _featureStatisticsBuilder.HasEmptyStatements = true;
-            base.VisitEmtpyStatement(node);
+            base.VisitEmptyStatement(node);
         }
 
         public override void VisitUnaryExpression(UnaryExpressionSyntax node)

@@ -1581,16 +1581,16 @@
     </Field>
   </Node>
 
-  <Node Name="EmtpyStatementSyntax" Base="StatementSyntax">
+  <Node Name="EmptyStatementSyntax" Base="StatementSyntax">
     <TypeComment>
       <summary>An empty statement.</summary>
     </TypeComment>
     <FactoryComment>
       <summary>
-        Creates a new <see cref="EmtpyStatementSyntax" /> node.
+        Creates a new <see cref="EmptyStatementSyntax" /> node.
       </summary>
     </FactoryComment>
-    <Kind Name="EmtpyStatement" />
+    <Kind Name="EmptyStatement" />
     <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
       <PropertyComment>
         <summary>The semicolon at the end of the statement (if any).</summary>

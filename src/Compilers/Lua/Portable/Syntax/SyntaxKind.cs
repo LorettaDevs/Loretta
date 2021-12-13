@@ -666,7 +666,7 @@ namespace Loretta.CodeAnalysis.Lua
         GotoLabelStatement = 2069,
         ExpressionStatement = 2070,
         StatementList = 2072,
-        EmtpyStatement = 2073,
+        EmptyStatement = 2073,
 
         // Big gap 2073-3001 (insert new nodes here)
 

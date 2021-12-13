@@ -161,7 +161,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         return ParseReturnStatement();
 
                     case SyntaxKind.SemicolonToken when Options.SyntaxOptions.AcceptEmptyStatements:
-                        return SyntaxFactory.EmtpyStatement(EatToken(SyntaxKind.SemicolonToken));
+                        return SyntaxFactory.EmptyStatement(EatToken(SyntaxKind.SemicolonToken));
 
                     default:
                     {
