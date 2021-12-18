@@ -520,7 +520,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (node.ElseClause is not null && prevNode is not null)
                 AddLineBreaksAfterToken(prevNode.GetLastToken(), 1);
 
-            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.EndKeyword);
+            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.GetLastToken());
 
             return base.VisitIfStatement(node);
         }
@@ -540,14 +540,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public override SyntaxNode? VisitDoStatement(DoStatementSyntax node)
         {
             AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.EndKeyword);
+            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.GetLastToken());
             return base.VisitDoStatement(node);
         }
 
         public override SyntaxNode? VisitWhileStatement(WhileStatementSyntax node)
         {
             AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.EndKeyword);
+            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.GetLastToken());
             return base.VisitWhileStatement(node);
         }
 
@@ -561,28 +561,28 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public override SyntaxNode? VisitNumericForStatement(NumericForStatementSyntax node)
         {
             AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.EndKeyword);
+            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.GetLastToken());
             return base.VisitNumericForStatement(node);
         }
 
         public override SyntaxNode? VisitGenericForStatement(GenericForStatementSyntax node)
         {
             AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.EndKeyword);
+            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.GetLastToken());
             return base.VisitGenericForStatement(node);
         }
 
         public override SyntaxNode? VisitFunctionDeclarationStatement(FunctionDeclarationStatementSyntax node)
         {
             AddLineBreaksAfterToken(node.Parameters.CloseParenthesisToken, 1);
-            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.EndKeyword);
+            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.GetLastToken());
             return base.VisitFunctionDeclarationStatement(node);
         }
 
         public override SyntaxNode? VisitLocalFunctionDeclarationStatement(LocalFunctionDeclarationStatementSyntax node)
         {
             AddLineBreaksAfterToken(node.Parameters.CloseParenthesisToken, 1);
-            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.EndKeyword);
+            AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(node, node.GetLastToken());
             return base.VisitLocalFunctionDeclarationStatement(node);
         }
 
