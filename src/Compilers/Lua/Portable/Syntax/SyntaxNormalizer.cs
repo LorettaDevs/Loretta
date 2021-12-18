@@ -344,6 +344,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (nextToken.IsKind(SyntaxKind.SemicolonToken))
                 return false;
 
+            if (token.IsKind(SyntaxKind.OpenParenthesisToken) || nextToken.IsKind(SyntaxKind.CloseParenthesisToken))
+                return false;
+
             if (nextToken.Parent.IsKind(SyntaxKind.AnonymousFunctionExpression))
                 return true;
 
