@@ -338,6 +338,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (token.Parent is null || nextToken.IsKind(SyntaxKind.None))
                 return false;
 
+            if (nextToken.IsKind(SyntaxKind.SemicolonToken))
+                return false;
+
             if (nextToken.Parent.IsKind(SyntaxKind.AnonymousFunctionExpression))
                 return true;
 
