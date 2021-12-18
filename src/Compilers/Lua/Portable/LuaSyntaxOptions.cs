@@ -32,6 +32,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptBitwiseOperators: false,
             acceptWhitespaceEscape: false,
             acceptUnicodeEscape: false,
+            acceptIfThenElseExpressions: false,
             continueType: ContinueType.None);
 
         /// <summary>
@@ -70,6 +71,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptBitwiseOperators: false,
             acceptWhitespaceEscape: true,
             acceptUnicodeEscape: false,
+            acceptIfThenElseExpressions: false,
             continueType: ContinueType.None);
 
         /// <summary>
@@ -106,6 +108,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptBitwiseOperators: true,
             acceptWhitespaceEscape: true,
             acceptUnicodeEscape: true,
+            acceptIfThenElseExpressions: true,
             continueType: ContinueType.ContextualKeyword);
 
         /// <summary>
@@ -128,6 +131,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptBitwiseOperators: true,
             acceptWhitespaceEscape: true,
             acceptUnicodeEscape: true,
+            acceptIfThenElseExpressions: true,
             continueType: ContinueType.ContextualKeyword);
 
         /// <summary>
@@ -163,6 +167,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="acceptBitwiseOperators"><inheritdoc cref="AcceptBitwiseOperators" path="/summary"/></param>
         /// <param name="acceptWhitespaceEscape"><inheritdoc cref="AcceptWhitespaceEscape" path="/summary"/></param>
         /// <param name="acceptUnicodeEscape"><inheritdoc cref="AcceptUnicodeEscape" path="/summary"/></param>
+        /// <param name="acceptIfThenElseExpressions"><inheritdoc cref="AcceptIfThenElseExpressions" path="/summary"/></param>
         /// <param name="continueType"><inheritdoc cref="ContinueType" path="/summary" /></param>
         public LuaSyntaxOptions(
             bool acceptBinaryNumbers,
@@ -180,6 +185,7 @@ namespace Loretta.CodeAnalysis.Lua
             bool acceptBitwiseOperators,
             bool acceptWhitespaceEscape,
             bool acceptUnicodeEscape,
+            bool acceptIfThenElseExpressions,
             ContinueType continueType)
         {
             AcceptBinaryNumbers = acceptBinaryNumbers;
@@ -197,6 +203,7 @@ namespace Loretta.CodeAnalysis.Lua
             AcceptBitwiseOperators = acceptBitwiseOperators;
             AcceptWhitespaceEscape = acceptWhitespaceEscape;
             AcceptUnicodeEscape = acceptUnicodeEscape;
+            AcceptIfThenElseExpressions = acceptIfThenElseExpressions;
             ContinueType = continueType;
         }
 
@@ -284,6 +291,11 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptUnicodeEscape { get; }
 
         /// <summary>
+        /// Whether to <b>not</b> error when encountering if-then-else expressions.
+        /// </summary>
+        public bool AcceptIfThenElseExpressions { get; }
+
+        /// <summary>
         /// The type of continue to be recognized by the parser.
         /// </summary>
         public ContinueType ContinueType { get; }
@@ -351,6 +363,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// <inheritdoc cref="AcceptUnicodeEscape" path="/summary"/> If None uses the value of
         /// <see cref="AcceptUnicodeEscape"/>.
         /// </param>
+        /// <param name="acceptIfThenElseExpressions">
+        /// <inheritdoc cref="AcceptIfThenElseExpressions" path="/summary"/> If None uses the value of
+        /// <see cref="AcceptIfThenElseExpressions"/>.
+        /// </param>
         /// <param name="continueType">
         /// <inheritdoc cref="ContinueType" path="/summary" /> If None uses the value of <see
         /// cref="ContinueType" />.
@@ -372,6 +388,7 @@ namespace Loretta.CodeAnalysis.Lua
             Option<bool> acceptBitwiseOperators = default,
             Option<bool> acceptWhitespaceEscape = default,
             Option<bool> acceptUnicodeEscape = default,
+            Option<bool> acceptIfThenElseExpressions = default,
             Option<ContinueType> continueType = default) =>
             new LuaSyntaxOptions(
                 acceptBinaryNumbers.UnwrapOr(AcceptBinaryNumbers),
@@ -389,6 +406,7 @@ namespace Loretta.CodeAnalysis.Lua
                 acceptBitwiseOperators.UnwrapOr(AcceptBitwiseOperators),
                 acceptWhitespaceEscape.UnwrapOr(AcceptWhitespaceEscape),
                 acceptUnicodeEscape.UnwrapOr(AcceptUnicodeEscape),
+                acceptIfThenElseExpressions.UnwrapOr(AcceptIfThenElseExpressions),
                 continueType.UnwrapOr(ContinueType));
 
         /// <inheritdoc/>

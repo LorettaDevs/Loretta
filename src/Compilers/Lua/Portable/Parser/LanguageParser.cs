@@ -696,6 +696,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 SyntaxKind.DotDotDotToken => ParseVarArgExpression(),
                 SyntaxKind.OpenBraceToken => ParseTableConstructorExpression(),
                 SyntaxKind.FunctionKeyword when PeekToken(1).Kind == SyntaxKind.OpenParenthesisToken => ParseAnonymousFunctionExpression(),
+                SyntaxKind.IfKeyword => ParseIfThenElseExpression(),
                 _ => ParsePrefixOrVariableExpression(),
             };
         }
@@ -978,6 +979,42 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var value = ParseExpression();
                 return SyntaxFactory.UnkeyedTableField(value);
             }
+        }
+
+        private IfThenElseExpressionSyntax ParseIfThenElseExpression()
+        {
+            var ifKeyword = EatToken(SyntaxKind.IfKeyword);
+            var condition = ParseExpression();
+            var thenKeyword = EatToken(SyntaxKind.ThenKeyword);
+            var body = ParseExpression();
+
+            var elseIfClausesBuilder = _pool.Allocate<ElseIfThenExpressionClauseSyntax>();
+            while (CurrentToken.Kind is SyntaxKind.ElseIfKeyword)
+            {
+                var elseIfKeyword = EatToken(SyntaxKind.ElseIfKeyword);
+                var elseIfCondition = ParseExpression();
+                var elseIfThenKeyword = EatToken(SyntaxKind.ThenKeyword);
+                var elseIfBody = ParseExpression();
+
+                elseIfClausesBuilder.Add(SyntaxFactory.ElseIfThenExpressionClause(
+                    elseIfKeyword,
+                    elseIfCondition,
+                    elseIfThenKeyword,
+                    elseIfBody));
+            }
+
+            var elseKeyword = EatToken(SyntaxKind.ElseKeyword);
+            var elseBody = ParseExpression();
+
+            var elseIfClauses = _pool.ToListAndFree(elseIfClausesBuilder);
+            return SyntaxFactory.IfThenElseExpression(
+                ifKeyword,
+                condition,
+                thenKeyword,
+                body,
+                elseIfClauses,
+                elseKeyword,
+                elseBody);
         }
 
         internal TNode ConsumeUnexpectedTokens<TNode>(TNode node) where TNode : LuaSyntaxNode

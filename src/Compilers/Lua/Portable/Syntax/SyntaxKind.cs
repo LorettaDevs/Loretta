@@ -668,7 +668,11 @@ namespace Loretta.CodeAnalysis.Lua
         StatementList = 2072,
         EmptyStatement = 2073,
 
-        // Big gap 2073-3001 (insert new nodes here)
+        // Control Flow Expressions
+        IfThenElseExpression = 2074,
+        ElseIfThenExpressionClause = 2075,
+
+        // Big gap 2075-3001 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,

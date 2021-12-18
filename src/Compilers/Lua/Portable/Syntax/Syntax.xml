@@ -1598,7 +1598,88 @@
       <Kind Name="SemicolonToken" />
     </Field>
   </Node>
-
+  <Node Name="IfThenElseExpressionSyntax" Base="ExpressionSyntax">
+    <TypeComment>
+      <summary>And if-then-else expression.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="IfThenElseExpressionSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="IfThenElseExpression" />  
+    <Field Name="IfKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'if' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="IfKeyword" />
+    </Field> 
+    <Field Name="Condition" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The if's condition.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="ThenKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'then' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ThenKeyword" />
+    </Field>
+    <Field Name="Body" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The if's body.</summary>
+      </PropertyComment>
+    </Field>  
+    <Field Name="ElseIfThenExpressionClause" Type="SyntaxList&lt;ElseIfThenExpressionClauseSyntax&gt;">
+      <PropertyComment>
+        <summary>The elseif clauses.</summary>
+      </PropertyComment>
+    </Field>    
+    <Field Name="ElseKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'else' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ElseKeyword" />
+    </Field>
+    <Field Name="ElseClause" Type="ExpressionSyntax" Optional="true">
+      <PropertyComment>
+        <summary>The else clause.</summary>
+      </PropertyComment>
+    </Field>  
+  </Node>
+  <Node Name="ElseIfThenExpressionClauseSyntax" Base="LuaSyntaxNode">
+    <TypeComment>
+      <summary>An elseif clause in an if-then-else expression.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="ElseIfThenExpressionClauseSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="ElseIfThenExpressionClause" />
+    <Field Name="ElseIfKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'elseif' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ElseIfKeyword" />
+    </Field>
+    <Field Name="Condition" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The elseif's condition.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="ThenKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'then' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ThenKeyword" />
+    </Field>
+    <Field Name="Body" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The elseif's body.</summary>
+      </PropertyComment>
+    </Field>
+  </Node>
   <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The node containing all of the file's contents.</summary>
