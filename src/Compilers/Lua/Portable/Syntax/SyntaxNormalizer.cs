@@ -338,6 +338,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (token.Parent is null || nextToken.IsKind(SyntaxKind.None))
                 return false;
 
+            if (token.IsKind(SyntaxKind.EqualsToken) || (token.Parent is CompoundAssignmentStatementSyntax compound && compound.AssignmentOperatorToken == token))
+                return true;
+
             if (nextToken.IsKind(SyntaxKind.SemicolonToken))
                 return false;
 
