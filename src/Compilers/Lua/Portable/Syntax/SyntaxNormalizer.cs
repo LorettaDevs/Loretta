@@ -344,6 +344,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (nextToken.IsKind(SyntaxKind.EndOfFileToken))
                 return false;
 
+            // '- -' instead of '--'
+            if (token.IsKind(SyntaxKind.MinusToken) && nextToken.IsKind(SyntaxKind.MinusToken))
+                return true;
+
             // '+1' instead of '+ 1'
             // but 'not a' instead of 'nota'
             if (token.Parent is UnaryExpressionSyntax && !SyntaxFacts.IsKeyword(token.Kind()))
