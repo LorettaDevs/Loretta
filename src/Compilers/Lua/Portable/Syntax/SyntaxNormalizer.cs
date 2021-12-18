@@ -133,7 +133,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                         mustBeIndented: needsIndentation,
                         mustHaveSeparator: false,
                         lineBreaksAfter: 0,
-                        lineBreaksBefore: numLineBreaksBefore));
+                        lineBreaksBefore: 0));
 
                 var nextToken = GetNextRelevantToken(token);
 
