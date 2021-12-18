@@ -350,6 +350,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (token.IsKind(SyntaxKind.OpenParenthesisToken) || nextToken.IsKind(SyntaxKind.CloseParenthesisToken))
                 return false;
 
+            if (token.IsKind(SyntaxKind.IfKeyword) || token.IsKind(SyntaxKind.ElseIfKeyword) || token.IsKind(SyntaxKind.UntilKeyword) || token.IsKind(SyntaxKind.WhileKeyword))
+                return true;
+
             if (nextToken.Parent.IsKind(SyntaxKind.AnonymousFunctionExpression))
                 return true;
 
