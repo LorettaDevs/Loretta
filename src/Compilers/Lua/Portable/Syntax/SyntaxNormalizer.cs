@@ -477,7 +477,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
 
         private void AddCorrectNumberOfLineBreaksToTokenIfNodeIsNotLast(SyntaxNode node, SyntaxToken token) =>
-            AddLineBreaksAfterToken(token, _lastStatementsInBlocks.Contains(node) ? 1 : 2);
+            AddLineBreaksAfterToken(token, 1);
 
         public override SyntaxNode? VisitParameterList(ParameterListSyntax node)
         {
