@@ -528,6 +528,8 @@ namespace Loretta.CodeAnalysis.Lua
         VarArgExpression = 2019,
         [ExtraCategories(SyntaxKindCategory.VariableExpression)]
         IdentifierName = 2020,
+        IfExpression = 2074,
+        ElseIfExpressionClause = 2075,
 
         // Unary Expressions
         [ExtraCategories(SyntaxKindCategory.UnaryExpression)]
@@ -668,7 +670,7 @@ namespace Loretta.CodeAnalysis.Lua
         StatementList = 2072,
         EmptyStatement = 2073,
 
-        // Big gap 2073-3001 (insert new nodes here)
+        // Big gap 2076-3001 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,

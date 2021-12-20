@@ -660,6 +660,92 @@
     </Field>
   </Node>
 
+  <Node Name="ElseIfExpressionClauseSyntax" Base="LuaSyntaxNode">
+    <TypeComment>
+      <summary>
+        Represents an elseif clause in an if expression.
+      </summary>
+    </TypeComment>
+    <FactoryComment>
+      Creates a new <see cref="ElseIfExpressionClauseSyntax" /> node.
+    </FactoryComment>
+    <Kind Name="ElseIfExpressionClause" />
+    <Field Name="ElseIfKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'elseif' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ElseIfKeyword" />
+    </Field>
+    <Field Name="Condition" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The elseif's condition.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="ThenKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'then' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ThenKeyword" />
+    </Field>
+    <Field Name="Value" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The value to be returned if the condition is true.</summary>
+      </PropertyComment>
+    </Field>
+  </Node>
+
+  <Node Name="IfExpressionSyntax" Base="ExpressionSyntax">
+    <TypeComment>
+      <summary>
+        Represents Luau's if expression.
+      </summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="IfExpressionSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="IfExpression" />
+    <Field Name="IfKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'if' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="IfKeyword" />
+    </Field>
+    <Field Name="Condition" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The if's condition.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="ThenKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'then' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ThenKeyword" />
+    </Field>
+    <Field Name="TrueValue" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The value that will be returned if condition is true.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="ElseIfClauses" Type="SyntaxList&lt;ElseIfExpressionClauseSyntax&gt;">
+      <PropertyComment>
+        <summary>The elseif clauses.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="ElseKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'else' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ElseKeyword" />
+    </Field>
+    <Field Name="FalseValue" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>The value that will be returned if none of the previous conditions are true.</summary>
+      </PropertyComment>
+    </Field>
+  </Node>
+
   <!-- Prefix Expressions -->
   <AbstractNode Name="PrefixExpressionSyntax" Base="ExpressionSyntax">
     <TypeComment>
