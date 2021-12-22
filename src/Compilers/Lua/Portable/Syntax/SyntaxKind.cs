@@ -668,7 +668,7 @@ namespace Loretta.CodeAnalysis.Lua
         StatementList = 2072,
         EmptyStatement = 2073,
 
-        // Big gap 2076-3001 (insert new nodes here)
+        // Big gap 2082-3001 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,
