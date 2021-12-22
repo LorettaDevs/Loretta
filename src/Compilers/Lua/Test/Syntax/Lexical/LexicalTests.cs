@@ -89,13 +89,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
             var tokens = Lex($"\n{shebang}").ToImmutableArray();
             var expectedBrokenTokens = new[]
             {
-                new ShortToken ( SyntaxKind.HashToken, "#", new TextSpan ( 1, 1 ) ),
-                new ShortToken ( SyntaxKind.BangToken, "!", new TextSpan ( 2, 1 ) ),
-                new ShortToken ( SyntaxKind.SlashToken, "/", new TextSpan ( 3, 1 ) ),
-                new ShortToken ( SyntaxKind.IdentifierToken, "bin", new TextSpan ( 4, 3 ) ),
-                new ShortToken ( SyntaxKind.SlashToken, "/", new TextSpan ( 7, 1 ) ),
-                new ShortToken ( SyntaxKind.IdentifierToken, "bash", new TextSpan ( 8, 4 ) ),
-                new ShortToken ( SyntaxKind.EndOfFileToken, "", new TextSpan ( 12, 0 ) ),
+                new ShortToken(SyntaxKind.HashToken, "#", new TextSpan(1, 1)),
+                new ShortToken(SyntaxKind.BangToken, "!", new TextSpan(2, 1)),
+                new ShortToken(SyntaxKind.SlashToken, "/", new TextSpan(3, 1)),
+                new ShortToken(SyntaxKind.IdentifierToken, "bin", new TextSpan(4, 3)),
+                new ShortToken(SyntaxKind.SlashToken, "/", new TextSpan(7, 1)),
+                new ShortToken(SyntaxKind.IdentifierToken, "bash", new TextSpan(8, 4)),
+                new ShortToken(SyntaxKind.EndOfFileToken, "", new TextSpan(12, 0)),
             };
 
             Assert.Equal(expectedBrokenTokens.Length, tokens.Length);
