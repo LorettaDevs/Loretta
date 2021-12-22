@@ -8,6 +8,7 @@
     <TargetFrameworks>$(TargetFrameworks);net5.0;net6.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
