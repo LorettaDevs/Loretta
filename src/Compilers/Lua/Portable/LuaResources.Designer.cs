@@ -151,6 +151,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expression expected.
+        /// </summary>
+        internal static string ERR_ExpressionExpected {
+            get {
+                return ResourceManager.GetString("ERR_ExpressionExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hexadecimal digit expected.
         /// </summary>
         internal static string ERR_HexDigitExpected {
@@ -241,11 +250,29 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid expression part &apos;{0}&apos;.
+        /// </summary>
+        internal static string ERR_InvalidExpressionPart {
+            get {
+                return ResourceManager.GetString("ERR_InvalidExpressionPart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid number.
         /// </summary>
         internal static string ERR_InvalidNumber {
             get {
                 return ResourceManager.GetString("ERR_InvalidNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid statement.
+        /// </summary>
+        internal static string ERR_InvalidStatement {
+            get {
+                return ResourceManager.GetString("ERR_InvalidStatement", resourceCulture);
             }
         }
         

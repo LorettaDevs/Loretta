@@ -149,6 +149,9 @@
     <value>Escape is too large, the limit is {0}</value>
     <comment>{0} is the numerical limit</comment>
   </data>
+  <data name="ERR_ExpressionExpected" xml:space="preserve">
+    <value>Expression expected</value>
+  </data>
   <data name="ERR_HexDigitExpected" xml:space="preserve">
     <value>Hexadecimal digit expected</value>
   </data>
@@ -180,8 +183,15 @@
   <data name="ERR_InsufficientStack" xml:space="preserve">
     <value>An expression is too long or complex to compile</value>
   </data>
+  <data name="ERR_InvalidExpressionPart" xml:space="preserve">
+    <value>Invalid expression part '{0}'</value>
+    <comment>{0} is the text of the token found</comment>
+  </data>
   <data name="ERR_InvalidNumber" xml:space="preserve">
     <value>Invalid number</value>
+  </data>
+  <data name="ERR_InvalidStatement" xml:space="preserve">
+    <value>Invalid statement</value>
   </data>
   <data name="ERR_InvalidStringEscape" xml:space="preserve">
     <value>Invalid string escape</value>
