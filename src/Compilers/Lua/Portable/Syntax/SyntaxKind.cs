@@ -528,8 +528,8 @@ namespace Loretta.CodeAnalysis.Lua
         VarArgExpression = 2019,
         [ExtraCategories(SyntaxKindCategory.VariableExpression)]
         IdentifierName = 2020,
-        IfExpression = 2074,
-        ElseIfExpressionClause = 2075,
+        IfExpression = 2080,
+        ElseIfExpressionClause = 2081,
 
         // Unary Expressions
         [ExtraCategories(SyntaxKindCategory.UnaryExpression)]
