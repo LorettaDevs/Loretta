@@ -635,12 +635,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var kind = SyntaxFacts.GetCompoundAssignmentStatement(assignmentOperatorToken.Kind).Value;
             var expression = ParseExpression();
             var semicolonToken = TryMatchSemicolon();
-            return SyntaxFactory.CompoundAssignmentStatement(
+
+            var compoundAssignment = SyntaxFactory.CompoundAssignmentStatement(
                 kind,
                 variable,
                 assignmentOperatorToken,
                 expression,
                 semicolonToken);
+            if (!Options.SyntaxOptions.AcceptCompoundAssignment)
+                compoundAssignment = AddError(compoundAssignment, ErrorCode.ERR_CompoundAssignmentNotSupportedInLuaVersion);
+            return compoundAssignment;
         }
 
         internal ExpressionSyntax ParseExpression() =>

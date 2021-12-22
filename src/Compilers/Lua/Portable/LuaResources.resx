@@ -142,6 +142,9 @@
   <data name="ERR_CloseParenExpected" xml:space="preserve">
     <value>) expected</value>
   </data>
+  <data name="ERR_CompoundAssignmentNotSupportedInLuaVersion" xml:space="preserve">
+    <value>Compound assignments are not supported in this lua version</value>
+  </data>
   <data name="ERR_DoubleOverflow" xml:space="preserve">
     <value>Constant represents a value either too large or too small for a double precision floating-point number</value>
   </data>

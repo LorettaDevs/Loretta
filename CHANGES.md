@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed errors not being reported for missing expressions.
+- Fixed an error not being reported when a compound assignment is parsed and `AcceptCompoundAssignment` is false.
 
 ### Changed
 - Changed the generated expression in the case of a missing expression (now it is a `IdentifierNameSyntax`
