@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added support for Luau's if expression.
 
+### Fixed
+- Fixed errors not being reported for missing expressions.
+
+### Changed
+- Changed the generated expression in the case of a missing expression (now it is a `IdentifierNameSyntax`
+  with `IsMissing` set to `true`).
+- Changed the generated statement in the case of a missing expression (now it is an `ExpressionStatementSyntax`
+  with `IsMissing` set to `true` and the inner expression is the one in the bullet point above).
+- Changed the generated error message in the case of a missing/invalid statement.
+
 ## v0.2.7-beta.4
 ### Changed
 - Fixed a typo in `EmptyStatementSyntax` and its helper methods.
