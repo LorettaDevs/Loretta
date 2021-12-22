@@ -44,6 +44,8 @@
         ERR_RbraceExpected = 1005,
         ERR_SyntaxError = 1006,
         ERR_InsufficientStack = 1007,
+        ERR_IfExpressionsNotSupportedInLuaVersion = 1008,
+        ERR_IfExpressionConditionExpected = 1009,
 
         // MessageProvider stuff
         ERR_BadDocumentationMode = 2000,

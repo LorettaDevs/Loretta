@@ -696,6 +696,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 SyntaxKind.DotDotDotToken => ParseVarArgExpression(),
                 SyntaxKind.OpenBraceToken => ParseTableConstructorExpression(),
                 SyntaxKind.FunctionKeyword when PeekToken(1).Kind == SyntaxKind.OpenParenthesisToken => ParseAnonymousFunctionExpression(),
+                SyntaxKind.IfKeyword => ParseIfExpression(),
                 _ => ParsePrefixOrVariableExpression(),
             };
         }
@@ -979,6 +980,85 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 return SyntaxFactory.UnkeyedTableField(value);
             }
         }
+
+        private IfExpressionSyntax ParseIfExpression()
+        {
+            var ifKeyword = EatToken(SyntaxKind.IfKeyword);
+
+            ExpressionSyntax condition;
+            // Check for missing condition
+            if (CurrentToken.Kind == SyntaxKind.ThenKeyword)
+            {
+                // And generate a "missing expression" for it with an error
+                condition = AddError(
+                    CreateMissingIdentifierName(),
+                    ErrorCode.ERR_IfExpressionConditionExpected);
+            }
+            else
+            {
+                condition = ParseExpression();
+            }
+            var thenKeyword = EatToken(SyntaxKind.ThenKeyword);
+            var trueValue = ParseExpression();
+
+            var elseIfClauses = _pool.Allocate<ElseIfExpressionClauseSyntax>();
+            while (CurrentToken.Kind == SyntaxKind.ElseIfKeyword)
+            {
+                var elseIfKeyword = EatToken(SyntaxKind.ElseIfKeyword);
+                ExpressionSyntax elseIfCondition;
+                // Check for missing condition
+                if (CurrentToken.Kind == SyntaxKind.ThenKeyword)
+                {
+                    // And generate a "missing expression" for it with an error
+                    elseIfCondition = AddError(
+                        CreateMissingIdentifierName(),
+                        ErrorCode.ERR_IfExpressionConditionExpected);
+                }
+                else
+                {
+                    elseIfCondition = ParseExpression();
+                }
+                var elseIfThenKeyword = EatToken(SyntaxKind.ThenKeyword);
+                var elseIfValue = ParseExpression();
+
+                elseIfClauses.Add(SyntaxFactory.ElseIfExpressionClause(
+                    elseIfKeyword,
+                    elseIfCondition,
+                    elseIfThenKeyword,
+                    elseIfValue));
+            }
+
+            var elseKeyword = EatToken(SyntaxKind.ElseKeyword);
+            var falseValue = ParseExpression();
+
+            var ifExpression = SyntaxFactory.IfExpression(
+                ifKeyword,
+                condition,
+                thenKeyword,
+                trueValue,
+                _pool.ToListAndFree(elseIfClauses),
+                elseKeyword,
+                falseValue);
+            if (!Options.SyntaxOptions.AcceptIfExpressions)
+                ifExpression = AddError(ifExpression, ErrorCode.ERR_IfExpressionsNotSupportedInLuaVersion);
+            return ifExpression;
+        }
+
+        /// <summary>
+        /// Creates a missing <see cref="IdentifierNameSyntax"/>.
+        /// Used for places where we expected an expression but got something else.
+        /// </summary>
+        /// <returns></returns>
+        private static IdentifierNameSyntax CreateMissingIdentifierName() =>
+            SyntaxFactory.IdentifierName(CreateMissingIdentifierToken());
+
+        /// <summary>
+        /// Creates a missing identifier <see cref="SyntaxToken"/>.
+        /// Used for places where we expected a token but got something else.
+        /// </summary>
+        /// <returns></returns>
+        private static SyntaxToken CreateMissingIdentifierToken() =>
+            SyntaxToken.CreateMissing(SyntaxKind.IdentifierToken, null, null);
 
         internal TNode ConsumeUnexpectedTokens<TNode>(TNode node) where TNode : LuaSyntaxNode
         {

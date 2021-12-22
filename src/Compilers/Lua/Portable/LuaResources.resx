@@ -165,6 +165,18 @@
     <value>Identifier expected; '{1}' is a keyword</value>
     <comment>{1} is the actual value obtained</comment>
   </data>
+  <data name="ERR_IfExpressionConditionExpected" xml:space="preserve">
+    <value>Condition not found for if expression</value>
+  </data>
+  <data name="ERR_IfExpressionConditionExpected_Description" xml:space="preserve">
+    <value>If expressions require a condition but one was not found, did you perhaps forget to specify one?</value>
+  </data>
+  <data name="ERR_IfExpressionConditionExpected_Title" xml:space="preserve">
+    <value>If expressions require a condition</value>
+  </data>
+  <data name="ERR_IfExpressionsNotSupportedInLuaVersion" xml:space="preserve">
+    <value>If expressions are not supported in this lua version</value>
+  </data>
   <data name="ERR_InsufficientStack" xml:space="preserve">
     <value>An expression is too long or complex to compile</value>
   </data>
