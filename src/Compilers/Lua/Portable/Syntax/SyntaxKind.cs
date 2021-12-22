@@ -608,7 +608,6 @@ namespace Loretta.CodeAnalysis.Lua
         ExclusiveOrExpression = 2079,
 
         // Expressions
-        BadExpression = 2039,
         ParenthesizedExpression = 2040,
         FunctionCallExpression = 2041,
         [ExtraCategories(SyntaxKindCategory.VariableExpression)]
@@ -658,7 +657,6 @@ namespace Loretta.CodeAnalysis.Lua
         ContinueStatement = 2063,
 
         // Statements
-        BadStatement = 2064,
         LocalVariableDeclarationStatement = 2065,
         [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
         LocalFunctionDeclarationStatement = 2066,
