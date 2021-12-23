@@ -46,6 +46,11 @@
         ERR_InsufficientStack = 1007,
         ERR_IfExpressionsNotSupportedInLuaVersion = 1008,
         ERR_IfExpressionConditionExpected = 1009,
+        ERR_ExpressionExpected = 1010,
+        // Using part instead of term here because it's more user friendly.
+        ERR_InvalidExpressionPart = 1011,
+        ERR_InvalidStatement = 1012,
+        ERR_CompoundAssignmentNotSupportedInLuaVersion = 1013,
 
         // MessageProvider stuff
         ERR_BadDocumentationMode = 2000,

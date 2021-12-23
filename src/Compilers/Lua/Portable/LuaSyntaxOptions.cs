@@ -210,11 +210,6 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// Whether to accept binary numbers (format: /0b[10]+/).
         /// </summary>
-        /// <remarks>
-        /// "accept" means an <see cref="DiagnosticSeverity.Error"/> <see cref="Diagnostic"/> will be
-        /// raised when encountering a binary number, however the parsing process will still continue
-        /// as if the number was a normal one.
-        /// </remarks>
         public bool AcceptBinaryNumbers { get; }
 
         /// <summary>
@@ -223,8 +218,8 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptCCommentSyntax { get; }
 
         /// <summary>
-        /// Whether to accept compound assignment syntax (format: &lt;expr&gt; ("+=" | "-=" | "*=" |
-        /// "/=" | "^=" | "%=" | "..=") &lt;expr&gt;).
+        /// Whether to accept compound assignment syntax
+        /// (format: &lt;expr&gt; ("+=" | "-=" | "*=" | "/=" | "^=" | "%=" | "..=") &lt;expr&gt;).
         /// </summary>
         public bool AcceptCompoundAssignment { get; }
 
@@ -234,7 +229,7 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptEmptyStatements { get; }
 
         /// <summary>
-        /// Whether to accept the C boolean operators (&amp;&amp;, ||, != and !).
+        /// Whether to accept C boolean operators (&amp;&amp;, ||, != and !).
         /// </summary>
         public bool AcceptCBooleanOperators { get; }
 
@@ -249,7 +244,8 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptHexEscapesInStrings { get; }
 
         /// <summary>
-        /// Whether to accept hexadecimal floating point literals (format: /0x[a-fA-F0-9]+(\.[a-fA-F0-9])?([+-]?p[0-9]+)/).
+        /// Whether to accept hexadecimal floating point literals
+        /// (format: /0x[a-fA-F0-9]+(\.[a-fA-F0-9])?([+-]?p[0-9]+)/).
         /// </summary>
         public bool AcceptHexFloatLiterals { get; }
 
@@ -259,7 +255,7 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptOctalNumbers { get; }
 
         /// <summary>
-        /// Whether to accept shebangs (format: "#!...") (currently accepted anywhere inside the file).
+        /// Whether to accept shebangs (format: "#!...").
         /// </summary>
         public bool AcceptShebang { get; }
 
@@ -275,17 +271,17 @@ namespace Loretta.CodeAnalysis.Lua
         public bool UseLuaJitIdentifierRules { get; }
 
         /// <summary>
-        /// Whether to error when encountering 5.3 bitise operators.
+        /// Whether to accept 5.3 bitise operators.
         /// </summary>
         public bool AcceptBitwiseOperators { get; }
 
         /// <summary>
-        /// Whether to <b>not</b> error when encountering <c>\z</c> escapes.
+        /// Whether to accept <c>\z</c> escapes.
         /// </summary>
         public bool AcceptWhitespaceEscape { get; }
 
         /// <summary>
-        /// Whether to <b>not</b> error when encountering Unicode (<c>\u{XXX}</c>) escapes.
+        /// Whether to accept Unicode (<c>\u{XXX}</c>) escapes.
         /// </summary>
         public bool AcceptUnicodeEscape { get; }
 
@@ -295,7 +291,7 @@ namespace Loretta.CodeAnalysis.Lua
         public ContinueType ContinueType { get; }
 
         /// <summary>
-        /// Whether to <b>not</b> error when encountering Luau if expressions.
+        /// Whether to accept Luau if expressions.
         /// </summary>
         public bool AcceptIfExpressions { get; }
 

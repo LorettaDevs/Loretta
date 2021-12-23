@@ -133,6 +133,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compound assignments are not supported in this lua version.
+        /// </summary>
+        internal static string ERR_CompoundAssignmentNotSupportedInLuaVersion {
+            get {
+                return ResourceManager.GetString("ERR_CompoundAssignmentNotSupportedInLuaVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Constant represents a value either too large or too small for a double precision floating-point number.
         /// </summary>
         internal static string ERR_DoubleOverflow {
@@ -147,6 +156,15 @@ namespace Loretta.CodeAnalysis.Lua {
         internal static string ERR_EscapeTooLarge {
             get {
                 return ResourceManager.GetString("ERR_EscapeTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expression expected.
+        /// </summary>
+        internal static string ERR_ExpressionExpected {
+            get {
+                return ResourceManager.GetString("ERR_ExpressionExpected", resourceCulture);
             }
         }
         
@@ -241,11 +259,29 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid expression part &apos;{0}&apos;.
+        /// </summary>
+        internal static string ERR_InvalidExpressionPart {
+            get {
+                return ResourceManager.GetString("ERR_InvalidExpressionPart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid number.
         /// </summary>
         internal static string ERR_InvalidNumber {
             get {
                 return ResourceManager.GetString("ERR_InvalidNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid statement.
+        /// </summary>
+        internal static string ERR_InvalidStatement {
+            get {
+                return ResourceManager.GetString("ERR_InvalidStatement", resourceCulture);
             }
         }
         

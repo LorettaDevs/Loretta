@@ -124,6 +124,8 @@ namespace Loretta.CodeAnalysis.Lua
 
             public override void VisitIdentifierName(IdentifierNameSyntax node)
             {
+                if (node.IsMissing || string.IsNullOrWhiteSpace(node.Name))
+                    return;
                 var variable = GetVariableOrCreateGlobal(node.Name);
                 _variables.Add(node, variable);
                 variable.AddReadLocation(node);
@@ -141,6 +143,8 @@ namespace Loretta.CodeAnalysis.Lua
                 {
                     if (assignee is IdentifierNameSyntax identifierName)
                     {
+                        if (identifierName.IsMissing || string.IsNullOrWhiteSpace(identifierName.Name))
+                            continue;
                         var variable = GetVariableOrCreateGlobal(identifierName.Name);
                         _variables.Add(assignee, variable);
                         variable.AddWriteLocation(node);
@@ -161,6 +165,8 @@ namespace Loretta.CodeAnalysis.Lua
 
                 if (node.Variable is IdentifierNameSyntax identifierName)
                 {
+                    if (identifierName.IsMissing || string.IsNullOrWhiteSpace(identifierName.Name))
+                        return;
                     var variable = GetVariableOrCreateGlobal(identifierName.Name);
                     _variables.Add(identifierName, variable);
                     variable.AddWriteLocation(node);
@@ -183,6 +189,8 @@ namespace Loretta.CodeAnalysis.Lua
                 var scope = CreateBlockScope(node);
                 try
                 {
+                    if (node.Identifier.IsMissing || string.IsNullOrWhiteSpace(node.Identifier.Name))
+                        return;
                     var variable = scope.CreateVariable(VariableKind.Iteration, node.Identifier.Name, node);
                     _variables.Add(node.Identifier, variable);
                     Visit(node.Body);
@@ -202,6 +210,8 @@ namespace Loretta.CodeAnalysis.Lua
                 {
                     foreach (var identifierName in node.Identifiers)
                     {
+                        if (identifierName.IsMissing || string.IsNullOrWhiteSpace(identifierName.Name))
+                            continue;
                         var variable = scope.CreateVariable(VariableKind.Iteration, identifierName.Name, node);
                         _variables.Add(identifierName, variable);
                     }
@@ -288,6 +298,8 @@ namespace Loretta.CodeAnalysis.Lua
                     Visit(values);
                 foreach (var name in node.Names)
                 {
+                    if (name.IsMissing || string.IsNullOrWhiteSpace(name.Name))
+                        continue;
                     var variable = Scope.CreateVariable(VariableKind.Local, name.Name, node);
                     _variables.Add(name, variable);
                     variable.AddWriteLocation(node);
@@ -298,11 +310,14 @@ namespace Loretta.CodeAnalysis.Lua
 
             public override void VisitLocalFunctionDeclarationStatement(LocalFunctionDeclarationStatementSyntax node)
             {
-                var variable = Scope.CreateVariable(VariableKind.Local, node.Name.Name, node);
-                _variables.Add(node.Name, variable);
-                variable.AddWriteLocation(node);
-                variable.AddReferencingScope(Scope);
-                Scope.AddReferencedVariable(variable);
+                if (!node.Name.IsMissing && !string.IsNullOrWhiteSpace(node.Name.Name))
+                {
+                    var variable = Scope.CreateVariable(VariableKind.Local, node.Name.Name, node);
+                    _variables.Add(node.Name, variable);
+                    variable.AddWriteLocation(node);
+                    variable.AddReferencingScope(Scope);
+                    Scope.AddReferencedVariable(variable);
+                }
 
                 var scope = CreateFunctionScope(node);
                 try

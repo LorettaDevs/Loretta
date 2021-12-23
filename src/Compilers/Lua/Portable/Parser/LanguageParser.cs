@@ -168,27 +168,40 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         if (CurrentToken.ContextualKind == SyntaxKind.ContinueKeyword)
                             return ParseContinueStatement();
 
+                        var restorePoint = GetResetPoint();
                         var expression = ParsePrefixOrVariableExpression();
-                        if (expression.Kind is SyntaxKind.BadExpression)
+                        if (expression.IsMissing)
                         {
-                            var semicolon = TryMatchSemicolon();
-                            return SyntaxFactory.BadStatement((BadExpressionSyntax) expression, semicolon);
-                        }
-
-                        if (CurrentToken.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken)
-                        {
-                            return ParseAssignmentStatement(expression);
-                        }
-                        else if (SyntaxFacts.IsCompoundAssignmentOperatorToken(CurrentToken.Kind))
-                        {
-                            return ParseCompoundAssignment(expression);
+                            // If the expression is missing, reset and then consume the token we cannot process
+                            // generating a *minimal* missing statement so that we can continue.
+                            Reset(ref restorePoint);
+                            var token = EatToken();
+                            return AddError(
+                                SyntaxFactory.ExpressionStatement(
+                                    AddLeadingSkippedSyntax(
+                                        CreateMissingIdentifierName(),
+                                        token),
+                                    null),
+                                ErrorCode.ERR_InvalidStatement);
                         }
                         else
                         {
+                            if (CurrentToken.Kind is SyntaxKind.CommaToken or SyntaxKind.EqualsToken)
+                            {
+                                return ParseAssignmentStatement(expression);
+                            }
+                            else if (SyntaxFacts.IsCompoundAssignmentOperatorToken(CurrentToken.Kind))
+                            {
+                                return ParseCompoundAssignment(expression);
+                            }
+
                             var semicolonToken = TryMatchSemicolon();
                             var node = SyntaxFactory.ExpressionStatement(expression, semicolonToken);
                             if (expression.Kind is not (SyntaxKind.FunctionCallExpression or SyntaxKind.MethodCallExpression))
+                            {
                                 node = AddError(node, ErrorCode.ERR_NonFunctionCallBeingUsedAsStatement);
+                            }
+
                             return node;
                         }
                     }
@@ -622,12 +635,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var kind = SyntaxFacts.GetCompoundAssignmentStatement(assignmentOperatorToken.Kind).Value;
             var expression = ParseExpression();
             var semicolonToken = TryMatchSemicolon();
-            return SyntaxFactory.CompoundAssignmentStatement(
+
+            var compoundAssignment = SyntaxFactory.CompoundAssignmentStatement(
                 kind,
                 variable,
                 assignmentOperatorToken,
                 expression,
                 semicolonToken);
+            if (!Options.SyntaxOptions.AcceptCompoundAssignment)
+                compoundAssignment = AddError(compoundAssignment, ErrorCode.ERR_CompoundAssignmentNotSupportedInLuaVersion);
+            return compoundAssignment;
         }
 
         internal ExpressionSyntax ParseExpression() =>
@@ -714,7 +731,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else
             {
-                return SyntaxFactory.BadExpression(EatToken());
+                var node = CreateMissingIdentifierName();
+                if (CurrentToken.Kind == SyntaxKind.EndOfFileToken)
+                    node = AddError(node, ErrorCode.ERR_ExpressionExpected);
+                else
+                    node = AddError(node, ErrorCode.ERR_InvalidExpressionPart, SyntaxFacts.GetText(CurrentToken.Kind));
+                return node;
             }
 
             var pos = -1;

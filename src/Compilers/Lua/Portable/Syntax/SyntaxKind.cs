@@ -608,7 +608,6 @@ namespace Loretta.CodeAnalysis.Lua
         ExclusiveOrExpression = 2079,
 
         // Expressions
-        BadExpression = 2039,
         ParenthesizedExpression = 2040,
         FunctionCallExpression = 2041,
         [ExtraCategories(SyntaxKindCategory.VariableExpression)]
@@ -658,7 +657,6 @@ namespace Loretta.CodeAnalysis.Lua
         ContinueStatement = 2063,
 
         // Statements
-        BadStatement = 2064,
         LocalVariableDeclarationStatement = 2065,
         [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
         LocalFunctionDeclarationStatement = 2066,
@@ -670,7 +668,7 @@ namespace Loretta.CodeAnalysis.Lua
         StatementList = 2072,
         EmptyStatement = 2073,
 
-        // Big gap 2076-3001 (insert new nodes here)
+        // Big gap 2082-3001 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,
