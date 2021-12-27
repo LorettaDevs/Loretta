@@ -456,7 +456,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     if (_reader.IsAt(1, '='))
                     {
                         _reader.Position += 2;
-                        info.Kind = SyntaxKind.StartEqualsToken;
+                        info.Kind = SyntaxKind.StarEqualsToken;
                         return;
                     }
                     else

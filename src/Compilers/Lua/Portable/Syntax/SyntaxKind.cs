@@ -182,7 +182,7 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
         [Property(SyntaxKindProperty.CompoundAssignmentOperator, StarToken)]
         [Property(SyntaxKindProperty.CompoundAssignmentStatement, MultiplyAssignmentStatement)]
-        StartEqualsToken = 26,
+        StarEqualsToken = 26,
         /// <summary>
         /// Represents the <c>/</c> token.
         /// </summary>
@@ -626,7 +626,7 @@ namespace Loretta.CodeAnalysis.Lua
         [Property(SyntaxKindProperty.OperatorTokenKind, MinusEqualsToken)]
         SubtractAssignmentStatement = 2047,
         [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
-        [Property(SyntaxKindProperty.OperatorTokenKind, StartEqualsToken)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, StarEqualsToken)]
         MultiplyAssignmentStatement = 2048,
         [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
         [Property(SyntaxKindProperty.OperatorTokenKind, SlashEqualsToken)]
