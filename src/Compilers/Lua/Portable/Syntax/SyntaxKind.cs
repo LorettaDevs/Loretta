@@ -1,5 +1,8 @@
 ﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member (still not sure of how to document this)
 
+using System;
+using System.ComponentModel;
+
 namespace Loretta.CodeAnalysis.Lua
 {
     internal static class SyntaxKindCategory
@@ -672,5 +675,10 @@ namespace Loretta.CodeAnalysis.Lua
 
         // Other types of nodes
         CompilationUnit = 3001,
+
+        // BACKWARDS COMPAT:
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use StarEqualsToken (without a 't' before Equals) instead", true)]
+        StartEqualsToken = StarEqualsToken,
     }
 }
