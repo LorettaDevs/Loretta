@@ -11,7 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed errors not being reported for missing expressions.
 - Fixed an error not being reported when a compound assignment is parsed and `AcceptCompoundAssignment` is false.
-- Fix typo in `SyntaxKind.StarEqualsToken` (was `StartEqualsToken`).
+- Fixed typo in `SyntaxKind.StarEqualsToken` (was `StartEqualsToken`).
+- `SyntaxNormalizer` fixes by @bmcq-0 in #37:
+	- Fixed chained unary operators spacing;
+	- Fixed spaces before semicolons;
+	- Fixed missing space after assignment operator;
+	- Fixed spaces being inserted inside parenthesis;
+	- Fixed spacing inside table constructors;
+	- Fixed spacing after `ìf`, `elseif`, `until` and `while`;
+	- Fixed two line breaks being inserted after certain statements;
+	- Fixed line breaks being inserted before semicolons;
+	- Fixed line breaks being inserted twice between statements.
 
 ### Changed
 - Changed the generated expression in the case of a missing expression (now it is a `IdentifierNameSyntax`
