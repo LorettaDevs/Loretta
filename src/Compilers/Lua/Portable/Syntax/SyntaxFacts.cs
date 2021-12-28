@@ -106,7 +106,7 @@ namespace Loretta.CodeAnalysis.Lua
                 return true;
             if (kindA is SyntaxKind.SlashToken && kindB is SyntaxKind.EqualsToken or SyntaxKind.SlashEqualsToken or SyntaxKind.EqualsEqualsToken)
                 return true;
-            if (kindA is SyntaxKind.SlashToken && kindB is SyntaxKind.SlashToken or SyntaxKind.StarToken or SyntaxKind.StartEqualsToken)
+            if (kindA is SyntaxKind.SlashToken && kindB is SyntaxKind.SlashToken or SyntaxKind.StarToken or SyntaxKind.StarEqualsToken)
                 return true;
             if (kindA is SyntaxKind.SlashToken && kindB is SyntaxKind.SingleLineCommentTrivia or SyntaxKind.MultiLineCommentTrivia && kindBText.StartsWith("/"))
                 return true;

@@ -916,7 +916,7 @@
       </PropertyComment>
       <Kind Name="PlusEqualsToken" />
       <Kind Name="MinusEqualsToken" />
-      <Kind Name="StartEqualsToken" />
+      <Kind Name="StarEqualsToken" />
       <Kind Name="SlashEqualsToken" />
       <Kind Name="PercentEqualsToken" />
       <Kind Name="DotDotEqualsToken" />
