@@ -696,7 +696,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case '`':
                 { 
                     info.Kind = SyntaxKind.HashStringLiteralToken;
-                    info.UIntValue = Hash.JenkinsOneAtATimeHash(ParseShortString().ToLowerVariant().AsSpan());
+                    info.UIntValue = Hash.JenkinsOneAtATimeHash(ParseShortString().ToLowerInvariant().AsSpan());
                     info.Text = GetText(intern: true);
                     return;
                 }
