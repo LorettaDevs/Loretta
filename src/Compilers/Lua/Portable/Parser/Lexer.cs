@@ -697,7 +697,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 { 
                     info.Kind = SyntaxKind.HashStringLiteralToken;
                     info.UIntValue = Hash.JenkinsOneAtATimeHash(ParseShortString().ToLowerVariant().AsSpan());
-                    info.Text = GetText(intern: true)
+                    info.Text = GetText(intern: true);
                     return;
                 }
                 
