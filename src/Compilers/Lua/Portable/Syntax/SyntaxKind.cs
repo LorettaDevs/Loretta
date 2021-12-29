@@ -503,7 +503,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         
 
-        // Big gap 1003-2000 (insert new tokens with text here)
+        // Big gap 1004-2000 (insert new tokens with text here)
 
         // Parameters
         NamedParameter = 2000,
