@@ -10,7 +10,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Syntax
         [Fact]
         public void SyntaxKindHasNoDuplicates()
         {
-            var names = Enum.GetNames(typeof(SyntaxKind));
+            var names = Enum.GetNames(typeof(SyntaxKind)).Except(new[] { "StartEqualsToken" });
             var groups = names.GroupBy(name => (SyntaxKind) Enum.Parse(typeof(SyntaxKind), name));
             foreach (var kinds in groups.Where(group => group.Count() > 1))
                 Assert.True(false, $"Found duplicates kinds: {string.Join(", ", kinds)}.");
