@@ -503,7 +503,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         
 
-        // Big gap 1004-2000 (insert new tokens with text here)
+        // Big gap 1005-2000 (insert new tokens with text here)
 
         // Parameters
         NamedParameter = 2000,
@@ -678,7 +678,7 @@ namespace Loretta.CodeAnalysis.Lua
         StatementList = 2072,
         EmptyStatement = 2073,
 
-        // Big gap 2082-3001 (insert new nodes here)
+        // Big gap 2083-3001 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,
