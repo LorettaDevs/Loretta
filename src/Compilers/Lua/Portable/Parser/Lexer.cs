@@ -26,6 +26,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal string? Text;
             internal string? StringValue;
             internal double DoubleValue;
+            internal uint UIntValue;
         }
 
         private readonly LexerCache _cache = new LexerCache();
@@ -112,6 +113,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case SyntaxKind.StringLiteralToken:
                     token = SyntaxFactory.Literal(leadingNode, info.Text!, info.StringValue!, trailingNode);
+                    break;
+                
+                case SyntaxKind.HashStringLiteralToken:
+                    token = SyntaxFactory.Literal(leadingNode, info.Text!, info.UIntValue, trailingNode);
                     break;
 
                 case SyntaxKind.EndOfFileToken:
@@ -688,6 +693,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 #endregion Numbers
 
+                case '`':
+                { 
+                    info.Kind = SyntaxKind.HashStringLiteralToken;
+                    info.UIntValue = Hash.JenkinsOneAtATimeHash(ParseShortString().ToLowerVariant().AsSpan());
+                    info.Text = GetText(intern: true)
+                    return;
+                }
+                
                 case '"':
                 case '\'':
                 {

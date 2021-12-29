@@ -709,7 +709,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 or SyntaxKind.TrueKeyword
                 or SyntaxKind.FalseKeyword
                 or SyntaxKind.NumericLiteralToken
-                or SyntaxKind.StringLiteralToken => ParseLiteralExpression(),
+                or SyntaxKind.StringLiteralToken
+                or SyntaxKind.HashStringLiteralToken => ParseLiteralExpression(),
                 SyntaxKind.DotDotDotToken => ParseVarArgExpression(),
                 SyntaxKind.OpenBraceToken => ParseTableConstructorExpression(),
                 SyntaxKind.FunctionKeyword when PeekToken(1).Kind == SyntaxKind.OpenParenthesisToken => ParseAnonymousFunctionExpression(),

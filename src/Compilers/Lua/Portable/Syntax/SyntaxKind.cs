@@ -496,6 +496,12 @@ namespace Loretta.CodeAnalysis.Lua
         StringLiteralToken = 1002,
         [Token]
         IdentifierToken = 1003,
+        [Token]
+        [ExtraCategories(SyntaxKindCategory.LiteralToken)]
+        [Property(SyntaxKindProperty.LiteralExpression, HashStringLiteralExpression)]
+        HashStringLiteralToken = 1004,
+
+        
 
         // Big gap 1003-2000 (insert new tokens with text here)
 
@@ -533,6 +539,7 @@ namespace Loretta.CodeAnalysis.Lua
         IdentifierName = 2020,
         IfExpression = 2080,
         ElseIfExpressionClause = 2081,
+        HashStringLiteralExpression = 2082,
 
         // Unary Expressions
         [ExtraCategories(SyntaxKindCategory.UnaryExpression)]

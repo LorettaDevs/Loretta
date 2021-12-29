@@ -118,6 +118,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
                     shortStringContentValue);
             }
 
+            yield return new ShortToken(
+                SyntaxKind.HashStringLiteralToken,
+                @"`abcd`",
+                3448463878);
+
             const string longStringContent = @"first line \n
 second line \r\n
 third line \r
