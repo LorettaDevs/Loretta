@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Added support for FiveM's hash strings (thanks to @TheGreatSageEqualToHeaven).
+  NOTE: There is currently no support for creating hash string literal nodes from `SyntaxFactory` because the API for
+  that still hasn't been decided on. If you need to create a node for it use `SyntaxFactory.ParseExpression`.
 
 ## v0.2.7-beta.5
 ### Added
