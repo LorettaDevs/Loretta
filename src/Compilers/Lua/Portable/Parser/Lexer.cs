@@ -710,6 +710,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     stringValue = stringValue.ToLowerInvariant();
                     info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
                     info.Text = GetText(intern: true);
+
+                    if (!Options.SyntaxOptions.AcceptHashStrings)
+                        AddError(ErrorCode.ERR_HashStringsNotSupportedInVersion);
+
                     return;
                 }
 
