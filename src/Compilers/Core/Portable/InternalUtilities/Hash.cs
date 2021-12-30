@@ -380,7 +380,7 @@ namespace Loretta.Utilities
         /// </summary>
         /// <param name="input">The string that will get hashed</param>
         /// <returns>The hash of <paramref name="input"/></returns>
-        public static uint JenkinsOneAtATimeHash(ReadOnlySpan<char> input)
+        public static uint GetJenkinsOneAtATimeHashCode(ReadOnlySpan<char> input)
         {
             uint hash = 0;
             var len = input.Length;

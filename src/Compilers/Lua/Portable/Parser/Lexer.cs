@@ -708,7 +708,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     var stringValue = ParseShortString();
                     // Jenkins' one-at-a-time hash doesn't do this but FiveM does.
                     stringValue = stringValue.ToLowerInvariant();
-                    info.UIntValue = Hash.JenkinsOneAtATimeHash(stringValue.AsSpan());
+                    info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
                     info.Text = GetText(intern: true);
                     return;
                 }
