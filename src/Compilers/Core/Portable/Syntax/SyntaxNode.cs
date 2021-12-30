@@ -16,8 +16,7 @@ namespace Loretta.CodeAnalysis
 {
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
-    /// Represents a non-terminal node in the syntax tree. This is the language agnostic equivalent of <see
-    /// cref="T:Loretta.CodeAnalysis.CSharp.CSharpSyntaxNode"/> and <see cref="T:Loretta.CodeAnalysis.VisualBasic.VisualBasicSyntaxNode"/>.
+    /// Represents a non-terminal node in the syntax tree.
     /// </summary>
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
     [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]

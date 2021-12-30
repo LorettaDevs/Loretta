@@ -14,8 +14,7 @@ namespace Loretta.CodeAnalysis
 {
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
-    /// Represents a token in the syntax tree. This is the language agnostic equivalent of <see
-    /// cref="T:Loretta.CodeAnalysis.CSharp.SyntaxToken"/> and <see cref="T:Loretta.CodeAnalysis.VisualBasic.SyntaxToken"/>.
+    /// Represents a token in the syntax tree.
     /// </summary>
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
     [StructLayout(LayoutKind.Auto)]
