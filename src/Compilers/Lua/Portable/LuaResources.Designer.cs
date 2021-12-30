@@ -169,6 +169,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hash strings are not supported in this lua version.
+        /// </summary>
+        internal static string ERR_HashStringsNotSupportedInVersion {
+            get {
+                return ResourceManager.GetString("ERR_HashStringsNotSupportedInVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hexadecimal digit expected.
         /// </summary>
         internal static string ERR_HexDigitExpected {
