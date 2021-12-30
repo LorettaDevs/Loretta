@@ -135,6 +135,11 @@ fourth line \xFF.";
                     longStringContent);
             }
 
+            yield return new ShortToken(
+                SyntaxKind.HashStringLiteralToken,
+                $"`{shortStringContentText}`",
+                Loretta.Utilities.Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
+
             #endregion Strings
 
             // Identifiers
