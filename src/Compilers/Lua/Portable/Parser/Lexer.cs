@@ -26,6 +26,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal string? Text;
             internal string? StringValue;
             internal double DoubleValue;
+            internal uint UIntValue;
         }
 
         private readonly LexerCache _cache = new LexerCache();
@@ -112,6 +113,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case SyntaxKind.StringLiteralToken:
                     token = SyntaxFactory.Literal(leadingNode, info.Text!, info.StringValue!, trailingNode);
+                    break;
+
+                case SyntaxKind.HashStringLiteralToken:
+                    token = SyntaxFactory.HashLiteral(leadingNode, info.Text!, info.UIntValue, trailingNode);
                     break;
 
                 case SyntaxKind.EndOfFileToken:
@@ -694,6 +699,21 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     info.Kind = SyntaxKind.StringLiteralToken;
                     info.StringValue = ParseShortString();
                     info.Text = GetText(intern: true);
+                    return;
+                }
+
+                case '`':
+                {
+                    info.Kind = SyntaxKind.HashStringLiteralToken;
+                    var stringValue = ParseShortString();
+                    // Jenkins' one-at-a-time hash doesn't do this but FiveM does.
+                    stringValue = stringValue.ToLowerInvariant();
+                    info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
+                    info.Text = GetText(intern: true);
+
+                    if (!Options.SyntaxOptions.AcceptHashStrings)
+                        AddError(ErrorCode.ERR_HashStringsNotSupportedInVersion);
+
                     return;
                 }
 

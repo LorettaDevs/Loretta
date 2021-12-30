@@ -445,6 +445,7 @@
     <Kind Name="TrueLiteralExpression" />
     <Kind Name="FalseLiteralExpression" />
     <Kind Name="NilLiteralExpression" />
+    <Kind Name="HashStringLiteralExpression" />
     <Field Name="Token" Type="SyntaxToken">
       <PropertyComment>
         <summary>The literal token.</summary>
@@ -454,6 +455,7 @@
       <Kind Name="TrueKeyword" />
       <Kind Name="FalseKeyword" />
       <Kind Name="NilKeyword" />
+      <Kind Name="HashStringLiteralToken" />
     </Field>
   </Node>
 

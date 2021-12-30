@@ -34,6 +34,7 @@
         ERR_EscapeTooLarge = 26,
         ERR_HexDigitExpected = 27,
         ERR_UnicodeEscapesNotSupportedLuaInVersion = 28,
+        ERR_HashStringsNotSupportedInVersion = 29,
 
         // Parser Errors
         ERR_IdentifierExpectedKW = 1000,

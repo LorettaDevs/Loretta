@@ -373,5 +373,30 @@ namespace Loretta.Utilities
         {
             return unchecked((hashCode ^ ch) * Hash.FnvPrime);
         }
+
+        /// <summary>
+        /// Jenkins's one_at_a_time hash is adapted here from a WWW page by Bob Jenkins
+        /// See https://en.wikipedia.org/wiki/Jenkins_hash_function
+        /// </summary>
+        /// <param name="input">The string that will get hashed</param>
+        /// <returns>The hash of <paramref name="input"/></returns>
+        public static uint GetJenkinsOneAtATimeHashCode(ReadOnlySpan<char> input)
+        {
+            uint hash = 0;
+            var len = input.Length;
+
+            foreach (var c in input)
+            {
+                hash += c;
+                hash += (hash << 10);
+                hash ^= (hash >> 6);
+            }
+
+            hash += (hash << 3);
+            hash ^= (hash >> 11);
+            hash += (hash << 15);
+
+            return hash;
+        }
     }
 }

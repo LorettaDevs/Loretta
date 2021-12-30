@@ -9,7 +9,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             _builder.Clear();
             var delim = _reader.Read()!.Value;
-            RoslynDebug.Assert(delim is '"' or '\'');
+            RoslynDebug.Assert(delim is '"' or '\'' or '`');
 
             while (_reader.Peek() is char peek && peek != delim)
             {

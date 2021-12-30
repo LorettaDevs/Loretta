@@ -128,6 +128,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         internal static SyntaxToken Literal(GreenNode? leading, string text, SyntaxKind kind, string value, GreenNode? trailing) =>
             SyntaxToken.WithValue(kind, leading, text, value, trailing);
 
+        internal static SyntaxToken HashLiteral(GreenNode? leading, string text, uint value, GreenNode? trailing) =>
+            SyntaxToken.WithValue(SyntaxKind.HashStringLiteralToken, leading, text, value, trailing);
+
         internal static SyntaxToken BadToken(GreenNode? leading, string text, GreenNode? trailing) =>
             SyntaxToken.WithValue(SyntaxKind.BadToken, leading, text, text, trailing);
 

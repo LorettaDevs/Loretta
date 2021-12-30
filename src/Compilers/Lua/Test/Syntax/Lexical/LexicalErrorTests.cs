@@ -423,5 +423,21 @@ local str4 = 'hello\xFFthere'
                 // local b = '\u{FEBE}'
                 Diagnostic(ErrorCode.ERR_UnicodeEscapesNotSupportedLuaInVersion, @"\u{FEBE}").WithLocation(2, 12));
         }
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsWhen_HashStringsAreFound_And_LuaSyntaxOptionsAcceptHashStringsIsFalse()
+        {
+            const string source = "local a = `hello`\r\n" +
+                "local b = `hi!`";
+            var options = LuaSyntaxOptions.All.With(acceptHashStrings: false);
+            ParseAndValidate(source, options,
+                // (1,11): error LUA0029: Hash strings are not supported in this lua version
+                // local a = `hello`
+                Diagnostic(ErrorCode.ERR_HashStringsNotSupportedInVersion, "`hello`").WithLocation(1, 11),
+                // (2,11): error LUA0029: Hash strings are not supported in this lua version
+                // local b = `hi!`
+                Diagnostic(ErrorCode.ERR_HashStringsNotSupportedInVersion, "`hi!`").WithLocation(2, 11));
+        }
     }
 }
