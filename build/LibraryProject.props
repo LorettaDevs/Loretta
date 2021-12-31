@@ -19,7 +19,7 @@
   <PropertyGroup>
     <Authors>GGG KILLER</Authors>
     <Copyright>GGG KILLER © 2021</Copyright>
-    <Version>0.2.7-beta.5</Version>
+    <Version>0.2.7-beta.6</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <RepositoryUrl>https://github.com/GGG-KILLER/Loretta</RepositoryUrl>
