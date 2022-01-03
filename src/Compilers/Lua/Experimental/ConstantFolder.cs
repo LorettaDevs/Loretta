@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.Utilities;
@@ -407,6 +408,8 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
+        [Obsolete("Use ConstantFold instead.")]
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public static SyntaxNode FoldConstants(this SyntaxNode node) =>
             ConstantFolder.Fold(node);
     }

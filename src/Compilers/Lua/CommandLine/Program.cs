@@ -201,7 +201,7 @@ namespace Loretta.CLI
             if (constantFold)
             {
                 using (s_logger.BeginOperation("Constant Folding"))
-                    rootNode = rootNode.FoldConstants();
+                    rootNode = rootNode.ConstantFold();
             }
 
             using (s_logger.BeginOperation("Format"))
@@ -254,7 +254,7 @@ namespace Loretta.CLI
             foreach (var diagnostic in diagnostics)
                 s_logger.WriteLine(diagnostic.ToString());
 
-            expr = (ExpressionSyntax) expr.FoldConstants();
+            expr = (ExpressionSyntax) expr.ConstantFold();
             expr = expr.NormalizeWhitespace();
             expr.WriteTo(new ConsoleTimingLoggerTextWriter(s_logger));
             s_logger.WriteLine("");
