@@ -11,7 +11,7 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
     - C style single line comment: `// ...`;
     - C style multi line comment: `/* */`;
 3. Characters accepted as part of identifiers by LuaJIT (emojis, non-rendering characters, [or basically any byte above `127`/`0x7F`](https://github.com/LuaJIT/LuaJIT/blob/e9af1abec542e6f9851ff2368e7f196b6382a44c/src/lj_char.c#L10-L13));
-4. Luau syntax (parial):
+4. Luau syntax (partial):
     - Roblox compound assignment: `+=`, `-=`, `*=`, `/=`, `^=`, `%=`, `..=`;
     - If expressions: `if a then b else c` and `if a then b elseif c then d else e`;
 5. Lua 5.3 bitwise operators;
