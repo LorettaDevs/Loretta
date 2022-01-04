@@ -24,7 +24,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                     if (name.SequenceEqual(variable.Name.AsSpan()))
                         return variable;
                 }
-                currentScope = scope.Parent;
+                currentScope = currentScope.Parent;
             }
 
             return null;
@@ -32,17 +32,18 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 
         private static string StringSequentialCore(IScope scope, int slot, char prefix, string alphabet, int minPrefixCount)
         {
-            var len = (int) Math.Ceiling(Math.Log(slot, alphabet.Length)) + MaxPrefixCount;
+            var len = getDigits(slot, alphabet.Length) + MaxPrefixCount;
             Span<char> fullName = stackalloc char[len];
             fullName.Fill(prefix);
             var pos = len - 1;
-            while (slot > 0)
+            do
             {
                 var num = slot % alphabet.Length;
                 slot /= alphabet.Length;
                 fullName[pos] = alphabet[num];
                 pos--;
             }
+            while (slot > 0);
 
             var prefixes = minPrefixCount;
             while (prefixes <= MaxPrefixCount)
@@ -52,6 +53,13 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                     return name.ToString();
             }
             throw new Exception($"Code has too many variables named {fullName[10..].ToString()} with '{prefix}'s at the start.");
+
+            static int getDigits(int slot, int @base)
+            {
+                if (slot <= 1)
+                    return 1;
+                return (int) Math.Ceiling(Math.Log(slot, @base));
+            }
         }
 
         /// <summary>
