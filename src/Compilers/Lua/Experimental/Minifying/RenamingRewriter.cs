@@ -291,7 +291,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         public override SyntaxNode? VisitSimpleFunctionName(SimpleFunctionNameSyntax node)
         {
             var newName = _renameTable.GetNewVariableName(node);
-            return newName != null && node.Name != newName
+            return newName != null && node.Name.Text != newName
                 ? node.Update(SyntaxFactory.Identifier(newName))
                 : node;
         }
