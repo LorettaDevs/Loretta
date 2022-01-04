@@ -169,6 +169,7 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
                 else
                 {
                     endDelimiter = shortStringQuote.ToString();
+                    builder.Append(shortStringQuote);
                 }
             }
 

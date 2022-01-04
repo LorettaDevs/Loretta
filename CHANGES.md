@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - DEPRECATED: `Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants` in favor of `ConstantFold`.
 
+### Fixed
+- `ObjectDisplay.FormatLiteral` was not adding the leading quote properly.
+   This also affected `SyntaxFactory.Literal`.
+- Constant folder was not folding `"a" .. true` to `"atrue"`.
+- Constant folder was not folding `nil == nil` to `true`.
+- Constant folder was folding `not x` to `x` instead of the result of the negation.
+
 ## v0.2.7-beta.6
 ### Added
 - Added support for FiveM's hash strings (thanks to @TheGreatSageEqualToHeaven).

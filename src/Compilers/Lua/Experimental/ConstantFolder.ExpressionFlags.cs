@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.Utilities;
 
@@ -6,6 +7,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
 {
     internal partial class ConstantFolder
     {
+        [Flags]
         private enum ExpressionFlags
         {
             None = 0,
@@ -33,10 +35,14 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                 RoslynDebug.Assert(innerNode is ExpressionSyntax);
 
                 flags = ExpressionFlags.None;
+                if (innerNode.IsKind(SyntaxKind.NilLiteralExpression))
+                    flags |= ExpressionFlags.IsNil;
                 if (innerNode.IsKind(SyntaxKind.NumericalLiteralExpression))
                     flags |= ExpressionFlags.IsNum;
                 if (innerNode.IsKind(SyntaxKind.StringLiteralExpression))
                     flags |= ExpressionFlags.IsStr;
+                if (innerNode.IsKind(SyntaxKind.TrueLiteralExpression) || innerNode.IsKind(SyntaxKind.FalseLiteralExpression))
+                    flags |= ExpressionFlags.IsBool;
                 if (CanConvertToBoolean(innerNode))
                     flags |= IsFalsey(innerNode) ? ExpressionFlags.IsFalsey : ExpressionFlags.IsTruthy;
                 if (innerNode.IsKind(SyntaxKind.TableConstructorExpression)

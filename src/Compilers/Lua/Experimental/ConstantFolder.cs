@@ -37,7 +37,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                 SyntaxKind.UnaryMinusExpression when HasEFlag(operandFlags, ExpressionFlags.IsNum) =>
                     LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(-GetValue<double>(operand))),
                 SyntaxKind.LogicalNotExpression when TryConvertToBool(operand, out var value) =>
-                    LiteralExpression(value ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression),
+                    LiteralExpression(!value ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression),
                 SyntaxKind.BitwiseNotExpression when HasEFlag(operandFlags, ExpressionFlags.IsNum)
                     && TryGetInt64(operand, out var value)
                     && TryConvertToDouble(~value, out var result) =>
