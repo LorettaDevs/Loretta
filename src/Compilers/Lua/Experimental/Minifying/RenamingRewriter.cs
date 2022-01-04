@@ -28,6 +28,33 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.Assert(popped == scope);
         }
 
+        #region Order Fixing - Fixes the order of operations so renaming happens properly
+
+        public override SyntaxNode? VisitLocalVariableDeclarationStatement(LocalVariableDeclarationStatementSyntax node)
+        {
+            // This needs to happen first.
+            var values = VisitList(node.Values);
+            return node.Update(
+                node.LocalKeyword,
+                VisitList(node.Names),
+                node.EqualsToken,
+                values,
+                node.SemicolonToken);
+        }
+
+        public override SyntaxNode? VisitAssignmentStatement(AssignmentStatementSyntax node)
+        {
+            // This needs to happen first.
+            var values = VisitList(node.Values);
+            return node.Update(
+                base.VisitList(node.Variables),
+                node.EqualsToken,
+                values,
+                node.SemicolonToken);
+        }
+
+        #endregion Order Fixing
+
         #region Scope Pushing
 
         public override SyntaxNode? VisitCompilationUnit(CompilationUnitSyntax node)
@@ -194,27 +221,6 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                     condition,
                     node.ThenKeyword,
                     (StatementListSyntax?) base.Visit(node.Body) ?? throw new ArgumentNullException("body"));
-            }
-            finally
-            {
-                ExitScope(scope);
-            }
-        }
-
-        public override SyntaxNode? VisitLocalVariableDeclarationStatement(LocalVariableDeclarationStatementSyntax node)
-        {
-            var values = VisitList(node.Values);
-            var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
-            try
-            {
-                EnterScope(scope);
-                return node.Update(
-                    node.LocalKeyword,
-                    VisitList(node.Names),
-                    node.EqualsToken,
-                    values,
-                    node.SemicolonToken);
             }
             finally
             {
