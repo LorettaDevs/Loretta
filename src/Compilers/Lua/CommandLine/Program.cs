@@ -291,7 +291,7 @@ namespace Loretta.CLI
         {
             Alphabetical,
             Numerical,
-            NonPrintable
+            ZeroWidth
         }
 
         private static Minifying.NamingStrategy GetNamingStrategy(NamingStrategy namingStrategy)
@@ -300,7 +300,7 @@ namespace Loretta.CLI
             {
                 NamingStrategy.Alphabetical => Minifying.NamingStrategies.Alphabetical,
                 NamingStrategy.Numerical => Minifying.NamingStrategies.Numerical,
-                NamingStrategy.NonPrintable => Minifying.NamingStrategies.NonPrintable,
+                NamingStrategy.ZeroWidth => Minifying.NamingStrategies.ZeroWidth,
             };
         }
 

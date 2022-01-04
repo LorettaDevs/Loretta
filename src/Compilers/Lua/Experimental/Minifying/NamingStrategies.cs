@@ -162,7 +162,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// <summary>
         /// The non-printable characters naming strategy. ONLY WORKS WHEN TARGETTING LUAJIT.
         /// This works like <see cref="Sequential(char, ImmutableArray{string})"/>.
-        /// With <c>prefix</c> as <c>_</c> and <c>alphabet</c> as non-printable characters.
+        /// With <c>prefix</c> as <c>_</c> and <c>alphabet</c> as zero width unicode characters.
         /// It is more optimized than <see cref="Sequential(char, ImmutableArray{string})"/> so use this
         /// instead of it whenever possible.
         /// 
@@ -170,33 +170,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// <param name="scope"><inheritdoc cref="NamingStrategy" path="/param[name='scope']"/></param>
         /// <param name="slot"></param>
         /// <returns></returns>
-        public static string NonPrintable(IScope scope, int slot)
+        public static string ZeroWidth(IScope scope, int slot)
         {
-            const char prefix = '\u1680'; // Ogham Space Mark
-            const string alphabet = "\u2000" // En Quad
-                + "\u2001" // Em Quad
-                + "\u2002" // En Space
-                + "\u2003" // Em Space
-                + "\u2004" // Three-Per-Em Space
-                + "\u2005" // Four-Per-Em Space
-                + "\u2006" // Six-Per-Em Space
-                + "\u2007" // Figure Space
-                + "\u2008" // Punctuation Space
-                + "\u2009" // Thin Space
-                + "\u200A" // Hair Space
-                + "\u200B" // Zero Width Space
-                + "\u2028" // Line Separator
-                + "\u202F" // Narrow No-Break Space
-                + "\u205F" // Medium Mathematical Space (MMSP)
-                + "\u2063" // Invisible Separator
-                + "\u2064" // Invisible Plus
-                + "\u2800" // Braille Pattern Blank
-                + "\u3000" // Ideographic Space
-
-                + "\u1160" // Hangul Jungseong Filler
-                + "\u3164" // Hangul Filler
-                + "\uFFA0" // Halfwidth Hangul Filler
-
+            const char prefix = '\u200B'; // ZERO WIDTH SPACE
+            const string alphabet = "\u200C" // ZERO WIDTH NON-JOINER
+                + "\u200D" // ZERO WIDTH JOINER
                 + "\uFEFF" // ZERO WIDTH NO-BREAK SPACE
                 ;
             return StringSequentialCore(scope, slot, prefix, alphabet, 0);
