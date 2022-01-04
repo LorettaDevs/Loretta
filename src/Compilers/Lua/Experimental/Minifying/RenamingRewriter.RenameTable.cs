@@ -72,7 +72,8 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 // If this the last use of this variable, then we won't be
                 // needing it for the rest of the code so we can reuse the
                 // number it was using.
-                if (GetLastUse(variable) == node)
+                var lastUse = GetLastUse(variable);
+                if (node.AncestorsAndSelf().Any(n => n == lastUse))
                     _slotAllocator.ReleaseSlot(name.slot);
 
                 return name.newName;
