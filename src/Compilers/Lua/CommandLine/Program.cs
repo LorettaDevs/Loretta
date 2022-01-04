@@ -14,6 +14,7 @@ using Tsu.CLI.Commands;
 using Tsu.CLI.Commands.Errors;
 using Tsu.Numerics;
 using Tsu.Timing;
+using Minifying = Loretta.CodeAnalysis.Lua.Experimental.Minifying;
 
 namespace Loretta.CLI
 {
@@ -284,6 +285,80 @@ namespace Loretta.CLI
                 if (!tree.GetRoot().ContainsDiagnostics)
                     s_logger.LogError("Diagnostics were emitted.");
             }
+        }
+
+        public enum NamingStrategy
+        {
+            Alphabetical,
+            Numerical,
+            NonPrintable
+        }
+
+        private static Minifying.NamingStrategy GetNamingStrategy(NamingStrategy namingStrategy)
+        {
+            return namingStrategy switch
+            {
+                NamingStrategy.Alphabetical => Minifying.NamingStrategies.Alphabetical,
+                NamingStrategy.Numerical => Minifying.NamingStrategies.Numerical,
+                NamingStrategy.NonPrintable => Minifying.NamingStrategies.NonPrintable,
+            };
+        }
+
+        public enum SlotAllocator
+        {
+            Sequential,
+            Sorted
+        }
+
+        private static Minifying.ISlotAllocator GetSlotAllocator(SlotAllocator slotAllocator)
+        {
+            return slotAllocator switch
+            {
+                SlotAllocator.Sequential => new Minifying.SequentialSlotAllocator(),
+                SlotAllocator.Sorted => new Minifying.SortedSlotAllocator(),
+            };
+        }
+
+        [Command("min"), Command("minify")]
+        public static void Minify(
+            string path,
+            LuaOptionsPreset preset = LuaOptionsPreset.All,
+            NamingStrategy namingStrategy = NamingStrategy.Numerical,
+            SlotAllocator slotAllocator = SlotAllocator.Sorted,
+            bool reformat = false)
+        {
+            if (!File.Exists(path))
+            {
+                s_logger.LogError("Provided path does not exist.");
+                return;
+            }
+
+            var options = PresetEnumToPresetOptions(preset);
+            SourceText sourceText;
+            using (var stream = File.OpenRead(path))
+                sourceText = SourceText.From(stream, Encoding.UTF8);
+
+            LuaSyntaxTree syntaxTree;
+            using (s_logger.BeginOperation("Parsing"))
+                syntaxTree = (LuaSyntaxTree) LuaSyntaxTree.ParseText(sourceText, options: options, path: path);
+            using (s_logger.BeginOperation("Minifying"))
+                syntaxTree = (LuaSyntaxTree) syntaxTree.Minify(GetNamingStrategy(namingStrategy), GetSlotAllocator(slotAllocator));
+            var root = syntaxTree.GetRoot();
+            if (reformat)
+            {
+                using (s_logger.BeginOperation("Formatting"))
+                    root = root.NormalizeWhitespace();
+            }
+
+            var diagnostics = syntaxTree.GetDiagnostics();
+            foreach (var diagnostic in diagnostics)
+                s_logger.WriteLine(diagnostic.ToString());
+
+            s_logger.Write("Press any key to continue...");
+            Console.ReadKey(true);
+            s_logger.WriteLine("");
+            root.WriteTo(new ConsoleTimingLoggerTextWriter(s_logger));
+            s_logger.WriteLine("");
         }
 
         #endregion Loretta
