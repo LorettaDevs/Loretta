@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Loretta.Utilities;
 using System.Linq;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
@@ -10,16 +10,16 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         {
             private readonly object _lock = new();
             private readonly Script _script;
-            private readonly StateStack _stateStack;
             private readonly NamingStrategy _namingStrategy;
             private readonly Dictionary<IVariable, SyntaxNode> _lastUseCache = new();
-            private readonly Dictionary<IVariable, string> _variableRenameMap = new();
+            private readonly Dictionary<IVariable, (int slot, string newName)> _variableMap = new();
+            private readonly ISlotAllocator _slotAllocator;
 
-            public RenameTable(Script script, StateStack stateStack, NamingStrategy namingStrategy)
+            public RenameTable(Script script, NamingStrategy namingStrategy, ISlotAllocator slotAllocator)
             {
                 _script = script;
-                _stateStack = stateStack;
                 _namingStrategy = namingStrategy;
+                _slotAllocator = slotAllocator;
             }
 
             /// <summary>
@@ -47,11 +47,12 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             /// <summary>
             /// Gets the new variable name to be used for this node.
             /// </summary>
+            /// <param name="scope"></param>
             /// <param name="node"></param>
             /// <returns>
             /// If <see langword="null"/>, remains unchanged.
             /// </returns>
-            public string? GetNewVariableName(SyntaxNode node)
+            public string? GetNewVariableName(IScope scope, SyntaxNode node)
             {
                 var variable = _script.GetVariable(node);
                 if (variable is null)
@@ -61,23 +62,20 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 
                 // Get or calculate the new name for the variable of the
                 // provided node.
-                if (!_variableRenameMap.TryGetValue(variable, out var name))
+                if (!_variableMap.TryGetValue(variable, out var name))
                 {
-                    var slot = _stateStack.Slot;
-                    name = _namingStrategy(_stateStack.Scope, slot);
-                    _variableRenameMap[variable] = name;
-                    // Increment the slot so the slot we just used is not
-                    // used by another variable.
-                    _stateStack.IncrementSlot();
+                    var slot = _slotAllocator.AllocateSlot();
+                    name = (slot, _namingStrategy(scope, slot));
+                    _variableMap[variable] = name;
                 }
 
                 // If this the last use of this variable, then we won't be
                 // needing it for the rest of the code so we can reuse the
                 // number it was using.
                 if (GetLastUse(variable) == node)
-                    _stateStack.DecrementSlot();
+                    _slotAllocator.ReleaseSlot(name.slot);
 
-                return name;
+                return name.newName;
             }
         }
     }

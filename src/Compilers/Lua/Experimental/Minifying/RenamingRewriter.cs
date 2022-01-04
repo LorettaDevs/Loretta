@@ -1,25 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using Loretta.Utilities;
-using System.Threading;
-using System.Linq;
 using Loretta.CodeAnalysis.Lua.Syntax;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "<Pending>")]
     internal partial class RenamingRewriter : LuaSyntaxRewriter
     {
         private readonly Script _script;
-        private readonly StateStack _stateStack;
+        private readonly Stack<IScope> _stack = new();
         private readonly RenameTable _renameTable;
+        private IScope Scope => _stack.Peek();
 
-        public RenamingRewriter(Script script, NamingStrategy namingStrategy)
+        public RenamingRewriter(Script script, NamingStrategy namingStrategy, ISlotAllocator slotAllocator)
         {
             _script = script;
-            _stateStack = new StateStack();
-            _renameTable = new RenameTable(script, _stateStack, namingStrategy);
+            _renameTable = new RenameTable(script, namingStrategy, slotAllocator);
+        }
+
+        public void EnterScope(IScope scope) =>
+            _stack.Push(scope);
+
+        public void ExitScope(IScope scope)
+        {
+            var popped = _stack.Pop();
+            RoslynDebug.Assert(popped == scope);
         }
 
         #region Scope Pushing
@@ -30,12 +36,12 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return base.VisitCompilationUnit(node);
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -45,12 +51,12 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return base.VisitAnonymousFunctionExpression(node);
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -67,7 +73,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return node.Update(
                     node.ForKeyword,
                     (IdentifierNameSyntax?) Visit(node.Identifier) ?? throw new ArgumentNullException("identifier"),
@@ -84,7 +90,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -96,7 +102,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return node.Update(
                     node.ForKeyword,
                     VisitList(node.Identifiers),
@@ -109,7 +115,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -120,7 +126,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return node.Update(
                     node.WhileKeyword,
                     condition,
@@ -131,7 +137,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -141,12 +147,12 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return base.VisitRepeatUntilStatement(node);
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -158,7 +164,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return node.Update(
                     node.IfKeyword,
                     condition,
@@ -171,7 +177,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -182,7 +188,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return node.Update(
                     node.ElseIfKeyword,
                     condition,
@@ -191,7 +197,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -202,7 +208,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return node.Update(
                     node.LocalKeyword,
                     VisitList(node.Names),
@@ -212,7 +218,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -223,7 +229,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return node.Update(
                     node.LocalKeyword,
                     node.FunctionKeyword,
@@ -235,7 +241,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -246,7 +252,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return node.Update(
                     node.FunctionKeyword,
                     name,
@@ -257,7 +263,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -267,12 +273,12 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             RoslynDebug.AssertNotNull(scope);
             try
             {
-                _stateStack.EnterScope(scope);
+                EnterScope(scope);
                 return base.VisitDoStatement(node);
             }
             finally
             {
-                _stateStack.ExitScope(scope);
+                ExitScope(scope);
             }
         }
 
@@ -282,7 +288,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 
         public override SyntaxNode? VisitNamedParameter(NamedParameterSyntax node)
         {
-            var newName = _renameTable.GetNewVariableName(node);
+            var newName = _renameTable.GetNewVariableName(Scope, node);
             return newName != null && node.Name != newName
                 ? node.Update(SyntaxFactory.Identifier(newName))
                 : node;
@@ -290,7 +296,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 
         public override SyntaxNode? VisitSimpleFunctionName(SimpleFunctionNameSyntax node)
         {
-            var newName = _renameTable.GetNewVariableName(node);
+            var newName = _renameTable.GetNewVariableName(Scope, node);
             return newName != null && node.Name.Text != newName
                 ? node.Update(SyntaxFactory.Identifier(newName))
                 : node;
@@ -298,7 +304,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 
         public override SyntaxNode? VisitIdentifierName(IdentifierNameSyntax node)
         {
-            var newName = _renameTable.GetNewVariableName(node);
+            var newName = _renameTable.GetNewVariableName(Scope, node);
             return newName != null && node.Name != newName
                 ? node.Update(SyntaxFactory.Identifier(newName))
                 : node;
