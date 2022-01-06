@@ -288,72 +288,16 @@ namespace Loretta.CLI
 
         #endregion Loretta
 
+        #region Multi-Lua
+
         [Command("mlua"), Command("multi-lua"), Command("multilua")]
-        public static void MultiLua(string scriptPath)
-        {
-            const string prefixTemplate = "[00:00:00.000000]";
-
-            var versions = Directory.GetDirectories("binaries", "lua*");
-
-            foreach (var version in versions)
-            {
-                var name = getFormattedLuaName(new DirectoryInfo(version).Name);
-                var executable = Path.Combine(version, "lua.exe");
-
-                var title = $"===== {name} ".PadRight(Console.WindowWidth - prefixTemplate.Length, '=');
-                s_logger.WriteLine(title);
-                var proc = new Process()
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = executable,
-                        ArgumentList = { scriptPath },
-                        UseShellExecute = false,
-                        RedirectStandardError = true,
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        CreateNoWindow = true,
-                    },
-                    EnableRaisingEvents = true
-                };
-#pragma warning disable CA1416 // Validate platform compatibility
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                    proc.StartInfo.LoadUserProfile = true;
-#pragma warning restore CA1416 // Validate platform compatibility
-                proc.OutputDataReceived += (_, args) =>
-                {
-                    if (args.Data is not null)
-                        s_logger.WriteLine(args.Data);
-                };
-                proc.ErrorDataReceived += (_, args) =>
-                {
-                    if (args.Data is not null)
-                        s_logger.LogError(args.Data);
-                };
-                proc.Start();
-                proc.BeginOutputReadLine();
-                proc.BeginErrorReadLine();
-                if (!proc.WaitForExit(2000))
-                {
-                    s_logger.LogError("Process has timed out, killing...");
-                    proc.Kill(true);
-                    s_logger.LogError("Killed.");
-                }
-                proc.WaitForExit();
-            }
-
-            static string getFormattedLuaName(string name)
-            {
-                if (name.StartsWith("luajit"))
-                    return "LuaJIT " + name["luajit".Length..];
-                else
-                    return "Lua " + name["lua".Length..];
-            }
-        } // /MultiLua
+        public static void MultiLua(string scriptPath) => RunMultiLua(scriptPath);
 
         [RawInput]
         [Command("emlua"), Command("expr-multi-lua"), Command("exprmultilua")]
-        public static void MultiLuaExpression(string expression)
+        public static void MultiLuaExpression(string expression) => RunMultiLua("-e", expression);
+
+        private static void RunMultiLua(params string[] args)
         {
             const string prefixTemplate = "[00:00:00.000000]";
 
@@ -371,7 +315,6 @@ namespace Loretta.CLI
                     StartInfo = new ProcessStartInfo
                     {
                         FileName = executable,
-                        ArgumentList = { "-e", expression },
                         UseShellExecute = false,
                         RedirectStandardError = true,
                         RedirectStandardInput = true,
@@ -380,19 +323,21 @@ namespace Loretta.CLI
                     },
                     EnableRaisingEvents = true
                 };
+                foreach (var arg in args)
+                    proc.StartInfo.ArgumentList.Add(arg);
 #pragma warning disable CA1416 // Validate platform compatibility
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                     proc.StartInfo.LoadUserProfile = true;
 #pragma warning restore CA1416 // Validate platform compatibility
-                proc.OutputDataReceived += (_, args) =>
+                proc.OutputDataReceived += (_, e) =>
                 {
-                    if (args.Data is not null)
-                        s_logger.WriteLine(args.Data);
+                    if (e.Data is not null)
+                        s_logger.WriteLine(e.Data);
                 };
-                proc.ErrorDataReceived += (_, args) =>
+                proc.ErrorDataReceived += (_, e) =>
                 {
-                    if (args.Data is not null)
-                        s_logger.LogError(args.Data);
+                    if (e.Data is not null)
+                        s_logger.LogError(e.Data);
                 };
                 proc.Start();
                 proc.BeginOutputReadLine();
@@ -413,7 +358,9 @@ namespace Loretta.CLI
                 else
                     return "Lua " + name["lua".Length..];
             }
-        } // /MultiLuaExpression
+        }
+
+        #endregion Multi-Lua
 
         [Command("cls"), Command("clear")]
         public static void Clear() =>
