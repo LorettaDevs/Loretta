@@ -100,7 +100,7 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
 
             if (NeedsEscaping(CharUnicodeInfo.GetUnicodeCategory(c)))
             {
-                replaceWith = utf8Encode ? CharUtils.EncodeCharToUtf8(c) : "\\u" + ((int) c).ToString("x4");
+                replaceWith = utf8Encode ? CharUtils.EncodeCharToUtf8(c) : "\\u{" + ((int) c).ToString("x4") + "}";
                 return true;
             }
 
@@ -169,6 +169,7 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
                 else
                 {
                     endDelimiter = shortStringQuote.ToString();
+                    builder.Append(shortStringQuote);
                 }
             }
 
