@@ -1,0 +1,18 @@
+{
+  "solution": {
+    "path": "Loretta.sln",
+    "projects": [
+      "src\\Compilers\\Core\\Portable\\Loretta.CodeAnalysis.csproj",
+      "src\\Compilers\\Lua\\CommandLine\\Loretta.CLI.csproj",
+      "src\\Compilers\\Lua\\Experimental\\Loretta.CodeAnalysis.Lua.Experimental.csproj",
+      "src\\Compilers\\Lua\\Portable\\Loretta.CodeAnalysis.Lua.csproj",
+      "src\\InternalBenchmarks\\Loretta.InternalBenchmarks.csproj",
+      "src\\Tools\\Analyzers\\Loretta.Analyzers.csproj",
+      "src\\Tools\\Loretta.Generators.ErrorFactsGenerator\\Loretta.Generators.ErrorFactsGenerator.csproj",
+      "src\\Tools\\Loretta.Generators.Shared\\Loretta.Generators.Shared.shproj",
+      "src\\Tools\\Loretta.Generators.SyntaxKindGenerator\\Loretta.Generators.SyntaxKindGenerator.csproj",
+      "src\\Tools\\Loretta.Generators.SyntaxXml\\Loretta.Generators.SyntaxXml.csproj",
+      "src\\Tools\\LuaStatisticsCollector\\Loretta.CodeAnalysis.Lua.StatisticsCollector.csproj"
+    ]
+  }
+}

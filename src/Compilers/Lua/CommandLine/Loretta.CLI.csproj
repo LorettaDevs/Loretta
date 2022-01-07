@@ -6,7 +6,7 @@
     <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     <AnalysisLevel>latest</AnalysisLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
