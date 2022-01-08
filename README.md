@@ -18,6 +18,10 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
     - If expressions: `if a then b else c` and `if a then b elseif c then d else e`;
 5. Lua 5.3 bitwise operators;
 6. FiveM's hash string syntax (only parsing, manual node creation currently not possible);
+7. Continue support. The following options are available:
+    - No continue at all;
+    - Roblox's `continue` which is a contextual keyword;
+    - Garry's Mod's `continue` which is a full fledged keyword.
 
 ## Installing Loretta v0.2
 We have two NuGet packages:
