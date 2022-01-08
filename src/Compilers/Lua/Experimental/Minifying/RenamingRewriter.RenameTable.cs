@@ -11,7 +11,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             private readonly object _lock = new();
             private readonly Script _script;
             private readonly NamingStrategy _namingStrategy;
-            private readonly Dictionary<IVariable, SyntaxNode> _lastUseCache = new();
+            private readonly Dictionary<IVariable, SyntaxNode?> _lastUseCache = new();
             private readonly Dictionary<IVariable, (int slot, string newName)> _variableMap = new();
             private readonly ISlotAllocator _slotAllocator;
 
@@ -27,7 +27,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             /// </summary>
             /// <param name="variable"></param>
             /// <returns></returns>
-            public SyntaxNode GetLastUse(IVariable variable)
+            public SyntaxNode? GetLastUse(IVariable variable)
             {
                 SyntaxNode? use;
                 lock (_lock)
@@ -37,7 +37,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                         _lastUseCache[variable] = use =
                             variable.ReadLocations.Concat(variable.WriteLocations)
                                                   .OrderByDescending(node => node.Location.SourceSpan.Start)
-                                                  .First();
+                                                  .FirstOrDefault() ?? variable.Declaration;
                     }
                 }
 
@@ -73,7 +73,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 // needing it for the rest of the code so we can reuse the
                 // number it was using.
                 var lastUse = GetLastUse(variable);
-                if (node.AncestorsAndSelf().Any(n => n == lastUse))
+                if (lastUse != null && node.AncestorsAndSelf().Any(n => n == lastUse))
                     _slotAllocator.ReleaseSlot(name.slot);
 
                 return name.newName;
