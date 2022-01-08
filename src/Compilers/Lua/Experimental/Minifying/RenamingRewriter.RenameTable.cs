@@ -58,7 +58,13 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 if (variable is null)
                     throw ExceptionUtilities.Unreachable;
                 if (variable.Kind is not (VariableKind.Iteration or VariableKind.Local or VariableKind.Parameter))
+                {
                     return null;
+                }
+                if (variable.Declaration is null)
+                {
+                    return null;
+                }
 
                 // Get or calculate the new name for the variable of the
                 // provided node.
