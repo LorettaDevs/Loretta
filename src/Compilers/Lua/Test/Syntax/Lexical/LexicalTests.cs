@@ -111,6 +111,21 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
         }
 
         [Fact]
+        [Trait("Category", "Lexer/Output")]
+        public void Lexer_LexesInvalidEscapes_WhenLuaSyntaxOptionsAcceptInvalidEscapesIsTrue()
+        {
+            const string RawText = @"'\A\B\C\D\E'";
+            const string Value = "ABCDE";
+            var strToken = LexToken(
+                RawText,
+                LuaSyntaxOptions.All.With(acceptInvalidEscapes: true));
+
+            Assert.Equal(SyntaxKind.StringLiteralToken, strToken.Kind());
+            Assert.Equal(RawText, strToken.Text);
+            Assert.Equal(Value, strToken.Value);
+        }
+
+        [Fact]
         [Trait("Category", "Lexer/Lexer_Tests")]
         public void Lexer_Covers_AllTokens()
         {
