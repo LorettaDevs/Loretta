@@ -1,6 +1,8 @@
 # Loretta
 A C# (G)Lua lexer, parser, code analysis, transformation and code generation toolkit.
 
+![Repo Stats](https://repobeats.axiom.co/api/embed/089a9f7dae190ea8dd0fc0750abbebceea3e86dd.svg "Repobeats analytics image")
+
 This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax of Lua](https://www.lua.org/manual/5.2/manual.html#9) with a few extensions:
 1. Operators introduced in Garry's Mod Lua (glua):
     - `&&` for `and`;
