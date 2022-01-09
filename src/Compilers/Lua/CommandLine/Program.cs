@@ -47,7 +47,7 @@ namespace Loretta.CLI
                 {
                     s_logger.LogError("Error while executing '{0}': {1}\n{2}", ex.Command, ex.Message, ex.StackTrace!);
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (!Debugger.IsAttached)
                 {
                     s_logger.LogError("Unexpected exception: {1}\n{2}", ex.Message, ex.StackTrace!);
                 }
