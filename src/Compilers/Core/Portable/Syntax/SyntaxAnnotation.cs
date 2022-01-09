@@ -31,20 +31,38 @@ namespace Loretta.CodeAnalysis
         private static long s_nextId;
 
         // use a value identity instead of object identity so a deserialized instance matches the original instance.
+        /// <summary>
+        /// The kind of annotation.
+        /// </summary>
         public string? Kind { get; }
+        /// <summary>
+        /// The annotation's data.
+        /// </summary>
         public string? Data { get; }
 
+        /// <summary>
+        /// Creates a new empty annotation.
+        /// </summary>
         public SyntaxAnnotation()
         {
             _id = System.Threading.Interlocked.Increment(ref s_nextId);
         }
 
+        /// <summary>
+        /// Creates a new annotation without a value.
+        /// </summary>
+        /// <param name="kind"></param>
         public SyntaxAnnotation(string? kind)
             : this()
         {
             this.Kind = kind;
         }
 
+        /// <summary>
+        /// Creates a new annotation.
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <param name="data"></param>
         public SyntaxAnnotation(string? kind, string? data)
             : this(kind)
         {
@@ -72,11 +90,18 @@ namespace Loretta.CodeAnalysis
             return string.Format("Annotation: Kind='{0}' Data='{1}'", this.Kind ?? "", this.Data ?? "");
         }
 
+        /// <inheritdoc/>
         public bool Equals(SyntaxAnnotation? other)
         {
             return other is object && _id == other._id;
         }
 
+        /// <summary>
+        /// Checks whether two annotations are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SyntaxAnnotation? left, SyntaxAnnotation? right)
         {
             if (left is null)
@@ -87,14 +112,22 @@ namespace Loretta.CodeAnalysis
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Checks whether two annotations are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SyntaxAnnotation? left, SyntaxAnnotation? right) =>
             !(left == right);
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return this.Equals(obj as SyntaxAnnotation);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return _id.GetHashCode();

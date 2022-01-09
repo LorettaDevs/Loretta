@@ -365,12 +365,16 @@ namespace Loretta.CodeAnalysis
 
         string IFormattable.ToString(string? ignored, IFormatProvider? formatProvider) => DiagnosticFormatter.Instance.Format(this, formatProvider);
 
+        /// <inheritdoc/>
         public override string ToString() => DiagnosticFormatter.Instance.Format(this, CultureInfo.CurrentUICulture);
 
+        /// <inheritdoc/>
         public abstract override bool Equals(object? obj);
 
+        /// <inheritdoc/>
         public abstract override int GetHashCode();
 
+        /// <inheritdoc/>
         public abstract bool Equals(Diagnostic? obj);
 
         private string GetDebuggerDisplay()
@@ -534,16 +538,5 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal bool IsUnsuppressedError
             => Severity == DiagnosticSeverity.Error && !IsSuppressed;
-    }
-
-    /// <summary>
-    /// This type is attached to diagnostics for required language version and should only be used
-    /// on such diagnostics, as they are recognized by <see cref="Compilation.GetRequiredLanguageVersion"/>.
-    /// </summary>
-    internal abstract class RequiredLanguageVersion : IFormattable
-    {
-        public abstract override string ToString();
-
-        string IFormattable.ToString(string? format, IFormatProvider? formatProvider) => ToString();
     }
 }

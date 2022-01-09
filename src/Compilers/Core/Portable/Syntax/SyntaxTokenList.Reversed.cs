@@ -20,11 +20,19 @@ namespace Loretta.CodeAnalysis
         {
             private readonly SyntaxTokenList _list;
 
+            /// <summary>
+            /// Creates a new reversed token list.
+            /// </summary>
+            /// <param name="list"></param>
             public Reversed(SyntaxTokenList list)
             {
                 _list = list;
             }
 
+            /// <summary>
+            /// Returns the enumerator for this reversed list.
+            /// </summary>
+            /// <returns></returns>
             public Enumerator GetEnumerator()
             {
                 return new Enumerator(in _list);
@@ -50,21 +58,27 @@ namespace Loretta.CodeAnalysis
                 return new EnumeratorImpl(in _list);
             }
 
+            /// <inheritdoc/>
             public override bool Equals(object? obj)
             {
                 return obj is Reversed r && Equals(r);
             }
 
+            /// <inheritdoc/>
             public bool Equals(Reversed other)
             {
                 return _list.Equals(other._list);
             }
 
+            /// <inheritdoc/>
             public override int GetHashCode()
             {
                 return _list.GetHashCode();
             }
 
+            /// <summary>
+            /// The enumerator for this reversed list.
+            /// </summary>
             [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
             [StructLayout(LayoutKind.Auto)]
             public struct Enumerator
@@ -96,6 +110,7 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
+                /// <inheritdoc cref="IEnumerator.MoveNext"/>
                 public bool MoveNext()
                 {
                     if (_count == 0 || _index <= 0)
@@ -114,6 +129,7 @@ namespace Loretta.CodeAnalysis
                     return true;
                 }
 
+                /// <inheritdoc cref="IEnumerator{T}.Current"/>
                 public SyntaxToken Current
                 {
                     get
@@ -127,11 +143,13 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
+                /// <inheritdoc/>
                 public override bool Equals(object? obj)
                 {
                     throw new NotSupportedException();
                 }
 
+                /// <inheritdoc/>
                 public override int GetHashCode()
                 {
                     throw new NotSupportedException();

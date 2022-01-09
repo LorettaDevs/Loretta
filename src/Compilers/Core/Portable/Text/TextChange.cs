@@ -53,11 +53,13 @@ namespace Loretta.CodeAnalysis.Text
             return string.Format("{0}: {{ {1}, \"{2}\" }}", this.GetType().Name, Span, NewText);
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return obj is TextChange && this.Equals((TextChange)obj);
         }
 
+        /// <inheritdoc/>
         public bool Equals(TextChange other)
         {
             return
@@ -65,16 +67,29 @@ namespace Loretta.CodeAnalysis.Text
                 EqualityComparer<string?>.Default.Equals(this.NewText, other.NewText);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return Hash.Combine(this.Span.GetHashCode(), this.NewText?.GetHashCode() ?? 0);
         }
 
+        /// <summary>
+        /// Checks whether two text changes are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(TextChange left, TextChange right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Checks whether two text changes are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(TextChange left, TextChange right)
         {
             return !(left == right);

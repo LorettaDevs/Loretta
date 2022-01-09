@@ -7,6 +7,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// Extension methods for <see cref="SyntaxNode"/>.
+    /// </summary>
     public static partial class SyntaxNodeExtensions
     {
         /// <summary>

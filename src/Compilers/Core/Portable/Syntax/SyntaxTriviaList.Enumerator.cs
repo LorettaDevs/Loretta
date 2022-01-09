@@ -12,6 +12,9 @@ namespace Loretta.CodeAnalysis
 {
     public partial struct SyntaxTriviaList
     {
+        /// <summary>
+        /// The enumerator for this trivia list.
+        /// </summary>
         [StructLayout(LayoutKind.Auto)]
         public struct Enumerator
         {
@@ -83,7 +86,8 @@ namespace Loretta.CodeAnalysis
                 RoslynDebug.Assert(trailingGreen is object);
                 InitializeFrom(in token, trailingGreen, index, trailingPosition);
             }
-
+            
+            /// <inheritdoc cref="IEnumerator.MoveNext"/>
             public bool MoveNext()
             {
                 int newIndex = _index + 1;
@@ -106,6 +110,7 @@ namespace Loretta.CodeAnalysis
                 return true;
             }
 
+            /// <inheritdoc cref="IEnumerator{T}.Current"/>
             public SyntaxTrivia Current
             {
                 get

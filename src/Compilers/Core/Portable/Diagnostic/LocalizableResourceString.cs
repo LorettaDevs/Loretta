@@ -108,6 +108,11 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <summary>
+        /// Gets the text for the localizable string with the provided format provider.
+        /// </summary>
+        /// <param name="formatProvider"></param>
+        /// <returns></returns>
         protected override string GetText(IFormatProvider? formatProvider)
         {
             var culture = formatProvider as CultureInfo ?? CultureInfo.CurrentUICulture;
@@ -117,16 +122,17 @@ namespace Loretta.CodeAnalysis
                 string.Empty;
         }
 
+        /// <inheritdoc/>
         protected override bool AreEqual(object? other)
         {
-            var otherResourceString = other as LocalizableResourceString;
-            return otherResourceString != null &&
+            return other is LocalizableResourceString otherResourceString &&
                 _nameOfLocalizableResource == otherResourceString._nameOfLocalizableResource &&
                 _resourceManager == otherResourceString._resourceManager &&
                 _resourceSource == otherResourceString._resourceSource &&
                 _formatArguments.SequenceEqual(otherResourceString._formatArguments, (a, b) => a == b);
         }
 
+        /// <inheritdoc/>
         protected override int GetHash()
         {
             return Hash.Combine(_nameOfLocalizableResource.GetHashCode(),

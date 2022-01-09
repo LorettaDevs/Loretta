@@ -301,8 +301,15 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new immutable array based on filtered elements by the predicate. The array must not be null.
         /// </summary>
-        /// <param name="array">The array to process</param>
-        /// <param name="predicate">The delegate that defines the conditions of the element to search for.</param>
+        /// <param name="array">
+        /// The array to process
+        /// </param>
+        /// <param name="predicate">
+        /// The delegate that defines the conditions of the element to search for.
+        /// </param>
+        /// <param name="arg">
+        /// The extra argument that will be passed on to the filter delegate.
+        /// </param>
         public static ImmutableArray<T> WhereAsArray<T, TArg>(this ImmutableArray<T> array, Func<T, TArg, bool> predicate, TArg arg)
             => WhereAsArrayImpl(array, predicateWithoutArg: null, predicate, arg);
 

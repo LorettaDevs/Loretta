@@ -72,6 +72,10 @@ namespace Loretta.CodeAnalysis.Text
             return TextSpan.FromBounds(GetPosition(span.Start), GetPosition(span.End));
         }
 
+        /// <summary>
+        /// Returns the enumerator for this text line collection.
+        /// </summary>
+        /// <returns></returns>
         public Enumerator GetEnumerator()
         {
             return new Enumerator(this);
@@ -87,6 +91,9 @@ namespace Loretta.CodeAnalysis.Text
             return this.GetEnumerator();
         }
 
+        /// <summary>
+        /// An enumerator for <see cref="TextLineCollection"/>.
+        /// </summary>
         [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
         public struct Enumerator : IEnumerator<TextLine>, IEnumerator
         {
@@ -99,6 +106,7 @@ namespace Loretta.CodeAnalysis.Text
                 _index = index;
             }
 
+            /// <inheritdoc cref="IEnumerator{T}.Current"/>
             public TextLine Current
             {
                 get
@@ -115,6 +123,7 @@ namespace Loretta.CodeAnalysis.Text
                 }
             }
 
+            /// <inheritdoc cref="IEnumerator.MoveNext"/>
             public bool MoveNext()
             {
                 if (_index < _lines.Count - 1)
@@ -144,11 +153,13 @@ namespace Loretta.CodeAnalysis.Text
             {
             }
 
+            /// <inheritdoc/>
             public override bool Equals(object? obj)
             {
                 throw new NotSupportedException();
             }
 
+            /// <inheritdoc/>
             public override int GetHashCode()
             {
                 throw new NotSupportedException();

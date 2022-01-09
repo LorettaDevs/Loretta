@@ -5,6 +5,9 @@ using System;
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// The option flags for the RemoveNode(s) methods.
+    /// </summary>
     [Flags]
     public enum SyntaxRemoveOptions
     {

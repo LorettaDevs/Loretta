@@ -12,6 +12,9 @@ namespace Loretta.CodeAnalysis
 {
     public readonly partial struct ChildSyntaxList
     {
+        /// <summary>
+        /// An enumerator that enumerates the list in reverse order.
+        /// </summary>
         public readonly partial struct Reversed : IEnumerable<SyntaxNodeOrToken>, IEquatable<Reversed>
         {
             private readonly SyntaxNode? _node;
@@ -23,6 +26,10 @@ namespace Loretta.CodeAnalysis
                 _count = count;
             }
 
+            /// <summary>
+            /// Returns the enumerator for this list.
+            /// </summary>
+            /// <returns></returns>
             public Enumerator GetEnumerator()
             {
                 RoslynDebug.Assert(_node is object);
@@ -49,22 +56,28 @@ namespace Loretta.CodeAnalysis
                 return new EnumeratorImpl(_node, _count);
             }
 
+            /// <inheritdoc/>
             public override int GetHashCode()
             {
                 return _node != null ? Hash.Combine(_node.GetHashCode(), _count) : 0;
             }
 
+            /// <inheritdoc/>
             public override bool Equals(object? obj)
             {
                 return (obj is Reversed r) && Equals(r);
             }
 
+            /// <inheritdoc/>
             public bool Equals(Reversed other)
             {
                 return _node == other._node
                     && _count == other._count;
             }
 
+            /// <summary>
+            /// Enumerates the nodes in this reversed children list.
+            /// </summary>
             public struct Enumerator
             {
                 private readonly SyntaxNode? _node;
@@ -78,12 +91,19 @@ namespace Loretta.CodeAnalysis
                     _childIndex = count;
                 }
 
+                /// <summary>
+                /// Moves to the next element.
+                /// </summary>
+                /// <returns>Whether there was another element to move to.</returns>
                 [MemberNotNullWhen(true, nameof(_node))]
                 public bool MoveNext()
                 {
                     return --_childIndex >= 0;
                 }
 
+                /// <summary>
+                /// The element the enumerator is at.
+                /// </summary>
                 public SyntaxNodeOrToken Current
                 {
                     get
@@ -93,6 +113,9 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
+                /// <summary>
+                /// Resets the enumerator to the last element.
+                /// </summary>
                 public void Reset()
                 {
                     _childIndex = _count;

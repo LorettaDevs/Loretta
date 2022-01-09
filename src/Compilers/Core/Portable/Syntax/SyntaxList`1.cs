@@ -393,7 +393,7 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <summary>
-        /// Get's the enumerator for this list.
+        /// Gets the enumerator for this list.
         /// </summary>
 #pragma warning disable RS0041 // uses oblivious reference types
         public Enumerator GetEnumerator()
@@ -422,36 +422,61 @@ namespace Loretta.CodeAnalysis
             return SpecializedCollections.EmptyEnumerator<TNode>();
         }
 
+        /// <summary>
+        /// Checks whether two lists are equal.
+        /// Does a reference check instead of structural.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SyntaxList<TNode> left, SyntaxList<TNode> right)
         {
             return left._node == right._node;
         }
 
+        /// <summary>
+        /// Checks whether two lists are not equal.
+        /// Does a reference check instead of structural.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SyntaxList<TNode> left, SyntaxList<TNode> right)
         {
             return left._node != right._node;
         }
 
+        /// <inheritdoc/>
         public bool Equals(SyntaxList<TNode> other)
         {
             return _node == other._node;
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return obj is SyntaxList<TNode> && Equals((SyntaxList<TNode>)obj);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return _node?.GetHashCode() ?? 0;
         }
 
+        /// <summary>
+        /// Converts an opaquely typed node list into a typed node list.
+        /// </summary>
+        /// <param name="nodes"></param>
         public static implicit operator SyntaxList<TNode>(SyntaxList<SyntaxNode> nodes)
         {
             return new SyntaxList<TNode>(nodes._node);
         }
 
+        /// <summary>
+        /// Converts a typed node list into an opaquely typed node list.
+        /// </summary>
+        /// <param name="nodes"></param>
         public static implicit operator SyntaxList<SyntaxNode>(SyntaxList<TNode> nodes)
         {
             return new SyntaxList<SyntaxNode>(nodes.Node);
@@ -465,7 +490,7 @@ namespace Loretta.CodeAnalysis
             var index = 0;
             foreach (var child in this)
             {
-                if (object.Equals(child, node))
+                if (Equals(child, node))
                 {
                     return index;
                 }
@@ -476,6 +501,11 @@ namespace Loretta.CodeAnalysis
             return -1;
         }
 
+        /// <summary>
+        /// Returns the index of the first node in this list that passes the provided predicate.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>-1 if not found.</returns>
         public int IndexOf(Func<TNode, bool> predicate)
         {
             var index = 0;
@@ -508,6 +538,11 @@ namespace Loretta.CodeAnalysis
             return -1;
         }
 
+        /// <summary>
+        /// Returns the index of the last item that is equal to the provided node in this list.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>-1 if not found.</returns>
         public int LastIndexOf(TNode node)
         {
             for (int i = this.Count - 1; i >= 0; i--)
@@ -521,6 +556,11 @@ namespace Loretta.CodeAnalysis
             return -1;
         }
 
+        /// <summary>
+        /// Returns the index of the last node in this list that passes the provided predicate.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public int LastIndexOf(Func<TNode, bool> predicate)
         {
             for (int i = this.Count - 1; i >= 0; i--)

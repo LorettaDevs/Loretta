@@ -510,13 +510,7 @@ namespace Loretta.CodeAnalysis
                 _index = -1;
             }
 
-            /// <summary>
-            /// Advances the enumerator to the next element of the collection.
-            /// </summary>
-            /// <returns>
-            /// true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
-            /// </returns>
-            /// <exception cref="InvalidOperationException">The collection was modified after the enumerator was created. </exception>
+            /// <inheritdoc cref="IEnumerator.MoveNext"/>
             public bool MoveNext()
             {
                 if (_index < _list.Count)
@@ -527,37 +521,29 @@ namespace Loretta.CodeAnalysis
                 return _index < _list.Count;
             }
 
-            /// <summary>
-            /// Gets the struct that this enumerator instance is currently pointing to.
-            /// </summary>
+            /// <inheritdoc cref="IEnumerator{T}.Current"/>
             public SyntaxNodeOrToken Current => _list[_index];
 
-            /// <summary>
-            /// Gets the struct that this enumerator instance is currently pointing to.
-            /// </summary>
             object IEnumerator.Current => this.Current;
 
-            /// <summary>
-            /// Sets the enumerator to its initial position, which is before the first element in the collection.
-            /// </summary>
-            /// <exception cref="InvalidOperationException">The collection was modified after the enumerator was created. </exception>
+            /// <inheritdoc cref="IEnumerator.Reset"/>
             void IEnumerator.Reset()
             {
                 throw new NotSupportedException();
             }
 
-            /// <summary>
-            /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-            /// </summary>
+            /// <inheritdoc cref="IDisposable.Dispose"/>
             void IDisposable.Dispose()
             {
             }
 
+            /// <inheritdoc/>
             public override bool Equals(object? obj)
             {
                 throw new NotSupportedException();
             }
 
+            /// <inheritdoc/>
             public override int GetHashCode()
             {
                 throw new NotSupportedException();

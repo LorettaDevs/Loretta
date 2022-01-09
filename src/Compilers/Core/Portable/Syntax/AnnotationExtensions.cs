@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// Extension methods for dealing with annotations.
+    /// </summary>
     public static class AnnotationExtensions
     {
         /// <summary>

@@ -12,11 +12,16 @@ namespace Loretta.CodeAnalysis
     /// </summary>
     public abstract class SourceReferenceResolver
     {
+        /// <summary>
+        /// Creates a <see cref="SourceReferenceResolver"/> instance.
+        /// </summary>
         protected SourceReferenceResolver()
         {
         }
 
+        /// <inheritdoc/>
         public abstract override bool Equals(object? other);
+        /// <inheritdoc/>
         public abstract override int GetHashCode();
 
         /// <summary>

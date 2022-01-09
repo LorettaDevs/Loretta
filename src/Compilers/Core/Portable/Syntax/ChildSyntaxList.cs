@@ -10,6 +10,9 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// A list containing all children of a syntax node.
+    /// </summary>
     public readonly partial struct ChildSyntaxList : IEquatable<ChildSyntaxList>, IReadOnlyList<SyntaxNodeOrToken>
     {
         private readonly SyntaxNode? _node;
@@ -302,6 +305,10 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <summary>
+        /// Checks whether this list contains any elements.
+        /// </summary>
+        /// <returns></returns>
         public bool Any()
         {
             return _count != 0;

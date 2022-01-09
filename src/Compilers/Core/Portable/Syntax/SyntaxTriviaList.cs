@@ -20,6 +20,9 @@ namespace Loretta.CodeAnalysis
     [StructLayout(LayoutKind.Auto)]
     public readonly partial struct SyntaxTriviaList : IEquatable<SyntaxTriviaList>, IReadOnlyList<SyntaxTrivia>
     {
+        /// <summary>
+        /// An empty trivia list.
+        /// </summary>
         public static SyntaxTriviaList Empty => default(SyntaxTriviaList);
 
         internal SyntaxTriviaList(in SyntaxToken token, GreenNode? node, int position, int index = 0)
@@ -38,6 +41,10 @@ namespace Loretta.CodeAnalysis
             Index = 0;
         }
 
+        /// <summary>
+        /// Creates a new trivia list with the provided trivia as the only element.
+        /// </summary>
+        /// <param name="trivia"></param>
         public SyntaxTriviaList(SyntaxTrivia trivia)
         {
             Token = default(SyntaxToken);
@@ -84,11 +91,19 @@ namespace Loretta.CodeAnalysis
 
         internal int Index { get; }
 
+        /// <summary>
+        /// The amount of elements in this list.
+        /// </summary>
         public int Count
         {
             get { return Node == null ? 0 : (Node.IsList ? Node.SlotCount : 1); }
         }
 
+        /// <summary>
+        /// Returns the element at the provided index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public SyntaxTrivia ElementAt(int index)
         {
             return this[index];
@@ -204,11 +219,20 @@ namespace Loretta.CodeAnalysis
             return new Reversed(this);
         }
 
+        /// <summary>
+        /// Returns the enumerator for this list.
+        /// </summary>
+        /// <returns></returns>
         public Enumerator GetEnumerator()
         {
             return new Enumerator(in this);
         }
 
+        /// <summary>
+        /// Returns the index of the provided trivia in this list.
+        /// </summary>
+        /// <param name="triviaInList"></param>
+        /// <returns>-1 if not found.</returns>
         public int IndexOf(SyntaxTrivia triviaInList)
         {
             for (int i = 0, n = this.Count; i < n; i++)
@@ -440,26 +464,41 @@ namespace Loretta.CodeAnalysis
             return node.IsList ? node.GetSlot(i) : node;
         }
 
+        /// <inheritdoc/>
         public bool Equals(SyntaxTriviaList other)
         {
             return Node == other.Node && Index == other.Index && Token.Equals(other.Token);
         }
 
+        /// <summary>
+        /// Checks whether two trivia lists are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SyntaxTriviaList left, SyntaxTriviaList right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Checks whether two trivia lists are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SyntaxTriviaList left, SyntaxTriviaList right)
         {
             return !left.Equals(right);
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return (obj is SyntaxTriviaList list) && Equals(list);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return Hash.Combine(Token.GetHashCode(), Hash.Combine(Node, Index));
@@ -497,16 +536,26 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return Node != null ? Node.ToString() : string.Empty;
         }
 
+        /// <summary>
+        /// Returns the list as a string including leading and trailing trivia.
+        /// </summary>
+        /// <returns></returns>
         public string ToFullString()
         {
             return Node != null ? Node.ToFullString() : string.Empty;
         }
 
+        /// <summary>
+        /// Creates a new trivia list.
+        /// </summary>
+        /// <param name="trivia"></param>
+        /// <returns></returns>
         public static SyntaxTriviaList Create(SyntaxTrivia trivia)
         {
             return new SyntaxTriviaList(trivia);

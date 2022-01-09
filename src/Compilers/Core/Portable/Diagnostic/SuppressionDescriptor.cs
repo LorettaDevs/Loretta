@@ -68,6 +68,7 @@ namespace Loretta.CodeAnalysis
             Justification = justification ?? throw new ArgumentNullException(nameof(justification));
         }
 
+        /// <inheritdoc/>
         public bool Equals(SuppressionDescriptor? other)
         {
             if (ReferenceEquals(this, other))
@@ -82,8 +83,10 @@ namespace Loretta.CodeAnalysis
                 Justification.Equals(other.Justification);
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj) => Equals(obj as SuppressionDescriptor);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return Hash.Combine(Id.GetHashCode(),

@@ -65,9 +65,12 @@ namespace Loretta.CodeAnalysis
         public virtual FileLinePositionSpan GetMappedLineSpan() => default;
 
         // Derived classes should provide value equality semantics.
+        /// <inheritdoc/>
         public abstract override bool Equals(object? obj);
+        /// <inheritdoc/>
         public abstract override int GetHashCode();
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             var result = Kind.ToString();
@@ -88,14 +91,30 @@ namespace Loretta.CodeAnalysis
             return result;
         }
 
+        /// <summary>
+        /// Checks whether two locations are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(Location? left, Location? right)
         {
             if (left is null) return right is null;
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Checks whether two locations are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(Location? left, Location? right) => !(left == right);
 
+        /// <summary>
+        /// Returns the display string for the debugger.
+        /// </summary>
+        /// <returns></returns>
         protected virtual string GetDebuggerDisplay()
         {
             var result = GetType().Name;

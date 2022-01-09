@@ -55,6 +55,9 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public int RawKind => Green.RawKind;
 
+        /// <summary>
+        /// The textual representation of this node's kind.
+        /// </summary>
         protected string KindText => Green.KindText;
 
         /// <summary>
@@ -166,6 +169,7 @@ namespace Loretta.CodeAnalysis
             return result;
         }
 
+        /// <summary>internal</summary>
         protected T? GetRed<T>(ref T? field, int slot) where T : SyntaxNode
         {
             var result = field;
@@ -184,6 +188,7 @@ namespace Loretta.CodeAnalysis
         }
 
         // special case of above function where slot = 0, does not need GetChildPosition 
+        /// <summary>internal</summary>
         protected T? GetRedAtZero<T>(ref T? field) where T : SyntaxNode
         {
             var result = field;
@@ -562,6 +567,10 @@ namespace Loretta.CodeAnalysis
             return this.Position + offset;
         }
 
+        /// <summary>
+        /// Returns the <see cref="CodeAnalysis.Location"/> for this node.
+        /// </summary>
+        /// <returns></returns>
         public Location GetLocation()
         {
             return this.SyntaxTree.GetLocation(this.Span);
@@ -619,6 +628,9 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <summary>
+        /// The parent trivia for this node in case it is part of structured trivia.
+        /// </summary>
         public virtual SyntaxTrivia ParentTrivia
         {
             get
@@ -643,6 +655,14 @@ namespace Loretta.CodeAnalysis
             return new ChildSyntaxList(this);
         }
 
+        /// <summary>
+        /// Returns the child node or token that contains the provided position.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if the provided position is outside of this node.
+        /// </exception>
         public virtual SyntaxNodeOrToken ChildThatContainsPosition(int position)
         {
             //PERF: it is very important to keep this method fast.
@@ -1473,11 +1493,17 @@ recurse:
             Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia>? computeReplacementTrivia = null)
             where TNode : SyntaxNode;
 
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode ReplaceNodeInListCore(SyntaxNode originalNode, IEnumerable<SyntaxNode> replacementNodes);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode InsertNodesInListCore(SyntaxNode nodeInList, IEnumerable<SyntaxNode> nodesToInsert, bool insertBefore);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode ReplaceTokenInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode InsertTokensInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens, bool insertBefore);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode ReplaceTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode InsertTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia, bool insertBefore);
 
         /// <summary>
@@ -1487,6 +1513,7 @@ recurse:
             IEnumerable<SyntaxNode> nodes,
             SyntaxRemoveOptions options);
 
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode NormalizeWhitespaceCore(string indentation, string eol, bool elasticTrivia);
 
         /// <summary>

@@ -151,6 +151,9 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public string ValueText => Node?.GetValueText() ?? string.Empty;
 
+        /// <summary>
+        /// The token's text.
+        /// </summary>
         public string Text => ToString();
 
         /// <summary>

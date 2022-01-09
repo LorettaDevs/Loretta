@@ -132,27 +132,52 @@ namespace Loretta.CodeAnalysis.Text
             return Line + "," + Character;
         }
 
+        /// <inheritdoc/>
         public int CompareTo(LinePosition other)
         {
             int result = _line.CompareTo(other._line);
             return (result != 0) ? result : _character.CompareTo(other.Character);
         }
 
+        /// <summary>
+        /// Checks whether one position is located after another.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator >(LinePosition left, LinePosition right)
         {
             return left.CompareTo(right) > 0;
         }
 
+        /// <summary>
+        /// Checks whether one position is located after or at the same location as another.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator >=(LinePosition left, LinePosition right)
         {
             return left.CompareTo(right) >= 0;
         }
 
+        /// <summary>
+        /// Checks whether one position is located before another.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator <(LinePosition left, LinePosition right)
         {
             return left.CompareTo(right) < 0;
         }
 
+        /// <summary>
+        /// Checks whether one position is located before or at the same location as another.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator <=(LinePosition left, LinePosition right)
         {
             return left.CompareTo(right) <= 0;

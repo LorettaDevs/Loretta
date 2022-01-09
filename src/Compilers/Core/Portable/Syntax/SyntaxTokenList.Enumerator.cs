@@ -117,11 +117,13 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
+            /// <inheritdoc/>
             public override bool Equals(object? obj)
             {
                 throw new NotSupportedException();
             }
 
+            /// <inheritdoc/>
             public override int GetHashCode()
             {
                 throw new NotSupportedException();

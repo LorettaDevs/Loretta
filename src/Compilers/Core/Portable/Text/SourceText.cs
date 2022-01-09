@@ -34,6 +34,7 @@ namespace Loretta.CodeAnalysis.Text
 
         private static readonly Encoding s_utf8EncodingWithNoBOM = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: false);
 
+        /// <summary>internal</summary>
         protected SourceText(ImmutableArray<byte> checksum = default, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1, SourceTextContainer? container = null)
         {
             ValidateChecksumAlgorithm(checksumAlgorithm);
@@ -468,6 +469,10 @@ namespace Loretta.CodeAnalysis.Text
             }
         }
 
+        /// <summary>
+        /// Returns the checksum for this text.
+        /// </summary>
+        /// <returns></returns>
         public ImmutableArray<byte> GetChecksum()
         {
             if (_lazyChecksum.IsDefault)

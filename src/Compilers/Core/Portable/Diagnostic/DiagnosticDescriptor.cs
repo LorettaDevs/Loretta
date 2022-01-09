@@ -169,6 +169,7 @@ namespace Loretta.CodeAnalysis
             this.CustomTags = customTags;
         }
 
+        /// <inheritdoc/>
         public bool Equals(DiagnosticDescriptor? other)
         {
             if (ReferenceEquals(this, other))
@@ -188,11 +189,13 @@ namespace Loretta.CodeAnalysis
                 this.Title.Equals(other.Title);
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return Equals(obj as DiagnosticDescriptor);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return Hash.Combine(this.Category.GetHashCode(),

@@ -3,6 +3,9 @@
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// The enum for the type of generated file.
+    /// </summary>
     public enum GeneratedKind
     {
         /// <summary>

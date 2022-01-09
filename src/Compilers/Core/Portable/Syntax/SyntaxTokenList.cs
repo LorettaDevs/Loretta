@@ -33,6 +33,10 @@ namespace Loretta.CodeAnalysis
             _index = index;
         }
 
+        /// <summary>
+        /// Creates a new token list with the provided token as its only element.
+        /// </summary>
+        /// <param name="token"></param>
         public SyntaxTokenList(SyntaxToken token)
         {
             _parent = token.Parent;
@@ -269,6 +273,11 @@ namespace Loretta.CodeAnalysis
             return node.IsList ? node.GetSlot(i) : node;
         }
 
+        /// <summary>
+        /// Retuns the index of the provided token in this list.
+        /// </summary>
+        /// <param name="tokenInList"></param>
+        /// <returns>-1 if not found.</returns>
         public int IndexOf(SyntaxToken tokenInList)
         {
             for (int i = 0, n = this.Count; i < n; i++)
@@ -481,6 +490,7 @@ namespace Loretta.CodeAnalysis
             return !left.Equals(right);
         }
 
+        /// <inheritdoc/>
         public bool Equals(SyntaxTokenList other)
         {
             return Node == other.Node && _parent == other._parent && _index == other._index;

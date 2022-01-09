@@ -19,11 +19,19 @@ namespace Loretta.CodeAnalysis
         {
             private readonly SyntaxTriviaList _list;
 
+            /// <summary>
+            /// Creates a new reversed trivia list.
+            /// </summary>
+            /// <param name="list"></param>
             public Reversed(SyntaxTriviaList list)
             {
                 _list = list;
             }
 
+            /// <summary>
+            /// Returns the enumerator for this reversed trivia list.
+            /// </summary>
+            /// <returns></returns>
             public Enumerator GetEnumerator()
             {
                 return new Enumerator(in _list);
@@ -50,21 +58,27 @@ namespace Loretta.CodeAnalysis
                 return new ReversedEnumeratorImpl(in _list);
             }
 
+            /// <inheritdoc/>
             public override int GetHashCode()
             {
                 return _list.GetHashCode();
             }
 
+            /// <inheritdoc/>
             public override bool Equals(object? obj)
             {
                 return obj is Reversed && Equals((Reversed)obj);
             }
 
+            /// <inheritdoc/>
             public bool Equals(Reversed other)
             {
                 return _list.Equals(other._list);
             }
 
+            /// <summary>
+            /// The enumerator for reversed trivia lists.
+            /// </summary>
             [StructLayout(LayoutKind.Auto)]
             public struct Enumerator
             {
@@ -95,6 +109,7 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
+                /// <inheritdoc cref="IEnumerator.MoveNext"/>
                 public bool MoveNext()
                 {
                     if (_count == 0 || _index <= 0)
@@ -113,6 +128,7 @@ namespace Loretta.CodeAnalysis
                     return true;
                 }
 
+                /// <inheritdoc cref="IEnumerator{T}.Current"/>
                 public SyntaxTrivia Current
                 {
                     get

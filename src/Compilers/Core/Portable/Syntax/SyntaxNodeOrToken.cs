@@ -393,6 +393,12 @@ namespace Loretta.CodeAnalysis
             return default(SyntaxTriviaList);
         }
 
+        /// <summary>
+        /// Returns this <see cref="SyntaxNode"/> or <see cref="SyntaxToken"/> with the provided
+        /// leading trivia.
+        /// </summary>
+        /// <param name="trivia"></param>
+        /// <returns></returns>
         public SyntaxNodeOrToken WithLeadingTrivia(IEnumerable<SyntaxTrivia> trivia)
         {
             if (_token != null)
@@ -408,11 +414,18 @@ namespace Loretta.CodeAnalysis
             return this;
         }
 
+        /// <inheritdoc cref="WithLeadingTrivia(IEnumerable{SyntaxTrivia})"/>
         public SyntaxNodeOrToken WithLeadingTrivia(params SyntaxTrivia[] trivia)
         {
             return WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
+        /// <summary>
+        /// Returns this <see cref="SyntaxNode"/> or <see cref="SyntaxToken"/> with the provided
+        /// trailing trivia.
+        /// </summary>
+        /// <param name="trivia"></param>
+        /// <returns></returns>
         public SyntaxNodeOrToken WithTrailingTrivia(IEnumerable<SyntaxTrivia> trivia)
         {
             if (_token != null)
@@ -428,6 +441,7 @@ namespace Loretta.CodeAnalysis
             return this;
         }
 
+        /// <inheritdoc cref="WithTrailingTrivia(IEnumerable{SyntaxTrivia})"/>
         public SyntaxNodeOrToken WithTrailingTrivia(params SyntaxTrivia[] trivia)
         {
             return WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
@@ -910,6 +924,15 @@ namespace Loretta.CodeAnalysis
 
         internal int EndPosition => _position + this.FullWidth;
 
+        /// <summary>
+        /// Returns the index of the first child of the provided node that contains the provided position.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the provided position is outside of the node's span.
+        /// </exception>
         public static int GetFirstChildIndexSpanningPosition(SyntaxNode node, int position)
         {
             if (!node.FullSpan.IntersectsWith(position))
@@ -960,6 +983,10 @@ namespace Loretta.CodeAnalysis
             throw ExceptionUtilities.Unreachable;
         }
 
+        /// <summary>
+        /// Returns the sibling to the right of this node or token.
+        /// </summary>
+        /// <returns></returns>
         public SyntaxNodeOrToken GetNextSibling()
         {
             var parent = this.Parent;
@@ -975,6 +1002,10 @@ namespace Loretta.CodeAnalysis
                 : GetNextSiblingWithSearch(siblings);
         }
 
+        /// <summary>
+        /// Returns the sibling to the left of this node or token.
+        /// </summary>
+        /// <returns></returns>
         public SyntaxNodeOrToken GetPreviousSibling()
         {
             if (this.Parent != null)

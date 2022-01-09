@@ -33,16 +33,25 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <summary>
+        /// Converts a <see cref="LocalizableString"/> to a <see cref="string"/> with the default UI culture.
+        /// </summary>
+        /// <param name="localizableResource"></param>
         public static explicit operator string?(LocalizableString localizableResource)
         {
             return localizableResource.ToString(null);
         }
 
+        /// <summary>
+        /// Converts a <see cref="string"/> to a <see cref="LocalizableString"/>.
+        /// </summary>
+        /// <param name="fixedResource"></param>
         public static implicit operator LocalizableString(string? fixedResource)
         {
             return FixedLocalizableString.Create(fixedResource);
         }
 
+        /// <inheritdoc/>
         public sealed override string ToString()
         {
             return ToString(null);
@@ -53,6 +62,7 @@ namespace Loretta.CodeAnalysis
             return ToString(formatProvider);
         }
 
+        /// <inheritdoc/>
         public sealed override int GetHashCode()
         {
             try
@@ -66,6 +76,7 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <inheritdoc/>
         public sealed override bool Equals(object? other)
         {
             try
@@ -79,9 +90,10 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <inheritdoc/>
         public bool Equals(LocalizableString? other)
         {
-            return Equals((object?)other);
+            return Equals((object?) other);
         }
 
         /// <summary>

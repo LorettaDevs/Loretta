@@ -5,6 +5,9 @@ using Loretta.CodeAnalysis.Diagnostics;
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// A class with common diagnostic tags.
+    /// </summary>
     public static class WellKnownDiagnosticTags
     {
         /// <summary>

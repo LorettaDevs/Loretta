@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// The options provider for the <see cref="SyntaxTree"/>.
+    /// </summary>
     public abstract class SyntaxTreeOptionsProvider
     {
         /// <summary>

@@ -64,6 +64,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public ParseOptions WithDocumentationMode(DocumentationMode documentationMode) => CommonWithDocumentationMode(documentationMode);
 
+        /// <inheritdoc cref="WithDocumentationMode(DocumentationMode)"/>
         protected abstract ParseOptions CommonWithDocumentationMode(DocumentationMode documentationMode);
 
         /// <summary>
@@ -71,6 +72,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public ParseOptions WithFeatures(IEnumerable<KeyValuePair<string, string>> features) => CommonWithFeatures(features);
 
+        /// <inheritdoc cref="WithFeatures(IEnumerable{KeyValuePair{string, string}})"/>
         protected abstract ParseOptions CommonWithFeatures(IEnumerable<KeyValuePair<string, string>> features);
 
         /// <summary>
@@ -81,8 +83,14 @@ namespace Loretta.CodeAnalysis
             get;
         }
 
+        /// <inheritdoc/>
         public abstract override bool Equals(object? obj);
 
+        /// <summary>
+        /// The helper method for equality comparison of the base class' fields.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         protected bool EqualsHelper([NotNullWhen(true)] ParseOptions? other)
         {
             if (other is null)
@@ -95,8 +103,13 @@ namespace Loretta.CodeAnalysis
                 Features.SequenceEqual(other.Features);
         }
 
+        /// <inheritdoc/>
         public abstract override int GetHashCode();
 
+        /// <summary>
+        /// The helper method for hash code calculation of the base class' fields.
+        /// </summary>
+        /// <returns></returns>
         protected int GetHashCodeHelper()
         {
             return Hash.Combine(
@@ -114,8 +127,20 @@ namespace Loretta.CodeAnalysis
             return hash.ToHashCode();
         }
 
-        public static bool operator ==(ParseOptions? left, ParseOptions? right) => object.Equals(left, right);
+        /// <summary>
+        /// Checks whether two parse options are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(ParseOptions? left, ParseOptions? right) => Equals(left, right);
 
-        public static bool operator !=(ParseOptions? left, ParseOptions? right) => !object.Equals(left, right);
+        /// <summary>
+        /// Checks whether two parse options are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator !=(ParseOptions? left, ParseOptions? right) => !Equals(left, right);
     }
 }

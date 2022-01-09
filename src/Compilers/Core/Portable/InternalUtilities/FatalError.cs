@@ -109,6 +109,7 @@ namespace Loretta.CodeAnalysis.ErrorReporting
         /// <paramref name="contextCancellationToken"/>, provided cancellation is expected per the previous
         /// paragraph.</para>
         /// </summary>
+        /// <param name="exception"></param>
         /// <param name="contextCancellationToken">A <see cref="CancellationToken"/> which will have
         /// <see cref="CancellationToken.IsCancellationRequested"/> set if cancellation is expected.</param>
         /// <returns><see langword="false"/> to avoid catching the exception.</returns>
@@ -155,6 +156,7 @@ namespace Loretta.CodeAnalysis.ErrorReporting
         /// <paramref name="contextCancellationToken"/>, provided cancellation is expected per the previous
         /// paragraph.</para>
         /// </summary>
+        /// <param name="exception"></param>
         /// <param name="contextCancellationToken">A <see cref="CancellationToken"/> which will have
         /// <see cref="CancellationToken.IsCancellationRequested"/> set if cancellation is expected.</param>
         /// <returns><see langword="true"/> to catch the exception if the non-fatal error was reported; otherwise,
