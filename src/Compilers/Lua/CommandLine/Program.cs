@@ -305,6 +305,7 @@ namespace Loretta.CLI
                 NamingStrategy.Alphabetical => Minifying.NamingStrategies.Alphabetical,
                 NamingStrategy.Numerical => Minifying.NamingStrategies.Numerical,
                 NamingStrategy.ZeroWidth => Minifying.NamingStrategies.ZeroWidth,
+                _ => throw new InvalidOperationException("Invalid naming strategy."),
             };
         }
 
@@ -320,6 +321,7 @@ namespace Loretta.CLI
             {
                 SlotAllocator.Sequential => new Minifying.SequentialSlotAllocator(),
                 SlotAllocator.Sorted => new Minifying.SortedSlotAllocator(),
+                _ => throw new InvalidOperationException("Invalid slot allocator."),
             };
         }
 
