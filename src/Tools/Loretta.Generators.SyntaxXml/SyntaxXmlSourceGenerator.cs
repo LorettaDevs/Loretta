@@ -23,11 +23,11 @@ namespace Loretta.Generators.SyntaxXml
         private static readonly DiagnosticDescriptor s_MissingSyntaxXml = new DiagnosticDescriptor(
             "LSSG1001",
             title: "Syntax.xml is missing",
-            messageFormat: "The Syntax.xml file was not included in the project, so we are not generating source.",
+            messageFormat: "The Syntax.xml file was not included in the project, so we are not generating source",
             category: "SyntaxGenerator",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
-
+        [SuppressMessage("MicrosoftCodeAnalysisDesign", "RS1032:Define diagnostic message correctly", Justification = "It is a question mark.")]
         private static readonly DiagnosticDescriptor s_UnableToReadSyntaxXml = new DiagnosticDescriptor(
             "LSSG1002",
             title: "Syntax.xml could not be read",
