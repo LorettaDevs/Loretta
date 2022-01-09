@@ -439,5 +439,14 @@ local str4 = 'hello\xFFthere'
                 // local b = `hi!`
                 Diagnostic(ErrorCode.ERR_HashStringsNotSupportedInVersion, "`hi!`").WithLocation(2, 11));
         }
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsNoDiagnosticsWhen_AnInvalidEscapeIsFound()
+        {
+            const string source = @"local a = '\A\B\C\D\E'";
+            var options = LuaSyntaxOptions.All.With(acceptInvalidEscapes: true);
+            ParseAndValidate(source, options);
+        }
     }
 }

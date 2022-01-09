@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Added a minifier to the experimental package.
+- Added support for the Lua 5.1 and Luau lexing bug that makes them silently accept invalid
+  single-char escapes (e.g.: `"\A\B\C\D" will be read as "ABCD" silently without any errors or warnings).
 
 ### Fixed
 - `ObjectDisplay.FormatLiteral` was not emitting unicode escapes correctly.

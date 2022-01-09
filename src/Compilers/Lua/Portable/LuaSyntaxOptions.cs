@@ -34,7 +34,8 @@ namespace Loretta.CodeAnalysis.Lua
             acceptUnicodeEscape: false,
             continueType: ContinueType.None,
             acceptIfExpression: true,
-            acceptHashStrings: false);
+            acceptHashStrings: false,
+            acceptInvalidEscapes: true);
 
         /// <summary>
         /// The Lua 5.2 preset.
@@ -44,7 +45,8 @@ namespace Loretta.CodeAnalysis.Lua
             acceptGoto: true,
             acceptHexEscapesInStrings: true,
             acceptHexFloatLiterals: true,
-            acceptWhitespaceEscape: true);
+            acceptWhitespaceEscape: true,
+            acceptInvalidEscapes: false);
 
         /// <summary>
         /// The Lua 5.3 preset.
@@ -74,7 +76,8 @@ namespace Loretta.CodeAnalysis.Lua
             acceptUnicodeEscape: false,
             continueType: ContinueType.None,
             acceptIfExpression: false,
-            acceptHashStrings: false);
+            acceptHashStrings: false,
+            acceptInvalidEscapes: false);
 
         /// <summary>
         /// The LuaJIT 2.1-beta3 preset.
@@ -112,7 +115,8 @@ namespace Loretta.CodeAnalysis.Lua
             acceptUnicodeEscape: true,
             continueType: ContinueType.ContextualKeyword,
             acceptIfExpression: true,
-            acceptHashStrings: false);
+            acceptHashStrings: false,
+            acceptInvalidEscapes: true);
 
         /// <summary>
         /// The FiveM preset.
@@ -142,7 +146,8 @@ namespace Loretta.CodeAnalysis.Lua
             acceptUnicodeEscape: true,
             continueType: ContinueType.ContextualKeyword,
             acceptIfExpression: true,
-            acceptHashStrings: true);
+            acceptHashStrings: true,
+            acceptInvalidEscapes: false);
 
         /// <summary>
         /// All presets that are preconfigured in <see cref="LuaSyntaxOptions"/>.
@@ -180,6 +185,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="continueType"><inheritdoc cref="ContinueType" path="/summary" /></param>
         /// <param name="acceptIfExpression"><inheritdoc cref="AcceptIfExpressions" path="/summary" /></param>
         /// <param name="acceptHashStrings"><inheritdoc cref="AcceptHashStrings" path="/summary" /></param>
+        /// <param name="acceptInvalidEscapes"><inheritdoc cref="AcceptInvalidEscapes" path="/summary" /></param>
         public LuaSyntaxOptions(
             bool acceptBinaryNumbers,
             bool acceptCCommentSyntax,
@@ -198,7 +204,8 @@ namespace Loretta.CodeAnalysis.Lua
             bool acceptUnicodeEscape,
             ContinueType continueType,
             bool acceptIfExpression,
-            bool acceptHashStrings)
+            bool acceptHashStrings,
+            bool acceptInvalidEscapes)
         {
             AcceptBinaryNumbers = acceptBinaryNumbers;
             AcceptCCommentSyntax = acceptCCommentSyntax;
@@ -218,6 +225,7 @@ namespace Loretta.CodeAnalysis.Lua
             ContinueType = continueType;
             AcceptIfExpressions = acceptIfExpression;
             AcceptHashStrings = acceptHashStrings;
+            AcceptInvalidEscapes = acceptInvalidEscapes;
         }
 
         /// <summary>
@@ -314,6 +322,16 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptHashStrings { get; }
 
         /// <summary>
+        /// Whether to support the Lua 5.1 lexer bug where invalid
+        /// escapes in strings are read as the character in the escape.
+        /// <para>
+        ///   NO ERROR WILL BE EMITTED IF AN INVALID ESCAPE IS ENCOUNTERED
+        ///   IF THIS IS <see langword="true"/>.
+        /// </para>
+        /// </summary>
+        public bool AcceptInvalidEscapes { get; }
+
+        /// <summary>
         /// Creates a new lua options changing the provided fields.
         /// </summary>
         /// <param name="acceptBinaryNumbers">
@@ -388,6 +406,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// <inheritdoc cref="AcceptHashStrings" path="/summary" /> If None uses the value of
         /// <see cref="AcceptHashStrings" />.
         /// </param>
+        /// <param name="acceptInvalidEscapes">
+        /// <inheritdoc cref="AcceptInvalidEscapes" path="/summary" /> If None uses the value of
+        /// <see cref="AcceptInvalidEscapes" />.
+        /// </param>
         /// <returns></returns>
         public LuaSyntaxOptions With(
             Option<bool> acceptBinaryNumbers = default,
@@ -407,7 +429,8 @@ namespace Loretta.CodeAnalysis.Lua
             Option<bool> acceptUnicodeEscape = default,
             Option<ContinueType> continueType = default,
             Option<bool> acceptIfExpression = default,
-            Option<bool> acceptHashStrings = default) =>
+            Option<bool> acceptHashStrings = default,
+            Option<bool> acceptInvalidEscapes = default) =>
             new LuaSyntaxOptions(
                 acceptBinaryNumbers.UnwrapOr(AcceptBinaryNumbers),
                 acceptCCommentSyntax.UnwrapOr(AcceptCCommentSyntax),
@@ -426,7 +449,8 @@ namespace Loretta.CodeAnalysis.Lua
                 acceptUnicodeEscape.UnwrapOr(AcceptUnicodeEscape),
                 continueType.UnwrapOr(ContinueType),
                 acceptIfExpression.UnwrapOr(AcceptIfExpressions),
-                acceptHashStrings.UnwrapOr(AcceptHashStrings));
+                acceptHashStrings.UnwrapOr(AcceptHashStrings),
+                acceptInvalidEscapes.UnwrapOr(AcceptInvalidEscapes));
 
         /// <inheritdoc/>
         public override bool Equals(object? obj) =>
