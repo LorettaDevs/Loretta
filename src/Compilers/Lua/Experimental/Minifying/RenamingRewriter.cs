@@ -5,7 +5,7 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "This is used to emulate the behavior of the base LuaSyntaxRewriter methods.")]
     internal partial class RenamingRewriter : LuaSyntaxRewriter
     {
         private readonly Script _script;
