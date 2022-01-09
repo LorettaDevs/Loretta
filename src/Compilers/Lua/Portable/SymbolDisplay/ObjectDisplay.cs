@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Loretta.CodeAnalysis.Lua.Utilities;
@@ -15,7 +16,12 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
         /// <summary>
         /// The nil literal in Lua.
         /// </summary>
-        public static string NullLiteral => "nil";
+        public static string NilLiteral => "nil";
+
+        /// <inheritdoc cref="NilLiteral"/>
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use NilLiteral instead.", true)]
+        public static string NullLiteral => NilLiteral;
 
         /// <summary>
         /// Returns a string representation of an object of primitive type.
@@ -29,7 +35,7 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
         public static string? FormatPrimitive(object? obj, ObjectDisplayOptions options)
         {
             if (obj is null)
-                return NullLiteral;
+                return NilLiteral;
 
             var type = obj.GetType();
             if (type.IsEnum)
@@ -234,7 +240,9 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             string startDelimiter, endDelimiter;
             while (value.IndexOf(startDelimiter = $"[{equalsBuilder}[", StringComparison.Ordinal) >= 0
                    || value.IndexOf(endDelimiter = $"]{equalsBuilder}]", StringComparison.Ordinal) >= 0)
+            {
                 equalsBuilder.Append('=');
+            }
 
             return (startDelimiter, endDelimiter);
         }
