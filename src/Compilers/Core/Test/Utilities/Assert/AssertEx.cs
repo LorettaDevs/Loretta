@@ -18,6 +18,7 @@ using DiffPlex;
 using DiffPlex.DiffBuilder;
 using DiffPlex.DiffBuilder.Model;
 using Loretta.CodeAnalysis.Test.Utilities;
+using Loretta.Utilities;
 using Xunit;
 
 namespace Loretta.Test.Utilities
@@ -801,7 +802,7 @@ namespace Loretta.Test.Utilities
         public static void NotNull<T>([NotNull] T value)
         {
             Assert.NotNull(value);
-            Debug.Assert(value is object);
+            RoslynDebug.Assert(value is object);
         }
 
 #nullable disable

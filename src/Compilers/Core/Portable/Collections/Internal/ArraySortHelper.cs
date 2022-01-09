@@ -23,8 +23,6 @@ using System.Runtime.InteropServices;
 using Half = System.Single;
 #endif
 
-#nullable disable
-
 namespace Loretta.CodeAnalysis.Collections.Internal
 {
     #region ArraySortHelper for single arrays
@@ -375,7 +373,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                 }
                 else
                 {
-                    order = array[i].CompareTo(value);
+                    order = array[i].CompareTo(value!);
                 }
 
                 if (order == 0)
