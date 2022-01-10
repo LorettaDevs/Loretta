@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## v0.2.7-beta.8
 ### Added
 - Added a minifier to the experimental package.
 - Added support for the Lua 5.1 and Luau lexing bug that makes them silently accept invalid
