@@ -12,6 +12,7 @@
       "src\\Tools\\Loretta.Generators.Shared\\Loretta.Generators.Shared.shproj",
       "src\\Tools\\Loretta.Generators.SyntaxKindGenerator\\Loretta.Generators.SyntaxKindGenerator.csproj",
       "src\\Tools\\Loretta.Generators.SyntaxXml\\Loretta.Generators.SyntaxXml.csproj",
+      "src\\Tools\\Loretta.UnusedStuffFinder\\Loretta.UnusedStuffFinder.csproj",
       "src\\Tools\\LuaStatisticsCollector\\Loretta.CodeAnalysis.Lua.StatisticsCollector.csproj"
     ]
   }
