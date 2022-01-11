@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Loretta.CodeAnalysis.Lua.Syntax;
+using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -51,6 +52,51 @@ namespace Loretta.CodeAnalysis.Lua
         /// Returns the scopes directly contained within this scope.
         /// </summary>
         IEnumerable<IScope> ContainedScopes { get; }
+
+        /// <summary>
+        /// Attempts to find a variable with the given name.
+        /// </summary>
+        /// <param name="name">The name of the variable to search by.</param>
+        /// <param name="kind">
+        /// The kind of scope up to which to search the variable in.
+        /// </param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the providedd name is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the provided name is not a valid identifier.
+        /// </exception>
+        /// <remarks>
+        ///   <para>The kind parameter searches for a scope of the provided kind or a more specific one as in the following list:</para>
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.Block"/> searches only <see cref="ScopeKind.Block"/>s.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.Function"/> searches: <see cref="ScopeKind.Function"/>s
+        ///         and <see cref="ScopeKind.Block"/>s.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.File"/> searches: <see cref="ScopeKind.File"/>,
+        ///         <see cref="ScopeKind.Function"/>s and <see cref="ScopeKind.Block"/>s.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.Global"/> searches: <see cref="ScopeKind.Global"/>,
+        ///         <see cref="ScopeKind.File"/>, <see cref="ScopeKind.Function"/>s
+        ///         and <see cref="ScopeKind.Block"/>s.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </remarks>
+        IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Block);
 
         /// <summary>
         /// Deprecated. <inheritdoc cref="ContainingScope"/>
@@ -116,6 +162,18 @@ namespace Loretta.CodeAnalysis.Lua
         public IEnumerable<IScopeInternal> ContainedScopes { get; }
 
         IEnumerable<IScope> IScope.ContainedScopes => ContainedScopes;
+
+        public IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Block)
+        {
+            if (name is null) throw new ArgumentNullException(nameof(name));
+            if (!StringUtils.IsIdentifier(name)) throw new ArgumentException($"'{nameof(name)}' must be a valid identifier.");
+            foreach (var variable in DeclaredVariables)
+            {
+                if (StringComparer.Ordinal.Equals(variable.Name, name))
+                    return variable;
+            }
+            return Parent is not null && Parent.Kind >= kind ? Parent.FindVariable(name) : null;
+        }
 
         public bool TryGetVariable(string name, [NotNullWhen(true)] out IVariableInternal? variable) =>
             _variables.TryGetValue(name, out variable) || Parent?.TryGetVariable(name, out variable) is true;
