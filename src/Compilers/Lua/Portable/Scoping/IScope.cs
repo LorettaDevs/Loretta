@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Loretta.CodeAnalysis.Lua.Syntax;
@@ -27,7 +28,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The parent scope (if any).
         /// </summary>
-        IScope? Parent { get; }
+        IScope? ContainingScope { get; }
 
         /// <summary>
         /// Contains the variables declared within the scope.
@@ -37,7 +38,7 @@ namespace Loretta.CodeAnalysis.Lua
         IEnumerable<IVariable> DeclaredVariables { get; }
 
         /// <summary>
-        /// Variables that are referenced by this scope.
+        /// Variables that are directly referenced by this scope.
         /// </summary>
         IEnumerable<IVariable> ReferencedVariables { get; }
 
@@ -50,6 +51,13 @@ namespace Loretta.CodeAnalysis.Lua
         /// Returns the scopes directly contained within this scope.
         /// </summary>
         IEnumerable<IScope> ContainedScopes { get; }
+
+        /// <summary>
+        /// Deprecated. <inheritdoc cref="ContainingScope"/>
+        /// </summary>
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use ContainingScope instead.")]
+        IScope? Parent => ContainingScope;
     }
 
     internal interface IScopeInternal : IScope
@@ -91,7 +99,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public IScopeInternal? Parent { get; }
 
-        IScope? IScope.Parent => Parent;
+        IScope? IScope.ContainingScope => Parent;
 
         public IEnumerable<IVariableInternal> DeclaredVariables { get; }
 
@@ -168,7 +176,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public void AddChildScope(IScopeInternal scope)
         {
-            RoslynDebug.Assert(scope.Parent == this);
+            RoslynDebug.Assert(scope.ContainingScope == this);
             _containedScopes.Add(scope);
         }
     }

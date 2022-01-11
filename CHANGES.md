@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added `IScope.ContainedScopes` which lets you check scopes contained within another scope.
 
+### Changed
+- Renamed `IScope.Parent` to `IScope.ContainingScope` to be more consistent with `ContainedScopes`.
+
 ## v0.2.7-beta.8
 ### Added
 - Added a minifier to the experimental package.
