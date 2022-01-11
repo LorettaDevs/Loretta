@@ -45,6 +45,11 @@ namespace Loretta.CodeAnalysis.Lua
         /// The goto labels contained within this scope.
         /// </summary>
         IEnumerable<IGotoLabel> GotoLabels { get; }
+
+        /// <summary>
+        /// Returns the scopes directly contained within this scope.
+        /// </summary>
+        IEnumerable<IScope> ContainedScopes { get; }
     }
 
     internal interface IScopeInternal : IScope
@@ -57,6 +62,8 @@ namespace Loretta.CodeAnalysis.Lua
         bool TryGetLabel(string name, [NotNullWhen(true)] out IGotoLabelInternal? label);
         IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null);
         IGotoLabelInternal CreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null);
+
+        void AddChildScope(IScopeInternal scope);
     }
 
     internal class Scope : IScopeInternal
@@ -65,6 +72,7 @@ namespace Loretta.CodeAnalysis.Lua
         protected readonly ISet<IVariableInternal> _declaredVariables = new HashSet<IVariableInternal>();
         protected readonly ISet<IVariableInternal> _referencedVariables = new HashSet<IVariableInternal>();
         protected readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringComparer.Ordinal);
+        protected readonly IList<IScopeInternal> _containedScopes = new List<IScopeInternal>();
 
         public Scope(ScopeKind kind, SyntaxNode? node, IScopeInternal? parent)
         {
@@ -74,6 +82,7 @@ namespace Loretta.CodeAnalysis.Lua
             DeclaredVariables = SpecializedCollections.ReadOnlyEnumerable(_declaredVariables);
             ReferencedVariables = SpecializedCollections.ReadOnlyEnumerable(_referencedVariables);
             GotoLabels = SpecializedCollections.ReadOnlyEnumerable(_labels.Values);
+            ContainedScopes = SpecializedCollections.ReadOnlyEnumerable(_containedScopes);
         }
 
         public ScopeKind Kind { get; }
@@ -95,6 +104,10 @@ namespace Loretta.CodeAnalysis.Lua
         public IEnumerable<IGotoLabelInternal> GotoLabels { get; }
 
         IEnumerable<IGotoLabel> IScope.GotoLabels => GotoLabels;
+
+        public IEnumerable<IScopeInternal> ContainedScopes { get; }
+
+        IEnumerable<IScope> IScope.ContainedScopes => ContainedScopes;
 
         public bool TryGetVariable(string name, [NotNullWhen(true)] out IVariableInternal? variable) =>
             _variables.TryGetValue(name, out variable) || Parent?.TryGetVariable(name, out variable) is true;
@@ -151,6 +164,12 @@ namespace Loretta.CodeAnalysis.Lua
             var label = new GotoLabel(name, labelSyntax);
             _labels[name] = label;
             return label;
+        }
+
+        public void AddChildScope(IScopeInternal scope)
+        {
+            RoslynDebug.Assert(scope.Parent == this);
+            _containedScopes.Add(scope);
         }
     }
 }
