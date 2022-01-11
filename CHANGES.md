@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Added `IScope.ContainedScopes` which lets you check scopes contained within another scope.
+- Added `IVariable.CanBeAccessedIn(IScope)` which lets you check if the variable can be accessed within a given scope.
 
 ### Changed
 - Renamed `IScope.Parent` to `IScope.ContainingScope` to be more consistent with `ContainedScopes`.
