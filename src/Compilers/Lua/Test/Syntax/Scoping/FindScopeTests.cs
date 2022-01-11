@@ -7,6 +7,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
     public class ScopeTests : ScriptTestsBase
     {
         [Fact]
+        [Trait("Category", "Script/FindScope")]
         public void CompilationUnit_HasFileScope()
         {
             var (tree, script) = ParseScript("print 'Hello'");
@@ -20,6 +21,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
         }
 
         [Fact]
+        [Trait("Category", "Script/FindScope")]
         public void FindScope_OnRootElement_ReturnsRootScope()
         {
             var (tree, script) = ParseScript("print 'Hello'");
