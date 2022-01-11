@@ -103,7 +103,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("Use ContainingScope instead.")]
-        IScope? Parent => ContainingScope;
+        IScope? Parent { get; }
     }
 
     internal interface IScopeInternal : IScope
@@ -146,6 +146,7 @@ namespace Loretta.CodeAnalysis.Lua
         public IScopeInternal? Parent { get; }
 
         IScope? IScope.ContainingScope => Parent;
+        IScope? IScope.Parent => Parent;
 
         public IEnumerable<IVariableInternal> DeclaredVariables { get; }
 
