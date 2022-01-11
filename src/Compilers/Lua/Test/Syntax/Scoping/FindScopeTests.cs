@@ -4,15 +4,8 @@ using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
 {
-    public class ScopeTests
+    public class ScopeTests : ScriptTestsBase
     {
-        private static (SyntaxTree, Script) ParseScript(string code)
-        {
-            var tree = LuaSyntaxTree.ParseText("print 'Hello'");
-            var script = new Script(ImmutableArray.Create(tree));
-            return (tree, script);
-        }
-
         [Fact]
         public void CompilationUnit_HasFileScope()
         {
@@ -22,8 +15,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
             var compilationUnitScope = script.GetScope(compilationUnit);
 
             Assert.NotNull(compilationUnitScope);
-            Assert.Equal(ScopeKind.File, compilationUnitScope.Kind);
-            Assert.Equal(script.RootScope, compilationUnitScope.Parent);
+            Assert.Equal(ScopeKind.File, compilationUnitScope!.Kind);
+            Assert.Equal(script.RootScope, compilationUnitScope.ContainingScope);
         }
 
         [Fact]
