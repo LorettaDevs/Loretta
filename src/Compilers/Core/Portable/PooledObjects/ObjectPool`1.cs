@@ -237,6 +237,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
         /// return a larger array to the pool than was originally allocated.
         /// </summary>
         [Conditional("DEBUG")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Accesses instance data when leak tracking is enabled.")]
         internal void ForgetTrackedObject(T old, T? replacement = null)
         {
 #if DETECT_LEAKS
