@@ -24,7 +24,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                     if (name.SequenceEqual(variable.Name.AsSpan()))
                         return variable;
                 }
-                currentScope = currentScope.Parent;
+                currentScope = currentScope.ContainingScope;
             }
 
             return null;
