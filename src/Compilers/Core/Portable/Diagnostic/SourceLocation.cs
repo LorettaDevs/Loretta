@@ -110,6 +110,7 @@ namespace Loretta.CodeAnalysis
             return Hash.Combine(_syntaxTree, _span.GetHashCode());
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1845:Use span-based 'string.Concat'", Justification = "This is only used for the debugger.")]
         protected override string GetDebuggerDisplay()
         {
             return base.GetDebuggerDisplay() + "\"" + _syntaxTree.ToString().Substring(_span.Start, _span.Length) + "\"";
