@@ -27,12 +27,12 @@ namespace Loretta.Utilities
             // Earlier steps are expected to prevent us from ever reaching this point with empty change sets.
             if (oldChanges.IsEmpty)
             {
-                throw new ArgumentException(nameof(oldChanges));
+                throw new ArgumentException($"'{nameof(oldChanges)}' must not be empty.", nameof(oldChanges));
             }
 
             if (newChanges.IsEmpty)
             {
-                throw new ArgumentException(nameof(newChanges));
+                throw new ArgumentException($"'{nameof(newChanges)}' must not be empty.", nameof(newChanges));
             }
 
             var builder = ArrayBuilder<TextChangeRange>.GetInstance();
