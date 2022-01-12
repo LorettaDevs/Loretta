@@ -96,7 +96,7 @@ namespace Loretta.CodeAnalysis.Lua
         ///     </item>
         ///   </list>
         /// </remarks>
-        IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Block);
+        IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Global);
 
         /// <summary>
         /// Deprecated. <inheritdoc cref="ContainingScope"/>
@@ -164,7 +164,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         IEnumerable<IScope> IScope.ContainedScopes => ContainedScopes;
 
-        public IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Block)
+        public IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Global)
         {
             if (name is null) throw new ArgumentNullException(nameof(name));
             if (!StringUtils.IsIdentifier(name)) throw new ArgumentException($"'{nameof(name)}' must be a valid identifier.");
@@ -173,7 +173,7 @@ namespace Loretta.CodeAnalysis.Lua
                 if (StringComparer.Ordinal.Equals(variable.Name, name))
                     return variable;
             }
-            return Parent is not null && Parent.Kind >= kind ? Parent.FindVariable(name) : null;
+            return Parent is not null && Parent.Kind >= kind ? Parent.FindVariable(name, kind) : null;
         }
 
         public bool TryGetVariable(string name, [NotNullWhen(true)] out IVariableInternal? variable) =>
