@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using Loretta.CodeAnalysis.Lua.Test.Utilities;
-using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
 {
@@ -21,13 +19,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
 
         protected static Script ParseScript(LuaSyntaxOptions options, params string[] codes)
         {
+            var parseOptions = new LuaParseOptions(options);
             var trees = new List<SyntaxTree>();
             foreach (var code in codes)
             {
-                var tree = ParseWithRoundTripCheck(code);
+                var tree = ParseWithRoundTripCheck(code, parseOptions);
                 tree.GetDiagnostics().Verify();
             }
-            Assert.Empty(trees.SelectMany(tree => tree.GetDiagnostics()));
             var script = new Script(ImmutableArray.CreateRange(trees));
             return script;
         }
