@@ -295,7 +295,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
         private int GetIndentationDepth()
         {
-            RoslynDebug.Assert(_indentationDepth >= 0);
+            LorettaDebug.Assert(_indentationDepth >= 0);
             return _indentationDepth;
         }
 

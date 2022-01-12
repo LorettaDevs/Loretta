@@ -23,7 +23,7 @@ namespace Loretta.CodeAnalysis.Text
         public StringBuilderText(StringBuilder builder, Encoding? encodingOpt, SourceHashAlgorithm checksumAlgorithm)
              : base(checksumAlgorithm: checksumAlgorithm)
         {
-            RoslynDebug.Assert(builder != null);
+            LorettaDebug.Assert(builder != null);
 
             _builder = builder;
             _encodingOpt = encodingOpt;

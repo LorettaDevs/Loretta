@@ -72,7 +72,10 @@ namespace Loretta.Generators.SyntaxKindGenerator
                              .GroupBy(t => t.key, t => (t.kind, t.value));
                     foreach (var propertyGroup in properties)
                     {
-                        var possibleTypes = propertyGroup.Select(t => t.value.Type).Where(t => t is not null).Distinct().ToImmutableArray();
+                        var possibleTypes = propertyGroup.Select(t => t.value.Type)
+                                                         .Where(t => t is not null)
+                                                         .Distinct(SymbolEqualityComparer.Default)
+                                                         .ToImmutableArray();
 
                         string type;
                         if (possibleTypes.Length > 1)

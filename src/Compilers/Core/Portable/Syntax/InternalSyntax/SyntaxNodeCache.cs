@@ -1,10 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Loretta.CodeAnalysis.Syntax.InternalSyntax;
-
 using System;
 using System.Diagnostics;
+using Loretta.CodeAnalysis.Syntax.InternalSyntax;
 using Loretta.Utilities;
 
 #if STATS
@@ -133,7 +132,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             {
                 GreenStats.ItemAdded();
 
-                RoslynDebug.Assert(node.GetCacheHash() == hash);
+                LorettaDebug.Assert(node.GetCacheHash() == hash);
 
                 var idx = hash & CacheMask;
                 s_cache[idx] = new Entry(hash, node);
@@ -273,7 +272,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         private static int GetCacheHash(int kind, GreenNode.NodeFlags flags, GreenNode? child1)
         {
-            int code = (int)(flags) ^ kind;
+            int code = (int) (flags) ^ kind;
             // the only child is never null
             // https://github.com/dotnet/roslyn/issues/41539
             code = Hash.Combine(System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(child1!), code);
@@ -284,7 +283,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         private static int GetCacheHash(int kind, GreenNode.NodeFlags flags, GreenNode? child1, GreenNode? child2)
         {
-            int code = (int)(flags) ^ kind;
+            int code = (int) (flags) ^ kind;
 
             if (child1 != null)
             {
@@ -301,7 +300,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         private static int GetCacheHash(int kind, GreenNode.NodeFlags flags, GreenNode? child1, GreenNode? child2, GreenNode? child3)
         {
-            int code = (int)(flags) ^ kind;
+            int code = (int) (flags) ^ kind;
 
             if (child1 != null)
             {

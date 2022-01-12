@@ -8,13 +8,6 @@ using Loretta.Test.Utilities;
 
 namespace Loretta.CodeAnalysis.Test.Utilities
 {
-    public enum Verification
-    {
-        Passes = 0,
-        Fails,
-        Skipped
-    }
-
     /// <summary>
     /// Base class for all language specific tests.
     /// </summary>

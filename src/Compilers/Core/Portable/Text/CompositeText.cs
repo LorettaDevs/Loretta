@@ -27,7 +27,7 @@ namespace Loretta.CodeAnalysis.Text
         private CompositeText(ImmutableArray<SourceText> segments, Encoding? encoding, SourceHashAlgorithm checksumAlgorithm)
             : base(checksumAlgorithm: checksumAlgorithm)
         {
-            RoslynDebug.Assert(!segments.IsDefaultOrEmpty);
+            LorettaDebug.Assert(!segments.IsDefaultOrEmpty);
 
             _segments = segments;
             _encoding = encoding;
@@ -162,8 +162,7 @@ namespace Loretta.CodeAnalysis.Text
 
         internal static void AddSegments(ArrayBuilder<SourceText> segments, SourceText text)
         {
-            CompositeText? composite = text as CompositeText;
-            if (composite == null)
+            if (text is not CompositeText composite)
             {
                 segments.Add(text);
             }

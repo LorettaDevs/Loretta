@@ -19,7 +19,7 @@ namespace Loretta.CodeAnalysis
 
             public static FixedLocalizableString Create(string? fixedResource)
             {
-                if (RoslynString.IsNullOrEmpty(fixedResource))
+                if (LorettaString.IsNullOrEmpty(fixedResource))
                 {
                     return s_empty;
                 }
@@ -39,8 +39,7 @@ namespace Loretta.CodeAnalysis
 
             protected override bool AreEqual(object? other)
             {
-                var fixedStr = other as FixedLocalizableString;
-                return fixedStr != null && string.Equals(_fixedString, fixedStr._fixedString);
+                return other is FixedLocalizableString fixedStr && string.Equals(_fixedString, fixedStr._fixedString);
             }
 
             protected override int GetHash()

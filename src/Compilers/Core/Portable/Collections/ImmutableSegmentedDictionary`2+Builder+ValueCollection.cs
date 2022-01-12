@@ -19,7 +19,7 @@ namespace Loretta.CodeAnalysis.Collections
 
                 internal ValueCollection(ImmutableSegmentedDictionary<TKey, TValue>.Builder dictionary)
                 {
-                    RoslynDebug.Assert(dictionary is not null);
+                    LorettaDebug.Assert(dictionary is not null);
                     _dictionary = dictionary!;
                 }
 
@@ -29,7 +29,7 @@ namespace Loretta.CodeAnalysis.Collections
 
                 bool ICollection.IsSynchronized => false;
 
-                object ICollection.SyncRoot => ((ICollection)_dictionary).SyncRoot;
+                object ICollection.SyncRoot => ((ICollection) _dictionary).SyncRoot;
 
                 void ICollection<TValue>.Add(TValue item)
                     => throw new NotSupportedException();
@@ -41,7 +41,7 @@ namespace Loretta.CodeAnalysis.Collections
                     => _dictionary.ContainsValue(item);
 
                 public void CopyTo(TValue[] array, int arrayIndex)
-                    => ((ICollection<TValue>)_dictionary.ReadOnlyDictionary.Values).CopyTo(array, arrayIndex);
+                    => ((ICollection<TValue>) _dictionary.ReadOnlyDictionary.Values).CopyTo(array, arrayIndex);
 
                 public ImmutableSegmentedDictionary<TKey, TValue>.ValueCollection.Enumerator GetEnumerator()
                     => new(_dictionary.GetEnumerator());
@@ -50,7 +50,7 @@ namespace Loretta.CodeAnalysis.Collections
                     => throw new NotSupportedException();
 
                 void ICollection.CopyTo(Array array, int index)
-                    => ((ICollection)_dictionary.ReadOnlyDictionary.Values).CopyTo(array, index);
+                    => ((ICollection) _dictionary.ReadOnlyDictionary.Values).CopyTo(array, index);
 
                 IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
                     => GetEnumerator();

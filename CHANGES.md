@@ -5,6 +5,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- Added `Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NilLiteral`.
+- Added `==` and `!=` operators to `Loretta.CodeAnalysis.FileLinePositionSpan`.
+
+### Deprecated
+- Deprecated `Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NullLiteral` in favor of `NilLiteral`.
+
+### Removed
+- Removed the following unused things:
+	- `Loretta.CodeAnalysis.CaseInsensitiveComparison`;
+	- `Loretta.CodeAnalysis.GeneratedKind`;
+	- `Loretta.CodeAnalysis.Optional<T>`;
+	- `Loretta.CodeAnalysis.SourceReferenceResolver`;
+	- `Loretta.CodeAnalysis.SyntaxTreeOptionsProvider`;
+	- `Loretta.CodeAnalysis.ReportDiagnostic`;
+	- `Loretta.CodeAnalysis.LocationKind.XmlFile`;
+	- `Loretta.CodeAnalysis.SuppressionDescriptor`;
+	- `Loretta.CodeAnalysis.Diagnostics.SuppressionInfo`.
+- Removed the following as they did not make sense in our project:
+	- `Loretta.CodeAnalysis.SourceLocation.GetMappedLineSpan`;
+	- `Loretta.CodeAnalysis.WellKnownDiagnosticTags.EditAndContinue`;
+	- `Loretta.CodeAnalysis.WellKnownDiagnosticTags.Telemetry`;
+	- `Loretta.CodeAnalysis.WellKnownDiagnosticTags.AnalyzerException`;
+	- `Loretta.CodeAnalysis.WellKnownDiagnosticTags.CustomObsolete`;
+	- `Loretta.CodeAnalysis.WellKnownDiagnosticTags.CompilationEnd`;
+	- `Loretta.CodeAnalysis.LineVisibility`;
+	- `Loretta.CodeAnalysis.SyntaxTree.GetMappedLineSpan`;
+	- `Loretta.CodeAnalysis.SyntaxTree.GetLineVisibility`;
+	- `Loretta.CodeAnalysis.SyntaxTree.HasHiddenRegions`;
+	- `Loretta.CodeAnalysis.Location.GetMappedLineSpan`;
+	- `IsHiddenPosition` `SyntaxTree` extension method;
+	- `Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetMappedLineSpan`;
+	- `Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetLineVisibility`;
+	- `Loretta.CodeAnalysis.Lua.LuaSyntaxTree.HasHiddenRegions`.
 
 ## v0.2.7-beta.9
 ### Added

@@ -75,9 +75,9 @@ namespace Loretta.CodeAnalysis.Collections
                 throw new ArgumentOutOfRangeException(nameof(sourceIndex), SR.ArgumentOutOfRange_ArrayLB);
             if (destinationIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(destinationIndex), SR.ArgumentOutOfRange_ArrayLB);
-            if ((uint)(sourceIndex + length) > sourceArray.Length)
+            if ((uint) (sourceIndex + length) > sourceArray.Length)
                 throw new ArgumentException(SR.Arg_LongerThanSrcArray, nameof(sourceArray));
-            if ((uint)(destinationIndex + length) > destinationArray.Length)
+            if ((uint) (destinationIndex + length) > destinationArray.Length)
                 throw new ArgumentException(SR.Arg_LongerThanDestArray, nameof(destinationArray));
 
             if (length == 0)
@@ -107,9 +107,9 @@ namespace Loretta.CodeAnalysis.Collections
                 throw new ArgumentOutOfRangeException(nameof(destinationIndex), SR.ArgumentOutOfRange_ArrayLB);
             destinationIndex -= dstLB;
 
-            if ((uint)(sourceIndex + length) > sourceArray.Length)
+            if ((uint) (sourceIndex + length) > sourceArray.Length)
                 throw new ArgumentException(SR.Arg_LongerThanSrcArray, nameof(sourceArray));
-            if ((uint)(destinationIndex + length) > (nuint)destinationArray.LongLength)
+            if ((uint) (destinationIndex + length) > (nuint) destinationArray.LongLength)
                 throw new ArgumentException(SR.Arg_LongerThanDestArray, nameof(destinationArray));
 
             var copied = 0;
@@ -164,12 +164,12 @@ namespace Loretta.CodeAnalysis.Collections
 
         public static int IndexOf<T>(SegmentedArray<T> array, T value, int startIndex, int count)
         {
-            if ((uint)startIndex > (uint)array.Length)
+            if ((uint) startIndex > (uint) array.Length)
             {
                 ThrowHelper.ThrowStartIndexArgumentOutOfRange_ArgumentOutOfRange_Index();
             }
 
-            if ((uint)count > (uint)(array.Length - startIndex))
+            if ((uint) count > (uint) (array.Length - startIndex))
             {
                 ThrowHelper.ThrowCountArgumentOutOfRange_ArgumentOutOfRange_Count();
             }
@@ -225,7 +225,7 @@ namespace Loretta.CodeAnalysis.Collections
             }
 
             // Make sure we're not out of range
-            if ((uint)startIndex >= (uint)array.Length)
+            if ((uint) startIndex >= (uint) array.Length)
             {
                 ThrowHelper.ThrowStartIndexArgumentOutOfRange_ArgumentOutOfRange_Index();
             }
@@ -280,7 +280,7 @@ namespace Loretta.CodeAnalysis.Collections
             if (array.Length > 1)
             {
                 var segment = new SegmentedArraySegment<T>(array, 0, array.Length);
-                SegmentedArraySortHelper<T>.Sort(segment, (IComparer<T>?)null);
+                SegmentedArraySortHelper<T>.Sort(segment, (IComparer<T>?) null);
             }
         }
 
@@ -361,7 +361,7 @@ namespace Loretta.CodeAnalysis.Collections
             }
 
             public AlignedSegmentEnumerator<T> GetEnumerator()
-                => new((T[][])_first.SyncRoot, _firstOffset, (T[][])_second.SyncRoot, _secondOffset, _length);
+                => new((T[][]) _first.SyncRoot, _firstOffset, (T[][]) _second.SyncRoot, _secondOffset, _length);
         }
 
         private struct AlignedSegmentEnumerator<T>
@@ -405,7 +405,7 @@ namespace Loretta.CodeAnalysis.Collections
                     var initialSecondSegment = _secondOffset / segmentLength;
                     var initialSecondSegmentStart = initialSecondSegment * segmentLength;
                     var offset = _firstOffset - initialFirstSegmentStart;
-                    RoslynDebug.Assert(offset == (_secondOffset - initialSecondSegmentStart), "Aligned views must start at the same segment offset");
+                    LorettaDebug.Assert(offset == (_secondOffset - initialSecondSegmentStart), "Aligned views must start at the same segment offset");
 
                     var firstSegment = _firstSegments[initialFirstSegment];
                     var secondSegment = _secondSegments[initialSecondSegment];
@@ -450,7 +450,7 @@ namespace Loretta.CodeAnalysis.Collections
             }
 
             public UnalignedSegmentEnumerator<T> GetEnumerator()
-                => new((T[][])_first.SyncRoot, _firstOffset, (T[][])_second.SyncRoot, _secondOffset, _length);
+                => new((T[][]) _first.SyncRoot, _firstOffset, (T[][]) _second.SyncRoot, _secondOffset, _length);
         }
 
         private struct UnalignedSegmentEnumerator<T>
@@ -520,7 +520,7 @@ namespace Loretta.CodeAnalysis.Collections
 
             public SegmentEnumerable(SegmentedArray<T> array, int offset, int length)
             {
-                if (offset < 0 || length < 0 || (uint)(offset + length) > (uint)array.Length)
+                if (offset < 0 || length < 0 || (uint) (offset + length) > (uint) array.Length)
                     ThrowHelper.ThrowArgumentOutOfRangeException();
 
                 _array = array;
@@ -529,7 +529,7 @@ namespace Loretta.CodeAnalysis.Collections
             }
 
             public SegmentEnumerator<T> GetEnumerator()
-                => new((T[][])_array.SyncRoot, _offset, _length);
+                => new((T[][]) _array.SyncRoot, _offset, _length);
 
             public ReverseEnumerable Reverse()
                 => new(this);
@@ -544,7 +544,7 @@ namespace Loretta.CodeAnalysis.Collections
                 }
 
                 public SegmentEnumerator<T>.Reverse GetEnumerator()
-                    => new((T[][])_enumerable._array.SyncRoot, _enumerable._offset, _enumerable._length);
+                    => new((T[][]) _enumerable._array.SyncRoot, _enumerable._offset, _enumerable._length);
 
                 public SegmentEnumerable<T> Reverse()
                     => _enumerable;

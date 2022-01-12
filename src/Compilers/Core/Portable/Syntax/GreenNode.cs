@@ -104,7 +104,7 @@ namespace Loretta.CodeAnalysis
 
         protected void AdjustFlagsAndWidth(GreenNode node)
         {
-            RoslynDebug.Assert(node != null, "PERF: caller must ensure that node!=null, we do not want to re-check that here.");
+            LorettaDebug.Assert(node != null, "PERF: caller must ensure that node!=null, we do not want to re-check that here.");
             this.flags |= (node.flags & NodeFlags.InheritMask);
             _fullWidth += node._fullWidth;
         }
@@ -152,7 +152,7 @@ namespace Loretta.CodeAnalysis
 
             protected set
             {
-                _slotCount = (byte)value;
+                _slotCount = (byte) value;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Loretta.CodeAnalysis
         internal GreenNode GetRequiredSlot(int index)
         {
             var node = GetSlot(index);
-            RoslynDebug.Assert(node is object);
+            LorettaDebug.Assert(node is object);
             return node;
         }
 
@@ -235,13 +235,13 @@ namespace Loretta.CodeAnalysis
         /// </remarks>
         public virtual int FindSlotIndexContainingOffset(int offset)
         {
-            RoslynDebug.Assert(0 <= offset && offset < FullWidth);
+            LorettaDebug.Assert(0 <= offset && offset < FullWidth);
 
             int i;
             int accumulatedWidth = 0;
             for (i = 0; ; i++)
             {
-                RoslynDebug.Assert(i < SlotCount);
+                LorettaDebug.Assert(i < SlotCount);
                 var child = GetSlot(i);
                 if (child != null)
                 {
@@ -421,23 +421,23 @@ namespace Loretta.CodeAnalysis
 
         #region Serialization 
         // use high-bit on Kind to identify serialization of extra info
-        private const UInt16 ExtendedSerializationInfoMask = unchecked((UInt16)(1u << 15));
+        private const UInt16 ExtendedSerializationInfoMask = unchecked((UInt16) (1u << 15));
 
         internal GreenNode(ObjectReader reader)
         {
             var kindBits = reader.ReadUInt16();
-            _kind = (ushort)(kindBits & ~ExtendedSerializationInfoMask);
+            _kind = (ushort) (kindBits & ~ExtendedSerializationInfoMask);
 
             if ((kindBits & ExtendedSerializationInfoMask) != 0)
             {
-                var diagnostics = (DiagnosticInfo[])reader.ReadValue();
+                var diagnostics = (DiagnosticInfo[]) reader.ReadValue();
                 if (diagnostics != null && diagnostics.Length > 0)
                 {
                     this.flags |= NodeFlags.ContainsDiagnostics;
                     s_diagnosticsTable.Add(this, diagnostics);
                 }
 
-                var annotations = (SyntaxAnnotation[])reader.ReadValue();
+                var annotations = (SyntaxAnnotation[]) reader.ReadValue();
                 if (annotations != null && annotations.Length > 0)
                 {
                     this.flags |= NodeFlags.ContainsAnnotations;
@@ -457,7 +457,7 @@ namespace Loretta.CodeAnalysis
 
         internal virtual void WriteTo(ObjectWriter writer)
         {
-            var kindBits = (UInt16)_kind;
+            var kindBits = (UInt16) _kind;
             var hasDiagnostics = this.GetDiagnostics().Length > 0;
             var hasAnnotations = this.GetAnnotations().Length > 0;
 
@@ -597,7 +597,7 @@ namespace Loretta.CodeAnalysis
                 SyntaxAnnotation[]? annotations;
                 if (s_annotationsTable.TryGetValue(this, out annotations))
                 {
-                    Loretta.Utilities.RoslynDebug.Assert(annotations.Length != 0, "we should return nonempty annotations or NoAnnotations");
+                    Loretta.Utilities.LorettaDebug.Assert(annotations.Length != 0, "we should return nonempty annotations or NoAnnotations");
                     return annotations;
                 }
             }
@@ -932,12 +932,12 @@ namespace Loretta.CodeAnalysis
                 case 3:
                     return SyntaxList.List(select(list[0]), select(list[1]), select(list[2]));
                 default:
-                    {
-                        var array = new ArrayElement<GreenNode>[list.Count];
-                        for (int i = 0; i < array.Length; i++)
-                            array[i].Value = select(list[i]);
-                        return SyntaxList.List(array);
-                    }
+                {
+                    var array = new ArrayElement<GreenNode>[list.Count];
+                    for (int i = 0; i < array.Length; i++)
+                        array[i].Value = select(list[i]);
+                    return SyntaxList.List(array);
+                }
             }
         }
 
@@ -954,12 +954,12 @@ namespace Loretta.CodeAnalysis
                 case 3:
                     return SyntaxList.List(select(list[0]), select(list[1]), select(list[2]));
                 default:
-                    {
-                        var array = new ArrayElement<GreenNode>[list.Count];
-                        for (int i = 0; i < array.Length; i++)
-                            array[i].Value = select(list[i]);
-                        return SyntaxList.List(array);
-                    }
+                {
+                    var array = new ArrayElement<GreenNode>[list.Count];
+                    for (int i = 0; i < array.Length; i++)
+                        array[i].Value = select(list[i]);
+                    return SyntaxList.List(array);
+                }
             }
         }
 
@@ -987,9 +987,9 @@ namespace Loretta.CodeAnalysis
 
         internal int GetCacheHash()
         {
-            RoslynDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(this.IsCacheable);
 
-            int code = (int)(this.flags) ^ this.RawKind;
+            int code = (int) (this.flags) ^ this.RawKind;
             int cnt = this.SlotCount;
             for (int i = 0; i < cnt; i++)
             {
@@ -1005,7 +1005,7 @@ namespace Loretta.CodeAnalysis
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1)
         {
-            RoslynDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(this.IsCacheable);
 
             return this.RawKind == kind &&
                 this.flags == flags &&
@@ -1014,7 +1014,7 @@ namespace Loretta.CodeAnalysis
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1, GreenNode? child2)
         {
-            RoslynDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(this.IsCacheable);
 
             return this.RawKind == kind &&
                 this.flags == flags &&
@@ -1024,7 +1024,7 @@ namespace Loretta.CodeAnalysis
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1, GreenNode? child2, GreenNode? child3)
         {
-            RoslynDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(this.IsCacheable);
 
             return this.RawKind == kind &&
                 this.flags == flags &&

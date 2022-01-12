@@ -7,7 +7,7 @@ using BenchmarkDotNet.Jobs;
 namespace Loretta.InternalBenchmarks
 {
     [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NetCoreApp31, baseline: true)]
-    [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NetCoreApp50)]
+    [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net50)]
     [DisassemblyDiagnoser(exportHtml: true, exportDiff: true)]
     public class IsAlphaCheckMicrobenchmark
 

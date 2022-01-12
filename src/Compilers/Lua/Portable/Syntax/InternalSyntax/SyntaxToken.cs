@@ -80,7 +80,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 token = s_tokensWithNoTrivia[(int) kind].Value;
             }
 
-            RoslynDebug.Assert(token is not null);
+            LorettaDebug.Assert(token is not null);
             return token;
         }
 
@@ -127,7 +127,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             token = new SyntaxTokenWithTrivia(kind, leading, trailing);
 
         ret:
-            RoslynDebug.Assert(token is not null);
+            LorettaDebug.Assert(token is not null);
             return token;
         }
 
@@ -261,13 +261,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
         {
-            RoslynDebug.Assert(GetType() == typeof(SyntaxToken));
+            LorettaDebug.Assert(GetType() == typeof(SyntaxToken));
             return new SyntaxToken(Kind, FullWidth, diagnostics, GetAnnotations());
         }
 
         internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
         {
-            RoslynDebug.Assert(GetType() == typeof(SyntaxToken));
+            LorettaDebug.Assert(GetType() == typeof(SyntaxToken));
             return new SyntaxToken(Kind, FullWidth, GetDiagnostics(), annotations);
         }
 

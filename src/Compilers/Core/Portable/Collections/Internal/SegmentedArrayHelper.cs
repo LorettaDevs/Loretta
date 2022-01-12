@@ -69,7 +69,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         /// <returns>The bit mask to obtain the index within a page from an absolute index within a segmented array.</returns>
         internal static int CalculateOffsetMask(int segmentSize)
         {
-            RoslynDebug.Assert(segmentSize == 1 || (segmentSize & (segmentSize - 1)) == 0, "Expected size of 1, or a power of 2");
+            LorettaDebug.Assert(segmentSize == 1 || (segmentSize & (segmentSize - 1)) == 0, "Expected size of 1, or a power of 2");
             return segmentSize - 1;
         }
     }

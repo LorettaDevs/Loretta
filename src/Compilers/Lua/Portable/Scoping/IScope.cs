@@ -122,10 +122,10 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal class Scope : IScopeInternal
     {
-        protected readonly IDictionary<string, IVariableInternal> _variables = new Dictionary<string, IVariableInternal>(StringComparer.Ordinal);
+        protected readonly IDictionary<string, IVariableInternal> _variables = new Dictionary<string, IVariableInternal>(StringOrdinalComparer.Instance);
         protected readonly ISet<IVariableInternal> _declaredVariables = new HashSet<IVariableInternal>();
         protected readonly ISet<IVariableInternal> _referencedVariables = new HashSet<IVariableInternal>();
-        protected readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringComparer.Ordinal);
+        protected readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringOrdinalComparer.Instance);
         protected readonly IList<IScopeInternal> _containedScopes = new List<IScopeInternal>();
 
         public Scope(ScopeKind kind, SyntaxNode? node, IScopeInternal? parent)
@@ -170,7 +170,7 @@ namespace Loretta.CodeAnalysis.Lua
             if (!StringUtils.IsIdentifier(name)) throw new ArgumentException($"'{nameof(name)}' must be a valid identifier.");
             foreach (var variable in DeclaredVariables)
             {
-                if (StringComparer.Ordinal.Equals(variable.Name, name))
+                if (StringOrdinalComparer.Equals(variable.Name, name))
                     return variable;
             }
             return Parent is not null && Parent.Kind >= kind ? Parent.FindVariable(name, kind) : null;
@@ -181,21 +181,21 @@ namespace Loretta.CodeAnalysis.Lua
 
         public IVariableInternal GetOrCreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null)
         {
-            RoslynDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
-            RoslynDebug.Assert(!string.IsNullOrEmpty(name));
+            LorettaDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
+            LorettaDebug.Assert(!string.IsNullOrEmpty(name));
 
             if (!TryGetVariable(name, out var variable))
                 variable = CreateVariable(kind, name, declaration);
 
             _referencedVariables.Add(variable);
-            RoslynDebug.Assert(variable.Kind == kind);
+            LorettaDebug.Assert(variable.Kind == kind);
             return variable;
         }
 
         public IVariableInternal CreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null)
         {
-            RoslynDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
-            RoslynDebug.Assert(!string.IsNullOrEmpty(name));
+            LorettaDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
+            LorettaDebug.Assert(!string.IsNullOrEmpty(name));
 
             var variable = new Variable(kind, this, name, declaration);
             _variables[name] = variable;
@@ -217,8 +217,8 @@ namespace Loretta.CodeAnalysis.Lua
 
         public IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null)
         {
-            RoslynDebug.Assert(!string.IsNullOrEmpty(name));
-            RoslynDebug.AssertNotNull(labelSyntax);
+            LorettaDebug.Assert(!string.IsNullOrEmpty(name));
+            LorettaDebug.AssertNotNull(labelSyntax);
 
             if (!TryGetLabel(name, out var label))
                 label = CreateLabel(name, labelSyntax);
@@ -235,7 +235,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public void AddChildScope(IScopeInternal scope)
         {
-            RoslynDebug.Assert(scope.ContainingScope == this);
+            LorettaDebug.Assert(scope.ContainingScope == this);
             _containedScopes.Add(scope);
         }
     }

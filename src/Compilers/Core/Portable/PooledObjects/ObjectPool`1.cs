@@ -114,14 +114,14 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         internal ObjectPool(Factory factory, int size)
         {
-            RoslynDebug.Assert(size >= 1);
+            LorettaDebug.Assert(size >= 1);
             _factory = factory;
             _items = new Element[size - 1];
         }
 
         internal ObjectPool(Func<ObjectPool<T>, T> factory, int size)
         {
-            RoslynDebug.Assert(size >= 1);
+            LorettaDebug.Assert(size >= 1);
             _factory = () => factory(this);
             _items = new Element[size - 1];
         }
@@ -237,6 +237,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
         /// return a larger array to the pool than was originally allocated.
         /// </summary>
         [Conditional("DEBUG")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Accesses instance data when leak tracking is enabled.")]
         internal void ForgetTrackedObject(T old, T? replacement = null)
         {
 #if DETECT_LEAKS
@@ -272,9 +273,9 @@ namespace Loretta.CodeAnalysis.PooledObjects
         [Conditional("DEBUG")]
         private void Validate(object obj)
         {
-            RoslynDebug.Assert(obj != null, "freeing null?");
+            LorettaDebug.Assert(obj != null, "freeing null?");
 
-            RoslynDebug.Assert(_firstItem != obj, "freeing twice?");
+            LorettaDebug.Assert(_firstItem != obj, "freeing twice?");
 
             var items = _items;
             for (var i = 0; i < items.Length; i++)
@@ -285,7 +286,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
                     return;
                 }
 
-                RoslynDebug.Assert(value != obj, "freeing twice?");
+                LorettaDebug.Assert(value != obj, "freeing twice?");
             }
         }
     }

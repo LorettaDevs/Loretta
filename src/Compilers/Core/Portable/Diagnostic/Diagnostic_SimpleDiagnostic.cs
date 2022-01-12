@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Loretta.CodeAnalysis.Diagnostics;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
@@ -148,8 +147,7 @@ namespace Loretta.CodeAnalysis
                     return true;
                 }
 
-                var other = obj as SimpleDiagnostic;
-                if (other == null)
+                if (obj is not SimpleDiagnostic other)
                 {
                     return false;
                 }
@@ -171,7 +169,7 @@ namespace Loretta.CodeAnalysis
                 return Hash.Combine(_descriptor,
                     Hash.CombineValues(_messageArgs,
                     Hash.Combine(_warningLevel,
-                    Hash.Combine(_location, (int)_severity))));
+                    Hash.Combine(_location, (int) _severity))));
             }
 
             internal override Diagnostic WithLocation(Location location)

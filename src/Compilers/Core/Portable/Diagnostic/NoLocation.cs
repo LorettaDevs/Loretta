@@ -22,7 +22,7 @@ namespace Loretta.CodeAnalysis
 
         public override bool Equals(object? obj)
         {
-            return (object)this == obj;
+            return (object) this == obj;
         }
 
         public override int GetHashCode()

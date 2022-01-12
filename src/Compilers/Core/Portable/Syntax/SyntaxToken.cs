@@ -28,8 +28,8 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxToken(SyntaxNode? parent, GreenNode? token, int position, int index)
         {
-            RoslynDebug.Assert(parent == null || !parent.Green.IsList, "list cannot be a parent");
-            RoslynDebug.Assert(token == null || token.IsToken, "token must be a token");
+            LorettaDebug.Assert(parent == null || !parent.Green.IsList, "list cannot be a parent");
+            LorettaDebug.Assert(token == null || token.IsToken, "token must be a token");
             Parent = parent;
             Node = token;
             Position = position;
@@ -39,7 +39,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxToken(GreenNode? token)
             : this()
         {
-            RoslynDebug.Assert(token == null || token.IsToken, "token must be a token");
+            LorettaDebug.Assert(token == null || token.IsToken, "token must be a token");
             Node = token;
         }
 
@@ -81,7 +81,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                RoslynDebug.Assert(Node is object);
+                LorettaDebug.Assert(Node is object);
                 return Node;
             }
         }
@@ -151,6 +151,9 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public string ValueText => Node?.GetValueText() ?? string.Empty;
 
+        /// <summary>
+        /// The token's text.
+        /// </summary>
         public string Text => ToString();
 
         /// <summary>
@@ -276,7 +279,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxAnnotation> GetAnnotations(params string[] annotationKinds)
         {
-            return GetAnnotations((IEnumerable<string>)annotationKinds);
+            return GetAnnotations((IEnumerable<string>) annotationKinds);
         }
 
         /// <summary>
@@ -293,7 +296,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithAdditionalAnnotations(params SyntaxAnnotation[] annotations)
         {
-            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>)annotations);
+            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
         }
 
         /// <summary>
@@ -324,7 +327,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithoutAnnotations(params SyntaxAnnotation[] annotations)
         {
-            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>)annotations);
+            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
         }
 
         /// <summary>
@@ -460,7 +463,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithLeadingTrivia(SyntaxTriviaList trivia)
         {
-            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>)trivia);
+            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
         /// <summary>
@@ -468,7 +471,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithLeadingTrivia(params SyntaxTrivia[]? trivia)
         {
-            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?)trivia);
+            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
         }
 
         /// <summary>
@@ -486,7 +489,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithTrailingTrivia(SyntaxTriviaList trivia)
         {
-            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>)trivia);
+            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
         /// <summary>
@@ -494,7 +497,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithTrailingTrivia(params SyntaxTrivia[]? trivia)
         {
-            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?)trivia);
+            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
         }
 
         /// <summary>
@@ -564,7 +567,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public override bool Equals(object? obj)
         {
-            return obj is SyntaxToken && Equals((SyntaxToken)obj);
+            return obj is SyntaxToken token && Equals(token);
         }
 
         /// <summary>

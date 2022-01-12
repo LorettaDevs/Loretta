@@ -97,7 +97,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             private void SkipOldToken()
             {
-                RoslynDebug.Assert(!_oldTreeCursor.IsFinished);
+                LorettaDebug.Assert(!_oldTreeCursor.IsFinished);
 
                 // First, move down so that we're actually pointing at a token.  If we're already
                 // pointing at a token, then we'll just stay there.
@@ -128,7 +128,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             private BlendedNode ReadNewToken()
             {
-                RoslynDebug.Assert(_changeDelta > 0 || _oldTreeCursor.IsFinished);
+                LorettaDebug.Assert(_changeDelta > 0 || _oldTreeCursor.IsFinished);
 
                 // The new text is either behind the cursor, or the cursor is done.  In either event,
                 // we need to lex a real token from the stream.

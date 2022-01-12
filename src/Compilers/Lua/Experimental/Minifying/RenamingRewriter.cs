@@ -25,7 +25,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         public void ExitScope(IScope scope)
         {
             var popped = _stack.Pop();
-            RoslynDebug.Assert(popped == scope);
+            LorettaDebug.Assert(popped == scope);
         }
 
         #region Order Fixing - Fixes the order of operations so renaming happens properly
@@ -60,7 +60,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         public override SyntaxNode? VisitCompilationUnit(CompilationUnitSyntax node)
         {
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -75,7 +75,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         public override SyntaxNode? VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax node)
         {
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -97,7 +97,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 stepValue = (ExpressionSyntax) Visit(stepValue);
 
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -126,7 +126,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             var expressions = VisitList(node.Expressions);
 
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -150,7 +150,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         {
             var condition = (ExpressionSyntax) Visit(node.Condition) ?? throw new ArgumentNullException("condition");
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -171,7 +171,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         public override SyntaxNode? VisitRepeatUntilStatement(RepeatUntilStatementSyntax node)
         {
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -188,7 +188,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             var condition = (ExpressionSyntax?) Visit(node.Condition) ?? throw new ArgumentNullException("condition");
 
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -212,7 +212,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         {
             var condition = (ExpressionSyntax?) Visit(node.Condition) ?? throw new ArgumentNullException("condition");
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -232,7 +232,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         {
             var name = (IdentifierNameSyntax?) Visit(node.Name) ?? throw new ArgumentNullException("name");
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -255,7 +255,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         {
             var name = (FunctionNameSyntax?) Visit(node.Name) ?? throw new ArgumentNullException("name");
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);
@@ -276,7 +276,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         public override SyntaxNode? VisitDoStatement(DoStatementSyntax node)
         {
             var scope = _script.GetScope(node);
-            RoslynDebug.AssertNotNull(scope);
+            LorettaDebug.AssertNotNull(scope);
             try
             {
                 EnterScope(scope);

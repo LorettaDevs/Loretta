@@ -73,8 +73,8 @@ namespace Loretta.CodeAnalysis.Lua
             var trailingTrivia = node.GetTrailingTriviaCore();
 
             // Trivia is either null or a non-empty list (there's no such thing as an empty green list)
-            RoslynDebug.Assert(leadingTrivia == null || !leadingTrivia.IsList || leadingTrivia.SlotCount > 0);
-            RoslynDebug.Assert(trailingTrivia == null || !trailingTrivia.IsList || trailingTrivia.SlotCount > 0);
+            LorettaDebug.Assert(leadingTrivia == null || !leadingTrivia.IsList || leadingTrivia.SlotCount > 0);
+            LorettaDebug.Assert(trailingTrivia == null || !trailingTrivia.IsList || trailingTrivia.SlotCount > 0);
 
             if (leadingTrivia != null)
             {

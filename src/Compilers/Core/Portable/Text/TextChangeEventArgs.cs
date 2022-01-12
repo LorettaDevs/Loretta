@@ -39,7 +39,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="newText">The text after the change.</param>
         /// <param name="changes">A set of ranges for the change.</param>
         public TextChangeEventArgs(SourceText oldText, SourceText newText, params TextChangeRange[] changes)
-            : this(oldText, newText, (IEnumerable<TextChangeRange>)changes)
+            : this(oldText, newText, (IEnumerable<TextChangeRange>) changes)
         {
         }
 

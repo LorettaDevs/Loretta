@@ -12,8 +12,8 @@ namespace Loretta.Utilities
         {
             // It's ok for 'start' to equal 'array.Length'.  In that case you'll
             // just get an empty array back.
-            RoslynDebug.Assert(start >= 0);
-            RoslynDebug.Assert(start <= array.Length);
+            LorettaDebug.Assert(start >= 0);
+            LorettaDebug.Assert(start <= array.Length);
 
             if (start + length > array.Length)
             {

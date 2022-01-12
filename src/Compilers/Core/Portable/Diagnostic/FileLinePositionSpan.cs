@@ -123,7 +123,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public override bool Equals(object? other)
         {
-            return other is FileLinePositionSpan && Equals((FileLinePositionSpan)other);
+            return other is FileLinePositionSpan span && Equals(span);
         }
 
         /// <summary>
@@ -146,6 +146,28 @@ namespace Loretta.CodeAnalysis
         public override string ToString()
         {
             return _path + ": " + _span;
+        }
+
+        /// <summary>
+        /// Checks whether two spans are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(FileLinePositionSpan left, FileLinePositionSpan right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Checks whether two spans are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator !=(FileLinePositionSpan left, FileLinePositionSpan right)
+        {
+            return !(left == right);
         }
     }
 }

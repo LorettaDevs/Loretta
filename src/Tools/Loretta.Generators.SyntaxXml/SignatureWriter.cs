@@ -55,14 +55,13 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteType(TreeType node)
         {
-            if (node is AbstractNode)
+            if (node is AbstractNode and)
             {
-                var nd = (AbstractNode) node;
                 _writer.WriteLine("  public abstract partial class {0} : {1}", node.Name, node.Base);
                 _writer.WriteLine("  {");
-                for (int i = 0, n = nd.Fields.Count; i < n; i++)
+                for (int i = 0, n = and.Fields.Count; i < n; i++)
                 {
-                    var field = nd.Fields[i];
+                    var field = and.Fields[i];
                     if (IsNodeOrNodeList(field.Type))
                     {
                         _writer.WriteLine("    public abstract {0}{1} {2} {{ get; }}", "", field.Type, field.Name);
@@ -70,9 +69,8 @@ namespace Loretta.Generators.SyntaxXml
                 }
                 _writer.WriteLine("  }");
             }
-            else if (node is Node)
+            else if (node is Node nd)
             {
-                var nd = (Node) node;
                 _writer.WriteLine("  public partial class {0} : {1}", node.Name, node.Base);
                 _writer.WriteLine("  {");
 

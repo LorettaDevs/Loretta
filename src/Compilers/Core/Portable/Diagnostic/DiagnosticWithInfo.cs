@@ -21,8 +21,8 @@ namespace Loretta.CodeAnalysis
 
         internal DiagnosticWithInfo(DiagnosticInfo info, Location location, bool isSuppressed = false)
         {
-            RoslynDebug.Assert(info != null);
-            RoslynDebug.Assert(location != null);
+            LorettaDebug.Assert(info != null);
+            LorettaDebug.Assert(location != null);
             _info = info;
             _location = location;
             _isSuppressed = isSuppressed;
@@ -152,9 +152,8 @@ namespace Loretta.CodeAnalysis
                 return true;
             }
 
-            var other = obj as DiagnosticWithInfo;
 
-            if (other == null || this.GetType() != other.GetType())
+            if (obj is not DiagnosticWithInfo other || this.GetType() != other.GetType())
             {
                 return false;
             }

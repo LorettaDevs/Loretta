@@ -44,7 +44,7 @@ namespace Loretta.CodeAnalysis
                 if (newIndex < _count)
                 {
                     _childIndex = newIndex;
-                    RoslynDebug.Assert(_node != null);
+                    LorettaDebug.Assert(_node != null);
                     return true;
                 }
 
@@ -57,7 +57,7 @@ namespace Loretta.CodeAnalysis
             {
                 get
                 {
-                    RoslynDebug.Assert(_node is object);
+                    LorettaDebug.Assert(_node is object);
                     return ItemInternal(_node, _childIndex);
                 }
             }

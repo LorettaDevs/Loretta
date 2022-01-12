@@ -27,11 +27,12 @@ namespace Loretta.CodeAnalysis.Syntax
             AddInternal(item.Green);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0016:Use 'throw' expression", Justification = "The throw exception being early avoids resizing in the error case.")]
         internal void AddInternal(GreenNode item)
         {
             if (item == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(item));
             }
 
             if (Count >= _nodes.Length)
@@ -141,7 +142,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void AddRange(SyntaxTokenList list, int offset, int length)
         {
-            RoslynDebug.Assert(list.Node is object);
+            LorettaDebug.Assert(list.Node is not null);
             this.AddRange(new SyntaxList<SyntaxNode>(list.Node.CreateRed()), offset, length);
         }
 

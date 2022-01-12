@@ -32,7 +32,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             if (!_exprFlags.TryGetValue(node, out var flags))
             {
                 var innerNode = GetInnerExpression(node);
-                RoslynDebug.Assert(innerNode is ExpressionSyntax);
+                LorettaDebug.Assert(innerNode is ExpressionSyntax);
 
                 flags = ExpressionFlags.None;
                 if (innerNode.IsKind(SyntaxKind.NilLiteralExpression))

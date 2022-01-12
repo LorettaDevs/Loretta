@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Loretta.UnusedStuffFinder": {
+      "commandName": "Project",
+      "workingDirectory": "."
+    }
+  }
+}

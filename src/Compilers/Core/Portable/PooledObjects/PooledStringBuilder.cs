@@ -22,7 +22,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         private PooledStringBuilder(ObjectPool<PooledStringBuilder> pool)
         {
-            RoslynDebug.Assert(pool != null);
+            LorettaDebug.Assert(pool != null);
             _pool = pool!;
         }
 
@@ -88,7 +88,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
         public static PooledStringBuilder GetInstance()
         {
             var builder = s_poolInstance.Allocate();
-            RoslynDebug.Assert(builder.Builder.Length == 0);
+            LorettaDebug.Assert(builder.Builder.Length == 0);
             return builder;
         }
 

@@ -27,8 +27,8 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxNode(GreenNode green, SyntaxNode? parent, int position)
         {
-            RoslynDebug.Assert(position >= 0, "position cannot be negative");
-            RoslynDebug.Assert(parent?.Green.IsList != true, "list cannot be a parent");
+            LorettaDebug.Assert(position >= 0, "position cannot be negative");
+            LorettaDebug.Assert(parent?.Green.IsList != true, "list cannot be a parent");
 
             Position = position;
             Green = green;
@@ -55,6 +55,9 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public int RawKind => Green.RawKind;
 
+        /// <summary>
+        /// The textual representation of this node's kind.
+        /// </summary>
         protected string KindText => Green.KindText;
 
         /// <summary>
@@ -102,7 +105,7 @@ namespace Loretta.CodeAnalysis
                 // adjust for following trivia width
                 width -= this.Green.GetTrailingTriviaWidth();
 
-                RoslynDebug.Assert(width >= 0);
+                LorettaDebug.Assert(width >= 0);
                 return new TextSpan(start, width);
             }
         }
@@ -166,6 +169,7 @@ namespace Loretta.CodeAnalysis
             return result;
         }
 
+        /// <summary>internal</summary>
         protected T? GetRed<T>(ref T? field, int slot) where T : SyntaxNode
         {
             var result = field;
@@ -175,7 +179,7 @@ namespace Loretta.CodeAnalysis
                 var green = this.Green.GetSlot(slot);
                 if (green != null)
                 {
-                    Interlocked.CompareExchange(ref field, (T)green.CreateRed(this, this.GetChildPosition(slot)), null);
+                    Interlocked.CompareExchange(ref field, (T) green.CreateRed(this, this.GetChildPosition(slot)), null);
                     result = field;
                 }
             }
@@ -184,6 +188,7 @@ namespace Loretta.CodeAnalysis
         }
 
         // special case of above function where slot = 0, does not need GetChildPosition 
+        /// <summary>internal</summary>
         protected T? GetRedAtZero<T>(ref T? field) where T : SyntaxNode
         {
             var result = field;
@@ -193,7 +198,7 @@ namespace Loretta.CodeAnalysis
                 var green = this.Green.GetSlot(0);
                 if (green != null)
                 {
-                    Interlocked.CompareExchange(ref field, (T)green.CreateRed(this, this.Position), null);
+                    Interlocked.CompareExchange(ref field, (T) green.CreateRed(this, this.Position), null);
                     result = field;
                 }
             }
@@ -208,7 +213,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal SyntaxNode? GetRedElement(ref SyntaxNode? element, int slot)
         {
-            RoslynDebug.Assert(this.IsList);
+            LorettaDebug.Assert(this.IsList);
 
             var result = element;
 
@@ -228,7 +233,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal SyntaxNode? GetRedElementIfNotToken(ref SyntaxNode? element)
         {
-            RoslynDebug.Assert(this.IsList);
+            LorettaDebug.Assert(this.IsList);
 
             var result = element;
 
@@ -471,7 +476,7 @@ namespace Loretta.CodeAnalysis
                 }
                 else if (node.IsStructuredTrivia)
                 {
-                    node = ((IStructuredTriviaSyntax)node).ParentTrivia.Token.Parent;
+                    node = ((IStructuredTriviaSyntax) node).ParentTrivia.Token.Parent;
                 }
                 else
                 {
@@ -562,6 +567,10 @@ namespace Loretta.CodeAnalysis
             return this.Position + offset;
         }
 
+        /// <summary>
+        /// Returns the <see cref="CodeAnalysis.Location"/> for this node.
+        /// </summary>
+        /// <returns></returns>
         public Location GetLocation()
         {
             return this.SyntaxTree.GetLocation(this.Span);
@@ -581,7 +590,7 @@ namespace Loretta.CodeAnalysis
                 // In future, if we decide to support this, we will need some mechanism to distinguish between scenarios (a) and (b) here.
 
                 var tree = this.SyntaxTree;
-                RoslynDebug.Assert(tree != null);
+                LorettaDebug.Assert(tree != null);
                 return !tree.SupportsLocations ? NoLocation.Singleton : new SourceLocation(this);
             }
         }
@@ -619,6 +628,9 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <summary>
+        /// The parent trivia for this node in case it is part of structured trivia.
+        /// </summary>
         public virtual SyntaxTrivia ParentTrivia
         {
             get
@@ -643,6 +655,14 @@ namespace Loretta.CodeAnalysis
             return new ChildSyntaxList(this);
         }
 
+        /// <summary>
+        /// Returns the child node or token that contains the provided position.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if the provided position is outside of this node.
+        /// </exception>
         public virtual SyntaxNodeOrToken ChildThatContainsPosition(int position)
         {
             //PERF: it is very important to keep this method fast.
@@ -653,7 +673,7 @@ namespace Loretta.CodeAnalysis
             }
 
             SyntaxNodeOrToken childNodeOrToken = ChildSyntaxList.ChildThatContainsPosition(this, position);
-            RoslynDebug.Assert(childNodeOrToken.FullSpan.Contains(position), "ChildThatContainsPosition's return value does not contain the requested position.");
+            LorettaDebug.Assert(childNodeOrToken.FullSpan.Contains(position), "ChildThatContainsPosition's return value does not contain the requested position.");
             return childNodeOrToken;
         }
 
@@ -667,7 +687,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxNode GetRequiredNodeSlot(int slot)
         {
             var syntaxNode = GetNodeSlot(slot);
-            RoslynDebug.Assert(syntaxNode is object);
+            LorettaDebug.Assert(syntaxNode is object);
             return syntaxNode;
         }
 
@@ -711,8 +731,7 @@ namespace Loretta.CodeAnalysis
             var parent = node.Parent;
             if (parent == null && ascendOutOfTrivia)
             {
-                var structuredTrivia = node as IStructuredTriviaSyntax;
-                if (structuredTrivia != null)
+                if (node is IStructuredTriviaSyntax structuredTrivia)
                 {
                     parent = structuredTrivia.ParentTrivia.Token.Parent;
                 }
@@ -729,8 +748,7 @@ namespace Loretta.CodeAnalysis
         {
             for (SyntaxNode? node = this; node != null; node = GetParent(node, ascendOutOfTrivia))
             {
-                var tnode = node as TNode;
-                if (tnode != null && (predicate == null || predicate(tnode)))
+                if (node is TNode tnode && (predicate == null || predicate(tnode)))
                 {
                     return tnode;
                 }
@@ -862,7 +880,7 @@ namespace Loretta.CodeAnalysis
                 .Parent
                 !.FirstAncestorOrSelf<SyntaxNode, TextSpan>((a, span) => a.FullSpan.Contains(span), span);
 
-            RoslynDebug.Assert(node is object);
+            LorettaDebug.Assert(node is object);
             SyntaxNode? cuRoot = node.SyntaxTree?.GetRoot();
 
             // Tie-breaking.
@@ -1001,7 +1019,7 @@ namespace Loretta.CodeAnalysis
 
         internal static SyntaxTrivia FindTriviaByOffset(SyntaxNode node, int textOffset, Func<SyntaxTrivia, bool>? stepInto = null)
         {
-recurse:
+        recurse:
             if (textOffset >= 0)
             {
                 foreach (var element in node.ChildNodesAndTokens())
@@ -1260,7 +1278,7 @@ recurse:
             var annotations = this.Green.GetAnnotations();
             if (annotations?.Length > 0)
             {
-                return (T)(node.Green.WithAdditionalAnnotationsGreen(annotations)).CreateRed();
+                return (T) (node.Green.WithAdditionalAnnotationsGreen(annotations)).CreateRed();
             }
             return node;
         }
@@ -1350,11 +1368,10 @@ recurse:
         {
             if (position == this.EndPosition)
             {
-                var compilationUnit = this as ICompilationUnitSyntax;
-                if (compilationUnit != null)
+                if (this is ICompilationUnitSyntax compilationUnit)
                 {
                     Eof = compilationUnit.EndOfFileToken;
-                    RoslynDebug.Assert(Eof.EndPosition == position);
+                    LorettaDebug.Assert(Eof.EndPosition == position);
                     return true;
                 }
             }
@@ -1371,8 +1388,8 @@ recurse:
 
             while (true)
             {
-                RoslynDebug.Assert(curNode.RawKind != 0);
-                RoslynDebug.Assert(curNode.FullSpan.Contains(position));
+                LorettaDebug.Assert(curNode.RawKind != 0);
+                LorettaDebug.Assert(curNode.FullSpan.Contains(position));
 
                 var node = curNode.AsNode();
 
@@ -1473,11 +1490,17 @@ recurse:
             Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia>? computeReplacementTrivia = null)
             where TNode : SyntaxNode;
 
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode ReplaceNodeInListCore(SyntaxNode originalNode, IEnumerable<SyntaxNode> replacementNodes);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode InsertNodesInListCore(SyntaxNode nodeInList, IEnumerable<SyntaxNode> nodesToInsert, bool insertBefore);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode ReplaceTokenInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode InsertTokensInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens, bool insertBefore);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode ReplaceTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia);
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode InsertTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia, bool insertBefore);
 
         /// <summary>
@@ -1487,6 +1510,7 @@ recurse:
             IEnumerable<SyntaxNode> nodes,
             SyntaxRemoveOptions options);
 
+        /// <summary>internal</summary>
         protected internal abstract SyntaxNode NormalizeWhitespaceCore(string indentation, string eol, bool elasticTrivia);
 
         /// <summary>
@@ -1538,7 +1562,7 @@ recurse:
         /// </summary>
         internal static T CloneNodeAsRoot<T>(T node, SyntaxTree syntaxTree) where T : SyntaxNode
         {
-            var clone = (T)node.Green.CreateRed(null, 0);
+            var clone = (T) node.Green.CreateRed(null, 0);
             clone._syntaxTree = syntaxTree;
 
             return clone;

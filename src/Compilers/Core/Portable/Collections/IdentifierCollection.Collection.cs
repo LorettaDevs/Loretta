@@ -41,7 +41,7 @@ namespace Loretta.CodeAnalysis
                 {
                     if (_count == -1)
                     {
-                        _count = this.IdentifierCollection._map.Values.Sum(o => o is string ? 1 : ((ISet<string>)o).Count);
+                        _count = this.IdentifierCollection._map.Values.Sum(o => o is string ? 1 : ((ISet<string>) o).Count);
                     }
 
                     return _count;
@@ -54,8 +54,7 @@ namespace Loretta.CodeAnalysis
             {
                 foreach (var obj in this.IdentifierCollection._map.Values)
                 {
-                    var strs = obj as HashSet<string>;
-                    if (strs != null)
+                    if (obj is HashSet<string> strs)
                     {
                         foreach (var s in strs)
                         {
@@ -64,7 +63,7 @@ namespace Loretta.CodeAnalysis
                     }
                     else
                     {
-                        yield return (string)obj;
+                        yield return (string) obj;
                     }
                 }
             }

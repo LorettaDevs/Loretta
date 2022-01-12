@@ -16,7 +16,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public AbstractLexer(SourceText text)
         {
-            RoslynDebug.Assert(text is not null);
+            LorettaDebug.Assert(text is not null);
             _text = text;
             // TODO: Either make an SourceTextCodeReader or reimplement the
             // Lexer without the ICodeReader.

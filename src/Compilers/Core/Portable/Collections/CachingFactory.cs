@@ -10,114 +10,6 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
 {
-    // Implements simple cache of limited size that could hold 
-    // a number of previously created/mapped items.
-    //
-    // These caches do not grow or shrink and need no rehashing
-    // Maximum size of a cache is set at construction.
-    // Items are inserted at locations that correspond to the hash code of the item
-    // New item displaces anything that previously used the same slot.
-    // 
-    // Cache needs to know 3 functions: 
-    //  keyHash - maps a key to a hashcode. 
-    //
-    //  keyValueEquality - compares key and a value and figures if the value could have been created using same key.
-    //                  NOTE: it does not compare two keys.
-    //                  The assumption is that value's key could be inferred from the value so we do not want to store it.
-    //                  We also do not want to pass in the new value as the whole purpose of the cache is to avoid creating
-    //                  a new instance if cached one can be used.
-    //                
-    //  valueFactory - creates a new value from a key. Needed only in GetOrMakeValue.
-    //                  in a case where it is not possible to create a static valueFactory, it is advisable
-    //                  to set valueFactory to null and use TryGetValue/Add pattern instead of GetOrMakeValue.
-    //
-    internal class CachingFactory<TKey, TValue> : CachingBase<CachingFactory<TKey, TValue>.Entry>
-        where TKey : notnull
-    {
-        internal struct Entry
-        {
-            internal int hash;
-            internal TValue value;
-        }
-
-        private readonly int _size;
-        private readonly Func<TKey, TValue> _valueFactory;
-        private readonly Func<TKey, int> _keyHash;
-        private readonly Func<TKey, TValue, bool> _keyValueEquality;
-
-        public CachingFactory(int size,
-                Func<TKey, TValue> valueFactory,
-                Func<TKey, int> keyHash,
-                Func<TKey, TValue, bool> keyValueEquality) :
-            base(size)
-        {
-            _size = size;
-            _valueFactory = valueFactory;
-            _keyHash = keyHash;
-            _keyValueEquality = keyValueEquality;
-        }
-
-        public void Add(TKey key, TValue value)
-        {
-            var hash = GetKeyHash(key);
-            var idx = hash & mask;
-
-            entries[idx].hash = hash;
-            entries[idx].value = value;
-        }
-
-        public bool TryGetValue(TKey key, [MaybeNullWhen(returnValue: false)] out TValue value)
-        {
-            int hash = GetKeyHash(key);
-            int idx = hash & mask;
-
-            var entries = this.entries;
-            if (entries[idx].hash == hash)
-            {
-                var candidate = entries[idx].value;
-                if (_keyValueEquality(key, candidate))
-                {
-                    value = candidate;
-                    return true;
-                }
-            }
-
-            value = default!;
-            return false;
-        }
-
-        public TValue GetOrMakeValue(TKey key)
-        {
-            int hash = GetKeyHash(key);
-            int idx = hash & mask;
-
-            var entries = this.entries;
-            if (entries[idx].hash == hash)
-            {
-                var candidate = entries[idx].value;
-                if (_keyValueEquality(key, candidate))
-                {
-                    return candidate;
-                }
-            }
-
-            var value = _valueFactory(key);
-            entries[idx].hash = hash;
-            entries[idx].value = value;
-
-            return value;
-        }
-
-        private int GetKeyHash(TKey key)
-        {
-            // Ensure result is non-zero to avoid
-            // treating an empty entry as valid.
-            int result = _keyHash(key) | _size;
-            RoslynDebug.Assert(result != 0);
-            return result;
-        }
-    }
-
     // special case for a situation where the key is a reference type with object identity 
     // in this case:
     //      keyHash             is assumed to be RuntimeHelpers.GetHashCode
@@ -163,7 +55,7 @@ namespace Loretta.CodeAnalysis
             int idx = hash & mask;
 
             var entries = this.entries;
-            if ((object)entries[idx].key == (object)key)
+            if ((object) entries[idx].key == (object) key)
             {
                 value = entries[idx].value;
                 return true;
@@ -179,7 +71,7 @@ namespace Loretta.CodeAnalysis
             int idx = hash & mask;
 
             var entries = this.entries;
-            if ((object)entries[idx].key == (object)key)
+            if ((object) entries[idx].key == (object) key)
             {
                 return entries[idx].value;
             }
@@ -229,7 +121,7 @@ namespace Loretta.CodeAnalysis
 
         private static int AlignSize(int size)
         {
-            RoslynDebug.Assert(size > 0);
+            LorettaDebug.Assert(size > 0);
 
             size--;
             size |= size >> 1;

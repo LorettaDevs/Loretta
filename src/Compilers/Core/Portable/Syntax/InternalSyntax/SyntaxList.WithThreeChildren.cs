@@ -46,11 +46,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 : base(reader)
             {
                 this.SlotCount = 3;
-                _child0 = (GreenNode)reader.ReadValue();
+                _child0 = (GreenNode) reader.ReadValue();
                 this.AdjustFlagsAndWidth(_child0);
-                _child1 = (GreenNode)reader.ReadValue();
+                _child1 = (GreenNode) reader.ReadValue();
                 this.AdjustFlagsAndWidth(_child1);
-                _child2 = (GreenNode)reader.ReadValue();
+                _child2 = (GreenNode) reader.ReadValue();
                 this.AdjustFlagsAndWidth(_child2);
             }
 

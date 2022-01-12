@@ -1,0 +1,25 @@
+﻿#nullable enable
+Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.AllocateSlot() -> int
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.ReleaseSlot(int slot) -> void
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator.AllocateSlot() -> int
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator.ReleaseSlot(int slot) -> void
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator.SequentialSlotAllocator() -> void
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.AllocateSlot() -> int
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.ReleaseSlot(int slot) -> void
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.SortedSlotAllocator() -> void
+Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions
+static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.ConstantFold(this Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxNode!
+static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree, Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy! namingStrategy, Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator! slotAllocator) -> Loretta.CodeAnalysis.SyntaxTree!
+static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree, Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy! namingStrategy) -> Loretta.CodeAnalysis.SyntaxTree!
+static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree) -> Loretta.CodeAnalysis.SyntaxTree!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabetical(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Numerical(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Sequential(char prefix, System.Collections.Immutable.ImmutableArray<string!> alphabet) -> Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.ZeroWidth(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
+static Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants(this Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxNode!

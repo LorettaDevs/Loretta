@@ -79,8 +79,8 @@ namespace Loretta.CodeAnalysis.Lua
 
         public Variable(VariableKind kind, IScopeInternal containingScope, string name, SyntaxNode? declaration)
         {
-            RoslynDebug.AssertNotNull(containingScope);
-            RoslynDebug.AssertNotNull(name);
+            LorettaDebug.AssertNotNull(containingScope);
+            LorettaDebug.AssertNotNull(name);
 
             Kind = kind;
             ContainingScope = containingScope;

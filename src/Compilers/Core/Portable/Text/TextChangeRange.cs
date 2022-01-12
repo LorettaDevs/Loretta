@@ -133,6 +133,10 @@ namespace Loretta.CodeAnalysis.Text
             return $"new TextChangeRange(new TextSpan({Span.Start}, {Span.Length}), {NewLength})";
         }
 
+        /// <summary>
+        /// Converts the text change range to a string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"TextChangeRange(Span={Span}, NewLength={NewLength})";

@@ -24,15 +24,19 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxTokenList(SyntaxNode? parent, GreenNode? tokenOrList, int position, int index)
         {
-            RoslynDebug.Assert(tokenOrList != null || (position == 0 && index == 0 && parent == null));
-            RoslynDebug.Assert(position >= 0);
-            RoslynDebug.Assert(tokenOrList == null || (tokenOrList.IsToken) || (tokenOrList.IsList));
+            LorettaDebug.Assert(tokenOrList != null || (position == 0 && index == 0 && parent == null));
+            LorettaDebug.Assert(position >= 0);
+            LorettaDebug.Assert(tokenOrList == null || (tokenOrList.IsToken) || (tokenOrList.IsList));
             _parent = parent;
             Node = tokenOrList;
             Position = position;
             _index = index;
         }
 
+        /// <summary>
+        /// Creates a new token list with the provided token as its only element.
+        /// </summary>
+        /// <param name="token"></param>
         public SyntaxTokenList(SyntaxToken token)
         {
             _parent = token.Parent;
@@ -71,7 +75,7 @@ namespace Loretta.CodeAnalysis
             for (int i = 0; i < tokens.Length; i++)
             {
                 var node = tokens[i].Node;
-                RoslynDebug.Assert(node is object);
+                LorettaDebug.Assert(node is object);
                 builder.Add(node);
             }
 
@@ -88,7 +92,7 @@ namespace Loretta.CodeAnalysis
             var builder = SyntaxTokenListBuilder.Create();
             foreach (var token in tokens)
             {
-                RoslynDebug.Assert(token.Node is object);
+                LorettaDebug.Assert(token.Node is object);
                 builder.Add(token.Node);
             }
 
@@ -119,7 +123,7 @@ namespace Loretta.CodeAnalysis
                 {
                     if (Node.IsList)
                     {
-                        if (unchecked((uint)index < (uint)Node.SlotCount))
+                        if (unchecked((uint) index < (uint) Node.SlotCount))
                         {
                             return new SyntaxToken(_parent, Node.GetSlot(index), Position + Node.GetSlotOffset(index), _index + index);
                         }
@@ -243,7 +247,7 @@ namespace Loretta.CodeAnalysis
 
         internal void CopyTo(int offset, GreenNode?[] array, int arrayOffset, int count)
         {
-            RoslynDebug.Assert(this.Count >= offset + count);
+            LorettaDebug.Assert(this.Count >= offset + count);
 
             for (int i = 0; i < count; i++)
             {
@@ -256,7 +260,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private GreenNode? GetGreenNodeAt(int i)
         {
-            RoslynDebug.Assert(Node is object);
+            LorettaDebug.Assert(Node is object);
             return GetGreenNodeAt(Node, i);
         }
 
@@ -265,10 +269,15 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private static GreenNode? GetGreenNodeAt(GreenNode node, int i)
         {
-            RoslynDebug.Assert(node.IsList || (i == 0 && !node.IsList));
+            LorettaDebug.Assert(node.IsList || (i == 0 && !node.IsList));
             return node.IsList ? node.GetSlot(i) : node;
         }
 
+        /// <summary>
+        /// Retuns the index of the provided token in this list.
+        /// </summary>
+        /// <param name="tokenInList"></param>
+        /// <returns>-1 if not found.</returns>
         public int IndexOf(SyntaxToken tokenInList)
         {
             for (int i = 0, n = this.Count; i < n; i++)
@@ -481,6 +490,7 @@ namespace Loretta.CodeAnalysis
             return !left.Equals(right);
         }
 
+        /// <inheritdoc/>
         public bool Equals(SyntaxTokenList other)
         {
             return Node == other.Node && _parent == other._parent && _index == other._index;

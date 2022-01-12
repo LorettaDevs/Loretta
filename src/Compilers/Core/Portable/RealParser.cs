@@ -35,7 +35,7 @@ namespace Loretta.CodeAnalysis
             var dbl = DoubleFloatingPointType.Instance;
             ulong result;
             var status = RealParser.ConvertDecimalToFloatingPointBits(str, dbl, out result);
-            d = BitConverter.Int64BitsToDouble((long)result);
+            d = BitConverter.Int64BitsToDouble((long) result);
             return status != Status.Overflow;
         }
 
@@ -53,7 +53,7 @@ namespace Loretta.CodeAnalysis
             var dbl = FloatFloatingPointType.Instance;
             ulong result;
             var status = RealParser.ConvertDecimalToFloatingPointBits(str, dbl, out result);
-            f = Int32BitsToFloat((uint)result);
+            f = Int32BitsToFloat((uint) result);
             return status != Status.Overflow;
         }
 
@@ -68,7 +68,7 @@ namespace Loretta.CodeAnalysis
         private abstract class FloatingPointType
         {
             public abstract ushort DenormalMantissaBits { get; }
-            public ushort NormalMantissaBits => (ushort)(DenormalMantissaBits + 1); // we get an extra (hidden) bit for normal mantissas
+            public ushort NormalMantissaBits => (ushort) (DenormalMantissaBits + 1); // we get an extra (hidden) bit for normal mantissas
             public abstract ushort ExponentBits { get; }
             public int MinBinaryExponent => 1 - MaxBinaryExponent;
             public abstract int MaxBinaryExponent { get; }
@@ -113,7 +113,7 @@ namespace Loretta.CodeAnalysis
                 // correct position, and compute the resulting base two exponent for the  
                 // normalized mantissa:  
                 uint initialMantissaBits = CountSignificantBits(initialMantissa);
-                int normalMantissaShift = this.NormalMantissaBits - (int)initialMantissaBits;
+                int normalMantissaShift = this.NormalMantissaBits - (int) initialMantissaBits;
                 int normalExponent = initialExponent - normalMantissaShift;
 
                 ulong mantissa = initialMantissa;
@@ -226,11 +226,11 @@ namespace Loretta.CodeAnalysis
                 // from the computed components:  
                 mantissa &= this.DenormalMantissaMask;
 
-                RoslynDebug.Assert((DenormalMantissaMask & (1UL << DenormalMantissaBits)) == 0);
-                ulong shiftedExponent = ((ulong)(exponent + this.ExponentBias)) << DenormalMantissaBits;
-                RoslynDebug.Assert((shiftedExponent & DenormalMantissaMask) == 0);
-                RoslynDebug.Assert((mantissa & ~DenormalMantissaMask) == 0);
-                RoslynDebug.Assert((shiftedExponent & ~(((1UL << this.ExponentBits) - 1) << DenormalMantissaBits)) == 0); // exponent fits in its place
+                LorettaDebug.Assert((DenormalMantissaMask & (1UL << DenormalMantissaBits)) == 0);
+                ulong shiftedExponent = ((ulong) (exponent + this.ExponentBias)) << DenormalMantissaBits;
+                LorettaDebug.Assert((shiftedExponent & DenormalMantissaMask) == 0);
+                LorettaDebug.Assert((mantissa & ~DenormalMantissaMask) == 0);
+                LorettaDebug.Assert((shiftedExponent & ~(((1UL << this.ExponentBits) - 1) << DenormalMantissaBits)) == 0); // exponent fits in its place
                 result = shiftedExponent | mantissa;
                 return Status.OK;
             }
@@ -262,8 +262,8 @@ namespace Loretta.CodeAnalysis
             public override ushort ExponentBits => 11;
             public override int MaxBinaryExponent => 1023;
             public override int ExponentBias => 1023;
-            public override ulong Zero => (ulong)BitConverter.DoubleToInt64Bits(0.0d);
-            public override ulong Infinity => (ulong)BitConverter.DoubleToInt64Bits(double.PositiveInfinity);
+            public override ulong Zero => (ulong) BitConverter.DoubleToInt64Bits(0.0d);
+            public override ulong Infinity => (ulong) BitConverter.DoubleToInt64Bits(double.PositiveInfinity);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Loretta.CodeAnalysis
         {
             public int Exponent;
             public string Mantissa;
-            public uint MantissaCount => (uint)Mantissa.Length;
+            public uint MantissaCount => (uint) Mantissa.Length;
 
             /// <summary>
             /// Create a DecimalFloatingPointString from a string representing a floating-point literal.
@@ -347,8 +347,13 @@ namespace Loretta.CodeAnalysis
 
                     int exponentMagnitude = 0;
 
+#if NETCOREAPP
+                    if (int.TryParse(source.AsSpan(firstExponent, lastExponent - firstExponent), out exponentMagnitude) &&
+                        exponentMagnitude <= MAX_EXP)
+#else
                     if (int.TryParse(source.Substring(firstExponent, lastExponent - firstExponent), out exponentMagnitude) &&
                         exponentMagnitude <= MAX_EXP)
+#endif
                     {
                         if (exponentSign == '-')
                         {
@@ -392,7 +397,7 @@ namespace Loretta.CodeAnalysis
             // extra bit is used to correctly round the mantissa (if there are fewer bits  
             // than this available, then that's totally okay; in that case we use what we  
             // have and we don't need to round).
-            uint requiredBitsOfPrecision = (uint)type.NormalMantissaBits + 1;
+            uint requiredBitsOfPrecision = (uint) type.NormalMantissaBits + 1;
 
             // The input is of the form 0.Mantissa x 10^Exponent, where 'Mantissa' are  
             // the decimal digits of the mantissa and 'Exponent' is the decimal exponent.  
@@ -401,7 +406,7 @@ namespace Loretta.CodeAnalysis
             // first 'exponent' digits, or all present digits if there are fewer digits.  
             // If the exponent is zero or negative, then the integer part is empty.  In  
             // either case, the remaining digits form the fractional part of the mantissa.  
-            uint positiveExponent = (uint)Math.Max(0, data.Exponent);
+            uint positiveExponent = (uint) Math.Max(0, data.Exponent);
             uint integerDigitsPresent = Math.Min(positiveExponent, data.MantissaCount);
             uint integerDigitsMissing = positiveExponent - integerDigitsPresent;
             uint integerFirstIndex = 0;
@@ -451,9 +456,9 @@ namespace Loretta.CodeAnalysis
             // fractional part of the mantissa.  
 
             uint fractionalDenominatorExponent = data.Exponent < 0
-                ? fractionalDigitsPresent + (uint)-data.Exponent
+                ? fractionalDigitsPresent + (uint) -data.Exponent
                 : fractionalDigitsPresent;
-            if (integerBitsOfPrecision == 0 && (fractionalDenominatorExponent - (int)data.MantissaCount) > type.OverflowDecimalExponent)
+            if (integerBitsOfPrecision == 0 && (fractionalDenominatorExponent - (int) data.MantissaCount) > type.OverflowDecimalExponent)
             {
                 // If there were any digits in the integer part, it is impossible to  
                 // underflow (because the exponent cannot possibly be small enough),  
@@ -463,7 +468,7 @@ namespace Loretta.CodeAnalysis
             }
 
             BigInteger fractionalNumerator = AccumulateDecimalDigitsIntoBigInteger(data, fractionalFirstIndex, fractionalLastIndex);
-            RoslynDebug.Assert(!fractionalNumerator.IsZero);
+            LorettaDebug.Assert(!fractionalNumerator.IsZero);
 
             BigInteger fractionalDenominator = s_bigOne;
             MultiplyByPowerOfTen(ref fractionalDenominator, fractionalDenominatorExponent);
@@ -530,7 +535,7 @@ namespace Loretta.CodeAnalysis
             ShiftLeft(ref fractionalNumerator, remainingBitsOfPrecisionRequired);
             BigInteger fractionalRemainder;
             BigInteger bigFractionalMantissa = BigInteger.DivRem(fractionalNumerator, fractionalDenominator, out fractionalRemainder);
-            ulong fractionalMantissa = (ulong)bigFractionalMantissa;
+            ulong fractionalMantissa = (ulong) bigFractionalMantissa;
 
             bool hasZeroTail = fractionalRemainder.IsZero;
 
@@ -539,17 +544,17 @@ namespace Loretta.CodeAnalysis
             uint fractionalMantissaBits = CountSignificantBits(fractionalMantissa);
             if (fractionalMantissaBits > requiredFractionalBitsOfPrecision)
             {
-                int shift = (int)(fractionalMantissaBits - requiredFractionalBitsOfPrecision);
+                int shift = (int) (fractionalMantissaBits - requiredFractionalBitsOfPrecision);
                 hasZeroTail = hasZeroTail && (fractionalMantissa & ((1UL << shift) - 1)) == 0;
                 fractionalMantissa >>= shift;
             }
 
             // Compose the mantissa from the integer and fractional parts:  
-            RoslynDebug.Assert(integerBitsOfPrecision < 60); // we can use BigInteger's built-in conversion
-            ulong integerMantissa = (ulong)integerValue;
+            LorettaDebug.Assert(integerBitsOfPrecision < 60); // we can use BigInteger's built-in conversion
+            ulong integerMantissa = (ulong) integerValue;
 
             ulong completeMantissa =
-                (integerMantissa << (int)requiredFractionalBitsOfPrecision) +
+                (integerMantissa << (int) requiredFractionalBitsOfPrecision) +
                 fractionalMantissa;
 
             // Compute the final exponent:  
@@ -563,8 +568,8 @@ namespace Loretta.CodeAnalysis
             // account for the fact that we've generated an extra bit of precision, for  
             // use in rounding.  
             int finalExponent = integerBitsOfPrecision > 0
-                ? (int)integerBitsOfPrecision - 2
-                : -(int)(fractionalExponent) - 1;
+                ? (int) integerBitsOfPrecision - 2
+                : -(int) (fractionalExponent) - 1;
 
             return type.AssembleFloatingPointValue(completeMantissa, finalExponent, hasZeroTail, out result);
         }
@@ -588,7 +593,7 @@ namespace Loretta.CodeAnalysis
             int exponent;
             ulong mantissa;
             bool has_zero_tail = !hasNonzeroFractionalPart;
-            int topElementIndex = ((int)integerBitsOfPrecision - 1) / 8;
+            int topElementIndex = ((int) integerBitsOfPrecision - 1) / 8;
 
             // The high-order byte of integerValueAsBytes might not have a full eight bits.  However,  
             // since the data are stored in quanta of 8 bits, and we really only need around 54  
@@ -598,7 +603,7 @@ namespace Loretta.CodeAnalysis
             int bottomElementIndex = Math.Max(0, topElementIndex - (64 / 8) + 1);
             exponent = baseExponent + bottomElementIndex * 8;
             mantissa = 0;
-            for (int i = (int)topElementIndex; i >= bottomElementIndex; i--)
+            for (int i = (int) topElementIndex; i >= bottomElementIndex; i--)
             {
                 mantissa <<= 8;
                 mantissa |= integerValueAsBytes[i];
@@ -621,7 +626,7 @@ namespace Loretta.CodeAnalysis
         private static BigInteger AccumulateDecimalDigitsIntoBigInteger(DecimalFloatingPointString data, uint integer_first_index, uint integer_last_index)
         {
             if (integer_first_index == integer_last_index) return s_bigZero;
-            var valueString = data.Mantissa.Substring((int)integer_first_index, (int)(integer_last_index - integer_first_index));
+            var valueString = data.Mantissa.Substring((int) integer_first_index, (int) (integer_last_index - integer_first_index));
             return BigInteger.Parse(valueString);
         }
 
@@ -670,7 +675,7 @@ namespace Loretta.CodeAnalysis
             for (int i = dataBytes.Length - 1; i >= 0; i--)
             {
                 var v = dataBytes[i];
-                if (v != 0) return 8 * (uint)i + CountSignificantBits(v);
+                if (v != 0) return 8 * (uint) i + CountSignificantBits(v);
             }
 
             return 0;
@@ -749,7 +754,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="shift">The power of two to multiply it by</param>
         private static void ShiftLeft(ref BigInteger number, uint shift)
         {
-            var powerOfTwo = BigInteger.Pow(s_bigTwo, (int)shift);
+            var powerOfTwo = BigInteger.Pow(s_bigTwo, (int) shift);
             number = number * powerOfTwo;
         }
 
@@ -760,7 +765,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="power">The power of ten to multiply it by</param>
         private static void MultiplyByPowerOfTen(ref BigInteger number, uint power)
         {
-            var powerOfTen = BigInteger.Pow(s_bigTen, (int)power);
+            var powerOfTen = BigInteger.Pow(s_bigTen, (int) power);
             number = number * powerOfTen;
         }
 

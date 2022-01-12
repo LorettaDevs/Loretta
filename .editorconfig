@@ -13,7 +13,7 @@ tab_width = 4
 
 # New line preferences
 end_of_line = crlf
-insert_final_newline = false
+insert_final_newline = true
 
 #### .NET Coding Conventions ####
 
@@ -105,7 +105,7 @@ csharp_preferred_modifier_order = public,private,protected,internal,static,exter
 
 # Code-block preferences
 csharp_prefer_braces = when_multiline:warning
-csharp_prefer_simple_using_statement = true
+csharp_prefer_simple_using_statement = true:suggestion
 
 # Expression-level preferences
 csharp_prefer_simple_default_expression = true
@@ -120,7 +120,7 @@ csharp_style_unused_value_assignment_preference = discard_variable
 csharp_style_unused_value_expression_statement_preference = discard_variable
 
 # 'using' directive preferences
-csharp_using_directive_placement = outside_namespace
+csharp_using_directive_placement = outside_namespace:silent
 
 # New line preferences
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = false:suggestion
@@ -128,6 +128,8 @@ csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false:s
 csharp_style_allow_embedded_statements_on_same_line_experimental = true
 
 #### C# Formatting Rules ####
+
+csharp_style_namespace_declarations = block_scoped:silent
 
 # New line preferences
 csharp_new_line_before_catch = true
@@ -256,5 +258,12 @@ dotnet_naming_style.camelcase_prefixed_by__s__.word_separator =
 dotnet_naming_style.camelcase_prefixed_by__s__.capitalization = camel_case
 
 # Severity settings
+
+# CA1303: Do not pass literals as localized parameters
 dotnet_diagnostic.CA1303.severity = none
-dotnet_diagnostic.IDE0090.severity = silent
+
+# RS0027: Public API with optional parameter(s) should have the most parameters amongst its public overloads
+dotnet_diagnostic.RS0027.severity = none
+
+# RS0026: Do not add multiple public overloads with optional parameters
+dotnet_diagnostic.RS0026.severity = none

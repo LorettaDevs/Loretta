@@ -11,6 +11,11 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// Represents a list of nodes separated by one token.
+    /// May have a trailing node.
+    /// </summary>
+    /// <typeparam name="TNode"></typeparam>
     public readonly partial struct SeparatedSyntaxList<TNode> : IEquatable<SeparatedSyntaxList<TNode>>, IReadOnlyList<TNode> where TNode : SyntaxNode
     {
         private readonly SyntaxNodeOrTokenList _list;
@@ -40,11 +45,11 @@ namespace Loretta.CodeAnalysis
                 var item = list[i];
                 if ((i & 1) == 0)
                 {
-                    RoslynDebug.Assert(item.IsNode, "Node missing in separated list.");
+                    LorettaDebug.Assert(item.IsNode, "Node missing in separated list.");
                 }
                 else
                 {
-                    RoslynDebug.Assert(item.IsToken, "Separator token missing in separated list.");
+                    LorettaDebug.Assert(item.IsToken, "Separator token missing in separated list.");
                 }
             }
         }
@@ -62,6 +67,9 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <summary>
+        /// The amount of nodes contained in this list.
+        /// </summary>
         public int Count
         {
             get
@@ -70,6 +78,9 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <summary>
+        /// The amount of separators contained in this list.
+        /// </summary>
         public int SeparatorCount
         {
             get
@@ -78,6 +89,12 @@ namespace Loretta.CodeAnalysis
             }
         }
 
+        /// <summary>
+        /// Obtains a node from this list at the provided index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public TNode this[int index]
         {
             get
@@ -89,14 +106,14 @@ namespace Loretta.CodeAnalysis
                     {
                         if (index == 0)
                         {
-                            return (TNode)node;
+                            return (TNode) node;
                         }
                     }
                     else
                     {
-                        if (unchecked((uint)index < (uint)_count))
+                        if (unchecked((uint) index < (uint) _count))
                         {
-                            return (TNode)node.GetRequiredNodeSlot(index << 1);
+                            return (TNode) node.GetRequiredNodeSlot(index << 1);
                         }
                     }
                 }
@@ -115,12 +132,12 @@ namespace Loretta.CodeAnalysis
             var node = _list.Node;
             if (node != null)
             {
-                RoslynDebug.Assert(node.IsList, "separated list cannot be a singleton separator");
-                if (unchecked((uint)index < (uint)_separatorCount))
+                LorettaDebug.Assert(node.IsList, "separated list cannot be a singleton separator");
+                if (unchecked((uint) index < (uint) _separatorCount))
                 {
                     index = (index << 1) + 1;
                     var green = node.Green.GetRequiredSlot(index);
-                    RoslynDebug.Assert(green.IsToken);
+                    LorettaDebug.Assert(green.IsToken);
                     return new SyntaxToken(node.Parent, green, node.GetChildPosition(index), _list.index + index);
                 }
             }
@@ -178,11 +195,20 @@ namespace Loretta.CodeAnalysis
             return _list.ToFullString();
         }
 
+        /// <summary>
+        /// Returns the first node in this list.
+        /// </summary>
+        /// <returns></returns>
         public TNode First()
         {
             return this[0];
         }
 
+        /// <summary>
+        /// Returns the first node in this list if any, otherwise returns
+        /// the default value for the type of node.
+        /// </summary>
+        /// <returns></returns>
         public TNode? FirstOrDefault()
         {
             if (this.Any())
@@ -193,11 +219,20 @@ namespace Loretta.CodeAnalysis
             return null;
         }
 
+        /// <summary>
+        /// Returns the last element in this list.
+        /// </summary>
+        /// <returns></returns>
         public TNode Last()
         {
             return this[this.Count - 1];
         }
 
+        /// <summary>
+        /// Returns the last element in this list if any, otherwise returns
+        /// the default value for the node type.
+        /// </summary>
+        /// <returns></returns>
         public TNode? LastOrDefault()
         {
             if (this.Any())
@@ -208,11 +243,21 @@ namespace Loretta.CodeAnalysis
             return null;
         }
 
+        /// <summary>
+        /// Returns whether this list contains the provided node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public bool Contains(TNode node)
         {
             return this.IndexOf(node) >= 0;
         }
 
+        /// <summary>
+        /// Returns the index of the provided node in this list.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>-1 if the node was not found.</returns>
         public int IndexOf(TNode node)
         {
             for (int i = 0, n = this.Count; i < n; i++)
@@ -226,6 +271,11 @@ namespace Loretta.CodeAnalysis
             return -1;
         }
 
+        /// <summary>
+        /// Returns the index of the first node that passes the provided predicate in this list.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>-1 if not found.</returns>
         public int IndexOf(Func<TNode, bool> predicate)
         {
             for (int i = 0, n = this.Count; i < n; i++)
@@ -252,6 +302,11 @@ namespace Loretta.CodeAnalysis
             return -1;
         }
 
+        /// <summary>
+        /// Returns the index of the last node that is equal to the provided one.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>-1 if not found.</returns>
         public int LastIndexOf(TNode node)
         {
             for (int i = this.Count - 1; i >= 0; i--)
@@ -265,6 +320,11 @@ namespace Loretta.CodeAnalysis
             return -1;
         }
 
+        /// <summary>
+        /// Returns the index of the last node that passes the provided predicate in this list.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>-1 if not found.</returns>
         public int LastIndexOf(Func<TNode, bool> predicate)
         {
             for (int i = this.Count - 1; i >= 0; i--)
@@ -278,11 +338,20 @@ namespace Loretta.CodeAnalysis
             return -1;
         }
 
+        /// <summary>
+        /// Returns whether this list contains any elements.
+        /// </summary>
+        /// <returns></returns>
         public bool Any()
         {
             return _list.Any();
         }
 
+        /// <summary>
+        /// Returns whether this list contains any elements that pass the provided predicate.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         internal bool Any(Func<TNode, bool> predicate)
         {
             for (int i = 0; i < this.Count; i++)
@@ -296,31 +365,50 @@ namespace Loretta.CodeAnalysis
             return false;
         }
 
+        /// <summary>
+        /// Returns the entire list including the separators.
+        /// </summary>
+        /// <returns></returns>
         public SyntaxNodeOrTokenList GetWithSeparators()
         {
             return _list;
         }
 
+        /// <summary>
+        /// Checks whether a list is equal to another.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(SeparatedSyntaxList<TNode> left, SeparatedSyntaxList<TNode> right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Checks whether two lists are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(SeparatedSyntaxList<TNode> left, SeparatedSyntaxList<TNode> right)
         {
             return !left.Equals(right);
         }
 
+        /// <inheritdoc/>
         public bool Equals(SeparatedSyntaxList<TNode> other)
         {
             return _list == other._list;
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return (obj is SeparatedSyntaxList<TNode> list) && Equals(list);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return _list.GetHashCode();
@@ -409,7 +497,7 @@ namespace Loretta.CodeAnalysis
             if (insertionIndex < nodesWithSeps.Count && nodesWithSeps[insertionIndex] is { IsNode: true } nodeOrToken)
             {
                 var node = nodesWithSeps[insertionIndex].AsNode();
-                RoslynDebug.Assert(node is object);
+                LorettaDebug.Assert(node is object);
                 nodesToInsertWithSeparators.Add(node.Green.CreateSeparator<TNode>(node)); // separator
             }
 
@@ -422,7 +510,7 @@ namespace Loretta.CodeAnalysis
             // then it should stay associated with previous node
             foreach (var tr in separator.TrailingTrivia)
             {
-                RoslynDebug.Assert(tr.UnderlyingNode is object);
+                LorettaDebug.Assert(tr.UnderlyingNode is object);
                 if (tr.UnderlyingNode.IsTriviaWithEndOfLine())
                 {
                     return true;
@@ -565,6 +653,10 @@ namespace Loretta.CodeAnalysis
             get { return _list.ToArray(); }
         }
 
+        /// <summary>
+        /// Returns the enumerator for this list.
+        /// </summary>
+        /// <returns></returns>
 #pragma warning disable RS0041 // uses oblivious reference types
         public Enumerator GetEnumerator()
 #pragma warning restore RS0041 // uses oblivious reference types
@@ -592,11 +684,19 @@ namespace Loretta.CodeAnalysis
             return SpecializedCollections.EmptyEnumerator<TNode>();
         }
 
+        /// <summary>
+        /// Converts a typed node list into an opaquely typed node list.
+        /// </summary>
+        /// <param name="nodes"></param>
         public static implicit operator SeparatedSyntaxList<SyntaxNode>(SeparatedSyntaxList<TNode> nodes)
         {
             return new SeparatedSyntaxList<SyntaxNode>(nodes._list);
         }
 
+        /// <summary>
+        /// Converts a list of opaquely typed nodes into a list of typed nodes.
+        /// </summary>
+        /// <param name="nodes"></param>
         public static implicit operator SeparatedSyntaxList<TNode>(SeparatedSyntaxList<SyntaxNode> nodes)
         {
             return new SeparatedSyntaxList<TNode>(nodes._list);

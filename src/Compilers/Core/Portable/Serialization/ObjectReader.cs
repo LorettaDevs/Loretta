@@ -10,9 +10,9 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Collections;
+using Loretta.CodeAnalysis.PooledObjects;
 
 namespace Loretta.Utilities
 {
@@ -71,7 +71,7 @@ namespace Loretta.Utilities
         {
             // String serialization assumes both reader and writer to be of the same endianness.
             // It can be adjusted for BigEndian if needed.
-            RoslynDebug.Assert(BitConverter.IsLittleEndian);
+            LorettaDebug.Assert(BitConverter.IsLittleEndian);
 
             _reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen);
             _objectReferenceMap = ReaderReferenceMap<object>.Create();
@@ -154,7 +154,7 @@ namespace Loretta.Utilities
         public bool ReadBoolean() => _reader.ReadBoolean();
         public byte ReadByte() => _reader.ReadByte();
         // read as ushort because BinaryWriter fails on chars that are unicode surrogates
-        public char ReadChar() => (char)_reader.ReadUInt16();
+        public char ReadChar() => (char) _reader.ReadUInt16();
         public decimal ReadDecimal() => _reader.ReadDecimal();
         public double ReadDouble() => _reader.ReadDouble();
         public float ReadSingle() => _reader.ReadSingle();
@@ -209,14 +209,14 @@ namespace Loretta.Utilities
             }
 
             _recursionDepth--;
-            RoslynDebug.Assert(oldDepth == _recursionDepth);
+            LorettaDebug.Assert(oldDepth == _recursionDepth);
 
             return value;
         }
 
         private object ReadValueWorker()
         {
-            var kind = (EncodingKind)_reader.ReadByte();
+            var kind = (EncodingKind) _reader.ReadByte();
             switch (kind)
             {
                 case EncodingKind.Null: return null;
@@ -227,8 +227,8 @@ namespace Loretta.Utilities
                 case EncodingKind.Int16: return _reader.ReadInt16();
                 case EncodingKind.UInt16: return _reader.ReadUInt16();
                 case EncodingKind.Int32: return _reader.ReadInt32();
-                case EncodingKind.Int32_1Byte: return (int)_reader.ReadByte();
-                case EncodingKind.Int32_2Bytes: return (int)_reader.ReadUInt16();
+                case EncodingKind.Int32_1Byte: return (int) _reader.ReadByte();
+                case EncodingKind.Int32_2Bytes: return (int) _reader.ReadUInt16();
                 case EncodingKind.Int32_0:
                 case EncodingKind.Int32_1:
                 case EncodingKind.Int32_2:
@@ -240,10 +240,10 @@ namespace Loretta.Utilities
                 case EncodingKind.Int32_8:
                 case EncodingKind.Int32_9:
                 case EncodingKind.Int32_10:
-                    return (int)kind - (int)EncodingKind.Int32_0;
+                    return (int) kind - (int) EncodingKind.Int32_0;
                 case EncodingKind.UInt32: return _reader.ReadUInt32();
-                case EncodingKind.UInt32_1Byte: return (uint)_reader.ReadByte();
-                case EncodingKind.UInt32_2Bytes: return (uint)_reader.ReadUInt16();
+                case EncodingKind.UInt32_1Byte: return (uint) _reader.ReadByte();
+                case EncodingKind.UInt32_2Bytes: return (uint) _reader.ReadUInt16();
                 case EncodingKind.UInt32_0:
                 case EncodingKind.UInt32_1:
                 case EncodingKind.UInt32_2:
@@ -255,7 +255,7 @@ namespace Loretta.Utilities
                 case EncodingKind.UInt32_8:
                 case EncodingKind.UInt32_9:
                 case EncodingKind.UInt32_10:
-                    return (uint)((int)kind - (int)EncodingKind.UInt32_0);
+                    return (uint) ((int) kind - (int) EncodingKind.UInt32_0);
                 case EncodingKind.Int64: return _reader.ReadInt64();
                 case EncodingKind.UInt64: return _reader.ReadUInt64();
                 case EncodingKind.Float4: return _reader.ReadSingle();
@@ -263,7 +263,7 @@ namespace Loretta.Utilities
                 case EncodingKind.Decimal: return _reader.ReadDecimal();
                 case EncodingKind.Char:
                     // read as ushort because BinaryWriter fails on chars that are unicode surrogates
-                    return (char)_reader.ReadUInt16();
+                    return (char) _reader.ReadUInt16();
                 case EncodingKind.StringUtf8:
                 case EncodingKind.StringUtf16:
                 case EncodingKind.StringRef_4Bytes:
@@ -351,8 +351,8 @@ namespace Loretta.Utilities
         internal uint ReadCompressedUInt()
         {
             var info = _reader.ReadByte();
-            byte marker = (byte)(info & ObjectWriter.ByteMarkerMask);
-            byte byte0 = (byte)(info & ~ObjectWriter.ByteMarkerMask);
+            byte marker = (byte) (info & ObjectWriter.ByteMarkerMask);
+            byte byte0 = (byte) (info & ~ObjectWriter.ByteMarkerMask);
 
             if (marker == ObjectWriter.Byte1Marker)
             {
@@ -362,7 +362,7 @@ namespace Loretta.Utilities
             if (marker == ObjectWriter.Byte2Marker)
             {
                 var byte1 = _reader.ReadByte();
-                return (((uint)byte0) << 8) | byte1;
+                return (((uint) byte0) << 8) | byte1;
             }
 
             if (marker == ObjectWriter.Byte4Marker)
@@ -371,7 +371,7 @@ namespace Loretta.Utilities
                 var byte2 = _reader.ReadByte();
                 var byte3 = _reader.ReadByte();
 
-                return (((uint)byte0) << 24) | (((uint)byte1) << 16) | (((uint)byte2) << 8) | byte3;
+                return (((uint) byte0) << 24) | (((uint) byte1) << 16) | (((uint) byte2) << 8) | byte3;
             }
 
             throw ExceptionUtilities.UnexpectedValue(marker);
@@ -379,7 +379,7 @@ namespace Loretta.Utilities
 
         private string ReadStringValue()
         {
-            var kind = (EncodingKind)_reader.ReadByte();
+            var kind = (EncodingKind) _reader.ReadByte();
             return kind == EncodingKind.Null ? null : ReadStringValue(kind);
         }
 
@@ -415,11 +415,11 @@ namespace Loretta.Utilities
             else
             {
                 // This is rare, just allocate UTF16 bytes for simplicity.
-                int characterCount = (int)ReadCompressedUInt();
+                int characterCount = (int) ReadCompressedUInt();
                 byte[] bytes = _reader.ReadBytes(characterCount * sizeof(char));
                 fixed (byte* bytesPtr = bytes)
                 {
-                    value = new string((char*)bytesPtr, 0, characterCount);
+                    value = new string((char*) bytesPtr, 0, characterCount);
                 }
             }
 
@@ -445,14 +445,14 @@ namespace Loretta.Utilities
                     length = 3;
                     break;
                 default:
-                    length = (int)this.ReadCompressedUInt();
+                    length = (int) this.ReadCompressedUInt();
                     break;
             }
 
             // SUBTLE: If it was a primitive array, only the EncodingKind byte of the element type was written, instead of encoding as a type.
-            var elementKind = (EncodingKind)_reader.ReadByte();
+            var elementKind = (EncodingKind) _reader.ReadByte();
 
-            var elementType = ObjectWriter.s_reverseTypeMap[(int)elementKind];
+            var elementType = ObjectWriter.s_reverseTypeMap[(int) elementKind];
             if (elementType != null)
             {
                 return this.ReadPrimitiveTypeArrayElements(elementType, elementKind, length);
@@ -477,7 +477,7 @@ namespace Loretta.Utilities
 
         private Array ReadPrimitiveTypeArrayElements(Type type, EncodingKind kind, int length)
         {
-            RoslynDebug.Assert(ObjectWriter.s_reverseTypeMap[(int)kind] == type);
+            LorettaDebug.Assert(ObjectWriter.s_reverseTypeMap[(int) kind] == type);
 
             // optimizations for supported array type by binary reader
             if (type == typeof(byte)) { return _reader.ReadBytes(length); }
@@ -509,7 +509,7 @@ namespace Loretta.Utilities
         private bool[] ReadBooleanArrayElements(bool[] array)
         {
             // Confirm the type to be read below is ulong
-            RoslynDebug.Assert(BitVector.BitsPerWord == 64);
+            LorettaDebug.Assert(BitVector.BitsPerWord == 64);
 
             var wordLength = BitVector.WordsRequired(array.Length);
 

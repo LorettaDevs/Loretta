@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
 
 #if DEBUG
-            RoslynDebug.Assert(!_allocated.Contains(item));
+            LorettaDebug.Assert(!_allocated.Contains(item));
             _allocated.Add(item);
 #endif
             return item;
@@ -54,7 +54,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal void Free<TNode>(in SeparatedSyntaxListBuilder<TNode> item) where TNode : GreenNode
         {
-            RoslynDebug.Assert(item.UnderlyingBuilder is object);
+            LorettaDebug.Assert(item.UnderlyingBuilder is object);
             Free(item.UnderlyingBuilder);
         }
 
@@ -66,7 +66,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 this.Grow();
             }
 #if DEBUG
-            RoslynDebug.Assert(_allocated.Contains(item));
+            LorettaDebug.Assert(_allocated.Contains(item));
 
             _allocated.Remove(item);
 #endif

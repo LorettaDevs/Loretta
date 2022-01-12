@@ -35,13 +35,13 @@ namespace Loretta.CodeAnalysis
         public SourceLocation(in SyntaxNodeOrToken nodeOrToken)
             : this(nodeOrToken.SyntaxTree!, nodeOrToken.Span)
         {
-            RoslynDebug.Assert(nodeOrToken.SyntaxTree is object);
+            LorettaDebug.Assert(nodeOrToken.SyntaxTree is object);
         }
 
         public SourceLocation(in SyntaxTrivia trivia)
             : this(trivia.SyntaxTree!, trivia.Span)
         {
-            RoslynDebug.Assert(trivia.SyntaxTree is object);
+            LorettaDebug.Assert(trivia.SyntaxTree is object);
         }
 
         public SourceLocation(SyntaxReference syntaxRef)
@@ -83,25 +83,11 @@ namespace Loretta.CodeAnalysis
             if (_syntaxTree == null)
             {
                 FileLinePositionSpan result = default(FileLinePositionSpan);
-                RoslynDebug.Assert(!result.IsValid);
+                LorettaDebug.Assert(!result.IsValid);
                 return result;
             }
 
             return _syntaxTree.GetLineSpan(_span);
-        }
-
-        public override FileLinePositionSpan GetMappedLineSpan()
-        {
-            // If there's no syntax tree (e.g. because we're binding speculatively),
-            // then just return an invalid span.
-            if (_syntaxTree == null)
-            {
-                FileLinePositionSpan result = default(FileLinePositionSpan);
-                RoslynDebug.Assert(!result.IsValid);
-                return result;
-            }
-
-            return _syntaxTree.GetMappedLineSpan(_span);
         }
 
         public bool Equals(SourceLocation? other)
@@ -124,6 +110,7 @@ namespace Loretta.CodeAnalysis
             return Hash.Combine(_syntaxTree, _span.GetHashCode());
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1845:Use span-based 'string.Concat'", Justification = "This is only used for the debugger.")]
         protected override string GetDebuggerDisplay()
         {
             return base.GetDebuggerDisplay() + "\"" + _syntaxTree.ToString().Substring(_span.Start, _span.Length) + "\"";

@@ -82,7 +82,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                     }
 
                     var slotIndex = _stack[_count - 1].SlotIndex;
-tryAgain:
+                tryAgain:
                     if (slotIndex < node.SlotCount - 1)
                     {
                         slotIndex++;
@@ -134,7 +134,7 @@ tryAgain:
 
             private void Push(GreenNode node)
             {
-                RoslynDebug.Assert(_stack is object);
+                LorettaDebug.Assert(_stack is object);
                 if (_count >= _stack.Length)
                 {
                     var tmp = new NodeIteration[_stack.Length * 2];

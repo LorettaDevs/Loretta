@@ -9,8 +9,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.PooledObjects;
 
 namespace Loretta.Utilities
 {
@@ -82,7 +82,7 @@ namespace Loretta.Utilities
         {
             // String serialization assumes both reader and writer to be of the same endianness.
             // It can be adjusted for BigEndian if needed.
-            RoslynDebug.Assert(BitConverter.IsLittleEndian);
+            LorettaDebug.Assert(BitConverter.IsLittleEndian);
 
             _writer = new BinaryWriter(stream, Encoding.UTF8, leaveOpen);
             _objectReferenceMap = new WriterReferenceMap(valueEquality: false);
@@ -150,7 +150,7 @@ namespace Loretta.Utilities
 
         public void WriteValue(object? value)
         {
-            RoslynDebug.Assert(value == null || !value.GetType().GetTypeInfo().IsEnum, "Enum should not be written with WriteValue.  Write them as ints instead.");
+            LorettaDebug.Assert(value == null || !value.GetType().GetTypeInfo().IsEnum, "Enum should not be written with WriteValue.  Write them as ints instead.");
 
             if (value == null)
             {
@@ -160,7 +160,7 @@ namespace Loretta.Utilities
 
             var type = value.GetType();
             var typeInfo = type.GetTypeInfo();
-            RoslynDebug.Assert(!typeInfo.IsEnum, "Enums should not be written with WriteObject.  Write them out as integers instead.");
+            LorettaDebug.Assert(!typeInfo.IsEnum, "Enums should not be written with WriteObject.  Write them out as integers instead.");
 
             // Perf: Note that JIT optimizes each expression value.GetType() == typeof(T) to a single register comparison.
             // Also the checks are sorted by commonality of the checked types.
@@ -299,7 +299,7 @@ namespace Loretta.Utilities
             }
 
             var elementType = typeof(byte);
-            RoslynDebug.Assert(s_typeMap[elementType] == EncodingKind.UInt8);
+            LorettaDebug.Assert(s_typeMap[elementType] == EncodingKind.UInt8);
 
             WritePrimitiveType(elementType, EncodingKind.UInt8);
 
@@ -478,7 +478,7 @@ namespace Loretta.Utilities
             {
                 if (_stringReferenceMap.TryGetReferenceId(value, out int id))
                 {
-                    RoslynDebug.Assert(id >= 0);
+                    LorettaDebug.Assert(id >= 0);
                     if (id <= byte.MaxValue)
                     {
                         _writer.Write((byte) EncodingKind.StringRef_1Byte);
@@ -592,7 +592,7 @@ namespace Loretta.Utilities
                 }
 
                 _recursionDepth--;
-                RoslynDebug.Assert(_recursionDepth == oldDepth);
+                LorettaDebug.Assert(_recursionDepth == oldDepth);
             }
         }
 
@@ -606,7 +606,7 @@ namespace Loretta.Utilities
 
         private void WritePrimitiveTypeArrayElements(Type type, EncodingKind kind, Array instance)
         {
-            RoslynDebug.Assert(s_typeMap[type] == kind);
+            LorettaDebug.Assert(s_typeMap[type] == kind);
 
             // optimization for type underlying binary writer knows about
             if (type == typeof(byte))
@@ -775,7 +775,7 @@ namespace Loretta.Utilities
 
         private void WritePrimitiveType(Type type, EncodingKind kind)
         {
-            RoslynDebug.Assert(s_typeMap[type] == kind);
+            LorettaDebug.Assert(s_typeMap[type] == kind);
             _writer.Write((byte) kind);
         }
 
@@ -812,23 +812,23 @@ namespace Loretta.Utilities
             switch (encoding.CodePage)
             {
                 case 1200:
-                    RoslynDebug.Assert(HasPreamble(Encoding.Unicode));
+                    LorettaDebug.Assert(HasPreamble(Encoding.Unicode));
                     return (encoding.Equals(Encoding.Unicode) || HasPreamble(encoding)) ? EncodingKind.EncodingUnicode_LE_BOM : EncodingKind.EncodingUnicode_LE;
 
                 case 1201:
-                    RoslynDebug.Assert(HasPreamble(Encoding.BigEndianUnicode));
+                    LorettaDebug.Assert(HasPreamble(Encoding.BigEndianUnicode));
                     return (encoding.Equals(Encoding.BigEndianUnicode) || HasPreamble(encoding)) ? EncodingKind.EncodingUnicode_BE_BOM : EncodingKind.EncodingUnicode_BE;
 
                 case 12000:
-                    RoslynDebug.Assert(HasPreamble(Encoding.UTF32));
+                    LorettaDebug.Assert(HasPreamble(Encoding.UTF32));
                     return (encoding.Equals(Encoding.UTF32) || HasPreamble(encoding)) ? EncodingKind.EncodingUTF32_LE_BOM : EncodingKind.EncodingUTF32_LE;
 
                 case 12001:
-                    RoslynDebug.Assert(HasPreamble(Encoding.UTF32));
+                    LorettaDebug.Assert(HasPreamble(Encoding.UTF32));
                     return (encoding.Equals(Encoding.UTF32) || HasPreamble(encoding)) ? EncodingKind.EncodingUTF32_BE_BOM : EncodingKind.EncodingUTF32_BE;
 
                 case 65001:
-                    RoslynDebug.Assert(HasPreamble(Encoding.UTF8));
+                    LorettaDebug.Assert(HasPreamble(Encoding.UTF8));
                     return (encoding.Equals(Encoding.UTF8) || HasPreamble(encoding)) ? EncodingKind.EncodingUTF8_BOM : EncodingKind.EncodingUTF8;
 
                 default:
@@ -845,15 +845,15 @@ namespace Loretta.Utilities
 
         private void WriteObject(object instance, IObjectWritable? instanceAsWritable)
         {
-            RoslynDebug.Assert(instance != null);
-            RoslynDebug.Assert(instanceAsWritable == null || instance == instanceAsWritable);
+            LorettaDebug.Assert(instance != null);
+            LorettaDebug.Assert(instanceAsWritable == null || instance == instanceAsWritable);
 
             _cancellationToken.ThrowIfCancellationRequested();
 
             // write object ref if we already know this instance
             if (_objectReferenceMap.TryGetReferenceId(instance, out var id))
             {
-                RoslynDebug.Assert(id >= 0);
+                LorettaDebug.Assert(id >= 0);
                 if (id <= byte.MaxValue)
                 {
                     _writer.Write((byte) EncodingKind.ObjectRef_1Byte);
@@ -912,7 +912,7 @@ namespace Loretta.Utilities
                 }
 
                 _recursionDepth--;
-                RoslynDebug.Assert(_recursionDepth == oldDepth);
+                LorettaDebug.Assert(_recursionDepth == oldDepth);
             }
         }
 

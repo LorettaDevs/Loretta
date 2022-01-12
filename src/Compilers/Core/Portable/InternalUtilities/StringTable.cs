@@ -636,7 +636,7 @@ namespace Loretta.Utilities
             var i1 = LocalNextRandom() & SharedBucketSizeMask;
             idx = (idx + ((i1 * i1 + i1) / 2)) & SharedSizeMask;
 
-foundIdx:
+        foundIdx:
             arr[idx].HashCode = hashCode;
             Volatile.Write(ref arr[idx].Text, text);
         }
@@ -725,7 +725,7 @@ foundIdx:
             var i1 = SharedNextRandom() & SharedBucketSizeMask;
             idx = (idx + ((i1 * i1 + i1) / 2)) & SharedSizeMask;
 
-foundIdx:
+        foundIdx:
             arr[idx].HashCode = hashCode;
             Volatile.Write(ref arr[idx].Text, text);
         }
@@ -795,7 +795,7 @@ foundIdx:
 #if DEBUG
             for (var i = 0; i < ascii.Length; i++)
             {
-                RoslynDebug.Assert((ascii[i] & 0x80) == 0, $"The {nameof(ascii)} input to this method must be valid ASCII.");
+                LorettaDebug.Assert((ascii[i] & 0x80) == 0, $"The {nameof(ascii)} input to this method must be valid ASCII.");
             }
 #endif
 

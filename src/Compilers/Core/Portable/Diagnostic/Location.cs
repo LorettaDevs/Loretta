@@ -54,20 +54,13 @@ namespace Loretta.CodeAnalysis
         /// </returns>
         public virtual FileLinePositionSpan GetLineSpan() => default;
 
-        /// <summary>
-        /// Gets the location in terms of path, line and column after applying source line mapping directives
-        /// (<c>#line</c> in C# or <c>#ExternalSource</c> in VB).
-        /// </summary>
-        /// <returns>
-        /// <see cref="FileLinePositionSpan"/> that contains file, line and column information,
-        /// or an invalid span (see <see cref="FileLinePositionSpan.IsValid"/>) if not available.
-        /// </returns>
-        public virtual FileLinePositionSpan GetMappedLineSpan() => default;
-
         // Derived classes should provide value equality semantics.
+        /// <inheritdoc/>
         public abstract override bool Equals(object? obj);
+        /// <inheritdoc/>
         public abstract override int GetHashCode();
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             var result = Kind.ToString();
@@ -88,14 +81,30 @@ namespace Loretta.CodeAnalysis
             return result;
         }
 
+        /// <summary>
+        /// Checks whether two locations are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(Location? left, Location? right)
         {
             if (left is null) return right is null;
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Checks whether two locations are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(Location? left, Location? right) => !(left == right);
 
+        /// <summary>
+        /// Returns the display string for the debugger.
+        /// </summary>
+        /// <returns></returns>
         protected virtual string GetDebuggerDisplay()
         {
             var result = GetType().Name;

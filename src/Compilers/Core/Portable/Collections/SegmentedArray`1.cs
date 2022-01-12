@@ -116,15 +116,15 @@ namespace Loretta.CodeAnalysis.Collections
         object? IList.this[int index]
         {
             get => this[index];
-            set => this[index] = (T)value!;
+            set => this[index] = (T) value!;
         }
 
         public object Clone()
         {
-            var items = (T[][])_items.Clone();
+            var items = (T[][]) _items.Clone();
             for (var i = 0; i < items.Length; i++)
             {
-                items[i] = (T[])items[i].Clone();
+                items[i] = (T[]) items[i].Clone();
             }
 
             return new SegmentedArray<T>(Length, items);
@@ -295,7 +295,7 @@ namespace Loretta.CodeAnalysis.Collections
             if (!(other is SegmentedArray<T> o))
                 return false;
 
-            if ((object)_items == o._items)
+            if ((object) _items == o._items)
                 return true;
 
             if (Length != o.Length)

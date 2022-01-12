@@ -1,0 +1,871 @@
+﻿#nullable enable
+abstract Loretta.CodeAnalysis.Diagnostic.AdditionalLocations.get -> System.Collections.Generic.IReadOnlyList<Loretta.CodeAnalysis.Location!>!
+abstract Loretta.CodeAnalysis.Diagnostic.Descriptor.get -> Loretta.CodeAnalysis.DiagnosticDescriptor!
+abstract Loretta.CodeAnalysis.Diagnostic.Equals(Loretta.CodeAnalysis.Diagnostic? obj) -> bool
+abstract Loretta.CodeAnalysis.Diagnostic.GetMessage(System.IFormatProvider? formatProvider = null) -> string!
+abstract Loretta.CodeAnalysis.Diagnostic.Id.get -> string!
+abstract Loretta.CodeAnalysis.Diagnostic.IsSuppressed.get -> bool
+abstract Loretta.CodeAnalysis.Diagnostic.Location.get -> Loretta.CodeAnalysis.Location!
+abstract Loretta.CodeAnalysis.Diagnostic.Severity.get -> Loretta.CodeAnalysis.DiagnosticSeverity
+abstract Loretta.CodeAnalysis.Diagnostic.WarningLevel.get -> int
+abstract Loretta.CodeAnalysis.LocalizableString.AreEqual(object? other) -> bool
+abstract Loretta.CodeAnalysis.LocalizableString.GetHash() -> int
+abstract Loretta.CodeAnalysis.LocalizableString.GetText(System.IFormatProvider? formatProvider) -> string!
+abstract Loretta.CodeAnalysis.Location.Kind.get -> Loretta.CodeAnalysis.LocationKind
+abstract Loretta.CodeAnalysis.ParseOptions.Features.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>!
+abstract Loretta.CodeAnalysis.ParseOptions.Language.get -> string!
+abstract Loretta.CodeAnalysis.SyntaxNode.Language.get -> string!
+abstract Loretta.CodeAnalysis.SyntaxReference.GetSyntax(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Loretta.CodeAnalysis.SyntaxNode!
+abstract Loretta.CodeAnalysis.SyntaxReference.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+abstract Loretta.CodeAnalysis.SyntaxReference.SyntaxTree.get -> Loretta.CodeAnalysis.SyntaxTree!
+abstract Loretta.CodeAnalysis.SyntaxTree.Encoding.get -> System.Text.Encoding?
+abstract Loretta.CodeAnalysis.SyntaxTree.FilePath.get -> string!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetChangedSpans(Loretta.CodeAnalysis.SyntaxTree! syntaxTree) -> System.Collections.Generic.IList<Loretta.CodeAnalysis.Text.TextSpan>!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetChanges(Loretta.CodeAnalysis.SyntaxTree! oldTree) -> System.Collections.Generic.IList<Loretta.CodeAnalysis.Text.TextChange>!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNode! node) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrToken) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxToken token) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetLineSpan(Loretta.CodeAnalysis.Text.TextSpan span, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Loretta.CodeAnalysis.FileLinePositionSpan
+abstract Loretta.CodeAnalysis.SyntaxTree.GetLocation(Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Location!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetReference(Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxReference!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetRootAsyncCore(System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Loretta.CodeAnalysis.SyntaxNode!>!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetRootCore(System.Threading.CancellationToken cancellationToken) -> Loretta.CodeAnalysis.SyntaxNode!
+abstract Loretta.CodeAnalysis.SyntaxTree.GetText(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Loretta.CodeAnalysis.Text.SourceText!
+abstract Loretta.CodeAnalysis.SyntaxTree.HasCompilationUnitRoot.get -> bool
+abstract Loretta.CodeAnalysis.SyntaxTree.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxTree! tree, bool topLevel = false) -> bool
+abstract Loretta.CodeAnalysis.SyntaxTree.Length.get -> int
+abstract Loretta.CodeAnalysis.SyntaxTree.OptionsCore.get -> Loretta.CodeAnalysis.ParseOptions!
+abstract Loretta.CodeAnalysis.SyntaxTree.TryGetRootCore(out Loretta.CodeAnalysis.SyntaxNode? root) -> bool
+abstract Loretta.CodeAnalysis.SyntaxTree.TryGetText(out Loretta.CodeAnalysis.Text.SourceText? text) -> bool
+abstract Loretta.CodeAnalysis.SyntaxTree.WithChangedText(Loretta.CodeAnalysis.Text.SourceText! newText) -> Loretta.CodeAnalysis.SyntaxTree!
+abstract Loretta.CodeAnalysis.SyntaxTree.WithFilePath(string! path) -> Loretta.CodeAnalysis.SyntaxTree!
+abstract Loretta.CodeAnalysis.SyntaxTree.WithRootAndOptions(Loretta.CodeAnalysis.SyntaxNode! root, Loretta.CodeAnalysis.ParseOptions! options) -> Loretta.CodeAnalysis.SyntaxTree!
+abstract Loretta.CodeAnalysis.Text.SourceText.CopyTo(int sourceIndex, char[]! destination, int destinationIndex, int count) -> void
+abstract Loretta.CodeAnalysis.Text.SourceText.Encoding.get -> System.Text.Encoding?
+abstract Loretta.CodeAnalysis.Text.SourceText.Length.get -> int
+abstract Loretta.CodeAnalysis.Text.SourceText.this[int position].get -> char
+abstract Loretta.CodeAnalysis.Text.SourceTextContainer.CurrentText.get -> Loretta.CodeAnalysis.Text.SourceText!
+abstract Loretta.CodeAnalysis.Text.SourceTextContainer.TextChanged -> System.EventHandler<Loretta.CodeAnalysis.Text.TextChangeEventArgs!>!
+abstract Loretta.CodeAnalysis.Text.TextLineCollection.Count.get -> int
+abstract Loretta.CodeAnalysis.Text.TextLineCollection.IndexOf(int position) -> int
+abstract Loretta.CodeAnalysis.Text.TextLineCollection.this[int index].get -> Loretta.CodeAnalysis.Text.TextLine
+const Loretta.CodeAnalysis.LanguageNames.CSharp = "C#" -> string!
+const Loretta.CodeAnalysis.LanguageNames.FSharp = "F#" -> string!
+const Loretta.CodeAnalysis.LanguageNames.Lua = "Lua" -> string!
+const Loretta.CodeAnalysis.LanguageNames.VisualBasic = "Visual Basic" -> string!
+const Loretta.CodeAnalysis.WellKnownDiagnosticTags.Build = "Build" -> string!
+const Loretta.CodeAnalysis.WellKnownDiagnosticTags.Compiler = "Compiler" -> string!
+const Loretta.CodeAnalysis.WellKnownDiagnosticTags.NotConfigurable = "NotConfigurable" -> string!
+const Loretta.CodeAnalysis.WellKnownDiagnosticTags.Unnecessary = "Unnecessary" -> string!
+Loretta.CodeAnalysis.AnnotationExtensions
+Loretta.CodeAnalysis.ChildSyntaxList
+Loretta.CodeAnalysis.ChildSyntaxList.Any() -> bool
+Loretta.CodeAnalysis.ChildSyntaxList.ChildSyntaxList() -> void
+Loretta.CodeAnalysis.ChildSyntaxList.Count.get -> int
+Loretta.CodeAnalysis.ChildSyntaxList.Enumerator
+Loretta.CodeAnalysis.ChildSyntaxList.Enumerator.Current.get -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.ChildSyntaxList.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.ChildSyntaxList.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.ChildSyntaxList.Enumerator.Reset() -> void
+Loretta.CodeAnalysis.ChildSyntaxList.Equals(Loretta.CodeAnalysis.ChildSyntaxList other) -> bool
+Loretta.CodeAnalysis.ChildSyntaxList.First() -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.ChildSyntaxList.GetEnumerator() -> Loretta.CodeAnalysis.ChildSyntaxList.Enumerator
+Loretta.CodeAnalysis.ChildSyntaxList.Last() -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.ChildSyntaxList.Reverse() -> Loretta.CodeAnalysis.ChildSyntaxList.Reversed
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator.Current.get -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator.Reset() -> void
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Equals(Loretta.CodeAnalysis.ChildSyntaxList.Reversed other) -> bool
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed.GetEnumerator() -> Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator
+Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Reversed() -> void
+Loretta.CodeAnalysis.ChildSyntaxList.this[int index].get -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.Diagnostic
+Loretta.CodeAnalysis.Diagnostic.Diagnostic() -> void
+Loretta.CodeAnalysis.Diagnostic.IsWarningAsError.get -> bool
+Loretta.CodeAnalysis.DiagnosticDescriptor
+Loretta.CodeAnalysis.DiagnosticDescriptor.Category.get -> string!
+Loretta.CodeAnalysis.DiagnosticDescriptor.CustomTags.get -> System.Collections.Generic.IEnumerable<string!>!
+Loretta.CodeAnalysis.DiagnosticDescriptor.DefaultSeverity.get -> Loretta.CodeAnalysis.DiagnosticSeverity
+Loretta.CodeAnalysis.DiagnosticDescriptor.Description.get -> Loretta.CodeAnalysis.LocalizableString!
+Loretta.CodeAnalysis.DiagnosticDescriptor.DiagnosticDescriptor(string! id, Loretta.CodeAnalysis.LocalizableString! title, Loretta.CodeAnalysis.LocalizableString! messageFormat, string! category, Loretta.CodeAnalysis.DiagnosticSeverity defaultSeverity, bool isEnabledByDefault, Loretta.CodeAnalysis.LocalizableString? description = null, string? helpLinkUri = null, params string![]! customTags) -> void
+Loretta.CodeAnalysis.DiagnosticDescriptor.DiagnosticDescriptor(string! id, string! title, string! messageFormat, string! category, Loretta.CodeAnalysis.DiagnosticSeverity defaultSeverity, bool isEnabledByDefault, string? description = null, string? helpLinkUri = null, params string![]! customTags) -> void
+Loretta.CodeAnalysis.DiagnosticDescriptor.Equals(Loretta.CodeAnalysis.DiagnosticDescriptor? other) -> bool
+Loretta.CodeAnalysis.DiagnosticDescriptor.HelpLinkUri.get -> string!
+Loretta.CodeAnalysis.DiagnosticDescriptor.Id.get -> string!
+Loretta.CodeAnalysis.DiagnosticDescriptor.IsEnabledByDefault.get -> bool
+Loretta.CodeAnalysis.DiagnosticDescriptor.MessageFormat.get -> Loretta.CodeAnalysis.LocalizableString!
+Loretta.CodeAnalysis.DiagnosticDescriptor.Title.get -> Loretta.CodeAnalysis.LocalizableString!
+Loretta.CodeAnalysis.DiagnosticFormatter
+Loretta.CodeAnalysis.DiagnosticFormatter.DiagnosticFormatter() -> void
+Loretta.CodeAnalysis.DiagnosticSeverity
+Loretta.CodeAnalysis.DiagnosticSeverity.Error = 3 -> Loretta.CodeAnalysis.DiagnosticSeverity
+Loretta.CodeAnalysis.DiagnosticSeverity.Hidden = 0 -> Loretta.CodeAnalysis.DiagnosticSeverity
+Loretta.CodeAnalysis.DiagnosticSeverity.Info = 1 -> Loretta.CodeAnalysis.DiagnosticSeverity
+Loretta.CodeAnalysis.DiagnosticSeverity.Warning = 2 -> Loretta.CodeAnalysis.DiagnosticSeverity
+Loretta.CodeAnalysis.DocumentationMode
+Loretta.CodeAnalysis.DocumentationMode.Diagnose = 2 -> Loretta.CodeAnalysis.DocumentationMode
+Loretta.CodeAnalysis.DocumentationMode.None = 0 -> Loretta.CodeAnalysis.DocumentationMode
+Loretta.CodeAnalysis.DocumentationMode.Parse = 1 -> Loretta.CodeAnalysis.DocumentationMode
+Loretta.CodeAnalysis.FileLinePositionSpan
+Loretta.CodeAnalysis.FileLinePositionSpan.EndLinePosition.get -> Loretta.CodeAnalysis.Text.LinePosition
+Loretta.CodeAnalysis.FileLinePositionSpan.Equals(Loretta.CodeAnalysis.FileLinePositionSpan other) -> bool
+Loretta.CodeAnalysis.FileLinePositionSpan.FileLinePositionSpan() -> void
+Loretta.CodeAnalysis.FileLinePositionSpan.FileLinePositionSpan(string! path, Loretta.CodeAnalysis.Text.LinePosition start, Loretta.CodeAnalysis.Text.LinePosition end) -> void
+Loretta.CodeAnalysis.FileLinePositionSpan.FileLinePositionSpan(string! path, Loretta.CodeAnalysis.Text.LinePositionSpan span) -> void
+Loretta.CodeAnalysis.FileLinePositionSpan.HasMappedPath.get -> bool
+Loretta.CodeAnalysis.FileLinePositionSpan.IsValid.get -> bool
+Loretta.CodeAnalysis.FileLinePositionSpan.Path.get -> string!
+Loretta.CodeAnalysis.FileLinePositionSpan.Span.get -> Loretta.CodeAnalysis.Text.LinePositionSpan
+Loretta.CodeAnalysis.FileLinePositionSpan.StartLinePosition.get -> Loretta.CodeAnalysis.Text.LinePosition
+Loretta.CodeAnalysis.ICompilationUnitSyntax
+Loretta.CodeAnalysis.ICompilationUnitSyntax.EndOfFileToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.IStructuredTriviaSyntax
+Loretta.CodeAnalysis.IStructuredTriviaSyntax.ParentTrivia.get -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.LanguageNames
+Loretta.CodeAnalysis.LocalizableResourceString
+Loretta.CodeAnalysis.LocalizableResourceString.LocalizableResourceString(string! nameOfLocalizableResource, System.Resources.ResourceManager! resourceManager, System.Type! resourceSource, params string![]! formatArguments) -> void
+Loretta.CodeAnalysis.LocalizableResourceString.LocalizableResourceString(string! nameOfLocalizableResource, System.Resources.ResourceManager! resourceManager, System.Type! resourceSource) -> void
+Loretta.CodeAnalysis.LocalizableString
+Loretta.CodeAnalysis.LocalizableString.Equals(Loretta.CodeAnalysis.LocalizableString? other) -> bool
+Loretta.CodeAnalysis.LocalizableString.LocalizableString() -> void
+Loretta.CodeAnalysis.LocalizableString.OnException -> System.EventHandler<System.Exception!>?
+Loretta.CodeAnalysis.LocalizableString.ToString(System.IFormatProvider? formatProvider) -> string!
+Loretta.CodeAnalysis.Location
+Loretta.CodeAnalysis.Location.IsInSource.get -> bool
+Loretta.CodeAnalysis.LocationKind
+Loretta.CodeAnalysis.LocationKind.ExternalFile = 3 -> Loretta.CodeAnalysis.LocationKind
+Loretta.CodeAnalysis.LocationKind.MetadataFile = 2 -> Loretta.CodeAnalysis.LocationKind
+Loretta.CodeAnalysis.LocationKind.None = 0 -> Loretta.CodeAnalysis.LocationKind
+Loretta.CodeAnalysis.LocationKind.SourceFile = 1 -> Loretta.CodeAnalysis.LocationKind
+Loretta.CodeAnalysis.ObjectDisplayOptions
+Loretta.CodeAnalysis.ObjectDisplayOptions.EscapeNonPrintableCharacters = 4 -> Loretta.CodeAnalysis.ObjectDisplayOptions
+Loretta.CodeAnalysis.ObjectDisplayOptions.EscapeWithUtf8 = 8 -> Loretta.CodeAnalysis.ObjectDisplayOptions
+Loretta.CodeAnalysis.ObjectDisplayOptions.None = 0 -> Loretta.CodeAnalysis.ObjectDisplayOptions
+Loretta.CodeAnalysis.ObjectDisplayOptions.UseHexadecimalNumbers = 1 -> Loretta.CodeAnalysis.ObjectDisplayOptions
+Loretta.CodeAnalysis.ObjectDisplayOptions.UseQuotes = 2 -> Loretta.CodeAnalysis.ObjectDisplayOptions
+Loretta.CodeAnalysis.ParseOptions
+Loretta.CodeAnalysis.ParseOptions.DocumentationMode.get -> Loretta.CodeAnalysis.DocumentationMode
+Loretta.CodeAnalysis.ParseOptions.Errors.get -> System.Collections.Immutable.ImmutableArray<Loretta.CodeAnalysis.Diagnostic!>
+Loretta.CodeAnalysis.ParseOptions.WithDocumentationMode(Loretta.CodeAnalysis.DocumentationMode documentationMode) -> Loretta.CodeAnalysis.ParseOptions!
+Loretta.CodeAnalysis.ParseOptions.WithFeatures(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string!, string!>>! features) -> Loretta.CodeAnalysis.ParseOptions!
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Add(TNode! node) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.AddRange(System.Collections.Generic.IEnumerable<TNode!>! nodes) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Any() -> bool
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Contains(TNode! node) -> bool
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Count.get -> int
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.Current.get -> TNode!
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.Reset() -> void
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Equals(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> other) -> bool
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.First() -> TNode!
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.FirstOrDefault() -> TNode?
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.GetSeparator(int index) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.GetSeparators() -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>!
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.GetWithSeparators() -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.IndexOf(System.Func<TNode!, bool>! predicate) -> int
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.IndexOf(TNode! node) -> int
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Insert(int index, TNode! node) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.InsertRange(int index, System.Collections.Generic.IEnumerable<TNode!>! nodes) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Last() -> TNode!
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.LastIndexOf(System.Func<TNode!, bool>! predicate) -> int
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.LastIndexOf(TNode! node) -> int
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.LastOrDefault() -> TNode?
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Remove(TNode! node) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.RemoveAt(int index) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Replace(TNode! nodeInList, TNode! newNode) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.ReplaceRange(TNode! nodeInList, System.Collections.Generic.IEnumerable<TNode!>! newNodes) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.ReplaceSeparator(Loretta.CodeAnalysis.SyntaxToken separatorToken, Loretta.CodeAnalysis.SyntaxToken newSeparator) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.SeparatedSyntaxList() -> void
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.SeparatorCount.get -> int
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.this[int index].get -> TNode!
+Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxAnnotation
+Loretta.CodeAnalysis.SyntaxAnnotation.Data.get -> string?
+Loretta.CodeAnalysis.SyntaxAnnotation.Equals(Loretta.CodeAnalysis.SyntaxAnnotation? other) -> bool
+Loretta.CodeAnalysis.SyntaxAnnotation.Kind.get -> string?
+Loretta.CodeAnalysis.SyntaxAnnotation.SyntaxAnnotation() -> void
+Loretta.CodeAnalysis.SyntaxAnnotation.SyntaxAnnotation(string? kind, string? data) -> void
+Loretta.CodeAnalysis.SyntaxAnnotation.SyntaxAnnotation(string? kind) -> void
+Loretta.CodeAnalysis.SyntaxList<TNode>
+Loretta.CodeAnalysis.SyntaxList<TNode>.Add(TNode! node) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+Loretta.CodeAnalysis.SyntaxList<TNode>.AddRange(System.Collections.Generic.IEnumerable<TNode!>! nodes) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+Loretta.CodeAnalysis.SyntaxList<TNode>.Any() -> bool
+Loretta.CodeAnalysis.SyntaxList<TNode>.Count.get -> int
+Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator
+Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.Current.get -> TNode!
+Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.Reset() -> void
+Loretta.CodeAnalysis.SyntaxList<TNode>.Equals(Loretta.CodeAnalysis.SyntaxList<TNode!> other) -> bool
+Loretta.CodeAnalysis.SyntaxList<TNode>.First() -> TNode!
+Loretta.CodeAnalysis.SyntaxList<TNode>.FirstOrDefault() -> TNode?
+Loretta.CodeAnalysis.SyntaxList<TNode>.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxList<TNode>.IndexOf(System.Func<TNode!, bool>! predicate) -> int
+Loretta.CodeAnalysis.SyntaxList<TNode>.IndexOf(TNode! node) -> int
+Loretta.CodeAnalysis.SyntaxList<TNode>.Insert(int index, TNode! node) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+Loretta.CodeAnalysis.SyntaxList<TNode>.InsertRange(int index, System.Collections.Generic.IEnumerable<TNode!>! nodes) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+Loretta.CodeAnalysis.SyntaxList<TNode>.Last() -> TNode!
+Loretta.CodeAnalysis.SyntaxList<TNode>.LastIndexOf(System.Func<TNode!, bool>! predicate) -> int
+Loretta.CodeAnalysis.SyntaxList<TNode>.LastIndexOf(TNode! node) -> int
+Loretta.CodeAnalysis.SyntaxList<TNode>.LastOrDefault() -> TNode?
+Loretta.CodeAnalysis.SyntaxList<TNode>.Remove(TNode! node) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+Loretta.CodeAnalysis.SyntaxList<TNode>.RemoveAt(int index) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+Loretta.CodeAnalysis.SyntaxList<TNode>.Replace(TNode! nodeInList, TNode! newNode) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+Loretta.CodeAnalysis.SyntaxList<TNode>.ReplaceRange(TNode! nodeInList, System.Collections.Generic.IEnumerable<TNode!>! newNodes) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+Loretta.CodeAnalysis.SyntaxList<TNode>.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxList<TNode>.SyntaxList() -> void
+Loretta.CodeAnalysis.SyntaxList<TNode>.SyntaxList(System.Collections.Generic.IEnumerable<TNode!>? nodes) -> void
+Loretta.CodeAnalysis.SyntaxList<TNode>.SyntaxList(TNode? node) -> void
+Loretta.CodeAnalysis.SyntaxList<TNode>.this[int index].get -> TNode!
+Loretta.CodeAnalysis.SyntaxList<TNode>.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxNode
+Loretta.CodeAnalysis.SyntaxNode.Ancestors(bool ascendOutOfTrivia = true) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.AncestorsAndSelf(bool ascendOutOfTrivia = true) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.ChildNodes() -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.ChildNodesAndTokens() -> Loretta.CodeAnalysis.ChildSyntaxList
+Loretta.CodeAnalysis.SyntaxNode.ChildTokens() -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>!
+Loretta.CodeAnalysis.SyntaxNode.Contains(Loretta.CodeAnalysis.SyntaxNode? node) -> bool
+Loretta.CodeAnalysis.SyntaxNode.ContainsAnnotations.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.ContainsDiagnostics.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.ContainsDirectives.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.ContainsSkippedText.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.CopyAnnotationsTo<T>(T? node) -> T?
+Loretta.CodeAnalysis.SyntaxNode.DescendantNodes(Loretta.CodeAnalysis.Text.TextSpan span, System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantNodes(System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantNodesAndSelf(Loretta.CodeAnalysis.Text.TextSpan span, System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantNodesAndSelf(System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantNodesAndTokens(Loretta.CodeAnalysis.Text.TextSpan span, System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantNodesAndTokens(System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantNodesAndTokensAndSelf(Loretta.CodeAnalysis.Text.TextSpan span, System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantNodesAndTokensAndSelf(System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantTokens(Loretta.CodeAnalysis.Text.TextSpan span, System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantTokens(System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantTrivia(Loretta.CodeAnalysis.Text.TextSpan span, System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>!
+Loretta.CodeAnalysis.SyntaxNode.DescendantTrivia(System.Func<Loretta.CodeAnalysis.SyntaxNode!, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>!
+Loretta.CodeAnalysis.SyntaxNode.FindNode(Loretta.CodeAnalysis.Text.TextSpan span, bool findInsideTrivia = false, bool getInnermostNodeForTie = false) -> Loretta.CodeAnalysis.SyntaxNode!
+Loretta.CodeAnalysis.SyntaxNode.FindToken(int position, bool findInsideTrivia = false) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxNode.FindTrivia(int position, bool findInsideTrivia = false) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxNode.FindTrivia(int position, System.Func<Loretta.CodeAnalysis.SyntaxTrivia, bool>? stepInto) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxNode.FirstAncestorOrSelf<TNode, TArg>(System.Func<TNode!, TArg, bool>! predicate, TArg argument, bool ascendOutOfTrivia = true) -> TNode?
+Loretta.CodeAnalysis.SyntaxNode.FirstAncestorOrSelf<TNode>(System.Func<TNode!, bool>? predicate = null, bool ascendOutOfTrivia = true) -> TNode?
+Loretta.CodeAnalysis.SyntaxNode.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedNodes(Loretta.CodeAnalysis.SyntaxAnnotation! syntaxAnnotation) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedNodes(string! annotationKind) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedNodesAndTokens(Loretta.CodeAnalysis.SyntaxAnnotation! annotation) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedNodesAndTokens(params string![]! annotationKinds) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedNodesAndTokens(string! annotationKind) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedTokens(Loretta.CodeAnalysis.SyntaxAnnotation! syntaxAnnotation) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedTokens(string! annotationKind) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedTrivia(Loretta.CodeAnalysis.SyntaxAnnotation! annotation) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedTrivia(params string![]! annotationKinds) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotatedTrivia(string! annotationKind) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotations(string! annotationKind) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxNode.GetAnnotations(System.Collections.Generic.IEnumerable<string!>! annotationKinds) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxNode.GetDiagnostics() -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+Loretta.CodeAnalysis.SyntaxNode.GetFirstToken(bool includeZeroWidth = false, bool includeSkipped = false, bool includeDirectives = false, bool includeDocumentationComments = false) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxNode.GetLastToken(bool includeZeroWidth = false, bool includeSkipped = false, bool includeDirectives = false, bool includeDocumentationComments = false) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxNode.GetLeadingTrivia() -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxNode.GetLocation() -> Loretta.CodeAnalysis.Location!
+Loretta.CodeAnalysis.SyntaxNode.GetReference() -> Loretta.CodeAnalysis.SyntaxReference!
+Loretta.CodeAnalysis.SyntaxNode.GetText(System.Text.Encoding? encoding = null, Loretta.CodeAnalysis.Text.SourceHashAlgorithm checksumAlgorithm = Loretta.CodeAnalysis.Text.SourceHashAlgorithm.Sha1) -> Loretta.CodeAnalysis.Text.SourceText!
+Loretta.CodeAnalysis.SyntaxNode.GetTrailingTrivia() -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxNode.HasAnnotation(Loretta.CodeAnalysis.SyntaxAnnotation? annotation) -> bool
+Loretta.CodeAnalysis.SyntaxNode.HasAnnotations(string! annotationKind) -> bool
+Loretta.CodeAnalysis.SyntaxNode.HasAnnotations(System.Collections.Generic.IEnumerable<string!>! annotationKinds) -> bool
+Loretta.CodeAnalysis.SyntaxNode.HasLeadingTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.HasStructuredTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.HasTrailingTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxNode! node, bool topLevel = false) -> bool
+Loretta.CodeAnalysis.SyntaxNode.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxNode? other) -> bool
+Loretta.CodeAnalysis.SyntaxNode.IsIncrementallyIdenticalTo(Loretta.CodeAnalysis.SyntaxNode? other) -> bool
+Loretta.CodeAnalysis.SyntaxNode.IsMissing.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.IsPartOfStructuredTrivia() -> bool
+Loretta.CodeAnalysis.SyntaxNode.IsStructuredTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxNode.Parent.get -> Loretta.CodeAnalysis.SyntaxNode?
+Loretta.CodeAnalysis.SyntaxNode.RawKind.get -> int
+Loretta.CodeAnalysis.SyntaxNode.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxNode.SpanStart.get -> int
+Loretta.CodeAnalysis.SyntaxNode.SyntaxTree.get -> Loretta.CodeAnalysis.SyntaxTree!
+Loretta.CodeAnalysis.SyntaxNodeExtensions
+Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.AsNode() -> Loretta.CodeAnalysis.SyntaxNode?
+Loretta.CodeAnalysis.SyntaxNodeOrToken.AsToken() -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.ChildNodesAndTokens() -> Loretta.CodeAnalysis.ChildSyntaxList
+Loretta.CodeAnalysis.SyntaxNodeOrToken.ContainsAnnotations.get -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.ContainsDiagnostics.get -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.ContainsDirectives.get -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.Equals(Loretta.CodeAnalysis.SyntaxNodeOrToken other) -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxNodeOrToken.GetAnnotations(string! annotationKind) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxNodeOrToken.GetAnnotations(System.Collections.Generic.IEnumerable<string!>! annotationKinds) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxNodeOrToken.GetDiagnostics() -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+Loretta.CodeAnalysis.SyntaxNodeOrToken.GetLeadingTrivia() -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxNodeOrToken.GetLocation() -> Loretta.CodeAnalysis.Location?
+Loretta.CodeAnalysis.SyntaxNodeOrToken.GetNextSibling() -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.GetPreviousSibling() -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.GetTrailingTrivia() -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxNodeOrToken.HasAnnotation(Loretta.CodeAnalysis.SyntaxAnnotation? annotation) -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.HasAnnotations(string! annotationKind) -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.HasAnnotations(System.Collections.Generic.IEnumerable<string!>! annotationKinds) -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.HasLeadingTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.HasTrailingTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxNodeOrToken other) -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.IsIncrementallyIdenticalTo(Loretta.CodeAnalysis.SyntaxNodeOrToken other) -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.IsMissing.get -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.IsNode.get -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.IsToken.get -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrToken.Language.get -> string!
+Loretta.CodeAnalysis.SyntaxNodeOrToken.Parent.get -> Loretta.CodeAnalysis.SyntaxNode?
+Loretta.CodeAnalysis.SyntaxNodeOrToken.RawKind.get -> int
+Loretta.CodeAnalysis.SyntaxNodeOrToken.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxNodeOrToken.SpanStart.get -> int
+Loretta.CodeAnalysis.SyntaxNodeOrToken.SyntaxNodeOrToken() -> void
+Loretta.CodeAnalysis.SyntaxNodeOrToken.SyntaxTree.get -> Loretta.CodeAnalysis.SyntaxTree?
+Loretta.CodeAnalysis.SyntaxNodeOrToken.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithAdditionalAnnotations(params Loretta.CodeAnalysis.SyntaxAnnotation![]! annotations) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithAdditionalAnnotations(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithLeadingTrivia(params Loretta.CodeAnalysis.SyntaxTrivia[]! trivia) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithLeadingTrivia(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! trivia) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithoutAnnotations(params Loretta.CodeAnalysis.SyntaxAnnotation![]! annotations) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithoutAnnotations(string! annotationKind) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithoutAnnotations(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithTrailingTrivia(params Loretta.CodeAnalysis.SyntaxTrivia[]! trivia) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WithTrailingTrivia(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! trivia) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrToken.WriteTo(System.IO.TextWriter! writer) -> void
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Add(Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrToken) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.AddRange(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>! nodesOrTokens) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Any() -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Count.get -> int
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.Current.get -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Equals(Loretta.CodeAnalysis.SyntaxNodeOrTokenList other) -> bool
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.First() -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.FirstOrDefault() -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.GetEnumerator() -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.IndexOf(Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrToken) -> int
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Insert(int index, Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrToken) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.InsertRange(int index, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>! nodesAndTokens) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Last() -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.LastOrDefault() -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Remove(Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrTokenInList) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.RemoveAt(int index) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Replace(Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrTokenInList, Loretta.CodeAnalysis.SyntaxNodeOrToken newNodeOrToken) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.ReplaceRange(Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrTokenInList, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>! newNodesAndTokens) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.SyntaxNodeOrTokenList() -> void
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.SyntaxNodeOrTokenList(params Loretta.CodeAnalysis.SyntaxNodeOrToken[]! nodesAndTokens) -> void
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.SyntaxNodeOrTokenList(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>! nodesAndTokens) -> void
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.this[int index].get -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+Loretta.CodeAnalysis.SyntaxNodeOrTokenList.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxReference
+Loretta.CodeAnalysis.SyntaxReference.SyntaxReference() -> void
+Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxRemoveOptions.AddElasticMarker = 32 -> Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepDirectives = 8 -> Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepEndOfLine = 16 -> Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepExteriorTrivia = Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepLeadingTrivia | Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepTrailingTrivia -> Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepLeadingTrivia = 1 -> Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepNoTrivia = 0 -> Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepTrailingTrivia = 2 -> Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxRemoveOptions.KeepUnbalancedDirectives = 4 -> Loretta.CodeAnalysis.SyntaxRemoveOptions
+Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.ContainsAnnotations.get -> bool
+Loretta.CodeAnalysis.SyntaxToken.ContainsDiagnostics.get -> bool
+Loretta.CodeAnalysis.SyntaxToken.ContainsDirectives.get -> bool
+Loretta.CodeAnalysis.SyntaxToken.CopyAnnotationsTo(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.Equals(Loretta.CodeAnalysis.SyntaxToken other) -> bool
+Loretta.CodeAnalysis.SyntaxToken.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxToken.GetAllTrivia() -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>!
+Loretta.CodeAnalysis.SyntaxToken.GetAnnotations(params string![]! annotationKinds) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxToken.GetAnnotations(string! annotationKind) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxToken.GetAnnotations(System.Collections.Generic.IEnumerable<string!>! annotationKinds) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxToken.GetDiagnostics() -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+Loretta.CodeAnalysis.SyntaxToken.GetLocation() -> Loretta.CodeAnalysis.Location!
+Loretta.CodeAnalysis.SyntaxToken.GetNextToken(bool includeZeroWidth = false, bool includeSkipped = false, bool includeDirectives = false, bool includeDocumentationComments = false) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.GetPreviousToken(bool includeZeroWidth = false, bool includeSkipped = false, bool includeDirectives = false, bool includeDocumentationComments = false) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.HasAnnotation(Loretta.CodeAnalysis.SyntaxAnnotation? annotation) -> bool
+Loretta.CodeAnalysis.SyntaxToken.HasAnnotations(params string![]! annotationKinds) -> bool
+Loretta.CodeAnalysis.SyntaxToken.HasAnnotations(string! annotationKind) -> bool
+Loretta.CodeAnalysis.SyntaxToken.HasLeadingTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxToken.HasStructuredTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxToken.HasTrailingTrivia.get -> bool
+Loretta.CodeAnalysis.SyntaxToken.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxToken token) -> bool
+Loretta.CodeAnalysis.SyntaxToken.IsIncrementallyIdenticalTo(Loretta.CodeAnalysis.SyntaxToken token) -> bool
+Loretta.CodeAnalysis.SyntaxToken.IsMissing.get -> bool
+Loretta.CodeAnalysis.SyntaxToken.IsPartOfStructuredTrivia() -> bool
+Loretta.CodeAnalysis.SyntaxToken.Language.get -> string!
+Loretta.CodeAnalysis.SyntaxToken.LeadingTrivia.get -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxToken.Parent.get -> Loretta.CodeAnalysis.SyntaxNode?
+Loretta.CodeAnalysis.SyntaxToken.RawKind.get -> int
+Loretta.CodeAnalysis.SyntaxToken.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxToken.SpanStart.get -> int
+Loretta.CodeAnalysis.SyntaxToken.SyntaxToken() -> void
+Loretta.CodeAnalysis.SyntaxToken.SyntaxTree.get -> Loretta.CodeAnalysis.SyntaxTree?
+Loretta.CodeAnalysis.SyntaxToken.Text.get -> string!
+Loretta.CodeAnalysis.SyntaxToken.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxToken.TrailingTrivia.get -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxToken.Value.get -> object?
+Loretta.CodeAnalysis.SyntaxToken.ValueText.get -> string!
+Loretta.CodeAnalysis.SyntaxToken.WithAdditionalAnnotations(params Loretta.CodeAnalysis.SyntaxAnnotation![]! annotations) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithAdditionalAnnotations(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithLeadingTrivia(Loretta.CodeAnalysis.SyntaxTriviaList trivia) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithLeadingTrivia(params Loretta.CodeAnalysis.SyntaxTrivia[]? trivia) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithLeadingTrivia(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>? trivia) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithoutAnnotations(params Loretta.CodeAnalysis.SyntaxAnnotation![]! annotations) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithoutAnnotations(string! annotationKind) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithoutAnnotations(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithTrailingTrivia(Loretta.CodeAnalysis.SyntaxTriviaList trivia) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithTrailingTrivia(params Loretta.CodeAnalysis.SyntaxTrivia[]? trivia) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithTrailingTrivia(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>? trivia) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WithTriviaFrom(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxToken.WriteTo(System.IO.TextWriter! writer) -> void
+Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.Add(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.AddRange(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! tokens) -> Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.Any() -> bool
+Loretta.CodeAnalysis.SyntaxTokenList.Count.get -> int
+Loretta.CodeAnalysis.SyntaxTokenList.Enumerator
+Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.Current.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.SyntaxTokenList.Equals(Loretta.CodeAnalysis.SyntaxTokenList other) -> bool
+Loretta.CodeAnalysis.SyntaxTokenList.First() -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxTokenList.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxTokenList.GetEnumerator() -> Loretta.CodeAnalysis.SyntaxTokenList.Enumerator
+Loretta.CodeAnalysis.SyntaxTokenList.IndexOf(Loretta.CodeAnalysis.SyntaxToken tokenInList) -> int
+Loretta.CodeAnalysis.SyntaxTokenList.Insert(int index, Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.InsertRange(int index, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! tokens) -> Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.Last() -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxTokenList.Remove(Loretta.CodeAnalysis.SyntaxToken tokenInList) -> Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.RemoveAt(int index) -> Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.Replace(Loretta.CodeAnalysis.SyntaxToken tokenInList, Loretta.CodeAnalysis.SyntaxToken newToken) -> Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.ReplaceRange(Loretta.CodeAnalysis.SyntaxToken tokenInList, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! newTokens) -> Loretta.CodeAnalysis.SyntaxTokenList
+Loretta.CodeAnalysis.SyntaxTokenList.Reverse() -> Loretta.CodeAnalysis.SyntaxTokenList.Reversed
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.Current.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Equals(Loretta.CodeAnalysis.SyntaxTokenList.Reversed other) -> bool
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed.GetEnumerator() -> Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Reversed() -> void
+Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Reversed(Loretta.CodeAnalysis.SyntaxTokenList list) -> void
+Loretta.CodeAnalysis.SyntaxTokenList.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxTokenList.SyntaxTokenList() -> void
+Loretta.CodeAnalysis.SyntaxTokenList.SyntaxTokenList(Loretta.CodeAnalysis.SyntaxToken token) -> void
+Loretta.CodeAnalysis.SyntaxTokenList.SyntaxTokenList(params Loretta.CodeAnalysis.SyntaxToken[]! tokens) -> void
+Loretta.CodeAnalysis.SyntaxTokenList.SyntaxTokenList(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! tokens) -> void
+Loretta.CodeAnalysis.SyntaxTokenList.this[int index].get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxTokenList.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxTree
+Loretta.CodeAnalysis.SyntaxTree.GetRoot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Loretta.CodeAnalysis.SyntaxNode!
+Loretta.CodeAnalysis.SyntaxTree.GetRootAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Loretta.CodeAnalysis.SyntaxNode!>!
+Loretta.CodeAnalysis.SyntaxTree.Options.get -> Loretta.CodeAnalysis.ParseOptions!
+Loretta.CodeAnalysis.SyntaxTree.SyntaxTree() -> void
+Loretta.CodeAnalysis.SyntaxTree.TryGetRoot(out Loretta.CodeAnalysis.SyntaxNode? root) -> bool
+Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTrivia.ContainsDiagnostics.get -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.CopyAnnotationsTo(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTrivia.Equals(Loretta.CodeAnalysis.SyntaxTrivia other) -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxTrivia.GetAnnotations(params string![]! annotationKinds) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxTrivia.GetAnnotations(string! annotationKind) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>!
+Loretta.CodeAnalysis.SyntaxTrivia.GetDiagnostics() -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
+Loretta.CodeAnalysis.SyntaxTrivia.GetLocation() -> Loretta.CodeAnalysis.Location!
+Loretta.CodeAnalysis.SyntaxTrivia.GetStructure() -> Loretta.CodeAnalysis.SyntaxNode?
+Loretta.CodeAnalysis.SyntaxTrivia.HasAnnotation(Loretta.CodeAnalysis.SyntaxAnnotation? annotation) -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.HasAnnotations(params string![]! annotationKinds) -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.HasAnnotations(string! annotationKind) -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.HasStructure.get -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.IsDirective.get -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.IsPartOfStructuredTrivia() -> bool
+Loretta.CodeAnalysis.SyntaxTrivia.Language.get -> string!
+Loretta.CodeAnalysis.SyntaxTrivia.RawKind.get -> int
+Loretta.CodeAnalysis.SyntaxTrivia.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxTrivia.SpanStart.get -> int
+Loretta.CodeAnalysis.SyntaxTrivia.SyntaxTree.get -> Loretta.CodeAnalysis.SyntaxTree?
+Loretta.CodeAnalysis.SyntaxTrivia.SyntaxTrivia() -> void
+Loretta.CodeAnalysis.SyntaxTrivia.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxTrivia.Token.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.SyntaxTrivia.WithAdditionalAnnotations(params Loretta.CodeAnalysis.SyntaxAnnotation![]! annotations) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTrivia.WithAdditionalAnnotations(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTrivia.WithoutAnnotations(params Loretta.CodeAnalysis.SyntaxAnnotation![]! annotations) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTrivia.WithoutAnnotations(string! annotationKind) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTrivia.WithoutAnnotations(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTrivia.WriteTo(System.IO.TextWriter! writer) -> void
+Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.Add(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.AddRange(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! trivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.Any() -> bool
+Loretta.CodeAnalysis.SyntaxTriviaList.Count.get -> int
+Loretta.CodeAnalysis.SyntaxTriviaList.ElementAt(int index) -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTriviaList.Enumerator
+Loretta.CodeAnalysis.SyntaxTriviaList.Enumerator.Current.get -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTriviaList.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.SyntaxTriviaList.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.SyntaxTriviaList.Equals(Loretta.CodeAnalysis.SyntaxTriviaList other) -> bool
+Loretta.CodeAnalysis.SyntaxTriviaList.First() -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTriviaList.FullSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxTriviaList.GetEnumerator() -> Loretta.CodeAnalysis.SyntaxTriviaList.Enumerator
+Loretta.CodeAnalysis.SyntaxTriviaList.IndexOf(Loretta.CodeAnalysis.SyntaxTrivia triviaInList) -> int
+Loretta.CodeAnalysis.SyntaxTriviaList.Insert(int index, Loretta.CodeAnalysis.SyntaxTrivia trivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.InsertRange(int index, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! trivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.Last() -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTriviaList.Remove(Loretta.CodeAnalysis.SyntaxTrivia triviaInList) -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.RemoveAt(int index) -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.Replace(Loretta.CodeAnalysis.SyntaxTrivia triviaInList, Loretta.CodeAnalysis.SyntaxTrivia newTrivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.ReplaceRange(Loretta.CodeAnalysis.SyntaxTrivia triviaInList, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! newTrivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
+Loretta.CodeAnalysis.SyntaxTriviaList.Reverse() -> Loretta.CodeAnalysis.SyntaxTriviaList.Reversed
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Enumerator
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Enumerator.Current.get -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Equals(Loretta.CodeAnalysis.SyntaxTriviaList.Reversed other) -> bool
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.GetEnumerator() -> Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Enumerator
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Reversed() -> void
+Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Reversed(Loretta.CodeAnalysis.SyntaxTriviaList list) -> void
+Loretta.CodeAnalysis.SyntaxTriviaList.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.SyntaxTriviaList.SyntaxTriviaList() -> void
+Loretta.CodeAnalysis.SyntaxTriviaList.SyntaxTriviaList(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> void
+Loretta.CodeAnalysis.SyntaxTriviaList.SyntaxTriviaList(params Loretta.CodeAnalysis.SyntaxTrivia[]! trivias) -> void
+Loretta.CodeAnalysis.SyntaxTriviaList.SyntaxTriviaList(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>? trivias) -> void
+Loretta.CodeAnalysis.SyntaxTriviaList.this[int index].get -> Loretta.CodeAnalysis.SyntaxTrivia
+Loretta.CodeAnalysis.SyntaxTriviaList.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxWalker
+Loretta.CodeAnalysis.SyntaxWalker.Depth.get -> Loretta.CodeAnalysis.SyntaxWalkerDepth
+Loretta.CodeAnalysis.SyntaxWalker.SyntaxWalker(Loretta.CodeAnalysis.SyntaxWalkerDepth depth = Loretta.CodeAnalysis.SyntaxWalkerDepth.Node) -> void
+Loretta.CodeAnalysis.SyntaxWalkerDepth
+Loretta.CodeAnalysis.SyntaxWalkerDepth.Node = 0 -> Loretta.CodeAnalysis.SyntaxWalkerDepth
+Loretta.CodeAnalysis.SyntaxWalkerDepth.StructuredTrivia = 3 -> Loretta.CodeAnalysis.SyntaxWalkerDepth
+Loretta.CodeAnalysis.SyntaxWalkerDepth.Token = 1 -> Loretta.CodeAnalysis.SyntaxWalkerDepth
+Loretta.CodeAnalysis.SyntaxWalkerDepth.Trivia = 2 -> Loretta.CodeAnalysis.SyntaxWalkerDepth
+Loretta.CodeAnalysis.Text.LinePosition
+Loretta.CodeAnalysis.Text.LinePosition.Character.get -> int
+Loretta.CodeAnalysis.Text.LinePosition.CompareTo(Loretta.CodeAnalysis.Text.LinePosition other) -> int
+Loretta.CodeAnalysis.Text.LinePosition.Equals(Loretta.CodeAnalysis.Text.LinePosition other) -> bool
+Loretta.CodeAnalysis.Text.LinePosition.Line.get -> int
+Loretta.CodeAnalysis.Text.LinePosition.LinePosition() -> void
+Loretta.CodeAnalysis.Text.LinePosition.LinePosition(int line, int character) -> void
+Loretta.CodeAnalysis.Text.LinePositionSpan
+Loretta.CodeAnalysis.Text.LinePositionSpan.End.get -> Loretta.CodeAnalysis.Text.LinePosition
+Loretta.CodeAnalysis.Text.LinePositionSpan.Equals(Loretta.CodeAnalysis.Text.LinePositionSpan other) -> bool
+Loretta.CodeAnalysis.Text.LinePositionSpan.LinePositionSpan() -> void
+Loretta.CodeAnalysis.Text.LinePositionSpan.LinePositionSpan(Loretta.CodeAnalysis.Text.LinePosition start, Loretta.CodeAnalysis.Text.LinePosition end) -> void
+Loretta.CodeAnalysis.Text.LinePositionSpan.Start.get -> Loretta.CodeAnalysis.Text.LinePosition
+Loretta.CodeAnalysis.Text.SourceHashAlgorithm
+Loretta.CodeAnalysis.Text.SourceHashAlgorithm.None = 0 -> Loretta.CodeAnalysis.Text.SourceHashAlgorithm
+Loretta.CodeAnalysis.Text.SourceHashAlgorithm.Sha1 = 1 -> Loretta.CodeAnalysis.Text.SourceHashAlgorithm
+Loretta.CodeAnalysis.Text.SourceHashAlgorithm.Sha256 = 2 -> Loretta.CodeAnalysis.Text.SourceHashAlgorithm
+Loretta.CodeAnalysis.Text.SourceText
+Loretta.CodeAnalysis.Text.SourceText.ChecksumAlgorithm.get -> Loretta.CodeAnalysis.Text.SourceHashAlgorithm
+Loretta.CodeAnalysis.Text.SourceText.ContentEquals(Loretta.CodeAnalysis.Text.SourceText! other) -> bool
+Loretta.CodeAnalysis.Text.SourceText.GetChecksum() -> System.Collections.Immutable.ImmutableArray<byte>
+Loretta.CodeAnalysis.Text.SourceText.GetSubText(int start) -> Loretta.CodeAnalysis.Text.SourceText!
+Loretta.CodeAnalysis.Text.SourceText.Lines.get -> Loretta.CodeAnalysis.Text.TextLineCollection!
+Loretta.CodeAnalysis.Text.SourceText.Replace(int start, int length, string! newText) -> Loretta.CodeAnalysis.Text.SourceText!
+Loretta.CodeAnalysis.Text.SourceText.Replace(Loretta.CodeAnalysis.Text.TextSpan span, string! newText) -> Loretta.CodeAnalysis.Text.SourceText!
+Loretta.CodeAnalysis.Text.SourceText.SourceText(System.Collections.Immutable.ImmutableArray<byte> checksum = default(System.Collections.Immutable.ImmutableArray<byte>), Loretta.CodeAnalysis.Text.SourceHashAlgorithm checksumAlgorithm = Loretta.CodeAnalysis.Text.SourceHashAlgorithm.Sha1, Loretta.CodeAnalysis.Text.SourceTextContainer? container = null) -> void
+Loretta.CodeAnalysis.Text.SourceText.WithChanges(params Loretta.CodeAnalysis.Text.TextChange[]! changes) -> Loretta.CodeAnalysis.Text.SourceText!
+Loretta.CodeAnalysis.Text.SourceText.Write(System.IO.TextWriter! textWriter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> void
+Loretta.CodeAnalysis.Text.SourceTextContainer
+Loretta.CodeAnalysis.Text.SourceTextContainer.SourceTextContainer() -> void
+Loretta.CodeAnalysis.Text.TextChange
+Loretta.CodeAnalysis.Text.TextChange.Equals(Loretta.CodeAnalysis.Text.TextChange other) -> bool
+Loretta.CodeAnalysis.Text.TextChange.NewText.get -> string?
+Loretta.CodeAnalysis.Text.TextChange.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.Text.TextChange.TextChange() -> void
+Loretta.CodeAnalysis.Text.TextChange.TextChange(Loretta.CodeAnalysis.Text.TextSpan span, string! newText) -> void
+Loretta.CodeAnalysis.Text.TextChangeEventArgs
+Loretta.CodeAnalysis.Text.TextChangeEventArgs.Changes.get -> System.Collections.Generic.IReadOnlyList<Loretta.CodeAnalysis.Text.TextChangeRange>!
+Loretta.CodeAnalysis.Text.TextChangeEventArgs.NewText.get -> Loretta.CodeAnalysis.Text.SourceText!
+Loretta.CodeAnalysis.Text.TextChangeEventArgs.OldText.get -> Loretta.CodeAnalysis.Text.SourceText!
+Loretta.CodeAnalysis.Text.TextChangeEventArgs.TextChangeEventArgs(Loretta.CodeAnalysis.Text.SourceText! oldText, Loretta.CodeAnalysis.Text.SourceText! newText, params Loretta.CodeAnalysis.Text.TextChangeRange[]! changes) -> void
+Loretta.CodeAnalysis.Text.TextChangeEventArgs.TextChangeEventArgs(Loretta.CodeAnalysis.Text.SourceText! oldText, Loretta.CodeAnalysis.Text.SourceText! newText, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Text.TextChangeRange>! changes) -> void
+Loretta.CodeAnalysis.Text.TextChangeRange
+Loretta.CodeAnalysis.Text.TextChangeRange.Equals(Loretta.CodeAnalysis.Text.TextChangeRange other) -> bool
+Loretta.CodeAnalysis.Text.TextChangeRange.NewLength.get -> int
+Loretta.CodeAnalysis.Text.TextChangeRange.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.Text.TextChangeRange.TextChangeRange() -> void
+Loretta.CodeAnalysis.Text.TextChangeRange.TextChangeRange(Loretta.CodeAnalysis.Text.TextSpan span, int newLength) -> void
+Loretta.CodeAnalysis.Text.TextLine
+Loretta.CodeAnalysis.Text.TextLine.End.get -> int
+Loretta.CodeAnalysis.Text.TextLine.EndIncludingLineBreak.get -> int
+Loretta.CodeAnalysis.Text.TextLine.Equals(Loretta.CodeAnalysis.Text.TextLine other) -> bool
+Loretta.CodeAnalysis.Text.TextLine.LineNumber.get -> int
+Loretta.CodeAnalysis.Text.TextLine.Span.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.Text.TextLine.SpanIncludingLineBreak.get -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.Text.TextLine.Start.get -> int
+Loretta.CodeAnalysis.Text.TextLine.Text.get -> Loretta.CodeAnalysis.Text.SourceText?
+Loretta.CodeAnalysis.Text.TextLine.TextLine() -> void
+Loretta.CodeAnalysis.Text.TextLineCollection
+Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator
+Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.Current.get -> Loretta.CodeAnalysis.Text.TextLine
+Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.Enumerator() -> void
+Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.MoveNext() -> bool
+Loretta.CodeAnalysis.Text.TextLineCollection.GetEnumerator() -> Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator
+Loretta.CodeAnalysis.Text.TextLineCollection.GetLinePositionSpan(Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Text.LinePositionSpan
+Loretta.CodeAnalysis.Text.TextLineCollection.GetPosition(Loretta.CodeAnalysis.Text.LinePosition position) -> int
+Loretta.CodeAnalysis.Text.TextLineCollection.GetTextSpan(Loretta.CodeAnalysis.Text.LinePositionSpan span) -> Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.Text.TextLineCollection.TextLineCollection() -> void
+Loretta.CodeAnalysis.Text.TextSpan
+Loretta.CodeAnalysis.Text.TextSpan.CompareTo(Loretta.CodeAnalysis.Text.TextSpan other) -> int
+Loretta.CodeAnalysis.Text.TextSpan.Contains(int position) -> bool
+Loretta.CodeAnalysis.Text.TextSpan.Contains(Loretta.CodeAnalysis.Text.TextSpan span) -> bool
+Loretta.CodeAnalysis.Text.TextSpan.End.get -> int
+Loretta.CodeAnalysis.Text.TextSpan.Equals(Loretta.CodeAnalysis.Text.TextSpan other) -> bool
+Loretta.CodeAnalysis.Text.TextSpan.Intersection(Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Text.TextSpan?
+Loretta.CodeAnalysis.Text.TextSpan.IntersectsWith(int position) -> bool
+Loretta.CodeAnalysis.Text.TextSpan.IntersectsWith(Loretta.CodeAnalysis.Text.TextSpan span) -> bool
+Loretta.CodeAnalysis.Text.TextSpan.IsEmpty.get -> bool
+Loretta.CodeAnalysis.Text.TextSpan.Length.get -> int
+Loretta.CodeAnalysis.Text.TextSpan.Overlap(Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Text.TextSpan?
+Loretta.CodeAnalysis.Text.TextSpan.OverlapsWith(Loretta.CodeAnalysis.Text.TextSpan span) -> bool
+Loretta.CodeAnalysis.Text.TextSpan.Start.get -> int
+Loretta.CodeAnalysis.Text.TextSpan.TextSpan() -> void
+Loretta.CodeAnalysis.Text.TextSpan.TextSpan(int start, int length) -> void
+Loretta.CodeAnalysis.WellKnownDiagnosticTags
+override abstract Loretta.CodeAnalysis.Diagnostic.Equals(object? obj) -> bool
+override abstract Loretta.CodeAnalysis.Diagnostic.GetHashCode() -> int
+override abstract Loretta.CodeAnalysis.Location.Equals(object? obj) -> bool
+override abstract Loretta.CodeAnalysis.Location.GetHashCode() -> int
+override abstract Loretta.CodeAnalysis.ParseOptions.Equals(object? obj) -> bool
+override abstract Loretta.CodeAnalysis.ParseOptions.GetHashCode() -> int
+override Loretta.CodeAnalysis.ChildSyntaxList.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.ChildSyntaxList.GetHashCode() -> int
+override Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.ChildSyntaxList.Reversed.GetHashCode() -> int
+override Loretta.CodeAnalysis.Diagnostic.ToString() -> string!
+override Loretta.CodeAnalysis.DiagnosticDescriptor.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.DiagnosticDescriptor.GetHashCode() -> int
+override Loretta.CodeAnalysis.FileLinePositionSpan.Equals(object? other) -> bool
+override Loretta.CodeAnalysis.FileLinePositionSpan.GetHashCode() -> int
+override Loretta.CodeAnalysis.FileLinePositionSpan.ToString() -> string!
+override Loretta.CodeAnalysis.Location.ToString() -> string!
+override Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.GetHashCode() -> int
+override Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.GetHashCode() -> int
+override Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxAnnotation.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxAnnotation.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxList<TNode>.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxList<TNode>.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxList<TNode>.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxNode.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxNodeOrToken.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxNodeOrToken.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxNodeOrToken.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxNodeOrTokenList.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxNodeOrTokenList.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxToken.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxToken.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxToken.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxTokenList.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxTokenList.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxTokenList.Reversed.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxTokenList.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxTree.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxTrivia.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxTrivia.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxTrivia.ToString() -> string!
+override Loretta.CodeAnalysis.SyntaxTriviaList.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxTriviaList.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.GetHashCode() -> int
+override Loretta.CodeAnalysis.SyntaxTriviaList.ToString() -> string!
+override Loretta.CodeAnalysis.Text.LinePosition.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.Text.LinePosition.GetHashCode() -> int
+override Loretta.CodeAnalysis.Text.LinePosition.ToString() -> string!
+override Loretta.CodeAnalysis.Text.LinePositionSpan.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.Text.LinePositionSpan.GetHashCode() -> int
+override Loretta.CodeAnalysis.Text.LinePositionSpan.ToString() -> string!
+override Loretta.CodeAnalysis.Text.SourceText.ToString() -> string!
+override Loretta.CodeAnalysis.Text.TextChange.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.Text.TextChange.GetHashCode() -> int
+override Loretta.CodeAnalysis.Text.TextChange.ToString() -> string!
+override Loretta.CodeAnalysis.Text.TextChangeRange.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.Text.TextChangeRange.GetHashCode() -> int
+override Loretta.CodeAnalysis.Text.TextChangeRange.ToString() -> string!
+override Loretta.CodeAnalysis.Text.TextLine.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.Text.TextLine.GetHashCode() -> int
+override Loretta.CodeAnalysis.Text.TextLine.ToString() -> string!
+override Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.GetHashCode() -> int
+override Loretta.CodeAnalysis.Text.TextSpan.Equals(object? obj) -> bool
+override Loretta.CodeAnalysis.Text.TextSpan.GetHashCode() -> int
+override Loretta.CodeAnalysis.Text.TextSpan.ToString() -> string!
+override sealed Loretta.CodeAnalysis.LocalizableString.Equals(object? other) -> bool
+override sealed Loretta.CodeAnalysis.LocalizableString.GetHashCode() -> int
+override sealed Loretta.CodeAnalysis.LocalizableString.ToString() -> string!
+static Loretta.CodeAnalysis.AnnotationExtensions.WithAdditionalAnnotations<TNode>(this TNode! node, params Loretta.CodeAnalysis.SyntaxAnnotation![]! annotations) -> TNode!
+static Loretta.CodeAnalysis.AnnotationExtensions.WithAdditionalAnnotations<TNode>(this TNode! node, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> TNode!
+static Loretta.CodeAnalysis.AnnotationExtensions.WithoutAnnotations<TNode>(this TNode! node, params Loretta.CodeAnalysis.SyntaxAnnotation![]! annotations) -> TNode!
+static Loretta.CodeAnalysis.AnnotationExtensions.WithoutAnnotations<TNode>(this TNode! node, string! annotationKind) -> TNode!
+static Loretta.CodeAnalysis.AnnotationExtensions.WithoutAnnotations<TNode>(this TNode! node, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> TNode!
+static Loretta.CodeAnalysis.ChildSyntaxList.operator !=(Loretta.CodeAnalysis.ChildSyntaxList list1, Loretta.CodeAnalysis.ChildSyntaxList list2) -> bool
+static Loretta.CodeAnalysis.ChildSyntaxList.operator ==(Loretta.CodeAnalysis.ChildSyntaxList list1, Loretta.CodeAnalysis.ChildSyntaxList list2) -> bool
+static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, Loretta.CodeAnalysis.DiagnosticSeverity effectiveSeverity, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
+static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
+static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
+static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
+static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
+static Loretta.CodeAnalysis.Diagnostic.Create(string! id, string! category, Loretta.CodeAnalysis.LocalizableString! message, Loretta.CodeAnalysis.DiagnosticSeverity severity, Loretta.CodeAnalysis.DiagnosticSeverity defaultSeverity, bool isEnabledByDefault, int warningLevel, bool isSuppressed, Loretta.CodeAnalysis.LocalizableString? title = null, Loretta.CodeAnalysis.LocalizableString? description = null, string? helpLink = null, Loretta.CodeAnalysis.Location? location = null, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations = null, System.Collections.Generic.IEnumerable<string!>? customTags = null, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties = null) -> Loretta.CodeAnalysis.Diagnostic!
+static Loretta.CodeAnalysis.Diagnostic.Create(string! id, string! category, Loretta.CodeAnalysis.LocalizableString! message, Loretta.CodeAnalysis.DiagnosticSeverity severity, Loretta.CodeAnalysis.DiagnosticSeverity defaultSeverity, bool isEnabledByDefault, int warningLevel, Loretta.CodeAnalysis.LocalizableString? title = null, Loretta.CodeAnalysis.LocalizableString? description = null, string? helpLink = null, Loretta.CodeAnalysis.Location? location = null, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations = null, System.Collections.Generic.IEnumerable<string!>? customTags = null, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties = null) -> Loretta.CodeAnalysis.Diagnostic!
+static Loretta.CodeAnalysis.LocalizableString.explicit operator string?(Loretta.CodeAnalysis.LocalizableString! localizableResource) -> string?
+static Loretta.CodeAnalysis.LocalizableString.implicit operator Loretta.CodeAnalysis.LocalizableString!(string? fixedResource) -> Loretta.CodeAnalysis.LocalizableString!
+static Loretta.CodeAnalysis.Location.Create(Loretta.CodeAnalysis.SyntaxTree! syntaxTree, Loretta.CodeAnalysis.Text.TextSpan textSpan) -> Loretta.CodeAnalysis.Location!
+static Loretta.CodeAnalysis.Location.Create(string! filePath, Loretta.CodeAnalysis.Text.TextSpan textSpan, Loretta.CodeAnalysis.Text.LinePositionSpan lineSpan) -> Loretta.CodeAnalysis.Location!
+static Loretta.CodeAnalysis.Location.None.get -> Loretta.CodeAnalysis.Location!
+static Loretta.CodeAnalysis.Location.operator !=(Loretta.CodeAnalysis.Location? left, Loretta.CodeAnalysis.Location? right) -> bool
+static Loretta.CodeAnalysis.Location.operator ==(Loretta.CodeAnalysis.Location? left, Loretta.CodeAnalysis.Location? right) -> bool
+static Loretta.CodeAnalysis.ParseOptions.operator !=(Loretta.CodeAnalysis.ParseOptions? left, Loretta.CodeAnalysis.ParseOptions? right) -> bool
+static Loretta.CodeAnalysis.ParseOptions.operator ==(Loretta.CodeAnalysis.ParseOptions? left, Loretta.CodeAnalysis.ParseOptions? right) -> bool
+static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.implicit operator Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.SyntaxNode!>(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> nodes) -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.SyntaxNode!>
+static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.implicit operator Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.SyntaxNode!> nodes) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
+static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.operator !=(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> left, Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> right) -> bool
+static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.operator ==(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> left, Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> right) -> bool
+static Loretta.CodeAnalysis.SyntaxAnnotation.ElasticAnnotation.get -> Loretta.CodeAnalysis.SyntaxAnnotation!
+static Loretta.CodeAnalysis.SyntaxAnnotation.operator !=(Loretta.CodeAnalysis.SyntaxAnnotation? left, Loretta.CodeAnalysis.SyntaxAnnotation? right) -> bool
+static Loretta.CodeAnalysis.SyntaxAnnotation.operator ==(Loretta.CodeAnalysis.SyntaxAnnotation? left, Loretta.CodeAnalysis.SyntaxAnnotation? right) -> bool
+static Loretta.CodeAnalysis.SyntaxList<TNode>.implicit operator Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.SyntaxNode!>(Loretta.CodeAnalysis.SyntaxList<TNode!> nodes) -> Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.SyntaxNode!>
+static Loretta.CodeAnalysis.SyntaxList<TNode>.implicit operator Loretta.CodeAnalysis.SyntaxList<TNode!>(Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.SyntaxNode!> nodes) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
+static Loretta.CodeAnalysis.SyntaxList<TNode>.operator !=(Loretta.CodeAnalysis.SyntaxList<TNode!> left, Loretta.CodeAnalysis.SyntaxList<TNode!> right) -> bool
+static Loretta.CodeAnalysis.SyntaxList<TNode>.operator ==(Loretta.CodeAnalysis.SyntaxList<TNode!> left, Loretta.CodeAnalysis.SyntaxList<TNode!> right) -> bool
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.GetCurrentNode<TNode>(this Loretta.CodeAnalysis.SyntaxNode! root, TNode! node) -> TNode?
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.GetCurrentNodes<TNode>(this Loretta.CodeAnalysis.SyntaxNode! root, System.Collections.Generic.IEnumerable<TNode!>! nodes) -> System.Collections.Generic.IEnumerable<TNode!>!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.GetCurrentNodes<TNode>(this Loretta.CodeAnalysis.SyntaxNode! root, TNode! node) -> System.Collections.Generic.IEnumerable<TNode!>!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.InsertNodesAfter<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxNode! nodeInList, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>! newNodes) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.InsertNodesBefore<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxNode! nodeInList, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>! newNodes) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.InsertTokensAfter<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxToken tokenInList, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! newTokens) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.InsertTokensBefore<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxToken tokenInList, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! newTokens) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.InsertTriviaAfter<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxTrivia trivia, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! newTrivia) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.InsertTriviaBefore<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxTrivia trivia, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! newTrivia) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.NormalizeWhitespace<TNode>(this TNode! node, string! indentation = "    ", string! eol = "\r\n", bool elasticTrivia = false) -> TNode!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.NormalizeWhitespace<TNode>(this TNode! node, string! indentation, bool elasticTrivia) -> TNode!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.RemoveNode<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxNode! node, Loretta.CodeAnalysis.SyntaxRemoveOptions options) -> TRoot?
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.RemoveNodes<TRoot>(this TRoot! root, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>! nodes, Loretta.CodeAnalysis.SyntaxRemoveOptions options) -> TRoot?
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceNode<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxNode! oldNode, Loretta.CodeAnalysis.SyntaxNode! newNode) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceNode<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxNode! oldNode, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>! newNodes) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceNodes<TRoot, TNode>(this TRoot! root, System.Collections.Generic.IEnumerable<TNode!>! nodes, System.Func<TNode!, TNode!, Loretta.CodeAnalysis.SyntaxNode!>! computeReplacementNode) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceSyntax<TRoot>(this TRoot! root, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>! nodes, System.Func<Loretta.CodeAnalysis.SyntaxNode!, Loretta.CodeAnalysis.SyntaxNode!, Loretta.CodeAnalysis.SyntaxNode!>! computeReplacementNode, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! tokens, System.Func<Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken>! computeReplacementToken, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! trivia, System.Func<Loretta.CodeAnalysis.SyntaxTrivia, Loretta.CodeAnalysis.SyntaxTrivia, Loretta.CodeAnalysis.SyntaxTrivia>! computeReplacementTrivia) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceToken<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxToken oldToken, Loretta.CodeAnalysis.SyntaxToken newToken) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceToken<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxToken tokenInList, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! newTokens) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceTokens<TRoot>(this TRoot! root, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! tokens, System.Func<Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken>! computeReplacementToken) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceTrivia<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxTrivia oldTrivia, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! newTrivia) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceTrivia<TRoot>(this TRoot! root, Loretta.CodeAnalysis.SyntaxTrivia trivia, Loretta.CodeAnalysis.SyntaxTrivia newTrivia) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.ReplaceTrivia<TRoot>(this TRoot! root, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! trivia, System.Func<Loretta.CodeAnalysis.SyntaxTrivia, Loretta.CodeAnalysis.SyntaxTrivia, Loretta.CodeAnalysis.SyntaxTrivia>! computeReplacementTrivia) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.TrackNodes<TRoot>(this TRoot! root, params Loretta.CodeAnalysis.SyntaxNode![]! nodes) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.TrackNodes<TRoot>(this TRoot! root, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNode!>! nodes) -> TRoot!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithLeadingTrivia<TSyntax>(this TSyntax! node, Loretta.CodeAnalysis.SyntaxTriviaList trivia) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithLeadingTrivia<TSyntax>(this TSyntax! node, params Loretta.CodeAnalysis.SyntaxTrivia[]? trivia) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithLeadingTrivia<TSyntax>(this TSyntax! node, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>? trivia) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithoutLeadingTrivia<TSyntax>(this TSyntax! node) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithoutTrailingTrivia<TSyntax>(this TSyntax! node) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithoutTrivia(this Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithoutTrivia<TSyntax>(this TSyntax! syntax) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithTrailingTrivia<TSyntax>(this TSyntax! node, Loretta.CodeAnalysis.SyntaxTriviaList trivia) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithTrailingTrivia<TSyntax>(this TSyntax! node, params Loretta.CodeAnalysis.SyntaxTrivia[]? trivia) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithTrailingTrivia<TSyntax>(this TSyntax! node, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>? trivia) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeExtensions.WithTriviaFrom<TSyntax>(this TSyntax! syntax, Loretta.CodeAnalysis.SyntaxNode! node) -> TSyntax!
+static Loretta.CodeAnalysis.SyntaxNodeOrToken.explicit operator Loretta.CodeAnalysis.SyntaxNode?(Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrToken) -> Loretta.CodeAnalysis.SyntaxNode?
+static Loretta.CodeAnalysis.SyntaxNodeOrToken.explicit operator Loretta.CodeAnalysis.SyntaxToken(Loretta.CodeAnalysis.SyntaxNodeOrToken nodeOrToken) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.SyntaxNodeOrToken.GetFirstChildIndexSpanningPosition(Loretta.CodeAnalysis.SyntaxNode! node, int position) -> int
+static Loretta.CodeAnalysis.SyntaxNodeOrToken.implicit operator Loretta.CodeAnalysis.SyntaxNodeOrToken(Loretta.CodeAnalysis.SyntaxNode? node) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+static Loretta.CodeAnalysis.SyntaxNodeOrToken.implicit operator Loretta.CodeAnalysis.SyntaxNodeOrToken(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+static Loretta.CodeAnalysis.SyntaxNodeOrToken.operator !=(Loretta.CodeAnalysis.SyntaxNodeOrToken left, Loretta.CodeAnalysis.SyntaxNodeOrToken right) -> bool
+static Loretta.CodeAnalysis.SyntaxNodeOrToken.operator ==(Loretta.CodeAnalysis.SyntaxNodeOrToken left, Loretta.CodeAnalysis.SyntaxNodeOrToken right) -> bool
+static Loretta.CodeAnalysis.SyntaxNodeOrTokenList.operator !=(Loretta.CodeAnalysis.SyntaxNodeOrTokenList left, Loretta.CodeAnalysis.SyntaxNodeOrTokenList right) -> bool
+static Loretta.CodeAnalysis.SyntaxNodeOrTokenList.operator ==(Loretta.CodeAnalysis.SyntaxNodeOrTokenList left, Loretta.CodeAnalysis.SyntaxNodeOrTokenList right) -> bool
+static Loretta.CodeAnalysis.SyntaxToken.operator !=(Loretta.CodeAnalysis.SyntaxToken left, Loretta.CodeAnalysis.SyntaxToken right) -> bool
+static Loretta.CodeAnalysis.SyntaxToken.operator ==(Loretta.CodeAnalysis.SyntaxToken left, Loretta.CodeAnalysis.SyntaxToken right) -> bool
+static Loretta.CodeAnalysis.SyntaxTokenList.Create(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxTokenList
+static Loretta.CodeAnalysis.SyntaxTokenList.operator !=(Loretta.CodeAnalysis.SyntaxTokenList left, Loretta.CodeAnalysis.SyntaxTokenList right) -> bool
+static Loretta.CodeAnalysis.SyntaxTokenList.operator ==(Loretta.CodeAnalysis.SyntaxTokenList left, Loretta.CodeAnalysis.SyntaxTokenList right) -> bool
+static Loretta.CodeAnalysis.SyntaxTrivia.operator !=(Loretta.CodeAnalysis.SyntaxTrivia left, Loretta.CodeAnalysis.SyntaxTrivia right) -> bool
+static Loretta.CodeAnalysis.SyntaxTrivia.operator ==(Loretta.CodeAnalysis.SyntaxTrivia left, Loretta.CodeAnalysis.SyntaxTrivia right) -> bool
+static Loretta.CodeAnalysis.SyntaxTriviaList.Create(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
+static Loretta.CodeAnalysis.SyntaxTriviaList.Empty.get -> Loretta.CodeAnalysis.SyntaxTriviaList
+static Loretta.CodeAnalysis.SyntaxTriviaList.operator !=(Loretta.CodeAnalysis.SyntaxTriviaList left, Loretta.CodeAnalysis.SyntaxTriviaList right) -> bool
+static Loretta.CodeAnalysis.SyntaxTriviaList.operator ==(Loretta.CodeAnalysis.SyntaxTriviaList left, Loretta.CodeAnalysis.SyntaxTriviaList right) -> bool
+static Loretta.CodeAnalysis.Text.LinePosition.operator !=(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
+static Loretta.CodeAnalysis.Text.LinePosition.operator <(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
+static Loretta.CodeAnalysis.Text.LinePosition.operator <=(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
+static Loretta.CodeAnalysis.Text.LinePosition.operator ==(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
+static Loretta.CodeAnalysis.Text.LinePosition.operator >(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
+static Loretta.CodeAnalysis.Text.LinePosition.operator >=(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
+static Loretta.CodeAnalysis.Text.LinePosition.Zero.get -> Loretta.CodeAnalysis.Text.LinePosition
+static Loretta.CodeAnalysis.Text.LinePositionSpan.operator !=(Loretta.CodeAnalysis.Text.LinePositionSpan left, Loretta.CodeAnalysis.Text.LinePositionSpan right) -> bool
+static Loretta.CodeAnalysis.Text.LinePositionSpan.operator ==(Loretta.CodeAnalysis.Text.LinePositionSpan left, Loretta.CodeAnalysis.Text.LinePositionSpan right) -> bool
+static Loretta.CodeAnalysis.Text.SourceText.From(byte[]! buffer, int length, System.Text.Encoding? encoding = null, Loretta.CodeAnalysis.Text.SourceHashAlgorithm checksumAlgorithm = Loretta.CodeAnalysis.Text.SourceHashAlgorithm.Sha1, bool throwIfBinaryDetected = false) -> Loretta.CodeAnalysis.Text.SourceText!
+static Loretta.CodeAnalysis.Text.SourceText.From(string! text, System.Text.Encoding? encoding = null, Loretta.CodeAnalysis.Text.SourceHashAlgorithm checksumAlgorithm = Loretta.CodeAnalysis.Text.SourceHashAlgorithm.Sha1) -> Loretta.CodeAnalysis.Text.SourceText!
+static Loretta.CodeAnalysis.Text.SourceText.From(System.IO.Stream! stream, System.Text.Encoding? encoding = null, Loretta.CodeAnalysis.Text.SourceHashAlgorithm checksumAlgorithm = Loretta.CodeAnalysis.Text.SourceHashAlgorithm.Sha1, bool throwIfBinaryDetected = false) -> Loretta.CodeAnalysis.Text.SourceText!
+static Loretta.CodeAnalysis.Text.SourceText.From(System.IO.TextReader! reader, int length, System.Text.Encoding? encoding = null, Loretta.CodeAnalysis.Text.SourceHashAlgorithm checksumAlgorithm = Loretta.CodeAnalysis.Text.SourceHashAlgorithm.Sha1) -> Loretta.CodeAnalysis.Text.SourceText!
+static Loretta.CodeAnalysis.Text.TextChange.implicit operator Loretta.CodeAnalysis.Text.TextChangeRange(Loretta.CodeAnalysis.Text.TextChange change) -> Loretta.CodeAnalysis.Text.TextChangeRange
+static Loretta.CodeAnalysis.Text.TextChange.NoChanges.get -> System.Collections.Generic.IReadOnlyList<Loretta.CodeAnalysis.Text.TextChange>!
+static Loretta.CodeAnalysis.Text.TextChange.operator !=(Loretta.CodeAnalysis.Text.TextChange left, Loretta.CodeAnalysis.Text.TextChange right) -> bool
+static Loretta.CodeAnalysis.Text.TextChange.operator ==(Loretta.CodeAnalysis.Text.TextChange left, Loretta.CodeAnalysis.Text.TextChange right) -> bool
+static Loretta.CodeAnalysis.Text.TextChangeRange.Collapse(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Text.TextChangeRange>! changes) -> Loretta.CodeAnalysis.Text.TextChangeRange
+static Loretta.CodeAnalysis.Text.TextChangeRange.NoChanges.get -> System.Collections.Generic.IReadOnlyList<Loretta.CodeAnalysis.Text.TextChangeRange>!
+static Loretta.CodeAnalysis.Text.TextChangeRange.operator !=(Loretta.CodeAnalysis.Text.TextChangeRange left, Loretta.CodeAnalysis.Text.TextChangeRange right) -> bool
+static Loretta.CodeAnalysis.Text.TextChangeRange.operator ==(Loretta.CodeAnalysis.Text.TextChangeRange left, Loretta.CodeAnalysis.Text.TextChangeRange right) -> bool
+static Loretta.CodeAnalysis.Text.TextLine.FromSpan(Loretta.CodeAnalysis.Text.SourceText! text, Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Text.TextLine
+static Loretta.CodeAnalysis.Text.TextLine.operator !=(Loretta.CodeAnalysis.Text.TextLine left, Loretta.CodeAnalysis.Text.TextLine right) -> bool
+static Loretta.CodeAnalysis.Text.TextLine.operator ==(Loretta.CodeAnalysis.Text.TextLine left, Loretta.CodeAnalysis.Text.TextLine right) -> bool
+static Loretta.CodeAnalysis.Text.TextSpan.FromBounds(int start, int end) -> Loretta.CodeAnalysis.Text.TextSpan
+static Loretta.CodeAnalysis.Text.TextSpan.operator !=(Loretta.CodeAnalysis.Text.TextSpan left, Loretta.CodeAnalysis.Text.TextSpan right) -> bool
+static Loretta.CodeAnalysis.Text.TextSpan.operator ==(Loretta.CodeAnalysis.Text.TextSpan left, Loretta.CodeAnalysis.Text.TextSpan right) -> bool
+virtual Loretta.CodeAnalysis.Diagnostic.DefaultSeverity.get -> Loretta.CodeAnalysis.DiagnosticSeverity
+virtual Loretta.CodeAnalysis.Diagnostic.Properties.get -> System.Collections.Immutable.ImmutableDictionary<string!, string?>!
+virtual Loretta.CodeAnalysis.DiagnosticFormatter.Format(Loretta.CodeAnalysis.Diagnostic! diagnostic, System.IFormatProvider? formatter = null) -> string!
+virtual Loretta.CodeAnalysis.Location.GetLineSpan() -> Loretta.CodeAnalysis.FileLinePositionSpan
+virtual Loretta.CodeAnalysis.Location.SourceSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
+virtual Loretta.CodeAnalysis.Location.SourceTree.get -> Loretta.CodeAnalysis.SyntaxTree?
+virtual Loretta.CodeAnalysis.SyntaxNode.ChildThatContainsPosition(int position) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
+virtual Loretta.CodeAnalysis.SyntaxNode.ParentTrivia.get -> Loretta.CodeAnalysis.SyntaxTrivia
+virtual Loretta.CodeAnalysis.SyntaxNode.SerializeTo(System.IO.Stream! stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> void
+virtual Loretta.CodeAnalysis.SyntaxNode.ToFullString() -> string!
+virtual Loretta.CodeAnalysis.SyntaxNode.WriteTo(System.IO.TextWriter! writer) -> void
+virtual Loretta.CodeAnalysis.SyntaxReference.GetSyntaxAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Loretta.CodeAnalysis.SyntaxNode!>!
+virtual Loretta.CodeAnalysis.SyntaxTree.GetTextAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Loretta.CodeAnalysis.Text.SourceText!>!
+virtual Loretta.CodeAnalysis.SyntaxWalker.Visit(Loretta.CodeAnalysis.SyntaxNode! node) -> void
+virtual Loretta.CodeAnalysis.SyntaxWalker.VisitToken(Loretta.CodeAnalysis.SyntaxToken token) -> void
+virtual Loretta.CodeAnalysis.SyntaxWalker.VisitTrivia(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> void
+virtual Loretta.CodeAnalysis.Text.SourceText.Container.get -> Loretta.CodeAnalysis.Text.SourceTextContainer!
+virtual Loretta.CodeAnalysis.Text.SourceText.ContentEqualsImpl(Loretta.CodeAnalysis.Text.SourceText! other) -> bool
+virtual Loretta.CodeAnalysis.Text.SourceText.GetChangeRanges(Loretta.CodeAnalysis.Text.SourceText! oldText) -> System.Collections.Generic.IReadOnlyList<Loretta.CodeAnalysis.Text.TextChangeRange>!
+virtual Loretta.CodeAnalysis.Text.SourceText.GetLinesCore() -> Loretta.CodeAnalysis.Text.TextLineCollection!
+virtual Loretta.CodeAnalysis.Text.SourceText.GetSubText(Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Text.SourceText!
+virtual Loretta.CodeAnalysis.Text.SourceText.GetTextChanges(Loretta.CodeAnalysis.Text.SourceText! oldText) -> System.Collections.Generic.IReadOnlyList<Loretta.CodeAnalysis.Text.TextChange>!
+virtual Loretta.CodeAnalysis.Text.SourceText.ToString(Loretta.CodeAnalysis.Text.TextSpan span) -> string!
+virtual Loretta.CodeAnalysis.Text.SourceText.WithChanges(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Text.TextChange>! changes) -> Loretta.CodeAnalysis.Text.SourceText!
+virtual Loretta.CodeAnalysis.Text.SourceText.Write(System.IO.TextWriter! writer, Loretta.CodeAnalysis.Text.TextSpan span, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> void
+virtual Loretta.CodeAnalysis.Text.TextLineCollection.GetLineFromPosition(int position) -> Loretta.CodeAnalysis.Text.TextLine
+virtual Loretta.CodeAnalysis.Text.TextLineCollection.GetLinePosition(int position) -> Loretta.CodeAnalysis.Text.LinePosition
+~Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.GetEnumerator() -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator
+~Loretta.CodeAnalysis.SyntaxList<TNode>.GetEnumerator() -> Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator

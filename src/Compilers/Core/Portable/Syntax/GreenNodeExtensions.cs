@@ -31,12 +31,12 @@ namespace Loretta.CodeAnalysis
                 }
                 else
                 {
-                    return (TNode)node.SetAnnotations(null);
+                    return (TNode) node.SetAnnotations(null);
                 }
             }
             else
             {
-                return (TNode)node.SetAnnotations(newAnnotations.ToArrayAndFree());
+                return (TNode) node.SetAnnotations(newAnnotations.ToArrayAndFree());
             }
         }
 
@@ -67,7 +67,7 @@ namespace Loretta.CodeAnalysis
             }
             else
             {
-                return (TNode)node.SetAnnotations(newAnnotations.ToArrayAndFree());
+                return (TNode) node.SetAnnotations(newAnnotations.ToArrayAndFree());
             }
         }
 
@@ -98,7 +98,7 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
-                return (TNode)node.SetAnnotations(newAnnotations.ToArrayAndFree());
+                return (TNode) node.SetAnnotations(newAnnotations.ToArrayAndFree());
             }
             finally
             {
@@ -108,18 +108,7 @@ namespace Loretta.CodeAnalysis
 
         public static TNode WithDiagnosticsGreen<TNode>(this TNode node, DiagnosticInfo[]? diagnostics) where TNode : GreenNode
         {
-            return (TNode)node.SetDiagnostics(diagnostics);
-        }
-
-        public static TNode WithoutDiagnosticsGreen<TNode>(this TNode node) where TNode : GreenNode
-        {
-            var current = node.GetDiagnostics();
-            if (current == null || current.Length == 0)
-            {
-                return node;
-            }
-
-            return (TNode)node.SetDiagnostics(null);
+            return (TNode) node.SetDiagnostics(diagnostics);
         }
     }
 }

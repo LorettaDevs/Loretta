@@ -4,13 +4,8 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Threading;
 using System.Xml.Linq;
 using Loretta.CodeAnalysis;
-using Loretta.CodeAnalysis.Lua;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Loretta.CodeAnalysis.Text;
 
@@ -19,38 +14,10 @@ namespace Loretta.Test.Utilities
     /// <summary>
     /// Base class for all unit test classes.
     /// </summary>
-    public abstract class TestBase : IDisposable
+    public abstract class TestBase
     {
-        private TempRoot _temp;
-
         protected TestBase()
         {
-        }
-
-        public static string GetUniqueName()
-        {
-            return Guid.NewGuid().ToString("D");
-        }
-
-        public TempRoot Temp
-        {
-            get
-            {
-                if (_temp == null)
-                {
-                    _temp = new TempRoot();
-                }
-
-                return _temp;
-            }
-        }
-
-        public virtual void Dispose()
-        {
-            if (_temp != null)
-            {
-                _temp.Dispose();
-            }
         }
 
         #region Diagnostics

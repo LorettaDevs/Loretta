@@ -31,7 +31,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 int n = children.Length;
                 if (n < byte.MaxValue)
                 {
-                    this.SlotCount = (byte)n;
+                    this.SlotCount = (byte) n;
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 this.children = new ArrayElement<GreenNode>[length];
                 for (var i = 0; i < length; i++)
                 {
-                    this.children[i].Value = (GreenNode)reader.ReadValue();
+                    this.children[i].Value = (GreenNode) reader.ReadValue();
                 }
 
                 this.InitializeChildren();
@@ -94,13 +94,13 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 {
                     return separated
                         ? new Syntax.SyntaxList.SeparatedWithManyWeakChildren(this, parent, position)
-                        : (SyntaxNode)new Syntax.SyntaxList.WithManyWeakChildren(this, parent, position);
+                        : (SyntaxNode) new Syntax.SyntaxList.WithManyWeakChildren(this, parent, position);
                 }
                 else
                 {
                     return separated
                         ? new Syntax.SyntaxList.SeparatedWithManyChildren(this, parent, position)
-                        : (SyntaxNode)new Syntax.SyntaxList.WithManyChildren(this, parent, position);
+                        : (SyntaxNode) new Syntax.SyntaxList.WithManyChildren(this, parent, position);
                 }
             }
 

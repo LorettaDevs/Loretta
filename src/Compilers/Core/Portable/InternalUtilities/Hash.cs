@@ -15,7 +15,7 @@ namespace Loretta.Utilities
         /// </summary>
         internal static int Combine(int newKey, int currentKey)
         {
-            return unchecked((currentKey * (int)0xA5555529) + newKey);
+            return unchecked((currentKey * (int) 0xA5555529) + newKey);
         }
 
         internal static int Combine(bool newKeyPart, int currentKey)
@@ -31,7 +31,7 @@ namespace Loretta.Utilities
         /// </summary>
         internal static int Combine<T>(T newKeyPart, int currentKey) where T : class?
         {
-            int hash = unchecked(currentKey * (int)0xA5555529);
+            int hash = unchecked(currentKey * (int) 0xA5555529);
 
             if (newKeyPart != null)
             {
@@ -146,7 +146,7 @@ namespace Loretta.Utilities
         /// The offset bias value used in the FNV-1a algorithm
         /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
         /// </summary>
-        internal const int FnvOffsetBias = unchecked((int)2166136261);
+        internal const int FnvOffsetBias = unchecked((int) 2166136261);
 
         /// <summary>
         /// The generative factor used in the FNV-1a algorithm
@@ -250,23 +250,6 @@ namespace Loretta.Utilities
         /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending after <paramref name="length"/> characters.</returns>
         internal static int GetFNVHashCode(string text, int start, int length)
             => GetFNVHashCode(text.AsSpan(start, length));
-
-        internal static int GetCaseInsensitiveFNVHashCode(string text)
-        {
-            return GetCaseInsensitiveFNVHashCode(text.AsSpan(0, text.Length));
-        }
-
-        internal static int GetCaseInsensitiveFNVHashCode(ReadOnlySpan<char> data)
-        {
-            int hashCode = Hash.FnvOffsetBias;
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                hashCode = unchecked((hashCode ^ CaseInsensitiveComparison.ToLower(data[i])) * Hash.FnvPrime);
-            }
-
-            return hashCode;
-        }
 
         /// <summary>
         /// Compute the hashcode of a sub-string using FNV-1a

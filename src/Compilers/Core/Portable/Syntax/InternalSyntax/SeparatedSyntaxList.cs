@@ -25,11 +25,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 var item = list.GetRequiredItem(i);
                 if ((i & 1) == 0)
                 {
-                    RoslynDebug.Assert(!item.IsToken, "even elements of a separated list must be nodes");
+                    LorettaDebug.Assert(!item.IsToken, "even elements of a separated list must be nodes");
                 }
                 else
                 {
-                    RoslynDebug.Assert(item.IsToken, "odd elements of a separated list must be tokens");
+                    LorettaDebug.Assert(item.IsToken, "odd elements of a separated list must be tokens");
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                return (TNode?)_list[index << 1];
+                return (TNode?) _list[index << 1];
             }
         }
 
@@ -92,7 +92,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public override bool Equals(object? obj)
         {
-            return (obj is SeparatedSyntaxList<TNode>) && Equals((SeparatedSyntaxList<TNode>)obj);
+            return (obj is SeparatedSyntaxList<TNode> list) && Equals(list);
         }
 
         public override int GetHashCode()

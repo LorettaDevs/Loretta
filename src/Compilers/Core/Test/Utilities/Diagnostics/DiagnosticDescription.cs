@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 {
     public sealed class DiagnosticDescription
     {
-        public static readonly DiagnosticDescription[] None = { };
+        public static readonly DiagnosticDescription[] None = Array.Empty<DiagnosticDescription>();
         public static readonly DiagnosticDescription[] Any = null;
 
         // common fields for all DiagnosticDescriptions
@@ -124,7 +124,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             _effectiveSeverityOpt = includeEffectiveSeverity ? d.Severity : (DiagnosticSeverity?) null;
 
             DiagnosticWithInfo dinfo = null;
-            if (d.Code == 0 || d.Descriptor.CustomTags.Contains(WellKnownDiagnosticTags.CustomObsolete))
+            if (d.Code == 0)
             {
                 _code = d.Id;
                 _errorCodeType = typeof(string);
@@ -177,7 +177,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                 }
             }
 
-            _startPosition = _location.GetMappedLineSpan().StartLinePosition;
+            _startPosition = _location.GetLineSpan().StartLinePosition;
         }
 
         public DiagnosticDescription WithArguments(params object[] arguments) =>
@@ -498,7 +498,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             return assertText.ToString();
         }
 
-        private static IEnumerable<Diagnostic> Sort(IEnumerable<Diagnostic> diagnostics) => diagnostics.OrderBy(d => d.Location.GetMappedLineSpan().StartLinePosition, LinePositionComparer.Instance);
+        private static IEnumerable<Diagnostic> Sort(IEnumerable<Diagnostic> diagnostics) => diagnostics.OrderBy(d => d.Location.GetLineSpan().StartLinePosition, LinePositionComparer.Instance);
 
         private static bool IsSortedOrEmpty(DiagnosticDescription[] diagnostics)
         {

@@ -27,7 +27,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
         public static bool AreEquivalent(SyntaxNode? before, SyntaxNode? after, Func<SyntaxKind, bool>? ignoreChildNode, bool topLevel)
         {
-            RoslynDebug.Assert(!topLevel || ignoreChildNode == null);
+            LorettaDebug.Assert(!topLevel || ignoreChildNode == null);
 
             if (before == null || after == null)
             {
@@ -57,7 +57,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             // NOTE(cyrusn): I don't believe we need to examine skipped text.  It isn't relevant from
             // the perspective of global symbolic information.
-            RoslynDebug.Assert(before.RawKind == after.RawKind);
+            LorettaDebug.Assert(before.RawKind == after.RawKind);
 
             if (before.IsMissing != after.IsMissing)
             {
@@ -93,7 +93,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             if (before.IsToken)
             {
-                RoslynDebug.Assert(after.IsToken);
+                LorettaDebug.Assert(after.IsToken);
                 return AreTokensEquivalent(before, after);
             }
 

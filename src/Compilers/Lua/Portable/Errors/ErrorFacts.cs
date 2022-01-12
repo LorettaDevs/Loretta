@@ -60,7 +60,7 @@ namespace Loretta.CodeAnalysis.Lua
         public static string GetMessage(ErrorCode code, CultureInfo? culture)
         {
             var message = ResourceManager.GetString(code.ToString(), culture);
-            RoslynDebug.Assert(!string.IsNullOrEmpty(message), code.ToString());
+            LorettaDebug.Assert(!string.IsNullOrEmpty(message), code.ToString());
             return message;
         }
 

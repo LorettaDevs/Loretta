@@ -52,27 +52,42 @@ namespace Loretta.CodeAnalysis.Text
             get { return _end; }
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            return obj is LinePositionSpan && Equals((LinePositionSpan)obj);
+            return obj is LinePositionSpan span && Equals(span);
         }
 
+        /// <inheritdoc/>
         public bool Equals(LinePositionSpan other)
         {
             return _start.Equals(other._start)
                 && _end.Equals(other._end);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return Hash.Combine(_start.GetHashCode(), _end.GetHashCode());
         }
 
+        /// <summary>
+        /// Checks whether two line position spans are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(LinePositionSpan left, LinePositionSpan right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Checks whether two line position spans are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(LinePositionSpan left, LinePositionSpan right)
         {
             return !left.Equals(right);

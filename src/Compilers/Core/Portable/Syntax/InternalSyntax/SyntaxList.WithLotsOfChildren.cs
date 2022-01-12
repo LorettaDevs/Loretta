@@ -2,8 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using Loretta.Utilities;
 using System.Diagnostics;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 {
@@ -58,7 +58,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             /// </remarks>
             public override int FindSlotIndexContainingOffset(int offset)
             {
-                RoslynDebug.Assert(offset >= 0 && offset < FullWidth);
+                LorettaDebug.Assert(offset >= 0 && offset < FullWidth);
                 return _childOffsets.BinarySearchUpperBound(offset) - 1;
             }
 

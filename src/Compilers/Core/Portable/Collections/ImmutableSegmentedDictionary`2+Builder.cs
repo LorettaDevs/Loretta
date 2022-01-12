@@ -88,8 +88,8 @@ namespace Loretta.CodeAnalysis.Collections
 
             object? IDictionary.this[object key]
             {
-                get => ((IDictionary)ReadOnlyDictionary)[key];
-                set => ((IDictionary)GetOrCreateMutableDictionary())[key] = value;
+                get => ((IDictionary) ReadOnlyDictionary)[key];
+                set => ((IDictionary) GetOrCreateMutableDictionary())[key] = value;
             }
 
             private SegmentedDictionary<TKey, TValue> GetOrCreateMutableDictionary()
@@ -206,7 +206,9 @@ namespace Loretta.CodeAnalysis.Collections
                 return false;
             }
 
+#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
             public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
+#pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
                 => ReadOnlyDictionary.TryGetValue(key, out value);
 
             public ImmutableSegmentedDictionary<TKey, TValue> ToImmutable()
@@ -217,7 +219,7 @@ namespace Loretta.CodeAnalysis.Collections
             }
 
             void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-                => ((ICollection<KeyValuePair<TKey, TValue>>)ReadOnlyDictionary).CopyTo(array, arrayIndex);
+                => ((ICollection<KeyValuePair<TKey, TValue>>) ReadOnlyDictionary).CopyTo(array, arrayIndex);
 
             IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
                 => new Enumerator(GetOrCreateMutableDictionary(), Enumerator.ReturnType.KeyValuePair);
@@ -226,19 +228,19 @@ namespace Loretta.CodeAnalysis.Collections
                 => new Enumerator(GetOrCreateMutableDictionary(), Enumerator.ReturnType.KeyValuePair);
 
             bool IDictionary.Contains(object key)
-                => ((IDictionary)ReadOnlyDictionary).Contains(key);
+                => ((IDictionary) ReadOnlyDictionary).Contains(key);
 
             void IDictionary.Add(object key, object? value)
-                => ((IDictionary)GetOrCreateMutableDictionary()).Add(key, value);
+                => ((IDictionary) GetOrCreateMutableDictionary()).Add(key, value);
 
             IDictionaryEnumerator IDictionary.GetEnumerator()
                 => new Enumerator(GetOrCreateMutableDictionary(), Enumerator.ReturnType.DictionaryEntry);
 
             void IDictionary.Remove(object key)
-                => ((IDictionary)GetOrCreateMutableDictionary()).Remove(key);
+                => ((IDictionary) GetOrCreateMutableDictionary()).Remove(key);
 
             void ICollection.CopyTo(Array array, int index)
-                => ((ICollection)ReadOnlyDictionary).CopyTo(array, index);
+                => ((ICollection) ReadOnlyDictionary).CopyTo(array, index);
         }
     }
 }

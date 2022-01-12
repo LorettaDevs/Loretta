@@ -14,7 +14,7 @@ namespace Loretta.CodeAnalysis.Lua
                 SyntaxWalkerDepth depth = SyntaxWalkerDepth.Node)
                 : base(depth)
             {
-                RoslynDebug.AssertNotNull(scopes);
+                LorettaDebug.AssertNotNull(scopes);
 
                 _scopes = scopes;
             }

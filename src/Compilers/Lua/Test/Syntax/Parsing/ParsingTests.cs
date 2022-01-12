@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,7 +12,7 @@ using Xunit.Abstractions;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing
 {
-    public abstract class ParsingTests : LuaTestBase
+    public abstract class ParsingTests : LuaTestBase, IDisposable
     {
         private LuaSyntaxNode? _node;
         private IEnumerator<SyntaxNodeOrToken>? _treeEnumerator;
@@ -22,10 +23,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing
             _output = output;
         }
 
-        public override void Dispose()
+        public virtual void Dispose()
         {
-            base.Dispose();
             VerifyEnumeratorConsumed();
+            GC.SuppressFinalize(this);
         }
 
         private void VerifyEnumeratorConsumed()

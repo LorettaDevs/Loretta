@@ -12,6 +12,9 @@ namespace Loretta.CodeAnalysis
 {
     public partial struct SyntaxTriviaList
     {
+        /// <summary>
+        /// The enumerator for this trivia list.
+        /// </summary>
         [StructLayout(LayoutKind.Auto)]
         public struct Enumerator
         {
@@ -54,9 +57,9 @@ namespace Loretta.CodeAnalysis
             // by ref since it's a non-trivial struct
             internal void InitializeFromLeadingTrivia(in SyntaxToken token)
             {
-                RoslynDebug.Assert(token.Node is object);
+                LorettaDebug.Assert(token.Node is object);
                 var node = token.Node.GetLeadingTriviaCore();
-                RoslynDebug.Assert(node is object);
+                LorettaDebug.Assert(node is object);
                 InitializeFrom(in token, node, 0, token.Position);
             }
 
@@ -65,7 +68,7 @@ namespace Loretta.CodeAnalysis
             // by ref since it's a non-trivial struct
             internal void InitializeFromTrailingTrivia(in SyntaxToken token)
             {
-                RoslynDebug.Assert(token.Node is object);
+                LorettaDebug.Assert(token.Node is object);
                 var leading = token.Node.GetLeadingTriviaCore();
                 int index = 0;
                 if (leading != null)
@@ -80,10 +83,11 @@ namespace Loretta.CodeAnalysis
                     trailingPosition -= trailingGreen.FullWidth;
                 }
 
-                RoslynDebug.Assert(trailingGreen is object);
+                LorettaDebug.Assert(trailingGreen is object);
                 InitializeFrom(in token, trailingGreen, index, trailingPosition);
             }
 
+            /// <inheritdoc cref="IEnumerator.MoveNext"/>
             public bool MoveNext()
             {
                 int newIndex = _index + 1;
@@ -101,11 +105,12 @@ namespace Loretta.CodeAnalysis
                     _position += _current.FullWidth;
                 }
 
-                RoslynDebug.Assert(_singleNodeOrList is object);
+                LorettaDebug.Assert(_singleNodeOrList is object);
                 _current = GetGreenNodeAt(_singleNodeOrList, newIndex);
                 return true;
             }
 
+            /// <inheritdoc cref="IEnumerator{T}.Current"/>
             public SyntaxTrivia Current
             {
                 get

@@ -155,6 +155,10 @@ namespace Loretta.CodeAnalysis.Text
             get { return TextSpan.FromBounds(this.Start, this.EndIncludingLineBreak); }
         }
 
+        /// <summary>
+        /// Returns the text for this line.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             if (_text == null || _text.Length == 0)
@@ -167,16 +171,29 @@ namespace Loretta.CodeAnalysis.Text
             }
         }
 
+        /// <summary>
+        /// Checks whether two text lines are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(TextLine left, TextLine right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Checks whether two text lines are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(TextLine left, TextLine right)
         {
             return !left.Equals(right);
         }
 
+        /// <inheritdoc/>
         public bool Equals(TextLine other)
         {
             return other._text == _text
@@ -184,16 +201,18 @@ namespace Loretta.CodeAnalysis.Text
                 && other._endIncludingBreaks == _endIncludingBreaks;
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            if (obj is TextLine)
+            if (obj is TextLine line)
             {
-                return Equals((TextLine)obj);
+                return Equals(line);
             }
 
             return false;
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return Hash.Combine(_text, Hash.Combine(_start, _endIncludingBreaks));

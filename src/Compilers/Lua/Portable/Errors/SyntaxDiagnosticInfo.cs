@@ -16,7 +16,7 @@ namespace Loretta.CodeAnalysis.Lua
         internal SyntaxDiagnosticInfo(int offset, int width, ErrorCode code, params object[] args)
             : base(Lua.MessageProvider.Instance, (int) code, args)
         {
-            RoslynDebug.Assert(width >= 0);
+            LorettaDebug.Assert(width >= 0);
             Offset = offset;
             Width = width;
         }

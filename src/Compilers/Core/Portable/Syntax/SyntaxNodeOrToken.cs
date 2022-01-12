@@ -42,7 +42,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxNodeOrToken(SyntaxNode node)
             : this()
         {
-            RoslynDebug.Assert(!node.Green.IsList, "node cannot be a list");
+            LorettaDebug.Assert(!node.Green.IsList, "node cannot be a list");
             _position = node.Position;
             _nodeOrParent = node;
             _tokenIndex = -1;
@@ -50,11 +50,11 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxNodeOrToken(SyntaxNode? parent, GreenNode? token, int position, int index)
         {
-            RoslynDebug.Assert(parent == null || !parent.Green.IsList, "parent cannot be a list");
-            RoslynDebug.Assert(token != null || (parent == null && position == 0 && index == 0), "parts must form a token");
-            RoslynDebug.Assert(token == null || token.IsToken, "token must be a token");
-            RoslynDebug.Assert(index >= 0, "index must not be negative");
-            RoslynDebug.Assert(parent == null || token != null, "null token cannot have parent");
+            LorettaDebug.Assert(parent == null || !parent.Green.IsList, "parent cannot be a list");
+            LorettaDebug.Assert(token != null || (parent == null && position == 0 && index == 0), "parts must form a token");
+            LorettaDebug.Assert(token == null || token.IsToken, "token must be a token");
+            LorettaDebug.Assert(index >= 0, "index must not be negative");
+            LorettaDebug.Assert(parent == null || token != null, "null token cannot have parent");
 
             _position = position;
             _tokenIndex = index;
@@ -132,7 +132,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                RoslynDebug.Assert(UnderlyingNode is not null);
+                LorettaDebug.Assert(UnderlyingNode is not null);
                 return UnderlyingNode;
             }
         }
@@ -393,6 +393,12 @@ namespace Loretta.CodeAnalysis
             return default(SyntaxTriviaList);
         }
 
+        /// <summary>
+        /// Returns this <see cref="SyntaxNode"/> or <see cref="SyntaxToken"/> with the provided
+        /// leading trivia.
+        /// </summary>
+        /// <param name="trivia"></param>
+        /// <returns></returns>
         public SyntaxNodeOrToken WithLeadingTrivia(IEnumerable<SyntaxTrivia> trivia)
         {
             if (_token != null)
@@ -408,11 +414,18 @@ namespace Loretta.CodeAnalysis
             return this;
         }
 
+        /// <inheritdoc cref="WithLeadingTrivia(IEnumerable{SyntaxTrivia})"/>
         public SyntaxNodeOrToken WithLeadingTrivia(params SyntaxTrivia[] trivia)
         {
             return WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
+        /// <summary>
+        /// Returns this <see cref="SyntaxNode"/> or <see cref="SyntaxToken"/> with the provided
+        /// trailing trivia.
+        /// </summary>
+        /// <param name="trivia"></param>
+        /// <returns></returns>
         public SyntaxNodeOrToken WithTrailingTrivia(IEnumerable<SyntaxTrivia> trivia)
         {
             if (_token != null)
@@ -428,6 +441,7 @@ namespace Loretta.CodeAnalysis
             return this;
         }
 
+        /// <inheritdoc cref="WithTrailingTrivia(IEnumerable{SyntaxTrivia})"/>
         public SyntaxNodeOrToken WithTrailingTrivia(params SyntaxTrivia[] trivia)
         {
             return WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
@@ -699,7 +713,7 @@ namespace Loretta.CodeAnalysis
         public bool Equals(SyntaxNodeOrToken other)
         {
             // index replaces position to ensure equality.  Assert if offset affects equality.
-            RoslynDebug.Assert(
+            LorettaDebug.Assert(
                 (_nodeOrParent == other._nodeOrParent && _token == other._token && _position == other._position && _tokenIndex == other._tokenIndex) ==
                 (_nodeOrParent == other._nodeOrParent && _token == other._token && _tokenIndex == other._tokenIndex));
 
@@ -910,6 +924,15 @@ namespace Loretta.CodeAnalysis
 
         internal int EndPosition => _position + this.FullWidth;
 
+        /// <summary>
+        /// Returns the index of the first child of the provided node that contains the provided position.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the provided position is outside of the node's span.
+        /// </exception>
         public static int GetFirstChildIndexSpanningPosition(SyntaxNode node, int position)
         {
             if (!node.FullSpan.IntersectsWith(position))
@@ -960,6 +983,10 @@ namespace Loretta.CodeAnalysis
             throw ExceptionUtilities.Unreachable;
         }
 
+        /// <summary>
+        /// Returns the sibling to the right of this node or token.
+        /// </summary>
+        /// <returns></returns>
         public SyntaxNodeOrToken GetNextSibling()
         {
             var parent = this.Parent;
@@ -975,6 +1002,10 @@ namespace Loretta.CodeAnalysis
                 : GetNextSiblingWithSearch(siblings);
         }
 
+        /// <summary>
+        /// Returns the sibling to the left of this node or token.
+        /// </summary>
+        /// <returns></returns>
         public SyntaxNodeOrToken GetPreviousSibling()
         {
             if (this.Parent != null)

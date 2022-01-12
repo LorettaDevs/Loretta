@@ -144,16 +144,16 @@ namespace Loretta.CodeAnalysis.Syntax
                                 _nodes[2].UnderlyingNode!),
                             position: 0, index: 0);
                     default:
+                    {
+                        var tmp = new ArrayElement<GreenNode>[_count];
+                        for (int i = 0; i < _count; i++)
                         {
-                            var tmp = new ArrayElement<GreenNode>[_count];
-                            for (int i = 0; i < _count; i++)
-                            {
-                                tmp[i].Value = _nodes[i].UnderlyingNode!;
-                            }
-
-                            return new SyntaxTriviaList(default(SyntaxToken),
-                                InternalSyntax.SyntaxList.List(tmp), position: 0, index: 0);
+                            tmp[i].Value = _nodes[i].UnderlyingNode!;
                         }
+
+                        return new SyntaxTriviaList(default(SyntaxToken),
+                            InternalSyntax.SyntaxList.List(tmp), position: 0, index: 0);
+                    }
                 }
             }
             else

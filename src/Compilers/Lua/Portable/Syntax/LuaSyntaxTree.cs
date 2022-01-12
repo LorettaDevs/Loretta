@@ -118,7 +118,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <remarks>This is used by the ExpressionEvaluator.</remarks>
         internal static SyntaxTree CreateForDebugger(LuaSyntaxNode root, SourceText text, LuaParseOptions options)
         {
-            RoslynDebug.Assert(root != null);
+            LorettaDebug.Assert(root != null);
 
             return new DebuggerSyntaxTree(root, text, options);
         }
@@ -133,7 +133,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         internal static SyntaxTree CreateWithoutClone(LuaSyntaxNode root)
         {
-            RoslynDebug.Assert(root != null);
+            LorettaDebug.Assert(root != null);
 
             return new ParsedSyntaxTree(
                 textOpt: null,
@@ -301,35 +301,6 @@ namespace Loretta.CodeAnalysis.Lua
             var text = GetText(cancellationToken);
             return new FileLinePositionSpan(FilePath, text.Lines.GetLinePositionSpan(span));
         }
-
-        /// <summary>
-        /// Gets the location in terms of path, line and column after applying source line mapping directives (<c>#line</c>).
-        /// </summary>
-        /// <param name="span">Span within the tree.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>
-        /// <para>A valid <see cref="FileLinePositionSpan"/> that contains path, line and column information.</para>
-        /// <para>
-        /// If the location path is mapped the resulting path is the path specified in the corresponding <c>#line</c>,
-        /// otherwise it's <see cref="SyntaxTree.FilePath"/>.
-        /// </para>
-        /// <para>
-        /// A location path is considered mapped if the first <c>#line</c> directive that precedes it and that
-        /// either specifies an explicit file path or is <c>#line default</c> exists and specifies an explicit path.
-        /// </para>
-        /// </returns>
-        public override FileLinePositionSpan GetMappedLineSpan(TextSpan span, CancellationToken cancellationToken = default) =>
-            GetLineSpan(span, cancellationToken);
-
-        /// <inheritdoc/>
-        public override LineVisibility GetLineVisibility(int position, CancellationToken cancellationToken = default) =>
-            LineVisibility.Visible;
-
-        /// <summary>
-        /// Gets a boolean value indicating whether there are any hidden regions in the tree.
-        /// </summary>
-        /// <returns>True if there is at least one hidden region.</returns>
-        public override bool HasHiddenRegions() => false;
 
         /// <summary>
         /// Gets a <see cref="Location"/> for the specified text <paramref name="span"/>.

@@ -80,7 +80,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public static ImmutableArray<T> AsImmutable<T>(this T[] items)
         {
-            RoslynDebug.Assert(items != null);
+            LorettaDebug.Assert(items != null);
             return ImmutableArray.Create<T>(items);
         }
 
@@ -245,7 +245,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>If the items's length is 0, this will return an empty immutable array.</returns>
         public static ImmutableArray<TResult> ZipAsArray<T1, T2, TResult>(this ImmutableArray<T1> self, ImmutableArray<T2> other, Func<T1, T2, TResult> map)
         {
-            RoslynDebug.Assert(self.Length == other.Length);
+            LorettaDebug.Assert(self.Length == other.Length);
             switch (self.Length)
             {
                 case 0:
@@ -276,7 +276,7 @@ namespace Loretta.CodeAnalysis
 
         public static ImmutableArray<TResult> ZipAsArray<T1, T2, TArg, TResult>(this ImmutableArray<T1> self, ImmutableArray<T2> other, TArg arg, Func<T1, T2, int, TArg, TResult> map)
         {
-            RoslynDebug.Assert(self.Length == other.Length);
+            LorettaDebug.Assert(self.Length == other.Length);
             if (self.IsEmpty)
             {
                 return ImmutableArray<TResult>.Empty;
@@ -301,15 +301,22 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new immutable array based on filtered elements by the predicate. The array must not be null.
         /// </summary>
-        /// <param name="array">The array to process</param>
-        /// <param name="predicate">The delegate that defines the conditions of the element to search for.</param>
+        /// <param name="array">
+        /// The array to process
+        /// </param>
+        /// <param name="predicate">
+        /// The delegate that defines the conditions of the element to search for.
+        /// </param>
+        /// <param name="arg">
+        /// The extra argument that will be passed on to the filter delegate.
+        /// </param>
         public static ImmutableArray<T> WhereAsArray<T, TArg>(this ImmutableArray<T> array, Func<T, TArg, bool> predicate, TArg arg)
             => WhereAsArrayImpl(array, predicateWithoutArg: null, predicate, arg);
 
         private static ImmutableArray<T> WhereAsArrayImpl<T, TArg>(ImmutableArray<T> array, Func<T, bool>? predicateWithoutArg, Func<T, TArg, bool>? predicateWithArg, TArg arg)
         {
-            RoslynDebug.Assert(!array.IsDefault);
-            RoslynDebug.Assert(predicateWithArg != null ^ predicateWithoutArg != null);
+            LorettaDebug.Assert(!array.IsDefault);
+            LorettaDebug.Assert(predicateWithArg != null ^ predicateWithoutArg != null);
 
             ArrayBuilder<T>? builder = null;
             bool none = true;
@@ -328,7 +335,7 @@ namespace Loretta.CodeAnalysis
                         continue;
                     }
 
-                    RoslynDebug.Assert(i > 0);
+                    LorettaDebug.Assert(i > 0);
                     if (builder == null)
                     {
                         builder = ArrayBuilder<T>.GetInstance();
@@ -344,10 +351,10 @@ namespace Loretta.CodeAnalysis
                         continue;
                     }
 
-                    RoslynDebug.Assert(i > 0);
+                    LorettaDebug.Assert(i > 0);
                     if (all)
                     {
-                        RoslynDebug.Assert(builder == null);
+                        LorettaDebug.Assert(builder == null);
                         all = false;
                         builder = ArrayBuilder<T>.GetInstance();
                         for (int j = 0; j < i; j++)
@@ -360,8 +367,8 @@ namespace Loretta.CodeAnalysis
 
             if (builder != null)
             {
-                RoslynDebug.Assert(!all);
-                RoslynDebug.Assert(!none);
+                LorettaDebug.Assert(!all);
+                LorettaDebug.Assert(!none);
                 return builder.ToImmutableAndFree();
             }
             else if (all)
@@ -370,7 +377,7 @@ namespace Loretta.CodeAnalysis
             }
             else
             {
-                RoslynDebug.Assert(none);
+                LorettaDebug.Assert(none);
                 return ImmutableArray<T>.Empty;
             }
         }
@@ -526,7 +533,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public static ImmutableArray<T> Distinct<T>(this ImmutableArray<T> array, IEqualityComparer<T>? comparer = null)
         {
-            RoslynDebug.Assert(!array.IsDefault);
+            LorettaDebug.Assert(!array.IsDefault);
 
             if (array.Length < 2)
             {

@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
     <TargetFrameworks>net472</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>$(TargetFrameworks);net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net5.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
     <Nullable>enable</Nullable>
@@ -22,6 +23,10 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 

@@ -53,6 +53,7 @@ namespace Loretta.Test.Utilities
                 _needToRestore = false;
                 CultureInfo.CurrentUICulture = _threadUICulture;
             }
+            GC.SuppressFinalize(this);
         }
     }
 }

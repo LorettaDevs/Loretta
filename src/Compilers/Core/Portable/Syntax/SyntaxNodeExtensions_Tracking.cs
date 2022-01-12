@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot TrackNodes<TRoot>(this TRoot root, params SyntaxNode[] nodes)
             where TRoot : SyntaxNode
         {
-            return TrackNodes(root, (IEnumerable<SyntaxNode>)nodes);
+            return TrackNodes(root, (IEnumerable<SyntaxNode>) nodes);
         }
 
         /// <summary>
@@ -155,8 +155,8 @@ namespace Loretta.CodeAnalysis
                 }
                 else
                 {
-                    node = ((IStructuredTriviaSyntax)node).ParentTrivia.Token.Parent!;
-                    RoslynDebug.Assert(node is object);
+                    node = ((IStructuredTriviaSyntax) node).ParentTrivia.Token.Parent!;
+                    LorettaDebug.Assert(node is object);
                 }
             }
         }
@@ -180,8 +180,8 @@ namespace Loretta.CodeAnalysis
                 }
                 else
                 {
-                    node = ((IStructuredTriviaSyntax)node).ParentTrivia.Token.Parent!;
-                    RoslynDebug.Assert(node is object);
+                    node = ((IStructuredTriviaSyntax) node).ParentTrivia.Token.Parent!;
+                    LorettaDebug.Assert(node is object);
                 }
             }
 
@@ -200,7 +200,7 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var node in root.GetAnnotatedNodesAndTokens(IdAnnotationKind).Select(n => n.AsNode()!))
                 {
-                    RoslynDebug.Assert(node is object);
+                    LorettaDebug.Assert(node is object);
                     foreach (var id in node.GetAnnotations(IdAnnotationKind))
                     {
                         List<SyntaxNode>? list;
@@ -214,7 +214,7 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
-                _idToNodeMap = map.ToDictionary(kv => kv.Key, kv => (IReadOnlyList<SyntaxNode>)ImmutableArray.CreateRange(kv.Value));
+                _idToNodeMap = map.ToDictionary(kv => kv.Key, kv => (IReadOnlyList<SyntaxNode>) ImmutableArray.CreateRange(kv.Value));
             }
 
             public IReadOnlyList<SyntaxNode> GetNodes(SyntaxAnnotation id)

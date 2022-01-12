@@ -78,7 +78,7 @@ namespace Loretta.CodeAnalysis
             public ConstantValueString(string value)
             {
                 // we should have just one Null regardless string or object.
-                RoslynDebug.Assert(value != null, "null strings should be represented as Null constant.");
+                LorettaDebug.Assert(value != null, "null strings should be represented as Null constant.");
                 _value = Rope.ForString(value);
                 _constantValueReference = new WeakReference<string>(value);
             }
@@ -86,7 +86,7 @@ namespace Loretta.CodeAnalysis
             public ConstantValueString(Rope value)
             {
                 // we should have just one Null regardless string or object.
-                RoslynDebug.Assert(value != null, "null strings should be represented as Null constant.");
+                LorettaDebug.Assert(value != null, "null strings should be represented as Null constant.");
                 _value = value;
             }
 
@@ -108,7 +108,7 @@ namespace Loretta.CodeAnalysis
                         _constantValueReference = new WeakReference<string>(constantValue);
                     }
 
-                    RoslynDebug.Assert(constantValue != null);
+                    LorettaDebug.Assert(constantValue != null);
                     return constantValue;
                 }
             }

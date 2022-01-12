@@ -7,6 +7,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Loretta.CodeAnalysis
 {
+    /// <summary>
+    /// Extension methods for <see cref="SyntaxNode"/>.
+    /// </summary>
     public static partial class SyntaxNodeExtensions
     {
         /// <summary>
@@ -36,7 +39,7 @@ namespace Loretta.CodeAnalysis
             Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia> computeReplacementTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore(
+            return (TRoot) root.ReplaceCore(
                 nodes: nodes, computeReplacementNode: computeReplacementNode,
                 tokens: tokens, computeReplacementToken: computeReplacementToken,
                 trivia: trivia, computeReplacementTrivia: computeReplacementTrivia);
@@ -56,7 +59,7 @@ namespace Loretta.CodeAnalysis
             where TRoot : SyntaxNode
             where TNode : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore(nodes: nodes, computeReplacementNode: computeReplacementNode);
+            return (TRoot) root.ReplaceCore(nodes: nodes, computeReplacementNode: computeReplacementNode);
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace Loretta.CodeAnalysis
                 return root;
             }
 
-            return (TRoot)root.ReplaceCore(nodes: new[] { oldNode }, computeReplacementNode: (o, r) => newNode);
+            return (TRoot) root.ReplaceCore(nodes: new[] { oldNode }, computeReplacementNode: (o, r) => newNode);
         }
 
         /// <summary>
@@ -87,7 +90,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot ReplaceNode<TRoot>(this TRoot root, SyntaxNode oldNode, IEnumerable<SyntaxNode> newNodes)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceNodeInListCore(oldNode, newNodes);
+            return (TRoot) root.ReplaceNodeInListCore(oldNode, newNodes);
         }
 
         /// <summary>
@@ -100,7 +103,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot InsertNodesBefore<TRoot>(this TRoot root, SyntaxNode nodeInList, IEnumerable<SyntaxNode> newNodes)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.InsertNodesInListCore(nodeInList, newNodes, insertBefore: true);
+            return (TRoot) root.InsertNodesInListCore(nodeInList, newNodes, insertBefore: true);
         }
 
         /// <summary>
@@ -113,7 +116,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot InsertNodesAfter<TRoot>(this TRoot root, SyntaxNode nodeInList, IEnumerable<SyntaxNode> newNodes)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.InsertNodesInListCore(nodeInList, newNodes, insertBefore: false);
+            return (TRoot) root.InsertNodesInListCore(nodeInList, newNodes, insertBefore: false);
         }
 
         /// <summary>
@@ -126,7 +129,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot ReplaceToken<TRoot>(this TRoot root, SyntaxToken tokenInList, IEnumerable<SyntaxToken> newTokens)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceTokenInListCore(tokenInList, newTokens);
+            return (TRoot) root.ReplaceTokenInListCore(tokenInList, newTokens);
         }
 
         /// <summary>
@@ -139,7 +142,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot InsertTokensBefore<TRoot>(this TRoot root, SyntaxToken tokenInList, IEnumerable<SyntaxToken> newTokens)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.InsertTokensInListCore(tokenInList, newTokens, insertBefore: true);
+            return (TRoot) root.InsertTokensInListCore(tokenInList, newTokens, insertBefore: true);
         }
 
         /// <summary>
@@ -152,7 +155,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot InsertTokensAfter<TRoot>(this TRoot root, SyntaxToken tokenInList, IEnumerable<SyntaxToken> newTokens)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.InsertTokensInListCore(tokenInList, newTokens, insertBefore: false);
+            return (TRoot) root.InsertTokensInListCore(tokenInList, newTokens, insertBefore: false);
         }
 
         /// <summary>
@@ -165,7 +168,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot ReplaceTrivia<TRoot>(this TRoot root, SyntaxTrivia oldTrivia, IEnumerable<SyntaxTrivia> newTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceTriviaInListCore(oldTrivia, newTrivia);
+            return (TRoot) root.ReplaceTriviaInListCore(oldTrivia, newTrivia);
         }
 
         /// <summary>
@@ -178,7 +181,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot InsertTriviaBefore<TRoot>(this TRoot root, SyntaxTrivia trivia, IEnumerable<SyntaxTrivia> newTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.InsertTriviaInListCore(trivia, newTrivia, insertBefore: true);
+            return (TRoot) root.InsertTriviaInListCore(trivia, newTrivia, insertBefore: true);
         }
 
         /// <summary>
@@ -191,7 +194,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot InsertTriviaAfter<TRoot>(this TRoot root, SyntaxTrivia trivia, IEnumerable<SyntaxTrivia> newTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.InsertTriviaInListCore(trivia, newTrivia, insertBefore: false);
+            return (TRoot) root.InsertTriviaInListCore(trivia, newTrivia, insertBefore: false);
         }
 
         /// <summary>
@@ -206,7 +209,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot ReplaceTokens<TRoot>(this TRoot root, IEnumerable<SyntaxToken> tokens, Func<SyntaxToken, SyntaxToken, SyntaxToken> computeReplacementToken)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore<SyntaxNode>(tokens: tokens, computeReplacementToken: computeReplacementToken);
+            return (TRoot) root.ReplaceCore<SyntaxNode>(tokens: tokens, computeReplacementToken: computeReplacementToken);
         }
 
         /// <summary>
@@ -220,7 +223,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot ReplaceToken<TRoot>(this TRoot root, SyntaxToken oldToken, SyntaxToken newToken)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore<SyntaxNode>(tokens: new[] { oldToken }, computeReplacementToken: (o, r) => newToken);
+            return (TRoot) root.ReplaceCore<SyntaxNode>(tokens: new[] { oldToken }, computeReplacementToken: (o, r) => newToken);
         }
 
         /// <summary>
@@ -235,7 +238,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot ReplaceTrivia<TRoot>(this TRoot root, IEnumerable<SyntaxTrivia> trivia, Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia> computeReplacementTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore<SyntaxNode>(trivia: trivia, computeReplacementTrivia: computeReplacementTrivia);
+            return (TRoot) root.ReplaceCore<SyntaxNode>(trivia: trivia, computeReplacementTrivia: computeReplacementTrivia);
         }
 
         /// <summary>
@@ -248,7 +251,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot ReplaceTrivia<TRoot>(this TRoot root, SyntaxTrivia trivia, SyntaxTrivia newTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore<SyntaxNode>(trivia: new[] { trivia }, computeReplacementTrivia: (o, r) => newTrivia);
+            return (TRoot) root.ReplaceCore<SyntaxNode>(trivia: new[] { trivia }, computeReplacementTrivia: (o, r) => newTrivia);
         }
 
         /// <summary>
@@ -263,7 +266,7 @@ namespace Loretta.CodeAnalysis
             SyntaxRemoveOptions options)
             where TRoot : SyntaxNode
         {
-            return (TRoot?)root.RemoveNodesCore(new[] { node }, options);
+            return (TRoot?) root.RemoveNodesCore(new[] { node }, options);
         }
 
         /// <summary>
@@ -279,7 +282,7 @@ namespace Loretta.CodeAnalysis
             SyntaxRemoveOptions options)
             where TRoot : SyntaxNode
         {
-            return (TRoot?)root.RemoveNodesCore(nodes, options);
+            return (TRoot?) root.RemoveNodesCore(nodes, options);
         }
 
         internal const string DefaultIndentation = "    ";
@@ -296,7 +299,7 @@ namespace Loretta.CodeAnalysis
         public static TNode NormalizeWhitespace<TNode>(this TNode node, string indentation, bool elasticTrivia)
             where TNode : SyntaxNode
         {
-            return (TNode)node.NormalizeWhitespaceCore(indentation, DefaultEOL, elasticTrivia);
+            return (TNode) node.NormalizeWhitespaceCore(indentation, DefaultEOL, elasticTrivia);
         }
 
         /// <summary>
@@ -311,7 +314,7 @@ namespace Loretta.CodeAnalysis
         public static TNode NormalizeWhitespace<TNode>(this TNode node, string indentation = DefaultIndentation, string eol = DefaultEOL, bool elasticTrivia = false)
             where TNode : SyntaxNode
         {
-            return (TNode)node.NormalizeWhitespaceCore(indentation, eol, elasticTrivia);
+            return (TNode) node.NormalizeWhitespaceCore(indentation, eol, elasticTrivia);
         }
 
         /// <summary>
@@ -370,7 +373,7 @@ namespace Loretta.CodeAnalysis
             this TSyntax node
             ) where TSyntax : SyntaxNode
         {
-            return node.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?)null);
+            return node.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?) null);
         }
 
         /// <summary>
@@ -380,7 +383,7 @@ namespace Loretta.CodeAnalysis
             this TSyntax node,
             params SyntaxTrivia[]? trivia) where TSyntax : SyntaxNode
         {
-            return node.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?)trivia);
+            return node.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
         }
 
         /// <summary>
@@ -412,7 +415,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public static TSyntax WithoutTrailingTrivia<TSyntax>(this TSyntax node) where TSyntax : SyntaxNode
         {
-            return node.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?)null);
+            return node.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?) null);
         }
 
         /// <summary>
@@ -422,7 +425,7 @@ namespace Loretta.CodeAnalysis
             this TSyntax node,
             params SyntaxTrivia[]? trivia) where TSyntax : SyntaxNode
         {
-            return node.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?)trivia);
+            return node.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
         }
 
         /// <summary>

@@ -1,0 +1,3 @@
+﻿#nullable enable
+static Loretta.CodeAnalysis.FileLinePositionSpan.operator !=(Loretta.CodeAnalysis.FileLinePositionSpan left, Loretta.CodeAnalysis.FileLinePositionSpan right) -> bool
+static Loretta.CodeAnalysis.FileLinePositionSpan.operator ==(Loretta.CodeAnalysis.FileLinePositionSpan left, Loretta.CodeAnalysis.FileLinePositionSpan right) -> bool

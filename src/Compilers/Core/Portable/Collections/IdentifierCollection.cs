@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
-using System.Diagnostics;
 
 namespace Loretta.CodeAnalysis
 {
@@ -45,7 +43,7 @@ namespace Loretta.CodeAnalysis
 
         public void AddIdentifier(string identifier)
         {
-            RoslynDebug.Assert(identifier != null);
+            LorettaDebug.Assert(identifier != null);
 
             object? value;
             if (!_map.TryGetValue(identifier, out value))
@@ -62,8 +60,7 @@ namespace Loretta.CodeAnalysis
         {
             // Had a mapping for it.  It will either map to a single 
             // spelling, or to a set of spellings.
-            var strValue = value as string;
-            if (strValue != null)
+            if (value is string strValue)
             {
                 if (!string.Equals(identifier, strValue, StringComparison.Ordinal))
                 {
@@ -75,7 +72,7 @@ namespace Loretta.CodeAnalysis
             else
             {
                 // We have multiple spellings already.
-                var spellings = (HashSet<string>)value;
+                var spellings = (HashSet<string>) value;
 
                 // Note: the set will prevent duplicates.
                 spellings.Add(identifier);
@@ -91,7 +88,7 @@ namespace Loretta.CodeAnalysis
 
         public bool ContainsIdentifier(string identifier, bool caseSensitive)
         {
-            RoslynDebug.Assert(identifier != null);
+            LorettaDebug.Assert(identifier != null);
 
             if (caseSensitive)
             {
@@ -116,13 +113,12 @@ namespace Loretta.CodeAnalysis
             object? spellings;
             if (_map.TryGetValue(identifier, out spellings))
             {
-                var spelling = spellings as string;
-                if (spelling != null)
+                if (spellings is string spelling)
                 {
                     return string.Equals(identifier, spelling, StringComparison.Ordinal);
                 }
 
-                var set = (HashSet<string>)spellings;
+                var set = (HashSet<string>) spellings;
                 return set.Contains(identifier);
             }
 

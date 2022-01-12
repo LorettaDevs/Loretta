@@ -90,7 +90,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             public Cursor MoveToFirstChild()
             {
-                RoslynDebug.Assert(CurrentNodeOrToken.IsNode);
+                LorettaDebug.Assert(CurrentNodeOrToken.IsNode);
 
                 // Just try to get the first node directly.  This is faster than getting the list of
                 // child nodes and tokens (which forces all children to be enumerated for the sake

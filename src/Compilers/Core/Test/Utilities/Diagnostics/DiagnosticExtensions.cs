@@ -18,29 +18,11 @@ namespace Loretta.CodeAnalysis
 {
     public static class DiagnosticExtensions
     {
-        /// <summary>
-        /// This is obsolete. Use Verify instead.
-        /// </summary>
-        public static void VerifyErrorCodes(this IEnumerable<Diagnostic> actual, params DiagnosticDescription[] expected) =>
-            Verify(actual, expected, errorCodeOnly: true);
-
-        public static void VerifyErrorCodes(this ImmutableArray<Diagnostic> actual, params DiagnosticDescription[] expected) =>
-            VerifyErrorCodes((IEnumerable<Diagnostic>) actual, expected);
-
-        internal static void Verify(this DiagnosticBag actual, params DiagnosticDescription[] expected) =>
-            Verify(actual.AsEnumerable(), expected, errorCodeOnly: false);
-
         public static void Verify(this IEnumerable<Diagnostic> actual, params DiagnosticDescription[] expected) =>
             Verify(actual, expected, errorCodeOnly: false);
 
         public static void Verify(this IEnumerable<Diagnostic> actual, bool fallbackToErrorCodeOnlyForNonEnglish, params DiagnosticDescription[] expected) =>
             Verify(actual, expected, errorCodeOnly: fallbackToErrorCodeOnlyForNonEnglish && EnsureEnglishUICulture.PreferredOrNull != null);
-
-        public static void VerifyWithFallbackToErrorCodeOnlyForNonEnglish(this IEnumerable<Diagnostic> actual, params DiagnosticDescription[] expected) =>
-            Verify(actual, true, expected);
-
-        public static void Verify(this ImmutableArray<Diagnostic> actual, params DiagnosticDescription[] expected) =>
-            Verify((IEnumerable<Diagnostic>) actual, expected);
 
         private static void Verify(IEnumerable<Diagnostic> actual, DiagnosticDescription[] expected, bool errorCodeOnly)
         {
@@ -74,17 +56,6 @@ namespace Loretta.CodeAnalysis
             {
                 Assert.True(false, DiagnosticDescription.GetAssertText(expected, actual));
             }
-        }
-
-        public static string Concat(this string[] str) => string.Concat(str);
-
-        public static string Inspect(this Diagnostic e) =>
-            e.Location.IsInSource ? $"{e.Severity} {e.Id}: {e.GetMessage(CultureInfo.CurrentCulture)}" : "no location: ";
-
-        public static string ToString(this Diagnostic d, IFormatProvider formatProvider)
-        {
-            IFormattable formattable = d;
-            return formattable.ToString(null, formatProvider);
         }
     }
 }
