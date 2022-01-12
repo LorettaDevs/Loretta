@@ -25,6 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - `ObjectDisplay.FormatLiteral` was not emitting unicode escapes correctly.
 
+### Removed
+- Removed `Loretta.CodeAnalysis.GeneratedKind` as it was not being used.
+- Removed `Loretta.CodeAnalysis.SourceReferenceResolver` as it was not being used.
+- Removed `Loretta.CodeAnalysis.SyntaxTreeOptionsProvider` as it was not being used.
+- Removed `Loretta.CodeAnalysis.Optional<T>` as it was not being used.
+- Removed `Loretta.CodeAnalysis.CaseInsensitiveComparison` as it was not being used.
+
 ## v0.2.7-beta.7
 ### Added
 - Added `Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.ConstantFold`.

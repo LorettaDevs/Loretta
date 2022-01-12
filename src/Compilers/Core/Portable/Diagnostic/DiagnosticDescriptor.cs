@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Loretta.CodeAnalysis.Diagnostics;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
@@ -206,24 +205,6 @@ namespace Loretta.CodeAnalysis
                 Hash.Combine(this.IsEnabledByDefault.GetHashCode(),
                 Hash.Combine(this.MessageFormat.GetHashCode(),
                     this.Title.GetHashCode())))))));
-        }
-
-        // internal for testing purposes.
-        internal static ReportDiagnostic MapSeverityToReport(DiagnosticSeverity severity)
-        {
-            switch (severity)
-            {
-                case DiagnosticSeverity.Hidden:
-                    return ReportDiagnostic.Hidden;
-                case DiagnosticSeverity.Info:
-                    return ReportDiagnostic.Info;
-                case DiagnosticSeverity.Warning:
-                    return ReportDiagnostic.Warn;
-                case DiagnosticSeverity.Error:
-                    return ReportDiagnostic.Error;
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(severity);
-            }
         }
     }
 }

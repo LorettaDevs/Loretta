@@ -23,9 +23,4 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         Sha256 = 2,
     }
-
-    internal static class SourceHashAlgorithmUtils
-    {
-        public const SourceHashAlgorithm DefaultContentHashAlgorithm = SourceHashAlgorithm.Sha256;
-    }
 }

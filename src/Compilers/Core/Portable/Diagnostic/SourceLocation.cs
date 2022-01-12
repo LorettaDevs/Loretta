@@ -90,20 +90,6 @@ namespace Loretta.CodeAnalysis
             return _syntaxTree.GetLineSpan(_span);
         }
 
-        public override FileLinePositionSpan GetMappedLineSpan()
-        {
-            // If there's no syntax tree (e.g. because we're binding speculatively),
-            // then just return an invalid span.
-            if (_syntaxTree == null)
-            {
-                FileLinePositionSpan result = default(FileLinePositionSpan);
-                RoslynDebug.Assert(!result.IsValid);
-                return result;
-            }
-
-            return _syntaxTree.GetMappedLineSpan(_span);
-        }
-
         public bool Equals(SourceLocation? other)
         {
             if (ReferenceEquals(this, other))

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
-using Loretta.CodeAnalysis.Diagnostics;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Utilities;
 
@@ -412,19 +411,6 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal abstract Diagnostic WithIsSuppressed(bool isSuppressed);
 
-        /// <summary>
-        /// Create a new instance of this diagnostic with the given programmatic suppression info.
-        /// </summary>
-        internal Diagnostic WithProgrammaticSuppression(ProgrammaticSuppressionInfo programmaticSuppressionInfo)
-        {
-            RoslynDebug.Assert(ProgrammaticSuppressionInfo == null);
-            RoslynDebug.Assert(programmaticSuppressionInfo != null);
-
-            return new DiagnosticWithProgrammaticSuppression(this, programmaticSuppressionInfo);
-        }
-
-        internal virtual ProgrammaticSuppressionInfo? ProgrammaticSuppressionInfo => null;
-
         // compatibility
         internal virtual int Code => 0;
 
@@ -468,28 +454,6 @@ namespace Loretta.CodeAnalysis
                 }
 
                 return !filterSpan.HasValue || filterSpan.GetValueOrDefault().IntersectsWith(location.SourceSpan);
-            }
-        }
-
-        internal Diagnostic? WithReportDiagnostic(ReportDiagnostic reportAction)
-        {
-            switch (reportAction)
-            {
-                case ReportDiagnostic.Suppress:
-                    // Suppressed diagnostic.
-                    return null;
-                case ReportDiagnostic.Error:
-                    return WithSeverity(DiagnosticSeverity.Error);
-                case ReportDiagnostic.Default:
-                    return this;
-                case ReportDiagnostic.Warn:
-                    return WithSeverity(DiagnosticSeverity.Warning);
-                case ReportDiagnostic.Info:
-                    return WithSeverity(DiagnosticSeverity.Info);
-                case ReportDiagnostic.Hidden:
-                    return WithSeverity(DiagnosticSeverity.Hidden);
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(reportAction);
             }
         }
 

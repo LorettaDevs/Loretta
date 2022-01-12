@@ -26,13 +26,8 @@ namespace Loretta.CodeAnalysis
         MetadataFile = 2,
 
         /// <summary>
-        /// The location represents a position in an XML file.
-        /// </summary>
-        XmlFile = 3,
-
-        /// <summary>
         /// The location in some external file.
         /// </summary>
-        ExternalFile = 4,
+        ExternalFile = 3,
     }
 }

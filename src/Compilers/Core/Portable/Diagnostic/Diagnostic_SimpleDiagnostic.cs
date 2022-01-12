@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Loretta.CodeAnalysis.Diagnostics;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
