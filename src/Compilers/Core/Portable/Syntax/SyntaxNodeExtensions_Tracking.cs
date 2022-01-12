@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis
         public static TRoot TrackNodes<TRoot>(this TRoot root, params SyntaxNode[] nodes)
             where TRoot : SyntaxNode
         {
-            return TrackNodes(root, (IEnumerable<SyntaxNode>)nodes);
+            return TrackNodes(root, (IEnumerable<SyntaxNode>) nodes);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Loretta.CodeAnalysis
                 }
                 else
                 {
-                    node = ((IStructuredTriviaSyntax)node).ParentTrivia.Token.Parent!;
+                    node = ((IStructuredTriviaSyntax) node).ParentTrivia.Token.Parent!;
                     LorettaDebug.Assert(node is object);
                 }
             }
@@ -180,7 +180,7 @@ namespace Loretta.CodeAnalysis
                 }
                 else
                 {
-                    node = ((IStructuredTriviaSyntax)node).ParentTrivia.Token.Parent!;
+                    node = ((IStructuredTriviaSyntax) node).ParentTrivia.Token.Parent!;
                     LorettaDebug.Assert(node is object);
                 }
             }
@@ -214,7 +214,7 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
-                _idToNodeMap = map.ToDictionary(kv => kv.Key, kv => (IReadOnlyList<SyntaxNode>)ImmutableArray.CreateRange(kv.Value));
+                _idToNodeMap = map.ToDictionary(kv => kv.Key, kv => (IReadOnlyList<SyntaxNode>) ImmutableArray.CreateRange(kv.Value));
             }
 
             public IReadOnlyList<SyntaxNode> GetNodes(SyntaxAnnotation id)

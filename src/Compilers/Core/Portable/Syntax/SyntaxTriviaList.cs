@@ -124,7 +124,7 @@ namespace Loretta.CodeAnalysis
                 {
                     if (Node.IsList)
                     {
-                        if (unchecked((uint)index < (uint)Node.SlotCount))
+                        if (unchecked((uint) index < (uint) Node.SlotCount))
                         {
                             return new SyntaxTrivia(Token, Node.GetSlot(index), Position + Node.GetSlotOffset(index), Index + index);
                         }
@@ -332,8 +332,7 @@ namespace Loretta.CodeAnalysis
             }
 
             // Just return ourselves if we're not being asked to add anything.
-            var triviaCollection = trivia as ICollection<SyntaxTrivia>;
-            if (triviaCollection != null && triviaCollection.Count == 0)
+            if (trivia is ICollection<SyntaxTrivia> triviaCollection && triviaCollection.Count == 0)
             {
                 return this;
             }

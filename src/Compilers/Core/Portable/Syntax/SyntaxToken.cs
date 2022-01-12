@@ -279,7 +279,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxAnnotation> GetAnnotations(params string[] annotationKinds)
         {
-            return GetAnnotations((IEnumerable<string>)annotationKinds);
+            return GetAnnotations((IEnumerable<string>) annotationKinds);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithAdditionalAnnotations(params SyntaxAnnotation[] annotations)
         {
-            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>)annotations);
+            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithoutAnnotations(params SyntaxAnnotation[] annotations)
         {
-            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>)annotations);
+            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithLeadingTrivia(SyntaxTriviaList trivia)
         {
-            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>)trivia);
+            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithLeadingTrivia(params SyntaxTrivia[]? trivia)
         {
-            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?)trivia);
+            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
         }
 
         /// <summary>
@@ -489,7 +489,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithTrailingTrivia(SyntaxTriviaList trivia)
         {
-            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>)trivia);
+            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithTrailingTrivia(params SyntaxTrivia[]? trivia)
         {
-            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?)trivia);
+            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
         }
 
         /// <summary>
@@ -567,7 +567,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public override bool Equals(object? obj)
         {
-            return obj is SyntaxToken && Equals((SyntaxToken)obj);
+            return obj is SyntaxToken token && Equals(token);
         }
 
         /// <summary>

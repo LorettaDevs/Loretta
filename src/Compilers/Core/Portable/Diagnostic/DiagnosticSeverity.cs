@@ -39,13 +39,13 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// An unknown severity diagnostic is something whose severity has not yet been determined.
         /// </summary>
-        public const DiagnosticSeverity Unknown = (DiagnosticSeverity)InternalErrorCode.Unknown;
+        public const DiagnosticSeverity Unknown = (DiagnosticSeverity) InternalErrorCode.Unknown;
 
         /// <summary>
         /// If an unknown diagnostic is resolved and found to be unnecessary then it is 
         /// treated as a "Void" diagnostic
         /// </summary>
-        public const DiagnosticSeverity Void = (DiagnosticSeverity)InternalErrorCode.Void;
+        public const DiagnosticSeverity Void = (DiagnosticSeverity) InternalErrorCode.Void;
     }
 
     /// <summary>

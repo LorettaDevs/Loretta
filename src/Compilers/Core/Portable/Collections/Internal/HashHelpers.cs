@@ -47,7 +47,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         {
             if ((candidate & 1) != 0)
             {
-                var limit = (int)Math.Sqrt(candidate);
+                var limit = (int) Math.Sqrt(candidate);
                 for (var divisor = 3; divisor <= limit; divisor += 2)
                 {
                     if ((candidate % divisor) == 0)
@@ -85,7 +85,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
             // Allow the hashtables to grow to maximum possible size (~2G elements) before encountering capacity overflow.
             // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-            if ((uint)newSize > MaxPrimeArrayLength && MaxPrimeArrayLength > oldSize)
+            if ((uint) newSize > MaxPrimeArrayLength && MaxPrimeArrayLength > oldSize)
             {
                 LorettaDebug.Assert(MaxPrimeArrayLength == GetPrime(MaxPrimeArrayLength), "Invalid MaxPrimeArrayLength");
                 return MaxPrimeArrayLength;
@@ -113,7 +113,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
             // This is equivalent of (uint)Math.BigMul(multiplier * value, divisor, out _). This version
             // is faster than BigMul currently because we only need the high bits.
-            var highbits = (uint)(((((multiplier * value) >> 32) + 1) * divisor) >> 32);
+            var highbits = (uint) (((((multiplier * value) >> 32) + 1) * divisor) >> 32);
 
             LorettaDebug.Assert(highbits == value % divisor);
             return highbits;

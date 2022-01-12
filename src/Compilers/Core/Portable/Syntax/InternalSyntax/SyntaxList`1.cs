@@ -40,11 +40,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                     LorettaDebug.Assert(index >= 0);
                     LorettaDebug.Assert(index <= _node.SlotCount);
 
-                    return (TNode?)_node.GetSlot(index);
+                    return (TNode?) _node.GetSlot(index);
                 }
                 else if (index == 0)
                 {
-                    return (TNode?)_node;
+                    return (TNode?) _node;
                 }
                 else
                 {
@@ -112,10 +112,10 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 var node = this._node;
                 if (node.IsList)
                 {
-                    return (TNode?)node.GetSlot(node.SlotCount - 1);
+                    return (TNode?) node.GetSlot(node.SlotCount - 1);
                 }
 
-                return (TNode?)node;
+                return (TNode?) node;
             }
         }
 
@@ -149,7 +149,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public override bool Equals(object? obj)
         {
-            return (obj is SyntaxList<TNode>) && Equals((SyntaxList<TNode>)obj);
+            return (obj is SyntaxList<TNode> list) && Equals(list);
         }
 
         public override int GetHashCode()

@@ -3,12 +3,12 @@
 
 using System;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.Utilities;
-using System.Diagnostics;
 
 namespace Loretta.CodeAnalysis.Text
 {
@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis.Text
 
             var maxCharRemainingGuess = encoding.GetMaxCharCountOrThrowIfHuge(stream);
             LorettaDebug.Assert(longLength > 0 && longLength <= int.MaxValue); // GetMaxCharCountOrThrowIfHuge should have thrown.
-            int length = (int)longLength;
+            int length = (int) longLength;
 
             using (var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true, bufferSize: Math.Min(length, 4096), leaveOpen: true))
             {
@@ -217,8 +217,6 @@ namespace Loretta.CodeAnalysis.Text
                 return;
             }
 
-            var chunkWriter = writer as LargeTextWriter;
-
             int chunkIndex = GetIndexFromPosition(span.Start);
             int chunkStartOffset = span.Start - _chunkStartOffsets[chunkIndex];
             while (true)
@@ -227,7 +225,7 @@ namespace Loretta.CodeAnalysis.Text
                 var chunk = _chunks[chunkIndex];
                 int charsToWrite = Math.Min(chunk.Length - chunkStartOffset, count);
 
-                if (chunkWriter != null && chunkStartOffset == 0 && charsToWrite == chunk.Length)
+                if (writer is LargeTextWriter chunkWriter && chunkStartOffset == 0 && charsToWrite == chunk.Length)
                 {
                     // reuse entire chunk
                     chunkWriter.AppendChunk(chunk);
@@ -300,7 +298,7 @@ namespace Loretta.CodeAnalysis.Text
                         case '\u0085':
                         case '\u2028':
                         case '\u2029':
-line_break:
+                        line_break:
                             arrayBuilder.Add(position);
                             position = index;
                             break;

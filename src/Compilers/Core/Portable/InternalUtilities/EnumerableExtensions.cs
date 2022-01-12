@@ -254,7 +254,7 @@ namespace Loretta.Utilities
                 return SpecializedCollections.EmptyEnumerable<T>();
             }
 
-            return source.Where((Func<T?, bool>)s_notNullTest)!;
+            return source.Where((Func<T?, bool>) s_notNullTest)!;
         }
 
         public static T[] AsArray<T>(this IEnumerable<T> source)

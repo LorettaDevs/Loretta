@@ -106,14 +106,14 @@ namespace Loretta.CodeAnalysis
                     {
                         if (index == 0)
                         {
-                            return (TNode)node;
+                            return (TNode) node;
                         }
                     }
                     else
                     {
-                        if (unchecked((uint)index < (uint)_count))
+                        if (unchecked((uint) index < (uint) _count))
                         {
-                            return (TNode)node.GetRequiredNodeSlot(index << 1);
+                            return (TNode) node.GetRequiredNodeSlot(index << 1);
                         }
                     }
                 }
@@ -133,7 +133,7 @@ namespace Loretta.CodeAnalysis
             if (node != null)
             {
                 LorettaDebug.Assert(node.IsList, "separated list cannot be a singleton separator");
-                if (unchecked((uint)index < (uint)_separatorCount))
+                if (unchecked((uint) index < (uint) _separatorCount))
                 {
                     index = (index << 1) + 1;
                     var green = node.Green.GetRequiredSlot(index);

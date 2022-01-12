@@ -123,7 +123,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public override bool Equals(object? other)
         {
-            return other is FileLinePositionSpan && Equals((FileLinePositionSpan)other);
+            return other is FileLinePositionSpan span && Equals(span);
         }
 
         /// <summary>

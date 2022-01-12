@@ -31,12 +31,12 @@ namespace Loretta.CodeAnalysis
                 }
                 else
                 {
-                    return (TNode)node.SetAnnotations(null);
+                    return (TNode) node.SetAnnotations(null);
                 }
             }
             else
             {
-                return (TNode)node.SetAnnotations(newAnnotations.ToArrayAndFree());
+                return (TNode) node.SetAnnotations(newAnnotations.ToArrayAndFree());
             }
         }
 
@@ -67,7 +67,7 @@ namespace Loretta.CodeAnalysis
             }
             else
             {
-                return (TNode)node.SetAnnotations(newAnnotations.ToArrayAndFree());
+                return (TNode) node.SetAnnotations(newAnnotations.ToArrayAndFree());
             }
         }
 
@@ -98,7 +98,7 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
-                return (TNode)node.SetAnnotations(newAnnotations.ToArrayAndFree());
+                return (TNode) node.SetAnnotations(newAnnotations.ToArrayAndFree());
             }
             finally
             {

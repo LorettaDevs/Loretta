@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             int hash;
             GreenNode? cached = SyntaxNodeCache.TryGetNode(GreenNode.ListKind, child0, child1, out hash);
             if (cached != null)
-                return (WithTwoChildren)cached;
+                return (WithTwoChildren) cached;
 
             var result = new WithTwoChildren(child0, child1);
             if (hash >= 0)
@@ -56,7 +56,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             int hash;
             GreenNode? cached = SyntaxNodeCache.TryGetNode(GreenNode.ListKind, child0, child1, child2, out hash);
             if (cached != null)
-                return (WithThreeChildren)cached;
+                return (WithThreeChildren) cached;
 
             var result = new WithThreeChildren(child0, child1, child2);
             if (hash >= 0)
@@ -113,9 +113,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 return left;
             }
 
-            var leftList = left as SyntaxList;
             var rightList = right as SyntaxList;
-            if (leftList != null)
+            if (left is SyntaxList leftList)
             {
                 if (rightList != null)
                 {

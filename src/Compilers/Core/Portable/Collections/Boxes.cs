@@ -9,10 +9,10 @@ namespace Loretta.CodeAnalysis
     {
         public static readonly object BoxedTrue = true;
         public static readonly object BoxedFalse = false;
-        public static readonly object BoxedByteZero = (byte)0;
-        public static readonly object BoxedSByteZero = (sbyte)0;
-        public static readonly object BoxedInt16Zero = (short)0;
-        public static readonly object BoxedUInt16Zero = (ushort)0;
+        public static readonly object BoxedByteZero = (byte) 0;
+        public static readonly object BoxedSByteZero = (sbyte) 0;
+        public static readonly object BoxedInt16Zero = (short) 0;
+        public static readonly object BoxedUInt16Zero = (ushort) 0;
         public static readonly object BoxedInt32Zero = 0;
         public static readonly object BoxedInt32One = 1;
         public static readonly object BoxedUInt32Zero = 0U;
@@ -78,7 +78,7 @@ namespace Loretta.CodeAnalysis
         {
             // There are many representations of zero in floating point.
             // Use the boxed value only if the bit pattern is all zeros.
-            return *(int*)(&f) == 0 ? BoxedSingleZero : f;
+            return *(int*) (&f) == 0 ? BoxedSingleZero : f;
         }
 
         public static object Box(double d)
@@ -99,7 +99,7 @@ namespace Loretta.CodeAnalysis
         {
             // There are many representation of zero in System.Decimal
             // Use the boxed value only if the bit pattern is all zeros.
-            ulong* ptr = (ulong*)&d;
+            ulong* ptr = (ulong*) &d;
             return ptr[0] == 0 && ptr[1] == 0 ? BoxedDecimalZero : d;
         }
     }

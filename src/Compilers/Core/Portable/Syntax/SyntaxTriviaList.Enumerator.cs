@@ -86,7 +86,7 @@ namespace Loretta.CodeAnalysis
                 LorettaDebug.Assert(trailingGreen is object);
                 InitializeFrom(in token, trailingGreen, index, trailingPosition);
             }
-            
+
             /// <inheritdoc cref="IEnumerator.MoveNext"/>
             public bool MoveNext()
             {

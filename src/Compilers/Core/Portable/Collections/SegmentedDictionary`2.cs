@@ -96,7 +96,7 @@ namespace Loretta.CodeAnalysis.Collections
             // back-compat with subclasses that may have overridden the enumerator behavior.
             if (dictionary.GetType() == typeof(SegmentedDictionary<TKey, TValue>))
             {
-                var d = (SegmentedDictionary<TKey, TValue>)dictionary;
+                var d = (SegmentedDictionary<TKey, TValue>) dictionary;
                 var count = d._count;
                 var entries = d._entries;
                 for (var i = 0; i < count; i++)
@@ -277,7 +277,7 @@ namespace Loretta.CodeAnalysis.Collections
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
             }
 
-            if ((uint)index > (uint)array.Length)
+            if ((uint) index > (uint) array.Length)
             {
                 ThrowHelper.ThrowIndexArgumentOutOfRange_NeedNonNegNumException();
             }
@@ -318,7 +318,7 @@ namespace Loretta.CodeAnalysis.Collections
                 var comparer = _comparer;
                 if (comparer == null)
                 {
-                    var hashCode = (uint)key.GetHashCode();
+                    var hashCode = (uint) key.GetHashCode();
                     var i = GetBucket(hashCode);
                     var entries = _entries;
                     uint collisionCount = 0;
@@ -331,7 +331,7 @@ namespace Loretta.CodeAnalysis.Collections
                         {
                             // Should be a while loop https://github.com/dotnet/runtime/issues/9422
                             // Test in if to drop range check for following array access
-                            if ((uint)i >= (uint)entries.Length)
+                            if ((uint) i >= (uint) entries.Length)
                             {
                                 goto ReturnNotFound;
                             }
@@ -345,7 +345,7 @@ namespace Loretta.CodeAnalysis.Collections
                             i = entry._next;
 
                             collisionCount++;
-                        } while (collisionCount <= (uint)entries.Length);
+                        } while (collisionCount <= (uint) entries.Length);
 
                         // The chain of entries forms a loop; which means a concurrent update has happened.
                         // Break out of the loop and throw, rather than looping forever.
@@ -363,7 +363,7 @@ namespace Loretta.CodeAnalysis.Collections
                         {
                             // Should be a while loop https://github.com/dotnet/runtime/issues/9422
                             // Test in if to drop range check for following array access
-                            if ((uint)i >= (uint)entries.Length)
+                            if ((uint) i >= (uint) entries.Length)
                             {
                                 goto ReturnNotFound;
                             }
@@ -377,7 +377,7 @@ namespace Loretta.CodeAnalysis.Collections
                             i = entry._next;
 
                             collisionCount++;
-                        } while (collisionCount <= (uint)entries.Length);
+                        } while (collisionCount <= (uint) entries.Length);
 
                         // The chain of entries forms a loop; which means a concurrent update has happened.
                         // Break out of the loop and throw, rather than looping forever.
@@ -386,7 +386,7 @@ namespace Loretta.CodeAnalysis.Collections
                 }
                 else
                 {
-                    var hashCode = (uint)comparer.GetHashCode(key);
+                    var hashCode = (uint) comparer.GetHashCode(key);
                     var i = GetBucket(hashCode);
                     var entries = _entries;
                     uint collisionCount = 0;
@@ -395,7 +395,7 @@ namespace Loretta.CodeAnalysis.Collections
                     {
                         // Should be a while loop https://github.com/dotnet/runtime/issues/9422
                         // Test in if to drop range check for following array access
-                        if ((uint)i >= (uint)entries.Length)
+                        if ((uint) i >= (uint) entries.Length)
                         {
                             goto ReturnNotFound;
                         }
@@ -409,7 +409,7 @@ namespace Loretta.CodeAnalysis.Collections
                         i = entry._next;
 
                         collisionCount++;
-                    } while (collisionCount <= (uint)entries.Length);
+                    } while (collisionCount <= (uint) entries.Length);
 
                     // The chain of entries forms a loop; which means a concurrent update has happened.
                     // Break out of the loop and throw, rather than looping forever.
@@ -419,13 +419,13 @@ namespace Loretta.CodeAnalysis.Collections
 
             goto ReturnNotFound;
 
-ConcurrentOperation:
+        ConcurrentOperation:
             ThrowHelper.ThrowInvalidOperationException_ConcurrentOperationsNotSupported();
-ReturnFound:
+        ReturnFound:
             ref TValue value = ref entry._value;
-Return:
+        Return:
             return ref value;
-ReturnNotFound:
+        ReturnNotFound:
             value = ref RoslynUnsafe.NullRef<TValue>();
             goto Return;
         }
@@ -438,7 +438,7 @@ ReturnNotFound:
 
             // Assign member variables after both arrays allocated to guard against corruption from OOM if second fails
             _freeList = -1;
-            _fastModMultiplier = HashHelpers.GetFastModMultiplier((uint)size);
+            _fastModMultiplier = HashHelpers.GetFastModMultiplier((uint) size);
             _buckets = buckets;
             _entries = entries;
 
@@ -462,7 +462,7 @@ ReturnNotFound:
             LorettaDebug.Assert(entries.Length > 0, "expected entries to be non-empty");
 
             var comparer = _comparer;
-            var hashCode = (uint)((comparer == null) ? key.GetHashCode() : comparer.GetHashCode(key));
+            var hashCode = (uint) ((comparer == null) ? key.GetHashCode() : comparer.GetHashCode(key));
 
             uint collisionCount = 0;
             ref var bucket = ref GetBucket(hashCode);
@@ -477,7 +477,7 @@ ReturnNotFound:
                     {
                         // Should be a while loop https://github.com/dotnet/runtime/issues/9422
                         // Test uint in if rather than loop condition to drop range check for following array access
-                        if ((uint)i >= (uint)entries.Length)
+                        if ((uint) i >= (uint) entries.Length)
                         {
                             break;
                         }
@@ -501,7 +501,7 @@ ReturnNotFound:
                         i = entries[i]._next;
 
                         collisionCount++;
-                        if (collisionCount > (uint)entries.Length)
+                        if (collisionCount > (uint) entries.Length)
                         {
                             // The chain of entries forms a loop; which means a concurrent update has happened.
                             // Break out of the loop and throw, rather than looping forever.
@@ -519,7 +519,7 @@ ReturnNotFound:
                     {
                         // Should be a while loop https://github.com/dotnet/runtime/issues/9422
                         // Test uint in if rather than loop condition to drop range check for following array access
-                        if ((uint)i >= (uint)entries.Length)
+                        if ((uint) i >= (uint) entries.Length)
                         {
                             break;
                         }
@@ -543,7 +543,7 @@ ReturnNotFound:
                         i = entries[i]._next;
 
                         collisionCount++;
-                        if (collisionCount > (uint)entries.Length)
+                        if (collisionCount > (uint) entries.Length)
                         {
                             // The chain of entries forms a loop; which means a concurrent update has happened.
                             // Break out of the loop and throw, rather than looping forever.
@@ -558,7 +558,7 @@ ReturnNotFound:
                 {
                     // Should be a while loop https://github.com/dotnet/runtime/issues/9422
                     // Test uint in if rather than loop condition to drop range check for following array access
-                    if ((uint)i >= (uint)entries.Length)
+                    if ((uint) i >= (uint) entries.Length)
                     {
                         break;
                     }
@@ -582,7 +582,7 @@ ReturnNotFound:
                     i = entries[i]._next;
 
                     collisionCount++;
-                    if (collisionCount > (uint)entries.Length)
+                    if (collisionCount > (uint) entries.Length)
                     {
                         // The chain of entries forms a loop; which means a concurrent update has happened.
                         // Break out of the loop and throw, rather than looping forever.
@@ -637,7 +637,7 @@ ReturnNotFound:
 
             // Assign member variables after both arrays allocated to guard against corruption from OOM if second fails
             _buckets = new SegmentedArray<int>(newSize);
-            _fastModMultiplier = HashHelpers.GetFastModMultiplier((uint)newSize);
+            _fastModMultiplier = HashHelpers.GetFastModMultiplier((uint) newSize);
             for (var i = 0; i < count; i++)
             {
                 if (entries[i]._next >= -1)
@@ -666,7 +666,7 @@ ReturnNotFound:
             {
                 LorettaDebug.Assert(_entries.Length > 0, "entries should be non-empty");
                 uint collisionCount = 0;
-                var hashCode = (uint)(_comparer?.GetHashCode(key) ?? key.GetHashCode());
+                var hashCode = (uint) (_comparer?.GetHashCode(key) ?? key.GetHashCode());
                 ref var bucket = ref GetBucket(hashCode);
                 var entries = _entries;
                 var last = -1;
@@ -712,7 +712,7 @@ ReturnNotFound:
                     i = entry._next;
 
                     collisionCount++;
-                    if (collisionCount > (uint)entries.Length)
+                    if (collisionCount > (uint) entries.Length)
                     {
                         // The chain of entries forms a loop; which means a concurrent update has happened.
                         // Break out of the loop and throw, rather than looping forever.
@@ -738,7 +738,7 @@ ReturnNotFound:
             {
                 LorettaDebug.Assert(_entries.Length > 0, "entries should be non-empty");
                 uint collisionCount = 0;
-                var hashCode = (uint)(_comparer?.GetHashCode(key) ?? key.GetHashCode());
+                var hashCode = (uint) (_comparer?.GetHashCode(key) ?? key.GetHashCode());
                 ref var bucket = ref GetBucket(hashCode);
                 var entries = _entries;
                 var last = -1;
@@ -786,7 +786,7 @@ ReturnNotFound:
                     i = entry._next;
 
                     collisionCount++;
-                    if (collisionCount > (uint)entries.Length)
+                    if (collisionCount > (uint) entries.Length)
                     {
                         // The chain of entries forms a loop; which means a concurrent update has happened.
                         // Break out of the loop and throw, rather than looping forever.
@@ -839,7 +839,7 @@ ReturnNotFound:
                 ThrowHelper.ThrowArgumentException(ExceptionResource.Arg_NonZeroLowerBound);
             }
 
-            if ((uint)index > (uint)array.Length)
+            if ((uint) index > (uint) array.Length)
             {
                 ThrowHelper.ThrowIndexArgumentOutOfRange_NeedNonNegNumException();
             }
@@ -1000,7 +1000,7 @@ ReturnNotFound:
             {
                 if (IsCompatibleKey(key))
                 {
-                    ref var value = ref FindValue((TKey)key);
+                    ref var value = ref FindValue((TKey) key);
                     if (!RoslynUnsafe.IsNullRef(ref value))
                     {
                         return value;
@@ -1019,10 +1019,10 @@ ReturnNotFound:
 
                 try
                 {
-                    var tempKey = (TKey)key;
+                    var tempKey = (TKey) key;
                     try
                     {
-                        this[tempKey] = (TValue)value!;
+                        this[tempKey] = (TValue) value!;
                     }
                     catch (InvalidCastException)
                     {
@@ -1055,11 +1055,11 @@ ReturnNotFound:
 
             try
             {
-                var tempKey = (TKey)key;
+                var tempKey = (TKey) key;
 
                 try
                 {
-                    Add(tempKey, (TValue)value!);
+                    Add(tempKey, (TValue) value!);
                 }
                 catch (InvalidCastException)
                 {
@@ -1076,7 +1076,7 @@ ReturnNotFound:
         {
             if (IsCompatibleKey(key))
             {
-                return ContainsKey((TKey)key);
+                return ContainsKey((TKey) key);
             }
 
             return false;
@@ -1089,7 +1089,7 @@ ReturnNotFound:
         {
             if (IsCompatibleKey(key))
             {
-                Remove((TKey)key);
+                Remove((TKey) key);
             }
         }
 
@@ -1097,7 +1097,7 @@ ReturnNotFound:
         private ref int GetBucket(uint hashCode)
         {
             var buckets = _buckets;
-            return ref buckets[(int)HashHelpers.FastMod(hashCode, (uint)buckets.Length, _fastModMultiplier)];
+            return ref buckets[(int) HashHelpers.FastMod(hashCode, (uint) buckets.Length, _fastModMultiplier)];
         }
 
         private struct Entry
@@ -1142,7 +1142,7 @@ ReturnNotFound:
 
                 // Use unsigned comparison since we set index to dictionary.count+1 when the enumeration ends.
                 // dictionary.count+1 could be negative if dictionary.count is int.MaxValue
-                while ((uint)_index < (uint)_dictionary._count)
+                while ((uint) _index < (uint) _dictionary._count)
                 {
                     ref var entry = ref _dictionary._entries[_index++];
 
@@ -1320,7 +1320,7 @@ ReturnNotFound:
                     ThrowHelper.ThrowArgumentException(ExceptionResource.Arg_NonZeroLowerBound);
                 }
 
-                if ((uint)index > (uint)array.Length)
+                if ((uint) index > (uint) array.Length)
                 {
                     ThrowHelper.ThrowIndexArgumentOutOfRange_NeedNonNegNumException();
                 }
@@ -1361,7 +1361,7 @@ ReturnNotFound:
 
             bool ICollection.IsSynchronized => false;
 
-            object ICollection.SyncRoot => ((ICollection)_dictionary).SyncRoot;
+            object ICollection.SyncRoot => ((ICollection) _dictionary).SyncRoot;
 
             public struct Enumerator : IEnumerator<TKey>, IEnumerator
             {
@@ -1389,7 +1389,7 @@ ReturnNotFound:
                         ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumFailedVersion();
                     }
 
-                    while ((uint)_index < (uint)_dictionary._count)
+                    while ((uint) _index < (uint) _dictionary._count)
                     {
                         ref var entry = ref _dictionary._entries[_index++];
 
@@ -1459,7 +1459,7 @@ ReturnNotFound:
                     ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
                 }
 
-                if ((uint)index > array.Length)
+                if ((uint) index > array.Length)
                 {
                     ThrowHelper.ThrowIndexArgumentOutOfRange_NeedNonNegNumException();
                 }
@@ -1520,7 +1520,7 @@ ReturnNotFound:
                     ThrowHelper.ThrowArgumentException(ExceptionResource.Arg_NonZeroLowerBound);
                 }
 
-                if ((uint)index > (uint)array.Length)
+                if ((uint) index > (uint) array.Length)
                 {
                     ThrowHelper.ThrowIndexArgumentOutOfRange_NeedNonNegNumException();
                 }
@@ -1561,7 +1561,7 @@ ReturnNotFound:
 
             bool ICollection.IsSynchronized => false;
 
-            object ICollection.SyncRoot => ((ICollection)_dictionary).SyncRoot;
+            object ICollection.SyncRoot => ((ICollection) _dictionary).SyncRoot;
 
             public struct Enumerator : IEnumerator<TValue>, IEnumerator
             {
@@ -1589,7 +1589,7 @@ ReturnNotFound:
                         ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumFailedVersion();
                     }
 
-                    while ((uint)_index < (uint)_dictionary._count)
+                    while ((uint) _index < (uint) _dictionary._count)
                     {
                         ref var entry = ref _dictionary._entries[_index++];
 

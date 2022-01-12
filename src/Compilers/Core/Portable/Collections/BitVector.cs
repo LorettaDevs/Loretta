@@ -123,7 +123,7 @@ namespace Loretta.CodeAnalysis
             {
                 for (int bit = 0; bit < BitsPerWord; bit++)
                 {
-                    Word mask = ((Word)1) << bit;
+                    Word mask = ((Word) 1) << bit;
                     if ((_bits0 & mask) != 0)
                     {
                         if (bit >= _capacity) yield break;
@@ -138,7 +138,7 @@ namespace Loretta.CodeAnalysis
                 {
                     for (int b = 0; b < BitsPerWord; b++)
                     {
-                        Word mask = ((Word)1) << b;
+                        Word mask = ((Word) 1) << b;
                         if ((w & mask) != 0)
                         {
                             int bit = ((i + 1) << Log2BitsPerWord) | b;
@@ -213,7 +213,7 @@ namespace Loretta.CodeAnalysis
             }
             else
             {
-                newBits = (Word[])_bits.Clone();
+                newBits = (Word[]) _bits.Clone();
             }
 
             return new BitVector(_bits0, newBits, _capacity);
@@ -355,7 +355,7 @@ namespace Loretta.CodeAnalysis
                     EnsureCapacity(index + 1);
                 int i = (index >> Log2BitsPerWord) - 1;
                 int b = index & (BitsPerWord - 1);
-                Word mask = ((Word)1) << b;
+                Word mask = ((Word) 1) << b;
                 if (i < 0)
                 {
                     if (value)
@@ -382,7 +382,7 @@ namespace Loretta.CodeAnalysis
         public static bool IsTrue(Word word, int index)
         {
             int b = index & (BitsPerWord - 1);
-            Word mask = ((Word)1) << b;
+            Word mask = ((Word) 1) << b;
             return (word & mask) != 0;
         }
 

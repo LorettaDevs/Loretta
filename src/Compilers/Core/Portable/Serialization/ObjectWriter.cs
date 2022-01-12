@@ -9,8 +9,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.PooledObjects;
 
 namespace Loretta.Utilities
 {

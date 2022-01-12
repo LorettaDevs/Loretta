@@ -66,7 +66,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                if (unchecked((uint)index < (uint)_count))
+                if (unchecked((uint) index < (uint) _count))
                 {
                     return ItemInternal(_node!, index);
                 }

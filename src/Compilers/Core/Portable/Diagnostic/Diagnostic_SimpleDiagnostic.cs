@@ -169,7 +169,7 @@ namespace Loretta.CodeAnalysis
                 return Hash.Combine(_descriptor,
                     Hash.CombineValues(_messageArgs,
                     Hash.Combine(_warningLevel,
-                    Hash.Combine(_location, (int)_severity))));
+                    Hash.Combine(_location, (int) _severity))));
             }
 
             internal override Diagnostic WithLocation(Location location)

@@ -135,7 +135,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
             if (keys.Length > 1)
             {
-                IntroSort(keys, 2 * (SegmentedArraySortUtils.Log2((uint)keys.Length) + 1), comparer);
+                IntroSort(keys, 2 * (SegmentedArraySortUtils.Log2((uint) keys.Length) + 1), comparer);
             }
         }
 
@@ -313,15 +313,15 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
             for (int i = 0; i < keys.Length; i++)
             {
-                if ((typeof(TKey) == typeof(double) && double.IsNaN((double)(object)keys[i])) ||
-                    (typeof(TKey) == typeof(float) && float.IsNaN((float)(object)keys[i])) ||
-                    (typeof(TKey) == typeof(Half) && Half.IsNaN((Half)(object)keys[i])))
+                if ((typeof(TKey) == typeof(double) && double.IsNaN((double) (object) keys[i])) ||
+                    (typeof(TKey) == typeof(float) && float.IsNaN((float) (object) keys[i])) ||
+                    (typeof(TKey) == typeof(Half) && Half.IsNaN((Half) (object) keys[i])))
                 {
                     TKey temp = keys[left];
                     keys[left] = keys[i];
                     keys[i] = temp;
 
-                    if ((uint)i < (uint)values.Length) // check to see if we have values
+                    if ((uint) i < (uint) values.Length) // check to see if we have values
                     {
                         TValue tempValue = values[left];
                         values[left] = values[i];

@@ -68,7 +68,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </returns>
         public bool Contains(int position)
         {
-            return unchecked((uint)(position - Start) < (uint)Length);
+            return unchecked((uint) (position - Start) < (uint) Length);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Loretta.CodeAnalysis.Text
 
             return overlapStart < overlapEnd
                 ? TextSpan.FromBounds(overlapStart, overlapEnd)
-                : (TextSpan?)null;
+                : (TextSpan?) null;
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </returns>
         public bool IntersectsWith(int position)
         {
-            return unchecked((uint)(position - Start) <= (uint)Length);
+            return unchecked((uint) (position - Start) <= (uint) Length);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Loretta.CodeAnalysis.Text
 
             return intersectStart <= intersectEnd
                 ? TextSpan.FromBounds(intersectStart, intersectEnd)
-                : (TextSpan?)null;
+                : (TextSpan?) null;
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         public override bool Equals(object? obj)
         {
-            return obj is TextSpan && Equals((TextSpan)obj);
+            return obj is TextSpan span && Equals(span);
         }
 
         /// <summary>

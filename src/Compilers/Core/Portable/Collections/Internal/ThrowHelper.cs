@@ -100,14 +100,14 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         internal static void ThrowWrongKeyTypeArgumentException<T>(T key, Type targetType)
         {
             // Generic key to move the boxing to the right hand side of throw
-            throw GetWrongKeyTypeArgumentException((object?)key, targetType);
+            throw GetWrongKeyTypeArgumentException((object?) key, targetType);
         }
 
         [DoesNotReturn]
         internal static void ThrowWrongValueTypeArgumentException<T>(T value, Type targetType)
         {
             // Generic key to move the boxing to the right hand side of throw
-            throw GetWrongValueTypeArgumentException((object?)value, targetType);
+            throw GetWrongValueTypeArgumentException((object?) value, targetType);
         }
 
         private static ArgumentException GetAddingDuplicateWithKeyArgumentException(object? key)
@@ -119,14 +119,14 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         internal static void ThrowAddingDuplicateWithKeyArgumentException<T>(T key)
         {
             // Generic key to move the boxing to the right hand side of throw
-            throw GetAddingDuplicateWithKeyArgumentException((object?)key);
+            throw GetAddingDuplicateWithKeyArgumentException((object?) key);
         }
 
         [DoesNotReturn]
         internal static void ThrowKeyNotFoundException<T>(T key)
         {
             // Generic key to move the boxing to the right hand side of throw
-            throw GetKeyNotFoundException((object?)key);
+            throw GetKeyNotFoundException((object?) key);
         }
 
         [DoesNotReturn]

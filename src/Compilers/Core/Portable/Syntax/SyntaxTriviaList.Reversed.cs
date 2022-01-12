@@ -67,7 +67,7 @@ namespace Loretta.CodeAnalysis
             /// <inheritdoc/>
             public override bool Equals(object? obj)
             {
-                return obj is Reversed && Equals((Reversed)obj);
+                return obj is Reversed reversed && Equals(reversed);
             }
 
             /// <inheritdoc/>

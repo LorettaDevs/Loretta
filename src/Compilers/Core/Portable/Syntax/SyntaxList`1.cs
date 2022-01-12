@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="node">The single element node.</param>
         public SyntaxList(TNode? node)
-            : this((SyntaxNode?)node)
+            : this((SyntaxNode?) node)
         {
         }
 
@@ -50,8 +50,7 @@ namespace Loretta.CodeAnalysis
                 return null;
             }
 
-            var collection = nodes as ICollection<TNode>;
-            var builder = (collection != null) ? new SyntaxListBuilder<TNode>(collection.Count) : SyntaxListBuilder<TNode>.Create();
+            var builder = (nodes is ICollection<TNode> collection) ? new SyntaxListBuilder<TNode>(collection.Count) : SyntaxListBuilder<TNode>.Create();
 
             foreach (TNode node in nodes)
             {
@@ -93,14 +92,14 @@ namespace Loretta.CodeAnalysis
                 {
                     if (_node.IsList)
                     {
-                        if (unchecked((uint)index < (uint)_node.SlotCount))
+                        if (unchecked((uint) index < (uint) _node.SlotCount))
                         {
-                            return (TNode)_node.GetNodeSlot(index)!;
+                            return (TNode) _node.GetNodeSlot(index)!;
                         }
                     }
                     else if (index == 0)
                     {
-                        return (TNode)_node;
+                        return (TNode) _node;
                     }
                 }
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -455,7 +454,7 @@ namespace Loretta.CodeAnalysis
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            return obj is SyntaxList<TNode> && Equals((SyntaxList<TNode>)obj);
+            return obj is SyntaxList<TNode> list && Equals(list);
         }
 
         /// <inheritdoc/>

@@ -123,7 +123,7 @@ namespace Loretta.CodeAnalysis
                 {
                     if (Node.IsList)
                     {
-                        if (unchecked((uint)index < (uint)Node.SlotCount))
+                        if (unchecked((uint) index < (uint) Node.SlotCount))
                         {
                             return new SyntaxToken(_parent, Node.GetSlot(index), Position + Node.GetSlotOffset(index), _index + index);
                         }

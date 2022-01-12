@@ -2,8 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using Loretta.Utilities;
 using System.Diagnostics;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 {

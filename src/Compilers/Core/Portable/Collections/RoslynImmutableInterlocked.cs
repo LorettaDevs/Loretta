@@ -364,4 +364,3 @@ namespace Loretta.CodeAnalysis.Collections
         }
     }
 }
-

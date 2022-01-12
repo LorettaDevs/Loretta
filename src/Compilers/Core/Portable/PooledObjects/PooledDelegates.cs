@@ -358,7 +358,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
             {
                 Argument = default!;
                 UnboundDelegate = null!;
-                DefaultDelegatePool<TSelf>.Instance.Free((TSelf)this);
+                DefaultDelegatePool<TSelf>.Instance.Free((TSelf) this);
             }
 
             protected abstract TBoundDelegate Bind();

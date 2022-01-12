@@ -45,7 +45,7 @@ namespace Loretta.CodeAnalysis
             var index = (skipped ? SyntaxKinds.SkippedTokens : 0) |
                         (directives ? SyntaxKinds.Directives : 0) |
                         (docComments ? SyntaxKinds.DocComments : 0);
-            return s_stepIntoFunctions[(int)index];
+            return s_stepIntoFunctions[(int) index];
         }
 
         private static Func<SyntaxToken, bool> GetPredicateFunction(bool includeZeroWidth)
@@ -470,7 +470,7 @@ namespace Loretta.CodeAnalysis
 
             if (node.IsStructuredTrivia)
             {
-                return GetNextToken(((IStructuredTriviaSyntax)node).ParentTrivia, predicate, stepInto);
+                return GetNextToken(((IStructuredTriviaSyntax) node).ParentTrivia, predicate, stepInto);
             }
 
             return default;
@@ -520,7 +520,7 @@ namespace Loretta.CodeAnalysis
 
             if (node.IsStructuredTrivia)
             {
-                return GetPreviousToken(((IStructuredTriviaSyntax)node).ParentTrivia, predicate, stepInto);
+                return GetPreviousToken(((IStructuredTriviaSyntax) node).ParentTrivia, predicate, stepInto);
             }
 
             return default;

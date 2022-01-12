@@ -291,7 +291,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
             var tmp = ArrayBuilder<U>.GetInstance(Count);
             foreach (var i in this)
             {
-                tmp.Add((U)i!);
+                tmp.Add((U) i!);
             }
 
             return tmp.ToImmutableAndFree();

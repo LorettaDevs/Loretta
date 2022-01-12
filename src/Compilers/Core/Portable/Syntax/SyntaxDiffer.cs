@@ -25,8 +25,8 @@ namespace Loretta.CodeAnalysis
 
         private SyntaxDiffer(SyntaxNode oldNode, SyntaxNode newNode, bool computeNewText)
         {
-            _oldNodes.Push((SyntaxNodeOrToken)oldNode);
-            _newNodes.Push((SyntaxNodeOrToken)newNode);
+            _oldNodes.Push((SyntaxNodeOrToken) oldNode);
+            _newNodes.Push((SyntaxNodeOrToken) newNode);
 
             _oldSpan = oldNode.FullSpan;
             _computeNewText = computeNewText;

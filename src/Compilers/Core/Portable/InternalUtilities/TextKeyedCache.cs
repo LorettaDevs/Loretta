@@ -7,11 +7,11 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Loretta.CodeAnalysis.PooledObjects;
-using Loretta.CodeAnalysis;
-using Loretta.CodeAnalysis.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.PooledObjects;
+using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.Utilities
 {
@@ -299,7 +299,7 @@ namespace Loretta.Utilities
             var i1 = NextRandom() & SharedBucketSizeMask;
             idx = (idx + ((i1 * i1 + i1) / 2)) & SharedSizeMask;
 
-foundIdx:
+        foundIdx:
             arr[idx].HashCode = hashCode;
             Volatile.Write(ref arr[idx].Entry, e);
         }

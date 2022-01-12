@@ -124,7 +124,7 @@ namespace Loretta.CodeAnalysis.Collections
 
         object? IDictionary.this[object key]
         {
-            get => ((IDictionary)_dictionary)[key];
+            get => ((IDictionary) _dictionary)[key];
             set => throw new NotSupportedException();
         }
 
@@ -345,13 +345,13 @@ namespace Loretta.CodeAnalysis.Collections
             => new Enumerator(_dictionary, Enumerator.ReturnType.KeyValuePair);
 
         void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-            => ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).CopyTo(array, arrayIndex);
+            => ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).CopyTo(array, arrayIndex);
 
         bool IDictionary.Contains(object key)
-            => ((IDictionary)_dictionary).Contains(key);
+            => ((IDictionary) _dictionary).Contains(key);
 
         void ICollection.CopyTo(Array array, int index)
-            => ((ICollection)_dictionary).CopyTo(array, index);
+            => ((ICollection) _dictionary).CopyTo(array, index);
 
         void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
             => throw new NotSupportedException();

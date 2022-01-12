@@ -152,7 +152,7 @@ namespace Loretta.CodeAnalysis
 
             protected set
             {
-                _slotCount = (byte)value;
+                _slotCount = (byte) value;
             }
         }
 
@@ -421,23 +421,23 @@ namespace Loretta.CodeAnalysis
 
         #region Serialization 
         // use high-bit on Kind to identify serialization of extra info
-        private const UInt16 ExtendedSerializationInfoMask = unchecked((UInt16)(1u << 15));
+        private const UInt16 ExtendedSerializationInfoMask = unchecked((UInt16) (1u << 15));
 
         internal GreenNode(ObjectReader reader)
         {
             var kindBits = reader.ReadUInt16();
-            _kind = (ushort)(kindBits & ~ExtendedSerializationInfoMask);
+            _kind = (ushort) (kindBits & ~ExtendedSerializationInfoMask);
 
             if ((kindBits & ExtendedSerializationInfoMask) != 0)
             {
-                var diagnostics = (DiagnosticInfo[])reader.ReadValue();
+                var diagnostics = (DiagnosticInfo[]) reader.ReadValue();
                 if (diagnostics != null && diagnostics.Length > 0)
                 {
                     this.flags |= NodeFlags.ContainsDiagnostics;
                     s_diagnosticsTable.Add(this, diagnostics);
                 }
 
-                var annotations = (SyntaxAnnotation[])reader.ReadValue();
+                var annotations = (SyntaxAnnotation[]) reader.ReadValue();
                 if (annotations != null && annotations.Length > 0)
                 {
                     this.flags |= NodeFlags.ContainsAnnotations;
@@ -457,7 +457,7 @@ namespace Loretta.CodeAnalysis
 
         internal virtual void WriteTo(ObjectWriter writer)
         {
-            var kindBits = (UInt16)_kind;
+            var kindBits = (UInt16) _kind;
             var hasDiagnostics = this.GetDiagnostics().Length > 0;
             var hasAnnotations = this.GetAnnotations().Length > 0;
 
@@ -932,12 +932,12 @@ namespace Loretta.CodeAnalysis
                 case 3:
                     return SyntaxList.List(select(list[0]), select(list[1]), select(list[2]));
                 default:
-                    {
-                        var array = new ArrayElement<GreenNode>[list.Count];
-                        for (int i = 0; i < array.Length; i++)
-                            array[i].Value = select(list[i]);
-                        return SyntaxList.List(array);
-                    }
+                {
+                    var array = new ArrayElement<GreenNode>[list.Count];
+                    for (int i = 0; i < array.Length; i++)
+                        array[i].Value = select(list[i]);
+                    return SyntaxList.List(array);
+                }
             }
         }
 
@@ -954,12 +954,12 @@ namespace Loretta.CodeAnalysis
                 case 3:
                     return SyntaxList.List(select(list[0]), select(list[1]), select(list[2]));
                 default:
-                    {
-                        var array = new ArrayElement<GreenNode>[list.Count];
-                        for (int i = 0; i < array.Length; i++)
-                            array[i].Value = select(list[i]);
-                        return SyntaxList.List(array);
-                    }
+                {
+                    var array = new ArrayElement<GreenNode>[list.Count];
+                    for (int i = 0; i < array.Length; i++)
+                        array[i].Value = select(list[i]);
+                    return SyntaxList.List(array);
+                }
             }
         }
 
@@ -989,7 +989,7 @@ namespace Loretta.CodeAnalysis
         {
             LorettaDebug.Assert(this.IsCacheable);
 
-            int code = (int)(this.flags) ^ this.RawKind;
+            int code = (int) (this.flags) ^ this.RawKind;
             int cnt = this.SlotCount;
             for (int i = 0; i < cnt; i++)
             {

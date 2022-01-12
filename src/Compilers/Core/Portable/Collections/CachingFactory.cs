@@ -55,7 +55,7 @@ namespace Loretta.CodeAnalysis
             int idx = hash & mask;
 
             var entries = this.entries;
-            if ((object)entries[idx].key == (object)key)
+            if ((object) entries[idx].key == (object) key)
             {
                 value = entries[idx].value;
                 return true;
@@ -71,7 +71,7 @@ namespace Loretta.CodeAnalysis
             int idx = hash & mask;
 
             var entries = this.entries;
-            if ((object)entries[idx].key == (object)key)
+            if ((object) entries[idx].key == (object) key)
             {
                 return entries[idx].value;
             }

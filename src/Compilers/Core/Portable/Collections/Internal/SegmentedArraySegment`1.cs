@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         {
             get
             {
-                if ((uint)index >= (uint)Length)
+                if ((uint) index >= (uint) Length)
                     ThrowHelper.ThrowIndexOutOfRangeException();
 
                 return ref Array[index + Start];
@@ -29,7 +29,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         public SegmentedArraySegment<T> Slice(int start)
         {
-            if ((uint)start >= (uint)Length)
+            if ((uint) start >= (uint) Length)
                 ThrowHelper.ThrowArgumentOutOfRangeException();
 
             return new SegmentedArraySegment<T>(Array, Start + start, Length - start);
@@ -42,7 +42,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             // extension from 32- to 64-bit is zero-extending rather than sign-extending. The end result
             // of this is that if either input is negative or if the input sum overflows past Int32.MaxValue,
             // that information is captured correctly in the comparison against the backing _length field.
-            if ((ulong)(uint)start + (ulong)(uint)length > (ulong)(uint)Length)
+            if ((ulong) (uint) start + (ulong) (uint) length > (ulong) (uint) Length)
                 ThrowHelper.ThrowArgumentOutOfRangeException();
 
             return new SegmentedArraySegment<T>(Array, Start + start, length);

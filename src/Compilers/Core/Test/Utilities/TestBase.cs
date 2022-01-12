@@ -4,13 +4,8 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Threading;
 using System.Xml.Linq;
 using Loretta.CodeAnalysis;
-using Loretta.CodeAnalysis.Lua;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Loretta.CodeAnalysis.Text;
 

@@ -58,7 +58,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="nodesAndTokens">The nodes and tokens</param>
         public SyntaxNodeOrTokenList(params SyntaxNodeOrToken[] nodesAndTokens)
-            : this((IEnumerable<SyntaxNodeOrToken>)nodesAndTokens)
+            : this((IEnumerable<SyntaxNodeOrToken>) nodesAndTokens)
         {
         }
 
@@ -110,7 +110,7 @@ namespace Loretta.CodeAnalysis
                     }
                     else
                     {
-                        if (unchecked((uint)index < (uint)_node.SlotCount))
+                        if (unchecked((uint) index < (uint) _node.SlotCount))
                         {
                             var green = _node.Green.GetRequiredSlot(index);
                             if (green.IsToken)
@@ -480,7 +480,7 @@ namespace Loretta.CodeAnalysis
         /// </returns>
         public override bool Equals(object? obj)
         {
-            return obj is SyntaxNodeOrTokenList && Equals((SyntaxNodeOrTokenList)obj);
+            return obj is SyntaxNodeOrTokenList list && Equals(list);
         }
 
         /// <summary>

@@ -179,7 +179,7 @@ namespace Loretta.CodeAnalysis
                 var green = this.Green.GetSlot(slot);
                 if (green != null)
                 {
-                    Interlocked.CompareExchange(ref field, (T)green.CreateRed(this, this.GetChildPosition(slot)), null);
+                    Interlocked.CompareExchange(ref field, (T) green.CreateRed(this, this.GetChildPosition(slot)), null);
                     result = field;
                 }
             }
@@ -198,7 +198,7 @@ namespace Loretta.CodeAnalysis
                 var green = this.Green.GetSlot(0);
                 if (green != null)
                 {
-                    Interlocked.CompareExchange(ref field, (T)green.CreateRed(this, this.Position), null);
+                    Interlocked.CompareExchange(ref field, (T) green.CreateRed(this, this.Position), null);
                     result = field;
                 }
             }
@@ -476,7 +476,7 @@ namespace Loretta.CodeAnalysis
                 }
                 else if (node.IsStructuredTrivia)
                 {
-                    node = ((IStructuredTriviaSyntax)node).ParentTrivia.Token.Parent;
+                    node = ((IStructuredTriviaSyntax) node).ParentTrivia.Token.Parent;
                 }
                 else
                 {
@@ -1019,7 +1019,7 @@ namespace Loretta.CodeAnalysis
 
         internal static SyntaxTrivia FindTriviaByOffset(SyntaxNode node, int textOffset, Func<SyntaxTrivia, bool>? stepInto = null)
         {
-recurse:
+        recurse:
             if (textOffset >= 0)
             {
                 foreach (var element in node.ChildNodesAndTokens())
@@ -1278,7 +1278,7 @@ recurse:
             var annotations = this.Green.GetAnnotations();
             if (annotations?.Length > 0)
             {
-                return (T)(node.Green.WithAdditionalAnnotationsGreen(annotations)).CreateRed();
+                return (T) (node.Green.WithAdditionalAnnotationsGreen(annotations)).CreateRed();
             }
             return node;
         }
@@ -1562,7 +1562,7 @@ recurse:
         /// </summary>
         internal static T CloneNodeAsRoot<T>(T node, SyntaxTree syntaxTree) where T : SyntaxNode
         {
-            var clone = (T)node.Green.CreateRed(null, 0);
+            var clone = (T) node.Green.CreateRed(null, 0);
             clone._syntaxTree = syntaxTree;
 
             return clone;

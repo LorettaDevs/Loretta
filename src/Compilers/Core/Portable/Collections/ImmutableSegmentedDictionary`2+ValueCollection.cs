@@ -24,7 +24,7 @@ namespace Loretta.CodeAnalysis.Collections
 
             bool ICollection.IsSynchronized => true;
 
-            object ICollection.SyncRoot => ((ICollection)_dictionary).SyncRoot;
+            object ICollection.SyncRoot => ((ICollection) _dictionary).SyncRoot;
 
             public Enumerator GetEnumerator()
                 => new(_dictionary.GetEnumerator());
@@ -39,10 +39,10 @@ namespace Loretta.CodeAnalysis.Collections
                 => GetEnumerator();
 
             void ICollection<TValue>.CopyTo(TValue[] array, int arrayIndex)
-                => ((ICollection<TValue>)_dictionary._dictionary.Values).CopyTo(array, arrayIndex);
+                => ((ICollection<TValue>) _dictionary._dictionary.Values).CopyTo(array, arrayIndex);
 
             void ICollection.CopyTo(Array array, int index)
-                => ((ICollection)_dictionary._dictionary.Values).CopyTo(array, index);
+                => ((ICollection) _dictionary._dictionary.Values).CopyTo(array, index);
 
             void ICollection<TValue>.Add(TValue item)
                 => throw new NotSupportedException();

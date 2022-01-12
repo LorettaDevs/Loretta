@@ -42,7 +42,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                return (TNode?)_builder[index];
+                return (TNode?) _builder[index];
             }
 
             set

@@ -56,7 +56,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            return obj is TextChange && this.Equals((TextChange)obj);
+            return obj is TextChange change && this.Equals(change);
         }
 
         /// <inheritdoc/>

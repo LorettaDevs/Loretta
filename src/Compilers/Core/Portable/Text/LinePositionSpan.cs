@@ -55,7 +55,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            return obj is LinePositionSpan && Equals((LinePositionSpan)obj);
+            return obj is LinePositionSpan span && Equals(span);
         }
 
         /// <inheritdoc/>

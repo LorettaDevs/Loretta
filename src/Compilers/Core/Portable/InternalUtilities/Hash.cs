@@ -15,7 +15,7 @@ namespace Loretta.Utilities
         /// </summary>
         internal static int Combine(int newKey, int currentKey)
         {
-            return unchecked((currentKey * (int)0xA5555529) + newKey);
+            return unchecked((currentKey * (int) 0xA5555529) + newKey);
         }
 
         internal static int Combine(bool newKeyPart, int currentKey)
@@ -31,7 +31,7 @@ namespace Loretta.Utilities
         /// </summary>
         internal static int Combine<T>(T newKeyPart, int currentKey) where T : class?
         {
-            int hash = unchecked(currentKey * (int)0xA5555529);
+            int hash = unchecked(currentKey * (int) 0xA5555529);
 
             if (newKeyPart != null)
             {
@@ -146,7 +146,7 @@ namespace Loretta.Utilities
         /// The offset bias value used in the FNV-1a algorithm
         /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
         /// </summary>
-        internal const int FnvOffsetBias = unchecked((int)2166136261);
+        internal const int FnvOffsetBias = unchecked((int) 2166136261);
 
         /// <summary>
         /// The generative factor used in the FNV-1a algorithm

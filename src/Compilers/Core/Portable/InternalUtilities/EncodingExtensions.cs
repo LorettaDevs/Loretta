@@ -1,11 +1,11 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Loretta.CodeAnalysis;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Loretta.CodeAnalysis;
 
 namespace Loretta.Utilities
 {
@@ -42,7 +42,7 @@ namespace Loretta.Utilities
             {
                 try
                 {
-                    maxCharCount = encoding.GetMaxCharCount((int)length);
+                    maxCharCount = encoding.GetMaxCharCount((int) length);
                     return true;
                 }
                 catch (ArgumentOutOfRangeException)

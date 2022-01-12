@@ -152,4 +152,3 @@ namespace Loretta.Generators.SyntaxXml
         }
     }
 }
-

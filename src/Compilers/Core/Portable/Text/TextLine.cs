@@ -204,9 +204,9 @@ namespace Loretta.CodeAnalysis.Text
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            if (obj is TextLine)
+            if (obj is TextLine line)
             {
-                return Equals((TextLine)obj);
+                return Equals(line);
             }
 
             return false;

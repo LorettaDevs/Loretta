@@ -36,7 +36,7 @@ namespace Loretta.Generators.SyntaxXml
             _childMap = tree.Types.ToLookup(n => n.Base, getName);
 
             CancellationToken = cancellationToken;
-            
+
             static string getName(TreeType type)
             {
                 var name = type.Name;
