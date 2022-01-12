@@ -122,10 +122,10 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal class Scope : IScopeInternal
     {
-        protected readonly IDictionary<string, IVariableInternal> _variables = new Dictionary<string, IVariableInternal>(StringComparer.Ordinal);
+        protected readonly IDictionary<string, IVariableInternal> _variables = new Dictionary<string, IVariableInternal>(StringOrdinalComparer.Instance);
         protected readonly ISet<IVariableInternal> _declaredVariables = new HashSet<IVariableInternal>();
         protected readonly ISet<IVariableInternal> _referencedVariables = new HashSet<IVariableInternal>();
-        protected readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringComparer.Ordinal);
+        protected readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringOrdinalComparer.Instance);
         protected readonly IList<IScopeInternal> _containedScopes = new List<IScopeInternal>();
 
         public Scope(ScopeKind kind, SyntaxNode? node, IScopeInternal? parent)
@@ -170,7 +170,7 @@ namespace Loretta.CodeAnalysis.Lua
             if (!StringUtils.IsIdentifier(name)) throw new ArgumentException($"'{nameof(name)}' must be a valid identifier.");
             foreach (var variable in DeclaredVariables)
             {
-                if (StringComparer.Ordinal.Equals(variable.Name, name))
+                if (StringOrdinalComparer.Equals(variable.Name, name))
                     return variable;
             }
             return Parent is not null && Parent.Kind >= kind ? Parent.FindVariable(name, kind) : null;
