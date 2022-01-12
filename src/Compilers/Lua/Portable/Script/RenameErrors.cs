@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Loretta.CodeAnalysis.Lua
+﻿namespace Loretta.CodeAnalysis.Lua
 {
     /// <summary>
     /// An error found while renaming a variable.
@@ -12,13 +8,13 @@ namespace Loretta.CodeAnalysis.Lua
     /// An error that represents the provided identifier not being supported
     /// in a provided tree.
     /// </summary>
-    /// <param name="SyntaxTree">
+    /// <param name="TreeWithoutSupport">
     /// The <see cref="SyntaxTree"/> the identifier name is not supported on.
     /// </param>
-    public record IdentifierNameNotSupportedError(SyntaxTree SyntaxTree) : RenameError;
+    public record IdentifierNameNotSupportedError(SyntaxTree TreeWithoutSupport) : RenameError;
     /// <summary>
     /// Represents a conflict with an existing variable.
     /// </summary>
-    /// <param name="Variable">The variable that is conflicted with.</param>
-    public record VariableConflictError(IVariable Variable) : RenameError;
+    /// <param name="VariableBeingConflictedWith">The variable that is conflicted with.</param>
+    public record VariableConflictError(IVariable VariableBeingConflictedWith) : RenameError;
 }
