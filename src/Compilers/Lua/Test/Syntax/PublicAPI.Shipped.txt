@@ -29,8 +29,8 @@ Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_DoesNot_Cou
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_DoesNot_IdentifyLongCommentsNaively(string! text) -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_Lexes_ShebangsOnlyOnFileStart() -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_Lexes_Token(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken expectedToken) -> void
-Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_Lexes_TokenPairs(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken tokenA, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken tokenB) -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_Lexes_TokenPairs_WithSeparators(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken tokenA, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken expectedSeparator, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken tokenB) -> void
+Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_Lexes_TokenPairs(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken tokenA, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken tokenB) -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_Lexes_Trivia(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken expectedTrivia) -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.Lexer_LexesInvalidEscapes_WhenLuaSyntaxOptionsAcceptInvalidEscapesIsTrue() -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.LexicalTests.LexicalTests() -> void
@@ -53,9 +53,9 @@ Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.M(Loretta.CodeAna
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.N(Loretta.CodeAnalysis.Lua.SyntaxKind kind, string? value = null) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.ParsingTests(Xunit.Abstractions.ITestOutputHelper! output) -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.UsingNode(Loretta.CodeAnalysis.Lua.LuaSyntaxNode! root) -> void
-Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.UsingNode(string! text) -> Loretta.CodeAnalysis.Lua.LuaSyntaxNode!
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.UsingNode(string! text, Loretta.CodeAnalysis.Lua.LuaParseOptions! options, params Loretta.CodeAnalysis.Test.Utilities.DiagnosticDescription![]! expectedErrors) -> Loretta.CodeAnalysis.Lua.LuaSyntaxNode!
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.UsingNode(string! text, Loretta.CodeAnalysis.Lua.LuaSyntaxNode! node, Loretta.CodeAnalysis.Test.Utilities.DiagnosticDescription![]! expectedErrors) -> void
+Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.UsingNode(string! text) -> Loretta.CodeAnalysis.Lua.LuaSyntaxNode!
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.UsingTree(string! text, Loretta.CodeAnalysis.Lua.LuaParseOptions? options = null) -> Loretta.CodeAnalysis.SyntaxTree!
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.SyntaxExtensions
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.CanBeAccessedInTests
@@ -65,6 +65,7 @@ Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.CanBeAccessedInTests.Script_Ca
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.CanBeAccessedInTests.Script_CanBeAccessedIn_ReturnsTrueWhenScopeIsChild() -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.FindVariableTests
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.FindVariableTests.FindVariableTests() -> void
+Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.FindVariableTests.Script_FindVariable_ReturnsNullWhenNoVariableIsAvailable(Loretta.CodeAnalysis.Lua.ScopeKind scopeKind, string! name) -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.FindVariableTests.Script_FindVariable_ReturnsVariableWhenVariableIsAvailable(Loretta.CodeAnalysis.Lua.ScopeKind scopeKind, string! name) -> void
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.RenameVariableTests
 Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping.RenameVariableTests.RenameVariableTests() -> void
@@ -84,7 +85,6 @@ Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Syntax.SyntaxKindTests.TokenKindsHaveT
 override Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.RunLongLexerTests.ShouldSkip.get -> bool
 override Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.RunLongLexerTests.SkipReason.get -> string!
 override Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortToken.ToString() -> string!
-override Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing.ParsingTests.Dispose() -> void
 readonly Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortDiagnostic.Description -> string!
 readonly Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortDiagnostic.Id -> string!
 readonly Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical.ShortDiagnostic.Span -> Loretta.CodeAnalysis.Text.TextSpan
