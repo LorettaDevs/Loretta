@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Added `Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NilLiteral`.
+- Added `==` and `!=` operators to `Loretta.CodeAnalysis.FileLinePositionSpan`.
 
 ### Deprecated
 - Deprecated `Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NullLiteral` in favor of `NilLiteral`.

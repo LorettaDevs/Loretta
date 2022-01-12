@@ -147,5 +147,27 @@ namespace Loretta.CodeAnalysis
         {
             return _path + ": " + _span;
         }
+
+        /// <summary>
+        /// Checks whether two spans are equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(FileLinePositionSpan left, FileLinePositionSpan right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Checks whether two spans are not equal.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator !=(FileLinePositionSpan left, FileLinePositionSpan right)
+        {
+            return !(left == right);
+        }
     }
 }
