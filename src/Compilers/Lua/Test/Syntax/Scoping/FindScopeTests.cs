@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Linq;
 using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
