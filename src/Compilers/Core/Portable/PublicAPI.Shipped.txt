@@ -27,13 +27,11 @@ abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.Syn
 abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxToken token) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
 abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
 abstract Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
-abstract Loretta.CodeAnalysis.SyntaxTree.GetLineSpan(Loretta.CodeAnalysis.Text.TextSpan span, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Loretta.CodeAnalysis.FileLinePositionSpan
 abstract Loretta.CodeAnalysis.SyntaxTree.GetLocation(Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Location!
 abstract Loretta.CodeAnalysis.SyntaxTree.GetMappedLineSpan(Loretta.CodeAnalysis.Text.TextSpan span, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Loretta.CodeAnalysis.FileLinePositionSpan
 abstract Loretta.CodeAnalysis.SyntaxTree.GetReference(Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxReference!
 abstract Loretta.CodeAnalysis.SyntaxTree.GetRootAsyncCore(System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Loretta.CodeAnalysis.SyntaxNode!>!
 abstract Loretta.CodeAnalysis.SyntaxTree.GetRootCore(System.Threading.CancellationToken cancellationToken) -> Loretta.CodeAnalysis.SyntaxNode!
-abstract Loretta.CodeAnalysis.SyntaxTree.GetText(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Loretta.CodeAnalysis.Text.SourceText!
 abstract Loretta.CodeAnalysis.SyntaxTree.HasCompilationUnitRoot.get -> bool
 abstract Loretta.CodeAnalysis.SyntaxTree.HasHiddenRegions() -> bool
 abstract Loretta.CodeAnalysis.SyntaxTree.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxTree! tree, bool topLevel = false) -> bool
@@ -153,13 +151,6 @@ Loretta.CodeAnalysis.ObjectDisplayOptions.UseQuotes = 2 -> Loretta.CodeAnalysis.
 Loretta.CodeAnalysis.ParseOptions
 Loretta.CodeAnalysis.ParseOptions.DocumentationMode.get -> Loretta.CodeAnalysis.DocumentationMode
 Loretta.CodeAnalysis.ParseOptions.Errors.get -> System.Collections.Immutable.ImmutableArray<Loretta.CodeAnalysis.Diagnostic!>
-Loretta.CodeAnalysis.ParseOptions.WithDocumentationMode(Loretta.CodeAnalysis.DocumentationMode documentationMode) -> Loretta.CodeAnalysis.ParseOptions!
-Loretta.CodeAnalysis.ParseOptions.WithFeatures(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string!, string!>>! features) -> Loretta.CodeAnalysis.ParseOptions!
-Loretta.CodeAnalysis.ReportDiagnostic
-Loretta.CodeAnalysis.ReportDiagnostic.Default = 0 -> Loretta.CodeAnalysis.ReportDiagnostic
-Loretta.CodeAnalysis.ReportDiagnostic.Error = 1 -> Loretta.CodeAnalysis.ReportDiagnostic
-Loretta.CodeAnalysis.ReportDiagnostic.Hidden = 4 -> Loretta.CodeAnalysis.ReportDiagnostic
-Loretta.CodeAnalysis.ReportDiagnostic.Info = 3 -> Loretta.CodeAnalysis.ReportDiagnostic
 Loretta.CodeAnalysis.ReportDiagnostic.Suppress = 5 -> Loretta.CodeAnalysis.ReportDiagnostic
 Loretta.CodeAnalysis.ReportDiagnostic.Warn = 2 -> Loretta.CodeAnalysis.ReportDiagnostic
 Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>
@@ -556,6 +547,9 @@ Loretta.CodeAnalysis.SyntaxTriviaList.SyntaxTriviaList(params Loretta.CodeAnalys
 Loretta.CodeAnalysis.SyntaxTriviaList.SyntaxTriviaList(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>? trivias) -> void
 Loretta.CodeAnalysis.SyntaxTriviaList.this[int index].get -> Loretta.CodeAnalysis.SyntaxTrivia
 Loretta.CodeAnalysis.SyntaxTriviaList.ToFullString() -> string!
+Loretta.CodeAnalysis.SyntaxWalker
+Loretta.CodeAnalysis.SyntaxWalker.Depth.get -> Loretta.CodeAnalysis.SyntaxWalkerDepth
+Loretta.CodeAnalysis.SyntaxWalker.SyntaxWalker(Loretta.CodeAnalysis.SyntaxWalkerDepth depth = Loretta.CodeAnalysis.SyntaxWalkerDepth.Node) -> void
 Loretta.CodeAnalysis.SyntaxWalkerDepth
 Loretta.CodeAnalysis.SyntaxWalkerDepth.Node = 0 -> Loretta.CodeAnalysis.SyntaxWalkerDepth
 Loretta.CodeAnalysis.SyntaxWalkerDepth.StructuredTrivia = 3 -> Loretta.CodeAnalysis.SyntaxWalkerDepth
@@ -841,7 +835,6 @@ static Loretta.CodeAnalysis.Text.TextChangeRange.NoChanges.get -> System.Collect
 static Loretta.CodeAnalysis.Text.TextChangeRange.operator !=(Loretta.CodeAnalysis.Text.TextChangeRange left, Loretta.CodeAnalysis.Text.TextChangeRange right) -> bool
 static Loretta.CodeAnalysis.Text.TextChangeRange.operator ==(Loretta.CodeAnalysis.Text.TextChangeRange left, Loretta.CodeAnalysis.Text.TextChangeRange right) -> bool
 static Loretta.CodeAnalysis.Text.TextLine.FromSpan(Loretta.CodeAnalysis.Text.SourceText! text, Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Text.TextLine
-static Loretta.CodeAnalysis.Text.TextLine.operator !=(Loretta.CodeAnalysis.Text.TextLine left, Loretta.CodeAnalysis.Text.TextLine right) -> bool
 static Loretta.CodeAnalysis.Text.TextLine.operator ==(Loretta.CodeAnalysis.Text.TextLine left, Loretta.CodeAnalysis.Text.TextLine right) -> bool
 static Loretta.CodeAnalysis.Text.TextSpan.FromBounds(int start, int end) -> Loretta.CodeAnalysis.Text.TextSpan
 static Loretta.CodeAnalysis.Text.TextSpan.operator !=(Loretta.CodeAnalysis.Text.TextSpan left, Loretta.CodeAnalysis.Text.TextSpan right) -> bool
@@ -855,13 +848,15 @@ virtual Loretta.CodeAnalysis.Location.GetMappedLineSpan() -> Loretta.CodeAnalysi
 virtual Loretta.CodeAnalysis.Location.SourceSpan.get -> Loretta.CodeAnalysis.Text.TextSpan
 virtual Loretta.CodeAnalysis.Location.SourceTree.get -> Loretta.CodeAnalysis.SyntaxTree?
 virtual Loretta.CodeAnalysis.SyntaxNode.ChildThatContainsPosition(int position) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
-virtual Loretta.CodeAnalysis.SyntaxNode.ParentTrivia.get -> Loretta.CodeAnalysis.SyntaxTrivia
 virtual Loretta.CodeAnalysis.SyntaxNode.SerializeTo(System.IO.Stream! stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> void
 virtual Loretta.CodeAnalysis.SyntaxNode.ToFullString() -> string!
 virtual Loretta.CodeAnalysis.SyntaxNode.WriteTo(System.IO.TextWriter! writer) -> void
 virtual Loretta.CodeAnalysis.SyntaxReference.GetSyntaxAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Loretta.CodeAnalysis.SyntaxNode!>!
 virtual Loretta.CodeAnalysis.SyntaxTree.GetLineVisibility(int position, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Loretta.CodeAnalysis.LineVisibility
 virtual Loretta.CodeAnalysis.SyntaxTree.GetTextAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Loretta.CodeAnalysis.Text.SourceText!>!
+virtual Loretta.CodeAnalysis.SyntaxWalker.Visit(Loretta.CodeAnalysis.SyntaxNode! node) -> void
+virtual Loretta.CodeAnalysis.SyntaxWalker.VisitToken(Loretta.CodeAnalysis.SyntaxToken token) -> void
+virtual Loretta.CodeAnalysis.SyntaxWalker.VisitTrivia(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> void
 virtual Loretta.CodeAnalysis.Text.SourceText.Container.get -> Loretta.CodeAnalysis.Text.SourceTextContainer!
 virtual Loretta.CodeAnalysis.Text.SourceText.ContentEqualsImpl(Loretta.CodeAnalysis.Text.SourceText! other) -> bool
 virtual Loretta.CodeAnalysis.Text.SourceText.GetChangeRanges(Loretta.CodeAnalysis.Text.SourceText! oldText) -> System.Collections.Generic.IReadOnlyList<Loretta.CodeAnalysis.Text.TextChangeRange>!

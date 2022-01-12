@@ -10,6 +10,10 @@ Loretta.CodeAnalysis.Lua.ContinueType
 Loretta.CodeAnalysis.Lua.ContinueType.ContextualKeyword = 2 -> Loretta.CodeAnalysis.Lua.ContinueType
 Loretta.CodeAnalysis.Lua.ContinueType.Keyword = 1 -> Loretta.CodeAnalysis.Lua.ContinueType
 Loretta.CodeAnalysis.Lua.ContinueType.None = 0 -> Loretta.CodeAnalysis.Lua.ContinueType
+Loretta.CodeAnalysis.Lua.IdentifierNameNotSupportedError
+Loretta.CodeAnalysis.Lua.IdentifierNameNotSupportedError.IdentifierNameNotSupportedError(Loretta.CodeAnalysis.SyntaxTree! TreeWithoutSupport) -> void
+Loretta.CodeAnalysis.Lua.IdentifierNameNotSupportedError.TreeWithoutSupport.get -> Loretta.CodeAnalysis.SyntaxTree!
+Loretta.CodeAnalysis.Lua.IdentifierNameNotSupportedError.TreeWithoutSupport.init -> void
 Loretta.CodeAnalysis.Lua.IFileScope
 Loretta.CodeAnalysis.Lua.IFileScope.ArgVariable.get -> Loretta.CodeAnalysis.Lua.IVariable!
 Loretta.CodeAnalysis.Lua.IFileScope.VarArgParameter.get -> Loretta.CodeAnalysis.Lua.IVariable!
@@ -21,13 +25,17 @@ Loretta.CodeAnalysis.Lua.IGotoLabel.JumpSyntaxes.get -> System.Collections.Gener
 Loretta.CodeAnalysis.Lua.IGotoLabel.LabelSyntax.get -> Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax?
 Loretta.CodeAnalysis.Lua.IGotoLabel.Name.get -> string!
 Loretta.CodeAnalysis.Lua.IScope
+Loretta.CodeAnalysis.Lua.IScope.ContainedScopes.get -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>!
+Loretta.CodeAnalysis.Lua.IScope.ContainingScope.get -> Loretta.CodeAnalysis.Lua.IScope?
 Loretta.CodeAnalysis.Lua.IScope.DeclaredVariables.get -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IVariable!>!
+Loretta.CodeAnalysis.Lua.IScope.FindVariable(string! name, Loretta.CodeAnalysis.Lua.ScopeKind kind = Loretta.CodeAnalysis.Lua.ScopeKind.Global) -> Loretta.CodeAnalysis.Lua.IVariable?
 Loretta.CodeAnalysis.Lua.IScope.GotoLabels.get -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IGotoLabel!>!
 Loretta.CodeAnalysis.Lua.IScope.Kind.get -> Loretta.CodeAnalysis.Lua.ScopeKind
 Loretta.CodeAnalysis.Lua.IScope.Node.get -> Loretta.CodeAnalysis.SyntaxNode?
 Loretta.CodeAnalysis.Lua.IScope.Parent.get -> Loretta.CodeAnalysis.Lua.IScope?
 Loretta.CodeAnalysis.Lua.IScope.ReferencedVariables.get -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IVariable!>!
 Loretta.CodeAnalysis.Lua.IVariable
+Loretta.CodeAnalysis.Lua.IVariable.CanBeAccessedIn(Loretta.CodeAnalysis.Lua.IScope! scope) -> bool
 Loretta.CodeAnalysis.Lua.IVariable.CapturingScopes.get -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>!
 Loretta.CodeAnalysis.Lua.IVariable.ContainingScope.get -> Loretta.CodeAnalysis.Lua.IScope!
 Loretta.CodeAnalysis.Lua.IVariable.Declaration.get -> Loretta.CodeAnalysis.SyntaxNode?
@@ -93,6 +101,7 @@ Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.LuaSyntaxVisitor() -> void
 Loretta.CodeAnalysis.Lua.LuaSyntaxWalker
 Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.Depth.get -> Loretta.CodeAnalysis.SyntaxWalkerDepth
 Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.LuaSyntaxWalker(Loretta.CodeAnalysis.SyntaxWalkerDepth depth = Loretta.CodeAnalysis.SyntaxWalkerDepth.Node) -> void
+Loretta.CodeAnalysis.Lua.RenameError
 Loretta.CodeAnalysis.Lua.ScopeKind
 Loretta.CodeAnalysis.Lua.ScopeKind.Block = 3 -> Loretta.CodeAnalysis.Lua.ScopeKind
 Loretta.CodeAnalysis.Lua.ScopeKind.File = 1 -> Loretta.CodeAnalysis.Lua.ScopeKind
@@ -103,6 +112,7 @@ Loretta.CodeAnalysis.Lua.Script.FindScope(Loretta.CodeAnalysis.SyntaxNode! node,
 Loretta.CodeAnalysis.Lua.Script.GetLabel(Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.Lua.IGotoLabel?
 Loretta.CodeAnalysis.Lua.Script.GetScope(Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.Lua.IScope?
 Loretta.CodeAnalysis.Lua.Script.GetVariable(Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.Lua.IVariable?
+Loretta.CodeAnalysis.Lua.Script.RenameVariable(Loretta.CodeAnalysis.Lua.IVariable! variable, string! newName) -> Tsu.Result<Loretta.CodeAnalysis.Lua.Script!, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.RenameError!>!>
 Loretta.CodeAnalysis.Lua.Script.RootScope.get -> Loretta.CodeAnalysis.Lua.IScope!
 Loretta.CodeAnalysis.Lua.Script.Script() -> void
 Loretta.CodeAnalysis.Lua.Script.Script(System.Collections.Immutable.ImmutableArray<Loretta.CodeAnalysis.SyntaxTree!> syntaxTrees) -> void
@@ -722,6 +732,10 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.VarArgParameter = 2001 -> Loretta.CodeAnalys
 Loretta.CodeAnalysis.Lua.SyntaxKind.WhileKeyword = 502 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.WhileStatement = 2055 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.WhitespaceTrivia = 5 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.VariableConflictError
+Loretta.CodeAnalysis.Lua.VariableConflictError.VariableBeingConflictedWith.get -> Loretta.CodeAnalysis.Lua.IVariable!
+Loretta.CodeAnalysis.Lua.VariableConflictError.VariableBeingConflictedWith.init -> void
+Loretta.CodeAnalysis.Lua.VariableConflictError.VariableConflictError(Loretta.CodeAnalysis.Lua.IVariable! VariableBeingConflictedWith) -> void
 Loretta.CodeAnalysis.Lua.VariableKind
 Loretta.CodeAnalysis.Lua.VariableKind.Global = 1 -> Loretta.CodeAnalysis.Lua.VariableKind
 Loretta.CodeAnalysis.Lua.VariableKind.Iteration = 3 -> Loretta.CodeAnalysis.Lua.VariableKind
@@ -780,12 +794,9 @@ override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitSkippedTokensTrivia(Lor
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitStatementList(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitStringFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTableConstructorExpression(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
-override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTableConstructorFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitUnaryExpression(Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
-override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitUnkeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitVarArgExpression(Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitVarArgParameter(Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
-override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitWhileStatement(Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChangedSpans(Loretta.CodeAnalysis.SyntaxTree! oldTree) -> System.Collections.Generic.IList<Loretta.CodeAnalysis.Text.TextSpan>!
 override Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChanges(Loretta.CodeAnalysis.SyntaxTree! oldTree) -> System.Collections.Generic.IList<Loretta.CodeAnalysis.Text.TextChange>!
 override Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNode! node) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Diagnostic!>!
