@@ -188,9 +188,9 @@ namespace Loretta.CodeAnalysis.Lua
             void handleLocation(SyntaxNode location)
             {
                 trees.Add(location.SyntaxTree);
-                if (FindScope(location)?.FindVariable(newName) is not null)
+                if (FindScope(location)?.FindVariable(newName) is IVariable conflicting)
                 {
-                    errors.Add(new VariableConflictError(variable));
+                    errors.Add(new VariableConflictError(conflicting));
                 }
             }
         }
