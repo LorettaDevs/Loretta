@@ -2,37 +2,31 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Loretta.CodeAnalysis.Lua.Test.Utilities;
 using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
 {
-    public class ScriptTestsBase
+    public class ScriptTestsBase : LuaTestBase
     {
-        protected static (SyntaxTree, Script) ParseScript(string code)
+        protected static (SyntaxTree, Script) ParseScript(string code, LuaSyntaxOptions? options = null)
         {
-            var tree = LuaSyntaxTree.ParseText(code);
-            Assert.Empty(tree.GetDiagnostics());
+            var tree = ParseWithRoundTripCheck(code, options != null ? new LuaParseOptions(options) : null);
+            tree.GetDiagnostics().Verify();
             var script = new Script(ImmutableArray.Create(tree));
             return (tree, script);
         }
 
-        protected static Script ParseScript(params string[] codes)
+        protected static Script ParseScript(params string[] codes) =>
+            ParseScript(LuaSyntaxOptions.All, codes);
+
+        protected static Script ParseScript(LuaSyntaxOptions options, params string[] codes)
         {
-            var idx = 0;
-            var trees = Array.ConvertAll(codes, (code) => LuaSyntaxTree.ParseText(code, path: $"codes_{idx++}"));
-            if (trees.Any(t => t.GetDiagnostics().Any()))
+            var trees = new List<SyntaxTree>();
+            foreach (var code in codes)
             {
-                foreach (var tree in trees)
-                {
-                    if (tree.GetDiagnostics().Any())
-                    {
-                        Console.WriteLine(tree.FilePath + ":");
-                        foreach (var diagnostic in tree.GetDiagnostics())
-                        {
-                            Console.WriteLine(diagnostic);
-                        }
-                    }
-                }
+                var tree = ParseWithRoundTripCheck(code);
+                tree.GetDiagnostics().Verify();
             }
             Assert.Empty(trees.SelectMany(tree => tree.GetDiagnostics()));
             var script = new Script(ImmutableArray.CreateRange(trees));
