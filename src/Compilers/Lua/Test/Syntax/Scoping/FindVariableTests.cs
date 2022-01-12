@@ -12,7 +12,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
         [InlineData(ScopeKind.Block, "b")]
         public void Script_FindVariable_ReturnsNullWhenNoVariableIsAvailable(ScopeKind scopeKind, string name)
         {
-            SetupScript(out _, out var innerMostScope);
+            SetupScript(out var innerMostScope);
             Assert.Null(innerMostScope.FindVariable(name, scopeKind));
         }
 
@@ -30,20 +30,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
         [InlineData(ScopeKind.Block, "c")]
         public void Script_FindVariable_ReturnsVariableWhenVariableIsAvailable(ScopeKind scopeKind, string name)
         {
-            SetupScript(out _, out var innerMostScope);
+            SetupScript(out var innerMostScope);
             Assert.NotNull(innerMostScope.FindVariable(name, scopeKind));
         }
 
-        private static void SetupScript(out Script script, out IScope innerMostScope)
+        private static void SetupScript(out IScope innerMostScope)
         {
-            script = ParseScript("local a = 1\r\n" +
-                                 "function f(b)\r\n" +
-                                 "    print(b)\r\n" +
-                                 "    do\r\n" +
-                                 "        local c = 3\r\n" +
-                                 "    end\r\n" +
-                                 "end",
-                                 "glob = 2");
+            var script = ParseScript("local a = 1\r\n" +
+                                     "function f(b)\r\n" +
+                                     "    print(b)\r\n" +
+                                     "    do\r\n" +
+                                     "        local c = 3\r\n" +
+                                     "    end\r\n" +
+                                     "end",
+                                     "glob = 2");
 
             var firstTree = script.SyntaxTrees.First();
             var root = Assert.IsType<CompilationUnitSyntax>(firstTree.GetRoot());
