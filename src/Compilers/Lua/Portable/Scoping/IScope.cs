@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Loretta.CodeAnalysis.Lua.Syntax;
+using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -27,7 +29,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The parent scope (if any).
         /// </summary>
-        IScope? Parent { get; }
+        IScope? ContainingScope { get; }
 
         /// <summary>
         /// Contains the variables declared within the scope.
@@ -37,7 +39,7 @@ namespace Loretta.CodeAnalysis.Lua
         IEnumerable<IVariable> DeclaredVariables { get; }
 
         /// <summary>
-        /// Variables that are referenced by this scope.
+        /// Variables that are directly referenced by this scope.
         /// </summary>
         IEnumerable<IVariable> ReferencedVariables { get; }
 
@@ -45,6 +47,63 @@ namespace Loretta.CodeAnalysis.Lua
         /// The goto labels contained within this scope.
         /// </summary>
         IEnumerable<IGotoLabel> GotoLabels { get; }
+
+        /// <summary>
+        /// Returns the scopes directly contained within this scope.
+        /// </summary>
+        IEnumerable<IScope> ContainedScopes { get; }
+
+        /// <summary>
+        /// Attempts to find a variable with the given name.
+        /// </summary>
+        /// <param name="name">The name of the variable to search by.</param>
+        /// <param name="kind">
+        /// The kind of scope up to which to search the variable in.
+        /// </param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the providedd name is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the provided name is not a valid identifier.
+        /// </exception>
+        /// <remarks>
+        ///   <para>The kind parameter searches for a scope of the provided kind or a more specific one as in the following list:</para>
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.Block"/> searches only <see cref="ScopeKind.Block"/>s.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.Function"/> searches: <see cref="ScopeKind.Function"/>s
+        ///         and <see cref="ScopeKind.Block"/>s.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.File"/> searches: <see cref="ScopeKind.File"/>,
+        ///         <see cref="ScopeKind.Function"/>s and <see cref="ScopeKind.Block"/>s.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         <see cref="ScopeKind.Global"/> searches: <see cref="ScopeKind.Global"/>,
+        ///         <see cref="ScopeKind.File"/>, <see cref="ScopeKind.Function"/>s
+        ///         and <see cref="ScopeKind.Block"/>s.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </remarks>
+        IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Global);
+
+        /// <summary>
+        /// Deprecated. <inheritdoc cref="ContainingScope"/>
+        /// </summary>
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use ContainingScope instead.")]
+        IScope? Parent { get; }
     }
 
     internal interface IScopeInternal : IScope
@@ -57,6 +116,8 @@ namespace Loretta.CodeAnalysis.Lua
         bool TryGetLabel(string name, [NotNullWhen(true)] out IGotoLabelInternal? label);
         IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null);
         IGotoLabelInternal CreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null);
+
+        void AddChildScope(IScopeInternal scope);
     }
 
     internal class Scope : IScopeInternal
@@ -65,6 +126,7 @@ namespace Loretta.CodeAnalysis.Lua
         protected readonly ISet<IVariableInternal> _declaredVariables = new HashSet<IVariableInternal>();
         protected readonly ISet<IVariableInternal> _referencedVariables = new HashSet<IVariableInternal>();
         protected readonly IDictionary<string, IGotoLabelInternal> _labels = new Dictionary<string, IGotoLabelInternal>(StringComparer.Ordinal);
+        protected readonly IList<IScopeInternal> _containedScopes = new List<IScopeInternal>();
 
         public Scope(ScopeKind kind, SyntaxNode? node, IScopeInternal? parent)
         {
@@ -74,6 +136,7 @@ namespace Loretta.CodeAnalysis.Lua
             DeclaredVariables = SpecializedCollections.ReadOnlyEnumerable(_declaredVariables);
             ReferencedVariables = SpecializedCollections.ReadOnlyEnumerable(_referencedVariables);
             GotoLabels = SpecializedCollections.ReadOnlyEnumerable(_labels.Values);
+            ContainedScopes = SpecializedCollections.ReadOnlyEnumerable(_containedScopes);
         }
 
         public ScopeKind Kind { get; }
@@ -82,6 +145,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public IScopeInternal? Parent { get; }
 
+        IScope? IScope.ContainingScope => Parent;
         IScope? IScope.Parent => Parent;
 
         public IEnumerable<IVariableInternal> DeclaredVariables { get; }
@@ -95,6 +159,22 @@ namespace Loretta.CodeAnalysis.Lua
         public IEnumerable<IGotoLabelInternal> GotoLabels { get; }
 
         IEnumerable<IGotoLabel> IScope.GotoLabels => GotoLabels;
+
+        public IEnumerable<IScopeInternal> ContainedScopes { get; }
+
+        IEnumerable<IScope> IScope.ContainedScopes => ContainedScopes;
+
+        public IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Global)
+        {
+            if (name is null) throw new ArgumentNullException(nameof(name));
+            if (!StringUtils.IsIdentifier(name)) throw new ArgumentException($"'{nameof(name)}' must be a valid identifier.");
+            foreach (var variable in DeclaredVariables)
+            {
+                if (StringComparer.Ordinal.Equals(variable.Name, name))
+                    return variable;
+            }
+            return Parent is not null && Parent.Kind >= kind ? Parent.FindVariable(name, kind) : null;
+        }
 
         public bool TryGetVariable(string name, [NotNullWhen(true)] out IVariableInternal? variable) =>
             _variables.TryGetValue(name, out variable) || Parent?.TryGetVariable(name, out variable) is true;
@@ -151,6 +231,12 @@ namespace Loretta.CodeAnalysis.Lua
             var label = new GotoLabel(name, labelSyntax);
             _labels[name] = label;
             return label;
+        }
+
+        public void AddChildScope(IScopeInternal scope)
+        {
+            RoslynDebug.Assert(scope.ContainingScope == this);
+            _containedScopes.Add(scope);
         }
     }
 }

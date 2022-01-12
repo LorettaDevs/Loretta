@@ -52,6 +52,14 @@ namespace Loretta.CodeAnalysis.Lua
         /// All locations this variable is written to.
         /// </summary>
         IEnumerable<SyntaxNode> WriteLocations { get; }
+
+        /// <summary>
+        /// Returns whether this variable can be accessed in the
+        /// provided scope.
+        /// </summary>
+        /// <param name="scope">The scope to check access in.</param>
+        /// <returns></returns>
+        bool CanBeAccessedIn(IScope scope);
     }
 
     internal interface IVariableInternal : IVariable
@@ -105,6 +113,16 @@ namespace Loretta.CodeAnalysis.Lua
         public IEnumerable<SyntaxNode> ReadLocations { get; }
 
         public IEnumerable<SyntaxNode> WriteLocations { get; }
+
+        public bool CanBeAccessedIn(IScope scope)
+        {
+            for (IScope? currScope = scope; currScope != null; currScope = currScope.ContainingScope)
+            {
+                if (ContainingScope == currScope)
+                    return true;
+            }
+            return false;
+        }
 
         public void AddReferencingScope(IScopeInternal scope) =>
             _referencingScopes.Add(scope);
