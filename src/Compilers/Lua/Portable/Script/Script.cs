@@ -150,7 +150,7 @@ namespace Loretta.CodeAnalysis.Lua
         {
             if (newName is null) throw new ArgumentNullException(nameof(newName));
 
-            var errors = ArrayBuilder<RenameError>.GetInstance();
+            var errors = new HashSet<RenameError>();
             var trees = new HashSet<SyntaxTree>();
             foreach (var location in variable.ReadLocations)
             {
@@ -173,7 +173,7 @@ namespace Loretta.CodeAnalysis.Lua
             }
 
             if (errors.Any())
-                return Result.Err<Script, IEnumerable<RenameError>>(errors.ToImmutableAndFree());
+                return Result.Err<Script, IEnumerable<RenameError>>(errors);
 
             var visitor = new RenameRewriter(this, variable, newName);
             var finalTrees = SyntaxTrees;
