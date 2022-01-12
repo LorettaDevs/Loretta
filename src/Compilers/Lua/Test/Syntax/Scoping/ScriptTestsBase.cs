@@ -25,6 +25,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
             {
                 var tree = ParseWithRoundTripCheck(code, parseOptions);
                 tree.GetDiagnostics().Verify();
+                trees.Add(tree);
             }
             var script = new Script(ImmutableArray.CreateRange(trees));
             return script;
