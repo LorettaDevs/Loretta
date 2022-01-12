@@ -77,7 +77,7 @@ namespace Loretta.CodeAnalysis
                 {
                     message = "Unexpected difference past end of the file";
                 }
-                RoslynDebug.Assert(false, message);
+                LorettaDebug.Assert(false, message);
             }
         }
 

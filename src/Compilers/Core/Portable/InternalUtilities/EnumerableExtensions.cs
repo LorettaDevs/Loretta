@@ -468,7 +468,7 @@ namespace Loretta.Utilities
         {
 #if DEBUG
             var count = data.First().Count();
-            RoslynDebug.Assert(data.All(d => d.Count() == count));
+            LorettaDebug.Assert(data.All(d => d.Count() == count));
 #endif
             return TransposeInternal(data).ToArray();
         }
@@ -595,7 +595,7 @@ namespace System.Linq
     {
         public static bool SequenceEqual<T>(this IEnumerable<T>? first, IEnumerable<T>? second, Func<T, T, bool> comparer)
         {
-            RoslynDebug.Assert(comparer != null);
+            LorettaDebug.Assert(comparer != null);
 
             if (first == second)
             {

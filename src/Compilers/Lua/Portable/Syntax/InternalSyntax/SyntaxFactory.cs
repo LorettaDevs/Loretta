@@ -94,9 +94,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         internal static SyntaxToken Token(GreenNode? leading, SyntaxKind kind, string text, string valueText, GreenNode? trailing)
         {
-            RoslynDebug.Assert(SyntaxFacts.IsToken(kind));
-            RoslynDebug.Assert(kind != SyntaxKind.IdentifierToken);
-            RoslynDebug.Assert(kind != SyntaxKind.NumericLiteralToken);
+            LorettaDebug.Assert(SyntaxFacts.IsToken(kind));
+            LorettaDebug.Assert(kind != SyntaxKind.IdentifierToken);
+            LorettaDebug.Assert(kind != SyntaxKind.NumericLiteralToken);
 
             var defaultText = SyntaxFacts.GetText(kind);
             return kind >= SyntaxToken.FirstTokenWithWellKnownText && kind <= SyntaxToken.LastTokenWithWellKnownText && text == defaultText && valueText == defaultText

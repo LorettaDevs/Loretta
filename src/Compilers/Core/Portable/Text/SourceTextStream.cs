@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis.Text
 
         public SourceTextStream(SourceText source, int bufferSize = 2048, bool useDefaultEncodingIfNull = false)
         {
-            RoslynDebug.Assert(source.Encoding != null || useDefaultEncodingIfNull);
+            LorettaDebug.Assert(source.Encoding != null || useDefaultEncodingIfNull);
 
             _source = source;
             _encoding = source.Encoding ?? s_utf8EncodingWithNoBOM;

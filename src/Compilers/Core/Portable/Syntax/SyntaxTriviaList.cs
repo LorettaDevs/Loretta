@@ -454,13 +454,13 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private GreenNode? GetGreenNodeAt(int i)
         {
-            RoslynDebug.Assert(Node is object);
+            LorettaDebug.Assert(Node is object);
             return GetGreenNodeAt(Node, i);
         }
 
         private static GreenNode? GetGreenNodeAt(GreenNode node, int i)
         {
-            RoslynDebug.Assert(node.IsList || (i == 0 && !node.IsList));
+            LorettaDebug.Assert(node.IsList || (i == 0 && !node.IsList));
             return node.IsList ? node.GetSlot(i) : node;
         }
 

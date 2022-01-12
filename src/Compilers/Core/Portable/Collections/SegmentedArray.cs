@@ -405,7 +405,7 @@ namespace Loretta.CodeAnalysis.Collections
                     var initialSecondSegment = _secondOffset / segmentLength;
                     var initialSecondSegmentStart = initialSecondSegment * segmentLength;
                     var offset = _firstOffset - initialFirstSegmentStart;
-                    RoslynDebug.Assert(offset == (_secondOffset - initialSecondSegmentStart), "Aligned views must start at the same segment offset");
+                    LorettaDebug.Assert(offset == (_secondOffset - initialSecondSegmentStart), "Aligned views must start at the same segment offset");
 
                     var firstSegment = _firstSegments[initialFirstSegment];
                     var secondSegment = _secondSegments[initialSecondSegment];

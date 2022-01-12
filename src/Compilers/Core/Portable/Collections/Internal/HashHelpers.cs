@@ -87,7 +87,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
             if ((uint)newSize > MaxPrimeArrayLength && MaxPrimeArrayLength > oldSize)
             {
-                RoslynDebug.Assert(MaxPrimeArrayLength == GetPrime(MaxPrimeArrayLength), "Invalid MaxPrimeArrayLength");
+                LorettaDebug.Assert(MaxPrimeArrayLength == GetPrime(MaxPrimeArrayLength), "Invalid MaxPrimeArrayLength");
                 return MaxPrimeArrayLength;
             }
 
@@ -109,13 +109,13 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         {
             // We use modified Daniel Lemire's fastmod algorithm (https://github.com/dotnet/runtime/pull/406),
             // which allows to avoid the long multiplication if the divisor is less than 2**31.
-            RoslynDebug.Assert(divisor <= int.MaxValue);
+            LorettaDebug.Assert(divisor <= int.MaxValue);
 
             // This is equivalent of (uint)Math.BigMul(multiplier * value, divisor, out _). This version
             // is faster than BigMul currently because we only need the high bits.
             var highbits = (uint)(((((multiplier * value) >> 32) + 1) * divisor) >> 32);
 
-            RoslynDebug.Assert(highbits == value % divisor);
+            LorettaDebug.Assert(highbits == value % divisor);
             return highbits;
         }
     }

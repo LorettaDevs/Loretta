@@ -48,7 +48,7 @@
 
                 if (alternate != null)
                 {
-                    RoslynDebug.Assert(visited != null && visited.Kind != SyntaxKind.None, "Cannot remove node using Syntax.InternalSyntax.SyntaxRewriter.");
+                    LorettaDebug.Assert(visited != null && visited.Kind != SyntaxKind.None, "Cannot remove node using Syntax.InternalSyntax.SyntaxRewriter.");
                     alternate.Add(visited);
                 }
             }

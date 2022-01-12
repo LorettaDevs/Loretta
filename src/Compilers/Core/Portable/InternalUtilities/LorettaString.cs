@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Loretta.Utilities
 {
-    internal static class RoslynString
+    internal static class LorettaString
     {
         /// <inheritdoc cref="string.IsNullOrEmpty(string)"/>
         public static bool IsNullOrEmpty([NotNullWhen(returnValue: false)] string? value)

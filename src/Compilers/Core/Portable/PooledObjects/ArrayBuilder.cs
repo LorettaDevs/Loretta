@@ -370,7 +370,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
         public static ArrayBuilder<T> GetInstance()
         {
             var builder = s_poolInstance.Allocate();
-            RoslynDebug.Assert(builder.Count == 0);
+            LorettaDebug.Assert(builder.Count == 0);
             return builder;
         }
 
@@ -488,8 +488,8 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         public void AddRange(ImmutableArray<T> items, int start, int length)
         {
-            RoslynDebug.Assert(start >= 0 && length >= 0);
-            RoslynDebug.Assert(start + length <= items.Length);
+            LorettaDebug.Assert(start >= 0 && length >= 0);
+            LorettaDebug.Assert(start + length <= items.Length);
             for (int i = start, end = start + length; i < end; i++)
             {
                 Add(items[i]);
@@ -503,8 +503,8 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         public void AddRange(T[] items, int start, int length)
         {
-            RoslynDebug.Assert(start >= 0 && length >= 0);
-            RoslynDebug.Assert(start + length <= items.Length);
+            LorettaDebug.Assert(start >= 0 && length >= 0);
+            LorettaDebug.Assert(start + length <= items.Length);
             for (int i = start, end = start + length; i < end; i++)
             {
                 Add(items[i]);
@@ -528,7 +528,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         public void Clip(int limit)
         {
-            RoslynDebug.Assert(limit <= Count);
+            LorettaDebug.Assert(limit <= Count);
             _builder.Count = limit;
         }
 

@@ -181,21 +181,21 @@ namespace Loretta.CodeAnalysis.Lua
 
         public IVariableInternal GetOrCreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null)
         {
-            RoslynDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
-            RoslynDebug.Assert(!string.IsNullOrEmpty(name));
+            LorettaDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
+            LorettaDebug.Assert(!string.IsNullOrEmpty(name));
 
             if (!TryGetVariable(name, out var variable))
                 variable = CreateVariable(kind, name, declaration);
 
             _referencedVariables.Add(variable);
-            RoslynDebug.Assert(variable.Kind == kind);
+            LorettaDebug.Assert(variable.Kind == kind);
             return variable;
         }
 
         public IVariableInternal CreateVariable(VariableKind kind, string name, SyntaxNode? declaration = null)
         {
-            RoslynDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
-            RoslynDebug.Assert(!string.IsNullOrEmpty(name));
+            LorettaDebug.Assert(Kind == ScopeKind.Global || kind != VariableKind.Global);
+            LorettaDebug.Assert(!string.IsNullOrEmpty(name));
 
             var variable = new Variable(kind, this, name, declaration);
             _variables[name] = variable;
@@ -217,8 +217,8 @@ namespace Loretta.CodeAnalysis.Lua
 
         public IGotoLabelInternal GetOrCreateLabel(string name, GotoLabelStatementSyntax? labelSyntax = null)
         {
-            RoslynDebug.Assert(!string.IsNullOrEmpty(name));
-            RoslynDebug.AssertNotNull(labelSyntax);
+            LorettaDebug.Assert(!string.IsNullOrEmpty(name));
+            LorettaDebug.AssertNotNull(labelSyntax);
 
             if (!TryGetLabel(name, out var label))
                 label = CreateLabel(name, labelSyntax);
@@ -235,7 +235,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public void AddChildScope(IScopeInternal scope)
         {
-            RoslynDebug.Assert(scope.ContainingScope == this);
+            LorettaDebug.Assert(scope.ContainingScope == this);
             _containedScopes.Add(scope);
         }
     }

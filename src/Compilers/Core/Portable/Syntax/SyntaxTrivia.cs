@@ -32,7 +32,7 @@ namespace Loretta.CodeAnalysis
             Position = position;
             Index = index;
 
-            RoslynDebug.Assert(this.RawKind != 0 || this.Equals(default(SyntaxTrivia)));
+            LorettaDebug.Assert(this.RawKind != 0 || this.Equals(default(SyntaxTrivia)));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis
             get
             {
                 var node = UnderlyingNode;
-                RoslynDebug.Assert(node is object);
+                LorettaDebug.Assert(node is object);
                 return node;
             }
         }

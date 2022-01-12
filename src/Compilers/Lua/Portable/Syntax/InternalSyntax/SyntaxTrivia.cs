@@ -51,7 +51,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             get
             {
-                RoslynDebug.Assert(FullWidth == Text.Length);
+                LorettaDebug.Assert(FullWidth == Text.Length);
                 return FullWidth;
             }
         }

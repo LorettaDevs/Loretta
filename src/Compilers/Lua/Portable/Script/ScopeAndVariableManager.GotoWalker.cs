@@ -15,7 +15,7 @@ namespace Loretta.CodeAnalysis.Lua
                 IDictionary<SyntaxNode, IGotoLabel> labels)
                 : base(scopes)
             {
-                RoslynDebug.AssertNotNull(labels);
+                LorettaDebug.AssertNotNull(labels);
 
                 _labels = labels;
             }

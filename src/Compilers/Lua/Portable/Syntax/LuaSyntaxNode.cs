@@ -44,7 +44,7 @@ namespace Loretta.CodeAnalysis.Lua
             get
             {
                 var result = _syntaxTree ?? ComputeSyntaxTree(this);
-                RoslynDebug.Assert(result != null);
+                LorettaDebug.Assert(result != null);
                 return result;
             }
         }
@@ -86,14 +86,14 @@ namespace Loretta.CodeAnalysis.Lua
             // Propagate the syntax tree downwards if necessary
             if (nodes != null)
             {
-                RoslynDebug.Assert(tree != null);
+                LorettaDebug.Assert(tree != null);
 
                 foreach (var n in nodes)
                 {
                     var existingTree = n._syntaxTree;
                     if (existingTree != null)
                     {
-                        RoslynDebug.Assert(existingTree == tree, "how could this node belong to a different tree?");
+                        LorettaDebug.Assert(existingTree == tree, "how could this node belong to a different tree?");
 
                         // yield the race
                         break;

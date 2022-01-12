@@ -28,8 +28,8 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxToken(SyntaxNode? parent, GreenNode? token, int position, int index)
         {
-            RoslynDebug.Assert(parent == null || !parent.Green.IsList, "list cannot be a parent");
-            RoslynDebug.Assert(token == null || token.IsToken, "token must be a token");
+            LorettaDebug.Assert(parent == null || !parent.Green.IsList, "list cannot be a parent");
+            LorettaDebug.Assert(token == null || token.IsToken, "token must be a token");
             Parent = parent;
             Node = token;
             Position = position;
@@ -39,7 +39,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxToken(GreenNode? token)
             : this()
         {
-            RoslynDebug.Assert(token == null || token.IsToken, "token must be a token");
+            LorettaDebug.Assert(token == null || token.IsToken, "token must be a token");
             Node = token;
         }
 
@@ -81,7 +81,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                RoslynDebug.Assert(Node is object);
+                LorettaDebug.Assert(Node is object);
                 return Node;
             }
         }

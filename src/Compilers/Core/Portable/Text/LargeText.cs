@@ -61,7 +61,7 @@ namespace Loretta.CodeAnalysis.Text
             }
 
             var maxCharRemainingGuess = encoding.GetMaxCharCountOrThrowIfHuge(stream);
-            RoslynDebug.Assert(longLength > 0 && longLength <= int.MaxValue); // GetMaxCharCountOrThrowIfHuge should have thrown.
+            LorettaDebug.Assert(longLength > 0 && longLength <= int.MaxValue); // GetMaxCharCountOrThrowIfHuge should have thrown.
             int length = (int)longLength;
 
             using (var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true, bufferSize: Math.Min(length, 4096), leaveOpen: true))

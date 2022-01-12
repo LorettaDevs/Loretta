@@ -64,7 +64,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         internal static void Sort(SegmentedArraySegment<T> keys, Comparison<T> comparer)
         {
-            RoslynDebug.Assert(comparer != null, "Check the arguments in the caller!");
+            LorettaDebug.Assert(comparer != null, "Check the arguments in the caller!");
 
             // Add a try block here to detect bogus comparisons
             try
@@ -83,7 +83,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         internal static int InternalBinarySearch(SegmentedArray<T> array, int index, int length, T value, IComparer<T> comparer)
         {
-            RoslynDebug.Assert(index >= 0 && length >= 0 && (array.Length - index >= length), "Check the arguments in the caller!");
+            LorettaDebug.Assert(index >= 0 && length >= 0 && (array.Length - index >= length), "Check the arguments in the caller!");
 
             int lo = index;
             int hi = index + length - 1;
@@ -109,7 +109,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         private static void SwapIfGreater(SegmentedArraySegment<T> keys, Comparison<T> comparer, int i, int j)
         {
-            RoslynDebug.Assert(i != j);
+            LorettaDebug.Assert(i != j);
 
             if (comparer(keys[i], keys[j]) > 0)
             {
@@ -122,7 +122,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void Swap(SegmentedArraySegment<T> a, int i, int j)
         {
-            RoslynDebug.Assert(i != j);
+            LorettaDebug.Assert(i != j);
 
             T t = a[i];
             a[i] = a[j];
@@ -131,7 +131,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         internal static void IntrospectiveSort(SegmentedArraySegment<T> keys, Comparison<T> comparer)
         {
-            RoslynDebug.Assert(comparer != null);
+            LorettaDebug.Assert(comparer != null);
 
             if (keys.Length > 1)
             {
@@ -141,9 +141,9 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         private static void IntroSort(SegmentedArraySegment<T> keys, int depthLimit, Comparison<T> comparer)
         {
-            RoslynDebug.Assert(keys.Length > 0);
-            RoslynDebug.Assert(depthLimit >= 0);
-            RoslynDebug.Assert(comparer != null);
+            LorettaDebug.Assert(keys.Length > 0);
+            LorettaDebug.Assert(depthLimit >= 0);
+            LorettaDebug.Assert(comparer != null);
 
             int partitionSize = keys.Length;
             while (partitionSize > 1)
@@ -186,8 +186,8 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         private static int PickPivotAndPartition(SegmentedArraySegment<T> keys, Comparison<T> comparer)
         {
-            RoslynDebug.Assert(keys.Length >= SegmentedArrayHelper.IntrosortSizeThreshold);
-            RoslynDebug.Assert(comparer != null);
+            LorettaDebug.Assert(keys.Length >= SegmentedArrayHelper.IntrosortSizeThreshold);
+            LorettaDebug.Assert(comparer != null);
 
             int hi = keys.Length - 1;
 
@@ -231,8 +231,8 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         private static void HeapSort(SegmentedArraySegment<T> keys, Comparison<T> comparer)
         {
-            RoslynDebug.Assert(comparer != null);
-            RoslynDebug.Assert(keys.Length > 0);
+            LorettaDebug.Assert(comparer != null);
+            LorettaDebug.Assert(keys.Length > 0);
 
             int n = keys.Length;
             for (int i = n >> 1; i >= 1; i--)
@@ -249,9 +249,9 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         private static void DownHeap(SegmentedArraySegment<T> keys, int i, int n, int lo, Comparison<T> comparer)
         {
-            RoslynDebug.Assert(comparer != null);
-            RoslynDebug.Assert(lo >= 0);
-            RoslynDebug.Assert(lo < keys.Length);
+            LorettaDebug.Assert(comparer != null);
+            LorettaDebug.Assert(lo >= 0);
+            LorettaDebug.Assert(lo < keys.Length);
 
             T d = keys[lo + i - 1];
             while (i <= n >> 1)
@@ -307,7 +307,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
         public static int MoveNansToFront<TKey, TValue>(SegmentedArraySegment<TKey> keys, Span<TValue> values) where TKey : notnull
         {
-            RoslynDebug.Assert(typeof(TKey) == typeof(double) || typeof(TKey) == typeof(float));
+            LorettaDebug.Assert(typeof(TKey) == typeof(double) || typeof(TKey) == typeof(float));
 
             int left = 0;
 

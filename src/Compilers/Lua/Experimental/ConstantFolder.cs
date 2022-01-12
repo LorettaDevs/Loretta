@@ -347,7 +347,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         /// <returns></returns>
         private static bool IsFalsey(SyntaxNode node)
         {
-            RoslynDebug.Assert(CanConvertToBoolean(node));
+            LorettaDebug.Assert(CanConvertToBoolean(node));
             return node.Kind() is SyntaxKind.NilLiteralExpression or SyntaxKind.FalseLiteralExpression;
         }
 
@@ -360,7 +360,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         private static T GetValue<T>(SyntaxNode node)
         {
             node = GetInnerExpression(node);
-            RoslynDebug.Assert(node is LiteralExpressionSyntax);
+            LorettaDebug.Assert(node is LiteralExpressionSyntax);
             return (T) ((LiteralExpressionSyntax) node).Token.Value!;
         }
 

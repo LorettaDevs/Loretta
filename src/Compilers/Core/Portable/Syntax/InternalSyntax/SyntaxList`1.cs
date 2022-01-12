@@ -37,8 +37,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 }
                 else if (_node.IsList)
                 {
-                    RoslynDebug.Assert(index >= 0);
-                    RoslynDebug.Assert(index <= _node.SlotCount);
+                    LorettaDebug.Assert(index >= 0);
+                    LorettaDebug.Assert(index <= _node.SlotCount);
 
                     return (TNode?)_node.GetSlot(index);
                 }
@@ -56,20 +56,20 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         internal TNode GetRequiredItem(int index)
         {
             var node = this[index];
-            RoslynDebug.Assert(node is object);
+            LorettaDebug.Assert(node is object);
             return node;
         }
 
         internal GreenNode? ItemUntyped(int index)
         {
-            RoslynDebug.Assert(_node is object);
+            LorettaDebug.Assert(_node is object);
             var node = this._node;
             if (node.IsList)
             {
                 return node.GetSlot(index);
             }
 
-            RoslynDebug.Assert(index == 0);
+            LorettaDebug.Assert(index == 0);
             return node;
         }
 
@@ -108,7 +108,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                RoslynDebug.Assert(_node is object);
+                LorettaDebug.Assert(_node is object);
                 var node = this._node;
                 if (node.IsList)
                 {

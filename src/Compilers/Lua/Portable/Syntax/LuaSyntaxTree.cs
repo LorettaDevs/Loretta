@@ -118,7 +118,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <remarks>This is used by the ExpressionEvaluator.</remarks>
         internal static SyntaxTree CreateForDebugger(LuaSyntaxNode root, SourceText text, LuaParseOptions options)
         {
-            RoslynDebug.Assert(root != null);
+            LorettaDebug.Assert(root != null);
 
             return new DebuggerSyntaxTree(root, text, options);
         }
@@ -133,7 +133,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         internal static SyntaxTree CreateWithoutClone(LuaSyntaxNode root)
         {
-            RoslynDebug.Assert(root != null);
+            LorettaDebug.Assert(root != null);
 
             return new ParsedSyntaxTree(
                 textOpt: null,

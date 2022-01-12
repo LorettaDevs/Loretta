@@ -57,9 +57,9 @@ namespace Loretta.CodeAnalysis
             // by ref since it's a non-trivial struct
             internal void InitializeFromLeadingTrivia(in SyntaxToken token)
             {
-                RoslynDebug.Assert(token.Node is object);
+                LorettaDebug.Assert(token.Node is object);
                 var node = token.Node.GetLeadingTriviaCore();
-                RoslynDebug.Assert(node is object);
+                LorettaDebug.Assert(node is object);
                 InitializeFrom(in token, node, 0, token.Position);
             }
 
@@ -68,7 +68,7 @@ namespace Loretta.CodeAnalysis
             // by ref since it's a non-trivial struct
             internal void InitializeFromTrailingTrivia(in SyntaxToken token)
             {
-                RoslynDebug.Assert(token.Node is object);
+                LorettaDebug.Assert(token.Node is object);
                 var leading = token.Node.GetLeadingTriviaCore();
                 int index = 0;
                 if (leading != null)
@@ -83,7 +83,7 @@ namespace Loretta.CodeAnalysis
                     trailingPosition -= trailingGreen.FullWidth;
                 }
 
-                RoslynDebug.Assert(trailingGreen is object);
+                LorettaDebug.Assert(trailingGreen is object);
                 InitializeFrom(in token, trailingGreen, index, trailingPosition);
             }
             
@@ -105,7 +105,7 @@ namespace Loretta.CodeAnalysis
                     _position += _current.FullWidth;
                 }
 
-                RoslynDebug.Assert(_singleNodeOrList is object);
+                LorettaDebug.Assert(_singleNodeOrList is object);
                 _current = GetGreenNodeAt(_singleNodeOrList, newIndex);
                 return true;
             }

@@ -121,7 +121,7 @@ namespace Loretta.CodeAnalysis
 
         private static int AlignSize(int size)
         {
-            RoslynDebug.Assert(size > 0);
+            LorettaDebug.Assert(size > 0);
 
             size--;
             size |= size >> 1;

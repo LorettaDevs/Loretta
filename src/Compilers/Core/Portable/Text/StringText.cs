@@ -26,7 +26,7 @@ namespace Loretta.CodeAnalysis.Text
             SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
             : base(checksum, checksumAlgorithm)
         {
-            RoslynDebug.Assert(source != null);
+            LorettaDebug.Assert(source != null);
 
             _source = source;
             _encodingOpt = encodingOpt;

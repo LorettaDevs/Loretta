@@ -142,7 +142,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void AddRange(SyntaxTokenList list, int offset, int length)
         {
-            RoslynDebug.Assert(list.Node is not null);
+            LorettaDebug.Assert(list.Node is not null);
             this.AddRange(new SyntaxList<SyntaxNode>(list.Node.CreateRed()), offset, length);
         }
 

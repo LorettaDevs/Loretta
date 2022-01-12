@@ -172,14 +172,14 @@ namespace Loretta.CodeAnalysis.Collections
             set
             {
                 var modified = TryInsert(key, value, InsertionBehavior.OverwriteExisting);
-                RoslynDebug.Assert(modified);
+                LorettaDebug.Assert(modified);
             }
         }
 
         public void Add(TKey key, TValue value)
         {
             var modified = TryInsert(key, value, InsertionBehavior.ThrowOnExisting);
-            RoslynDebug.Assert(modified); // If there was an existing key and the Add failed, an exception will already have been thrown.
+            LorettaDebug.Assert(modified); // If there was an existing key and the Add failed, an exception will already have been thrown.
         }
 
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> keyValuePair)
@@ -213,8 +213,8 @@ namespace Loretta.CodeAnalysis.Collections
             var count = _count;
             if (count > 0)
             {
-                RoslynDebug.Assert(_buckets.Length > 0, "_buckets should be non-empty");
-                RoslynDebug.Assert(_entries.Length > 0, "_entries should be non-empty");
+                LorettaDebug.Assert(_buckets.Length > 0, "_buckets should be non-empty");
+                LorettaDebug.Assert(_entries.Length > 0, "_entries should be non-empty");
 
                 SegmentedArray.Clear(_buckets, 0, _buckets.Length);
 
@@ -314,7 +314,7 @@ namespace Loretta.CodeAnalysis.Collections
             ref var entry = ref RoslynUnsafe.NullRef<Entry>();
             if (_buckets.Length > 0)
             {
-                RoslynDebug.Assert(_entries.Length > 0, "expected entries to be non-empty");
+                LorettaDebug.Assert(_entries.Length > 0, "expected entries to be non-empty");
                 var comparer = _comparer;
                 if (comparer == null)
                 {
@@ -456,10 +456,10 @@ ReturnNotFound:
             {
                 Initialize(0);
             }
-            RoslynDebug.Assert(_buckets.Length > 0);
+            LorettaDebug.Assert(_buckets.Length > 0);
 
             var entries = _entries;
-            RoslynDebug.Assert(entries.Length > 0, "expected entries to be non-empty");
+            LorettaDebug.Assert(entries.Length > 0, "expected entries to be non-empty");
 
             var comparer = _comparer;
             var hashCode = (uint)((comparer == null) ? key.GetHashCode() : comparer.GetHashCode(key));
@@ -595,7 +595,7 @@ ReturnNotFound:
             if (_freeCount > 0)
             {
                 index = _freeList;
-                RoslynDebug.Assert((StartOfFreeList - entries[_freeList]._next) >= -1, "shouldn't overflow because `next` cannot underflow");
+                LorettaDebug.Assert((StartOfFreeList - entries[_freeList]._next) >= -1, "shouldn't overflow because `next` cannot underflow");
                 _freeList = StartOfFreeList - entries[_freeList]._next;
                 _freeCount--;
             }
@@ -627,8 +627,8 @@ ReturnNotFound:
 
         private void Resize(int newSize)
         {
-            RoslynDebug.Assert(_entries.Length > 0, "_entries should be non-empty");
-            RoslynDebug.Assert(newSize >= _entries.Length);
+            LorettaDebug.Assert(_entries.Length > 0, "_entries should be non-empty");
+            LorettaDebug.Assert(newSize >= _entries.Length);
 
             var entries = new SegmentedArray<Entry>(newSize);
 
@@ -664,7 +664,7 @@ ReturnNotFound:
 
             if (_buckets.Length > 0)
             {
-                RoslynDebug.Assert(_entries.Length > 0, "entries should be non-empty");
+                LorettaDebug.Assert(_entries.Length > 0, "entries should be non-empty");
                 uint collisionCount = 0;
                 var hashCode = (uint)(_comparer?.GetHashCode(key) ?? key.GetHashCode());
                 ref var bucket = ref GetBucket(hashCode);
@@ -686,7 +686,7 @@ ReturnNotFound:
                             entries[last]._next = entry._next;
                         }
 
-                        RoslynDebug.Assert((StartOfFreeList - _freeList) < 0, "shouldn't underflow because max hashtable length is MaxPrimeArrayLength = 0x7FEFFFFD(2146435069) _freelist underflow threshold 2147483646");
+                        LorettaDebug.Assert((StartOfFreeList - _freeList) < 0, "shouldn't underflow because max hashtable length is MaxPrimeArrayLength = 0x7FEFFFFD(2146435069) _freelist underflow threshold 2147483646");
                         entry._next = StartOfFreeList - _freeList;
 
 #if NETCOREAPP
@@ -736,7 +736,7 @@ ReturnNotFound:
 
             if (_buckets.Length > 0)
             {
-                RoslynDebug.Assert(_entries.Length > 0, "entries should be non-empty");
+                LorettaDebug.Assert(_entries.Length > 0, "entries should be non-empty");
                 uint collisionCount = 0;
                 var hashCode = (uint)(_comparer?.GetHashCode(key) ?? key.GetHashCode());
                 ref var bucket = ref GetBucket(hashCode);
@@ -760,7 +760,7 @@ ReturnNotFound:
 
                         value = entry._value;
 
-                        RoslynDebug.Assert((StartOfFreeList - _freeList) < 0, "shouldn't underflow because max hashtable length is MaxPrimeArrayLength = 0x7FEFFFFD(2146435069) _freelist underflow threshold 2147483646");
+                        LorettaDebug.Assert((StartOfFreeList - _freeList) < 0, "shouldn't underflow because max hashtable length is MaxPrimeArrayLength = 0x7FEFFFFD(2146435069) _freelist underflow threshold 2147483646");
                         entry._next = StartOfFreeList - _freeList;
 
 #if NETCOREAPP

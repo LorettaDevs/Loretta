@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public Blender(Lexer lexer, Lua.LuaSyntaxNode oldTree, IEnumerable<TextChangeRange> changes)
         {
-            RoslynDebug.Assert(lexer != null);
+            LorettaDebug.Assert(lexer != null);
             _lexer = lexer;
             _changes = ImmutableStack.Create<TextChangeRange>();
 
@@ -80,9 +80,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             int newPosition,
             int changeDelta)
         {
-            RoslynDebug.Assert(lexer != null);
-            RoslynDebug.Assert(changes != null);
-            RoslynDebug.Assert(newPosition >= 0);
+            LorettaDebug.Assert(lexer != null);
+            LorettaDebug.Assert(changes != null);
+            LorettaDebug.Assert(newPosition >= 0);
             _lexer = lexer;
             _oldTreeCursor = oldTreeCursor;
             _changes = changes;
@@ -118,7 +118,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             for (var i = 0; start > 0 && i <= maxLookahead;)
             {
                 var token = oldTree.FindToken(start, findInsideTrivia: false);
-                RoslynDebug.Assert(token.Kind() != SyntaxKind.None, "how could we not get a real token back?");
+                LorettaDebug.Assert(token.Kind() != SyntaxKind.None, "how could we not get a real token back?");
 
                 start = Math.Max(0, token.Position - 1);
 

@@ -30,9 +30,9 @@ namespace Loretta.CodeAnalysis.Lua
                 LuaSyntaxNode root,
                 bool cloneRoot)
             {
-                RoslynDebug.Assert(root != null);
-                RoslynDebug.Assert(options != null);
-                RoslynDebug.Assert(textOpt == null || textOpt.Encoding == encodingOpt && textOpt.ChecksumAlgorithm == checksumAlgorithm);
+                LorettaDebug.Assert(root != null);
+                LorettaDebug.Assert(options != null);
+                LorettaDebug.Assert(textOpt == null || textOpt.Encoding == encodingOpt && textOpt.ChecksumAlgorithm == checksumAlgorithm);
 
                 _lazyText = textOpt;
                 _encodingOpt = encodingOpt ?? textOpt?.Encoding;

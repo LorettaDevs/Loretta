@@ -192,7 +192,7 @@ namespace Loretta.CodeAnalysis
 
             public DiffAction(DiffOp operation, int count)
             {
-                Loretta.Utilities.RoslynDebug.Assert(count >= 0);
+                Loretta.Utilities.LorettaDebug.Assert(count >= 0);
                 this.Operation = operation;
                 this.Count = count;
             }
@@ -440,19 +440,19 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var tr in node1.GetLeadingTrivia())
                 {
-                    RoslynDebug.Assert(tr.UnderlyingNode is object);
+                    LorettaDebug.Assert(tr.UnderlyingNode is object);
                     _nodeSimilaritySet.Add(tr.UnderlyingNode);
                 }
 
                 foreach (var tr in node1.GetTrailingTrivia())
                 {
-                    RoslynDebug.Assert(tr.UnderlyingNode is object);
+                    LorettaDebug.Assert(tr.UnderlyingNode is object);
                     _nodeSimilaritySet.Add(tr.UnderlyingNode);
                 }
 
                 foreach (var tr in node2.GetLeadingTrivia())
                 {
-                    RoslynDebug.Assert(tr.UnderlyingNode is object);
+                    LorettaDebug.Assert(tr.UnderlyingNode is object);
                     if (_nodeSimilaritySet.Contains(tr.UnderlyingNode))
                     {
                         w += tr.FullSpan.Length;
@@ -461,7 +461,7 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var tr in node2.GetTrailingTrivia())
                 {
-                    RoslynDebug.Assert(tr.UnderlyingNode is object);
+                    LorettaDebug.Assert(tr.UnderlyingNode is object);
                     if (_nodeSimilaritySet.Contains(tr.UnderlyingNode))
                     {
                         w += tr.FullSpan.Length;
@@ -472,7 +472,7 @@ namespace Loretta.CodeAnalysis
             {
                 foreach (var n1 in node1.ChildNodesAndTokens())
                 {
-                    RoslynDebug.Assert(n1.UnderlyingNode is object);
+                    LorettaDebug.Assert(n1.UnderlyingNode is object);
                     _nodeSimilaritySet.Add(n1.UnderlyingNode);
 
                     if (n1.IsToken)
@@ -483,7 +483,7 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var n2 in node2.ChildNodesAndTokens())
                 {
-                    RoslynDebug.Assert(n2.UnderlyingNode is object);
+                    LorettaDebug.Assert(n2.UnderlyingNode is object);
                     if (_nodeSimilaritySet.Contains(n2.UnderlyingNode))
                     {
                         w += n2.FullSpan.Length;
@@ -583,7 +583,7 @@ namespace Loretta.CodeAnalysis
                     return;
                 }
 
-                RoslynDebug.Assert(change.Range.Span.Start >= last.Range.Span.End);
+                LorettaDebug.Assert(change.Range.Span.Start >= last.Range.Span.End);
             }
 
             _changes.Add(change);
@@ -606,7 +606,7 @@ namespace Loretta.CodeAnalysis
                     return;
                 }
 
-                RoslynDebug.Assert(textChangeRange.Span.Start >= last.Range.Span.End);
+                LorettaDebug.Assert(textChangeRange.Span.Start >= last.Range.Span.End);
             }
 
             _changes.Add(new ChangeRecord(textChangeRange, CreateQueue(removedNode), CreateQueue(insertedNode)));
@@ -639,8 +639,8 @@ namespace Loretta.CodeAnalysis
                 i++;
             }
 
-            RoslynDebug.Assert(start >= 0);
-            RoslynDebug.Assert(end >= 0);
+            LorettaDebug.Assert(start >= 0);
+            LorettaDebug.Assert(end >= 0);
 
             return TextSpan.FromBounds(start, end);
         }
@@ -664,8 +664,8 @@ namespace Loretta.CodeAnalysis
                 i++;
             }
 
-            RoslynDebug.Assert(start >= 0);
-            RoslynDebug.Assert(end >= 0);
+            LorettaDebug.Assert(start >= 0);
+            LorettaDebug.Assert(end >= 0);
 
             return TextSpan.FromBounds(start, end);
         }

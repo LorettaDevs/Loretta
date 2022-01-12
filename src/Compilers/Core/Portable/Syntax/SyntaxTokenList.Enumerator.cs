@@ -92,9 +92,9 @@ namespace Loretta.CodeAnalysis
                     _position += _current.FullWidth;
                 }
 
-                RoslynDebug.Assert(_singleNodeOrList is object);
+                LorettaDebug.Assert(_singleNodeOrList is object);
                 _current = GetGreenNodeAt(_singleNodeOrList, _index);
-                RoslynDebug.Assert(_current is object);
+                LorettaDebug.Assert(_current is object);
                 return true;
             }
 

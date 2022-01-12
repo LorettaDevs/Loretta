@@ -156,7 +156,7 @@ namespace Loretta.CodeAnalysis
                 else
                 {
                     node = ((IStructuredTriviaSyntax)node).ParentTrivia.Token.Parent!;
-                    RoslynDebug.Assert(node is object);
+                    LorettaDebug.Assert(node is object);
                 }
             }
         }
@@ -181,7 +181,7 @@ namespace Loretta.CodeAnalysis
                 else
                 {
                     node = ((IStructuredTriviaSyntax)node).ParentTrivia.Token.Parent!;
-                    RoslynDebug.Assert(node is object);
+                    LorettaDebug.Assert(node is object);
                 }
             }
 
@@ -200,7 +200,7 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var node in root.GetAnnotatedNodesAndTokens(IdAnnotationKind).Select(n => n.AsNode()!))
                 {
-                    RoslynDebug.Assert(node is object);
+                    LorettaDebug.Assert(node is object);
                     foreach (var id in node.GetAnnotations(IdAnnotationKind))
                     {
                         List<SyntaxNode>? list;

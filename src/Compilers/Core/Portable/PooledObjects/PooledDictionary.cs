@@ -50,7 +50,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
         public static PooledDictionary<K, V> GetInstance()
         {
             var instance = s_poolInstance.Allocate();
-            RoslynDebug.Assert(instance.Count == 0);
+            LorettaDebug.Assert(instance.Count == 0);
             return instance;
         }
     }

@@ -35,13 +35,13 @@ namespace Loretta.CodeAnalysis
         public SourceLocation(in SyntaxNodeOrToken nodeOrToken)
             : this(nodeOrToken.SyntaxTree!, nodeOrToken.Span)
         {
-            RoslynDebug.Assert(nodeOrToken.SyntaxTree is object);
+            LorettaDebug.Assert(nodeOrToken.SyntaxTree is object);
         }
 
         public SourceLocation(in SyntaxTrivia trivia)
             : this(trivia.SyntaxTree!, trivia.Span)
         {
-            RoslynDebug.Assert(trivia.SyntaxTree is object);
+            LorettaDebug.Assert(trivia.SyntaxTree is object);
         }
 
         public SourceLocation(SyntaxReference syntaxRef)
@@ -83,7 +83,7 @@ namespace Loretta.CodeAnalysis
             if (_syntaxTree == null)
             {
                 FileLinePositionSpan result = default(FileLinePositionSpan);
-                RoslynDebug.Assert(!result.IsValid);
+                LorettaDebug.Assert(!result.IsValid);
                 return result;
             }
 

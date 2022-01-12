@@ -244,8 +244,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <exception cref="DecoderFallbackException">If the given encoding is set to use a throwing decoder as a fallback</exception>
         private static string Decode(Stream stream, Encoding encoding, out Encoding actualEncoding)
         {
-            RoslynDebug.Assert(stream != null);
-            RoslynDebug.Assert(encoding != null);
+            LorettaDebug.Assert(stream != null);
+            LorettaDebug.Assert(encoding != null);
             const int maxBufferSize = 4096;
             var bufferSize = maxBufferSize;
 
@@ -287,8 +287,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <exception cref="DecoderFallbackException">If the given encoding is set to use a throwing decoder as a fallback</exception>
         private static string Decode(byte[] buffer, int length, Encoding encoding, out Encoding actualEncoding)
         {
-            RoslynDebug.Assert(buffer != null);
-            RoslynDebug.Assert(encoding != null);
+            LorettaDebug.Assert(buffer != null);
+            LorettaDebug.Assert(encoding != null);
             actualEncoding = TryReadByteOrderMark(buffer, length, out var preambleLength) ?? encoding;
             return actualEncoding.GetString(buffer, preambleLength, length - preambleLength);
         }
@@ -386,7 +386,7 @@ namespace Loretta.CodeAnalysis.Text
 
         internal void CheckSubSpan(TextSpan span)
         {
-            RoslynDebug.Assert(0 <= span.Start && span.Start <= span.End);
+            LorettaDebug.Assert(0 <= span.Start && span.Start <= span.End);
 
             if (span.End > Length)
             {
@@ -490,7 +490,7 @@ namespace Loretta.CodeAnalysis.Text
         {
             using (var algorithm = CryptographicHashProvider.TryGetAlgorithm(algorithmId))
             {
-                RoslynDebug.Assert(algorithm != null);
+                LorettaDebug.Assert(algorithm != null);
                 return ImmutableArray.Create(algorithm.ComputeHash(buffer, offset, count));
             }
         }
@@ -499,7 +499,7 @@ namespace Loretta.CodeAnalysis.Text
         {
             using (var algorithm = CryptographicHashProvider.TryGetAlgorithm(algorithmId))
             {
-                RoslynDebug.Assert(algorithm != null);
+                LorettaDebug.Assert(algorithm != null);
                 if (stream.CanSeek)
                 {
                     stream.Seek(0, SeekOrigin.Begin);
@@ -997,8 +997,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <returns>The detected encoding or null if no recognized byte order mark was present.</returns>
         internal static Encoding? TryReadByteOrderMark(byte[] source, int length, out int preambleLength)
         {
-            RoslynDebug.Assert(source != null);
-            RoslynDebug.Assert(length <= source.Length);
+            LorettaDebug.Assert(source != null);
+            LorettaDebug.Assert(length <= source.Length);
 
             if (length >= 2)
             {

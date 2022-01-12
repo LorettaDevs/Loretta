@@ -45,11 +45,11 @@ namespace Loretta.CodeAnalysis
                 var item = list[i];
                 if ((i & 1) == 0)
                 {
-                    RoslynDebug.Assert(item.IsNode, "Node missing in separated list.");
+                    LorettaDebug.Assert(item.IsNode, "Node missing in separated list.");
                 }
                 else
                 {
-                    RoslynDebug.Assert(item.IsToken, "Separator token missing in separated list.");
+                    LorettaDebug.Assert(item.IsToken, "Separator token missing in separated list.");
                 }
             }
         }
@@ -132,12 +132,12 @@ namespace Loretta.CodeAnalysis
             var node = _list.Node;
             if (node != null)
             {
-                RoslynDebug.Assert(node.IsList, "separated list cannot be a singleton separator");
+                LorettaDebug.Assert(node.IsList, "separated list cannot be a singleton separator");
                 if (unchecked((uint)index < (uint)_separatorCount))
                 {
                     index = (index << 1) + 1;
                     var green = node.Green.GetRequiredSlot(index);
-                    RoslynDebug.Assert(green.IsToken);
+                    LorettaDebug.Assert(green.IsToken);
                     return new SyntaxToken(node.Parent, green, node.GetChildPosition(index), _list.index + index);
                 }
             }
@@ -497,7 +497,7 @@ namespace Loretta.CodeAnalysis
             if (insertionIndex < nodesWithSeps.Count && nodesWithSeps[insertionIndex] is { IsNode: true } nodeOrToken)
             {
                 var node = nodesWithSeps[insertionIndex].AsNode();
-                RoslynDebug.Assert(node is object);
+                LorettaDebug.Assert(node is object);
                 nodesToInsertWithSeparators.Add(node.Green.CreateSeparator<TNode>(node)); // separator
             }
 
@@ -510,7 +510,7 @@ namespace Loretta.CodeAnalysis
             // then it should stay associated with previous node
             foreach (var tr in separator.TrailingTrivia)
             {
-                RoslynDebug.Assert(tr.UnderlyingNode is object);
+                LorettaDebug.Assert(tr.UnderlyingNode is object);
                 if (tr.UnderlyingNode.IsTriviaWithEndOfLine())
                 {
                     return true;

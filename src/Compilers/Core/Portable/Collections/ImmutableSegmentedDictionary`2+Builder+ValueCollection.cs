@@ -19,7 +19,7 @@ namespace Loretta.CodeAnalysis.Collections
 
                 internal ValueCollection(ImmutableSegmentedDictionary<TKey, TValue>.Builder dictionary)
                 {
-                    RoslynDebug.Assert(dictionary is not null);
+                    LorettaDebug.Assert(dictionary is not null);
                     _dictionary = dictionary!;
                 }
 

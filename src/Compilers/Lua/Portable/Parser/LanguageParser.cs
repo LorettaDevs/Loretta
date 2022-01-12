@@ -51,7 +51,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             // If this value is non-zero then we are nesting calls to ParseWithStackGuard which should not be
             // happening.  It's not a bug but it's inefficient and should be changed.
-            RoslynDebug.Assert(_recursionDepth == 0);
+            LorettaDebug.Assert(_recursionDepth == 0);
 
             try
             {
@@ -491,7 +491,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private ContinueStatementSyntax ParseContinueStatement()
         {
-            RoslynDebug.Assert(Options.SyntaxOptions.ContinueType is ContinueType.ContextualKeyword or ContinueType.Keyword);
+            LorettaDebug.Assert(Options.SyntaxOptions.ContinueType is ContinueType.ContextualKeyword or ContinueType.Keyword);
             var continueKeyword = Options.SyntaxOptions.ContinueType == ContinueType.ContextualKeyword
                 ? EatContextualToken(SyntaxKind.ContinueKeyword)
                 : EatTokenWithPrejudice(SyntaxKind.ContinueKeyword);
@@ -628,7 +628,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private CompoundAssignmentStatementSyntax ParseCompoundAssignment(PrefixExpressionSyntax variable)
         {
-            RoslynDebug.Assert(SyntaxFacts.IsCompoundAssignmentOperatorToken(CurrentToken.Kind));
+            LorettaDebug.Assert(SyntaxFacts.IsCompoundAssignmentOperatorToken(CurrentToken.Kind));
             if (!SyntaxFacts.IsVariableExpression(variable.Kind))
                 variable = AddError(variable, ErrorCode.ERR_CannotBeAssignedTo);
             var assignmentOperatorToken = EatToken();

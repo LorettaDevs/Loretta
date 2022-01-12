@@ -24,9 +24,9 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxTokenList(SyntaxNode? parent, GreenNode? tokenOrList, int position, int index)
         {
-            RoslynDebug.Assert(tokenOrList != null || (position == 0 && index == 0 && parent == null));
-            RoslynDebug.Assert(position >= 0);
-            RoslynDebug.Assert(tokenOrList == null || (tokenOrList.IsToken) || (tokenOrList.IsList));
+            LorettaDebug.Assert(tokenOrList != null || (position == 0 && index == 0 && parent == null));
+            LorettaDebug.Assert(position >= 0);
+            LorettaDebug.Assert(tokenOrList == null || (tokenOrList.IsToken) || (tokenOrList.IsList));
             _parent = parent;
             Node = tokenOrList;
             Position = position;
@@ -75,7 +75,7 @@ namespace Loretta.CodeAnalysis
             for (int i = 0; i < tokens.Length; i++)
             {
                 var node = tokens[i].Node;
-                RoslynDebug.Assert(node is object);
+                LorettaDebug.Assert(node is object);
                 builder.Add(node);
             }
 
@@ -92,7 +92,7 @@ namespace Loretta.CodeAnalysis
             var builder = SyntaxTokenListBuilder.Create();
             foreach (var token in tokens)
             {
-                RoslynDebug.Assert(token.Node is object);
+                LorettaDebug.Assert(token.Node is object);
                 builder.Add(token.Node);
             }
 
@@ -247,7 +247,7 @@ namespace Loretta.CodeAnalysis
 
         internal void CopyTo(int offset, GreenNode?[] array, int arrayOffset, int count)
         {
-            RoslynDebug.Assert(this.Count >= offset + count);
+            LorettaDebug.Assert(this.Count >= offset + count);
 
             for (int i = 0; i < count; i++)
             {
@@ -260,7 +260,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private GreenNode? GetGreenNodeAt(int i)
         {
-            RoslynDebug.Assert(Node is object);
+            LorettaDebug.Assert(Node is object);
             return GetGreenNodeAt(Node, i);
         }
 
@@ -269,7 +269,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private static GreenNode? GetGreenNodeAt(GreenNode node, int i)
         {
-            RoslynDebug.Assert(node.IsList || (i == 0 && !node.IsList));
+            LorettaDebug.Assert(node.IsList || (i == 0 && !node.IsList));
             return node.IsList ? node.GetSlot(i) : node;
         }
 

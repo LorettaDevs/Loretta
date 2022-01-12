@@ -19,7 +19,7 @@ namespace Loretta.CodeAnalysis
 
             public static FixedLocalizableString Create(string? fixedResource)
             {
-                if (RoslynString.IsNullOrEmpty(fixedResource))
+                if (LorettaString.IsNullOrEmpty(fixedResource))
                 {
                     return s_empty;
                 }

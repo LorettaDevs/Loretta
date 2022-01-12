@@ -19,11 +19,11 @@ namespace Loretta.CodeAnalysis.Text
         public ChangedText(SourceText oldText, SourceText newText, ImmutableArray<TextChangeRange> changeRanges)
             : base(checksumAlgorithm: oldText.ChecksumAlgorithm)
         {
-            RoslynDebug.Assert(newText != null);
-            RoslynDebug.Assert(newText is CompositeText || newText is SubText || newText is StringText || newText is LargeText);
-            RoslynDebug.Assert(oldText != null);
-            RoslynDebug.Assert(oldText != newText);
-            RoslynDebug.Assert(!changeRanges.IsDefault);
+            LorettaDebug.Assert(newText != null);
+            LorettaDebug.Assert(newText is CompositeText || newText is SubText || newText is StringText || newText is LargeText);
+            LorettaDebug.Assert(oldText != null);
+            LorettaDebug.Assert(oldText != newText);
+            LorettaDebug.Assert(!changeRanges.IsDefault);
             RequiresChangeRangesAreValid(oldText, newText, changeRanges);
 
             _newText = newText;
@@ -251,7 +251,7 @@ namespace Loretta.CodeAnalysis.Text
 
         private static ImmutableArray<TextChangeRange> Merge(IReadOnlyList<ImmutableArray<TextChangeRange>> changeSets)
         {
-            RoslynDebug.Assert(changeSets.Count > 1);
+            LorettaDebug.Assert(changeSets.Count > 1);
 
             var merged = changeSets[0];
             for (int i = 1; i < changeSets.Count; i++)

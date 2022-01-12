@@ -46,7 +46,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public Lexer(SourceText text, LuaParseOptions options)
             : base(text)
         {
-            RoslynDebug.Assert(options is not null);
+            LorettaDebug.Assert(options is not null);
             Options = options;
             _createWhitespaceTriviaFunction = CreateWhitespaceTrivia;
         }
@@ -95,7 +95,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             SyntaxListBuilder trailing,
             SyntaxDiagnosticInfo[]? errors)
         {
-            RoslynDebug.Assert(info.Kind != SyntaxKind.IdentifierToken || info.StringValue != null);
+            LorettaDebug.Assert(info.Kind != SyntaxKind.IdentifierToken || info.StringValue != null);
 
             var leadingNode = leading.ToListNode();
             var trailingNode = trailing.ToListNode();
@@ -128,7 +128,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     break;
 
                 default:
-                    RoslynDebug.Assert(SyntaxFacts.GetText(info.Kind) is not (null or ""));
+                    LorettaDebug.Assert(SyntaxFacts.GetText(info.Kind) is not (null or ""));
                     token = SyntaxFactory.Token(leadingNode, info.Kind, trailingNode);
                     break;
             }

@@ -42,7 +42,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxNodeOrToken(SyntaxNode node)
             : this()
         {
-            RoslynDebug.Assert(!node.Green.IsList, "node cannot be a list");
+            LorettaDebug.Assert(!node.Green.IsList, "node cannot be a list");
             _position = node.Position;
             _nodeOrParent = node;
             _tokenIndex = -1;
@@ -50,11 +50,11 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxNodeOrToken(SyntaxNode? parent, GreenNode? token, int position, int index)
         {
-            RoslynDebug.Assert(parent == null || !parent.Green.IsList, "parent cannot be a list");
-            RoslynDebug.Assert(token != null || (parent == null && position == 0 && index == 0), "parts must form a token");
-            RoslynDebug.Assert(token == null || token.IsToken, "token must be a token");
-            RoslynDebug.Assert(index >= 0, "index must not be negative");
-            RoslynDebug.Assert(parent == null || token != null, "null token cannot have parent");
+            LorettaDebug.Assert(parent == null || !parent.Green.IsList, "parent cannot be a list");
+            LorettaDebug.Assert(token != null || (parent == null && position == 0 && index == 0), "parts must form a token");
+            LorettaDebug.Assert(token == null || token.IsToken, "token must be a token");
+            LorettaDebug.Assert(index >= 0, "index must not be negative");
+            LorettaDebug.Assert(parent == null || token != null, "null token cannot have parent");
 
             _position = position;
             _tokenIndex = index;
@@ -132,7 +132,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                RoslynDebug.Assert(UnderlyingNode is not null);
+                LorettaDebug.Assert(UnderlyingNode is not null);
                 return UnderlyingNode;
             }
         }
@@ -713,7 +713,7 @@ namespace Loretta.CodeAnalysis
         public bool Equals(SyntaxNodeOrToken other)
         {
             // index replaces position to ensure equality.  Assert if offset affects equality.
-            RoslynDebug.Assert(
+            LorettaDebug.Assert(
                 (_nodeOrParent == other._nodeOrParent && _token == other._token && _position == other._position && _tokenIndex == other._tokenIndex) ==
                 (_nodeOrParent == other._nodeOrParent && _token == other._token && _tokenIndex == other._tokenIndex));
 

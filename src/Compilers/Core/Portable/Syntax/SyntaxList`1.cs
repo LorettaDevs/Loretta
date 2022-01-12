@@ -114,7 +114,7 @@ namespace Loretta.CodeAnalysis
                 return _node.GetNodeSlot(index);
             }
 
-            RoslynDebug.Assert(index == 0);
+            LorettaDebug.Assert(index == 0);
             return _node;
         }
 
@@ -369,7 +369,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public bool Any()
         {
-            RoslynDebug.Assert(_node == null || Count != 0);
+            LorettaDebug.Assert(_node == null || Count != 0);
             return _node != null;
         }
 

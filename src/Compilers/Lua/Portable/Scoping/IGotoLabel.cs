@@ -38,7 +38,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public GotoLabel(string name, GotoLabelStatementSyntax? label)
         {
-            RoslynDebug.Assert(!string.IsNullOrEmpty(name));
+            LorettaDebug.Assert(!string.IsNullOrEmpty(name));
 
             Name = name;
             LabelSyntax = label;
@@ -53,7 +53,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         public void AddJump(GotoStatementSyntax jump)
         {
-            RoslynDebug.AssertNotNull(jump);
+            LorettaDebug.AssertNotNull(jump);
             _jumps.Add(jump);
         }
     }

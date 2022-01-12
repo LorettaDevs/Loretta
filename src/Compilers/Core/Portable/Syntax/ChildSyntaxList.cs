@@ -174,13 +174,13 @@ namespace Loretta.CodeAnalysis
         internal static SyntaxNodeOrToken ChildThatContainsPosition(SyntaxNode node, int targetPosition)
         {
             // The targetPosition must already be within this node
-            RoslynDebug.Assert(node.FullSpan.Contains(targetPosition));
+            LorettaDebug.Assert(node.FullSpan.Contains(targetPosition));
 
             GreenNode? green = node.Green;
             var position = node.Position;
             var index = 0;
 
-            RoslynDebug.Assert(!green.IsList);
+            LorettaDebug.Assert(!green.IsList);
 
             // Find the green node that spans the target position.
             // We will be skipping whole slots here so we will not loop for long
@@ -350,7 +350,7 @@ namespace Loretta.CodeAnalysis
         /// <returns><see cref="Reversed"/> which contains all children of <see cref="ChildSyntaxList"/> in reversed order</returns>
         public Reversed Reverse()
         {
-            RoslynDebug.Assert(_node is object);
+            LorettaDebug.Assert(_node is object);
             return new Reversed(_node, _count);
         }
 

@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxNodeOrTokenList(SyntaxNode? node, int index)
             : this()
         {
-            RoslynDebug.Assert(node != null || index == 0);
+            LorettaDebug.Assert(node != null || index == 0);
             if (node != null)
             {
                 _node = node;

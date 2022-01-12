@@ -226,11 +226,11 @@ namespace Loretta.CodeAnalysis
                 // from the computed components:  
                 mantissa &= this.DenormalMantissaMask;
 
-                RoslynDebug.Assert((DenormalMantissaMask & (1UL << DenormalMantissaBits)) == 0);
+                LorettaDebug.Assert((DenormalMantissaMask & (1UL << DenormalMantissaBits)) == 0);
                 ulong shiftedExponent = ((ulong)(exponent + this.ExponentBias)) << DenormalMantissaBits;
-                RoslynDebug.Assert((shiftedExponent & DenormalMantissaMask) == 0);
-                RoslynDebug.Assert((mantissa & ~DenormalMantissaMask) == 0);
-                RoslynDebug.Assert((shiftedExponent & ~(((1UL << this.ExponentBits) - 1) << DenormalMantissaBits)) == 0); // exponent fits in its place
+                LorettaDebug.Assert((shiftedExponent & DenormalMantissaMask) == 0);
+                LorettaDebug.Assert((mantissa & ~DenormalMantissaMask) == 0);
+                LorettaDebug.Assert((shiftedExponent & ~(((1UL << this.ExponentBits) - 1) << DenormalMantissaBits)) == 0); // exponent fits in its place
                 result = shiftedExponent | mantissa;
                 return Status.OK;
             }
@@ -463,7 +463,7 @@ namespace Loretta.CodeAnalysis
             }
 
             BigInteger fractionalNumerator = AccumulateDecimalDigitsIntoBigInteger(data, fractionalFirstIndex, fractionalLastIndex);
-            RoslynDebug.Assert(!fractionalNumerator.IsZero);
+            LorettaDebug.Assert(!fractionalNumerator.IsZero);
 
             BigInteger fractionalDenominator = s_bigOne;
             MultiplyByPowerOfTen(ref fractionalDenominator, fractionalDenominatorExponent);
@@ -545,7 +545,7 @@ namespace Loretta.CodeAnalysis
             }
 
             // Compose the mantissa from the integer and fractional parts:  
-            RoslynDebug.Assert(integerBitsOfPrecision < 60); // we can use BigInteger's built-in conversion
+            LorettaDebug.Assert(integerBitsOfPrecision < 60); // we can use BigInteger's built-in conversion
             ulong integerMantissa = (ulong)integerValue;
 
             ulong completeMantissa =

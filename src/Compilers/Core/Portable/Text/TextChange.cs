@@ -101,7 +101,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="change"></param>
         public static implicit operator TextChangeRange(TextChange change)
         {
-            RoslynDebug.Assert(change.NewText is object);
+            LorettaDebug.Assert(change.NewText is object);
             return new TextChangeRange(change.Span, change.NewText.Length);
         }
 

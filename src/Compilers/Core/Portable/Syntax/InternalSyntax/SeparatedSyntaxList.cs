@@ -25,11 +25,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 var item = list.GetRequiredItem(i);
                 if ((i & 1) == 0)
                 {
-                    RoslynDebug.Assert(!item.IsToken, "even elements of a separated list must be nodes");
+                    LorettaDebug.Assert(!item.IsToken, "even elements of a separated list must be nodes");
                 }
                 else
                 {
-                    RoslynDebug.Assert(item.IsToken, "odd elements of a separated list must be tokens");
+                    LorettaDebug.Assert(item.IsToken, "odd elements of a separated list must be tokens");
                 }
             }
         }

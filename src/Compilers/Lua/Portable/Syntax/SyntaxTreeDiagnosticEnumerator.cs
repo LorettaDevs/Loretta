@@ -57,7 +57,7 @@ namespace Loretta.CodeAnalysis.Lua
                     var leadingWidthAlreadyCounted = node.IsToken ? node.GetLeadingTriviaWidth() : 0;
 
                     // don't produce locations outside of tree span
-                    RoslynDebug.Assert(_syntaxTree is not null);
+                    LorettaDebug.Assert(_syntaxTree is not null);
                     var length = _syntaxTree.GetRoot().FullSpan.Length;
                     var spanStart = Math.Min(_position - leadingWidthAlreadyCounted + sdi.Offset, length);
                     var spanWidth = Math.Min(spanStart + sdi.Width, length) - spanStart;
@@ -107,7 +107,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public Diagnostic Current
         {
-            get { RoslynDebug.Assert(_current is not null); return _current; }
+            get { LorettaDebug.Assert(_current is not null); return _current; }
         }
 
         private struct NodeIteration
@@ -131,7 +131,7 @@ namespace Loretta.CodeAnalysis.Lua
 
             internal NodeIterationStack(int capacity)
             {
-                RoslynDebug.Assert(capacity > 0);
+                LorettaDebug.Assert(capacity > 0);
                 _stack = new NodeIteration[capacity];
                 _count = 0;
             }
@@ -187,23 +187,23 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 get
                 {
-                    RoslynDebug.Assert(_stack != null);
-                    RoslynDebug.Assert(index >= 0 && index < _count);
+                    LorettaDebug.Assert(_stack != null);
+                    LorettaDebug.Assert(index >= 0 && index < _count);
                     return _stack[index];
                 }
             }
 
             internal void UpdateSlotIndexForStackTop(int slotIndex)
             {
-                RoslynDebug.Assert(_stack != null);
-                RoslynDebug.Assert(_count > 0);
+                LorettaDebug.Assert(_stack != null);
+                LorettaDebug.Assert(_count > 0);
                 _stack[_count - 1].SlotIndex = slotIndex;
             }
 
             internal void UpdateDiagnosticIndexForStackTop(int diagnosticIndex)
             {
-                RoslynDebug.Assert(_stack != null);
-                RoslynDebug.Assert(_count > 0);
+                LorettaDebug.Assert(_stack != null);
+                LorettaDebug.Assert(_count > 0);
                 _stack[_count - 1].DiagnosticIndex = diagnosticIndex;
             }
         }

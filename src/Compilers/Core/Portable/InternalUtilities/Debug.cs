@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Loretta.Utilities
 {
-    internal static class RoslynDebug
+    internal static class LorettaDebug
     {
         [Conditional("DEBUG")]
         [DoesNotReturn]
@@ -22,12 +22,12 @@ namespace Loretta.Utilities
             Debug.Fail(message, detailMessage);
 #pragma warning restore CS8763 // A method marked [DoesNotReturn] should not return.
 
-        /// <inheritdoc cref="RoslynDebug.Assert(bool)"/>
+        /// <inheritdoc cref="LorettaDebug.Assert(bool)"/>
         [Conditional("DEBUG")]
         public static void Assert([DoesNotReturnIf(false)] bool b) =>
             Debug.Assert(b);
 
-        /// <inheritdoc cref="RoslynDebug.Assert(bool, string)"/>
+        /// <inheritdoc cref="LorettaDebug.Assert(bool, string)"/>
         [Conditional("DEBUG")]
         public static void Assert([DoesNotReturnIf(false)] bool b, string message) =>
             Debug.Assert(b, message);

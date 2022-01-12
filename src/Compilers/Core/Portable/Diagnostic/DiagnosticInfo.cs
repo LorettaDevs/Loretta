@@ -93,7 +93,7 @@ namespace Loretta.CodeAnalysis
         {
             foreach (var arg in args)
             {
-                RoslynDebug.Assert(arg != null);
+                LorettaDebug.Assert(arg != null);
 
                 if (arg is IFormattable)
                 {
@@ -120,7 +120,7 @@ namespace Loretta.CodeAnalysis
         internal DiagnosticInfo(CommonMessageProvider messageProvider, bool isWarningAsError, int errorCode, params object[] arguments)
             : this(messageProvider, errorCode, arguments)
         {
-            RoslynDebug.Assert(!isWarningAsError || _defaultSeverity == DiagnosticSeverity.Warning);
+            LorettaDebug.Assert(!isWarningAsError || _defaultSeverity == DiagnosticSeverity.Warning);
 
             if (isWarningAsError)
             {

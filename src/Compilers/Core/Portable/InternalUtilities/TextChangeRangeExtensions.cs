@@ -227,7 +227,7 @@ namespace Loretta.Utilities
                 else
                 {
                     // old and new change start at same adjusted position
-                    RoslynDebug.Assert(newChange.SpanStart == oldChange.Span.Start + oldDelta);
+                    LorettaDebug.Assert(newChange.SpanStart == oldChange.Span.Start + oldDelta);
 
                     if (newChange.SpanLength <= oldChange.NewLength)
                     {

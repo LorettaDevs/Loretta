@@ -30,8 +30,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal static WithTwoChildren List(GreenNode child0, GreenNode child1)
         {
-            RoslynDebug.Assert(child0 != null);
-            RoslynDebug.Assert(child1 != null);
+            LorettaDebug.Assert(child0 != null);
+            LorettaDebug.Assert(child1 != null);
 
             int hash;
             GreenNode? cached = SyntaxNodeCache.TryGetNode(GreenNode.ListKind, child0, child1, out hash);
@@ -49,9 +49,9 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal static WithThreeChildren List(GreenNode child0, GreenNode child1, GreenNode child2)
         {
-            RoslynDebug.Assert(child0 != null);
-            RoslynDebug.Assert(child1 != null);
-            RoslynDebug.Assert(child2 != null);
+            LorettaDebug.Assert(child0 != null);
+            LorettaDebug.Assert(child1 != null);
+            LorettaDebug.Assert(child2 != null);
 
             int hash;
             GreenNode? cached = SyntaxNodeCache.TryGetNode(GreenNode.ListKind, child0, child1, child2, out hash);
@@ -78,7 +78,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             for (int i = 0; i < count; i++)
             {
                 var node = nodes[i];
-                RoslynDebug.Assert(node is object);
+                LorettaDebug.Assert(node is object);
                 array[i].Value = node;
             }
 

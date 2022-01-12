@@ -64,7 +64,7 @@ namespace Loretta.CodeAnalysis
 
         internal static ConstantValue CreateFromRope(Rope value)
         {
-            RoslynDebug.Assert(value != null);
+            LorettaDebug.Assert(value != null);
             return new ConstantValueString(value);
         }
 

@@ -45,7 +45,7 @@ namespace Loretta.CodeAnalysis
 
         public void AddIdentifier(string identifier)
         {
-            RoslynDebug.Assert(identifier != null);
+            LorettaDebug.Assert(identifier != null);
 
             object? value;
             if (!_map.TryGetValue(identifier, out value))
@@ -91,7 +91,7 @@ namespace Loretta.CodeAnalysis
 
         public bool ContainsIdentifier(string identifier, bool caseSensitive)
         {
-            RoslynDebug.Assert(identifier != null);
+            LorettaDebug.Assert(identifier != null);
 
             if (caseSensitive)
             {

@@ -104,7 +104,7 @@ namespace Loretta.CodeAnalysis
 
         protected void AdjustFlagsAndWidth(GreenNode node)
         {
-            RoslynDebug.Assert(node != null, "PERF: caller must ensure that node!=null, we do not want to re-check that here.");
+            LorettaDebug.Assert(node != null, "PERF: caller must ensure that node!=null, we do not want to re-check that here.");
             this.flags |= (node.flags & NodeFlags.InheritMask);
             _fullWidth += node._fullWidth;
         }
@@ -161,7 +161,7 @@ namespace Loretta.CodeAnalysis
         internal GreenNode GetRequiredSlot(int index)
         {
             var node = GetSlot(index);
-            RoslynDebug.Assert(node is object);
+            LorettaDebug.Assert(node is object);
             return node;
         }
 
@@ -235,13 +235,13 @@ namespace Loretta.CodeAnalysis
         /// </remarks>
         public virtual int FindSlotIndexContainingOffset(int offset)
         {
-            RoslynDebug.Assert(0 <= offset && offset < FullWidth);
+            LorettaDebug.Assert(0 <= offset && offset < FullWidth);
 
             int i;
             int accumulatedWidth = 0;
             for (i = 0; ; i++)
             {
-                RoslynDebug.Assert(i < SlotCount);
+                LorettaDebug.Assert(i < SlotCount);
                 var child = GetSlot(i);
                 if (child != null)
                 {
@@ -597,7 +597,7 @@ namespace Loretta.CodeAnalysis
                 SyntaxAnnotation[]? annotations;
                 if (s_annotationsTable.TryGetValue(this, out annotations))
                 {
-                    Loretta.Utilities.RoslynDebug.Assert(annotations.Length != 0, "we should return nonempty annotations or NoAnnotations");
+                    Loretta.Utilities.LorettaDebug.Assert(annotations.Length != 0, "we should return nonempty annotations or NoAnnotations");
                     return annotations;
                 }
             }
@@ -987,7 +987,7 @@ namespace Loretta.CodeAnalysis
 
         internal int GetCacheHash()
         {
-            RoslynDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(this.IsCacheable);
 
             int code = (int)(this.flags) ^ this.RawKind;
             int cnt = this.SlotCount;
@@ -1005,7 +1005,7 @@ namespace Loretta.CodeAnalysis
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1)
         {
-            RoslynDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(this.IsCacheable);
 
             return this.RawKind == kind &&
                 this.flags == flags &&
@@ -1014,7 +1014,7 @@ namespace Loretta.CodeAnalysis
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1, GreenNode? child2)
         {
-            RoslynDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(this.IsCacheable);
 
             return this.RawKind == kind &&
                 this.flags == flags &&
@@ -1024,7 +1024,7 @@ namespace Loretta.CodeAnalysis
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1, GreenNode? child2, GreenNode? child3)
         {
-            RoslynDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(this.IsCacheable);
 
             return this.RawKind == kind &&
                 this.flags == flags &&

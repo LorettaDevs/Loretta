@@ -269,7 +269,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                 case ExceptionArgument.destinationArray:
                     return "destinationArray";
                 default:
-                    RoslynDebug.Fail("The enum value is not defined, please check the ExceptionArgument Enum.");
+                    LorettaDebug.Fail("The enum value is not defined, please check the ExceptionArgument Enum.");
                     return "";
             }
         }
@@ -305,7 +305,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                 case ExceptionResource.InvalidOperation_IComparerFailed:
                     return SR.InvalidOperation_IComparerFailed;
                 default:
-                    RoslynDebug.Fail("The enum value is not defined, please check the ExceptionResource Enum.");
+                    LorettaDebug.Fail("The enum value is not defined, please check the ExceptionResource Enum.");
                     return "";
             }
         }

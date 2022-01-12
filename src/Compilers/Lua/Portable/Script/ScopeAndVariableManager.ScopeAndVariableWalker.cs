@@ -19,9 +19,9 @@ namespace Loretta.CodeAnalysis.Lua
                 IDictionary<SyntaxNode, IScope> scopes)
                 : base(scopes)
             {
-                RoslynDebug.AssertNotNull(rootScope);
-                RoslynDebug.AssertNotNull(variables);
-                RoslynDebug.AssertNotNull(scopes);
+                LorettaDebug.AssertNotNull(rootScope);
+                LorettaDebug.AssertNotNull(variables);
+                LorettaDebug.AssertNotNull(scopes);
 
                 _rootScope = rootScope;
                 _variables = variables;
@@ -57,7 +57,7 @@ namespace Loretta.CodeAnalysis.Lua
             private IScopeInternal PopScope(IScopeInternal scope)
             {
                 var poppedScope = _scopeStack.Pop();
-                RoslynDebug.Assert(poppedScope == scope);
+                LorettaDebug.Assert(poppedScope == scope);
                 return poppedScope;
             }
 

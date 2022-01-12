@@ -58,7 +58,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             /// </remarks>
             public override int FindSlotIndexContainingOffset(int offset)
             {
-                RoslynDebug.Assert(offset >= 0 && offset < FullWidth);
+                LorettaDebug.Assert(offset >= 0 && offset < FullWidth);
                 return _childOffsets.BinarySearchUpperBound(offset) - 1;
             }
 

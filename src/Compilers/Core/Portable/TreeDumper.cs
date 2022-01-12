@@ -76,8 +76,8 @@ namespace Loretta.CodeAnalysis
 
         private void DoDumpCompact(TreeDumperNode node, string indent)
         {
-            RoslynDebug.Assert(node != null);
-            RoslynDebug.Assert(indent != null);
+            LorettaDebug.Assert(node != null);
+            LorettaDebug.Assert(indent != null);
 
             // Precondition: indentation and prefix has already been output
             // Precondition: indent is correct for node's *children*
@@ -116,7 +116,7 @@ namespace Loretta.CodeAnalysis
 
         private void DoDumpXML(TreeDumperNode node, string indent, string relativeIndent)
         {
-            RoslynDebug.Assert(node != null);
+            LorettaDebug.Assert(node != null);
             if (node.Children.All(child => child == null))
             {
                 _sb.Append(indent);

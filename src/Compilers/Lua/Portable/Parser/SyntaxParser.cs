@@ -138,7 +138,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         protected void Reset(ref ResetPoint point)
         {
             var offset = point.Position - _firstToken;
-            RoslynDebug.Assert(offset >= 0);
+            LorettaDebug.Assert(offset >= 0);
 
             if (offset >= _tokenCount)
             {
@@ -149,7 +149,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 offset = point.Position - _firstToken;
             }
 
-            RoslynDebug.Assert(offset >= 0 && offset < _tokenCount);
+            LorettaDebug.Assert(offset >= 0 && offset < _tokenCount);
             _tokenOffset = offset;
             _currentToken = null;
             _currentNode = default(BlendedNode);
@@ -175,7 +175,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected void Release(ref ResetPoint point)
         {
-            RoslynDebug.Assert(_resetCount == point.ResetCount);
+            LorettaDebug.Assert(_resetCount == point.ResetCount);
             _resetCount--;
             if (_resetCount == 0)
             {
@@ -190,7 +190,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             get
             {
                 // we will fail anyways. Assert is just to catch that earlier.
-                RoslynDebug.Assert(_blendedTokens != null);
+                LorettaDebug.Assert(_blendedTokens != null);
 
                 //PERF: currentNode is a BlendedNode, which is a fairly large struct.
                 // the following code tries not to pull the whole struct into a local
@@ -230,7 +230,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         protected GreenNode EatNode()
         {
             // we will fail anyways. Assert is just to catch that earlier.
-            RoslynDebug.Assert(_blendedTokens != null);
+            LorettaDebug.Assert(_blendedTokens != null);
 
             // remember result
             var result = CurrentNode.Green;
@@ -299,7 +299,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         // adds token to end of current token array
         private void AddToken(in BlendedNode tokenResult)
         {
-            RoslynDebug.Assert(tokenResult.Token != null);
+            LorettaDebug.Assert(tokenResult.Token != null);
             if (_tokenCount >= _blendedTokens.Length)
             {
                 AddTokenSlot();
@@ -311,7 +311,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private void AddLexedToken(SyntaxToken token)
         {
-            RoslynDebug.Assert(token != null);
+            LorettaDebug.Assert(token != null);
             if (_tokenCount >= _lexedTokens.Length)
             {
                 AddLexedTokenSlot();
@@ -330,7 +330,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 var shiftOffset = (_resetStart == -1) ? _tokenOffset : _resetStart - _firstToken;
                 var shiftCount = _tokenCount - shiftOffset;
-                RoslynDebug.Assert(shiftOffset > 0);
+                LorettaDebug.Assert(shiftOffset > 0);
                 _firstBlender = _blendedTokens[shiftOffset - 1].Blender;
                 if (shiftCount > 0)
                 {
@@ -358,7 +358,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 var shiftOffset = (_resetStart == -1) ? _tokenOffset : _resetStart - _firstToken;
                 var shiftCount = _tokenCount - shiftOffset;
-                RoslynDebug.Assert(shiftOffset > 0);
+                LorettaDebug.Assert(shiftOffset > 0);
                 if (shiftCount > 0)
                 {
                     Array.Copy(_lexedTokens, shiftOffset, _lexedTokens, 0, shiftCount);
@@ -378,7 +378,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected SyntaxToken PeekToken(int n)
         {
-            RoslynDebug.Assert(n >= 0);
+            LorettaDebug.Assert(n >= 0);
             while (_tokenOffset + n >= _tokenCount)
             {
                 AddNewToken();
@@ -430,7 +430,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         //we should keep it simple so that it can be inlined.
         protected SyntaxToken EatToken(SyntaxKind kind)
         {
-            RoslynDebug.Assert(SyntaxFacts.IsToken(kind));
+            LorettaDebug.Assert(SyntaxFacts.IsToken(kind));
 
             var ct = CurrentToken;
             if (ct.Kind == kind)
@@ -446,7 +446,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         // Consume a token if it is the right kind. Otherwise skip a token and replace it with one of the correct kind.
         protected SyntaxToken EatTokenAsKind(SyntaxKind expected)
         {
-            RoslynDebug.Assert(SyntaxFacts.IsToken(expected));
+            LorettaDebug.Assert(SyntaxFacts.IsToken(expected));
 
             var ct = CurrentToken;
             if (ct.Kind == expected)
@@ -490,7 +490,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 return EatToken(kind);
             }
 
-            RoslynDebug.Assert(SyntaxFacts.IsToken(kind));
+            LorettaDebug.Assert(SyntaxFacts.IsToken(kind));
             if (CurrentToken.Kind != kind)
             {
                 // should we eat the current ParseToken's leading trivia?
@@ -504,7 +504,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected SyntaxToken EatToken(SyntaxKind kind, ErrorCode code, bool reportError = true)
         {
-            RoslynDebug.Assert(SyntaxFacts.IsToken(kind));
+            LorettaDebug.Assert(SyntaxFacts.IsToken(kind));
             if (CurrentToken.Kind != kind)
             {
                 return CreateMissingToken(kind, code, reportError);
@@ -518,7 +518,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         protected SyntaxToken EatTokenWithPrejudice(SyntaxKind kind)
         {
             var token = CurrentToken;
-            RoslynDebug.Assert(SyntaxFacts.IsToken(kind));
+            LorettaDebug.Assert(SyntaxFacts.IsToken(kind));
             if (token.Kind != kind)
             {
                 token = WithAdditionalDiagnostics(token, GetExpectedTokenError(kind, token.Kind));
@@ -537,7 +537,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected SyntaxToken EatContextualToken(SyntaxKind kind, ErrorCode code, bool reportError = true)
         {
-            RoslynDebug.Assert(SyntaxFacts.IsToken(kind));
+            LorettaDebug.Assert(SyntaxFacts.IsToken(kind));
 
             if (CurrentToken.ContextualKind != kind)
             {
@@ -551,7 +551,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected SyntaxToken EatContextualToken(SyntaxKind kind, bool reportError = true)
         {
-            RoslynDebug.Assert(SyntaxFacts.IsToken(kind));
+            LorettaDebug.Assert(SyntaxFacts.IsToken(kind));
 
             var contextualKind = CurrentToken.ContextualKind;
             if (contextualKind != kind)
@@ -679,7 +679,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 // node to which the error is to be attached, the computed offset will be incorrect.
 
                 offset = token.GetLeadingTriviaWidth(); // Should always be zero, but at least we'll do something sensible if it's not.
-                RoslynDebug.Assert(offset == 0, "Why are we producing a missing token that has both skipped text and leading trivia?");
+                LorettaDebug.Assert(offset == 0, "Why are we producing a missing token that has both skipped text and leading trivia?");
 
                 width = 0;
                 var seenSkipped = false;
@@ -971,7 +971,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected static SyntaxToken ConvertToIdentifier(SyntaxToken token)
         {
-            RoslynDebug.Assert(!token.IsMissing);
+            LorettaDebug.Assert(!token.IsMissing);
             return SyntaxToken.Identifier(token.Kind, token.LeadingTrivia.Node, token.Text, token.TrailingTrivia.Node);
         }
 
@@ -992,7 +992,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 return true;
             }
 
-            RoslynDebug.Assert(!assertIfFalse);
+            LorettaDebug.Assert(!assertIfFalse);
             return false;
         }
 

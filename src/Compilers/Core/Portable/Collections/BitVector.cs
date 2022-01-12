@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis
         private BitVector(Word bits0, Word[] bits, int capacity)
         {
             int requiredWords = WordsForCapacity(capacity);
-            RoslynDebug.Assert(requiredWords == 0 || requiredWords <= bits.Length);
+            LorettaDebug.Assert(requiredWords == 0 || requiredWords <= bits.Length);
             _bits0 = bits0;
             _bits = bits;
             _capacity = capacity;
@@ -88,7 +88,7 @@ namespace Loretta.CodeAnalysis
         [Conditional("DEBUG_BITARRAY")]
         private void Check()
         {
-            RoslynDebug.Assert(_capacity == 0 || WordsForCapacity(_capacity) <= _bits.Length);
+            LorettaDebug.Assert(_capacity == 0 || WordsForCapacity(_capacity) <= _bits.Length);
         }
 
         public void EnsureCapacity(int newCapacity)
@@ -181,7 +181,7 @@ namespace Loretta.CodeAnalysis
             int numTrailingBits = capacity & ((BitsPerWord) - 1);
             if (numTrailingBits > 0)
             {
-                RoslynDebug.Assert(numTrailingBits <= BitsPerWord);
+                LorettaDebug.Assert(numTrailingBits <= BitsPerWord);
                 Word lastBits = ~((~ZeroWord) << numTrailingBits);
                 if (lastWord < 0)
                 {

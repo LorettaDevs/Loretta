@@ -119,7 +119,7 @@ namespace Loretta.CodeAnalysis
 
                         if (child.IsNode)
                         {
-                            RoslynDebug.Assert(child.IsNode);
+                            LorettaDebug.Assert(child.IsNode);
                             stack.Push(child.AsNode()!.ChildNodesAndTokens().GetEnumerator());
                         }
                     }
@@ -166,7 +166,7 @@ namespace Loretta.CodeAnalysis
 
                         if (child.IsNode)
                         {
-                            RoslynDebug.Assert(child.IsNode);
+                            LorettaDebug.Assert(child.IsNode);
                             stack.Push(child.AsNode()!.ChildNodesAndTokens().Reverse().GetEnumerator());
                         }
                     }
@@ -186,7 +186,7 @@ namespace Loretta.CodeAnalysis
             Func<SyntaxToken, bool>? predicate,
             Func<SyntaxTrivia, bool> stepInto)
         {
-            RoslynDebug.Assert(stepInto != null);
+            LorettaDebug.Assert(stepInto != null);
             foreach (var trivia in triviaList)
             {
                 if (trivia.TryGetStructure(out var structure) && stepInto(trivia))
@@ -207,7 +207,7 @@ namespace Loretta.CodeAnalysis
             Func<SyntaxToken, bool> predicate,
             Func<SyntaxTrivia, bool> stepInto)
         {
-            RoslynDebug.Assert(stepInto != null);
+            LorettaDebug.Assert(stepInto != null);
 
             foreach (var trivia in list.Reverse())
             {
@@ -450,7 +450,7 @@ namespace Loretta.CodeAnalysis
                         }
                         else
                         {
-                            RoslynDebug.Assert(child.IsNode);
+                            LorettaDebug.Assert(child.IsNode);
                             var token = GetFirstToken(child.AsNode()!, predicate, stepInto);
                             if (token.RawKind != None)
                             {
@@ -500,7 +500,7 @@ namespace Loretta.CodeAnalysis
                         }
                         else
                         {
-                            RoslynDebug.Assert(child.IsNode);
+                            LorettaDebug.Assert(child.IsNode);
                             var token = GetLastToken(child.AsNode()!, predicate, stepInto);
                             if (token.RawKind != None)
                             {
@@ -528,7 +528,7 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxToken GetNextToken(in SyntaxToken current, Func<SyntaxToken, bool>? predicate, bool searchInsideCurrentTokenTrailingTrivia, Func<SyntaxTrivia, bool>? stepInto)
         {
-            RoslynDebug.Assert(searchInsideCurrentTokenTrailingTrivia == false || stepInto != null);
+            LorettaDebug.Assert(searchInsideCurrentTokenTrailingTrivia == false || stepInto != null);
             if (current.Parent != null)
             {
                 // look inside trailing trivia for structure
@@ -558,7 +558,7 @@ namespace Loretta.CodeAnalysis
                         }
                         else
                         {
-                            RoslynDebug.Assert(child.IsNode);
+                            LorettaDebug.Assert(child.IsNode);
                             var token = GetFirstToken(child.AsNode()!, predicate, stepInto);
                             if (token.RawKind != None)
                             {
@@ -582,7 +582,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxToken GetPreviousToken(in SyntaxToken current, Func<SyntaxToken, bool> predicate, bool searchInsideCurrentTokenLeadingTrivia,
             Func<SyntaxTrivia, bool>? stepInto)
         {
-            RoslynDebug.Assert(searchInsideCurrentTokenLeadingTrivia == false || stepInto != null);
+            LorettaDebug.Assert(searchInsideCurrentTokenLeadingTrivia == false || stepInto != null);
             if (current.Parent != null)
             {
                 // look inside trailing trivia for structure
@@ -612,7 +612,7 @@ namespace Loretta.CodeAnalysis
                         }
                         else
                         {
-                            RoslynDebug.Assert(child.IsNode);
+                            LorettaDebug.Assert(child.IsNode);
                             var token = GetLastToken(child.AsNode()!, predicate, stepInto);
                             if (token.RawKind != None)
                             {

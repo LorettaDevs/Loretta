@@ -795,7 +795,7 @@ foundIdx:
 #if DEBUG
             for (var i = 0; i < ascii.Length; i++)
             {
-                RoslynDebug.Assert((ascii[i] & 0x80) == 0, $"The {nameof(ascii)} input to this method must be valid ASCII.");
+                LorettaDebug.Assert((ascii[i] & 0x80) == 0, $"The {nameof(ascii)} input to this method must be valid ASCII.");
             }
 #endif
 

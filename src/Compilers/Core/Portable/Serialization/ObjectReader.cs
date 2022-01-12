@@ -71,7 +71,7 @@ namespace Loretta.Utilities
         {
             // String serialization assumes both reader and writer to be of the same endianness.
             // It can be adjusted for BigEndian if needed.
-            RoslynDebug.Assert(BitConverter.IsLittleEndian);
+            LorettaDebug.Assert(BitConverter.IsLittleEndian);
 
             _reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen);
             _objectReferenceMap = ReaderReferenceMap<object>.Create();
@@ -209,7 +209,7 @@ namespace Loretta.Utilities
             }
 
             _recursionDepth--;
-            RoslynDebug.Assert(oldDepth == _recursionDepth);
+            LorettaDebug.Assert(oldDepth == _recursionDepth);
 
             return value;
         }
@@ -477,7 +477,7 @@ namespace Loretta.Utilities
 
         private Array ReadPrimitiveTypeArrayElements(Type type, EncodingKind kind, int length)
         {
-            RoslynDebug.Assert(ObjectWriter.s_reverseTypeMap[(int)kind] == type);
+            LorettaDebug.Assert(ObjectWriter.s_reverseTypeMap[(int)kind] == type);
 
             // optimizations for supported array type by binary reader
             if (type == typeof(byte)) { return _reader.ReadBytes(length); }
@@ -509,7 +509,7 @@ namespace Loretta.Utilities
         private bool[] ReadBooleanArrayElements(bool[] array)
         {
             // Confirm the type to be read below is ulong
-            RoslynDebug.Assert(BitVector.BitsPerWord == 64);
+            LorettaDebug.Assert(BitVector.BitsPerWord == 64);
 
             var wordLength = BitVector.WordsRequired(array.Length);
 

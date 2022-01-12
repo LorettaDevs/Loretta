@@ -133,7 +133,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             {
                 GreenStats.ItemAdded();
 
-                RoslynDebug.Assert(node.GetCacheHash() == hash);
+                LorettaDebug.Assert(node.GetCacheHash() == hash);
 
                 var idx = hash & CacheMask;
                 s_cache[idx] = new Entry(hash, node);

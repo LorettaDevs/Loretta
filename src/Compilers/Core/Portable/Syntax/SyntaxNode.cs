@@ -27,8 +27,8 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxNode(GreenNode green, SyntaxNode? parent, int position)
         {
-            RoslynDebug.Assert(position >= 0, "position cannot be negative");
-            RoslynDebug.Assert(parent?.Green.IsList != true, "list cannot be a parent");
+            LorettaDebug.Assert(position >= 0, "position cannot be negative");
+            LorettaDebug.Assert(parent?.Green.IsList != true, "list cannot be a parent");
 
             Position = position;
             Green = green;
@@ -105,7 +105,7 @@ namespace Loretta.CodeAnalysis
                 // adjust for following trivia width
                 width -= this.Green.GetTrailingTriviaWidth();
 
-                RoslynDebug.Assert(width >= 0);
+                LorettaDebug.Assert(width >= 0);
                 return new TextSpan(start, width);
             }
         }
@@ -213,7 +213,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal SyntaxNode? GetRedElement(ref SyntaxNode? element, int slot)
         {
-            RoslynDebug.Assert(this.IsList);
+            LorettaDebug.Assert(this.IsList);
 
             var result = element;
 
@@ -233,7 +233,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal SyntaxNode? GetRedElementIfNotToken(ref SyntaxNode? element)
         {
-            RoslynDebug.Assert(this.IsList);
+            LorettaDebug.Assert(this.IsList);
 
             var result = element;
 
@@ -590,7 +590,7 @@ namespace Loretta.CodeAnalysis
                 // In future, if we decide to support this, we will need some mechanism to distinguish between scenarios (a) and (b) here.
 
                 var tree = this.SyntaxTree;
-                RoslynDebug.Assert(tree != null);
+                LorettaDebug.Assert(tree != null);
                 return !tree.SupportsLocations ? NoLocation.Singleton : new SourceLocation(this);
             }
         }
@@ -673,7 +673,7 @@ namespace Loretta.CodeAnalysis
             }
 
             SyntaxNodeOrToken childNodeOrToken = ChildSyntaxList.ChildThatContainsPosition(this, position);
-            RoslynDebug.Assert(childNodeOrToken.FullSpan.Contains(position), "ChildThatContainsPosition's return value does not contain the requested position.");
+            LorettaDebug.Assert(childNodeOrToken.FullSpan.Contains(position), "ChildThatContainsPosition's return value does not contain the requested position.");
             return childNodeOrToken;
         }
 
@@ -687,7 +687,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxNode GetRequiredNodeSlot(int slot)
         {
             var syntaxNode = GetNodeSlot(slot);
-            RoslynDebug.Assert(syntaxNode is object);
+            LorettaDebug.Assert(syntaxNode is object);
             return syntaxNode;
         }
 
@@ -880,7 +880,7 @@ namespace Loretta.CodeAnalysis
                 .Parent
                 !.FirstAncestorOrSelf<SyntaxNode, TextSpan>((a, span) => a.FullSpan.Contains(span), span);
 
-            RoslynDebug.Assert(node is object);
+            LorettaDebug.Assert(node is object);
             SyntaxNode? cuRoot = node.SyntaxTree?.GetRoot();
 
             // Tie-breaking.
@@ -1371,7 +1371,7 @@ recurse:
                 if (this is ICompilationUnitSyntax compilationUnit)
                 {
                     Eof = compilationUnit.EndOfFileToken;
-                    RoslynDebug.Assert(Eof.EndPosition == position);
+                    LorettaDebug.Assert(Eof.EndPosition == position);
                     return true;
                 }
             }
@@ -1388,8 +1388,8 @@ recurse:
 
             while (true)
             {
-                RoslynDebug.Assert(curNode.RawKind != 0);
-                RoslynDebug.Assert(curNode.FullSpan.Contains(position));
+                LorettaDebug.Assert(curNode.RawKind != 0);
+                LorettaDebug.Assert(curNode.FullSpan.Contains(position));
 
                 var node = curNode.AsNode();
 

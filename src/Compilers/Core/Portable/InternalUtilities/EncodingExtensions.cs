@@ -17,7 +17,7 @@ namespace Loretta.Utilities
         /// <exception cref="IOException">Stream is so big that max char count can't fit in <see cref="int"/>.</exception> 
         internal static int GetMaxCharCountOrThrowIfHuge(this Encoding encoding, Stream stream)
         {
-            RoslynDebug.Assert(stream.CanSeek);
+            LorettaDebug.Assert(stream.CanSeek);
             long length = stream.Length;
 
             if (encoding.TryGetMaxCharCount(length, out int maxCharCount))

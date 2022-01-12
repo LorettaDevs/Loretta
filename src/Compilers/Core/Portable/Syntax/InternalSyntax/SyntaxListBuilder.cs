@@ -89,7 +89,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
             for (int i = start; i < end; i++)
             {
-                RoslynDebug.Assert(_nodes[i].Value != null);
+                LorettaDebug.Assert(_nodes[i].Value != null);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 requiredSize < 8 ? 8 :
                 requiredSize >= (int.MaxValue / 2) ? int.MaxValue :
                 Math.Max(requiredSize, currentSize * 2); // NB: Size will *at least* double.
-            RoslynDebug.Assert(newSize >= requiredSize);
+            LorettaDebug.Assert(newSize >= requiredSize);
 
             Array.Resize(ref _nodes, newSize);
         }
