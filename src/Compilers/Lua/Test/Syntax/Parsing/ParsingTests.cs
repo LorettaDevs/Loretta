@@ -26,6 +26,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing
         public virtual void Dispose()
         {
             VerifyEnumeratorConsumed();
+            GC.SuppressFinalize(this);
         }
 
         private void VerifyEnumeratorConsumed()
