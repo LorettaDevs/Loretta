@@ -10,13 +10,17 @@ namespace Loretta.Utilities
     {
         [Conditional("DEBUG")]
         [DoesNotReturn]
+#pragma warning disable CS8763 // A method marked [DoesNotReturn] should not return.
         public static void Fail(string? message) =>
             Debug.Fail(message);
+#pragma warning restore CS8763 // A method marked [DoesNotReturn] should not return.
 
         [Conditional("DEBUG")]
         [DoesNotReturn]
+#pragma warning disable CS8763 // A method marked [DoesNotReturn] should not return.
         public static void Fail(string? message, string? detailMessage) =>
             Debug.Fail(message, detailMessage);
+#pragma warning restore CS8763 // A method marked [DoesNotReturn] should not return.
 
         /// <inheritdoc cref="RoslynDebug.Assert(bool)"/>
         [Conditional("DEBUG")]
