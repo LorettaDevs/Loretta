@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `Loretta.CodeAnalysis.SyntaxTree.GetMappedLineSpan`;
 	- `Loretta.CodeAnalysis.SyntaxTree.GetLineVisibility`;
 	- `Loretta.CodeAnalysis.SyntaxTree.HasHiddenRegions`;
+	- `Loretta.CodeAnalysis.Location.GetMappedLineSpan`;
 	- `IsHiddenPosition` `SyntaxTree` extension method;
 	- `Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetMappedLineSpan`;
 	- `Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetLineVisibility`;

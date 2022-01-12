@@ -36,11 +36,6 @@ namespace Loretta.CodeAnalysis
             return _lineSpan;
         }
 
-        public override FileLinePositionSpan GetMappedLineSpan()
-        {
-            return _lineSpan;
-        }
-
         public override LocationKind Kind
         {
             get

@@ -54,16 +54,6 @@ namespace Loretta.CodeAnalysis
         /// </returns>
         public virtual FileLinePositionSpan GetLineSpan() => default;
 
-        /// <summary>
-        /// Gets the location in terms of path, line and column after applying source line mapping directives
-        /// (<c>#line</c> in C# or <c>#ExternalSource</c> in VB).
-        /// </summary>
-        /// <returns>
-        /// <see cref="FileLinePositionSpan"/> that contains file, line and column information,
-        /// or an invalid span (see <see cref="FileLinePositionSpan.IsValid"/>) if not available.
-        /// </returns>
-        public virtual FileLinePositionSpan GetMappedLineSpan() => default;
-
         // Derived classes should provide value equality semantics.
         /// <inheritdoc/>
         public abstract override bool Equals(object? obj);

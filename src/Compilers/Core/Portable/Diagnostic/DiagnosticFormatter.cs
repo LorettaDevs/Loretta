@@ -33,27 +33,14 @@ namespace Loretta.CodeAnalysis
                 case LocationKind.SourceFile:
                 case LocationKind.ExternalFile:
                     var span = diagnostic.Location.GetLineSpan();
-                    var mappedSpan = diagnostic.Location.GetMappedLineSpan();
-                    if (!span.IsValid || !mappedSpan.IsValid)
+                    if (!span.IsValid)
                     {
                         goto default;
                     }
 
-                    string? path, basePath;
-                    if (mappedSpan.HasMappedPath)
-                    {
-                        path = mappedSpan.Path;
-                        basePath = span.Path;
-                    }
-                    else
-                    {
-                        path = span.Path;
-                        basePath = null;
-                    }
-
                     return string.Format(formatter, "{0}{1}: {2}: {3}",
-                                         FormatSourcePath(path, basePath, formatter),
-                                         FormatSourceSpan(mappedSpan.Span, formatter),
+                                         FormatSourcePath(span.Path, null, formatter),
+                                         FormatSourceSpan(span.Span, formatter),
                                          GetMessagePrefix(diagnostic),
                                          diagnostic.GetMessage(culture));
 
