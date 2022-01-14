@@ -1,0 +1,52 @@
+# Docs build script based on https://tehgm.net/blog/docfx-github-actions/
+name: DocFX Build and Publish
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: |
+            3.1.x
+            5.0.x
+            6.0.x
+          include-prerelease: True
+        env:
+          DOTNET_INSTALL_DIR: C:\Program Files\dotnet
+
+      - name: Setup DocFX
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install docfx
+
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: DocFX Build
+        working-directory: docs
+        run: docfx docfx.json
+        continue-on-error: false
+
+      - name: Publish
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_site
+          force_orphan: true
