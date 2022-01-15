@@ -35,8 +35,8 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         /// The slot allocator to use.
         /// There are two builtin ones:
         /// <list type="bullet">
-        ///   <item><see cref="Minifying.SequentialSlotAllocator"/> - fast but doesn't reuse variable names.</item>
-        ///   <item><see cref="Minifying.SortedSlotAllocator"/> - reuses variable names as much as possible.</item>
+        ///   <item><description><see cref="Minifying.SequentialSlotAllocator"/> - fast but doesn't reuse variable names.</description></item>
+        ///   <item><description><see cref="Minifying.SortedSlotAllocator"/> - reuses variable names as much as possible.</description></item>
         /// </list>
         /// </param>
         /// <returns>The tree with the new minified root.</returns>

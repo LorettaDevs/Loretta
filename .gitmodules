@@ -1,0 +1,3 @@
+[submodule "docs/templates/darkfx"]
+	path = docs/templates/darkfx
+	url = https://github.com/steffen-wilke/darkfx

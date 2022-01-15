@@ -9,7 +9,7 @@ namespace Loretta.CodeAnalysis.Lua
     public interface IFileScope : IScope
     {
         /// <summary>
-        /// The implicit <c>args</c> that's available in all files.
+        /// The implicit <c>arg</c> that's available in all files.
         /// </summary>
         IVariable ArgVariable { get; }
 
