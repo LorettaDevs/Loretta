@@ -5,15 +5,25 @@
         {
           "src": "..",
           "files": [
+            // "src/Compilers/Core/Portable/Loretta.CodeAnalysis.csproj",
+            // "src/Compilers/Lua/Portable/Generated/**.cs",
+            // "src/Compilers/Lua/Portable/Loretta.CodeAnalysis.Lua.csproj",
+            // "src/Compilers/Lua/Experimental/Loretta.CodeAnalysis.Lua.Experimental.csproj"
             "src/Compilers/Core/Portable/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.dll",
             "src/Compilers/Lua/Portable/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.Lua.dll",
             "src/Compilers/Lua/Experimental/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.Lua.Experimental.dll"
-          ]
+            // "src/Compilers/Core/Portable/**.cs",
+            // "src/Compilers/Lua/Portable/**.cs",
+            // "src/Compilers/Lua/Experimental/**.cs"
+          ]//,
+          // "exclude": [
+          //   "**/obj/**",
+          //   "**/bin/**"
+          // ]
         }
       ],
       "dest": "api",
-      "disableGitFeatures": false,
-      "disableDefaultFilter": false
+      "filter": "unwanted-filter.yml"
     }
   ],
   "build": {
