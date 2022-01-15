@@ -80,18 +80,18 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// <remarks>
         /// To provide an example of how this strategy works, let's assume the following:
         /// <list type="number">
-        ///   <item><paramref name="prefix"/> is <c>'_'</c></item>
-        ///   <item><paramref name="alphabet"/> is <c>"a", "b" and "c"</c></item>
-        ///   <item>The provided <see cref="IScope"/> has two variables in scope named 'a' and 'b'.</item>
+        ///   <item><description><paramref name="prefix"/> is <c>'_'</c></description></item>
+        ///   <item><description><paramref name="alphabet"/> is <c>"a", "b" and "c"</c></description></item>
+        ///   <item><description>The provided <see cref="IScope"/> has two variables in scope named 'a' and 'b'.</description></item>
         /// </list>
         /// And these are some of its returns:
         /// <list type="bullet">
-        ///   <item>Slot 0: <c>_a</c> (as <c>a</c> is already in scope)</item>
-        ///   <item>Slot 1: <c>_b</c> (as <c>b</c> is already in scope)</item>
-        ///   <item>Slot 2: <c>c</c> (as there is no <c>c</c> already in scope)</item>
-        ///   <item>Slot 3: <c>aa</c></item>
-        ///   <item>Slot 13: <c>aaa</c></item>
-        ///   <item>Slot 40: <c>aaaa</c></item>
+        ///   <item><description>Slot 0: <c>_a</c> (as <c>a</c> is already in scope)</description></item>
+        ///   <item><description>Slot 1: <c>_b</c> (as <c>b</c> is already in scope)</description></item>
+        ///   <item><description>Slot 2: <c>c</c> (as there is no <c>c</c> already in scope)</description></item>
+        ///   <item><description>Slot 3: <c>aa</c></description></item>
+        ///   <item><description>Slot 13: <c>aaa</c></description></item>
+        ///   <item><description>Slot 40: <c>aaaa</c></description></item>
         /// </list>
         /// </remarks>
         public static NamingStrategy Sequential(char prefix, ImmutableArray<string> alphabet)
