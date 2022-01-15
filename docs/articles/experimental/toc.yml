@@ -1,0 +1,4 @@
+- name: Constant Folder
+  href: constant-folder.md
+- name: Minifier
+  href: minifier.md
