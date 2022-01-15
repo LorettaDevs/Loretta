@@ -7,7 +7,7 @@ using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Text;
 using static Tsu.Option;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
     internal static class LexicalTestData
     {

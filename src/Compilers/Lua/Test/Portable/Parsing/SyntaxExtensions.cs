@@ -2,7 +2,7 @@
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 {
     public static class SyntaxExtensions
     {
@@ -32,13 +32,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing
         public static SyntaxTriviaList GetTrailingTrivia(this SyntaxToken token) => token.TrailingTrivia;
 
         internal static ImmutableArray<DiagnosticInfo> Errors(this SyntaxToken token) =>
-            ((InternalSyntax.LuaSyntaxNode) token.Node!).ErrorsOrWarnings(errorsOnly: true);
+            ((Lua.Syntax.InternalSyntax.LuaSyntaxNode) token.Node!).ErrorsOrWarnings(errorsOnly: true);
 
         internal static ImmutableArray<DiagnosticInfo> Warnings(this SyntaxToken token) =>
-            ((InternalSyntax.LuaSyntaxNode) token.Node!).ErrorsOrWarnings(errorsOnly: false);
+            ((Lua.Syntax.InternalSyntax.LuaSyntaxNode) token.Node!).ErrorsOrWarnings(errorsOnly: false);
 
         internal static ImmutableArray<DiagnosticInfo> ErrorsAndWarnings(this SyntaxToken token) =>
-            ((InternalSyntax.LuaSyntaxNode) token.Node!).ErrorsAndWarnings();
+            ((Lua.Syntax.InternalSyntax.LuaSyntaxNode) token.Node!).ErrorsAndWarnings();
 
         #endregion SyntaxTokenExtensions
 
@@ -58,13 +58,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing
         #region SyntaxTriviaExtensions
 
         internal static ImmutableArray<DiagnosticInfo> Errors(this SyntaxTrivia trivia) =>
-            ((InternalSyntax.LuaSyntaxNode) trivia.UnderlyingNode!).ErrorsOrWarnings(errorsOnly: true);
+            ((Lua.Syntax.InternalSyntax.LuaSyntaxNode) trivia.UnderlyingNode!).ErrorsOrWarnings(errorsOnly: true);
 
         internal static ImmutableArray<DiagnosticInfo> Warnings(this SyntaxTrivia trivia) =>
-            ((InternalSyntax.LuaSyntaxNode) trivia.UnderlyingNode!).ErrorsOrWarnings(errorsOnly: false);
+            ((Lua.Syntax.InternalSyntax.LuaSyntaxNode) trivia.UnderlyingNode!).ErrorsOrWarnings(errorsOnly: false);
 
         internal static ImmutableArray<DiagnosticInfo> ErrorsAndWarnings(this SyntaxTrivia trivia) =>
-            ((InternalSyntax.LuaSyntaxNode) trivia.UnderlyingNode!).ErrorsAndWarnings();
+            ((Lua.Syntax.InternalSyntax.LuaSyntaxNode) trivia.UnderlyingNode!).ErrorsAndWarnings();
 
         #endregion SyntaxTriviaExtensions
 

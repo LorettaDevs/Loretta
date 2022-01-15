@@ -28,5 +28,5 @@ function Remove-Directory ([string] $Path, [int] $Indentation)
 Remove-Directory -Path ".vs" -Indentation 0
 Remove-Directory -Path "src/Compilers/Core/Test/Utilities/bin" -Indentation 0
 Remove-Directory -Path "src/Compilers/Core/Test/Utilities/obj" -Indentation 0
-Remove-Directory -Path "src/Compilers/Lua/Test/Syntax/bin" -Indentation 0
-Remove-Directory -Path "src/Compilers/Lua/Test/Syntax/obj" -Indentation 0
+Remove-Directory -Path "src/Compilers/Lua/Test/Portable/bin" -Indentation 0
+Remove-Directory -Path "src/Compilers/Lua/Test/Portable/obj" -Indentation 0

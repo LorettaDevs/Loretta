@@ -2,7 +2,7 @@
 //#define LARGE_TESTS_DEBUG
 using Loretta.CodeAnalysis.Text;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
     public readonly struct ShortDiagnostic
     {

@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing;
+using Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Test.Utilities;
 using Xunit;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
     public class LexicalTests
     {

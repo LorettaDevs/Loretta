@@ -12,7 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Syntax.UnitTests" />
+    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.UnitTests" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using Loretta.CodeAnalysis.Lua.Test.Utilities;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
 {
     public class ScriptTestsBase : LuaTestBase
     {

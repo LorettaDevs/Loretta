@@ -1,7 +1,7 @@
 ﻿using System;
 using Loretta.Test.Utilities;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
     public class RunLongLexerTests : ExecutionCondition
     {

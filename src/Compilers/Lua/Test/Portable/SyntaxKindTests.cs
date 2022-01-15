@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Syntax
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Syntax
 {
     public class SyntaxKindTests
     {

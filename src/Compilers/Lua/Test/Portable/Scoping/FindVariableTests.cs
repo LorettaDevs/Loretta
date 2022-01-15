@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using Loretta.CodeAnalysis.Lua.Syntax;
+using System.Linq;
 using Xunit;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Scoping
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
 {
     public class FindVariableTests : ScriptTestsBase
     {

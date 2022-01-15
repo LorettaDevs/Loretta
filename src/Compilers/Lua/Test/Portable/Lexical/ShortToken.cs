@@ -3,7 +3,7 @@
 using Loretta.CodeAnalysis.Text;
 using Tsu;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Lexical
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
     public readonly struct ShortToken
     {

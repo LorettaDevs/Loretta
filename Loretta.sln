@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CLI", "src\Compiler
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CodeAnalysis.Lua", "src\Compilers\Lua\Portable\Loretta.CodeAnalysis.Lua.csproj", "{06591CEB-7984-4C0E-B458-794F0319541D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CodeAnalysis.Lua.Syntax.UnitTests", "src\Compilers\Lua\Test\Syntax\Loretta.CodeAnalysis.Lua.Syntax.UnitTests.csproj", "{42FAB505-09BF-4F4E-950A-50130D765A88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CodeAnalysis.Lua.UnitTests", "src\Compilers\Lua\Test\Portable\Loretta.CodeAnalysis.Lua.UnitTests.csproj", "{42FAB505-09BF-4F4E-950A-50130D765A88}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.CodeAnalysis.Lua.Test.Utilities", "src\Compilers\Lua\Test\Utilities\Loretta.CodeAnalysis.Lua.Test.Utilities.csproj", "{68876CAE-30F7-41EA-A468-DDC9607BAEC7}"
 EndProject
@@ -55,6 +55,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{4444A40B-FAEF-4F74-BE00-99C53E9335BC}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build-and-test.yml = .github\workflows\build-and-test.yml
+		.github\workflows\build-docs.yml = .github\workflows\build-docs.yml
 		.github\workflows\long-lexer-tests.yml = .github\workflows\long-lexer-tests.yml
 		.github\workflows\publish.yml = .github\workflows\publish.yml
 	EndProjectSection

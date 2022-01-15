@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Lua.Test.Utilities;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Loretta.CodeAnalysis.Lua.Syntax.UnitTests.Parsing
+namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 {
     public abstract class ParsingTests : LuaTestBase, IDisposable
     {
