@@ -33,6 +33,8 @@ We have two NuGet packages:
 
 ## Using Loretta v0.2
 
+The best source for getting started is the [Introduction Article](https://ggg-killer.github.io/Loretta/articles/intro.html).
+
 ### Parsing text
 1. (Optional) Pick a [`LuaSyntaxOptions` preset](src/Compilers/Lua/Portable/LuaSyntaxOptions.cs#L12-L104) and then create a `LuaParseOptions` from it. If no preset is picked, `LuaSyntaxOptions.All` is used by default;
 2. (Optional) Create a `SourceText` from your code (using one of the `SourceText.From` overloads);
