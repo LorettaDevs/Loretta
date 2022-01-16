@@ -64,7 +64,6 @@ namespace Loretta.CodeAnalysis
             get { return this.Info.Category; }
         }
 
-
         internal sealed override int Code
         {
             get { return this.Info.Code; }
@@ -151,7 +150,6 @@ namespace Loretta.CodeAnalysis
             {
                 return true;
             }
-
 
             if (obj is not DiagnosticWithInfo other || this.GetType() != other.GetType())
             {

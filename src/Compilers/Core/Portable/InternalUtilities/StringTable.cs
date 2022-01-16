@@ -316,7 +316,6 @@ namespace Loretta.Utilities
             return chars;
         }
 
-
         private static string? FindSharedEntry(char[] chars, int start, int len, int hashCode)
         {
             var arr = s_sharedTable;
@@ -351,7 +350,6 @@ namespace Loretta.Utilities
 
             return e;
         }
-
 
         private static string? FindSharedEntry(ReadOnlySpan<char> span, int hashCode)
         {
@@ -562,7 +560,6 @@ namespace Loretta.Utilities
             return e;
         }
 
-
         private string AddItem(char[] chars, int start, int len, int hashCode)
         {
             var text = new String(chars, start, len);
@@ -597,7 +594,6 @@ namespace Loretta.Utilities
             AddCore(text, hashCode);
             return text;
         }
-
 
         private void AddCore(string chars, int hashCode)
         {

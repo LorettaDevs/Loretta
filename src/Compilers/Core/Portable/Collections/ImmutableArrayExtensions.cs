@@ -223,7 +223,6 @@ namespace Loretta.CodeAnalysis
             return builder.ToImmutableAndFree();
         }
 
-
         /// <summary>
         /// Maps an immutable array through a function that returns ValueTasks, returning the new ImmutableArray.
         /// </summary>
@@ -445,7 +444,6 @@ namespace Loretta.CodeAnalysis
 
             return false;
         }
-
 
         public static async ValueTask<T?> FirstOrDefaultAsync<T>(this ImmutableArray<T> array, Func<T, Task<bool>> predicateAsync)
         {
