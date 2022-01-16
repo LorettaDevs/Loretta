@@ -196,6 +196,10 @@ dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.non_field_members_should_be_pascal_case.symbols = non_field_members
 dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
 
+dotnet_naming_rule.const_field_members_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.const_field_members_should_be_pascal_case.symbols = const_field
+dotnet_naming_rule.const_field_members_should_be_pascal_case.style = pascal_case
+
 dotnet_naming_rule.non_static_private_field_should_be_camelcase_prefixed_by_underline.severity = suggestion
 dotnet_naming_rule.non_static_private_field_should_be_camelcase_prefixed_by_underline.symbols = non_static_private_field
 dotnet_naming_rule.non_static_private_field_should_be_camelcase_prefixed_by_underline.style = camelcase_prefixed_by_underline
@@ -223,12 +227,16 @@ dotnet_naming_symbols.type_parameter.applicable_accessibilities = *
 dotnet_naming_symbols.type_parameter.required_modifiers = *
 
 dotnet_naming_symbols.non_static_private_field.applicable_kinds = field
-dotnet_naming_symbols.non_static_private_field.applicable_accessibilities = private, protected, private_protected
+dotnet_naming_symbols.non_static_private_field.applicable_accessibilities = private, private_protected
 dotnet_naming_symbols.non_static_private_field.required_modifiers = 
 
 dotnet_naming_symbols.static_private_field.applicable_kinds = field
-dotnet_naming_symbols.static_private_field.applicable_accessibilities = private, protected, private_protected
+dotnet_naming_symbols.static_private_field.applicable_accessibilities = private, private_protected
 dotnet_naming_symbols.static_private_field.required_modifiers = static
+
+dotnet_naming_symbols.const_field.applicable_kinds = field
+dotnet_naming_symbols.const_field.applicable_accessibilities = *
+dotnet_naming_symbols.const_field.required_modifiers = const
 
 # Naming styles
 
