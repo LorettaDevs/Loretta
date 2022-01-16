@@ -95,8 +95,8 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
 
         protected static SyntaxNode GetSyntaxNodeForBinding(List<SyntaxNode> synList) => GetSyntaxNodeOfTypeForBinding<SyntaxNode>(synList);
 
-        protected const string StartString = "/*<bind>*/";
-        protected const string EndString = "/*</bind>*/";
+        protected const string StartString = "--[[bind]]";
+        protected const string EndString = "--[[/bind]]";
 
         protected static TNode GetSyntaxNodeOfTypeForBinding<TNode>(List<SyntaxNode> synList) where TNode : SyntaxNode
         {

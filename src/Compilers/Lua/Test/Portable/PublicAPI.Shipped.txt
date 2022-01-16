@@ -1,4 +1,7 @@
 ﻿#nullable enable
+Loretta.CodeAnalysis.Lua.UnitTests.Experimental.NamingStrategiesTests
+Loretta.CodeAnalysis.Lua.UnitTests.Experimental.NamingStrategiesTests.NamingStrategies_Alphabetic_DoesNotFallIntoAnInfiniteLoop() -> void
+Loretta.CodeAnalysis.Lua.UnitTests.Experimental.NamingStrategiesTests.NamingStrategiesTests() -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalErrorTests
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalErrorTests.Lexer_EmitsDiagnosticOn_UnfinishedLongComment(string! text) -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalErrorTests.Lexer_EmitsDiagnosticsOn_InvalidEscapes() -> void
@@ -29,8 +32,8 @@ Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_DoesNot_CountNumbe
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_DoesNot_IdentifyLongCommentsNaively(string! text) -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_Lexes_ShebangsOnlyOnFileStart() -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_Lexes_Token(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken expectedToken) -> void
-Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_Lexes_TokenPairs_WithSeparators(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken tokenA, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken expectedSeparator, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken tokenB) -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_Lexes_TokenPairs(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken tokenA, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken tokenB) -> void
+Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_Lexes_TokenPairs_WithSeparators(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken tokenA, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken expectedSeparator, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken tokenB) -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_Lexes_Trivia(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! options, Loretta.CodeAnalysis.Lua.UnitTests.Lexical.ShortToken expectedTrivia) -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.Lexer_LexesInvalidEscapes_WhenLuaSyntaxOptionsAcceptInvalidEscapesIsTrue() -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Lexical.LexicalTests.LexicalTests() -> void
@@ -53,9 +56,9 @@ Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.M(Loretta.CodeAnalysis.L
 Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.N(Loretta.CodeAnalysis.Lua.SyntaxKind kind, string? value = null) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
 Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.ParsingTests(Xunit.Abstractions.ITestOutputHelper! output) -> void
 Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.UsingNode(Loretta.CodeAnalysis.Lua.LuaSyntaxNode! root) -> void
+Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.UsingNode(string! text) -> Loretta.CodeAnalysis.Lua.LuaSyntaxNode!
 Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.UsingNode(string! text, Loretta.CodeAnalysis.Lua.LuaParseOptions! options, params Loretta.CodeAnalysis.Test.Utilities.DiagnosticDescription![]! expectedErrors) -> Loretta.CodeAnalysis.Lua.LuaSyntaxNode!
 Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.UsingNode(string! text, Loretta.CodeAnalysis.Lua.LuaSyntaxNode! node, Loretta.CodeAnalysis.Test.Utilities.DiagnosticDescription![]! expectedErrors) -> void
-Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.UsingNode(string! text) -> Loretta.CodeAnalysis.Lua.LuaSyntaxNode!
 Loretta.CodeAnalysis.Lua.UnitTests.Parsing.ParsingTests.UsingTree(string! text, Loretta.CodeAnalysis.Lua.LuaParseOptions? options = null) -> Loretta.CodeAnalysis.SyntaxTree!
 Loretta.CodeAnalysis.Lua.UnitTests.Parsing.SyntaxExtensions
 Loretta.CodeAnalysis.Lua.UnitTests.Scoping.CanBeAccessedInTests
