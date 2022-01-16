@@ -5,7 +5,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
 {
     internal static class Diagnostics
     {
-        private static readonly string[] notConfigurableTags = new[] { WellKnownDiagnosticTags.NotConfigurable };
+        private static readonly string[] s_notConfigurableTags = new[] { WellKnownDiagnosticTags.NotConfigurable };
 
         public static readonly DiagnosticDescriptor SyntaxKindNotFound = new DiagnosticDescriptor(
             id: "LOSK0001",
@@ -14,7 +14,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             category: "Loretta.Generators.SyntaxKind",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            customTags: notConfigurableTags);
+            customTags: s_notConfigurableTags);
 
         public static readonly DiagnosticDescriptor NoSyntaxKindWithAttributesFound = new DiagnosticDescriptor(
             id: "LOSK0002",
@@ -23,7 +23,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             category: "Loretta.Generators.SyntaxKind",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            customTags: notConfigurableTags);
+            customTags: s_notConfigurableTags);
 
         public static readonly DiagnosticDescriptor TriviaKindIsAlsoAToken = new DiagnosticDescriptor(
             id: "LOSK0003",
@@ -32,7 +32,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             category: "Loretta.Generators.SyntaxKind",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            customTags: notConfigurableTags);
+            customTags: s_notConfigurableTags);
 
         public static readonly DiagnosticDescriptor OperatorKindWithoutText = new DiagnosticDescriptor(
             id: "LOSK0004",
@@ -41,7 +41,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             category: "Loretta.Generators.SyntaxKind",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            customTags: notConfigurableTags);
+            customTags: s_notConfigurableTags);
 
         public static readonly DiagnosticDescriptor KeywordKindWithoutText = new DiagnosticDescriptor(
             id: "LOSK0005",
@@ -50,7 +50,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             category: "Loretta.Generators.SyntaxKind",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            customTags: notConfigurableTags);
+            customTags: s_notConfigurableTags);
 
         public static readonly DiagnosticDescriptor CategoryNotInConstantClass = new DiagnosticDescriptor(
             id: "LOSK0006",

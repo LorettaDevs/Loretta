@@ -17,7 +17,7 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 {
     internal class Program
     {
-        private static readonly object _reportLock = new object();
+        private static readonly object s_reportLock = new object();
         private static GlobalStatistics.Builder? s_globalStatisticsBuilder = new GlobalStatistics.Builder();
         private static readonly ConcurrentBag<FileStatistics> s_fileStatistics = new ConcurrentBag<FileStatistics>();
         private static long s_parsedFiles, s_totalFiles;
@@ -228,7 +228,7 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
             s_fileStatistics.Add(fileStatistics);
             var parsed = Interlocked.Increment(ref s_parsedFiles);
 
-            if (s_nextReport <= Stopwatch.GetTimestamp() && Monitor.TryEnter(_reportLock))
+            if (s_nextReport <= Stopwatch.GetTimestamp() && Monitor.TryEnter(s_reportLock))
             {
                 try
                 {
@@ -239,7 +239,7 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
                 }
                 finally
                 {
-                    Monitor.Exit(_reportLock);
+                    Monitor.Exit(s_reportLock);
                 }
             }
         }

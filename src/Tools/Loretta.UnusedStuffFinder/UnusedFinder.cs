@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Tsu.Numerics;
 
@@ -7,6 +8,7 @@ namespace Loretta.UnusedStuffFinder
 {
     internal class UnusedFinder
     {
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
         private const int ReportCount = 1000;
 
         public static async Task<(ImmutableArray<ISymbol>, IEnumerable<SymbolEx>)> FindUnused(

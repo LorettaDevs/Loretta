@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Loretta.CodeAnalysis.Test.Utilities
@@ -117,8 +118,11 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                 }
             }
 
+            [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
             private const int DeleteCost = 1;
+            [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
             private const int InsertCost = 1;
+            [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
             private const int UpdateCost = 2;
 
             protected abstract bool ItemsEqual(TSequence sequenceA, int indexA, TSequence sequenceB, int indexB);

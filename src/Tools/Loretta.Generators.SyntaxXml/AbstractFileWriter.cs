@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -21,6 +22,7 @@ namespace Loretta.Generators.SyntaxXml
         private readonly IDictionary<string, Node> _nodeMap;
         private readonly IDictionary<string, TreeType> _typeMap;
 
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
         private const int INDENT_SIZE = 4;
         private int _indentLevel;
         private bool _needIndent = true;

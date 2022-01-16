@@ -20,7 +20,7 @@ namespace Loretta.Generators.SyntaxXml
     [Generator]
     public sealed class SyntaxXmlSourceGenerator : AdditionalTextCachingSourceGenerator
     {
-        private static readonly DiagnosticDescriptor s_MissingSyntaxXml = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor s_missingSyntaxXml = new DiagnosticDescriptor(
             "LSSG1001",
             title: "Syntax.xml is missing",
             messageFormat: "The Syntax.xml file was not included in the project, so we are not generating source",
@@ -28,7 +28,7 @@ namespace Loretta.Generators.SyntaxXml
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
         [SuppressMessage("MicrosoftCodeAnalysisDesign", "RS1032:Define diagnostic message correctly", Justification = "It is a question mark.")]
-        private static readonly DiagnosticDescriptor s_UnableToReadSyntaxXml = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor s_unableToReadSyntaxXml = new DiagnosticDescriptor(
             "LSSG1002",
             title: "Syntax.xml could not be read",
             messageFormat: "The Syntax.xml file could not even be read. Does it exist?",
@@ -36,7 +36,7 @@ namespace Loretta.Generators.SyntaxXml
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
-        private static readonly DiagnosticDescriptor s_SyntaxXmlError = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor s_syntaxXmlError = new DiagnosticDescriptor(
             "LSSG1003",
             title: "Syntax.xml has a syntax error",
             messageFormat: "{0}",
@@ -44,7 +44,7 @@ namespace Loretta.Generators.SyntaxXml
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
-        private static readonly DiagnosticDescriptor s_SyntaxXmlException = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor s_syntaxXmlException = new DiagnosticDescriptor(
             "LSSG1004",
             title: "Syntax.xml generator threw an exception",
             messageFormat: "{0}",
@@ -60,7 +60,7 @@ namespace Loretta.Generators.SyntaxXml
             input = context.AdditionalFiles.SingleOrDefault(a => Path.GetFileName(a.Path) == "Syntax.xml");
             if (input == null)
             {
-                context.ReportDiagnostic(Diagnostic.Create(s_MissingSyntaxXml, location: null));
+                context.ReportDiagnostic(Diagnostic.Create(s_missingSyntaxXml, location: null));
                 inputText = null;
                 return false;
             }
@@ -68,7 +68,7 @@ namespace Loretta.Generators.SyntaxXml
             inputText = input.GetText();
             if (inputText == null)
             {
-                context.ReportDiagnostic(Diagnostic.Create(s_UnableToReadSyntaxXml, location: null));
+                context.ReportDiagnostic(Diagnostic.Create(s_unableToReadSyntaxXml, location: null));
                 return false;
             }
 
@@ -104,7 +104,7 @@ namespace Loretta.Generators.SyntaxXml
                     sources = default;
                     diagnostics = ImmutableArray.Create(
                         Diagnostic.Create(
-                            s_SyntaxXmlError,
+                            s_syntaxXmlError,
                             location: Location.Create(input.Path, span, lineSpan),
                             xmlException.Message));
                     relativePath = null;
@@ -143,7 +143,7 @@ namespace Loretta.Generators.SyntaxXml
             {
                 sources = default;
                 diagnostics = ImmutableArray.Create(Diagnostic.Create(
-                    s_SyntaxXmlException,
+                    s_syntaxXmlException,
                     null,
                     ex.ToString()));
                 relativePath = null;

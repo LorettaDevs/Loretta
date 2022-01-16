@@ -25,7 +25,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             public ImmutableArray<byte> Checksum { get; }
         }
 
-        private static CachedKindList cachedList = new CachedKindList();
+        private static CachedKindList s_cachedList = new CachedKindList();
 
         public static KindList? GetKindInfos(
             GeneratorExecutionContext context,
@@ -43,13 +43,13 @@ namespace Loretta.Generators.SyntaxKindGenerator
                                                         .GetText()
                                                         .GetChecksum();
 
-            if (cachedList.Checksum.IsDefault || !syntaxKindChecksum.SequenceEqual(cachedList.Checksum))
+            if (s_cachedList.Checksum.IsDefault || !syntaxKindChecksum.SequenceEqual(s_cachedList.Checksum))
             {
                 var list = GetKindInfosCore(context, compilation);
-                cachedList = new CachedKindList(list, syntaxKindChecksum);
+                s_cachedList = new CachedKindList(list, syntaxKindChecksum);
             }
 
-            return cachedList.List;
+            return s_cachedList.List;
         }
 
         private static KindList? GetKindInfosCore(

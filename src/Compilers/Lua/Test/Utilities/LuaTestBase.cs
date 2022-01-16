@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -95,7 +96,9 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
 
         protected static SyntaxNode GetSyntaxNodeForBinding(List<SyntaxNode> synList) => GetSyntaxNodeOfTypeForBinding<SyntaxNode>(synList);
 
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
         protected const string StartString = "--[[bind]]";
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
         protected const string EndString = "--[[/bind]]";
 
         protected static TNode GetSyntaxNodeOfTypeForBinding<TNode>(List<SyntaxNode> synList) where TNode : SyntaxNode

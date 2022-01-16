@@ -1,10 +1,12 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 
 namespace Loretta.UnusedStuffFinder
 {
     internal class PublicApiContainer
     {
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
         private const int IncludeNonNullableReferenceTypeModifier = 1 << 8;
 
         private static readonly SymbolDisplayFormat s_publicApiFormat =
