@@ -78,7 +78,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             for (int i = 0; i < count; i++)
             {
                 var node = nodes[i];
-                LorettaDebug.Assert(node is object);
+                LorettaDebug.Assert(node is not null);
                 array[i].Value = node;
             }
 

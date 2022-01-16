@@ -93,7 +93,7 @@ namespace Loretta.CodeAnalysis
         /// <inheritdoc/>
         public bool Equals(SyntaxAnnotation? other)
         {
-            return other is object && _id == other._id;
+            return other is not null && _id == other._id;
         }
 
         /// <summary>

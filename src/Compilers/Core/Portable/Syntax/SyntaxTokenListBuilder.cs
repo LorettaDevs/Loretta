@@ -33,7 +33,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void Add(SyntaxToken item)
         {
-            LorettaDebug.Assert(item.Node is object);
+            LorettaDebug.Assert(item.Node is not null);
             this.Add(item.Node);
         }
 
@@ -95,13 +95,13 @@ namespace Loretta.CodeAnalysis.Syntax
                     case 1:
                         return new SyntaxTokenList(null, _nodes[0], 0, 0);
                     case 2:
-                        LorettaDebug.Assert(_nodes[0] is object);
-                        LorettaDebug.Assert(_nodes[1] is object);
+                        LorettaDebug.Assert(_nodes[0] is not null);
+                        LorettaDebug.Assert(_nodes[1] is not null);
                         return new SyntaxTokenList(null, InternalSyntax.SyntaxList.List(_nodes[0]!, _nodes[1]!), 0, 0);
                     case 3:
-                        LorettaDebug.Assert(_nodes[0] is object);
-                        LorettaDebug.Assert(_nodes[1] is object);
-                        LorettaDebug.Assert(_nodes[2] is object);
+                        LorettaDebug.Assert(_nodes[0] is not null);
+                        LorettaDebug.Assert(_nodes[1] is not null);
+                        LorettaDebug.Assert(_nodes[2] is not null);
                         return new SyntaxTokenList(null, InternalSyntax.SyntaxList.List(_nodes[0]!, _nodes[1]!, _nodes[2]!), 0, 0);
                     default:
                         return new SyntaxTokenList(null, InternalSyntax.SyntaxList.List(_nodes, _count), 0, 0);

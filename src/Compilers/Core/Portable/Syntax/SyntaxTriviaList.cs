@@ -453,7 +453,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private GreenNode? GetGreenNodeAt(int i)
         {
-            LorettaDebug.Assert(Node is object);
+            LorettaDebug.Assert(Node is not null);
             return GetGreenNodeAt(Node, i);
         }
 

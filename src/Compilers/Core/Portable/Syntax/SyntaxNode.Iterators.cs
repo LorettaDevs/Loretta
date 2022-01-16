@@ -67,7 +67,7 @@ namespace Loretta.CodeAnalysis
 
             public bool TryGetNextInSpan(in TextSpan span, out SyntaxNodeOrToken value)
             {
-                LorettaDebug.Assert(_stack is object);
+                LorettaDebug.Assert(_stack is not null);
                 while (_stack[_stackPtr].TryMoveNextAndGetCurrent(out value))
                 {
                     if (IsInSpan(in span, value.FullSpan))
@@ -82,7 +82,7 @@ namespace Loretta.CodeAnalysis
 
             public SyntaxNode? TryGetNextAsNodeInSpan(in TextSpan span)
             {
-                LorettaDebug.Assert(_stack is object);
+                LorettaDebug.Assert(_stack is not null);
                 SyntaxNode? nodeValue;
                 while ((nodeValue = _stack[_stackPtr].TryMoveNextAndGetCurrentAsNode()) != null)
                 {
@@ -98,7 +98,7 @@ namespace Loretta.CodeAnalysis
 
             public void PushChildren(SyntaxNode node)
             {
-                LorettaDebug.Assert(_stack is object);
+                LorettaDebug.Assert(_stack is not null);
                 if (++_stackPtr >= _stack.Length)
                 {
                     // Geometric growth
@@ -214,7 +214,7 @@ namespace Loretta.CodeAnalysis
 
             public Which PeekNext()
             {
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 return _discriminatorStack.Peek();
             }
 
@@ -225,7 +225,7 @@ namespace Loretta.CodeAnalysis
                     return true;
                 }
 
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 _discriminatorStack.Pop();
                 return false;
             }
@@ -237,7 +237,7 @@ namespace Loretta.CodeAnalysis
                     return true;
                 }
 
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 _discriminatorStack.Pop();
                 return false;
             }
@@ -246,7 +246,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (descendIntoChildren == null || descendIntoChildren(node))
                 {
-                    LorettaDebug.Assert(_discriminatorStack is object);
+                    LorettaDebug.Assert(_discriminatorStack is not null);
                     _nodeStack.PushChildren(node);
                     _discriminatorStack.Push(Which.Node);
                 }
@@ -254,14 +254,14 @@ namespace Loretta.CodeAnalysis
 
             public void PushLeadingTrivia(in SyntaxToken token)
             {
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 _triviaStack.PushLeadingTrivia(in token);
                 _discriminatorStack.Push(Which.Trivia);
             }
 
             public void PushTrailingTrivia(in SyntaxToken token)
             {
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 _triviaStack.PushTrailingTrivia(in token);
                 _discriminatorStack.Push(Which.Trivia);
             }
@@ -309,7 +309,7 @@ namespace Loretta.CodeAnalysis
 
             public Which PeekNext()
             {
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 return _discriminatorStack.Peek();
             }
 
@@ -320,7 +320,7 @@ namespace Loretta.CodeAnalysis
                     return true;
                 }
 
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 _discriminatorStack.Pop();
                 return false;
             }
@@ -332,15 +332,15 @@ namespace Loretta.CodeAnalysis
                     return true;
                 }
 
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 _discriminatorStack.Pop();
                 return false;
             }
 
             public SyntaxNodeOrToken PopToken()
             {
-                LorettaDebug.Assert(_discriminatorStack is object);
-                LorettaDebug.Assert(_tokenStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
+                LorettaDebug.Assert(_tokenStack is not null);
                 _discriminatorStack.Pop();
                 return _tokenStack.Pop();
             }
@@ -349,7 +349,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (descendIntoChildren == null || descendIntoChildren(node))
                 {
-                    LorettaDebug.Assert(_discriminatorStack is object);
+                    LorettaDebug.Assert(_discriminatorStack is not null);
                     _nodeStack.PushChildren(node);
                     _discriminatorStack.Push(Which.Node);
                 }
@@ -357,22 +357,22 @@ namespace Loretta.CodeAnalysis
 
             public void PushLeadingTrivia(in SyntaxToken token)
             {
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 _triviaStack.PushLeadingTrivia(in token);
                 _discriminatorStack.Push(Which.Trivia);
             }
 
             public void PushTrailingTrivia(in SyntaxToken token)
             {
-                LorettaDebug.Assert(_discriminatorStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
                 _triviaStack.PushTrailingTrivia(in token);
                 _discriminatorStack.Push(Which.Trivia);
             }
 
             public void PushToken(in SyntaxNodeOrToken value)
             {
-                LorettaDebug.Assert(_discriminatorStack is object);
-                LorettaDebug.Assert(_tokenStack is object);
+                LorettaDebug.Assert(_discriminatorStack is not null);
+                LorettaDebug.Assert(_tokenStack is not null);
                 _tokenStack.Push(value);
                 _discriminatorStack.Push(Which.Token);
             }

@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal GreenNode? ItemUntyped(int index)
         {
-            LorettaDebug.Assert(_node is object);
+            LorettaDebug.Assert(_node is not null);
             var node = this._node;
             if (node.IsList)
             {
@@ -108,7 +108,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                LorettaDebug.Assert(_node is object);
+                LorettaDebug.Assert(_node is not null);
                 var node = this._node;
                 if (node.IsList)
                 {

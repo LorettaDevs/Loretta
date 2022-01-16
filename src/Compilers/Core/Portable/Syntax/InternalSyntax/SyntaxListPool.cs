@@ -54,7 +54,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal void Free<TNode>(in SeparatedSyntaxListBuilder<TNode> item) where TNode : GreenNode
         {
-            LorettaDebug.Assert(item.UnderlyingBuilder is object);
+            LorettaDebug.Assert(item.UnderlyingBuilder is not null);
             Free(item.UnderlyingBuilder);
         }
 

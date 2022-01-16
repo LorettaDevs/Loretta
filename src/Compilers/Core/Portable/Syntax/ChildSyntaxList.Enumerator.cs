@@ -57,7 +57,7 @@ namespace Loretta.CodeAnalysis
             {
                 get
                 {
-                    LorettaDebug.Assert(_node is object);
+                    LorettaDebug.Assert(_node is not null);
                     return ItemInternal(_node, _childIndex);
                 }
             }

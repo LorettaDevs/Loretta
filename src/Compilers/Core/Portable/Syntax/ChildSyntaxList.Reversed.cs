@@ -32,7 +32,7 @@ namespace Loretta.CodeAnalysis
             /// <returns></returns>
             public Enumerator GetEnumerator()
             {
-                LorettaDebug.Assert(_node is object);
+                LorettaDebug.Assert(_node is not null);
                 return new Enumerator(_node, _count);
             }
 
@@ -108,7 +108,7 @@ namespace Loretta.CodeAnalysis
                 {
                     get
                     {
-                        LorettaDebug.Assert(_node is object);
+                        LorettaDebug.Assert(_node is not null);
                         return ItemInternal(_node, _childIndex);
                     }
                 }

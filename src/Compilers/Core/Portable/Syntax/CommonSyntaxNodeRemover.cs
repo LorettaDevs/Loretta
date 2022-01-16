@@ -33,7 +33,7 @@ namespace Loretta.CodeAnalysis.Syntax
             // in the list that needs to be fixed up.
 
             var node = nodesAndSeparators[nodeIndex].AsNode();
-            LorettaDebug.Assert(node is object);
+            LorettaDebug.Assert(node is not null);
 
             nextTokenIsSeparator =
                 nodeIndex + 1 < nodesAndSeparators.Count &&

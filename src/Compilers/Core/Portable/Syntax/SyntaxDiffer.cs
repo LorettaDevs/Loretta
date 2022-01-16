@@ -440,19 +440,19 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var tr in node1.GetLeadingTrivia())
                 {
-                    LorettaDebug.Assert(tr.UnderlyingNode is object);
+                    LorettaDebug.Assert(tr.UnderlyingNode is not null);
                     _nodeSimilaritySet.Add(tr.UnderlyingNode);
                 }
 
                 foreach (var tr in node1.GetTrailingTrivia())
                 {
-                    LorettaDebug.Assert(tr.UnderlyingNode is object);
+                    LorettaDebug.Assert(tr.UnderlyingNode is not null);
                     _nodeSimilaritySet.Add(tr.UnderlyingNode);
                 }
 
                 foreach (var tr in node2.GetLeadingTrivia())
                 {
-                    LorettaDebug.Assert(tr.UnderlyingNode is object);
+                    LorettaDebug.Assert(tr.UnderlyingNode is not null);
                     if (_nodeSimilaritySet.Contains(tr.UnderlyingNode))
                     {
                         w += tr.FullSpan.Length;
@@ -461,7 +461,7 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var tr in node2.GetTrailingTrivia())
                 {
-                    LorettaDebug.Assert(tr.UnderlyingNode is object);
+                    LorettaDebug.Assert(tr.UnderlyingNode is not null);
                     if (_nodeSimilaritySet.Contains(tr.UnderlyingNode))
                     {
                         w += tr.FullSpan.Length;
@@ -472,7 +472,7 @@ namespace Loretta.CodeAnalysis
             {
                 foreach (var n1 in node1.ChildNodesAndTokens())
                 {
-                    LorettaDebug.Assert(n1.UnderlyingNode is object);
+                    LorettaDebug.Assert(n1.UnderlyingNode is not null);
                     _nodeSimilaritySet.Add(n1.UnderlyingNode);
 
                     if (n1.IsToken)
@@ -483,7 +483,7 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var n2 in node2.ChildNodesAndTokens())
                 {
-                    LorettaDebug.Assert(n2.UnderlyingNode is object);
+                    LorettaDebug.Assert(n2.UnderlyingNode is not null);
                     if (_nodeSimilaritySet.Contains(n2.UnderlyingNode))
                     {
                         w += n2.FullSpan.Length;

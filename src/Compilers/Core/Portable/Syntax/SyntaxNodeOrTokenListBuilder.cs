@@ -38,7 +38,7 @@ namespace Loretta.CodeAnalysis.Syntax
             get
             {
                 var innerNode = _nodes[index];
-                LorettaDebug.Assert(innerNode is object);
+                LorettaDebug.Assert(innerNode is not null);
                 if (innerNode.IsToken == true)
                 {
                     // getting internal token so we do not know the position
@@ -73,13 +73,13 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void Add(in SyntaxToken item)
         {
-            LorettaDebug.Assert(item.Node is object);
+            LorettaDebug.Assert(item.Node is not null);
             this.Add(item.Node);
         }
 
         public void Add(in SyntaxNodeOrToken item)
         {
-            LorettaDebug.Assert(item.UnderlyingNode is object);
+            LorettaDebug.Assert(item.UnderlyingNode is not null);
             this.Add(item.UnderlyingNode);
         }
 

@@ -350,7 +350,7 @@ namespace Loretta.CodeAnalysis
         /// <returns><see cref="Reversed"/> which contains all children of <see cref="ChildSyntaxList"/> in reversed order</returns>
         public Reversed Reverse()
         {
-            LorettaDebug.Assert(_node is object);
+            LorettaDebug.Assert(_node is not null);
             return new Reversed(_node, _count);
         }
 

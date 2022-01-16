@@ -161,7 +161,7 @@ namespace Loretta.CodeAnalysis
         internal GreenNode GetRequiredSlot(int index)
         {
             var node = GetSlot(index);
-            LorettaDebug.Assert(node is object);
+            LorettaDebug.Assert(node is not null);
             return node;
         }
 

@@ -94,7 +94,7 @@ namespace Loretta.CodeAnalysis
                 internal Enumerator(in SyntaxTriviaList list)
                     : this()
                 {
-                    if (list.Node is object)
+                    if (list.Node is not null)
                     {
                         _token = list.Token;
                         _singleNodeOrList = list.Node;
@@ -118,11 +118,11 @@ namespace Loretta.CodeAnalysis
                         return false;
                     }
 
-                    LorettaDebug.Assert(_singleNodeOrList is object);
+                    LorettaDebug.Assert(_singleNodeOrList is not null);
                     _index--;
 
                     _current = GetGreenNodeAt(_singleNodeOrList, _index);
-                    LorettaDebug.Assert(_current is object);
+                    LorettaDebug.Assert(_current is not null);
                     _position -= _current.FullWidth;
 
                     return true;

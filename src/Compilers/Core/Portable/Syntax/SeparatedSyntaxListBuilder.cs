@@ -75,7 +75,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public SeparatedSyntaxListBuilder<TNode> AddSeparator(in SyntaxToken separatorToken)
         {
-            LorettaDebug.Assert(separatorToken.Node is object);
+            LorettaDebug.Assert(separatorToken.Node is not null);
             CheckExpectedSeparator();
             _expectedSeparator = false;
             _builder.AddInternal(separatorToken.Node);

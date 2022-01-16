@@ -687,7 +687,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxNode GetRequiredNodeSlot(int slot)
         {
             var syntaxNode = GetNodeSlot(slot);
-            LorettaDebug.Assert(syntaxNode is object);
+            LorettaDebug.Assert(syntaxNode is not null);
             return syntaxNode;
         }
 
@@ -880,7 +880,7 @@ namespace Loretta.CodeAnalysis
                 .Parent
                 !.FirstAncestorOrSelf<SyntaxNode, TextSpan>((a, span) => a.FullSpan.Contains(span), span);
 
-            LorettaDebug.Assert(node is object);
+            LorettaDebug.Assert(node is not null);
             SyntaxNode? cuRoot = node.SyntaxTree?.GetRoot();
 
             // Tie-breaking.

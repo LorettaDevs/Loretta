@@ -75,7 +75,7 @@ namespace Loretta.CodeAnalysis
             for (int i = 0; i < tokens.Length; i++)
             {
                 var node = tokens[i].Node;
-                LorettaDebug.Assert(node is object);
+                LorettaDebug.Assert(node is not null);
                 builder.Add(node);
             }
 
@@ -92,7 +92,7 @@ namespace Loretta.CodeAnalysis
             var builder = SyntaxTokenListBuilder.Create();
             foreach (var token in tokens)
             {
-                LorettaDebug.Assert(token.Node is object);
+                LorettaDebug.Assert(token.Node is not null);
                 builder.Add(token.Node);
             }
 
@@ -260,7 +260,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private GreenNode? GetGreenNodeAt(int i)
         {
-            LorettaDebug.Assert(Node is object);
+            LorettaDebug.Assert(Node is not null);
             return GetGreenNodeAt(Node, i);
         }
 

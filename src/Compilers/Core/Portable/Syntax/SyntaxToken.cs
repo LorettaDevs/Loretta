@@ -81,7 +81,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                LorettaDebug.Assert(Node is object);
+                LorettaDebug.Assert(Node is not null);
                 return Node;
             }
         }

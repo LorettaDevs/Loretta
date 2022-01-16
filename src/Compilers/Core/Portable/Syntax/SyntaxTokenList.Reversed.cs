@@ -121,9 +121,9 @@ namespace Loretta.CodeAnalysis
 
                     _index--;
 
-                    LorettaDebug.Assert(_singleNodeOrList is object);
+                    LorettaDebug.Assert(_singleNodeOrList is not null);
                     _current = GetGreenNodeAt(_singleNodeOrList, _index);
-                    LorettaDebug.Assert(_current is object);
+                    LorettaDebug.Assert(_current is not null);
                     _position -= _current.FullWidth;
 
                     return true;

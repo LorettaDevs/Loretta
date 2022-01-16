@@ -134,7 +134,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
             private void Push(GreenNode node)
             {
-                LorettaDebug.Assert(_stack is object);
+                LorettaDebug.Assert(_stack is not null);
                 if (_count >= _stack.Length)
                 {
                     var tmp = new NodeIteration[_stack.Length * 2];

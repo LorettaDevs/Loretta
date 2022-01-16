@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis
             get
             {
                 var node = UnderlyingNode;
-                LorettaDebug.Assert(node is object);
+                LorettaDebug.Assert(node is not null);
                 return node;
             }
         }
@@ -214,7 +214,7 @@ namespace Loretta.CodeAnalysis
         internal bool TryGetStructure([NotNullWhen(true)] out SyntaxNode? structure)
         {
             structure = GetStructure();
-            return structure is object;
+            return structure is not null;
         }
 
         /// <summary> 

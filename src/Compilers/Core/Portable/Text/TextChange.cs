@@ -101,7 +101,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="change"></param>
         public static implicit operator TextChangeRange(TextChange change)
         {
-            LorettaDebug.Assert(change.NewText is object);
+            LorettaDebug.Assert(change.NewText is not null);
             return new TextChangeRange(change.Span, change.NewText.Length);
         }
 

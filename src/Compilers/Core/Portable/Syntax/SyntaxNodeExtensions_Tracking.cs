@@ -122,7 +122,7 @@ namespace Loretta.CodeAnalysis
         private static IReadOnlyList<SyntaxNode> GetCurrentNodeFromTrueRoots(SyntaxNode trueRoot, SyntaxNode node)
         {
             var id = GetId(node);
-            if (id is object)
+            if (id is not null)
             {
                 CurrentNodes tracked = s_rootToCurrentNodesMap.GetValue(trueRoot, r => new CurrentNodes(r));
                 return tracked.GetNodes(id);
@@ -156,7 +156,7 @@ namespace Loretta.CodeAnalysis
                 else
                 {
                     node = ((IStructuredTriviaSyntax) node).ParentTrivia.Token.Parent!;
-                    LorettaDebug.Assert(node is object);
+                    LorettaDebug.Assert(node is not null);
                 }
             }
         }
@@ -181,7 +181,7 @@ namespace Loretta.CodeAnalysis
                 else
                 {
                     node = ((IStructuredTriviaSyntax) node).ParentTrivia.Token.Parent!;
-                    LorettaDebug.Assert(node is object);
+                    LorettaDebug.Assert(node is not null);
                 }
             }
 
@@ -200,7 +200,7 @@ namespace Loretta.CodeAnalysis
 
                 foreach (var node in root.GetAnnotatedNodesAndTokens(IdAnnotationKind).Select(n => n.AsNode()!))
                 {
-                    LorettaDebug.Assert(node is object);
+                    LorettaDebug.Assert(node is not null);
                     foreach (var id in node.GetAnnotations(IdAnnotationKind))
                     {
                         List<SyntaxNode>? list;
