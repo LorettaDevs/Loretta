@@ -39,7 +39,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             writer.WriteString(Text);
         }
 
-        internal static SyntaxTrivia Create(SyntaxKind kind, string text) => new SyntaxTrivia(kind, text);
+        internal static SyntaxTrivia Create(SyntaxKind kind, string text) => new(kind, text);
 
         public override string ToFullString() => Text;
 
@@ -72,7 +72,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         protected override void WriteTriviaTo(System.IO.TextWriter writer) => writer.Write(Text);
 
         public static implicit operator CodeAnalysis.SyntaxTrivia(SyntaxTrivia trivia) =>
-            new CodeAnalysis.SyntaxTrivia(token: default, trivia, position: 0, index: 0);
+            new(token: default, trivia, position: 0, index: 0);
 
         public override bool IsEquivalentTo(GreenNode? other)
         {

@@ -17,7 +17,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
     /// </summary>
     public readonly struct LuaTestSource
     {
-        public static LuaTestSource None => new LuaTestSource(null);
+        public static LuaTestSource None => new(null);
 
         public object Value { get; }
 
@@ -52,12 +52,12 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             }
         }
 
-        public static implicit operator LuaTestSource(string source) => new LuaTestSource(source);
-        public static implicit operator LuaTestSource(string[] source) => new LuaTestSource(source);
-        public static implicit operator LuaTestSource(SyntaxTree source) => new LuaTestSource(source);
-        public static implicit operator LuaTestSource(SyntaxTree[] source) => new LuaTestSource(source);
-        public static implicit operator LuaTestSource(List<SyntaxTree> source) => new LuaTestSource(source.ToArray());
-        public static implicit operator LuaTestSource(ImmutableArray<SyntaxTree> source) => new LuaTestSource(source.ToArray());
-        public static implicit operator LuaTestSource(LuaTestSource[] source) => new LuaTestSource(source);
+        public static implicit operator LuaTestSource(string source) => new(source);
+        public static implicit operator LuaTestSource(string[] source) => new(source);
+        public static implicit operator LuaTestSource(SyntaxTree source) => new(source);
+        public static implicit operator LuaTestSource(SyntaxTree[] source) => new(source);
+        public static implicit operator LuaTestSource(List<SyntaxTree> source) => new(source.ToArray());
+        public static implicit operator LuaTestSource(ImmutableArray<SyntaxTree> source) => new(source.ToArray());
+        public static implicit operator LuaTestSource(LuaTestSource[] source) => new(source);
     }
 }

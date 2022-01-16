@@ -17,9 +17,9 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 {
     internal class Program
     {
-        private static readonly object s_reportLock = new object();
-        private static GlobalStatistics.Builder? s_globalStatisticsBuilder = new GlobalStatistics.Builder();
-        private static readonly ConcurrentBag<FileStatistics> s_fileStatistics = new ConcurrentBag<FileStatistics>();
+        private static readonly object s_reportLock = new();
+        private static GlobalStatistics.Builder? s_globalStatisticsBuilder = new();
+        private static readonly ConcurrentBag<FileStatistics> s_fileStatistics = new();
         private static long s_parsedFiles, s_totalFiles;
         private static bool s_includeAllocations, s_includeTokenStats, s_noReportStatistics, s_gcInReport, s_noPrompts;
         private static long s_executionStart, s_nextReport = -1, s_reportInterval = TimeSpan.FromSeconds(5).Ticks;

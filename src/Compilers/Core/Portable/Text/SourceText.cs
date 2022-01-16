@@ -25,7 +25,7 @@ namespace Loretta.CodeAnalysis.Text
         private const int CharBufferCount = 5;
         internal const int LargeObjectHeapLimitInChars = 40 * 1024; // 40KB
 
-        private static readonly ObjectPool<char[]> s_charArrayPool = new ObjectPool<char[]>(() => new char[CharBufferSize], CharBufferCount);
+        private static readonly ObjectPool<char[]> s_charArrayPool = new(() => new char[CharBufferSize], CharBufferCount);
 
         private readonly SourceHashAlgorithm _checksumAlgorithm;
         private SourceTextContainer? _lazyContainer;

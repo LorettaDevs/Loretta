@@ -32,7 +32,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private int _resetCount;
         private int _resetStart;
 
-        private static readonly ObjectPool<BlendedNode[]> s_blendedNodesPool = new ObjectPool<BlendedNode[]>(() => new BlendedNode[32], 2);
+        private static readonly ObjectPool<BlendedNode[]> s_blendedNodesPool = new(() => new BlendedNode[32], 2);
 
         private BlendedNode[] _blendedTokens;
 
@@ -754,13 +754,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
-        protected static SyntaxDiagnosticInfo MakeError(int offset, int width, ErrorCode code) => new SyntaxDiagnosticInfo(offset, width, code);
+        protected static SyntaxDiagnosticInfo MakeError(int offset, int width, ErrorCode code) => new(offset, width, code);
 
-        protected static SyntaxDiagnosticInfo MakeError(int offset, int width, ErrorCode code, params object[] args) => new SyntaxDiagnosticInfo(offset, width, code, args);
+        protected static SyntaxDiagnosticInfo MakeError(int offset, int width, ErrorCode code, params object[] args) => new(offset, width, code, args);
 
-        protected static SyntaxDiagnosticInfo MakeError(GreenNode node, ErrorCode code, params object[] args) => new SyntaxDiagnosticInfo(node.GetLeadingTriviaWidth(), node.Width, code, args);
+        protected static SyntaxDiagnosticInfo MakeError(GreenNode node, ErrorCode code, params object[] args) => new(node.GetLeadingTriviaWidth(), node.Width, code, args);
 
-        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code, params object[] args) => new SyntaxDiagnosticInfo(code, args);
+        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code, params object[] args) => new(code, args);
 
         protected TNode AddLeadingSkippedSyntax<TNode>(TNode node, GreenNode skippedSyntax) where TNode : LuaSyntaxNode
         {

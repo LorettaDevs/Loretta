@@ -14,7 +14,7 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
     {
         public class Builder
         {
-            private readonly object _addLock = new object();
+            private readonly object _addLock = new();
             private readonly SegmentedList<double> _parseTimes;
             private readonly SegmentedList<double> _parseAllocations;
             private readonly SegmentedList<double> _tokenCounts;

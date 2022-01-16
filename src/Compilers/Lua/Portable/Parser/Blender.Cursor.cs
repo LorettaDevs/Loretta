@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 _indexInParent = indexInParent;
             }
 
-            public static Cursor FromRoot(Lua.LuaSyntaxNode node) => new Cursor(node, indexInParent: 0);
+            public static Cursor FromRoot(Lua.LuaSyntaxNode node) => new(node, indexInParent: 0);
 
             public bool IsFinished => CurrentNodeOrToken.Kind() is SyntaxKind.None or SyntaxKind.EndOfFileToken;
 

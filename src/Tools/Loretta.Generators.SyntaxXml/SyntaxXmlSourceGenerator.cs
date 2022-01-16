@@ -20,7 +20,7 @@ namespace Loretta.Generators.SyntaxXml
     [Generator]
     public sealed class SyntaxXmlSourceGenerator : AdditionalTextCachingSourceGenerator
     {
-        private static readonly DiagnosticDescriptor s_missingSyntaxXml = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor s_missingSyntaxXml = new(
             "LSSG1001",
             title: "Syntax.xml is missing",
             messageFormat: "The Syntax.xml file was not included in the project, so we are not generating source",
@@ -28,7 +28,7 @@ namespace Loretta.Generators.SyntaxXml
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
         [SuppressMessage("MicrosoftCodeAnalysisDesign", "RS1032:Define diagnostic message correctly", Justification = "It is a question mark.")]
-        private static readonly DiagnosticDescriptor s_unableToReadSyntaxXml = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor s_unableToReadSyntaxXml = new(
             "LSSG1002",
             title: "Syntax.xml could not be read",
             messageFormat: "The Syntax.xml file could not even be read. Does it exist?",
@@ -36,7 +36,7 @@ namespace Loretta.Generators.SyntaxXml
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
-        private static readonly DiagnosticDescriptor s_syntaxXmlError = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor s_syntaxXmlError = new(
             "LSSG1003",
             title: "Syntax.xml has a syntax error",
             messageFormat: "{0}",
@@ -44,7 +44,7 @@ namespace Loretta.Generators.SyntaxXml
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
-        private static readonly DiagnosticDescriptor s_syntaxXmlException = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor s_syntaxXmlException = new(
             "LSSG1004",
             title: "Syntax.xml generator threw an exception",
             messageFormat: "{0}",

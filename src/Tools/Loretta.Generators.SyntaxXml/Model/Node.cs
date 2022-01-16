@@ -17,9 +17,9 @@ namespace Loretta.Generators.SyntaxXml
         public string Errors;
 
         [XmlElement(ElementName = "Kind", Type = typeof(Kind))]
-        public List<Kind> Kinds = new List<Kind>();
+        public List<Kind> Kinds = new();
 
-        public readonly List<Field> Fields = new List<Field>();
+        public readonly List<Field> Fields = new();
 
         public bool HasErrors => StringComparer.Ordinal.Equals(Errors, "true");
 

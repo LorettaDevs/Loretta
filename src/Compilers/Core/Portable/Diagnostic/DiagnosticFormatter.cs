@@ -86,6 +86,6 @@ namespace Loretta.CodeAnalysis
             return string.Format("{0} {1}", prefix, diagnostic.Id);
         }
 
-        internal static readonly DiagnosticFormatter Instance = new DiagnosticFormatter();
+        internal static readonly DiagnosticFormatter Instance = new();
     }
 }

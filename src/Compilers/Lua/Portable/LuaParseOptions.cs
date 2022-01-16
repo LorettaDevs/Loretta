@@ -82,7 +82,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public new LuaParseOptions WithFeatures(IEnumerable<KeyValuePair<string, string>>? features)
-            => new LuaParseOptions(this) { _features = features?.ToImmutableDictionary(StringComparer.OrdinalIgnoreCase) ?? ImmutableDictionary<string, string>.Empty };
+            => new(this) { _features = features?.ToImmutableDictionary(StringComparer.OrdinalIgnoreCase) ?? ImmutableDictionary<string, string>.Empty };
 
         /// <summary>
         /// Creates a new instance with the syntax options replaced by the provided ones.

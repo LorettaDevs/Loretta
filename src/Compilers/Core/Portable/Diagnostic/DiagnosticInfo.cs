@@ -129,7 +129,7 @@ namespace Loretta.CodeAnalysis
         }
 
         // Create a copy of this instance with a explicit overridden severity
-        internal virtual DiagnosticInfo GetInstanceWithSeverity(DiagnosticSeverity severity) => new DiagnosticInfo(this, severity);
+        internal virtual DiagnosticInfo GetInstanceWithSeverity(DiagnosticSeverity severity) => new(this, severity);
 
         #region Serialization
 

@@ -1249,8 +1249,7 @@ namespace Loretta.CodeAnalysis.Collections
                 _dictionary = dictionary;
             }
 
-            public Enumerator GetEnumerator()
-                => new Enumerator(_dictionary);
+            public Enumerator GetEnumerator() => new(_dictionary);
 
             public void CopyTo(TKey[] array, int index)
             {
@@ -1450,7 +1449,7 @@ namespace Loretta.CodeAnalysis.Collections
             }
 
             public Enumerator GetEnumerator()
-                => new Enumerator(_dictionary);
+                => new(_dictionary);
 
             public void CopyTo(TValue[] array, int index)
             {

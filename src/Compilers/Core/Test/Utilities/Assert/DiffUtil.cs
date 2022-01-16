@@ -38,7 +38,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
         private class LCS<T> : LongestCommonSubsequence<IList<T>>
         {
-            public static readonly LCS<T> Default = new LCS<T>(EqualityComparer<T>.Default);
+            public static readonly LCS<T> Default = new(EqualityComparer<T>.Default);
 
             private readonly IEqualityComparer<T> _comparer;
 

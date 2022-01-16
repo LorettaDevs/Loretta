@@ -15,13 +15,13 @@ namespace Loretta.CodeAnalysis
     {
         private const int InitialStackSize = 8;
         private const int MaxSearchLength = 8;
-        private readonly Stack<SyntaxNodeOrToken> _oldNodes = new Stack<SyntaxNodeOrToken>(InitialStackSize);
-        private readonly Stack<SyntaxNodeOrToken> _newNodes = new Stack<SyntaxNodeOrToken>(InitialStackSize);
-        private readonly List<ChangeRecord> _changes = new List<ChangeRecord>();
+        private readonly Stack<SyntaxNodeOrToken> _oldNodes = new(InitialStackSize);
+        private readonly Stack<SyntaxNodeOrToken> _newNodes = new(InitialStackSize);
+        private readonly List<ChangeRecord> _changes = new();
         private readonly TextSpan _oldSpan;
         private readonly bool _computeNewText;
-        private readonly HashSet<GreenNode> _nodeSimilaritySet = new HashSet<GreenNode>();
-        private readonly HashSet<string> _tokenTextSimilaritySet = new HashSet<string>();
+        private readonly HashSet<GreenNode> _nodeSimilaritySet = new();
+        private readonly HashSet<string> _tokenTextSimilaritySet = new();
 
         private SyntaxDiffer(SyntaxNode oldNode, SyntaxNode newNode, bool computeNewText)
         {

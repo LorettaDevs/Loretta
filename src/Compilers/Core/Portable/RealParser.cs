@@ -59,8 +59,8 @@ namespace Loretta.CodeAnalysis
 
         private static readonly BigInteger s_bigZero = BigInteger.Zero;
         private static readonly BigInteger s_bigOne = BigInteger.One;
-        private static readonly BigInteger s_bigTwo = new BigInteger(2);
-        private static readonly BigInteger s_bigTen = new BigInteger(10);
+        private static readonly BigInteger s_bigTwo = new(2);
+        private static readonly BigInteger s_bigTen = new(10);
 
         /// <summary>
         /// Properties of an IEEE floating-point representation.
@@ -241,7 +241,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private sealed class FloatFloatingPointType : FloatingPointType
         {
-            public static FloatFloatingPointType Instance = new FloatFloatingPointType();
+            public static FloatFloatingPointType Instance = new();
             private FloatFloatingPointType() { }
             public override ushort DenormalMantissaBits => 23;
             public override ushort ExponentBits => 8;
@@ -256,7 +256,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private sealed class DoubleFloatingPointType : FloatingPointType
         {
-            public static DoubleFloatingPointType Instance = new DoubleFloatingPointType();
+            public static DoubleFloatingPointType Instance = new();
             private DoubleFloatingPointType() { }
             public override ushort DenormalMantissaBits => 52;
             public override ushort ExponentBits => 11;

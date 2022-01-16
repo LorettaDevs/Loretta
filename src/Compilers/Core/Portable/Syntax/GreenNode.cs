@@ -30,11 +30,9 @@ namespace Loretta.CodeAnalysis
         private byte _slotCount;
         private int _fullWidth;
 
-        private static readonly ConditionalWeakTable<GreenNode, DiagnosticInfo[]> s_diagnosticsTable =
-            new ConditionalWeakTable<GreenNode, DiagnosticInfo[]>();
+        private static readonly ConditionalWeakTable<GreenNode, DiagnosticInfo[]> s_diagnosticsTable = new();
 
-        private static readonly ConditionalWeakTable<GreenNode, SyntaxAnnotation[]> s_annotationsTable =
-            new ConditionalWeakTable<GreenNode, SyntaxAnnotation[]>();
+        private static readonly ConditionalWeakTable<GreenNode, SyntaxAnnotation[]> s_annotationsTable = new();
 
         private static readonly DiagnosticInfo[] s_noDiagnostics = Array.Empty<DiagnosticInfo>();
         private static readonly SyntaxAnnotation[] s_noAnnotations = Array.Empty<SyntaxAnnotation>();

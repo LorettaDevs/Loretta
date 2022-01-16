@@ -30,8 +30,8 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal class FunctionScope : Scope, IFunctionScopeInternal
     {
-        private readonly IList<IVariableInternal> _parameters = new List<IVariableInternal>();
-        private readonly HashSet<IVariableInternal> _capturedVariables = new HashSet<IVariableInternal>();
+        private readonly List<IVariableInternal> _parameters = new();
+        private readonly HashSet<IVariableInternal> _capturedVariables = new();
 
         public FunctionScope(SyntaxNode node, IScopeInternal? parent) : base(ScopeKind.Function, node, parent)
         {

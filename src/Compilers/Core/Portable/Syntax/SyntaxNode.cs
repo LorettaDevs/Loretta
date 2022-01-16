@@ -82,7 +82,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The absolute span of this node in characters, including its leading and trailing trivia.
         /// </summary>
-        public TextSpan FullSpan => new TextSpan(this.Position, this.Green.FullWidth);
+        public TextSpan FullSpan => new(this.Position, this.Green.FullWidth);
 
         internal int SlotCount => this.Green.SlotCount;
 

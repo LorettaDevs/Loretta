@@ -64,7 +64,7 @@ namespace Loretta.Generators.SyntaxXml
         public bool AllowTrailingSeparator;
 
         [XmlElement(ElementName = "Kind", Type = typeof(Kind))]
-        public List<Kind> Kinds = new List<Kind>();
+        public List<Kind> Kinds = new();
 
         [XmlElement]
         public Comment PropertyComment;

@@ -24,8 +24,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         private bool _afterLineBreak;
         private bool _afterIndentation;
 
-        private readonly Dictionary<SyntaxToken, int> _lineBreaksAfterToken = new Dictionary<SyntaxToken, int>();
-        private readonly HashSet<SyntaxNode> _lastStatementsInBlocks = new HashSet<SyntaxNode>();
+        private readonly Dictionary<SyntaxToken, int> _lineBreaksAfterToken = new();
+        private readonly HashSet<SyntaxNode> _lastStatementsInBlocks = new();
 
         private int _indentationDepth;
 

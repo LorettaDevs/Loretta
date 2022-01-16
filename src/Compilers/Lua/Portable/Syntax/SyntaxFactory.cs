@@ -86,8 +86,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="text">The text of the end of line. Any text can be specified here, however only carriage return and
         /// line feed characters are recognized by the parser as end of line.</param>
-        public static SyntaxTrivia EndOfLine(string text)
-            => InternalSyntax.SyntaxFactory.EndOfLine(text, elastic: false);
+        public static SyntaxTrivia EndOfLine(string text) =>
+            InternalSyntax.SyntaxFactory.EndOfLine(text, elastic: false);
 
         /// <summary>
         /// Creates a trivia with kind EndOfLineTrivia containing the specified text. Elastic trivia are used to
@@ -95,16 +95,16 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="text">The text of the end of line. Any text can be specified here, however only carriage return and
         /// line feed characters are recognized by the parser as end of line.</param>
-        public static SyntaxTrivia ElasticEndOfLine(string text)
-            => InternalSyntax.SyntaxFactory.EndOfLine(text, elastic: true);
+        public static SyntaxTrivia ElasticEndOfLine(string text) =>
+            InternalSyntax.SyntaxFactory.EndOfLine(text, elastic: true);
 
         /// <summary>
         /// Creates a trivia with kind WhitespaceTrivia containing the specified text.
         /// </summary>
         /// <param name="text">The text of the whitespace. Any text can be specified here, however only specific
         /// whitespace characters are recognized by the parser.</param>
-        public static SyntaxTrivia Whitespace(string text)
-            => InternalSyntax.SyntaxFactory.Whitespace(text, elastic: false);
+        public static SyntaxTrivia Whitespace(string text) =>
+            InternalSyntax.SyntaxFactory.Whitespace(text, elastic: false);
 
         /// <summary>
         /// Creates a trivia with kind WhitespaceTrivia containing the specified text. Elastic trivia are used to
@@ -112,8 +112,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="text">The text of the whitespace. Any text can be specified here, however only specific
         /// whitespace characters are recognized by the parser.</param>
-        public static SyntaxTrivia ElasticWhitespace(string text)
-            => InternalSyntax.SyntaxFactory.Whitespace(text, elastic: false);
+        public static SyntaxTrivia ElasticWhitespace(string text) =>
+            InternalSyntax.SyntaxFactory.Whitespace(text, elastic: false);
 
         /// <summary>
         /// Creates a trivia with kind either SingleLineCommentTrivia or MultiLineCommentTrivia containing the specified
@@ -159,8 +159,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <returns></returns>
-        public static SyntaxToken Token(SyntaxKind kind)
-            => new(InternalSyntax.SyntaxFactory.Token(ElasticMarker.UnderlyingNode, kind, ElasticMarker.UnderlyingNode));
+        public static SyntaxToken Token(SyntaxKind kind) =>
+            new(InternalSyntax.SyntaxFactory.Token(ElasticMarker.UnderlyingNode, kind, ElasticMarker.UnderlyingNode));
 
         /// <summary>
         /// Creates a token corresponding to syntax kind. This method can be used for token syntax kinds whose text can
@@ -169,8 +169,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public static SyntaxToken Token(SyntaxTriviaList leading, SyntaxKind kind, SyntaxTriviaList trailing)
-            => new(InternalSyntax.SyntaxFactory.Token(leading.Node, kind, trailing.Node));
+        public static SyntaxToken Token(SyntaxTriviaList leading, SyntaxKind kind, SyntaxTriviaList trailing) =>
+            new(InternalSyntax.SyntaxFactory.Token(leading.Node, kind, trailing.Node));
 
         /// <summary>
         /// Creates a token corresponding to syntax kind. This method gives control over token Text and ValueText.
@@ -209,8 +209,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// expected token is not found. A missing token has no text and normally has associated diagnostics.
         /// </summary>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
-        public static SyntaxToken MissingToken(SyntaxKind kind)
-            => new(InternalSyntax.SyntaxFactory.MissingToken(ElasticMarker.UnderlyingNode, kind, ElasticMarker.UnderlyingNode));
+        public static SyntaxToken MissingToken(SyntaxKind kind) =>
+            new(InternalSyntax.SyntaxFactory.MissingToken(ElasticMarker.UnderlyingNode, kind, ElasticMarker.UnderlyingNode));
 
         /// <summary>
         /// Creates a missing token corresponding to syntax kind. A missing token is produced by the parser when an
@@ -219,15 +219,15 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public static SyntaxToken MissingToken(SyntaxTriviaList leading, SyntaxKind kind, SyntaxTriviaList trailing)
-            => new(InternalSyntax.SyntaxFactory.MissingToken(leading.Node, kind, trailing.Node));
+        public static SyntaxToken MissingToken(SyntaxTriviaList leading, SyntaxKind kind, SyntaxTriviaList trailing) =>
+            new(InternalSyntax.SyntaxFactory.MissingToken(leading.Node, kind, trailing.Node));
 
         /// <summary>
         /// Creates a token with kind IdentifierToken containing the specified text.
         /// <param name="text">The text of the identifier name.</param>
         /// </summary>
-        public static SyntaxToken Identifier(string text)
-            => new SyntaxToken(InternalSyntax.SyntaxFactory.Identifier(ElasticMarker.UnderlyingNode, text, ElasticMarker.UnderlyingNode));
+        public static SyntaxToken Identifier(string text) =>
+            new(InternalSyntax.SyntaxFactory.Identifier(ElasticMarker.UnderlyingNode, text, ElasticMarker.UnderlyingNode));
 
         /// <summary>
         /// Creates a token with kind IdentifierToken containing the specified text.
@@ -235,8 +235,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="text">The text of the identifier name.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public static SyntaxToken Identifier(SyntaxTriviaList leading, string text, SyntaxTriviaList trailing)
-            => new SyntaxToken(InternalSyntax.SyntaxFactory.Identifier(leading.Node, text, trailing.Node));
+        public static SyntaxToken Identifier(SyntaxTriviaList leading, string text, SyntaxTriviaList trailing) =>
+            new(InternalSyntax.SyntaxFactory.Identifier(leading.Node, text, trailing.Node));
 
         /// <summary>
         /// Creates a token with kind IdentifierToken containing the specified text.
@@ -249,8 +249,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="trailing">A list of trivia immediately following the token.</param>
         /// 
         /// <returns></returns>
-        public static SyntaxToken Identifier(SyntaxTriviaList leading, SyntaxKind contextualKind, string text, SyntaxTriviaList trailing)
-            => new SyntaxToken(InternalSyntax.SyntaxFactory.Identifier(contextualKind, leading.Node, text, trailing.Node));
+        public static SyntaxToken Identifier(SyntaxTriviaList leading, SyntaxKind contextualKind, string text, SyntaxTriviaList trailing) =>
+            new(InternalSyntax.SyntaxFactory.Identifier(contextualKind, leading.Node, text, trailing.Node));
 
         /// <summary>
         /// Creates a token with kind NumericLiteralToken from an 8-byte floating point value.
@@ -265,7 +265,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">The raw text of the literal.</param>
         /// <param name="value">The 8-byte floating point value to be represented by the returned token.</param>
         public static SyntaxToken Literal(string text, double value) =>
-            new SyntaxToken(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
+            new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
 
         /// <summary>
         /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte floating point value.
@@ -275,7 +275,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="value">The 8-byte floating point value to be represented by the returned token.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
         public static SyntaxToken Literal(SyntaxTriviaList leading, string text, double value, SyntaxTriviaList trailing) =>
-            new SyntaxToken(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
+            new(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
 
         /// <summary>
         /// Creates a token with kind StringLiteralToken from a string value.
@@ -290,7 +290,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">The raw text of the literal, including quotes and escape sequences.</param>
         /// <param name="value">The string value to be represented by the returned token.</param>
         public static SyntaxToken Literal(string text, string value) =>
-            new SyntaxToken(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
+            new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
 
         /// <summary>
         /// Creates a token with kind StringLiteralToken from the text and corresponding string value.
@@ -300,7 +300,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="value">The string value to be represented by the returned token.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
         public static SyntaxToken Literal(SyntaxTriviaList leading, string text, string value, SyntaxTriviaList trailing) =>
-            new SyntaxToken(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
+            new(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
 
         /// <summary>
         /// Creates a token with kind BadToken.
@@ -309,7 +309,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">The raw text of the bad token.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
         public static SyntaxToken BadToken(SyntaxTriviaList leading, string text, SyntaxTriviaList trailing) =>
-            new SyntaxToken(Syntax.InternalSyntax.SyntaxFactory.BadToken(leading.Node, text, trailing.Node));
+            new(Syntax.InternalSyntax.SyntaxFactory.BadToken(leading.Node, text, trailing.Node));
 
         /// <summary>
         /// Creates an empty list of syntax nodes.
@@ -323,14 +323,14 @@ namespace Loretta.CodeAnalysis.Lua
         /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
         /// <param name="node">The single element node.</param>
         /// <returns></returns>
-        public static SyntaxList<TNode> SingletonList<TNode>(TNode node) where TNode : SyntaxNode => new SyntaxList<TNode>(node);
+        public static SyntaxList<TNode> SingletonList<TNode>(TNode node) where TNode : SyntaxNode => new(node);
 
         /// <summary>
         /// Creates a list of syntax nodes.
         /// </summary>
         /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
         /// <param name="nodes">A sequence of element nodes.</param>
-        public static SyntaxList<TNode> List<TNode>(IEnumerable<TNode> nodes) where TNode : SyntaxNode => new SyntaxList<TNode>(nodes);
+        public static SyntaxList<TNode> List<TNode>(IEnumerable<TNode> nodes) where TNode : SyntaxNode => new(nodes);
 
         /// <summary>
         /// Creates an empty list of tokens.
@@ -341,25 +341,25 @@ namespace Loretta.CodeAnalysis.Lua
         /// Creates a singleton list of tokens.
         /// </summary>
         /// <param name="token">The single token.</param>
-        public static SyntaxTokenList TokenList(SyntaxToken token) => new SyntaxTokenList(token);
+        public static SyntaxTokenList TokenList(SyntaxToken token) => new(token);
 
         /// <summary>
         /// Creates a list of tokens.
         /// </summary>
         /// <param name="tokens">An array of tokens.</param>
-        public static SyntaxTokenList TokenList(params SyntaxToken[] tokens) => new SyntaxTokenList(tokens);
+        public static SyntaxTokenList TokenList(params SyntaxToken[] tokens) => new(tokens);
 
         /// <summary>
         /// Creates a list of tokens.
         /// </summary>
         /// <param name="tokens"></param>
         /// <returns></returns>
-        public static SyntaxTokenList TokenList(IEnumerable<SyntaxToken> tokens) => new SyntaxTokenList(tokens);
+        public static SyntaxTokenList TokenList(IEnumerable<SyntaxToken> tokens) => new(tokens);
 
         /// <summary>
         /// Creates a trivia from a StructuredTriviaSyntax node.
         /// </summary>
-        public static SyntaxTrivia Trivia(StructuredTriviaSyntax node) => new SyntaxTrivia(default, node.Green, position: 0, index: 0);
+        public static SyntaxTrivia Trivia(StructuredTriviaSyntax node) => new(default, node.Green, position: 0, index: 0);
 
         /// <summary>
         /// Creates an empty list of trivia.
@@ -370,21 +370,21 @@ namespace Loretta.CodeAnalysis.Lua
         /// Creates a singleton list of trivia.
         /// </summary>
         /// <param name="trivia">A single trivia.</param>
-        public static SyntaxTriviaList TriviaList(SyntaxTrivia trivia) => new SyntaxTriviaList(trivia);
+        public static SyntaxTriviaList TriviaList(SyntaxTrivia trivia) => new(trivia);
 
         /// <summary>
         /// Creates a list of trivia.
         /// </summary>
         /// <param name="trivias">An array of trivia.</param>
         public static SyntaxTriviaList TriviaList(params SyntaxTrivia[] trivias)
-            => new SyntaxTriviaList(trivias);
+            => new(trivias);
 
         /// <summary>
         /// Creates a list of trivia.
         /// </summary>
         /// <param name="trivias">A sequence of trivia.</param>
         public static SyntaxTriviaList TriviaList(IEnumerable<SyntaxTrivia> trivias)
-            => new SyntaxTriviaList(trivias);
+            => new(trivias);
 
         /// <summary>
         /// Creates an empty separated list.
@@ -397,7 +397,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
         /// <param name="node">A single node.</param>
-        public static SeparatedSyntaxList<TNode> SingletonSeparatedList<TNode>(TNode node) where TNode : SyntaxNode => new SeparatedSyntaxList<TNode>(new SyntaxNodeOrTokenList(node, index: 0));
+        public static SeparatedSyntaxList<TNode> SingletonSeparatedList<TNode>(TNode node) where TNode : SyntaxNode => new(new SyntaxNodeOrTokenList(node, index: 0));
 
         /// <summary>
         /// Creates a separated list of nodes from a sequence of nodes, synthesizing comma separators in between.
@@ -564,13 +564,13 @@ namespace Loretta.CodeAnalysis.Lua
         /// Create a <see cref="SyntaxNodeOrTokenList"/> from a sequence of <see cref="SyntaxNodeOrToken"/>.
         /// </summary>
         /// <param name="nodesAndTokens">The sequence of nodes and tokens</param>
-        public static SyntaxNodeOrTokenList NodeOrTokenList(IEnumerable<SyntaxNodeOrToken> nodesAndTokens) => new SyntaxNodeOrTokenList(nodesAndTokens);
+        public static SyntaxNodeOrTokenList NodeOrTokenList(IEnumerable<SyntaxNodeOrToken> nodesAndTokens) => new(nodesAndTokens);
 
         /// <summary>
         /// Create a <see cref="SyntaxNodeOrTokenList"/> from one or more <see cref="SyntaxNodeOrToken"/>.
         /// </summary>
         /// <param name="nodesAndTokens">The nodes and tokens</param>
-        public static SyntaxNodeOrTokenList NodeOrTokenList(params SyntaxNodeOrToken[] nodesAndTokens) => new SyntaxNodeOrTokenList(nodesAndTokens);
+        public static SyntaxNodeOrTokenList NodeOrTokenList(params SyntaxNodeOrToken[] nodesAndTokens) => new(nodesAndTokens);
 
         /// <summary>
         /// Creates an <see cref="IdentifierNameSyntax"/> node.
@@ -779,10 +779,10 @@ namespace Loretta.CodeAnalysis.Lua
             SourceText.From(text, Encoding.UTF8).GetSubText(offset);
 
         private static InternalSyntax.Lexer MakeLexer(SourceText text, LuaParseOptions? options = null) =>
-            new InternalSyntax.Lexer(text: text, options: options ?? LuaParseOptions.Default);
+            new(text: text, options: options ?? LuaParseOptions.Default);
 
         private static InternalSyntax.LanguageParser MakeParser(InternalSyntax.Lexer lexer) =>
-            new InternalSyntax.LanguageParser(lexer, oldTree: null, changes: null);
+            new(lexer, oldTree: null, changes: null);
 
         /// <summary>
         /// Determines if two trees are the same, disregarding trivia differences.

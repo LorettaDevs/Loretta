@@ -7,7 +7,7 @@ namespace Loretta.CodeAnalysis.Lua
 {
     internal sealed class MessageProvider : CommonMessageProvider, IObjectWritable
     {
-        public static readonly MessageProvider Instance = new MessageProvider();
+        public static readonly MessageProvider Instance = new();
 
         static MessageProvider()
         {

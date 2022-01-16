@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis.Lua
         {
         }
 
-        public SyntaxDiagnosticInfo WithOffset(int offset) => new SyntaxDiagnosticInfo(offset, Width, (ErrorCode) Code, Arguments);
+        public SyntaxDiagnosticInfo WithOffset(int offset) => new(offset, Width, (ErrorCode) Code, Arguments);
 
         #region Serialization
 

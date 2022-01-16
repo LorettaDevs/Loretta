@@ -29,10 +29,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal uint UIntValue;
         }
 
-        private readonly LexerCache _cache = new LexerCache();
+        private readonly LexerCache _cache = new();
         private readonly SyntaxListBuilder _leadingTriviaCache = new(10);
         private readonly SyntaxListBuilder _trailingTriviaCache = new(10);
-        private readonly StringBuilder _builder = new StringBuilder();
+        private readonly StringBuilder _builder = new();
         private int _badTokenCount; // cumulative count of bad tokens produced
 
         private static int GetFullWidth(SyntaxListBuilder builder)

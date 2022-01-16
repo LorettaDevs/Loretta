@@ -18,10 +18,10 @@ namespace Loretta.Generators
         }
 
         public Indenter Indenter(string openingLine = "") =>
-            new Indenter(this, openingLine);
+            new(this, openingLine);
 
         public CurlyIndenter CurlyIndenter(string openingLine = "", string closingExtra = "") =>
-            new CurlyIndenter(this, openingLine, closingExtra);
+            new(this, openingLine, closingExtra);
 
         public void WriteLineIndented(string text)
         {

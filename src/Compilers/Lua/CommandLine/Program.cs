@@ -20,7 +20,7 @@ namespace Loretta.CLI
 {
     public static class Program
     {
-        private static readonly ConsoleTimingLogger s_logger = new ConsoleTimingLogger();
+        private static readonly ConsoleTimingLogger s_logger = new();
         private static bool s_shouldRun, s_printCurrentDir = true;
 
         public static void Main()
@@ -450,7 +450,7 @@ namespace Loretta.CLI
         #region Memory Usage
 
         private static readonly Process s_currentProc = Process.GetCurrentProcess();
-        private static readonly Stack<(long gcMemory, long processMemory)> s_memoryStack = new Stack<(long gcMemory, long processMemory)>();
+        private static readonly Stack<(long gcMemory, long processMemory)> s_memoryStack = new();
 
         [Command("m"), Command("mem")]
         public static void PrintMemoryUsage()

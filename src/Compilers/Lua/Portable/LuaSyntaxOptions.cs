@@ -16,7 +16,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The Lua 5.1 preset.
         /// </summary>
-        public static readonly LuaSyntaxOptions Lua51 = new LuaSyntaxOptions(
+        public static readonly LuaSyntaxOptions Lua51 = new(
             acceptBinaryNumbers: false,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: false,
@@ -58,7 +58,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The LuaJIT 2.0 preset.
         /// </summary>
-        public static readonly LuaSyntaxOptions LuaJIT20 = new LuaSyntaxOptions(
+        public static readonly LuaSyntaxOptions LuaJIT20 = new(
             acceptBinaryNumbers: false,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: false,
@@ -97,7 +97,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The Luau preset.
         /// </summary>
-        public static readonly LuaSyntaxOptions Roblox = new LuaSyntaxOptions(
+        public static readonly LuaSyntaxOptions Roblox = new(
             acceptBinaryNumbers: true,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: true,
@@ -128,7 +128,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// The preset that sets everything to true and continue to <see
         /// cref="ContinueType.ContextualKeyword" />.
         /// </summary>
-        public static readonly LuaSyntaxOptions All = new LuaSyntaxOptions(
+        public static readonly LuaSyntaxOptions All = new(
             acceptBinaryNumbers: true,
             acceptCCommentSyntax: true,
             acceptCompoundAssignment: true,
@@ -431,7 +431,7 @@ namespace Loretta.CodeAnalysis.Lua
             Option<bool> acceptIfExpression = default,
             Option<bool> acceptHashStrings = default,
             Option<bool> acceptInvalidEscapes = default) =>
-            new LuaSyntaxOptions(
+            new(
                 acceptBinaryNumbers.UnwrapOr(AcceptBinaryNumbers),
                 acceptCCommentSyntax.UnwrapOr(AcceptCCommentSyntax),
                 acceptCompoundAssignment.UnwrapOr(AcceptCompoundAssignment),

@@ -107,9 +107,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 _shouldVisitTrivia = _triviaSet.Count > 0 || _visitIntoStructuredTrivia;
             }
 
-            private static readonly HashSet<SyntaxNode> s_noNodes = new HashSet<SyntaxNode>();
-            private static readonly HashSet<SyntaxToken> s_noTokens = new HashSet<SyntaxToken>();
-            private static readonly HashSet<SyntaxTrivia> s_noTrivia = new HashSet<SyntaxTrivia>();
+            private static readonly HashSet<SyntaxNode> s_noNodes = new();
+            private static readonly HashSet<SyntaxToken> s_noTokens = new();
+            private static readonly HashSet<SyntaxTrivia> s_noTrivia = new();
 
             public override bool VisitIntoStructuredTrivia => _visitIntoStructuredTrivia;
 
@@ -249,7 +249,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             Replace
         }
 
-        private static InvalidOperationException GetItemNotListElementException() => new InvalidOperationException(CodeAnalysisResources.MissingListItem);
+        private static InvalidOperationException GetItemNotListElementException() => new(CodeAnalysisResources.MissingListItem);
 
         private abstract class BaseListEditor : LuaSyntaxRewriter
         {

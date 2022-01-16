@@ -15,7 +15,7 @@ namespace Loretta.Utilities
     /// </summary>
     internal sealed class StringOrdinalComparer : IEqualityComparer<string>
     {
-        public static readonly StringOrdinalComparer Instance = new StringOrdinalComparer();
+        public static readonly StringOrdinalComparer Instance = new();
 
         private StringOrdinalComparer()
         {

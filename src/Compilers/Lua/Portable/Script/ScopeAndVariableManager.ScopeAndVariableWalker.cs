@@ -11,7 +11,7 @@ namespace Loretta.CodeAnalysis.Lua
         {
             private readonly Scope _rootScope;
             private readonly IDictionary<SyntaxNode, IVariable> _variables;
-            private readonly Stack<IScopeInternal> _scopeStack = new Stack<IScopeInternal>();
+            private readonly Stack<IScopeInternal> _scopeStack = new();
 
             public ScopeAndVariableWalker(
                 Scope rootScope,

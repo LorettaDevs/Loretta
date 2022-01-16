@@ -8,7 +8,7 @@ namespace Loretta.CodeAnalysis
 {
     internal sealed class CommonDiagnosticComparer : IEqualityComparer<Diagnostic>
     {
-        internal static readonly CommonDiagnosticComparer Instance = new CommonDiagnosticComparer();
+        internal static readonly CommonDiagnosticComparer Instance = new();
 
         private CommonDiagnosticComparer()
         {

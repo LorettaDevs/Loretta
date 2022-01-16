@@ -14,7 +14,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         private int _freeIndex;
 
 #if DEBUG
-        private readonly List<SyntaxListBuilder> _allocated = new List<SyntaxListBuilder>();
+        private readonly List<SyntaxListBuilder> _allocated = new();
 #endif
 
         internal SyntaxListPool()

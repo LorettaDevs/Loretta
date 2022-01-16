@@ -35,7 +35,7 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
             }
 
             public DiagnosticStatistics Summarize() =>
-                new DiagnosticStatistics(_errorCount, _warningCount, _informationCount, _errorCount + _warningCount + _informationCount);
+                new(_errorCount, _warningCount, _informationCount, _errorCount + _warningCount + _informationCount);
         }
 
         public static DiagnosticStatistics Collect(IEnumerable<Diagnostic> diagnostics)

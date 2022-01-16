@@ -93,9 +93,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
-        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code) => new SyntaxDiagnosticInfo(code);
+        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code) => new(code);
 
-        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code, params object[] args) => new SyntaxDiagnosticInfo(code, args);
+        protected static SyntaxDiagnosticInfo MakeError(ErrorCode code, params object[] args) => new(code, args);
 
         protected SyntaxDiagnosticInfo MakeError(int position, int width, ErrorCode code)
         {

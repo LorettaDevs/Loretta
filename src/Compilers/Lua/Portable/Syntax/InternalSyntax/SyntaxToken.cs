@@ -245,9 +245,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return trailing != null ? trailing.FullWidth : 0;
         }
 
-        internal SyntaxList<LuaSyntaxNode> LeadingTrivia => new SyntaxList<LuaSyntaxNode>(GetLeadingTrivia());
+        internal SyntaxList<LuaSyntaxNode> LeadingTrivia => new(GetLeadingTrivia());
 
-        internal SyntaxList<LuaSyntaxNode> TrailingTrivia => new SyntaxList<LuaSyntaxNode>(GetTrailingTrivia());
+        internal SyntaxList<LuaSyntaxNode> TrailingTrivia => new(GetTrailingTrivia());
 
         public sealed override GreenNode WithLeadingTrivia(GreenNode? trivia) => TokenWithLeadingTrivia(trivia);
 

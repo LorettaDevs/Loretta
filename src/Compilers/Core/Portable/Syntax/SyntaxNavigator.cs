@@ -13,7 +13,7 @@ namespace Loretta.CodeAnalysis
     {
         private const int None = 0;
 
-        public static readonly SyntaxNavigator Instance = new SyntaxNavigator();
+        public static readonly SyntaxNavigator Instance = new();
 
         private SyntaxNavigator()
         {
@@ -89,7 +89,7 @@ namespace Loretta.CodeAnalysis
         }
 
         private static readonly ObjectPool<Stack<ChildSyntaxList.Enumerator>> s_childEnumeratorStackPool
-            = new ObjectPool<Stack<ChildSyntaxList.Enumerator>>(() => new Stack<ChildSyntaxList.Enumerator>(), 10);
+            = new(() => new Stack<ChildSyntaxList.Enumerator>(), 10);
 
         internal SyntaxToken GetFirstToken(SyntaxNode current, Func<SyntaxToken, bool>? predicate, Func<SyntaxTrivia, bool>? stepInto)
         {
@@ -135,7 +135,7 @@ namespace Loretta.CodeAnalysis
         }
 
         private static readonly ObjectPool<Stack<ChildSyntaxList.Reversed.Enumerator>> s_childReversedEnumeratorStackPool
-            = new ObjectPool<Stack<ChildSyntaxList.Reversed.Enumerator>>(() => new Stack<ChildSyntaxList.Reversed.Enumerator>(), 10);
+            = new(() => new Stack<ChildSyntaxList.Reversed.Enumerator>(), 10);
 
         internal SyntaxToken GetLastToken(SyntaxNode current, Func<SyntaxToken, bool> predicate, Func<SyntaxTrivia, bool>? stepInto)
         {

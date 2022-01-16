@@ -66,7 +66,7 @@
             }
 
             public FileFeatureStatistics Summarize() =>
-                new FileFeatureStatistics(HasBinaryNumbers, HasCComments, HasCompoundAssignments, HasEmptyStatements, HasCBooleanOperators, HasGoto, HasHexEscapesInStrings, HasHexFloatLiterals, HasOctalNumbers, HasShebang, HasUnderscoreInNumericLiterals, HasLuajitIdentifiers, ContinueType);
+                new(HasBinaryNumbers, HasCComments, HasCompoundAssignments, HasEmptyStatements, HasCBooleanOperators, HasGoto, HasHexEscapesInStrings, HasHexFloatLiterals, HasOctalNumbers, HasShebang, HasUnderscoreInNumericLiterals, HasLuajitIdentifiers, ContinueType);
         }
 
         public FileFeatureStatistics()
@@ -75,7 +75,7 @@
         }
 
         public FileFeatureStatistics Merge(FileFeatureStatistics other) =>
-            new FileFeatureStatistics(
+            new(
                 HasBinaryNumbers || other.HasBinaryNumbers,
                 HasCComments || other.HasCComments,
                 HasCompoundAssignments || other.HasCompoundAssignments,

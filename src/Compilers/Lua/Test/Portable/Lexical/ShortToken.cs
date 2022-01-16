@@ -34,7 +34,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         }
 
         public ShortToken WithSpan(TextSpan span) =>
-            new ShortToken(Kind, Text, span, Value);
+            new(Kind, Text, span, Value);
 
         public override string ToString() => $"{Kind}<{Text}>";
     }

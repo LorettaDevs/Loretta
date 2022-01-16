@@ -27,7 +27,7 @@ namespace Loretta.CodeAnalysis
         {
             private ConstantValueBad() { }
 
-            public static readonly ConstantValueBad Instance = new ConstantValueBad();
+            public static readonly ConstantValueBad Instance = new();
 
             public override ConstantValueTypeDiscriminator Discriminator =>
                 ConstantValueTypeDiscriminator.Bad;
@@ -44,8 +44,8 @@ namespace Loretta.CodeAnalysis
         {
             private ConstantValueNil() { }
 
-            public static readonly ConstantValueNil Instance = new ConstantValueNil();
-            public static readonly ConstantValueNil Uninitialized = new ConstantValueNil();
+            public static readonly ConstantValueNil Instance = new();
+            public static readonly ConstantValueNil Uninitialized = new();
 
             public override ConstantValueTypeDiscriminator Discriminator =>
                 ConstantValueTypeDiscriminator.Nil;
@@ -142,9 +142,9 @@ namespace Loretta.CodeAnalysis
         // default value of a value type constant. (reference type constants use Null as default)
         private class ConstantValueDefault : ConstantValueDiscriminated
         {
-            public static readonly ConstantValueDefault Int64 = new ConstantValueDefault(ConstantValueTypeDiscriminator.Int64);
+            public static readonly ConstantValueDefault Int64 = new(ConstantValueTypeDiscriminator.Int64);
             public static readonly ConstantValueDefault Double = new ConstantValueDoubleZero();
-            public static readonly ConstantValueDefault Boolean = new ConstantValueDefault(ConstantValueTypeDiscriminator.Boolean);
+            public static readonly ConstantValueDefault Boolean = new(ConstantValueTypeDiscriminator.Boolean);
 
             protected ConstantValueDefault(ConstantValueTypeDiscriminator discriminator)
                 : base(discriminator)
@@ -190,9 +190,9 @@ namespace Loretta.CodeAnalysis
 
         private class ConstantValueOne : ConstantValueDiscriminated
         {
-            public static readonly ConstantValueOne Int64 = new ConstantValueOne(ConstantValueTypeDiscriminator.Int64);
-            public static readonly ConstantValueOne Double = new ConstantValueOne(ConstantValueTypeDiscriminator.Double);
-            public static readonly ConstantValueOne Boolean = new ConstantValueOne(ConstantValueTypeDiscriminator.Boolean);
+            public static readonly ConstantValueOne Int64 = new(ConstantValueTypeDiscriminator.Int64);
+            public static readonly ConstantValueOne Double = new(ConstantValueTypeDiscriminator.Double);
+            public static readonly ConstantValueOne Boolean = new(ConstantValueTypeDiscriminator.Boolean);
 
             protected ConstantValueOne(ConstantValueTypeDiscriminator discriminator)
                 : base(discriminator)

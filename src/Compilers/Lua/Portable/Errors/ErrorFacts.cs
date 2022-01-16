@@ -11,7 +11,7 @@ namespace Loretta.CodeAnalysis.Lua
     {
         private const string s_titleSuffix = "_Title";
         private const string s_descriptionSuffix = "_Description";
-        private static readonly Lazy<ImmutableDictionary<ErrorCode, string>> s_categoriesMap = new Lazy<ImmutableDictionary<ErrorCode, string>>(CreateCategoriesMap);
+        private static readonly Lazy<ImmutableDictionary<ErrorCode, string>> s_categoriesMap = new(CreateCategoriesMap);
 
         public static string GetId(ErrorCode errorCode) =>
             MessageProvider.Instance.GetIdForErrorCode((int) errorCode);
@@ -65,13 +65,13 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         public static LocalizableResourceString GetMessageFormat(ErrorCode code)
-            => new LocalizableResourceString(code.ToString(), ResourceManager, typeof(ErrorFacts));
+            => new(code.ToString(), ResourceManager, typeof(ErrorFacts));
 
         public static LocalizableResourceString GetTitle(ErrorCode code)
-            => new LocalizableResourceString(code.ToString() + s_titleSuffix, ResourceManager, typeof(ErrorFacts));
+            => new(code.ToString() + s_titleSuffix, ResourceManager, typeof(ErrorFacts));
 
         public static LocalizableResourceString GetDescription(ErrorCode code)
-            => new LocalizableResourceString(code.ToString() + s_descriptionSuffix, ResourceManager, typeof(ErrorFacts));
+            => new(code.ToString() + s_descriptionSuffix, ResourceManager, typeof(ErrorFacts));
 
         public static string GetCategory(ErrorCode code)
             => s_categoriesMap.Value.TryGetValue(code, out var category)

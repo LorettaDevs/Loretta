@@ -25,7 +25,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             public ImmutableArray<byte> Checksum { get; }
         }
 
-        private static CachedKindList s_cachedList = new CachedKindList();
+        private static CachedKindList s_cachedList = new();
 
         public static KindList? GetKindInfos(
             GeneratorExecutionContext context,

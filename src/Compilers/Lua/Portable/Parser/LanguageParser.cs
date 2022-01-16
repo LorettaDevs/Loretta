@@ -12,7 +12,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
     internal sealed class LanguageParser : SyntaxParser
     {
-        private readonly SyntaxListPool _pool = new SyntaxListPool();
+        private readonly SyntaxListPool _pool = new();
         private int _recursionDepth;
 
         public LanguageParser(
