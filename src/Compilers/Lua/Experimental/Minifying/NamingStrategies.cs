@@ -12,7 +12,6 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
     public static class NamingStrategies
     {
         // We'll add up to 5 prefixes otherwise we'll call quits.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "No 's_' prefix for constants.")]
         private const int MaxPrefixCount = 5;
 
         private static IVariable? FindVariable(IScope scope, ReadOnlySpan<char> name)

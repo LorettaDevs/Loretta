@@ -23,7 +23,6 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
 
 #if DEBUG
-#pragma warning disable 618
             [Obsolete("For debugging", error: true)]
             private GreenNode[] Nodes
             {
@@ -39,7 +38,6 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 }
             }
 
-#pragma warning restore 618
 #endif
         }
     }

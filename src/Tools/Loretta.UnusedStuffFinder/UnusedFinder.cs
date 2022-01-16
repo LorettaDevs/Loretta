@@ -8,7 +8,6 @@ namespace Loretta.UnusedStuffFinder
 {
     internal class UnusedFinder
     {
-        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
         private const int ReportCount = 1000;
 
         public static async Task<(ImmutableArray<ISymbol>, IEnumerable<SymbolEx>)> FindUnused(

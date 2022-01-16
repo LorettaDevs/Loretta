@@ -12,11 +12,9 @@ using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
 {
-#pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Represents a token in the syntax tree.
     /// </summary>
-#pragma warning restore CA1200 // Avoid using cref tags with a prefix
     [StructLayout(LayoutKind.Auto)]
     [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
     public readonly struct SyntaxToken : IEquatable<SyntaxToken>

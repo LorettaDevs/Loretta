@@ -9,7 +9,6 @@ namespace Loretta.UnusedStuffFinder
 {
     internal class ReferenceFinder
     {
-        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Doesn't apply for constants.")]
         private const int MaxTries = 20;
 
         public static async Task<IEnumerable<ReferencedSymbol>> FindReferencesAsync(
