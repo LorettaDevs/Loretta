@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Loretta.Utilities;
 
@@ -21,6 +22,7 @@ namespace Loretta.CodeAnalysis
         /// to one.  Conversion of this value to float produces the corresponding
         /// canonical NaN of the float type (IEEE Std 754-2008 section 6.2.3).
         /// </summary>
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "It is an acronym.")]
         private static readonly double s_IEEE_canonical_NaN = BitConverter.Int64BitsToDouble(unchecked((long) 0xFFF8000000000000UL));
 
         private sealed class ConstantValueBad : ConstantValue
