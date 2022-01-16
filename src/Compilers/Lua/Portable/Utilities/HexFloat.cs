@@ -314,7 +314,7 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
                     exp -= isSubnormal;
                 }
                 exp -= minExp - 1; // add bias
-                xn = (((ulong) sign) << ((maxBits - 1) + expBits)) | (((ulong) exp) << (maxBits - 1)) | xn;
+                xn = (((ulong) sign) << (maxBits - 1 + expBits)) | (((ulong) exp) << (maxBits - 1)) | xn;
                 return BitConverter.Int64BitsToDouble(unchecked((long) xn));
             }
 

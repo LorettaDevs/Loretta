@@ -26,7 +26,7 @@ namespace Loretta.CodeAnalysis
         {
             LorettaDebug.Assert(tokenOrList != null || (position == 0 && index == 0 && parent == null));
             LorettaDebug.Assert(position >= 0);
-            LorettaDebug.Assert(tokenOrList == null || (tokenOrList.IsToken) || (tokenOrList.IsList));
+            LorettaDebug.Assert(tokenOrList == null || tokenOrList.IsToken || tokenOrList.IsList);
             _parent = parent;
             Node = tokenOrList;
             Position = position;

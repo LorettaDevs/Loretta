@@ -371,13 +371,13 @@ namespace Loretta.Utilities
             foreach (var c in input)
             {
                 hash += c;
-                hash += (hash << 10);
-                hash ^= (hash >> 6);
+                hash += hash << 10;
+                hash ^= hash >> 6;
             }
 
-            hash += (hash << 3);
-            hash ^= (hash >> 11);
-            hash += (hash << 15);
+            hash += hash << 3;
+            hash ^= hash >> 11;
+            hash += hash << 15;
 
             return hash;
         }

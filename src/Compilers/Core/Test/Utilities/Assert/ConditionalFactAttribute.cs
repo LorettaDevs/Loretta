@@ -64,7 +64,7 @@ namespace Loretta.Test.Utilities
 
     public static class ExecutionConditionUtil
     {
-        public static ExecutionArchitecture Architecture => (IntPtr.Size) switch
+        public static ExecutionArchitecture Architecture => IntPtr.Size switch
         {
             4 => ExecutionArchitecture.x86,
             8 => ExecutionArchitecture.x64,

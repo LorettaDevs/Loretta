@@ -70,7 +70,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             }
 
             // Outside of our predefined table. Compute the hard way.
-            for (var i = (min | 1); i < int.MaxValue; i += 2)
+            for (var i = min | 1; i < int.MaxValue; i += 2)
             {
                 if (IsPrime(i) && ((i - 1) % HashPrime != 0))
                     return i;

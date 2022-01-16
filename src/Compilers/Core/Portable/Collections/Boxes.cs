@@ -78,7 +78,7 @@ namespace Loretta.CodeAnalysis
         {
             // There are many representations of zero in floating point.
             // Use the boxed value only if the bit pattern is all zeros.
-            return *(int*) (&f) == 0 ? BoxedSingleZero : f;
+            return *(int*) &f == 0 ? BoxedSingleZero : f;
         }
 
         public static object Box(double d)
