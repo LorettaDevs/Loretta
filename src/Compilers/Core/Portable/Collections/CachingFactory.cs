@@ -28,14 +28,14 @@ namespace Loretta.CodeAnalysis
             internal TValue value;
         }
 
-        public CachingIdentityFactory(int size, Func<TKey, TValue> valueFactory) :
-            base(size)
+        public CachingIdentityFactory(int size, Func<TKey, TValue> valueFactory)
+            : base(size)
         {
             _valueFactory = valueFactory;
         }
 
-        public CachingIdentityFactory(int size, Func<TKey, TValue> valueFactory, ObjectPool<CachingIdentityFactory<TKey, TValue>> pool) :
-            this(size, valueFactory)
+        public CachingIdentityFactory(int size, Func<TKey, TValue> valueFactory, ObjectPool<CachingIdentityFactory<TKey, TValue>> pool)
+            : this(size, valueFactory)
         {
             _pool = pool;
         }

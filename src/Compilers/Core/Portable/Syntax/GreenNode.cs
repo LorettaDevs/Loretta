@@ -70,8 +70,8 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        protected GreenNode(ushort kind, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations) :
-            this(kind, diagnostics)
+        protected GreenNode(ushort kind, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations)
+            : this(kind, diagnostics)
         {
             if (annotations?.Length > 0)
             {
@@ -85,8 +85,8 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        protected GreenNode(ushort kind, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations, int fullWidth) :
-            this(kind, diagnostics, fullWidth)
+        protected GreenNode(ushort kind, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations, int fullWidth)
+            : this(kind, diagnostics, fullWidth)
         {
             if (annotations?.Length > 0)
             {
