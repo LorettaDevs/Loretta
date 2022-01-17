@@ -9,7 +9,7 @@ namespace Loretta.Utilities
     internal static class ReaderWriterLockSlimExtensions
     {
         internal static ReadLockExiter DisposableRead(this ReaderWriterLockSlim @lock) =>
-            new ReadLockExiter(@lock);
+            new(@lock);
 
         [NonCopyable]
         internal readonly struct ReadLockExiter : IDisposable
@@ -26,7 +26,7 @@ namespace Loretta.Utilities
         }
 
         internal static UpgradeableReadLockExiter DisposableUpgradeableRead(this ReaderWriterLockSlim @lock) =>
-            new UpgradeableReadLockExiter(@lock);
+            new(@lock);
 
         [NonCopyable]
         internal readonly struct UpgradeableReadLockExiter : IDisposable
@@ -53,7 +53,7 @@ namespace Loretta.Utilities
         }
 
         internal static WriteLockExiter DisposableWrite(this ReaderWriterLockSlim @lock) =>
-            new WriteLockExiter(@lock);
+            new(@lock);
 
         [NonCopyable]
         internal readonly struct WriteLockExiter : IDisposable

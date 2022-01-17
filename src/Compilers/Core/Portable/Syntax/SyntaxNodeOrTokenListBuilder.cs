@@ -18,7 +18,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _count = 0;
         }
 
-        public static SyntaxNodeOrTokenListBuilder Create() => new SyntaxNodeOrTokenListBuilder(8);
+        public static SyntaxNodeOrTokenListBuilder Create() => new(8);
 
         public int Count => _count;
 

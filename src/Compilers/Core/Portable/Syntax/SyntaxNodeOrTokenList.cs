@@ -384,7 +384,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets the enumerator.
         /// </summary>
-        public Enumerator GetEnumerator() => new Enumerator(this);
+        public Enumerator GetEnumerator() => new(this);
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.

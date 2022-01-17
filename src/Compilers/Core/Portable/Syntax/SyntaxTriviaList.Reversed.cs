@@ -31,7 +31,7 @@ namespace Loretta.CodeAnalysis
             /// Returns the enumerator for this reversed trivia list.
             /// </summary>
             /// <returns></returns>
-            public Enumerator GetEnumerator() => new Enumerator(in _list);
+            public Enumerator GetEnumerator() => new(in _list);
 
             IEnumerator<SyntaxTrivia> IEnumerable<SyntaxTrivia>.GetEnumerator()
             {

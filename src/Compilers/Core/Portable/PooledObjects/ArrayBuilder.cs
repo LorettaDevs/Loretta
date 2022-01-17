@@ -333,7 +333,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         #endregion
 
-        public Enumerator GetEnumerator() => new Enumerator(this);
+        public Enumerator GetEnumerator() => new(this);
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => _builder.GetEnumerator();
 

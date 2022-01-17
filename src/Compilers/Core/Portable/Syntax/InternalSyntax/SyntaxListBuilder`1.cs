@@ -12,7 +12,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
         }
 
-        public static SyntaxListBuilder<TNode> Create() => new SyntaxListBuilder<TNode>(8);
+        public static SyntaxListBuilder<TNode> Create() => new(8);
 
         internal SyntaxListBuilder(SyntaxListBuilder builder)
         {
@@ -68,6 +68,6 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         }
 
         public SyntaxList<TDerived> ToList<TDerived>() where TDerived : GreenNode =>
-            new SyntaxList<TDerived>(ToListNode());
+            new(ToListNode());
     }
 }

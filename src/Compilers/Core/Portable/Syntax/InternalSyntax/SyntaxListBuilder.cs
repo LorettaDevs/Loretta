@@ -17,7 +17,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             _nodes = new ArrayElement<GreenNode?>[size];
         }
 
-        public static SyntaxListBuilder Create() => new SyntaxListBuilder(8);
+        public static SyntaxListBuilder Create() => new(8);
 
         public void Clear() => Count = 0;
 
@@ -166,8 +166,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public SyntaxList<GreenNode> ToList() => new SyntaxList<GreenNode>(ToListNode());
+        public SyntaxList<GreenNode> ToList() => new(ToListNode());
 
-        public SyntaxList<TNode> ToList<TNode>() where TNode : GreenNode => new SyntaxList<TNode>(ToListNode());
+        public SyntaxList<TNode> ToList<TNode>() where TNode : GreenNode => new(ToListNode());
     }
 }

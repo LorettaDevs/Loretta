@@ -16,7 +16,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _nodes = new SyntaxTrivia[size];
         }
 
-        public static SyntaxTriviaListBuilder Create() => new SyntaxTriviaListBuilder(4);
+        public static SyntaxTriviaListBuilder Create() => new(4);
 
         public static SyntaxTriviaList Create(IEnumerable<SyntaxTrivia>? trivia)
         {

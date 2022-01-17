@@ -60,7 +60,7 @@ namespace Loretta.CodeAnalysis
                 object?[]? messageArgs,
                 ImmutableDictionary<string, string?>? properties,
                 bool isSuppressed = false) =>
-                new SimpleDiagnostic(descriptor, severity, warningLevel, location, additionalLocations, messageArgs, properties, isSuppressed);
+                new(descriptor, severity, warningLevel, location, additionalLocations, messageArgs, properties, isSuppressed);
 
             internal static SimpleDiagnostic Create(
                 string id,

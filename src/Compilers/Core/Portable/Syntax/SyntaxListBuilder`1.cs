@@ -12,7 +12,7 @@ namespace Loretta.CodeAnalysis.Syntax
         {
         }
 
-        public static SyntaxListBuilder<TNode> Create() => new SyntaxListBuilder<TNode>(8);
+        public static SyntaxListBuilder<TNode> Create() => new(8);
 
         internal SyntaxListBuilder(SyntaxListBuilder? builder)
         {

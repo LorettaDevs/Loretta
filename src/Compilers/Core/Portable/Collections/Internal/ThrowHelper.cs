@@ -101,7 +101,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             throw GetWrongValueTypeArgumentException(value, targetType);
 
         private static ArgumentException GetAddingDuplicateWithKeyArgumentException(object? key) =>
-            new ArgumentException(string.Format(SR.Argument_AddingDuplicateWithKey, key));
+            new(string.Format(SR.Argument_AddingDuplicateWithKey, key));
 
         [DoesNotReturn]
         internal static void ThrowAddingDuplicateWithKeyArgumentException<T>(T key) =>
@@ -118,7 +118,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             throw GetArgumentException(resource);
 
         private static ArgumentNullException GetArgumentNullException(ExceptionArgument argument) =>
-            new ArgumentNullException(GetArgumentName(argument));
+            new(GetArgumentName(argument));
 
         [DoesNotReturn]
         internal static void ThrowArgumentNullException(ExceptionArgument argument) =>
@@ -156,19 +156,19 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         internal static void ThrowInvalidOperationException_ConcurrentOperationsNotSupported() => throw new InvalidOperationException(SR.InvalidOperation_ConcurrentOperationsNotSupported);
 
         private static ArgumentException GetArgumentException(ExceptionResource resource) =>
-            new ArgumentException(GetResourceString(resource));
+            new(GetResourceString(resource));
 
         private static ArgumentException GetWrongKeyTypeArgumentException(object? key, Type targetType) =>
-            new ArgumentException(string.Format(SR.Arg_WrongType, key, targetType), nameof(key));
+            new(string.Format(SR.Arg_WrongType, key, targetType), nameof(key));
 
         private static ArgumentException GetWrongValueTypeArgumentException(object? value, Type targetType) =>
-            new ArgumentException(string.Format(SR.Arg_WrongType, value, targetType), nameof(value));
+            new(string.Format(SR.Arg_WrongType, value, targetType), nameof(value));
 
         private static KeyNotFoundException GetKeyNotFoundException(object? key) =>
-            new KeyNotFoundException(string.Format(SR.Arg_KeyNotFoundWithKey, key));
+            new(string.Format(SR.Arg_KeyNotFoundWithKey, key));
 
         private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource) =>
-            new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
+            new(GetArgumentName(argument), GetResourceString(resource));
 
         // Allow nulls for reference types and Nullable<U>, but not for value types.
         // Aggressively inline so the jit evaluates the if in place and either drops the call altogether

@@ -16,7 +16,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             _node = node;
         }
 
-        public Enumerator GetEnumerator() => new Enumerator(_node);
+        public Enumerator GetEnumerator() => new(_node);
 
         internal bool Any(Func<DiagnosticInfo, bool> predicate)
         {

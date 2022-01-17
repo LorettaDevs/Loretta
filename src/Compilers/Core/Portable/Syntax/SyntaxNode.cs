@@ -558,7 +558,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The list of child nodes and tokens of this node, where each element is a SyntaxNodeOrToken instance.
         /// </summary>
-        public ChildSyntaxList ChildNodesAndTokens() => new ChildSyntaxList(this);
+        public ChildSyntaxList ChildNodesAndTokens() => new(this);
 
         /// <summary>
         /// Returns the child node or token that contains the provided position.

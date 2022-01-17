@@ -593,7 +593,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <returns></returns>
 #pragma warning disable RS0041 // uses oblivious reference types
-        public Enumerator GetEnumerator() => new Enumerator(this);
+        public Enumerator GetEnumerator() => new(this);
 
         IEnumerator<TNode> IEnumerable<TNode>.GetEnumerator()
         {

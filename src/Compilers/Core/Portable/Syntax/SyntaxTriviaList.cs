@@ -204,13 +204,13 @@ namespace Loretta.CodeAnalysis
         /// Returns a list which contains all elements of <see cref="SyntaxTriviaList"/> in reversed order.
         /// </summary>
         /// <returns><see cref="Reversed"/> which contains all elements of <see cref="SyntaxTriviaList"/> in reversed order</returns>
-        public Reversed Reverse() => new Reversed(this);
+        public Reversed Reverse() => new(this);
 
         /// <summary>
         /// Returns the enumerator for this list.
         /// </summary>
         /// <returns></returns>
-        public Enumerator GetEnumerator() => new Enumerator(in this);
+        public Enumerator GetEnumerator() => new(in this);
 
         /// <summary>
         /// Returns the index of the provided trivia in this list.
@@ -521,6 +521,6 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="trivia"></param>
         /// <returns></returns>
-        public static SyntaxTriviaList Create(SyntaxTrivia trivia) => new SyntaxTriviaList(trivia);
+        public static SyntaxTriviaList Create(SyntaxTrivia trivia) => new(trivia);
     }
 }

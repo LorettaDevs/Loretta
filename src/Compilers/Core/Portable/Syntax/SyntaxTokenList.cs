@@ -230,7 +230,7 @@ namespace Loretta.CodeAnalysis
         /// Returns a list which contains all elements of <see cref="SyntaxTokenList"/> in reversed order.
         /// </summary>
         /// <returns><see cref="Reversed"/> which contains all elements of <see cref="SyntaxTokenList"/> in reversed order</returns>
-        public Reversed Reverse() => new Reversed(this);
+        public Reversed Reverse() => new(this);
 
         internal void CopyTo(int offset, GreenNode?[] array, int arrayOffset, int count)
         {
@@ -424,7 +424,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Returns an enumerator for the tokens in the <see cref="SyntaxTokenList"/>
         /// </summary>
-        public Enumerator GetEnumerator() => new Enumerator(in this);
+        public Enumerator GetEnumerator() => new(in this);
 
         IEnumerator<SyntaxToken> IEnumerable<SyntaxToken>.GetEnumerator()
         {
@@ -482,6 +482,6 @@ namespace Loretta.CodeAnalysis
         /// Create a new Token List
         /// </summary>
         /// <param name="token">Element of the return Token List</param>
-        public static SyntaxTokenList Create(SyntaxToken token) => new SyntaxTokenList(token);
+        public static SyntaxTokenList Create(SyntaxToken token) => new(token);
     }
 }

@@ -20,6 +20,6 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         }
 
         internal static SyntaxList<T> ToGreenList<T>(this GreenNode? node) where T : GreenNode =>
-            new SyntaxList<T>(node);
+            new(node);
     }
 }

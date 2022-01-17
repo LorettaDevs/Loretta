@@ -166,7 +166,7 @@ namespace Loretta.CodeAnalysis
         }
 
         internal Syntax.InternalSyntax.ChildSyntaxList ChildNodesAndTokens() =>
-            new Syntax.InternalSyntax.ChildSyntaxList(this);
+            new(this);
 
         /// <summary>
         /// Enumerates all nodes of the tree rooted by this node (including this node).

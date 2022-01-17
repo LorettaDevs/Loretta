@@ -48,7 +48,7 @@ namespace Loretta.CodeAnalysis.Text
         /// Convert a <see cref="TextSpan"/> to a <see cref="LinePositionSpan"/>.
         /// </summary>
         public LinePositionSpan GetLinePositionSpan(TextSpan span) =>
-            new LinePositionSpan(GetLinePosition(span.Start), GetLinePosition(span.End));
+            new(GetLinePosition(span.Start), GetLinePosition(span.End));
 
         /// <summary>
         /// Convert a <see cref="LinePosition"/> to a position.
@@ -66,7 +66,7 @@ namespace Loretta.CodeAnalysis.Text
         /// Returns the enumerator for this text line collection.
         /// </summary>
         /// <returns></returns>
-        public Enumerator GetEnumerator() => new Enumerator(this);
+        public Enumerator GetEnumerator() => new(this);
 
         IEnumerator<TextLine> IEnumerable<TextLine>.GetEnumerator() => GetEnumerator();
 

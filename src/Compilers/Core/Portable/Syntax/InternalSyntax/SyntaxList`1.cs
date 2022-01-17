@@ -109,7 +109,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public Enumerator GetEnumerator() => new Enumerator(this);
+        public Enumerator GetEnumerator() => new(this);
 
         internal void CopyTo(int offset, ArrayElement<GreenNode>[] array, int arrayOffset, int count)
         {
@@ -132,7 +132,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         public override int GetHashCode() => _node != null ? _node.GetHashCode() : 0;
 
         public SeparatedSyntaxList<TOther> AsSeparatedList<TOther>() where TOther : GreenNode =>
-            new SeparatedSyntaxList<TOther>(this);
+            new(this);
 
         public static implicit operator SyntaxList<TNode>(TNode node)
         {
