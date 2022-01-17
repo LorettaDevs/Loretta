@@ -19,29 +19,16 @@ namespace Loretta.CodeAnalysis.Text
         }
 
         // https://github.com/dotnet/roslyn/issues/40830
-        public override Encoding Encoding
-        {
-            get { return _encoding!; }
-        }
+        public override Encoding Encoding => _encoding!;
 
-        public override SourceText ToSourceText()
-        {
-            return new StringText(_builder.ToString(), _encoding, checksumAlgorithm: _checksumAlgorithm);
-        }
+        public override SourceText ToSourceText() =>
+            new StringText(_builder.ToString(), _encoding, checksumAlgorithm: _checksumAlgorithm);
 
-        public override void Write(char value)
-        {
-            _builder.Append(value);
-        }
+        public override void Write(char value) => _builder.Append(value);
 
-        public override void Write(string? value)
-        {
-            _builder.Append(value);
-        }
+        public override void Write(string? value) => _builder.Append(value);
 
-        public override void Write(char[] buffer, int index, int count)
-        {
+        public override void Write(char[] buffer, int index, int count) =>
             _builder.Append(buffer, index, count);
-        }
     }
 }

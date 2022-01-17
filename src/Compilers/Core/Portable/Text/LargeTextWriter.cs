@@ -33,15 +33,9 @@ namespace Loretta.CodeAnalysis.Text
         }
 
         // https://github.com/dotnet/roslyn/issues/40830
-        public override Encoding Encoding
-        {
-            get { return _encoding!; }
-        }
+        public override Encoding Encoding => _encoding!;
 
-        public bool CanFitInAllocatedBuffer(int chars)
-        {
-            return _buffer != null && chars <= (_buffer.Length - _currentUsed);
-        }
+        public bool CanFitInAllocatedBuffer(int chars) => _buffer != null && chars <= (_buffer.Length - _currentUsed);
 
         public override void Write(char value)
         {

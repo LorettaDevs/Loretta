@@ -334,15 +334,14 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             return left;
         }
 
-        public static int Log2(uint value)
-        {
+        public static int Log2(uint value) =>
 #if NETCOREAPP
-            return BitOperations.Log2(value);
+            BitOperations.Log2(value);
 #else
             // Fallback contract is 0->0
-            return Log2SoftwareFallback(value);
+            Log2SoftwareFallback(value);
 #endif
-        }
+
 
 #if !NETCOREAPP
         /// <summary>

@@ -89,19 +89,14 @@ namespace Loretta.Utilities
             return pool;
         }
 
-        public static TextKeyedCache<T> GetInstance()
-        {
-            return s_staticPool.Allocate();
-        }
+        public static TextKeyedCache<T> GetInstance() => s_staticPool.Allocate();
 
-        public void Free()
-        {
+        public void Free() =>
             // leave cache content in the cache, just return it to the pool
             // Array.Clear(this.localTable, 0, this.localTable.Length);
             // Array.Clear(sharedTable, 0, sharedTable.Length);
 
             _pool?.Free(this);
-        }
 
         #endregion // Poolable
 
@@ -297,16 +292,11 @@ namespace Loretta.Utilities
             Volatile.Write(ref arr[idx].Entry, e);
         }
 
-        private static int LocalIdxFromHash(int hash)
-        {
-            return hash & LocalSizeMask;
-        }
+        private static int LocalIdxFromHash(int hash) => hash & LocalSizeMask;
 
-        private static int SharedIdxFromHash(int hash)
-        {
+        private static int SharedIdxFromHash(int hash) =>
             // we can afford to mix some more hash bits here
-            return (hash ^ (hash >> LocalSizeBits)) & SharedSizeMask;
-        }
+            (hash ^ (hash >> LocalSizeBits)) & SharedSizeMask;
 
         private int NextRandom()
         {

@@ -39,24 +39,17 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Gets the start position of the span.
         /// </summary>
-        public LinePosition Start
-        {
-            get { return _start; }
-        }
+        public LinePosition Start => _start;
 
         /// <summary>
         /// Gets the end position of the span.
         /// </summary>
-        public LinePosition End
-        {
-            get { return _end; }
-        }
+        public LinePosition End => _end;
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return obj is LinePositionSpan span && Equals(span);
-        }
+        public override bool Equals(object? obj) =>
+            
+            obj is LinePositionSpan span && Equals(span);
 
         /// <inheritdoc/>
         public bool Equals(LinePositionSpan other)
@@ -66,10 +59,7 @@ namespace Loretta.CodeAnalysis.Text
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(_start.GetHashCode(), _end.GetHashCode());
-        }
+        public override int GetHashCode() => Hash.Combine(_start.GetHashCode(), _end.GetHashCode());
 
         /// <summary>
         /// Checks whether two line position spans are equal.
@@ -77,10 +67,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(LinePositionSpan left, LinePositionSpan right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(LinePositionSpan left, LinePositionSpan right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Checks whether two line position spans are not equal.
@@ -88,18 +76,13 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(LinePositionSpan left, LinePositionSpan right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(LinePositionSpan left, LinePositionSpan right) =>
+            !left.Equals(right);
 
         /// <summary>
         /// Provides a string representation for <see cref="LinePositionSpan"/>.
         /// </summary>
         /// <example>(0,0)-(5,6)</example>
-        public override string ToString()
-        {
-            return string.Format("({0})-({1})", _start, _end);
-        }
+        public override string ToString() => string.Format("({0})-({1})", _start, _end);
     }
 }

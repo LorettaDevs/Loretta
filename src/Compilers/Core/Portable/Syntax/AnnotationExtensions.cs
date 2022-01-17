@@ -17,10 +17,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="node">Original node.</param>
         /// <param name="annotations">Annotations to be added to the new node.</param>
         public static TNode WithAdditionalAnnotations<TNode>(this TNode node, params SyntaxAnnotation[] annotations)
-            where TNode : SyntaxNode
-        {
-            return (TNode) node.WithAdditionalAnnotationsInternal(annotations);
-        }
+            where TNode : SyntaxNode => (TNode) node.WithAdditionalAnnotationsInternal(annotations);
 
         /// <summary>
         /// Creates a new node identical to this node with the specified annotations attached.
@@ -28,10 +25,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="node">Original node.</param>
         /// <param name="annotations">Annotations to be added to the new node.</param>
         public static TNode WithAdditionalAnnotations<TNode>(this TNode node, IEnumerable<SyntaxAnnotation> annotations)
-            where TNode : SyntaxNode
-        {
-            return (TNode) node.WithAdditionalAnnotationsInternal(annotations);
-        }
+            where TNode : SyntaxNode => (TNode) node.WithAdditionalAnnotationsInternal(annotations);
 
         /// <summary>
         /// Creates a new node identical to this node with the specified annotations removed.
@@ -39,10 +33,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="node">Original node.</param>
         /// <param name="annotations">Annotations to be removed from the new node.</param>
         public static TNode WithoutAnnotations<TNode>(this TNode node, params SyntaxAnnotation[] annotations)
-            where TNode : SyntaxNode
-        {
-            return (TNode) node.GetNodeWithoutAnnotations(annotations);
-        }
+            where TNode : SyntaxNode => (TNode) node.GetNodeWithoutAnnotations(annotations);
 
         /// <summary>
         /// Creates a new node identical to this node with the specified annotations removed.
@@ -50,10 +41,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="node">Original node.</param>
         /// <param name="annotations">Annotations to be removed from the new node.</param>
         public static TNode WithoutAnnotations<TNode>(this TNode node, IEnumerable<SyntaxAnnotation> annotations)
-            where TNode : SyntaxNode
-        {
-            return (TNode) node.GetNodeWithoutAnnotations(annotations);
-        }
+            where TNode : SyntaxNode => (TNode) node.GetNodeWithoutAnnotations(annotations);
 
         /// <summary>
         /// Creates a new node identical to this node with the annotations of the specified kind removed.

@@ -14,10 +14,8 @@ namespace Loretta.Test.Utilities
     /// </summary>
     public static class AssertEx
     {
-        public static void Equal(bool[,] expected, Func<int, int, bool> getResult, int size)
-        {
+        public static void Equal(bool[,] expected, Func<int, int, bool> getResult, int size) =>
             Equal<bool>(expected, getResult, (b1, b2) => b1 == b2, b => b ? "true" : "false", "{0,-6:G}", size);
-        }
 
         public static void Equal<T>(T[,] expected, Func<int, int, T> getResult, Func<T, T, bool> valuesEqual, Func<T, string> printValue, string format, int size)
         {

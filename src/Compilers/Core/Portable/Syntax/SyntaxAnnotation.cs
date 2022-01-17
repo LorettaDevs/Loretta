@@ -85,16 +85,12 @@ namespace Loretta.CodeAnalysis
             writer.WriteString(Data);
         }
 
-        private string GetDebuggerDisplay()
-        {
-            return string.Format("Annotation: Kind='{0}' Data='{1}'", Kind ?? "", Data ?? "");
-        }
+        private string GetDebuggerDisplay() =>
+            string.Format("Annotation: Kind='{0}' Data='{1}'", Kind ?? "", Data ?? "");
 
         /// <inheritdoc/>
-        public bool Equals(SyntaxAnnotation? other)
-        {
-            return other is not null && _id == other._id;
-        }
+        public bool Equals(SyntaxAnnotation? other) =>
+            other is not null && _id == other._id;
 
         /// <summary>
         /// Checks whether two annotations are equal.
@@ -122,15 +118,9 @@ namespace Loretta.CodeAnalysis
             !(left == right);
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as SyntaxAnnotation);
-        }
+        public override bool Equals(object? obj) => Equals(obj as SyntaxAnnotation);
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return _id.GetHashCode();
-        }
+        public override int GetHashCode() => _id.GetHashCode();
     }
 }

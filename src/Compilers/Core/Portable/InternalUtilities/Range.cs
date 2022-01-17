@@ -44,10 +44,7 @@ namespace System
         public bool Equals(Range other) => other.Start.Equals(Start) && other.End.Equals(End);
 
         /// <summary>Returns the hash code for this instance.</summary>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(Start.GetHashCode(), End.GetHashCode());
-        }
+        public override int GetHashCode() => Hash.Combine(Start.GetHashCode(), End.GetHashCode());
 
         /// <summary>Converts the value of the current Range object to its equivalent string representation.</summary>
         public override string ToString()

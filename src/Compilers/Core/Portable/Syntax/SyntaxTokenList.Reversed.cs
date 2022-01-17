@@ -32,10 +32,7 @@ namespace Loretta.CodeAnalysis
             /// Returns the enumerator for this reversed list.
             /// </summary>
             /// <returns></returns>
-            public Enumerator GetEnumerator()
-            {
-                return new Enumerator(in _list);
-            }
+            public Enumerator GetEnumerator() => new Enumerator(in _list);
 
             IEnumerator<SyntaxToken> IEnumerable<SyntaxToken>.GetEnumerator()
             {
@@ -58,27 +55,20 @@ namespace Loretta.CodeAnalysis
             }
 
             /// <inheritdoc/>
-            public override bool Equals(object? obj)
-            {
-                return obj is Reversed r && Equals(r);
-            }
+            public override bool Equals(object? obj) => obj is Reversed r && Equals(r);
 
             /// <inheritdoc/>
-            public bool Equals(Reversed other)
-            {
-                return _list.Equals(other._list);
-            }
+            public bool Equals(Reversed other) => _list.Equals(other._list);
 
             /// <inheritdoc/>
-            public override int GetHashCode()
-            {
-                return _list.GetHashCode();
-            }
+            public override int GetHashCode() => _list.GetHashCode();
 
             /// <summary>
             /// The enumerator for this reversed list.
             /// </summary>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
             [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
             [StructLayout(LayoutKind.Auto)]
             public struct Enumerator
             {
@@ -143,16 +133,10 @@ namespace Loretta.CodeAnalysis
                 }
 
                 /// <inheritdoc/>
-                public override bool Equals(object? obj)
-                {
-                    throw new NotSupportedException();
-                }
+                public override bool Equals(object? obj) => throw new NotSupportedException();
 
                 /// <inheritdoc/>
-                public override int GetHashCode()
-                {
-                    throw new NotSupportedException();
-                }
+                public override int GetHashCode() => throw new NotSupportedException();
             }
 
             private class EnumeratorImpl : IEnumerator<SyntaxToken>
@@ -169,15 +153,9 @@ namespace Loretta.CodeAnalysis
 
                 object IEnumerator.Current => _enumerator.Current;
 
-                public bool MoveNext()
-                {
-                    return _enumerator.MoveNext();
-                }
+                public bool MoveNext() => _enumerator.MoveNext();
 
-                public void Reset()
-                {
-                    throw new NotSupportedException();
-                }
+                public void Reset() => throw new NotSupportedException();
 
                 public void Dispose()
                 {

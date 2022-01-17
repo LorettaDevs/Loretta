@@ -34,7 +34,7 @@ namespace Loretta.CodeAnalysis
         public string HelpLinkUri { get; }
 
         /// <summary>
-        /// A localizable format message string, which can be passed as the first argument to <see cref="String.Format(string, object[])"/> when creating the diagnostic message with this descriptor.
+        /// A localizable format message string, which can be passed as the first argument to <see cref="string.Format(string, object[])"/> when creating the diagnostic message with this descriptor.
         /// </summary>
         /// <returns></returns>
         public LocalizableString MessageFormat { get; }
@@ -66,7 +66,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="id">A unique identifier for the diagnostic. For example, code analysis diagnostic ID "CA1001".</param>
         /// <param name="title">A short title describing the diagnostic. For example, for CA1001: "Types that own disposable fields should be disposable".</param>
-        /// <param name="messageFormat">A format message string, which can be passed as the first argument to <see cref="String.Format(string, object[])"/> when creating the diagnostic message with this descriptor.
+        /// <param name="messageFormat">A format message string, which can be passed as the first argument to <see cref="string.Format(string, object[])"/> when creating the diagnostic message with this descriptor.
         /// For example, for CA1001: "Implement IDisposable on '{0}' because it creates members of the following IDisposable types: '{1}'."</param>
         /// <param name="category">The category of the diagnostic (like Design, Naming etc.). For example, for CA1001: "Microsoft.Design".</param>
         /// <param name="defaultSeverity">Default severity of the diagnostic.</param>
@@ -93,7 +93,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="id">A unique identifier for the diagnostic. For example, code analysis diagnostic ID "CA1001".</param>
         /// <param name="title">A short localizable title describing the diagnostic. For example, for CA1001: "Types that own disposable fields should be disposable".</param>
-        /// <param name="messageFormat">A localizable format message string, which can be passed as the first argument to <see cref="String.Format(string, object[])"/> when creating the diagnostic message with this descriptor.
+        /// <param name="messageFormat">A localizable format message string, which can be passed as the first argument to <see cref="string.Format(string, object[])"/> when creating the diagnostic message with this descriptor.
         /// For example, for CA1001: "Implement IDisposable on '{0}' because it creates members of the following IDisposable types: '{1}'."</param>
         /// <param name="category">The category of the diagnostic (like Design, Naming etc.). For example, for CA1001: "Microsoft.Design".</param>
         /// <param name="defaultSeverity">Default severity of the diagnostic.</param>
@@ -188,10 +188,7 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as DiagnosticDescriptor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as DiagnosticDescriptor);
 
         /// <inheritdoc/>
         public override int GetHashCode()

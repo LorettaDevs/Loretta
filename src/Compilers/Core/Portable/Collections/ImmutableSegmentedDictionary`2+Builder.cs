@@ -30,10 +30,7 @@ namespace Loretta.CodeAnalysis.Collections
 
             public IEqualityComparer<TKey> KeyComparer
             {
-                get
-                {
-                    return ReadOnlyDictionary.Comparer;
-                }
+                get => ReadOnlyDictionary.Comparer;
 
                 set
                 {
@@ -92,10 +89,8 @@ namespace Loretta.CodeAnalysis.Collections
                 set => ((IDictionary) GetOrCreateMutableDictionary())[key] = value;
             }
 
-            private SegmentedDictionary<TKey, TValue> GetOrCreateMutableDictionary()
-            {
-                return _mutableDictionary ??= new SegmentedDictionary<TKey, TValue>(_dictionary._dictionary, _dictionary.KeyComparer);
-            }
+            private SegmentedDictionary<TKey, TValue> GetOrCreateMutableDictionary() =>
+                _mutableDictionary ??= new SegmentedDictionary<TKey, TValue>(_dictionary._dictionary, _dictionary.KeyComparer);
 
             public void Add(TKey key, TValue value)
             {
@@ -137,10 +132,7 @@ namespace Loretta.CodeAnalysis.Collections
             public bool ContainsKey(TKey key)
                 => ReadOnlyDictionary.ContainsKey(key);
 
-            public bool ContainsValue(TValue value)
-            {
-                return _dictionary.ContainsValue(value);
-            }
+            public bool ContainsValue(TValue value) => _dictionary.ContainsValue(value);
 
             public Enumerator GetEnumerator()
                 => new(GetOrCreateMutableDictionary(), Enumerator.ReturnType.KeyValuePair);
@@ -206,9 +198,11 @@ namespace Loretta.CodeAnalysis.Collections
                 return false;
             }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
             public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
 #pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
+#pragma warning restore IDE0079 // Remove unnecessary suppression
                 => ReadOnlyDictionary.TryGetValue(key, out value);
 
             public ImmutableSegmentedDictionary<TKey, TValue> ToImmutable()

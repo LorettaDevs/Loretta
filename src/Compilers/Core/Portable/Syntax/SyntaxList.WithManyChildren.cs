@@ -15,15 +15,11 @@ namespace Loretta.CodeAnalysis.Syntax
                 _children = new ArrayElement<SyntaxNode?>[green.SlotCount];
             }
 
-            internal override SyntaxNode? GetNodeSlot(int index)
-            {
-                return GetRedElement(ref _children[index].Value, index);
-            }
+            internal override SyntaxNode? GetNodeSlot(int index) =>
+                GetRedElement(ref _children[index].Value, index);
 
-            internal override SyntaxNode? GetCachedSlot(int index)
-            {
-                return _children[index];
-            }
+            internal override SyntaxNode? GetCachedSlot(int index) =>
+                _children[index];
         }
     }
 }

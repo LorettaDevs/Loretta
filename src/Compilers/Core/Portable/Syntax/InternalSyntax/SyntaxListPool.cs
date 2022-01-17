@@ -41,15 +41,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return item;
         }
 
-        internal SyntaxListBuilder<TNode> Allocate<TNode>() where TNode : GreenNode
-        {
-            return new SyntaxListBuilder<TNode>(Allocate());
-        }
+        internal SyntaxListBuilder<TNode> Allocate<TNode>() where TNode : GreenNode =>
+            new SyntaxListBuilder<TNode>(Allocate());
 
-        internal SeparatedSyntaxListBuilder<TNode> AllocateSeparated<TNode>() where TNode : GreenNode
-        {
-            return new SeparatedSyntaxListBuilder<TNode>(Allocate());
-        }
+        internal SeparatedSyntaxListBuilder<TNode> AllocateSeparated<TNode>() where TNode : GreenNode =>
+            new SeparatedSyntaxListBuilder<TNode>(Allocate());
 
         internal void Free<TNode>(in SeparatedSyntaxListBuilder<TNode> item) where TNode : GreenNode
         {

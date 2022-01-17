@@ -44,16 +44,12 @@ namespace Loretta.CodeAnalysis.Collections.Internal
     internal static class ThrowHelper
     {
         [DoesNotReturn]
-        internal static void ThrowIndexOutOfRangeException()
-        {
+        internal static void ThrowIndexOutOfRangeException() =>
             throw new IndexOutOfRangeException();
-        }
 
         [DoesNotReturn]
-        internal static void ThrowArgumentOutOfRangeException()
-        {
+        internal static void ThrowArgumentOutOfRangeException() =>
             throw new ArgumentOutOfRangeException();
-        }
 
         [DoesNotReturn]
         internal static void ThrowArgumentOutOfRange_IndexException()
@@ -63,10 +59,8 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         }
 
         [DoesNotReturn]
-        internal static void ThrowArgumentException_BadComparer(object? comparer)
-        {
+        internal static void ThrowArgumentException_BadComparer(object? comparer) =>
             throw new ArgumentException(string.Format(SR.Arg_BogusIComparer, comparer));
-        }
 
         [DoesNotReturn]
         internal static void ThrowIndexArgumentOutOfRange_NeedNonNegNumException()
@@ -97,127 +91,84 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         }
 
         [DoesNotReturn]
-        internal static void ThrowWrongKeyTypeArgumentException<T>(T key, Type targetType)
-        {
+        internal static void ThrowWrongKeyTypeArgumentException<T>(T key, Type targetType) =>
             // Generic key to move the boxing to the right hand side of throw
             throw GetWrongKeyTypeArgumentException((object?) key, targetType);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowWrongValueTypeArgumentException<T>(T value, Type targetType)
-        {
+        internal static void ThrowWrongValueTypeArgumentException<T>(T value, Type targetType) =>
             // Generic key to move the boxing to the right hand side of throw
             throw GetWrongValueTypeArgumentException((object?) value, targetType);
-        }
 
-        private static ArgumentException GetAddingDuplicateWithKeyArgumentException(object? key)
-        {
-            return new ArgumentException(string.Format(SR.Argument_AddingDuplicateWithKey, key));
-        }
+        private static ArgumentException GetAddingDuplicateWithKeyArgumentException(object? key) =>
+            new ArgumentException(string.Format(SR.Argument_AddingDuplicateWithKey, key));
 
         [DoesNotReturn]
-        internal static void ThrowAddingDuplicateWithKeyArgumentException<T>(T key)
-        {
+        internal static void ThrowAddingDuplicateWithKeyArgumentException<T>(T key) =>
             // Generic key to move the boxing to the right hand side of throw
             throw GetAddingDuplicateWithKeyArgumentException((object?) key);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowKeyNotFoundException<T>(T key)
-        {
+        internal static void ThrowKeyNotFoundException<T>(T key) =>
             // Generic key to move the boxing to the right hand side of throw
             throw GetKeyNotFoundException((object?) key);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowArgumentException(ExceptionResource resource)
-        {
+        internal static void ThrowArgumentException(ExceptionResource resource) =>
             throw GetArgumentException(resource);
-        }
 
-        private static ArgumentNullException GetArgumentNullException(ExceptionArgument argument)
-        {
-            return new ArgumentNullException(GetArgumentName(argument));
-        }
+        private static ArgumentNullException GetArgumentNullException(ExceptionArgument argument) =>
+            new ArgumentNullException(GetArgumentName(argument));
 
         [DoesNotReturn]
-        internal static void ThrowArgumentNullException(ExceptionArgument argument)
-        {
+        internal static void ThrowArgumentNullException(ExceptionArgument argument) =>
             throw GetArgumentNullException(argument);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowArgumentOutOfRangeException(ExceptionArgument argument)
-        {
+        internal static void ThrowArgumentOutOfRangeException(ExceptionArgument argument) =>
             throw new ArgumentOutOfRangeException(GetArgumentName(argument));
-        }
 
         [DoesNotReturn]
-        internal static void ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-        {
+        internal static void ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource) =>
             throw GetArgumentOutOfRangeException(argument, resource);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowInvalidOperationException(ExceptionResource resource, Exception e)
-        {
+        internal static void ThrowInvalidOperationException(ExceptionResource resource, Exception e) =>
             throw new InvalidOperationException(GetResourceString(resource), e);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowNotSupportedException(ExceptionResource resource)
-        {
+        internal static void ThrowNotSupportedException(ExceptionResource resource) =>
             throw new NotSupportedException(GetResourceString(resource));
-        }
 
         [DoesNotReturn]
-        internal static void ThrowArgumentException_Argument_InvalidArrayType()
-        {
+        internal static void ThrowArgumentException_Argument_InvalidArrayType() =>
             throw new ArgumentException(SR.Argument_InvalidArrayType);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowInvalidOperationException_InvalidOperation_EnumFailedVersion()
-        {
+        internal static void ThrowInvalidOperationException_InvalidOperation_EnumFailedVersion() =>
             throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowInvalidOperationException_InvalidOperation_EnumOpCantHappen()
-        {
+        internal static void ThrowInvalidOperationException_InvalidOperation_EnumOpCantHappen() =>
             throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-        }
 
         [DoesNotReturn]
-        internal static void ThrowInvalidOperationException_ConcurrentOperationsNotSupported()
-        {
-            throw new InvalidOperationException(SR.InvalidOperation_ConcurrentOperationsNotSupported);
-        }
+        internal static void ThrowInvalidOperationException_ConcurrentOperationsNotSupported() => throw new InvalidOperationException(SR.InvalidOperation_ConcurrentOperationsNotSupported);
 
-        private static ArgumentException GetArgumentException(ExceptionResource resource)
-        {
-            return new ArgumentException(GetResourceString(resource));
-        }
+        private static ArgumentException GetArgumentException(ExceptionResource resource) =>
+            new ArgumentException(GetResourceString(resource));
 
-        private static ArgumentException GetWrongKeyTypeArgumentException(object? key, Type targetType)
-        {
-            return new ArgumentException(string.Format(SR.Arg_WrongType, key, targetType), nameof(key));
-        }
+        private static ArgumentException GetWrongKeyTypeArgumentException(object? key, Type targetType) =>
+            new ArgumentException(string.Format(SR.Arg_WrongType, key, targetType), nameof(key));
 
-        private static ArgumentException GetWrongValueTypeArgumentException(object? value, Type targetType)
-        {
-            return new ArgumentException(string.Format(SR.Arg_WrongType, value, targetType), nameof(value));
-        }
+        private static ArgumentException GetWrongValueTypeArgumentException(object? value, Type targetType) =>
+            new ArgumentException(string.Format(SR.Arg_WrongType, value, targetType), nameof(value));
 
-        private static KeyNotFoundException GetKeyNotFoundException(object? key)
-        {
-            return new KeyNotFoundException(string.Format(SR.Arg_KeyNotFoundWithKey, key));
-        }
+        private static KeyNotFoundException GetKeyNotFoundException(object? key) =>
+            new KeyNotFoundException(string.Format(SR.Arg_KeyNotFoundWithKey, key));
 
-        private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-        {
-            return new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
-        }
+        private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource) =>
+            new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
 
         // Allow nulls for reference types and Nullable<U>, but not for value types.
         // Aggressively inline so the jit evaluates the if in place and either drops the call altogether

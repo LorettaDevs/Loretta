@@ -32,20 +32,12 @@ namespace Loretta.CodeAnalysis
                 _fixedString = fixedResource;
             }
 
-            protected override string GetText(IFormatProvider? formatProvider)
-            {
-                return _fixedString;
-            }
+            protected override string GetText(IFormatProvider? formatProvider) => _fixedString;
 
-            protected override bool AreEqual(object? other)
-            {
-                return other is FixedLocalizableString fixedStr && string.Equals(_fixedString, fixedStr._fixedString);
-            }
+            protected override bool AreEqual(object? other) =>
+                other is FixedLocalizableString fixedStr && string.Equals(_fixedString, fixedStr._fixedString);
 
-            protected override int GetHash()
-            {
-                return _fixedString?.GetHashCode() ?? 0;
-            }
+            protected override int GetHash() => _fixedString?.GetHashCode() ?? 0;
 
             internal override bool CanThrowExceptions => false;
         }

@@ -98,7 +98,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return num;
         }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("Usage", "CA2249:Consider using 'string.Contains' instead of 'string.IndexOf'", Justification = "Not available in .NET Standard 2.0")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         private void ParseDecimalNumber(ref TokenInfo info)
         {
             _builder.Clear();
@@ -126,7 +128,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             info.DoubleValue = result;
         }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("Usage", "CA2249:Consider using 'string.Contains' instead of 'string.IndexOf'", Justification = "Not available in .NET Standard 2.0")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         private void ParseHexadecimalNumber(ref TokenInfo info)
         {
             _builder.Clear();

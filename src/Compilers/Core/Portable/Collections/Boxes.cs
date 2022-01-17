@@ -24,30 +24,15 @@ namespace Loretta.CodeAnalysis
 
         private static readonly object?[] s_boxedAsciiChars = new object?[128];
 
-        public static object Box(bool b)
-        {
-            return b ? BoxedTrue : BoxedFalse;
-        }
+        public static object Box(bool b) => b ? BoxedTrue : BoxedFalse;
 
-        public static object Box(byte b)
-        {
-            return b == 0 ? BoxedByteZero : b;
-        }
+        public static object Box(byte b) => b == 0 ? BoxedByteZero : b;
 
-        public static object Box(sbyte sb)
-        {
-            return sb == 0 ? BoxedSByteZero : sb;
-        }
+        public static object Box(sbyte sb) => sb == 0 ? BoxedSByteZero : sb;
 
-        public static object Box(short s)
-        {
-            return s == 0 ? BoxedInt16Zero : s;
-        }
+        public static object Box(short s) => s == 0 ? BoxedInt16Zero : s;
 
-        public static object Box(ushort us)
-        {
-            return us == 0 ? BoxedUInt16Zero : us;
-        }
+        public static object Box(ushort us) => us == 0 ? BoxedUInt16Zero : us;
 
         public static object Box(int i)
         {
@@ -59,34 +44,21 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        public static object Box(uint u)
-        {
-            return u == 0 ? BoxedUInt32Zero : u;
-        }
+        public static object Box(uint u) => u == 0 ? BoxedUInt32Zero : u;
 
-        public static object Box(long l)
-        {
-            return l == 0 ? BoxedInt64Zero : l;
-        }
+        public static object Box(long l) => l == 0 ? BoxedInt64Zero : l;
 
-        public static object Box(ulong ul)
-        {
-            return ul == 0 ? BoxedUInt64Zero : ul;
-        }
+        public static object Box(ulong ul) => ul == 0 ? BoxedUInt64Zero : ul;
 
-        public static unsafe object Box(float f)
-        {
+        public static unsafe object Box(float f) =>
             // There are many representations of zero in floating point.
             // Use the boxed value only if the bit pattern is all zeros.
-            return *(int*) &f == 0 ? BoxedSingleZero : f;
-        }
+            *(int*) &f == 0 ? BoxedSingleZero : f;
 
-        public static object Box(double d)
-        {
+        public static object Box(double d) =>
             // There are many representations of zero in floating point.
             // Use the boxed value only if the bit pattern is all zeros.
-            return BitConverter.DoubleToInt64Bits(d) == 0 ? BoxedDoubleZero : d;
-        }
+            BitConverter.DoubleToInt64Bits(d) == 0 ? BoxedDoubleZero : d;
 
         public static object Box(char c)
         {

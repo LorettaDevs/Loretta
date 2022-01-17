@@ -138,20 +138,14 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        private static bool CanBeCached(GreenNode? child1)
-        {
-            return child1 == null || child1.IsCacheable;
-        }
+        private static bool CanBeCached(GreenNode? child1) =>
+            child1 == null || child1.IsCacheable;
 
-        private static bool CanBeCached(GreenNode? child1, GreenNode? child2)
-        {
-            return CanBeCached(child1) && CanBeCached(child2);
-        }
+        private static bool CanBeCached(GreenNode? child1, GreenNode? child2) =>
+            CanBeCached(child1) && CanBeCached(child2);
 
-        private static bool CanBeCached(GreenNode? child1, GreenNode? child2, GreenNode? child3)
-        {
-            return CanBeCached(child1) && CanBeCached(child2) && CanBeCached(child3);
-        }
+        private static bool CanBeCached(GreenNode? child1, GreenNode? child2, GreenNode? child3) =>
+            CanBeCached(child1) && CanBeCached(child2) && CanBeCached(child3);
 
         private static bool ChildInCache(GreenNode? child)
         {
@@ -180,10 +174,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return true;
         }
 
-        internal static GreenNode? TryGetNode(int kind, GreenNode? child1, out int hash)
-        {
-            return TryGetNode(kind, child1, GetDefaultNodeFlags(), out hash);
-        }
+        internal static GreenNode? TryGetNode(int kind, GreenNode? child1, out int hash) =>
+            TryGetNode(kind, child1, GetDefaultNodeFlags(), out hash);
 
         internal static GreenNode? TryGetNode(int kind, GreenNode? child1, GreenNode.NodeFlags flags, out int hash)
         {
@@ -208,10 +200,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return null;
         }
 
-        internal static GreenNode? TryGetNode(int kind, GreenNode? child1, GreenNode? child2, out int hash)
-        {
-            return TryGetNode(kind, child1, child2, GetDefaultNodeFlags(), out hash);
-        }
+        internal static GreenNode? TryGetNode(int kind, GreenNode? child1, GreenNode? child2, out int hash) =>
+            TryGetNode(kind, child1, child2, GetDefaultNodeFlags(), out hash);
 
         internal static GreenNode? TryGetNode(int kind, GreenNode? child1, GreenNode? child2, GreenNode.NodeFlags flags, out int hash)
         {
@@ -236,10 +226,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return null;
         }
 
-        internal static GreenNode? TryGetNode(int kind, GreenNode? child1, GreenNode? child2, GreenNode? child3, out int hash)
-        {
-            return TryGetNode(kind, child1, child2, child3, GetDefaultNodeFlags(), out hash);
-        }
+        internal static GreenNode? TryGetNode(int kind, GreenNode? child1, GreenNode? child2, GreenNode? child3, out int hash) =>
+            TryGetNode(kind, child1, child2, child3, GetDefaultNodeFlags(), out hash);
 
         internal static GreenNode? TryGetNode(int kind, GreenNode? child1, GreenNode? child2, GreenNode? child3, GreenNode.NodeFlags flags, out int hash)
         {
@@ -264,10 +252,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return null;
         }
 
-        public static GreenNode.NodeFlags GetDefaultNodeFlags()
-        {
-            return GreenNode.NodeFlags.IsNotMissing;
-        }
+        public static GreenNode.NodeFlags GetDefaultNodeFlags() =>
+            GreenNode.NodeFlags.IsNotMissing;
 
         private static int GetCacheHash(int kind, GreenNode.NodeFlags flags, GreenNode? child1)
         {
@@ -277,7 +263,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             code = Hash.Combine(System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(child1!), code);
 
             // ensure nonnegative hash
-            return code & Int32.MaxValue;
+            return code & int.MaxValue;
         }
 
         private static int GetCacheHash(int kind, GreenNode.NodeFlags flags, GreenNode? child1, GreenNode? child2)
@@ -294,7 +280,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
 
             // ensure nonnegative hash
-            return code & Int32.MaxValue;
+            return code & int.MaxValue;
         }
 
         private static int GetCacheHash(int kind, GreenNode.NodeFlags flags, GreenNode? child1, GreenNode? child2, GreenNode? child3)
@@ -315,7 +301,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
 
             // ensure nonnegative hash
-            return code & Int32.MaxValue;
+            return code & int.MaxValue;
         }
     }
 }

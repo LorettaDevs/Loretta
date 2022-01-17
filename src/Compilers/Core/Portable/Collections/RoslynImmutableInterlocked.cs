@@ -104,10 +104,7 @@ namespace Loretta.CodeAnalysis.Collections
         /// <param name="value">The new value to assign.</param>
         /// <returns>The prior value at the specified <paramref name="location"/>.</returns>
         public static ImmutableSegmentedDictionary<TKey, TValue> InterlockedExchange<TKey, TValue>(ref ImmutableSegmentedDictionary<TKey, TValue> location, ImmutableSegmentedDictionary<TKey, TValue> value)
-            where TKey : notnull
-        {
-            return ImmutableSegmentedDictionary<TKey, TValue>.PrivateInterlocked.InterlockedExchange(ref location, value);
-        }
+            where TKey : notnull => ImmutableSegmentedDictionary<TKey, TValue>.PrivateInterlocked.InterlockedExchange(ref location, value);
 
         /// <summary>
         /// Assigns a field or variable containing an immutable dictionary to the specified value if it is currently
@@ -120,10 +117,7 @@ namespace Loretta.CodeAnalysis.Collections
         /// <param name="comparand">The value to check equality for before assigning.</param>
         /// <returns>The prior value at the specified <paramref name="location"/>.</returns>
         public static ImmutableSegmentedDictionary<TKey, TValue> InterlockedCompareExchange<TKey, TValue>(ref ImmutableSegmentedDictionary<TKey, TValue> location, ImmutableSegmentedDictionary<TKey, TValue> value, ImmutableSegmentedDictionary<TKey, TValue> comparand)
-            where TKey : notnull
-        {
-            return ImmutableSegmentedDictionary<TKey, TValue>.PrivateInterlocked.InterlockedCompareExchange(ref location, value, comparand);
-        }
+            where TKey : notnull => ImmutableSegmentedDictionary<TKey, TValue>.PrivateInterlocked.InterlockedCompareExchange(ref location, value, comparand);
 
         /// <summary>
         /// Assigns a field or variable containing an immutable dictionary to the specified value if it is has not yet
@@ -136,10 +130,7 @@ namespace Loretta.CodeAnalysis.Collections
         /// <returns><see langword="true"/> if the field was assigned the specified value; otherwise,
         /// <see langword="false"/> if it was previously initialized.</returns>
         public static bool InterlockedInitialize<TKey, TValue>(ref ImmutableSegmentedDictionary<TKey, TValue> location, ImmutableSegmentedDictionary<TKey, TValue> value)
-            where TKey : notnull
-        {
-            return InterlockedCompareExchange(ref location, value, default(ImmutableSegmentedDictionary<TKey, TValue>)).IsDefault;
-        }
+            where TKey : notnull => InterlockedCompareExchange(ref location, value, default(ImmutableSegmentedDictionary<TKey, TValue>)).IsDefault;
 
         /// <inheritdoc cref="ImmutableInterlocked.GetOrAdd{TKey, TValue, TArg}(ref ImmutableDictionary{TKey, TValue}, TKey, Func{TKey, TArg, TValue}, TArg)"/>
         public static TValue GetOrAdd<TKey, TValue, TArg>(ref ImmutableSegmentedDictionary<TKey, TValue> location, TKey key, Func<TKey, TArg, TValue> valueFactory, TArg factoryArgument)

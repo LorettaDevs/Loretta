@@ -39,15 +39,9 @@ namespace Loretta.CodeAnalysis.Text
 
         public override int Length => UnderlyingSpan.Length;
 
-        internal override int StorageSize
-        {
-            get { return UnderlyingText.StorageSize; }
-        }
+        internal override int StorageSize => UnderlyingText.StorageSize;
 
-        internal override SourceText StorageKey
-        {
-            get { return UnderlyingText.StorageKey; }
-        }
+        internal override SourceText StorageKey => UnderlyingText.StorageKey;
 
         public override char this[int position]
         {

@@ -46,20 +46,11 @@ namespace Loretta.CodeAnalysis
                 && _bits.AsSpan().SequenceEqual(other._bits.AsSpan());
         }
 
-        public override bool Equals(object? obj)
-        {
-            return obj is BitVector other && Equals(other);
-        }
+        public override bool Equals(object? obj) => obj is BitVector other && Equals(other);
 
-        public static bool operator ==(BitVector left, BitVector right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(BitVector left, BitVector right) => left.Equals(right);
 
-        public static bool operator !=(BitVector left, BitVector right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(BitVector left, BitVector right) => !left.Equals(right);
 
         public override int GetHashCode()
         {
@@ -86,10 +77,7 @@ namespace Loretta.CodeAnalysis
         public int Capacity => _capacity;
 
         [Conditional("DEBUG_BITARRAY")]
-        private void Check()
-        {
-            LorettaDebug.Assert(_capacity == 0 || WordsForCapacity(_capacity) <= _bits.Length);
-        }
+        private void Check() => LorettaDebug.Assert(_capacity == 0 || WordsForCapacity(_capacity) <= _bits.Length);
 
         public void EnsureCapacity(int newCapacity)
         {
@@ -237,13 +225,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Is the given bit array null?
         /// </summary>
-        public bool IsNull
-        {
-            get
-            {
-                return _bits == null;
-            }
-        }
+        public bool IsNull => _bits == null;
 
         public static BitVector Null => s_nullValue;
 

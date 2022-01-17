@@ -230,7 +230,9 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             return true;
         }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("Usage", "CA2249:Consider using 'string.Contains' instead of 'string.IndexOf'", Justification = "Not available in all TFMs.")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         private static (string startDelimiter, string endDelimiter) SlowGetVerbatimEquals(string value)
         {
             var equalsPooledBuilder = PooledStringBuilder.GetInstance();

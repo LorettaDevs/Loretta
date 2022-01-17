@@ -57,10 +57,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="root">The root of the subtree containing the nodes to be tracked.</param>
         /// <param name="nodes">One or more nodes that are descendants of the root node.</param>
         public static TRoot TrackNodes<TRoot>(this TRoot root, params SyntaxNode[] nodes)
-            where TRoot : SyntaxNode
-        {
-            return TrackNodes(root, (IEnumerable<SyntaxNode>) nodes);
-        }
+            where TRoot : SyntaxNode =>
+            TrackNodes(root, (IEnumerable<SyntaxNode>) nodes);
 
         /// <summary>
         /// Gets the nodes within the subtree corresponding to the original tracked node.
@@ -86,10 +84,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="root">The root of the subtree containing the current node corresponding to the original tracked node.</param>
         /// <param name="node">The node instance originally tracked.</param>
         public static TNode? GetCurrentNode<TNode>(this SyntaxNode root, TNode node)
-            where TNode : SyntaxNode
-        {
-            return GetCurrentNodes(root, node).SingleOrDefault();
-        }
+            where TNode : SyntaxNode =>
+            GetCurrentNodes(root, node).SingleOrDefault();
 
         /// <summary>
         /// Gets the nodes within the subtree corresponding to the original tracked nodes.

@@ -20,44 +20,23 @@ namespace Loretta.Utilities
                     _loneValue = value;
                 }
 
-                public void Add(T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public void Add(T item) => throw new NotSupportedException();
 
-                public void Clear()
-                {
-                    throw new NotSupportedException();
-                }
+                public void Clear() => throw new NotSupportedException();
 
-                public bool Contains(T item)
-                {
-                    return EqualityComparer<T>.Default.Equals(_loneValue, item);
-                }
+                public bool Contains(T item) => EqualityComparer<T>.Default.Equals(_loneValue, item);
 
-                public void CopyTo(T[] array, int arrayIndex)
-                {
-                    array[arrayIndex] = _loneValue;
-                }
+                public void CopyTo(T[] array, int arrayIndex) => array[arrayIndex] = _loneValue;
 
                 public int Count => 1;
 
                 public bool IsReadOnly => true;
 
-                public bool Remove(T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public bool Remove(T item) => throw new NotSupportedException();
 
-                public IEnumerator<T> GetEnumerator()
-                {
-                    return new Enumerator<T>(_loneValue);
-                }
+                public IEnumerator<T> GetEnumerator() => new Enumerator<T>(_loneValue);
 
-                IEnumerator IEnumerable.GetEnumerator()
-                {
-                    return GetEnumerator();
-                }
+                IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
                 public T this[int index]
                 {
@@ -71,10 +50,7 @@ namespace Loretta.Utilities
                         return _loneValue;
                     }
 
-                    set
-                    {
-                        throw new NotSupportedException();
-                    }
+                    set => throw new NotSupportedException();
                 }
 
                 public int IndexOf(T item)
@@ -87,15 +63,9 @@ namespace Loretta.Utilities
                     return -1;
                 }
 
-                public void Insert(int index, T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public void Insert(int index, T item) => throw new NotSupportedException();
 
-                public void RemoveAt(int index)
-                {
-                    throw new NotSupportedException();
-                }
+                public void RemoveAt(int index) => throw new NotSupportedException();
             }
         }
     }

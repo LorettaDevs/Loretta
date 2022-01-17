@@ -34,10 +34,7 @@ namespace Loretta.CodeAnalysis
         /// This action may cause a parse to happen to recover the syntax node.
         /// </summary>
         /// <returns>The original referenced syntax node.</returns>
-        public virtual Task<SyntaxNode> GetSyntaxAsync(CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(GetSyntax(cancellationToken));
-        }
+        public virtual Task<SyntaxNode> GetSyntaxAsync(CancellationToken cancellationToken = default) => Task.FromResult(GetSyntax(cancellationToken));
 
         /// <summary>
         /// The location of this syntax reference.
@@ -46,9 +43,6 @@ namespace Loretta.CodeAnalysis
         /// <remarks>
         /// More performant than GetSyntax().GetLocation().
         /// </remarks>
-        internal Location GetLocation()
-        {
-            return SyntaxTree.GetLocation(Span);
-        }
+        internal Location GetLocation() => SyntaxTree.GetLocation(Span);
     }
 }

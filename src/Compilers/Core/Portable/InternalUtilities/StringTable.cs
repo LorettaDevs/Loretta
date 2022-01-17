@@ -93,19 +93,14 @@ namespace Loretta.Utilities
             return pool;
         }
 
-        public static StringTable GetInstance()
-        {
-            return s_staticPool.Allocate();
-        }
+        public static StringTable GetInstance() => s_staticPool.Allocate();
 
-        public void Free()
-        {
+        public void Free() =>
             // leave cache content in the cache, just return it to the pool
             // Array.Clear(this.localTable, 0, this.localTable.Length);
             // Array.Clear(sharedTable, 0, sharedTable.Length);
 
             _pool?.Free(this);
-        }
 
         #endregion // Poolable
 
@@ -561,7 +556,7 @@ namespace Loretta.Utilities
 
         private string AddItem(char[] chars, int start, int len, int hashCode)
         {
-            var text = new String(chars, start, len);
+            var text = new string(chars, start, len);
             AddCore(text, hashCode);
             return text;
         }
@@ -582,7 +577,7 @@ namespace Loretta.Utilities
 
         private string AddItem(char chars, int hashCode)
         {
-            var text = new String(chars, 1);
+            var text = new string(chars, 1);
             AddCore(text, hashCode);
             return text;
         }
@@ -725,26 +720,15 @@ namespace Loretta.Utilities
             Volatile.Write(ref arr[idx].Text, text);
         }
 
-        private static int LocalIdxFromHash(int hash)
-        {
-            return hash & LocalSizeMask;
-        }
+        private static int LocalIdxFromHash(int hash) => hash & LocalSizeMask;
 
-        private static int SharedIdxFromHash(int hash)
-        {
+        private static int SharedIdxFromHash(int hash) =>
             // we can afford to mix some more hash bits here
-            return (hash ^ (hash >> LocalSizeBits)) & SharedSizeMask;
-        }
+            (hash ^ (hash >> LocalSizeBits)) & SharedSizeMask;
 
-        private int LocalNextRandom()
-        {
-            return _localRandom++;
-        }
+        private int LocalNextRandom() => _localRandom++;
 
-        private static int SharedNextRandom()
-        {
-            return Interlocked.Increment(ref StringTable.s_sharedRandom);
-        }
+        private static int SharedNextRandom() => Interlocked.Increment(ref StringTable.s_sharedRandom);
 
         internal static bool TextEquals(string array, string text, int start, int length)
         {

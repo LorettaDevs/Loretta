@@ -736,16 +736,14 @@ namespace Loretta.CodeAnalysis
         private static bool ShouldRoundUp(
             bool lsbBit,
             bool roundBit,
-            bool hasTailBits)
-        {
+            bool hasTailBits) =>
             // If there are insignificant set bits, we need to round to the  
             // nearest; there are two cases:  
             // we round up if either [1] the value is slightly greater than the midpoint  
             // between two exactly representable values or [2] the value is exactly the  
             // midpoint between two exactly representable values and the greater of the  
             // two is even (this is "round-to-even").  
-            return roundBit && (hasTailBits || lsbBit);
-        }
+            roundBit && (hasTailBits || lsbBit);
 
         /// <summary>
         /// Multiply a BigInteger by the given power of two.

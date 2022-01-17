@@ -27,9 +27,7 @@ namespace Loretta.CodeAnalysis
                 SourceTextComparer.Instance.Equals(x.GetText(), y.GetText());
         }
 
-        public int GetHashCode(SyntaxTree obj)
-        {
-            return Hash.Combine(obj.FilePath.GetHashCode(), SourceTextComparer.Instance.GetHashCode(obj.GetText()));
-        }
+        public int GetHashCode(SyntaxTree obj) =>
+            Hash.Combine(obj.FilePath.GetHashCode(), SourceTextComparer.Instance.GetHashCode(obj.GetText()));
     }
 }

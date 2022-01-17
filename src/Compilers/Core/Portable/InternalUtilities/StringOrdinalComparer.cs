@@ -20,24 +20,17 @@ namespace Loretta.Utilities
         {
         }
 
-        bool IEqualityComparer<string>.Equals(string? a, string? b)
-        {
-            return StringOrdinalComparer.Equals(a, b);
-        }
+        bool IEqualityComparer<string>.Equals(string? a, string? b) => StringOrdinalComparer.Equals(a, b);
 
-        public static bool Equals(string? a, string? b)
-        {
+        public static bool Equals(string? a, string? b) =>
             // this is fast enough
-            return string.Equals(a, b);
-        }
+            string.Equals(a, b);
 
-        int IEqualityComparer<string>.GetHashCode(string s)
-        {
+        int IEqualityComparer<string>.GetHashCode(string s) =>
             // PERF: the default string hashcode is not always good or fast and cannot be changed for compat reasons.
             // We, however, can use anything we want in our dictionaries. 
             // Our typical scenario is a relatively short string (identifier)
             // FNV performs pretty well in such cases
-            return Hash.GetFNVHashCode(s);
-        }
+            Hash.GetFNVHashCode(s);
     }
 }

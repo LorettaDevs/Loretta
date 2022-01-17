@@ -18,40 +18,19 @@ namespace Loretta.Utilities
                 {
                 }
 
-                public void Add(T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public void Add(T item) => throw new NotSupportedException();
 
-                public void Clear()
-                {
-                    throw new NotSupportedException();
-                }
+                public void Clear() => throw new NotSupportedException();
 
-                public bool Contains(T item)
-                {
-                    return Underlying.Contains(item);
-                }
+                public bool Contains(T item) => Underlying.Contains(item);
 
-                public void CopyTo(T[] array, int arrayIndex)
-                {
-                    Underlying.CopyTo(array, arrayIndex);
-                }
+                public void CopyTo(T[] array, int arrayIndex) => Underlying.CopyTo(array, arrayIndex);
 
-                public int Count
-                {
-                    get
-                    {
-                        return Underlying.Count;
-                    }
-                }
+                public int Count => Underlying.Count;
 
                 public bool IsReadOnly => true;
 
-                public bool Remove(T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public bool Remove(T item) => throw new NotSupportedException();
             }
         }
     }

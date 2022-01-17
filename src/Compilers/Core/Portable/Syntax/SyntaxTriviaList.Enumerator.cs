@@ -150,15 +150,9 @@ namespace Loretta.CodeAnalysis
 
             object IEnumerator.Current => _enumerator.Current;
 
-            public bool MoveNext()
-            {
-                return _enumerator.MoveNext();
-            }
+            public bool MoveNext() => _enumerator.MoveNext();
 
-            public void Reset()
-            {
-                throw new NotSupportedException();
-            }
+            public void Reset() => throw new NotSupportedException();
 
             public void Dispose()
             {

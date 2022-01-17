@@ -21,33 +21,15 @@ namespace Loretta.CodeAnalysis
             _lineSpan = new FileLinePositionSpan(filePath, lineSpan);
         }
 
-        public override TextSpan SourceSpan
-        {
-            get
-            {
-                return _sourceSpan;
-            }
-        }
+        public override TextSpan SourceSpan => _sourceSpan;
 
         public string FilePath => _lineSpan.Path;
 
-        public override FileLinePositionSpan GetLineSpan()
-        {
-            return _lineSpan;
-        }
+        public override FileLinePositionSpan GetLineSpan() => _lineSpan;
 
-        public override LocationKind Kind
-        {
-            get
-            {
-                return LocationKind.ExternalFile;
-            }
-        }
+        public override LocationKind Kind => LocationKind.ExternalFile;
 
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as ExternalFileLocation);
-        }
+        public override bool Equals(object? obj) => Equals(obj as ExternalFileLocation);
 
         public bool Equals(ExternalFileLocation? obj)
         {
@@ -61,9 +43,6 @@ namespace Loretta.CodeAnalysis
                 && _lineSpan.Equals(obj._lineSpan);
         }
 
-        public override int GetHashCode()
-        {
-            return Hash.Combine(_lineSpan.GetHashCode(), _sourceSpan.GetHashCode());
-        }
+        public override int GetHashCode() => Hash.Combine(_lineSpan.GetHashCode(), _sourceSpan.GetHashCode());
     }
 }

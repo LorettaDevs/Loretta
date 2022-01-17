@@ -59,35 +59,17 @@ namespace Loretta.CodeAnalysis
         {
         }
 
-        internal SyntaxNode? Node
-        {
-            get
-            {
-                return _list.Node;
-            }
-        }
+        internal SyntaxNode? Node => _list.Node;
 
         /// <summary>
         /// The amount of nodes contained in this list.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return _count;
-            }
-        }
+        public int Count => _count;
 
         /// <summary>
         /// The amount of separators contained in this list.
         /// </summary>
-        public int SeparatorCount
-        {
-            get
-            {
-                return _separatorCount;
-            }
-        }
+        public int SeparatorCount => _separatorCount;
 
         /// <summary>
         /// Obtains a node from this list at the provided index.
@@ -148,26 +130,18 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Returns the sequence of just the separator tokens.
         /// </summary>
-        public IEnumerable<SyntaxToken> GetSeparators()
-        {
-            return _list.Where(n => n.IsToken).Select(n => n.AsToken());
-        }
+        public IEnumerable<SyntaxToken> GetSeparators() =>
+            _list.Where(n => n.IsToken).Select(n => n.AsToken());
 
         /// <summary>
         /// The absolute span of the list elements in characters, including the leading and trailing trivia of the first and last elements.
         /// </summary>
-        public TextSpan FullSpan
-        {
-            get { return _list.FullSpan; }
-        }
+        public TextSpan FullSpan => _list.FullSpan;
 
         /// <summary>
         /// The absolute span of the list elements in characters, not including the leading and trailing trivia of the first and last elements.
         /// </summary>
-        public TextSpan Span
-        {
-            get { return _list.Span; }
-        }
+        public TextSpan Span => _list.Span;
 
         /// <summary>
         /// Returns the string representation of the nodes in this list including separators but not including 
@@ -177,10 +151,7 @@ namespace Loretta.CodeAnalysis
         /// The string representation of the nodes in this list including separators but not including 
         /// the first node's leading trivia and the last node or token's trailing trivia.
         /// </returns>
-        public override string ToString()
-        {
-            return _list.ToString();
-        }
+        public override string ToString() => _list.ToString();
 
         /// <summary>
         /// Returns the full string representation of the nodes in this list including separators, 
@@ -190,19 +161,13 @@ namespace Loretta.CodeAnalysis
         /// The full string representation of the nodes in this list including separators including separators,
         /// the first node's leading trivia, and the last node or token's trailing trivia.
         /// </returns>
-        public string ToFullString()
-        {
-            return _list.ToFullString();
-        }
+        public string ToFullString() => _list.ToFullString();
 
         /// <summary>
         /// Returns the first node in this list.
         /// </summary>
         /// <returns></returns>
-        public TNode First()
-        {
-            return this[0];
-        }
+        public TNode First() => this[0];
 
         /// <summary>
         /// Returns the first node in this list if any, otherwise returns
@@ -223,10 +188,7 @@ namespace Loretta.CodeAnalysis
         /// Returns the last element in this list.
         /// </summary>
         /// <returns></returns>
-        public TNode Last()
-        {
-            return this[Count - 1];
-        }
+        public TNode Last() => this[Count - 1];
 
         /// <summary>
         /// Returns the last element in this list if any, otherwise returns
@@ -248,10 +210,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public bool Contains(TNode node)
-        {
-            return IndexOf(node) >= 0;
-        }
+        public bool Contains(TNode node) => IndexOf(node) >= 0;
 
         /// <summary>
         /// Returns the index of the provided node in this list.
@@ -342,10 +301,7 @@ namespace Loretta.CodeAnalysis
         /// Returns whether this list contains any elements.
         /// </summary>
         /// <returns></returns>
-        public bool Any()
-        {
-            return _list.Any();
-        }
+        public bool Any() => _list.Any();
 
         /// <summary>
         /// Returns whether this list contains any elements that pass the provided predicate.
@@ -369,10 +325,7 @@ namespace Loretta.CodeAnalysis
         /// Returns the entire list including the separators.
         /// </summary>
         /// <returns></returns>
-        public SyntaxNodeOrTokenList GetWithSeparators()
-        {
-            return _list;
-        }
+        public SyntaxNodeOrTokenList GetWithSeparators() => _list;
 
         /// <summary>
         /// Checks whether a list is equal to another.
@@ -380,10 +333,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(SeparatedSyntaxList<TNode> left, SeparatedSyntaxList<TNode> right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(SeparatedSyntaxList<TNode> left, SeparatedSyntaxList<TNode> right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Checks whether two lists are not equal.
@@ -391,46 +342,31 @@ namespace Loretta.CodeAnalysis
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(SeparatedSyntaxList<TNode> left, SeparatedSyntaxList<TNode> right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(SeparatedSyntaxList<TNode> left, SeparatedSyntaxList<TNode> right) =>
+            !left.Equals(right);
 
         /// <inheritdoc/>
-        public bool Equals(SeparatedSyntaxList<TNode> other)
-        {
-            return _list == other._list;
-        }
+        public bool Equals(SeparatedSyntaxList<TNode> other) => _list == other._list;
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return (obj is SeparatedSyntaxList<TNode> list) && Equals(list);
-        }
+        public override bool Equals(object? obj) =>
+            (obj is SeparatedSyntaxList<TNode> list) && Equals(list);
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return _list.GetHashCode();
-        }
+        public override int GetHashCode() => _list.GetHashCode();
 
         /// <summary>
         /// Creates a new list with the specified node added to the end.
         /// </summary>
         /// <param name="node">The node to add.</param>
-        public SeparatedSyntaxList<TNode> Add(TNode node)
-        {
-            return Insert(Count, node);
-        }
+        public SeparatedSyntaxList<TNode> Add(TNode node) => Insert(Count, node);
 
         /// <summary>
         /// Creates a new list with the specified nodes added to the end.
         /// </summary>
         /// <param name="nodes">The nodes to add.</param>
-        public SeparatedSyntaxList<TNode> AddRange(IEnumerable<TNode> nodes)
-        {
-            return InsertRange(Count, nodes);
-        }
+        public SeparatedSyntaxList<TNode> AddRange(IEnumerable<TNode> nodes) =>
+            InsertRange(Count, nodes);
 
         /// <summary>
         /// Creates a new list with the specified node inserted at the index.
@@ -643,26 +579,16 @@ namespace Loretta.CodeAnalysis
         }
 
         // for debugging
-        private TNode[] Nodes
-        {
-            get { return this.ToArray(); }
-        }
+        private TNode[] Nodes => this.ToArray();
 
-        private SyntaxNodeOrToken[] NodesWithSeparators
-        {
-            get { return _list.ToArray(); }
-        }
+        private SyntaxNodeOrToken[] NodesWithSeparators => _list.ToArray();
 
         /// <summary>
         /// Returns the enumerator for this list.
         /// </summary>
         /// <returns></returns>
 #pragma warning disable RS0041 // uses oblivious reference types
-        public Enumerator GetEnumerator()
-#pragma warning restore RS0041 // uses oblivious reference types
-        {
-            return new Enumerator(this);
-        }
+        public Enumerator GetEnumerator() => new Enumerator(this);
 
         IEnumerator<TNode> IEnumerable<TNode>.GetEnumerator()
         {

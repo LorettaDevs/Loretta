@@ -7,87 +7,39 @@ namespace Loretta.Utilities
 {
     internal static partial class SpecializedCollections
     {
-        public static IEnumerator<T> EmptyEnumerator<T>()
-        {
-            return Empty.Enumerator<T>.Instance;
-        }
+        public static IEnumerator<T> EmptyEnumerator<T>() => Empty.Enumerator<T>.Instance;
 
-        public static IEnumerable<T> EmptyEnumerable<T>()
-        {
-            return Empty.List<T>.Instance;
-        }
+        public static IEnumerable<T> EmptyEnumerable<T>() => Empty.List<T>.Instance;
 
-        public static ICollection<T> EmptyCollection<T>()
-        {
-            return Empty.List<T>.Instance;
-        }
+        public static ICollection<T> EmptyCollection<T>() => Empty.List<T>.Instance;
 
-        public static IList<T> EmptyList<T>()
-        {
-            return Empty.List<T>.Instance;
-        }
+        public static IList<T> EmptyList<T>() => Empty.List<T>.Instance;
 
-        public static IReadOnlyList<T> EmptyBoxedImmutableArray<T>()
-        {
-            return Empty.BoxedImmutableArray<T>.Instance;
-        }
+        public static IReadOnlyList<T> EmptyBoxedImmutableArray<T>() => Empty.BoxedImmutableArray<T>.Instance;
 
-        public static IReadOnlyList<T> EmptyReadOnlyList<T>()
-        {
-            return Empty.List<T>.Instance;
-        }
+        public static IReadOnlyList<T> EmptyReadOnlyList<T>() => Empty.List<T>.Instance;
 
-        public static ISet<T> EmptySet<T>()
-        {
-            return Empty.Set<T>.Instance;
-        }
+        public static ISet<T> EmptySet<T>() => Empty.Set<T>.Instance;
 
-        public static IReadOnlySet<T> EmptyReadOnlySet<T>()
-        {
-            return Empty.Set<T>.Instance;
-        }
+        public static IReadOnlySet<T> EmptyReadOnlySet<T>() => Empty.Set<T>.Instance;
 
         public static IDictionary<TKey, TValue> EmptyDictionary<TKey, TValue>()
-            where TKey : notnull
-        {
-            return Empty.Dictionary<TKey, TValue>.Instance;
-        }
+            where TKey : notnull => Empty.Dictionary<TKey, TValue>.Instance;
 
         public static IReadOnlyDictionary<TKey, TValue> EmptyReadOnlyDictionary<TKey, TValue>()
-            where TKey : notnull
-        {
-            return Empty.Dictionary<TKey, TValue>.Instance;
-        }
+            where TKey : notnull => Empty.Dictionary<TKey, TValue>.Instance;
 
-        public static IEnumerable<T> SingletonEnumerable<T>(T value)
-        {
-            return new Singleton.List<T>(value);
-        }
+        public static IEnumerable<T> SingletonEnumerable<T>(T value) => new Singleton.List<T>(value);
 
-        public static ICollection<T> SingletonCollection<T>(T value)
-        {
-            return new Singleton.List<T>(value);
-        }
+        public static ICollection<T> SingletonCollection<T>(T value) => new Singleton.List<T>(value);
 
-        public static IEnumerator<T> SingletonEnumerator<T>(T value)
-        {
-            return new Singleton.Enumerator<T>(value);
-        }
+        public static IEnumerator<T> SingletonEnumerator<T>(T value) => new Singleton.Enumerator<T>(value);
 
-        public static IReadOnlyList<T> SingletonReadOnlyList<T>(T value)
-        {
-            return new Singleton.List<T>(value);
-        }
+        public static IReadOnlyList<T> SingletonReadOnlyList<T>(T value) => new Singleton.List<T>(value);
 
-        public static IList<T> SingletonList<T>(T value)
-        {
-            return new Singleton.List<T>(value);
-        }
+        public static IList<T> SingletonList<T>(T value) => new Singleton.List<T>(value);
 
-        public static IEnumerable<T> ReadOnlyEnumerable<T>(IEnumerable<T> values)
-        {
-            return new ReadOnly.Enumerable<IEnumerable<T>, T>(values);
-        }
+        public static IEnumerable<T> ReadOnlyEnumerable<T>(IEnumerable<T> values) => new ReadOnly.Enumerable<IEnumerable<T>, T>(values);
 
         public static ICollection<T> ReadOnlyCollection<T>(ICollection<T>? collection)
         {

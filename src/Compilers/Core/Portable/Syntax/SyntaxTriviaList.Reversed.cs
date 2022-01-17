@@ -31,10 +31,7 @@ namespace Loretta.CodeAnalysis
             /// Returns the enumerator for this reversed trivia list.
             /// </summary>
             /// <returns></returns>
-            public Enumerator GetEnumerator()
-            {
-                return new Enumerator(in _list);
-            }
+            public Enumerator GetEnumerator() => new Enumerator(in _list);
 
             IEnumerator<SyntaxTrivia> IEnumerable<SyntaxTrivia>.GetEnumerator()
             {
@@ -58,22 +55,14 @@ namespace Loretta.CodeAnalysis
             }
 
             /// <inheritdoc/>
-            public override int GetHashCode()
-            {
-                return _list.GetHashCode();
-            }
+            public override int GetHashCode() => _list.GetHashCode();
 
             /// <inheritdoc/>
-            public override bool Equals(object? obj)
-            {
-                return obj is Reversed reversed && Equals(reversed);
-            }
+            public override bool Equals(object? obj) =>
+                obj is Reversed reversed && Equals(reversed);
 
             /// <inheritdoc/>
-            public bool Equals(Reversed other)
-            {
-                return _list.Equals(other._list);
-            }
+            public bool Equals(Reversed other) => _list.Equals(other._list);
 
             /// <summary>
             /// The enumerator for reversed trivia lists.
@@ -156,15 +145,9 @@ namespace Loretta.CodeAnalysis
 
                 object IEnumerator.Current => _enumerator.Current;
 
-                public bool MoveNext()
-                {
-                    return _enumerator.MoveNext();
-                }
+                public bool MoveNext() => _enumerator.MoveNext();
 
-                public void Reset()
-                {
-                    throw new NotSupportedException();
-                }
+                public void Reset() => throw new NotSupportedException();
 
                 public void Dispose()
                 {

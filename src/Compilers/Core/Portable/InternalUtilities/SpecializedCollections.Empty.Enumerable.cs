@@ -17,15 +17,9 @@ namespace Loretta.Utilities
                 // one extra instance field
                 private readonly IEnumerator<T> _enumerator = Enumerator<T>.Instance;
 
-                public IEnumerator<T> GetEnumerator()
-                {
-                    return _enumerator;
-                }
+                public IEnumerator<T> GetEnumerator() => _enumerator;
 
-                System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-                {
-                    return GetEnumerator();
-                }
+                System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
             }
         }
     }

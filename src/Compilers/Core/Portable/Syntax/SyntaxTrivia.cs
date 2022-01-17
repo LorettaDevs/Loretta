@@ -38,10 +38,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public int RawKind => UnderlyingNode?.RawKind ?? 0;
 
-        private string GetDebuggerDisplay()
-        {
-            return GetType().Name + " " + (UnderlyingNode?.KindText ?? "None") + " " + ToString();
-        }
+        private string GetDebuggerDisplay() => GetType().Name + " " + (UnderlyingNode?.KindText ?? "None") + " " + ToString();
 
         /// <summary>
         /// The language name that this trivia is syntax of.
@@ -117,10 +114,8 @@ namespace Loretta.CodeAnalysis
         /// The absolute span of this trivia in characters. If this trivia is a structured trivia then the returned span
         /// will include spans of any leading or trailing trivia present on the child non-terminal node of this trivia.
         /// </summary>
-        public TextSpan FullSpan
-        {
-            get { return UnderlyingNode != null ? new TextSpan(Position, UnderlyingNode.FullWidth) : default(TextSpan); }
-        }
+        public TextSpan FullSpan =>
+            UnderlyingNode != null ? new TextSpan(Position, UnderlyingNode.FullWidth) : default(TextSpan);
 
         /// <summary>
         /// Determines whether this trivia has any diagnostics on it. If this trivia is a structured trivia then the
@@ -137,10 +132,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether this trivia is a descendant of a structured trivia.
         /// </summary>
-        public bool IsPartOfStructuredTrivia()
-        {
-            return Token.Parent?.IsPartOfStructuredTrivia() ?? false;
-        }
+        public bool IsPartOfStructuredTrivia() =>
+            Token.Parent?.IsPartOfStructuredTrivia() ?? false;
 
         /// <summary>
         /// Determines whether this trivia or any of its structure has annotations.
@@ -150,26 +143,19 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines where this trivia has annotations of the specified annotation kind.
         /// </summary>
-        public bool HasAnnotations(string annotationKind)
-        {
-            return UnderlyingNode?.HasAnnotations(annotationKind) ?? false;
-        }
+        public bool HasAnnotations(string annotationKind) =>
+            UnderlyingNode?.HasAnnotations(annotationKind) ?? false;
 
         /// <summary>
         /// Determines where this trivia has any annotations of the specified annotation kinds.
         /// </summary>
-        public bool HasAnnotations(params string[] annotationKinds)
-        {
-            return UnderlyingNode?.HasAnnotations(annotationKinds) ?? false;
-        }
+        public bool HasAnnotations(params string[] annotationKinds) =>
+            UnderlyingNode?.HasAnnotations(annotationKinds) ?? false;
 
         /// <summary>
         /// Determines whether this trivia has the specific annotation.
         /// </summary>
-        public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation)
-        {
-            return UnderlyingNode?.HasAnnotation(annotation) ?? false;
-        }
+        public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation) => UnderlyingNode?.HasAnnotation(annotation) ?? false;
 
         /// <summary>
         /// Get all the annotations of the specified annotation kind.
@@ -204,10 +190,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <returns>The child non-terminal node representing the syntax tree structure under this structured
         /// trivia.</returns>
-        public SyntaxNode? GetStructure()
-        {
-            return HasStructure ? UnderlyingNode!.GetStructure(this) : null;
-        }
+        public SyntaxNode? GetStructure() =>
+            HasStructure ? UnderlyingNode!.GetStructure(this) : null;
 
         internal bool TryGetStructure([NotNullWhen(true)] out SyntaxNode? structure)
         {
@@ -221,10 +205,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <returns>The string representation of this trivia.</returns>
         /// <remarks>The length of the returned string is always the same as Span.Length</remarks>
-        public override string ToString()
-        {
-            return UnderlyingNode != null ? UnderlyingNode.ToString() : string.Empty;
-        }
+        public override string ToString() =>
+            UnderlyingNode != null ? UnderlyingNode.ToString() : string.Empty;
 
         /// <summary> 
         /// Returns the full string representation of this trivia. If this trivia is structured trivia then the returned string will
@@ -232,69 +214,49 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <returns>The full string representation of this trivia.</returns>
         /// <remarks>The length of the returned string is always the same as FullSpan.Length</remarks>
-        public string ToFullString()
-        {
-            return UnderlyingNode != null ? UnderlyingNode.ToFullString() : string.Empty;
-        }
+        public string ToFullString() => UnderlyingNode != null ? UnderlyingNode.ToFullString() : string.Empty;
 
         /// <summary>
         /// Writes the full text of this trivia to the specified TextWriter.
         /// </summary>
-        public void WriteTo(System.IO.TextWriter writer)
-        {
-            UnderlyingNode?.WriteTo(writer);
-        }
+        public void WriteTo(System.IO.TextWriter writer) => UnderlyingNode?.WriteTo(writer);
 
         /// <summary>
         /// Determines whether two <see cref="SyntaxTrivia"/>s are equal.
         /// </summary>
-        public static bool operator ==(SyntaxTrivia left, SyntaxTrivia right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(SyntaxTrivia left, SyntaxTrivia right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Determines whether two <see cref="SyntaxTrivia"/>s are unequal.
         /// </summary>
-        public static bool operator !=(SyntaxTrivia left, SyntaxTrivia right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(SyntaxTrivia left, SyntaxTrivia right) =>
+            !left.Equals(right);
 
         /// <summary>
         /// Determines whether the supplied <see cref="SyntaxTrivia"/> is equal to this
         /// <see cref="SyntaxTrivia"/>.
         /// </summary>
-        public bool Equals(SyntaxTrivia other)
-        {
-            return Token == other.Token && UnderlyingNode == other.UnderlyingNode && Position == other.Position && Index == other.Index;
-        }
+        public bool Equals(SyntaxTrivia other) => Token == other.Token && UnderlyingNode == other.UnderlyingNode && Position == other.Position && Index == other.Index;
 
         /// <summary>
         /// Determines whether the supplied <see cref="SyntaxTrivia"/> is equal to this
         /// <see cref="SyntaxTrivia"/>.
         /// </summary>
-        public override bool Equals(object? obj)
-        {
-            return obj is SyntaxTrivia trivia && Equals(trivia);
-        }
+        public override bool Equals(object? obj) =>
+            obj is SyntaxTrivia trivia && Equals(trivia);
 
         /// <summary>
         /// Serves as hash function for <see cref="SyntaxTrivia"/>.
         /// </summary>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(Token.GetHashCode(), Hash.Combine(UnderlyingNode, Hash.Combine(Position, Index)));
-        }
+        public override int GetHashCode() =>
+            Hash.Combine(Token.GetHashCode(), Hash.Combine(UnderlyingNode, Hash.Combine(Position, Index)));
 
         #region Annotations 
         /// <summary>
         /// Creates a new SyntaxTrivia with the specified annotations.
         /// </summary>
-        public SyntaxTrivia WithAdditionalAnnotations(params SyntaxAnnotation[] annotations)
-        {
-            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
-        }
+        public SyntaxTrivia WithAdditionalAnnotations(params SyntaxAnnotation[] annotations) => WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
 
         /// <summary>
         /// Creates a new SyntaxTrivia with the specified annotations.
@@ -320,10 +282,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new SyntaxTrivia without the specified annotations.
         /// </summary>
-        public SyntaxTrivia WithoutAnnotations(params SyntaxAnnotation[] annotations)
-        {
-            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
-        }
+        public SyntaxTrivia WithoutAnnotations(params SyntaxAnnotation[] annotations) =>
+            WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
 
         /// <summary>
         /// Creates a new SyntaxTrivia without the specified annotations.
@@ -395,22 +355,14 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// SyntaxTree which contains current SyntaxTrivia.
         /// </summary>
-        public SyntaxTree? SyntaxTree
-        {
-            get
-            {
-                return Token.SyntaxTree;
-            }
-        }
+        public SyntaxTree? SyntaxTree => Token.SyntaxTree;
 
         /// <summary>
         /// Get the location of this trivia.
         /// </summary>
-        public Location GetLocation()
-        {
+        public Location GetLocation() =>
             // https://github.com/dotnet/roslyn/issues/40773
-            return SyntaxTree != null ? SyntaxTree.GetLocation(Span) : Location.None;
-        }
+            SyntaxTree != null ? SyntaxTree.GetLocation(Span) : Location.None;
 
         /// <summary>
         /// Gets a list of all the diagnostics associated with this trivia.

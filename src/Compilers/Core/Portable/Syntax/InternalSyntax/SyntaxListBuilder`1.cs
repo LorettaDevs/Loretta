@@ -12,49 +12,25 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
         }
 
-        public static SyntaxListBuilder<TNode> Create()
-        {
-            return new SyntaxListBuilder<TNode>(8);
-        }
+        public static SyntaxListBuilder<TNode> Create() => new SyntaxListBuilder<TNode>(8);
 
         internal SyntaxListBuilder(SyntaxListBuilder builder)
         {
             _builder = builder;
         }
 
-        public bool IsNull
-        {
-            get
-            {
-                return _builder == null;
-            }
-        }
+        public bool IsNull => _builder == null;
 
-        public int Count
-        {
-            get
-            {
-                return _builder.Count;
-            }
-        }
+        public int Count => _builder.Count;
 
         public TNode? this[int index]
         {
-            get
-            {
-                return (TNode?) _builder[index];
-            }
+            get => (TNode?) _builder[index];
 
-            set
-            {
-                _builder[index] = value;
-            }
+            set => _builder[index] = value;
         }
 
-        public void Clear()
-        {
-            _builder.Clear();
-        }
+        public void Clear() => _builder.Clear();
 
         public SyntaxListBuilder<TNode> Add(TNode node)
         {
@@ -62,35 +38,19 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return this;
         }
 
-        public void AddRange(TNode[] items, int offset, int length)
-        {
+        public void AddRange(TNode[] items, int offset, int length) =>
             _builder.AddRange(items, offset, length);
-        }
 
-        public void AddRange(SyntaxList<TNode> nodes)
-        {
-            _builder.AddRange(nodes);
-        }
+        public void AddRange(SyntaxList<TNode> nodes) => _builder.AddRange(nodes);
 
-        public void AddRange(SyntaxList<TNode> nodes, int offset, int length)
-        {
+        public void AddRange(SyntaxList<TNode> nodes, int offset, int length) =>
             _builder.AddRange(nodes, offset, length);
-        }
 
-        public bool Any(int kind)
-        {
-            return _builder.Any(kind);
-        }
+        public bool Any(int kind) => _builder.Any(kind);
 
-        public SyntaxList<TNode> ToList()
-        {
-            return _builder.ToList();
-        }
+        public SyntaxList<TNode> ToList() => _builder.ToList();
 
-        public GreenNode? ToListNode()
-        {
-            return _builder.ToListNode();
-        }
+        public GreenNode? ToListNode() => _builder.ToListNode();
 
         public static implicit operator SyntaxListBuilder(SyntaxListBuilder<TNode> builder)
         {
@@ -107,9 +67,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return default(SyntaxList<TNode>);
         }
 
-        public SyntaxList<TDerived> ToList<TDerived>() where TDerived : GreenNode
-        {
-            return new SyntaxList<TDerived>(ToListNode());
-        }
+        public SyntaxList<TDerived> ToList<TDerived>() where TDerived : GreenNode =>
+            new SyntaxList<TDerived>(ToListNode());
     }
 }

@@ -25,10 +25,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
             _pool = pool!;
         }
 
-        public int Length
-        {
-            get { return Builder.Length; }
-        }
+        public int Length => Builder.Length;
 
         public void Free()
         {
@@ -47,10 +44,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
         }
 
         [System.Obsolete("Consider calling ToStringAndFree instead.")]
-        public new string ToString()
-        {
-            return Builder.ToString();
-        }
+        public new string ToString() => Builder.ToString();
 
         public string ToStringAndFree()
         {

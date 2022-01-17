@@ -26,13 +26,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets the number of children contained in the <see cref="ChildSyntaxList"/>.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return _count;
-            }
-        }
+        public int Count => _count;
 
         internal static int CountNodes(GreenNode green)
         {
@@ -74,15 +68,9 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        internal SyntaxNode? Node
-        {
-            get { return _node; }
-        }
+        internal SyntaxNode? Node => _node;
 
-        private static int Occupancy(GreenNode green)
-        {
-            return green.IsList ? green.SlotCount : 1;
-        }
+        private static int Occupancy(GreenNode green) => green.IsList ? green.SlotCount : 1;
 
         /// <summary>
         /// internal indexer that does not verify index.
@@ -296,22 +284,13 @@ namespace Loretta.CodeAnalysis
         }
 
         // for debugging
-        private SyntaxNodeOrToken[] Nodes
-        {
-            get
-            {
-                return this.ToArray();
-            }
-        }
+        private SyntaxNodeOrToken[] Nodes => this.ToArray();
 
         /// <summary>
         /// Checks whether this list contains any elements.
         /// </summary>
         /// <returns></returns>
-        public bool Any()
-        {
-            return _count != 0;
-        }
+        public bool Any() => _count != 0;
 
         /// <summary>
         /// Returns the first child in the list.
@@ -388,42 +367,30 @@ namespace Loretta.CodeAnalysis
         /// <summary>Determines whether the specified object is equal to the current instance.</summary>
         /// <returns>true if the specified object is a <see cref="ChildSyntaxList" /> structure and is equal to the current instance; otherwise, false.</returns>
         /// <param name="obj">The object to be compared with the current instance.</param>
-        public override bool Equals(object? obj)
-        {
-            return obj is ChildSyntaxList list && Equals(list);
-        }
+        public override bool Equals(object? obj) =>
+            obj is ChildSyntaxList list && Equals(list);
 
         /// <summary>Determines whether the specified <see cref="ChildSyntaxList" /> structure is equal to the current instance.</summary>
         /// <returns>true if the specified <see cref="ChildSyntaxList" /> structure is equal to the current instance; otherwise, false.</returns>
         /// <param name="other">The <see cref="ChildSyntaxList" /> structure to be compared with the current instance.</param>
-        public bool Equals(ChildSyntaxList other)
-        {
-            return _node == other._node;
-        }
+        public bool Equals(ChildSyntaxList other) => _node == other._node;
 
         /// <summary>Returns the hash code for the current instance.</summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
-        public override int GetHashCode()
-        {
-            return _node?.GetHashCode() ?? 0;
-        }
+        public override int GetHashCode() => _node?.GetHashCode() ?? 0;
 
         /// <summary>Indicates whether two <see cref="ChildSyntaxList" /> structures are equal.</summary>
         /// <returns>true if <paramref name="list1" /> is equal to <paramref name="list2" />; otherwise, false.</returns>
         /// <param name="list1">The <see cref="ChildSyntaxList" /> structure on the left side of the equality operator.</param>
         /// <param name="list2">The <see cref="ChildSyntaxList" /> structure on the right side of the equality operator.</param>
-        public static bool operator ==(ChildSyntaxList list1, ChildSyntaxList list2)
-        {
-            return list1.Equals(list2);
-        }
+        public static bool operator ==(ChildSyntaxList list1, ChildSyntaxList list2) =>
+            list1.Equals(list2);
 
         /// <summary>Indicates whether two <see cref="ChildSyntaxList" /> structures are unequal.</summary>
         /// <returns>true if <paramref name="list1" /> is equal to <paramref name="list2" />; otherwise, false.</returns>
         /// <param name="list1">The <see cref="ChildSyntaxList" /> structure on the left side of the inequality operator.</param>
         /// <param name="list2">The <see cref="ChildSyntaxList" /> structure on the right side of the inequality operator.</param>
-        public static bool operator !=(ChildSyntaxList list1, ChildSyntaxList list2)
-        {
-            return !list1.Equals(list2);
-        }
+        public static bool operator !=(ChildSyntaxList list1, ChildSyntaxList list2) =>
+            !list1.Equals(list2);
     }
 }

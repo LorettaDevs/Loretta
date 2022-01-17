@@ -18,7 +18,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// A structure for enumerating a <see cref="SyntaxTokenList"/>
         /// </summary>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         [StructLayout(LayoutKind.Auto)]
         public struct Enumerator
         {
@@ -117,16 +119,10 @@ namespace Loretta.CodeAnalysis
             }
 
             /// <inheritdoc/>
-            public override bool Equals(object? obj)
-            {
-                throw new NotSupportedException();
-            }
+            public override bool Equals(object? obj) => throw new NotSupportedException();
 
             /// <inheritdoc/>
-            public override int GetHashCode()
-            {
-                throw new NotSupportedException();
-            }
+            public override int GetHashCode() => throw new NotSupportedException();
         }
 
         private class EnumeratorImpl : IEnumerator<SyntaxToken>
@@ -143,15 +139,9 @@ namespace Loretta.CodeAnalysis
 
             object IEnumerator.Current => _enumerator.Current;
 
-            public bool MoveNext()
-            {
-                return _enumerator.MoveNext();
-            }
+            public bool MoveNext() => _enumerator.MoveNext();
 
-            public void Reset()
-            {
-                throw new NotSupportedException();
-            }
+            public void Reset() => throw new NotSupportedException();
 
             public void Dispose()
             {

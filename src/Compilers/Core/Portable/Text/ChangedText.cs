@@ -98,55 +98,26 @@ namespace Loretta.CodeAnalysis.Text
             }
         }
 
-        public override Encoding? Encoding
-        {
-            get { return _newText.Encoding; }
-        }
+        public override Encoding? Encoding => _newText.Encoding;
 
-        public IEnumerable<TextChangeRange> Changes
-        {
-            get { return _info.ChangeRanges; }
-        }
+        public IEnumerable<TextChangeRange> Changes => _info.ChangeRanges;
 
-        public override int Length
-        {
-            get { return _newText.Length; }
-        }
+        public override int Length => _newText.Length;
 
-        internal override int StorageSize
-        {
-            get { return _newText.StorageSize; }
-        }
+        internal override int StorageSize => _newText.StorageSize;
 
-        internal override ImmutableArray<SourceText> Segments
-        {
-            get { return _newText.Segments; }
-        }
+        internal override ImmutableArray<SourceText> Segments => _newText.Segments;
 
-        internal override SourceText StorageKey
-        {
-            get { return _newText.StorageKey; }
-        }
+        internal override SourceText StorageKey => _newText.StorageKey;
 
-        public override char this[int position]
-        {
-            get { return _newText[position]; }
-        }
+        public override char this[int position] => _newText[position];
 
-        public override string ToString(TextSpan span)
-        {
-            return _newText.ToString(span);
-        }
+        public override string ToString(TextSpan span) => _newText.ToString(span);
 
-        public override SourceText GetSubText(TextSpan span)
-        {
-            return _newText.GetSubText(span);
-        }
+        public override SourceText GetSubText(TextSpan span) => _newText.GetSubText(span);
 
-        public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count)
-        {
+        public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count) =>
             _newText.CopyTo(sourceIndex, destination, destinationIndex, count);
-        }
 
         public override SourceText WithChanges(IEnumerable<TextChange> changes)
         {

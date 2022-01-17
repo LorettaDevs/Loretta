@@ -83,20 +83,14 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 array[offset + 2].Value = _child2;
             }
 
-            internal override SyntaxNode CreateRed(SyntaxNode? parent, int position)
-            {
-                return new Syntax.SyntaxList.WithThreeChildren(this, parent, position);
-            }
+            internal override SyntaxNode CreateRed(SyntaxNode? parent, int position) =>
+                new Syntax.SyntaxList.WithThreeChildren(this, parent, position);
 
-            internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors)
-            {
-                return new WithThreeChildren(errors, GetAnnotations(), _child0, _child1, _child2);
-            }
+            internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors) =>
+                new WithThreeChildren(errors, GetAnnotations(), _child0, _child1, _child2);
 
-            internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
-            {
-                return new WithThreeChildren(GetDiagnostics(), annotations, _child0, _child1, _child2);
-            }
+            internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations) =>
+                new WithThreeChildren(GetDiagnostics(), annotations, _child0, _child1, _child2);
         }
     }
 }

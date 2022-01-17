@@ -15,20 +15,12 @@ namespace Loretta.CodeAnalysis
         {
         }
 
-        public override LocationKind Kind
-        {
-            get { return LocationKind.None; }
-        }
+        public override LocationKind Kind => LocationKind.None;
 
-        public override bool Equals(object? obj)
-        {
-            return (object) this == obj;
-        }
+        public override bool Equals(object? obj) => (object) this == obj;
 
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() =>
             // arbitrary number, since all NoLocation's are equal
-            return 0x16487756;
-        }
+            0x16487756;
     }
 }

@@ -17,20 +17,12 @@ namespace Loretta.Utilities
         {
         }
 
-        bool IEqualityComparer<object?>.Equals(object? a, object? b)
-        {
-            return a == b;
-        }
+        bool IEqualityComparer<object?>.Equals(object? a, object? b) => a == b;
 
-        int IEqualityComparer<object?>.GetHashCode(object? a)
-        {
-            return ReferenceEqualityComparer.GetHashCode(a);
-        }
+        int IEqualityComparer<object?>.GetHashCode(object? a) => ReferenceEqualityComparer.GetHashCode(a);
 
-        public static int GetHashCode(object? a)
-        {
+        public static int GetHashCode(object? a) =>
             // https://github.com/dotnet/roslyn/issues/41539
-            return RuntimeHelpers.GetHashCode(a!);
-        }
+            RuntimeHelpers.GetHashCode(a!);
     }
 }

@@ -17,10 +17,7 @@ namespace Loretta.CodeAnalysis
     [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
     internal abstract class GreenNode : IObjectWritable
     {
-        private string GetDebuggerDisplay()
-        {
-            return GetType().Name + " " + KindText + " " + ToString();
-        }
+        private string GetDebuggerDisplay() => GetType().Name + " " + KindText + " " + ToString();
 
         internal const int ListKind = 1;
 
@@ -109,18 +106,9 @@ namespace Loretta.CodeAnalysis
         public abstract string Language { get; }
 
         #region Kind 
-        public int RawKind
-        {
-            get { return _kind; }
-        }
+        public int RawKind => _kind;
 
-        public bool IsList
-        {
-            get
-            {
-                return RawKind == ListKind;
-            }
-        }
+        public bool IsList => RawKind == ListKind;
 
         public abstract string KindText { get; }
 
@@ -147,10 +135,7 @@ namespace Loretta.CodeAnalysis
                 return count;
             }
 
-            protected set
-            {
-                _slotCount = (byte) value;
-            }
+            protected set => _slotCount = (byte) value;
         }
 
         internal abstract GreenNode? GetSlot(int index);
@@ -163,10 +148,7 @@ namespace Loretta.CodeAnalysis
         }
 
         // for slot counts >= byte.MaxValue
-        protected virtual int GetSlotCount()
-        {
-            return _slotCount;
-        }
+        protected virtual int GetSlotCount() => _slotCount;
 
         public virtual int GetSlotOffset(int index)
         {
@@ -183,10 +165,8 @@ namespace Loretta.CodeAnalysis
             return offset;
         }
 
-        internal Syntax.InternalSyntax.ChildSyntaxList ChildNodesAndTokens()
-        {
-            return new Syntax.InternalSyntax.ChildSyntaxList(this);
-        }
+        internal Syntax.InternalSyntax.ChildSyntaxList ChildNodesAndTokens() =>
+            new Syntax.InternalSyntax.ChildSyntaxList(this);
 
         /// <summary>
         /// Enumerates all nodes of the tree rooted by this node (including this node).
@@ -274,116 +254,42 @@ namespace Loretta.CodeAnalysis
             InheritMask = ContainsDiagnostics | ContainsStructuredTrivia | ContainsDirectives | ContainsSkippedText | ContainsAnnotations | IsNotMissing,
         }
 
-        internal NodeFlags Flags
-        {
-            get { return flags; }
-        }
+        internal NodeFlags Flags => flags;
 
-        internal void SetFlags(NodeFlags flags)
-        {
-            this.flags |= flags;
-        }
+        internal void SetFlags(NodeFlags flags) => this.flags |= flags;
 
-        internal void ClearFlags(NodeFlags flags)
-        {
-            this.flags &= ~flags;
-        }
+        internal void ClearFlags(NodeFlags flags) => this.flags &= ~flags;
 
-        internal bool IsMissing
-        {
-            get
-            {
+        internal bool IsMissing =>
                 // flag has reversed meaning hence "=="
-                return (flags & NodeFlags.IsNotMissing) == 0;
-            }
-        }
+                (flags & NodeFlags.IsNotMissing) == 0;
 
-        internal bool ParsedInAsync
-        {
-            get
-            {
-                return (flags & NodeFlags.FactoryContextIsInAsync) != 0;
-            }
-        }
+        internal bool ParsedInAsync => (flags & NodeFlags.FactoryContextIsInAsync) != 0;
 
-        internal bool ParsedInQuery
-        {
-            get
-            {
-                return (flags & NodeFlags.FactoryContextIsInQuery) != 0;
-            }
-        }
+        internal bool ParsedInQuery => (flags & NodeFlags.FactoryContextIsInQuery) != 0;
 
-        internal bool ParsedInIterator
-        {
-            get
-            {
-                return (flags & NodeFlags.FactoryContextIsInIterator) != 0;
-            }
-        }
+        internal bool ParsedInIterator => (flags & NodeFlags.FactoryContextIsInIterator) != 0;
 
-        public bool ContainsSkippedText
-        {
-            get
-            {
-                return (flags & NodeFlags.ContainsSkippedText) != 0;
-            }
-        }
+        public bool ContainsSkippedText => (flags & NodeFlags.ContainsSkippedText) != 0;
 
-        public bool ContainsStructuredTrivia
-        {
-            get
-            {
-                return (flags & NodeFlags.ContainsStructuredTrivia) != 0;
-            }
-        }
+        public bool ContainsStructuredTrivia => (flags & NodeFlags.ContainsStructuredTrivia) != 0;
 
-        public bool ContainsDirectives
-        {
-            get
-            {
-                return (flags & NodeFlags.ContainsDirectives) != 0;
-            }
-        }
+        public bool ContainsDirectives => (flags & NodeFlags.ContainsDirectives) != 0;
 
-        public bool ContainsDiagnostics
-        {
-            get
-            {
-                return (flags & NodeFlags.ContainsDiagnostics) != 0;
-            }
-        }
+        public bool ContainsDiagnostics => (flags & NodeFlags.ContainsDiagnostics) != 0;
 
-        public bool ContainsAnnotations
-        {
-            get
-            {
-                return (flags & NodeFlags.ContainsAnnotations) != 0;
-            }
-        }
+        public bool ContainsAnnotations => (flags & NodeFlags.ContainsAnnotations) != 0;
         #endregion
 
         #region Spans
         public int FullWidth
         {
-            get
-            {
-                return _fullWidth;
-            }
+            get => _fullWidth;
 
-            protected set
-            {
-                _fullWidth = value;
-            }
+            protected set => _fullWidth = value;
         }
 
-        public virtual int Width
-        {
-            get
-            {
-                return _fullWidth - GetLeadingTriviaWidth() - GetTrailingTriviaWidth();
-            }
-        }
+        public virtual int Width => _fullWidth - GetLeadingTriviaWidth() - GetTrailingTriviaWidth();
 
         public virtual int GetLeadingTriviaWidth()
         {
@@ -399,26 +305,14 @@ namespace Loretta.CodeAnalysis
                 0;
         }
 
-        public bool HasLeadingTrivia
-        {
-            get
-            {
-                return GetLeadingTriviaWidth() != 0;
-            }
-        }
+        public bool HasLeadingTrivia => GetLeadingTriviaWidth() != 0;
 
-        public bool HasTrailingTrivia
-        {
-            get
-            {
-                return GetTrailingTriviaWidth() != 0;
-            }
-        }
+        public bool HasTrailingTrivia => GetTrailingTriviaWidth() != 0;
         #endregion
 
         #region Serialization 
         // use high-bit on Kind to identify serialization of extra info
-        private const UInt16 ExtendedSerializationInfoMask = unchecked((UInt16) (1u << 15));
+        private const ushort ExtendedSerializationInfoMask = unchecked((ushort) (1u << 15));
 
         internal GreenNode(ObjectReader reader)
         {
@@ -447,14 +341,11 @@ namespace Loretta.CodeAnalysis
 
         internal virtual bool ShouldReuseInSerialization => IsCacheable;
 
-        void IObjectWritable.WriteTo(ObjectWriter writer)
-        {
-            WriteTo(writer);
-        }
+        void IObjectWritable.WriteTo(ObjectWriter writer) => WriteTo(writer);
 
         internal virtual void WriteTo(ObjectWriter writer)
         {
-            var kindBits = (UInt16) _kind;
+            var kindBits = (ushort) _kind;
             var hasDiagnostics = GetDiagnostics().Length > 0;
             var hasAnnotations = GetAnnotations().Length > 0;
 
@@ -642,10 +533,8 @@ namespace Loretta.CodeAnalysis
             return sb.ToStringAndFree();
         }
 
-        public void WriteTo(System.IO.TextWriter writer)
-        {
+        public void WriteTo(System.IO.TextWriter writer) =>
             WriteTo(writer, leading: true, trailing: true);
-        }
 
         protected internal void WriteTo(TextWriter writer, bool leading, bool trailing)
         {
@@ -731,35 +620,25 @@ namespace Loretta.CodeAnalysis
             return lastIndex;
         }
 
-        protected virtual void WriteTriviaTo(TextWriter writer)
-        {
+        protected virtual void WriteTriviaTo(TextWriter writer) =>
             throw new NotImplementedException();
-        }
 
-        protected virtual void WriteTokenTo(TextWriter writer, bool leading, bool trailing)
-        {
+        protected virtual void WriteTokenTo(TextWriter writer, bool leading, bool trailing) =>
             throw new NotImplementedException();
-        }
 
         #endregion
 
         #region Tokens 
 
-        public virtual int RawContextualKind { get { return RawKind; } }
-        public virtual object? GetValue() { return null; }
-        public virtual string GetValueText() { return string.Empty; }
-        public virtual GreenNode? GetLeadingTriviaCore() { return null; }
-        public virtual GreenNode? GetTrailingTriviaCore() { return null; }
+        public virtual int RawContextualKind => RawKind;
+        public virtual object? GetValue() => null;
+        public virtual string GetValueText() => string.Empty;
+        public virtual GreenNode? GetLeadingTriviaCore() => null;
+        public virtual GreenNode? GetTrailingTriviaCore() => null;
 
-        public virtual GreenNode WithLeadingTrivia(GreenNode? trivia)
-        {
-            return this;
-        }
+        public virtual GreenNode WithLeadingTrivia(GreenNode? trivia) => this;
 
-        public virtual GreenNode WithTrailingTrivia(GreenNode? trivia)
-        {
-            return this;
-        }
+        public virtual GreenNode WithTrailingTrivia(GreenNode? trivia) => this;
 
         internal GreenNode? GetFirstTerminal()
         {
@@ -960,10 +839,7 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        public SyntaxNode CreateRed()
-        {
-            return CreateRed(null, 0);
-        }
+        public SyntaxNode CreateRed() => CreateRed(null, 0);
 
         internal abstract SyntaxNode CreateRed(SyntaxNode? parent, int position);
 
@@ -997,7 +873,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            return code & Int32.MaxValue;
+            return code & int.MaxValue;
         }
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1)

@@ -10,17 +10,21 @@ namespace Loretta.Utilities
     {
         [Conditional("DEBUG")]
         [DoesNotReturn]
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS8763 // A method marked [DoesNotReturn] should not return.
         public static void Fail(string? message) =>
             Debug.Fail(message);
 #pragma warning restore CS8763 // A method marked [DoesNotReturn] should not return.
+#pragma warning restore IDE0079 // Remove unnecessary suppression
 
         [Conditional("DEBUG")]
         [DoesNotReturn]
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS8763 // A method marked [DoesNotReturn] should not return.
         public static void Fail(string? message, string? detailMessage) =>
             Debug.Fail(message, detailMessage);
 #pragma warning restore CS8763 // A method marked [DoesNotReturn] should not return.
+#pragma warning restore IDE0079 // Remove unnecessary suppression
 
         /// <inheritdoc cref="LorettaDebug.Assert(bool)"/>
         [Conditional("DEBUG")]

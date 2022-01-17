@@ -682,19 +682,13 @@ namespace Loretta.Utilities
             return instance;
         }
 
-        private static Exception DeserializationReadIncorrectNumberOfValuesException(string typeName)
-        {
-            throw new InvalidOperationException(String.Format(Resources.Deserialization_reader_for_0_read_incorrect_number_of_values, typeName));
-        }
+        private static Exception DeserializationReadIncorrectNumberOfValuesException(string typeName) =>
+            throw new InvalidOperationException(string.Format(Resources.Deserialization_reader_for_0_read_incorrect_number_of_values, typeName));
 
-        private static Exception NoSerializationTypeException(string typeName)
-        {
-            return new InvalidOperationException(string.Format(Resources.The_type_0_is_not_understood_by_the_serialization_binder, typeName));
-        }
+        private static Exception NoSerializationTypeException(string typeName) =>
+            new InvalidOperationException(string.Format(Resources.The_type_0_is_not_understood_by_the_serialization_binder, typeName));
 
-        private static Exception NoSerializationReaderException(string typeName)
-        {
-            return new InvalidOperationException(string.Format(Resources.Cannot_serialize_type_0, typeName));
-        }
+        private static Exception NoSerializationReaderException(string typeName) =>
+            new InvalidOperationException(string.Format(Resources.Cannot_serialize_type_0, typeName));
     }
 }

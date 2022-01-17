@@ -33,10 +33,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public virtual TextLine GetLineFromPosition(int position)
-        {
-            return this[IndexOf(position)];
-        }
+        public virtual TextLine GetLineFromPosition(int position) => this[IndexOf(position)];
 
         /// <summary>
         /// Gets a <see cref="LinePosition"/> corresponding to a character position.
@@ -50,50 +47,37 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Convert a <see cref="TextSpan"/> to a <see cref="LinePositionSpan"/>.
         /// </summary>
-        public LinePositionSpan GetLinePositionSpan(TextSpan span)
-        {
-            return new LinePositionSpan(GetLinePosition(span.Start), GetLinePosition(span.End));
-        }
+        public LinePositionSpan GetLinePositionSpan(TextSpan span) =>
+            new LinePositionSpan(GetLinePosition(span.Start), GetLinePosition(span.End));
 
         /// <summary>
         /// Convert a <see cref="LinePosition"/> to a position.
         /// </summary>
-        public int GetPosition(LinePosition position)
-        {
-            return this[position.Line].Start + position.Character;
-        }
+        public int GetPosition(LinePosition position) =>
+            this[position.Line].Start + position.Character;
 
         /// <summary>
         /// Convert a <see cref="LinePositionSpan"/> to <see cref="TextSpan"/>.
         /// </summary>
-        public TextSpan GetTextSpan(LinePositionSpan span)
-        {
-            return TextSpan.FromBounds(GetPosition(span.Start), GetPosition(span.End));
-        }
+        public TextSpan GetTextSpan(LinePositionSpan span) =>
+            TextSpan.FromBounds(GetPosition(span.Start), GetPosition(span.End));
 
         /// <summary>
         /// Returns the enumerator for this text line collection.
         /// </summary>
         /// <returns></returns>
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
+        public Enumerator GetEnumerator() => new Enumerator(this);
 
-        IEnumerator<TextLine> IEnumerable<TextLine>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator<TextLine> IEnumerable<TextLine>.GetEnumerator() => GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
         /// An enumerator for <see cref="TextLineCollection"/>.
         /// </summary>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         public struct Enumerator : IEnumerator<TextLine>, IEnumerator
         {
             private readonly TextLineCollection _lines;
@@ -134,15 +118,9 @@ namespace Loretta.CodeAnalysis.Text
                 return false;
             }
 
-            object IEnumerator.Current
-            {
-                get { return Current; }
-            }
+            object IEnumerator.Current => Current;
 
-            bool IEnumerator.MoveNext()
-            {
-                return MoveNext();
-            }
+            bool IEnumerator.MoveNext() => MoveNext();
 
             void IEnumerator.Reset()
             {
@@ -153,16 +131,10 @@ namespace Loretta.CodeAnalysis.Text
             }
 
             /// <inheritdoc/>
-            public override bool Equals(object? obj)
-            {
-                throw new NotSupportedException();
-            }
+            public override bool Equals(object? obj) => throw new NotSupportedException();
 
             /// <inheritdoc/>
-            public override int GetHashCode()
-            {
-                throw new NotSupportedException();
-            }
+            public override int GetHashCode() => throw new NotSupportedException();
         }
     }
 }

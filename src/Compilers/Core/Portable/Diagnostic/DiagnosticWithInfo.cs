@@ -28,82 +28,33 @@ namespace Loretta.CodeAnalysis
             _isSuppressed = isSuppressed;
         }
 
-        public override Location Location
-        {
-            get { return _location; }
-        }
+        public override Location Location => _location;
 
-        public override IReadOnlyList<Location> AdditionalLocations
-        {
-            get { return Info.AdditionalLocations; }
-        }
+        public override IReadOnlyList<Location> AdditionalLocations => Info.AdditionalLocations;
 
-        internal override IReadOnlyList<string> CustomTags
-        {
-            get
-            {
-                return Info.CustomTags;
-            }
-        }
+        internal override IReadOnlyList<string> CustomTags => Info.CustomTags;
 
-        public override DiagnosticDescriptor Descriptor
-        {
-            get
-            {
-                return Info.Descriptor;
-            }
-        }
+        public override DiagnosticDescriptor Descriptor => Info.Descriptor;
 
-        public override string Id
-        {
-            get { return Info.MessageIdentifier; }
-        }
+        public override string Id => Info.MessageIdentifier;
 
-        internal override string Category
-        {
-            get { return Info.Category; }
-        }
+        internal override string Category => Info.Category;
 
-        internal sealed override int Code
-        {
-            get { return Info.Code; }
-        }
+        internal sealed override int Code => Info.Code;
 
-        public sealed override DiagnosticSeverity Severity
-        {
-            get { return Info.Severity; }
-        }
+        public sealed override DiagnosticSeverity Severity => Info.Severity;
 
-        public sealed override DiagnosticSeverity DefaultSeverity
-        {
-            get { return Info.DefaultSeverity; }
-        }
+        public sealed override DiagnosticSeverity DefaultSeverity => Info.DefaultSeverity;
 
-        internal sealed override bool IsEnabledByDefault
-        {
-            // All compiler errors and warnings are enabled by default.
-            get { return true; }
-        }
+        internal sealed override bool IsEnabledByDefault => true;
 
-        public override bool IsSuppressed
-        {
-            get { return _isSuppressed; }
-        }
+        public override bool IsSuppressed => _isSuppressed;
 
-        public sealed override int WarningLevel
-        {
-            get { return Info.WarningLevel; }
-        }
+        public sealed override int WarningLevel => Info.WarningLevel;
 
-        public override string GetMessage(IFormatProvider? formatProvider = null)
-        {
-            return Info.GetMessage(formatProvider);
-        }
+        public override string GetMessage(IFormatProvider? formatProvider = null) => Info.GetMessage(formatProvider);
 
-        internal override IReadOnlyList<object?> Arguments
-        {
-            get { return Info.Arguments; }
-        }
+        internal override IReadOnlyList<object?> Arguments => Info.Arguments;
 
         /// <summary>
         /// Get the information about the diagnostic: the code, severity, message, etc.
@@ -134,15 +85,9 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        public override int GetHashCode()
-        {
-            return Hash.Combine(Location.GetHashCode(), Info.GetHashCode());
-        }
+        public override int GetHashCode() => Hash.Combine(Location.GetHashCode(), Info.GetHashCode());
 
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as Diagnostic);
-        }
+        public override bool Equals(object? obj) => Equals(obj as Diagnostic);
 
         public override bool Equals(Diagnostic? obj)
         {
@@ -217,9 +162,6 @@ namespace Loretta.CodeAnalysis
             return this;
         }
 
-        internal sealed override bool IsNotConfigurable()
-        {
-            return Info.IsNotConfigurable();
-        }
+        internal sealed override bool IsNotConfigurable() => Info.IsNotConfigurable();
     }
 }

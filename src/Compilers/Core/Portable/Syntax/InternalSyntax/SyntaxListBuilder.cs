@@ -17,27 +17,15 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             _nodes = new ArrayElement<GreenNode?>[size];
         }
 
-        public static SyntaxListBuilder Create()
-        {
-            return new SyntaxListBuilder(8);
-        }
+        public static SyntaxListBuilder Create() => new SyntaxListBuilder(8);
 
-        public void Clear()
-        {
-            Count = 0;
-        }
+        public void Clear() => Count = 0;
 
         public GreenNode? this[int index]
         {
-            get
-            {
-                return _nodes[index];
-            }
+            get => _nodes[index];
 
-            set
-            {
-                _nodes[index].Value = value;
-            }
+            set => _nodes[index].Value = value;
         }
 
         public void Add(GreenNode? item)
@@ -64,10 +52,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public void AddRange(GreenNode[] items)
-        {
-            AddRange(items, 0, items.Length);
-        }
+        public void AddRange(GreenNode[] items) => AddRange(items, 0, items.Length);
 
         public void AddRange(GreenNode[] items, int offset, int length)
         {
@@ -93,10 +78,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public void AddRange(SyntaxList<GreenNode> list)
-        {
-            AddRange(list, 0, list.Count);
-        }
+        public void AddRange(SyntaxList<GreenNode> list) => AddRange(list, 0, list.Count);
 
         public void AddRange(SyntaxList<GreenNode> list, int offset, int length)
         {
@@ -113,15 +95,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             Validate(oldCount, Count);
         }
 
-        public void AddRange<TNode>(SyntaxList<TNode> list) where TNode : GreenNode
-        {
+        public void AddRange<TNode>(SyntaxList<TNode> list) where TNode : GreenNode =>
             AddRange(list, 0, list.Count);
-        }
 
-        public void AddRange<TNode>(SyntaxList<TNode> list, int offset, int length) where TNode : GreenNode
-        {
+        public void AddRange<TNode>(SyntaxList<TNode> list, int offset, int length) where TNode : GreenNode =>
             AddRange(new SyntaxList<GreenNode>(list.Node), offset, length);
-        }
 
         public void RemoveLast()
         {
@@ -188,14 +166,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public SyntaxList<GreenNode> ToList()
-        {
-            return new SyntaxList<GreenNode>(ToListNode());
-        }
+        public SyntaxList<GreenNode> ToList() => new SyntaxList<GreenNode>(ToListNode());
 
-        public SyntaxList<TNode> ToList<TNode>() where TNode : GreenNode
-        {
-            return new SyntaxList<TNode>(ToListNode());
-        }
+        public SyntaxList<TNode> ToList<TNode>() where TNode : GreenNode => new SyntaxList<TNode>(ToListNode());
     }
 }

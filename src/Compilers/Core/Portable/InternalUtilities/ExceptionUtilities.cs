@@ -21,9 +21,6 @@ namespace Loretta.Utilities
             return new InvalidOperationException(output);
         }
 
-        internal static Exception Unreachable
-        {
-            get { return new InvalidOperationException("This program location is thought to be unreachable."); }
-        }
+        internal static Exception Unreachable => new InvalidOperationException("This program location is thought to be unreachable.");
     }
 }

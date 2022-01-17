@@ -20,15 +20,9 @@ namespace Loretta.Utilities
 
                 public object? Current => throw new InvalidOperationException();
 
-                public bool MoveNext()
-                {
-                    return false;
-                }
+                public bool MoveNext() => false;
 
-                public void Reset()
-                {
-                    throw new InvalidOperationException();
-                }
+                public void Reset() => throw new InvalidOperationException();
             }
         }
     }

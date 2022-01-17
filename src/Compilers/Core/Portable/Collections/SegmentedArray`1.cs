@@ -91,13 +91,7 @@ namespace Loretta.CodeAnalysis.Collections
 
         public object SyncRoot => _items;
 
-        public ref T this[int index]
-        {
-            get
-            {
-                return ref _items[index >> s_segmentShift][index & s_offsetMask];
-            }
-        }
+        public ref T this[int index] => ref _items[index >> s_segmentShift][index & s_offsetMask];
 
         int ICollection.Count => Length;
 
@@ -150,15 +144,9 @@ namespace Loretta.CodeAnalysis.Collections
         public Enumerator GetEnumerator()
             => new(this);
 
-        int IList.Add(object? value)
-        {
-            throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
+        int IList.Add(object? value) => throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
 
-        void ICollection<T>.Add(T value)
-        {
-            throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
+        void ICollection<T>.Add(T value) => throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
 
         void IList.Clear()
         {
@@ -170,11 +158,9 @@ namespace Loretta.CodeAnalysis.Collections
             }
         }
 
-        void ICollection<T>.Clear()
-        {
+        void ICollection<T>.Clear() =>
             // Matches `((ICollection<T>)new T[1]).Clear()`
             throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
 
         bool IList.Contains(object? value)
         {
@@ -228,35 +214,17 @@ namespace Loretta.CodeAnalysis.Collections
             return -1;
         }
 
-        void IList.Insert(int index, object? value)
-        {
-            throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
+        void IList.Insert(int index, object? value) => throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
 
-        void IList<T>.Insert(int index, T value)
-        {
-            throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
+        void IList<T>.Insert(int index, T value) => throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
 
-        void IList.Remove(object? value)
-        {
-            throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
+        void IList.Remove(object? value) => throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
 
-        bool ICollection<T>.Remove(T value)
-        {
-            throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
+        bool ICollection<T>.Remove(T value) => throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
 
-        void IList.RemoveAt(int index)
-        {
-            throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
+        void IList.RemoveAt(int index) => throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
 
-        void IList<T>.RemoveAt(int index)
-        {
-            throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
-        }
+        void IList<T>.RemoveAt(int index) => throw new NotSupportedException(SR.NotSupported_FixedSizeCollection);
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
             => GetEnumerator();

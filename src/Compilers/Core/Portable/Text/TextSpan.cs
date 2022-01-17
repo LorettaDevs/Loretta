@@ -66,10 +66,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <c>true</c> if the position is greater than or equal to Start and strictly less 
         /// than End, otherwise <c>false</c>.
         /// </returns>
-        public bool Contains(int position)
-        {
-            return unchecked((uint) (position - Start) < (uint) Length);
-        }
+        public bool Contains(int position) => unchecked((uint) (position - Start) < (uint) Length);
 
         /// <summary>
         /// Determines whether <paramref name="span"/> falls completely within this span.
@@ -80,10 +77,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <returns>
         /// <c>true</c> if the specified span falls completely within this span, otherwise <c>false</c>.
         /// </returns>
-        public bool Contains(TextSpan span)
-        {
-            return span.Start >= Start && span.End <= End;
-        }
+        public bool Contains(TextSpan span) => span.Start >= Start && span.End <= End;
 
         /// <summary>
         /// Determines whether <paramref name="span"/> overlaps this span. Two spans are considered to overlap 
@@ -134,10 +128,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <returns>
         /// <c>true</c> if the spans intersect, otherwise <c>false</c>.
         /// </returns>
-        public bool IntersectsWith(TextSpan span)
-        {
-            return span.Start <= End && span.End >= Start;
-        }
+        public bool IntersectsWith(TextSpan span) => span.Start <= End && span.End >= Start;
 
         /// <summary>
         /// Determines whether <paramref name="position"/> intersects this span. 
@@ -150,10 +141,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <returns>
         /// <c>true</c> if the position intersects, otherwise <c>false</c>.
         /// </returns>
-        public bool IntersectsWith(int position)
-        {
-            return unchecked((uint) (position - Start) <= (uint) Length);
-        }
+        public bool IntersectsWith(int position) => unchecked((uint) (position - Start) <= (uint) Length);
 
         /// <summary>
         /// Returns the intersection with the given span, or null if there is no intersection.
@@ -199,50 +187,32 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Determines if two instances of <see cref="TextSpan"/> are the same.
         /// </summary>
-        public static bool operator ==(TextSpan left, TextSpan right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(TextSpan left, TextSpan right) => left.Equals(right);
 
         /// <summary>
         /// Determines if two instances of <see cref="TextSpan"/> are different.
         /// </summary>
-        public static bool operator !=(TextSpan left, TextSpan right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(TextSpan left, TextSpan right) => !left.Equals(right);
 
         /// <summary>
         /// Determines if current instance of <see cref="TextSpan"/> is equal to another.
         /// </summary>
-        public bool Equals(TextSpan other)
-        {
-            return Start == other.Start && Length == other.Length;
-        }
+        public bool Equals(TextSpan other) => Start == other.Start && Length == other.Length;
 
         /// <summary>
         /// Determines if current instance of <see cref="TextSpan"/> is equal to another.
         /// </summary>
-        public override bool Equals(object? obj)
-        {
-            return obj is TextSpan span && Equals(span);
-        }
+        public override bool Equals(object? obj) => obj is TextSpan span && Equals(span);
 
         /// <summary>
         /// Produces a hash code for <see cref="TextSpan"/>.
         /// </summary>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(Start, Length);
-        }
+        public override int GetHashCode() => Hash.Combine(Start, Length);
 
         /// <summary>
         /// Provides a string representation for <see cref="TextSpan"/>.
         /// </summary>
-        public override string ToString()
-        {
-            return $"[{Start}..{End})";
-        }
+        public override string ToString() => $"[{Start}..{End})";
 
         /// <summary>
         /// Compares current instance of <see cref="TextSpan"/> with another.

@@ -28,26 +28,17 @@ namespace Loretta.CodeAnalysis.Text
             _encodingOpt = encodingOpt;
         }
 
-        public override Encoding? Encoding
-        {
-            get { return _encodingOpt; }
-        }
+        public override Encoding? Encoding => _encodingOpt;
 
         /// <summary>
         /// Underlying string which is the source of this SourceText instance
         /// </summary>
-        internal StringBuilder Builder
-        {
-            get { return _builder; }
-        }
+        internal StringBuilder Builder => _builder;
 
         /// <summary>
         /// The length of the text represented by <see cref="StringBuilderText"/>.
         /// </summary>
-        public override int Length
-        {
-            get { return _builder.Length; }
-        }
+        public override int Length => _builder.Length;
 
         /// <summary>
         /// Returns a character at given position.
@@ -83,9 +74,7 @@ namespace Loretta.CodeAnalysis.Text
             return _builder.ToString(span.Start, span.Length);
         }
 
-        public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count)
-        {
+        public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count) =>
             _builder.CopyTo(sourceIndex, destination, destinationIndex, count);
-        }
     }
 }

@@ -13,15 +13,9 @@ namespace Loretta.Utilities
         /// <summary>
         /// This is how VB Anonymous Types combine hash values for fields.
         /// </summary>
-        internal static int Combine(int newKey, int currentKey)
-        {
-            return unchecked((currentKey * (int) 0xA5555529) + newKey);
-        }
+        internal static int Combine(int newKey, int currentKey) => unchecked((currentKey * (int) 0xA5555529) + newKey);
 
-        internal static int Combine(bool newKeyPart, int currentKey)
-        {
-            return Combine(currentKey, newKeyPart ? 1 : 0);
-        }
+        internal static int Combine(bool newKeyPart, int currentKey) => Combine(currentKey, newKeyPart ? 1 : 0);
 
         /// <summary>
         /// This is how VB Anonymous Types combine hash values for fields.
@@ -258,10 +252,7 @@ namespace Loretta.Utilities
         /// <param name="text">The input string</param>
         /// <param name="start">The start index of the first character to hash</param>
         /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending at the end of the string.</returns>
-        internal static int GetFNVHashCode(string text, int start)
-        {
-            return GetFNVHashCode(text, start, length: text.Length - start);
-        }
+        internal static int GetFNVHashCode(string text, int start) => GetFNVHashCode(text, start, length: text.Length - start);
 
         /// <summary>
         /// Compute the hashcode of a string using FNV-1a
@@ -269,10 +260,7 @@ namespace Loretta.Utilities
         /// </summary>
         /// <param name="text">The input string</param>
         /// <returns>The FNV-1a hash code of <paramref name="text"/></returns>
-        internal static int GetFNVHashCode(string text)
-        {
-            return CombineFNVHash(Hash.FnvOffsetBias, text);
-        }
+        internal static int GetFNVHashCode(string text) => CombineFNVHash(Hash.FnvOffsetBias, text);
 
         /// <summary>
         /// Compute the hashcode of a string using FNV-1a
@@ -323,10 +311,7 @@ namespace Loretta.Utilities
         /// </summary>
         /// <param name="ch">The character to hash</param>
         /// <returns>The FNV-1a hash code of the character.</returns>
-        internal static int GetFNVHashCode(char ch)
-        {
-            return Hash.CombineFNVHash(Hash.FnvOffsetBias, ch);
-        }
+        internal static int GetFNVHashCode(char ch) => Hash.CombineFNVHash(Hash.FnvOffsetBias, ch);
 
         /// <summary>
         /// Combine a string with an existing FNV-1a hash code
@@ -352,10 +337,7 @@ namespace Loretta.Utilities
         /// <param name="hashCode">The accumulated hash code</param>
         /// <param name="ch">The new character to combine</param>
         /// <returns>The result of combining <paramref name="hashCode"/> with <paramref name="ch"/> using the FNV-1a algorithm</returns>
-        internal static int CombineFNVHash(int hashCode, char ch)
-        {
-            return unchecked((hashCode ^ ch) * Hash.FnvPrime);
-        }
+        internal static int CombineFNVHash(int hashCode, char ch) => unchecked((hashCode ^ ch) * Hash.FnvPrime);
 
         /// <summary>
         /// Jenkins's one_at_a_time hash is adapted here from a WWW page by Bob Jenkins

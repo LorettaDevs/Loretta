@@ -22,10 +22,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
         }
 
-        internal static GreenNode List(GreenNode child)
-        {
-            return child;
-        }
+        internal static GreenNode List(GreenNode child) => child;
 
         internal static WithTwoChildren List(GreenNode child0, GreenNode child1)
         {
@@ -66,10 +63,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return result;
         }
 
-        internal static GreenNode List(GreenNode?[] nodes)
-        {
-            return List(nodes, nodes.Length);
-        }
+        internal static GreenNode List(GreenNode?[] nodes) => List(nodes, nodes.Length);
 
         internal static GreenNode List(GreenNode?[] nodes, int count)
         {
@@ -143,35 +137,16 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public sealed override string Language
-        {
-            get
-            {
-                throw ExceptionUtilities.Unreachable;
-            }
-        }
+        public sealed override string Language => throw ExceptionUtilities.Unreachable;
 
-        public sealed override string KindText
-        {
-            get
-            {
-                throw ExceptionUtilities.Unreachable;
-            }
-        }
+        public sealed override string KindText => throw ExceptionUtilities.Unreachable;
 
-        public sealed override SyntaxNode GetStructure(SyntaxTrivia parentTrivia)
-        {
+        public sealed override SyntaxNode GetStructure(SyntaxTrivia parentTrivia) =>
             throw ExceptionUtilities.Unreachable;
-        }
 
-        public sealed override SyntaxToken CreateSeparator<TNode>(SyntaxNode element)
-        {
+        public sealed override SyntaxToken CreateSeparator<TNode>(SyntaxNode element) =>
             throw ExceptionUtilities.Unreachable;
-        }
 
-        public sealed override bool IsTriviaWithEndOfLine()
-        {
-            return false;
-        }
+        public sealed override bool IsTriviaWithEndOfLine() => false;
     }
 }

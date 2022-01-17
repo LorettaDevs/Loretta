@@ -17,54 +17,27 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
         }
 
-        public static SeparatedSyntaxListBuilder<TNode> Create()
-        {
-            return new SeparatedSyntaxListBuilder<TNode>(8);
-        }
+        public static SeparatedSyntaxListBuilder<TNode> Create() => new SeparatedSyntaxListBuilder<TNode>(8);
 
         internal SeparatedSyntaxListBuilder(SyntaxListBuilder builder)
         {
             _builder = builder;
         }
 
-        public bool IsNull
-        {
-            get
-            {
-                return _builder == null;
-            }
-        }
+        public bool IsNull => _builder == null;
 
-        public int Count
-        {
-            get
-            {
-                return _builder!.Count;
-            }
-        }
+        public int Count => _builder!.Count;
 
         public GreenNode? this[int index]
         {
-            get
-            {
-                return _builder![index];
-            }
+            get => _builder![index];
 
-            set
-            {
-                _builder![index] = value;
-            }
+            set => _builder![index] = value;
         }
 
-        public void Clear()
-        {
-            _builder!.Clear();
-        }
+        public void Clear() => _builder!.Clear();
 
-        public void RemoveLast()
-        {
-            _builder!.RemoveLast();
-        }
+        public void RemoveLast() => _builder!.RemoveLast();
 
         public SeparatedSyntaxListBuilder<TNode> Add(TNode node)
         {
@@ -72,20 +45,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return this;
         }
 
-        public void AddSeparator(GreenNode separatorToken)
-        {
-            _builder!.Add(separatorToken);
-        }
+        public void AddSeparator(GreenNode separatorToken) => _builder!.Add(separatorToken);
 
-        public void AddRange(TNode[] items, int offset, int length)
-        {
-            _builder!.AddRange(items, offset, length);
-        }
+        public void AddRange(TNode[] items, int offset, int length) => _builder!.AddRange(items, offset, length);
 
-        public void AddRange(in SeparatedSyntaxList<TNode> nodes)
-        {
-            _builder!.AddRange(nodes.GetWithSeparators());
-        }
+        public void AddRange(in SeparatedSyntaxList<TNode> nodes) => _builder!.AddRange(nodes.GetWithSeparators());
 
         public void AddRange(in SeparatedSyntaxList<TNode> nodes, int count)
         {
@@ -93,10 +57,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             _builder!.AddRange(list, Count, Math.Min(count * 2, list.Count));
         }
 
-        public bool Any(int kind)
-        {
-            return _builder!.Any(kind);
-        }
+        public bool Any(int kind) => _builder!.Any(kind);
 
         public SeparatedSyntaxList<TNode> ToList()
         {
@@ -114,10 +75,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         /// In order to avoid creating a separate pool of SeparatedSyntaxListBuilders, we expose
         /// our underlying SyntaxListBuilder to SyntaxListPool.
         /// </remarks>
-        internal SyntaxListBuilder? UnderlyingBuilder
-        {
-            get { return _builder; }
-        }
+        internal SyntaxListBuilder? UnderlyingBuilder => _builder;
 
         public static implicit operator SeparatedSyntaxList<TNode>(in SeparatedSyntaxListBuilder<TNode> builder)
         {

@@ -51,16 +51,12 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        internal virtual string FormatSourcePath(string path, string? basePath, IFormatProvider? formatter)
-        {
+        internal virtual string FormatSourcePath(string path, string? basePath, IFormatProvider? formatter) =>
             // ignore base path
-            return path;
-        }
+            path;
 
-        internal virtual string FormatSourceSpan(LinePositionSpan span, IFormatProvider? formatter)
-        {
-            return string.Format("({0},{1})", span.Start.Line + 1, span.Start.Character + 1);
-        }
+        internal virtual string FormatSourceSpan(LinePositionSpan span, IFormatProvider? formatter) =>
+            string.Format("({0},{1})", span.Start.Line + 1, span.Start.Character + 1);
 
         internal static string GetMessagePrefix(Diagnostic diagnostic)
         {

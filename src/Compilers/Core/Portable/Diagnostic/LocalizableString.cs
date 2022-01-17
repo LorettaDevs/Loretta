@@ -52,15 +52,9 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <inheritdoc/>
-        public sealed override string ToString()
-        {
-            return ToString(null);
-        }
+        public sealed override string ToString() => ToString(null);
 
-        string IFormattable.ToString(string? ignored, IFormatProvider? formatProvider)
-        {
-            return ToString(formatProvider);
-        }
+        string IFormattable.ToString(string? ignored, IFormatProvider? formatProvider) => ToString(formatProvider);
 
         /// <inheritdoc/>
         public sealed override int GetHashCode()
@@ -91,10 +85,7 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <inheritdoc/>
-        public bool Equals(LocalizableString? other)
-        {
-            return Equals((object?) other);
-        }
+        public bool Equals(LocalizableString? other) => Equals((object?) other);
 
         /// <summary>
         /// Formats the value of the current instance using the optionally specified format.

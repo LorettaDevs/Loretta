@@ -18,20 +18,11 @@ namespace Loretta.Utilities
                 {
                 }
 
-                public void Add(T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public void Add(T item) => throw new NotSupportedException();
 
-                public void Clear()
-                {
-                    throw new NotSupportedException();
-                }
+                public void Clear() => throw new NotSupportedException();
 
-                public bool Contains(T item)
-                {
-                    return false;
-                }
+                public bool Contains(T item) => false;
 
                 public void CopyTo(T[] array, int arrayIndex)
                 {
@@ -41,10 +32,7 @@ namespace Loretta.Utilities
 
                 public bool IsReadOnly => true;
 
-                public bool Remove(T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public bool Remove(T item) => throw new NotSupportedException();
             }
         }
     }

@@ -83,37 +83,22 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Gets the source text.
         /// </summary>
-        public SourceText? Text
-        {
-            get { return _text; }
-        }
+        public SourceText? Text => _text;
 
         /// <summary>
         /// Gets the zero-based line number.
         /// </summary>
-        public int LineNumber
-        {
-            get
-            {
-                return _text?.Lines.IndexOf(_start) ?? 0;
-            }
-        }
+        public int LineNumber => _text?.Lines.IndexOf(_start) ?? 0;
 
         /// <summary>
         /// Gets the start position of the line.
         /// </summary>
-        public int Start
-        {
-            get { return _start; }
-        }
+        public int Start => _start;
 
         /// <summary>
         /// Gets the end position of the line not including the line break.
         /// </summary>
-        public int End
-        {
-            get { return _endIncludingBreaks - LineBreakLength; }
-        }
+        public int End => _endIncludingBreaks - LineBreakLength;
 
         private int LineBreakLength
         {
@@ -134,26 +119,17 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Gets the end position of the line including the line break.
         /// </summary>
-        public int EndIncludingLineBreak
-        {
-            get { return _endIncludingBreaks; }
-        }
+        public int EndIncludingLineBreak => _endIncludingBreaks;
 
         /// <summary>
         /// Gets the line span not including the line break.
         /// </summary>
-        public TextSpan Span
-        {
-            get { return TextSpan.FromBounds(Start, End); }
-        }
+        public TextSpan Span => TextSpan.FromBounds(Start, End);
 
         /// <summary>
         /// Gets the line span including the line break.
         /// </summary>
-        public TextSpan SpanIncludingLineBreak
-        {
-            get { return TextSpan.FromBounds(Start, EndIncludingLineBreak); }
-        }
+        public TextSpan SpanIncludingLineBreak => TextSpan.FromBounds(Start, EndIncludingLineBreak);
 
         /// <summary>
         /// Returns the text for this line.
@@ -177,10 +153,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(TextLine left, TextLine right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(TextLine left, TextLine right) => left.Equals(right);
 
         /// <summary>
         /// Checks whether two text lines are not equal.
@@ -188,10 +161,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(TextLine left, TextLine right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(TextLine left, TextLine right) => !left.Equals(right);
 
         /// <inheritdoc/>
         public bool Equals(TextLine other)
@@ -213,9 +183,7 @@ namespace Loretta.CodeAnalysis.Text
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(_text, Hash.Combine(_start, _endIncludingBreaks));
-        }
+        public override int GetHashCode() =>
+            Hash.Combine(_text, Hash.Combine(_start, _endIncludingBreaks));
     }
 }

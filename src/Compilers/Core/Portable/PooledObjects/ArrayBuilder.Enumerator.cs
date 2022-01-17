@@ -19,13 +19,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
                 _index = -1;
             }
 
-            public T Current
-            {
-                get
-                {
-                    return _builder[_index];
-                }
-            }
+            public T Current => _builder[_index];
 
             public bool MoveNext()
             {

@@ -56,35 +56,27 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Compares current instance of <see cref="TextChangeRange"/> to another.
         /// </summary>
-        public override bool Equals(object? obj)
-        {
-            return obj is TextChangeRange range && Equals(range);
-        }
+        public override bool Equals(object? obj) =>
+            obj is TextChangeRange range && Equals(range);
 
         /// <summary>
         /// Provides hash code for current instance of <see cref="TextChangeRange"/>.
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(NewLength, Span.GetHashCode());
-        }
+        public override int GetHashCode() =>
+            Hash.Combine(NewLength, Span.GetHashCode());
 
         /// <summary>
         /// Determines if two instances of <see cref="TextChangeRange"/> are same.
         /// </summary>
-        public static bool operator ==(TextChangeRange left, TextChangeRange right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(TextChangeRange left, TextChangeRange right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Determines if two instances of <see cref="TextChangeRange"/> are different.
         /// </summary>
-        public static bool operator !=(TextChangeRange left, TextChangeRange right)
-        {
-            return !(left == right);
-        }
+        public static bool operator !=(TextChangeRange left, TextChangeRange right) =>
+            !(left == right);
 
         /// <summary>
         /// An empty set of changes.
@@ -128,18 +120,14 @@ namespace Loretta.CodeAnalysis.Text
             return new TextChangeRange(combined, newLen);
         }
 
-        private string GetDebuggerDisplay()
-        {
-            return $"new TextChangeRange(new TextSpan({Span.Start}, {Span.Length}), {NewLength})";
-        }
+        private string GetDebuggerDisplay() =>
+            $"new TextChangeRange(new TextSpan({Span.Start}, {Span.Length}), {NewLength})";
 
         /// <summary>
         /// Converts the text change range to a string.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            return $"TextChangeRange(Span={Span}, NewLength={NewLength})";
-        }
+        public override string ToString() =>
+            $"TextChangeRange(Span={Span}, NewLength={NewLength})";
     }
 }

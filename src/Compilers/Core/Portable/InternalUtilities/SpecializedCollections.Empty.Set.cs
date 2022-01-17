@@ -18,60 +18,27 @@ namespace Loretta.Utilities
                 {
                 }
 
-                public new bool Add(T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public new bool Add(T item) => throw new NotSupportedException();
 
-                public void ExceptWith(IEnumerable<T> other)
-                {
-                    throw new NotSupportedException();
-                }
+                public void ExceptWith(IEnumerable<T> other) => throw new NotSupportedException();
 
-                public void IntersectWith(IEnumerable<T> other)
-                {
-                    throw new NotSupportedException();
-                }
+                public void IntersectWith(IEnumerable<T> other) => throw new NotSupportedException();
 
-                public bool IsProperSubsetOf(IEnumerable<T> other)
-                {
-                    return !other.IsEmpty();
-                }
+                public bool IsProperSubsetOf(IEnumerable<T> other) => !other.IsEmpty();
 
-                public bool IsProperSupersetOf(IEnumerable<T> other)
-                {
-                    return false;
-                }
+                public bool IsProperSupersetOf(IEnumerable<T> other) => false;
 
-                public bool IsSubsetOf(IEnumerable<T> other)
-                {
-                    return true;
-                }
+                public bool IsSubsetOf(IEnumerable<T> other) => true;
 
-                public bool IsSupersetOf(IEnumerable<T> other)
-                {
-                    return other.IsEmpty();
-                }
+                public bool IsSupersetOf(IEnumerable<T> other) => other.IsEmpty();
 
-                public bool Overlaps(IEnumerable<T> other)
-                {
-                    return false;
-                }
+                public bool Overlaps(IEnumerable<T> other) => false;
 
-                public bool SetEquals(IEnumerable<T> other)
-                {
-                    return other.IsEmpty();
-                }
+                public bool SetEquals(IEnumerable<T> other) => other.IsEmpty();
 
-                public void SymmetricExceptWith(IEnumerable<T> other)
-                {
-                    throw new NotSupportedException();
-                }
+                public void SymmetricExceptWith(IEnumerable<T> other) => throw new NotSupportedException();
 
-                public void UnionWith(IEnumerable<T> other)
-                {
-                    throw new NotSupportedException();
-                }
+                public void UnionWith(IEnumerable<T> other) => throw new NotSupportedException();
             }
         }
     }

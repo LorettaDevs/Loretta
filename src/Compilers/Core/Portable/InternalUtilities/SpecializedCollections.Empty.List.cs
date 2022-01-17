@@ -25,32 +25,17 @@ namespace Loretta.Utilities
                 {
                 }
 
-                public int IndexOf(T item)
-                {
-                    return -1;
-                }
+                public int IndexOf(T item) => -1;
 
-                public void Insert(int index, T item)
-                {
-                    throw new NotSupportedException();
-                }
+                public void Insert(int index, T item) => throw new NotSupportedException();
 
-                public void RemoveAt(int index)
-                {
-                    throw new NotSupportedException();
-                }
+                public void RemoveAt(int index) => throw new NotSupportedException();
 
                 public T this[int index]
                 {
-                    get
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(index));
-                    }
+                    get => throw new ArgumentOutOfRangeException(nameof(index));
 
-                    set
-                    {
-                        throw new NotSupportedException();
-                    }
+                    set => throw new NotSupportedException();
                 }
             }
         }

@@ -19,9 +19,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 default(SeparatedSyntaxList<T>);
         }
 
-        internal static SyntaxList<T> ToGreenList<T>(this GreenNode? node) where T : GreenNode
-        {
-            return new SyntaxList<T>(node);
-        }
+        internal static SyntaxList<T> ToGreenList<T>(this GreenNode? node) where T : GreenNode =>
+            new SyntaxList<T>(node);
     }
 }

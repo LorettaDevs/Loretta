@@ -62,10 +62,8 @@ namespace Loretta.CodeAnalysis
             _sb = new StringBuilder();
         }
 
-        public static string DumpCompact(TreeDumperNode root)
-        {
-            return new TreeDumper().DoDumpCompact(root);
-        }
+        public static string DumpCompact(TreeDumperNode root) =>
+            new TreeDumper().DoDumpCompact(root);
 
         protected string DoDumpCompact(TreeDumperNode root)
         {
@@ -159,7 +157,7 @@ namespace Loretta.CodeAnalysis
         }
 
         // an (awful) test for a null read-only-array.  Is there no better way to do this?
-        private static bool IsDefaultImmutableArray(Object o)
+        private static bool IsDefaultImmutableArray(object o)
         {
             var ti = o.GetType().GetTypeInfo();
             if (ti.IsGenericType && ti.GetGenericTypeDefinition() == typeof(ImmutableArray<>))
@@ -213,13 +211,8 @@ namespace Loretta.CodeAnalysis
         public object? Value { get; }
         public string Text { get; }
         public IEnumerable<TreeDumperNode> Children { get; }
-        public TreeDumperNode? this[string child]
-        {
-            get
-            {
-                return Children.FirstOrDefault(c => c.Text == child);
-            }
-        }
+        public TreeDumperNode? this[string child] =>
+            Children.FirstOrDefault(c => c.Text == child);
 
         // enumerates all edges of the tree yielding (parent, node) pairs. The first yielded value is (null, this).
         public IEnumerable<KeyValuePair<TreeDumperNode?, TreeDumperNode>> PreorderTraversal()

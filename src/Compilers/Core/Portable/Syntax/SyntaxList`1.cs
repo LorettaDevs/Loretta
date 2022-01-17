@@ -59,24 +59,12 @@ namespace Loretta.CodeAnalysis
             return builder.ToList().Node;
         }
 
-        internal SyntaxNode? Node
-        {
-            get
-            {
-                return _node;
-            }
-        }
+        internal SyntaxNode? Node => _node;
 
         /// <summary>
         /// The number of nodes in the list.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return _node == null ? 0 : (_node.IsList ? _node.SlotCount : 1);
-            }
-        }
+        public int Count => _node == null ? 0 : (_node.IsList ? _node.SlotCount : 1);
 
         /// <summary>
         /// Gets the node at the specified index.
@@ -160,10 +148,7 @@ namespace Loretta.CodeAnalysis
         /// The string representation of the nodes in this list, not including 
         /// the first node's leading trivia and the last node's trailing trivia.
         /// </returns>
-        public override string ToString()
-        {
-            return _node != null ? _node.ToString() : string.Empty;
-        }
+        public override string ToString() => _node != null ? _node.ToString() : string.Empty;
 
         /// <summary>
         /// Returns the full string representation of the nodes in this list including 
@@ -173,28 +158,20 @@ namespace Loretta.CodeAnalysis
         /// The full string representation of the nodes in this list including 
         /// the first node's leading trivia and the last node's trailing trivia.
         /// </returns>
-        public string ToFullString()
-        {
-            return _node != null ? _node.ToFullString() : string.Empty;
-        }
+        public string ToFullString() => _node != null ? _node.ToFullString() : string.Empty;
 
         /// <summary>
         /// Creates a new list with the specified node added at the end.
         /// </summary>
         /// <param name="node">The node to add.</param>
-        public SyntaxList<TNode> Add(TNode node)
-        {
-            return Insert(Count, node);
-        }
+        public SyntaxList<TNode> Add(TNode node) => Insert(Count, node);
 
         /// <summary>
         /// Creates a new list with the specified nodes added at the end.
         /// </summary>
         /// <param name="nodes">The nodes to add.</param>
-        public SyntaxList<TNode> AddRange(IEnumerable<TNode> nodes)
-        {
-            return InsertRange(Count, nodes);
-        }
+        public SyntaxList<TNode> AddRange(IEnumerable<TNode> nodes) =>
+            InsertRange(Count, nodes);
 
         /// <summary>
         /// Creates a new list with the specified node inserted at the index.
@@ -259,20 +236,16 @@ namespace Loretta.CodeAnalysis
         /// Creates a new list with the element removed.
         /// </summary>
         /// <param name="node">The element to remove.</param>
-        public SyntaxList<TNode> Remove(TNode node)
-        {
-            return CreateList(this.Where(x => x != node).ToList());
-        }
+        public SyntaxList<TNode> Remove(TNode node) =>
+            CreateList(this.Where(x => x != node).ToList());
 
         /// <summary>
         /// Creates a new list with the specified element replaced with the new node.
         /// </summary>
         /// <param name="nodeInList">The element to replace.</param>
         /// <param name="newNode">The new node.</param>
-        public SyntaxList<TNode> Replace(TNode nodeInList, TNode newNode)
-        {
-            return ReplaceRange(nodeInList, new[] { newNode });
-        }
+        public SyntaxList<TNode> Replace(TNode nodeInList, TNode newNode) =>
+            ReplaceRange(nodeInList, new[] { newNode });
 
         /// <summary>
         /// Creates a new list with the specified element replaced with new nodes.
@@ -319,10 +292,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The first node in the list.
         /// </summary>
-        public TNode First()
-        {
-            return this[0];
-        }
+        public TNode First() => this[0];
 
         /// <summary>
         /// The first node in the list or default if the list is empty.
@@ -342,10 +312,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The last node in the list.
         /// </summary>
-        public TNode Last()
-        {
-            return this[Count - 1];
-        }
+        public TNode Last() => this[Count - 1];
 
         /// <summary>
         /// The last node in the list or default if the list is empty.
@@ -385,20 +352,13 @@ namespace Loretta.CodeAnalysis
         }
 
         // for debugging
-        private TNode[] Nodes
-        {
-            get { return this.ToArray(); }
-        }
+        private TNode[] Nodes => this.ToArray();
 
         /// <summary>
         /// Gets the enumerator for this list.
         /// </summary>
 #pragma warning disable RS0041 // uses oblivious reference types
-        public Enumerator GetEnumerator()
-#pragma warning restore RS0041 // uses oblivious reference types
-        {
-            return new Enumerator(this);
-        }
+        public Enumerator GetEnumerator() => new Enumerator(this);
 
         IEnumerator<TNode> IEnumerable<TNode>.GetEnumerator()
         {
@@ -427,10 +387,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(SyntaxList<TNode> left, SyntaxList<TNode> right)
-        {
-            return left._node == right._node;
-        }
+        public static bool operator ==(SyntaxList<TNode> left, SyntaxList<TNode> right) =>
+            left._node == right._node;
 
         /// <summary>
         /// Checks whether two lists are not equal.
@@ -439,28 +397,18 @@ namespace Loretta.CodeAnalysis
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(SyntaxList<TNode> left, SyntaxList<TNode> right)
-        {
-            return left._node != right._node;
-        }
+        public static bool operator !=(SyntaxList<TNode> left, SyntaxList<TNode> right) =>
+            left._node != right._node;
 
         /// <inheritdoc/>
-        public bool Equals(SyntaxList<TNode> other)
-        {
-            return _node == other._node;
-        }
+        public bool Equals(SyntaxList<TNode> other) => _node == other._node;
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return obj is SyntaxList<TNode> list && Equals(list);
-        }
+        public override bool Equals(object? obj) =>
+            obj is SyntaxList<TNode> list && Equals(list);
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return _node?.GetHashCode() ?? 0;
-        }
+        public override int GetHashCode() => _node?.GetHashCode() ?? 0;
 
         /// <summary>
         /// Converts an opaquely typed node list into a typed node list.

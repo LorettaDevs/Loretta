@@ -85,10 +85,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets the count of nodes in this list
         /// </summary>
-        public int Count
-        {
-            get { return _node == null ? 0 : _node.Green.IsList ? _node.SlotCount : 1; }
-        }
+        public int Count => _node == null ? 0 : _node.Green.IsList ? _node.SlotCount : 1;
 
         /// <summary>
         /// Gets the <see cref="SyntaxNodeOrToken"/> at the specified index. 
@@ -169,10 +166,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets the first SyntaxNodeOrToken structure from this list.
         /// </summary>
-        public SyntaxNodeOrToken First()
-        {
-            return this[0];
-        }
+        public SyntaxNodeOrToken First() => this[0];
 
         /// <summary>
         /// Gets the first SyntaxNodeOrToken structure from this list if present, else default(SyntaxNodeOrToken).
@@ -187,10 +181,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets the last SyntaxNodeOrToken structure from this list.
         /// </summary>
-        public SyntaxNodeOrToken Last()
-        {
-            return this[Count - 1];
-        }
+        public SyntaxNodeOrToken Last() => this[Count - 1];
 
         /// <summary>
         /// Gets the last SyntaxNodeOrToken structure from this list if present, else default(SyntaxNodeOrToken).
@@ -227,10 +218,7 @@ namespace Loretta.CodeAnalysis
         /// Indicates whether there is any element in the list.
         /// </summary>
         /// <returns><c>true</c> if there are any elements in the list, else <c>false</c>.</returns>
-        public bool Any()
-        {
-            return _node != null;
-        }
+        public bool Any() => _node != null;
 
         /// <summary>
         /// Copies a given count of elements into the given array at specified offsets.
@@ -251,19 +239,15 @@ namespace Loretta.CodeAnalysis
         /// Creates a new <see cref="SyntaxNodeOrTokenList"/> with the specified node or token added to the end.
         /// </summary>
         /// <param name="nodeOrToken">The node or token to add.</param>
-        public SyntaxNodeOrTokenList Add(SyntaxNodeOrToken nodeOrToken)
-        {
-            return Insert(Count, nodeOrToken);
-        }
+        public SyntaxNodeOrTokenList Add(SyntaxNodeOrToken nodeOrToken) =>
+            Insert(Count, nodeOrToken);
 
         /// <summary>
         /// Creates a new <see cref="SyntaxNodeOrTokenList"/> with the specified nodes or tokens added to the end.
         /// </summary>
         /// <param name="nodesOrTokens">The nodes or tokens to add.</param>
-        public SyntaxNodeOrTokenList AddRange(IEnumerable<SyntaxNodeOrToken> nodesOrTokens)
-        {
-            return InsertRange(Count, nodesOrTokens);
-        }
+        public SyntaxNodeOrTokenList AddRange(IEnumerable<SyntaxNodeOrToken> nodesOrTokens) =>
+            InsertRange(Count, nodesOrTokens);
 
         /// <summary>
         /// Creates a new <see cref="SyntaxNodeOrTokenList"/> with the specified node or token inserted at the index.
@@ -392,18 +376,12 @@ namespace Loretta.CodeAnalysis
         }
 
         // for debugging
-        private SyntaxNodeOrToken[] Nodes
-        {
-            get { return this.ToArray(); }
-        }
+        private SyntaxNodeOrToken[] Nodes => this.ToArray();
 
         /// <summary>
         /// Gets the enumerator.
         /// </summary>
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
+        public Enumerator GetEnumerator() => new Enumerator(this);
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -439,10 +417,8 @@ namespace Loretta.CodeAnalysis
         /// <returns>
         /// <c>true</c> if both lists equal, else <c>false</c>.
         /// </returns>
-        public static bool operator ==(SyntaxNodeOrTokenList left, SyntaxNodeOrTokenList right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(SyntaxNodeOrTokenList left, SyntaxNodeOrTokenList right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Implements the operator !=.
@@ -452,10 +428,8 @@ namespace Loretta.CodeAnalysis
         /// <returns>
         /// <c>true</c> if both lists not equal, else <c>false</c>.
         /// </returns>
-        public static bool operator !=(SyntaxNodeOrTokenList left, SyntaxNodeOrTokenList right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(SyntaxNodeOrTokenList left, SyntaxNodeOrTokenList right) =>
+            !left.Equals(right);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -465,10 +439,7 @@ namespace Loretta.CodeAnalysis
         /// <c>true</c> if the current object is equal to the <paramref name="other"/> parameter; otherwise,
         /// <c>false</c>.
         /// </returns>
-        public bool Equals(SyntaxNodeOrTokenList other)
-        {
-            return _node == other._node;
-        }
+        public bool Equals(SyntaxNodeOrTokenList other) => _node == other._node;
 
         /// <summary>
         /// Determines whether the specified <see cref="object"/> is equal to this instance.
@@ -477,10 +448,8 @@ namespace Loretta.CodeAnalysis
         /// <returns>
         ///   <c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public override bool Equals(object? obj)
-        {
-            return obj is SyntaxNodeOrTokenList list && Equals(list);
-        }
+        public override bool Equals(object? obj) =>
+            obj is SyntaxNodeOrTokenList list && Equals(list);
 
         /// <summary>
         /// Returns a hash code for this instance.
@@ -488,15 +457,14 @@ namespace Loretta.CodeAnalysis
         /// <returns>
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
         /// </returns>
-        public override int GetHashCode()
-        {
-            return _node?.GetHashCode() ?? 0;
-        }
+        public override int GetHashCode() => _node?.GetHashCode() ?? 0;
 
         /// <summary>
         /// Enumerator for lists of SyntaxNodeOrToken structs.
         /// </summary>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         public struct Enumerator : IEnumerator<SyntaxNodeOrToken>
         {
             private readonly SyntaxNodeOrTokenList _list;
@@ -526,10 +494,7 @@ namespace Loretta.CodeAnalysis
             object IEnumerator.Current => Current;
 
             /// <inheritdoc cref="IEnumerator.Reset"/>
-            void IEnumerator.Reset()
-            {
-                throw new NotSupportedException();
-            }
+            void IEnumerator.Reset() => throw new NotSupportedException();
 
             /// <inheritdoc cref="IDisposable.Dispose"/>
             void IDisposable.Dispose()
@@ -537,16 +502,10 @@ namespace Loretta.CodeAnalysis
             }
 
             /// <inheritdoc/>
-            public override bool Equals(object? obj)
-            {
-                throw new NotSupportedException();
-            }
+            public override bool Equals(object? obj) => throw new NotSupportedException();
 
             /// <inheritdoc/>
-            public override int GetHashCode()
-            {
-                throw new NotSupportedException();
-            }
+            public override int GetHashCode() => throw new NotSupportedException();
         }
     }
 }

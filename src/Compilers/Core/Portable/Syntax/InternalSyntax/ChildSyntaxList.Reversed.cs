@@ -17,10 +17,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 _node = node;
             }
 
-            public Enumerator GetEnumerator()
-            {
-                return new Enumerator(_node);
-            }
+            public Enumerator GetEnumerator() => new Enumerator(_node);
 
 #if DEBUG
             [Obsolete("For debugging", error: true)]

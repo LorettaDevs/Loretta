@@ -59,31 +59,50 @@ namespace Loretta.CodeAnalysis
                 IEnumerable<Location>? additionalLocations,
                 object?[]? messageArgs,
                 ImmutableDictionary<string, string?>? properties,
+                bool isSuppressed = false) =>
+                new SimpleDiagnostic(descriptor, severity, warningLevel, location, additionalLocations, messageArgs, properties, isSuppressed);
+
+            internal static SimpleDiagnostic Create(
+                string id,
+                LocalizableString title,
+                string category,
+                LocalizableString message,
+                LocalizableString description,
+                string helpLink,
+                DiagnosticSeverity severity,
+                DiagnosticSeverity defaultSeverity,
+                bool isEnabledByDefault,
+                int warningLevel,
+                Location location,
+                IEnumerable<Location>? additionalLocations,
+                IEnumerable<string>? customTags,
+                ImmutableDictionary<string, string?>? properties,
                 bool isSuppressed = false)
             {
-                return new SimpleDiagnostic(descriptor, severity, warningLevel, location, additionalLocations, messageArgs, properties, isSuppressed);
+                var descriptor = new DiagnosticDescriptor(
+                    id,
+                    title,
+                    message,
+                    category,
+                    defaultSeverity,
+                    isEnabledByDefault,
+                    description,
+                    helpLink,
+                    customTags.ToImmutableArrayOrEmpty());
+                return new SimpleDiagnostic(
+                    descriptor,
+                    severity,
+                    warningLevel,
+                    location,
+                    additionalLocations,
+                    messageArgs: null,
+                    properties: properties,
+                    isSuppressed: isSuppressed);
             }
 
-            internal static SimpleDiagnostic Create(string id, LocalizableString title, string category, LocalizableString message, LocalizableString description, string helpLink,
-                                      DiagnosticSeverity severity, DiagnosticSeverity defaultSeverity,
-                                      bool isEnabledByDefault, int warningLevel, Location location,
-                                      IEnumerable<Location>? additionalLocations, IEnumerable<string>? customTags,
-                                      ImmutableDictionary<string, string?>? properties, bool isSuppressed = false)
-            {
-                var descriptor = new DiagnosticDescriptor(id, title, message,
-                     category, defaultSeverity, isEnabledByDefault, description, helpLink, customTags.ToImmutableArrayOrEmpty());
-                return new SimpleDiagnostic(descriptor, severity, warningLevel, location, additionalLocations, messageArgs: null, properties: properties, isSuppressed: isSuppressed);
-            }
+            public override DiagnosticDescriptor Descriptor => _descriptor;
 
-            public override DiagnosticDescriptor Descriptor
-            {
-                get { return _descriptor; }
-            }
-
-            public override string Id
-            {
-                get { return _descriptor.Id; }
-            }
+            public override string Id => _descriptor.Id;
 
             public override string GetMessage(IFormatProvider? formatProvider = null)
             {
@@ -105,40 +124,19 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            internal override IReadOnlyList<object?> Arguments
-            {
-                get { return _messageArgs; }
-            }
+            internal override IReadOnlyList<object?> Arguments => _messageArgs;
 
-            public override DiagnosticSeverity Severity
-            {
-                get { return _severity; }
-            }
+            public override DiagnosticSeverity Severity => _severity;
 
-            public override bool IsSuppressed
-            {
-                get { return _isSuppressed; }
-            }
+            public override bool IsSuppressed => _isSuppressed;
 
-            public override int WarningLevel
-            {
-                get { return _warningLevel; }
-            }
+            public override int WarningLevel => _warningLevel;
 
-            public override Location Location
-            {
-                get { return _location; }
-            }
+            public override Location Location => _location;
 
-            public override IReadOnlyList<Location> AdditionalLocations
-            {
-                get { return _additionalLocations; }
-            }
+            public override IReadOnlyList<Location> AdditionalLocations => _additionalLocations;
 
-            public override ImmutableDictionary<string, string?> Properties
-            {
-                get { return _properties; }
-            }
+            public override ImmutableDictionary<string, string?> Properties => _properties;
 
             public override bool Equals(Diagnostic? obj)
             {
@@ -159,10 +157,7 @@ namespace Loretta.CodeAnalysis
                     && _warningLevel == other._warningLevel;
             }
 
-            public override bool Equals(object? obj)
-            {
-                return Equals(obj as Diagnostic);
-            }
+            public override bool Equals(object? obj) => Equals(obj as Diagnostic);
 
             public override int GetHashCode()
             {

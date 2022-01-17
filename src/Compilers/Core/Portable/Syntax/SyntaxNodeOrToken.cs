@@ -62,10 +62,7 @@ namespace Loretta.CodeAnalysis
             _token = token;
         }
 
-        internal string GetDebuggerDisplay()
-        {
-            return GetType().Name + " " + KindText + " " + ToString();
-        }
+        internal string GetDebuggerDisplay() => GetType().Name + " " + KindText + " " + ToString();
 
         private string KindText
         {
@@ -415,10 +412,8 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <inheritdoc cref="WithLeadingTrivia(IEnumerable{SyntaxTrivia})"/>
-        public SyntaxNodeOrToken WithLeadingTrivia(params SyntaxTrivia[] trivia)
-        {
-            return WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
-        }
+        public SyntaxNodeOrToken WithLeadingTrivia(params SyntaxTrivia[] trivia) =>
+            WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
 
         /// <summary>
         /// Returns this <see cref="SyntaxNode"/> or <see cref="SyntaxToken"/> with the provided
@@ -442,10 +437,8 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <inheritdoc cref="WithTrailingTrivia(IEnumerable{SyntaxTrivia})"/>
-        public SyntaxNodeOrToken WithTrailingTrivia(params SyntaxTrivia[] trivia)
-        {
-            return WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
-        }
+        public SyntaxNodeOrToken WithTrailingTrivia(params SyntaxTrivia[] trivia) =>
+            WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
 
         /// <summary>
         /// Determines whether the underlying node or token or any of its descendant nodes, tokens or trivia have any
@@ -626,10 +619,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new node or token identical to this one with the specified annotations.
         /// </summary>
-        public SyntaxNodeOrToken WithAdditionalAnnotations(params SyntaxAnnotation[] annotations)
-        {
-            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
-        }
+        public SyntaxNodeOrToken WithAdditionalAnnotations(params SyntaxAnnotation[] annotations) =>
+            WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
 
         /// <summary>
         /// Creates a new node or token identical to this one with the specified annotations.
@@ -657,10 +648,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new node or token identical to this one without the specified annotations.
         /// </summary>
-        public SyntaxNodeOrToken WithoutAnnotations(params SyntaxAnnotation[] annotations)
-        {
-            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
-        }
+        public SyntaxNodeOrToken WithoutAnnotations(params SyntaxAnnotation[] annotations) =>
+            WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
 
         /// <summary>
         /// Creates a new node or token identical to this one without the specified annotations.
@@ -724,35 +713,27 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether two <see cref="SyntaxNodeOrToken"/>s are equal.
         /// </summary>
-        public static bool operator ==(SyntaxNodeOrToken left, SyntaxNodeOrToken right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(SyntaxNodeOrToken left, SyntaxNodeOrToken right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Determines whether two <see cref="SyntaxNodeOrToken"/>s are unequal.
         /// </summary>
-        public static bool operator !=(SyntaxNodeOrToken left, SyntaxNodeOrToken right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(SyntaxNodeOrToken left, SyntaxNodeOrToken right) =>
+            !left.Equals(right);
 
         /// <summary>
         /// Determines whether the supplied <see cref="SyntaxNodeOrToken"/> is equal to this
         /// <see cref="SyntaxNodeOrToken"/>.
         /// </summary>
-        public override bool Equals(object? obj)
-        {
-            return obj is SyntaxNodeOrToken token && Equals(token);
-        }
+        public override bool Equals(object? obj) =>
+            obj is SyntaxNodeOrToken token && Equals(token);
 
         /// <summary>
         /// Serves as hash function for <see cref="SyntaxNodeOrToken"/>.
         /// </summary>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(_nodeOrParent, Hash.Combine(_token, _tokenIndex));
-        }
+        public override int GetHashCode() =>
+            Hash.Combine(_nodeOrParent, Hash.Combine(_token, _tokenIndex));
 
         /// <summary>
         /// Determines if the two nodes or tokens are equivalent.

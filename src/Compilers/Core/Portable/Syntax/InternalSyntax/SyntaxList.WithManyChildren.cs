@@ -71,20 +71,12 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 }
             }
 
-            protected override int GetSlotCount()
-            {
-                return children.Length;
-            }
+            protected override int GetSlotCount() => children.Length;
 
-            internal override GreenNode GetSlot(int index)
-            {
-                return children[index];
-            }
+            internal override GreenNode GetSlot(int index) => children[index];
 
-            internal override void CopyTo(ArrayElement<GreenNode>[] array, int offset)
-            {
+            internal override void CopyTo(ArrayElement<GreenNode>[] array, int offset) =>
                 Array.Copy(children, 0, array, offset, children.Length);
-            }
 
             internal override SyntaxNode CreateRed(SyntaxNode? parent, int position)
             {
@@ -140,15 +132,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             {
             }
 
-            internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors)
-            {
-                return new WithManyChildren(errors, GetAnnotations(), children);
-            }
+            internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors) =>
+                new WithManyChildren(errors, GetAnnotations(), children);
 
-            internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
-            {
-                return new WithManyChildren(GetDiagnostics(), annotations, children);
-            }
+            internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations) =>
+                new WithManyChildren(GetDiagnostics(), annotations, children);
         }
     }
 }

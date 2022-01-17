@@ -35,15 +35,11 @@ namespace Loretta.CodeAnalysis.Syntax
                 _childPositions = childOffsets;
             }
 
-            internal override int GetChildPosition(int index)
-            {
-                return _childPositions[index];
-            }
+            internal override int GetChildPosition(int index) =>
+                _childPositions[index];
 
-            internal override SyntaxNode GetNodeSlot(int index)
-            {
-                return GetWeakRedElement(ref _children[index].Value, index);
-            }
+            internal override SyntaxNode GetNodeSlot(int index) =>
+                GetWeakRedElement(ref _children[index].Value, index);
 
             internal override SyntaxNode? GetCachedSlot(int index)
             {

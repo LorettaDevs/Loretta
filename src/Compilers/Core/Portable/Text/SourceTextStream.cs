@@ -43,35 +43,20 @@ namespace Loretta.CodeAnalysis.Text
             _preambleWritten = false;
         }
 
-        public override bool CanRead
-        {
-            get { return true; }
-        }
+        public override bool CanRead => true;
 
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
+        public override bool CanSeek => false;
 
-        public override bool CanWrite
-        {
-            get { return false; }
-        }
+        public override bool CanWrite => false;
 
-        public override void Flush()
-        {
-            throw new NotSupportedException();
-        }
+        public override void Flush() => throw new NotSupportedException();
 
-        public override long Length
-        {
-            get { throw new NotSupportedException(); }
-        }
+        public override long Length => throw new NotSupportedException();
 
         public override long Position
         {
-            get { return _position; }
-            set { throw new NotSupportedException(); }
+            get => _position;
+            set => throw new NotSupportedException();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -137,19 +122,13 @@ namespace Loretta.CodeAnalysis.Text
             _bufferUnreadChars = charsToRead;
         }
 
-        public override long Seek(long offset, SeekOrigin origin)
-        {
+        public override long Seek(long offset, SeekOrigin origin) =>
             throw new NotSupportedException();
-        }
 
-        public override void SetLength(long value)
-        {
+        public override void SetLength(long value) =>
             throw new NotSupportedException();
-        }
 
-        public override void Write(byte[] buffer, int offset, int count)
-        {
+        public override void Write(byte[] buffer, int offset, int count) =>
             throw new NotSupportedException();
-        }
     }
 }

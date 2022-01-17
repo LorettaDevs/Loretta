@@ -124,20 +124,14 @@ namespace Loretta.CodeAnalysis.Collections
             }
         }
 
-        public static int BinarySearch<T>(SegmentedArray<T> array, T value)
-        {
-            return BinarySearch(array, 0, array.Length, value, comparer: null);
-        }
+        public static int BinarySearch<T>(SegmentedArray<T> array, T value) =>
+            BinarySearch(array, 0, array.Length, value, comparer: null);
 
-        public static int BinarySearch<T>(SegmentedArray<T> array, T value, IComparer<T>? comparer)
-        {
-            return BinarySearch(array, 0, array.Length, value, comparer);
-        }
+        public static int BinarySearch<T>(SegmentedArray<T> array, T value, IComparer<T>? comparer) =>
+            BinarySearch(array, 0, array.Length, value, comparer);
 
-        public static int BinarySearch<T>(SegmentedArray<T> array, int index, int length, T value)
-        {
-            return BinarySearch(array, index, length, value, comparer: null);
-        }
+        public static int BinarySearch<T>(SegmentedArray<T> array, int index, int length, T value) =>
+            BinarySearch(array, index, length, value, comparer: null);
 
         public static int BinarySearch<T>(SegmentedArray<T> array, int index, int length, T value, IComparer<T>? comparer)
         {
@@ -151,15 +145,11 @@ namespace Loretta.CodeAnalysis.Collections
             return SegmentedArraySortHelper<T>.BinarySearch(array, index, length, value, comparer);
         }
 
-        public static int IndexOf<T>(SegmentedArray<T> array, T value)
-        {
-            return IndexOf(array, value, 0, array.Length);
-        }
+        public static int IndexOf<T>(SegmentedArray<T> array, T value) =>
+            IndexOf(array, value, 0, array.Length);
 
-        public static int IndexOf<T>(SegmentedArray<T> array, T value, int startIndex)
-        {
-            return IndexOf(array, value, startIndex, array.Length - startIndex);
-        }
+        public static int IndexOf<T>(SegmentedArray<T> array, T value, int startIndex) =>
+            IndexOf(array, value, startIndex, array.Length - startIndex);
 
         public static int IndexOf<T>(SegmentedArray<T> array, T value, int startIndex, int count)
         {
@@ -193,15 +183,11 @@ namespace Loretta.CodeAnalysis.Collections
             return -1;
         }
 
-        public static int LastIndexOf<T>(SegmentedArray<T> array, T value)
-        {
-            return LastIndexOf(array, value, array.Length - 1, array.Length);
-        }
+        public static int LastIndexOf<T>(SegmentedArray<T> array, T value) =>
+            LastIndexOf(array, value, array.Length - 1, array.Length);
 
-        public static int LastIndexOf<T>(SegmentedArray<T> array, T value, int startIndex)
-        {
-            return LastIndexOf(array, value, startIndex, array.Length == 0 ? 0 : startIndex + 1);
-        }
+        public static int LastIndexOf<T>(SegmentedArray<T> array, T value, int startIndex) =>
+            LastIndexOf(array, value, startIndex, array.Length == 0 ? 0 : startIndex + 1);
 
         public static int LastIndexOf<T>(SegmentedArray<T> array, T value, int startIndex, int count)
         {
@@ -245,10 +231,7 @@ namespace Loretta.CodeAnalysis.Collections
             return -1;
         }
 
-        public static void Reverse<T>(SegmentedArray<T> array)
-        {
-            Reverse(array, 0, array.Length);
-        }
+        public static void Reverse<T>(SegmentedArray<T> array) => Reverse(array, 0, array.Length);
 
         public static void Reverse<T>(SegmentedArray<T> array, int index, int length)
         {
@@ -283,15 +266,11 @@ namespace Loretta.CodeAnalysis.Collections
             }
         }
 
-        public static void Sort<T>(SegmentedArray<T> array, int index, int length)
-        {
+        public static void Sort<T>(SegmentedArray<T> array, int index, int length) =>
             Sort(array, index, length, comparer: null);
-        }
 
-        public static void Sort<T>(SegmentedArray<T> array, IComparer<T>? comparer)
-        {
+        public static void Sort<T>(SegmentedArray<T> array, IComparer<T>? comparer) =>
             Sort(array, 0, array.Length, comparer);
-        }
 
         public static void Sort<T>(SegmentedArray<T> array, int index, int length, IComparer<T>? comparer)
         {

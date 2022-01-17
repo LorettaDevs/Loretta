@@ -47,45 +47,29 @@ namespace Loretta.CodeAnalysis
             return s_stepIntoFunctions[(int) index];
         }
 
-        private static Func<SyntaxToken, bool> GetPredicateFunction(bool includeZeroWidth)
-        {
-            return includeZeroWidth ? SyntaxToken.Any : SyntaxToken.NonZeroWidth;
-        }
+        private static Func<SyntaxToken, bool> GetPredicateFunction(bool includeZeroWidth) =>
+            includeZeroWidth ? SyntaxToken.Any : SyntaxToken.NonZeroWidth;
 
-        private static bool Matches(Func<SyntaxToken, bool>? predicate, SyntaxToken token)
-        {
-            return predicate == null || ReferenceEquals(predicate, SyntaxToken.Any) || predicate(token);
-        }
+        private static bool Matches(Func<SyntaxToken, bool>? predicate, SyntaxToken token) =>
+            predicate == null || ReferenceEquals(predicate, SyntaxToken.Any) || predicate(token);
 
-        internal SyntaxToken GetFirstToken(in SyntaxNode current, bool includeZeroWidth, bool includeSkipped, bool includeDirectives, bool includeDocumentationComments)
-        {
-            return GetFirstToken(current, GetPredicateFunction(includeZeroWidth), GetStepIntoFunction(includeSkipped, includeDirectives, includeDocumentationComments));
-        }
+        internal SyntaxToken GetFirstToken(in SyntaxNode current, bool includeZeroWidth, bool includeSkipped, bool includeDirectives, bool includeDocumentationComments) =>
+            GetFirstToken(current, GetPredicateFunction(includeZeroWidth), GetStepIntoFunction(includeSkipped, includeDirectives, includeDocumentationComments));
 
-        internal SyntaxToken GetLastToken(in SyntaxNode current, bool includeZeroWidth, bool includeSkipped, bool includeDirectives, bool includeDocumentationComments)
-        {
-            return GetLastToken(current, GetPredicateFunction(includeZeroWidth), GetStepIntoFunction(includeSkipped, includeDirectives, includeDocumentationComments));
-        }
+        internal SyntaxToken GetLastToken(in SyntaxNode current, bool includeZeroWidth, bool includeSkipped, bool includeDirectives, bool includeDocumentationComments) =>
+            GetLastToken(current, GetPredicateFunction(includeZeroWidth), GetStepIntoFunction(includeSkipped, includeDirectives, includeDocumentationComments));
 
-        internal SyntaxToken GetPreviousToken(in SyntaxToken current, bool includeZeroWidth, bool includeSkipped, bool includeDirectives, bool includeDocumentationComments)
-        {
-            return GetPreviousToken(current, GetPredicateFunction(includeZeroWidth), GetStepIntoFunction(includeSkipped, includeDirectives, includeDocumentationComments));
-        }
+        internal SyntaxToken GetPreviousToken(in SyntaxToken current, bool includeZeroWidth, bool includeSkipped, bool includeDirectives, bool includeDocumentationComments) =>
+            GetPreviousToken(current, GetPredicateFunction(includeZeroWidth), GetStepIntoFunction(includeSkipped, includeDirectives, includeDocumentationComments));
 
-        internal SyntaxToken GetNextToken(in SyntaxToken current, bool includeZeroWidth, bool includeSkipped, bool includeDirectives, bool includeDocumentationComments)
-        {
-            return GetNextToken(current, GetPredicateFunction(includeZeroWidth), GetStepIntoFunction(includeSkipped, includeDirectives, includeDocumentationComments));
-        }
+        internal SyntaxToken GetNextToken(in SyntaxToken current, bool includeZeroWidth, bool includeSkipped, bool includeDirectives, bool includeDocumentationComments) =>
+            GetNextToken(current, GetPredicateFunction(includeZeroWidth), GetStepIntoFunction(includeSkipped, includeDirectives, includeDocumentationComments));
 
-        internal SyntaxToken GetPreviousToken(in SyntaxToken current, Func<SyntaxToken, bool> predicate, Func<SyntaxTrivia, bool>? stepInto)
-        {
-            return GetPreviousToken(current, predicate, stepInto != null, stepInto);
-        }
+        internal SyntaxToken GetPreviousToken(in SyntaxToken current, Func<SyntaxToken, bool> predicate, Func<SyntaxTrivia, bool>? stepInto) =>
+            GetPreviousToken(current, predicate, stepInto != null, stepInto);
 
-        internal SyntaxToken GetNextToken(in SyntaxToken current, Func<SyntaxToken, bool> predicate, Func<SyntaxTrivia, bool>? stepInto)
-        {
-            return GetNextToken(current, predicate, stepInto != null, stepInto);
-        }
+        internal SyntaxToken GetNextToken(in SyntaxToken current, Func<SyntaxToken, bool> predicate, Func<SyntaxTrivia, bool>? stepInto) =>
+            GetNextToken(current, predicate, stepInto != null, stepInto);
 
         private static readonly ObjectPool<Stack<ChildSyntaxList.Enumerator>> s_childEnumeratorStackPool
             = new(() => new Stack<ChildSyntaxList.Enumerator>(), 10);

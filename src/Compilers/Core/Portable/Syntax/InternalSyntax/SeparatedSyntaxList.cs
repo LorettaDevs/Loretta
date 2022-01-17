@@ -36,69 +36,32 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal GreenNode? Node => _list.Node;
 
-        public int Count
-        {
-            get
-            {
-                return (_list.Count + 1) >> 1;
-            }
-        }
+        public int Count => (_list.Count + 1) >> 1;
 
-        public int SeparatorCount
-        {
-            get
-            {
-                return _list.Count >> 1;
-            }
-        }
+        public int SeparatorCount => _list.Count >> 1;
 
-        public TNode? this[int index]
-        {
-            get
-            {
-                return (TNode?) _list[index << 1];
-            }
-        }
+        public TNode? this[int index] => (TNode?) _list[index << 1];
 
         /// <summary>
         /// Gets the separator at the given index in this list.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public GreenNode? GetSeparator(int index)
-        {
-            return _list[(index << 1) + 1];
-        }
+        public GreenNode? GetSeparator(int index) => _list[(index << 1) + 1];
 
-        public SyntaxList<GreenNode> GetWithSeparators()
-        {
-            return _list;
-        }
+        public SyntaxList<GreenNode> GetWithSeparators() => _list;
 
-        public static bool operator ==(in SeparatedSyntaxList<TNode> left, in SeparatedSyntaxList<TNode> right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(in SeparatedSyntaxList<TNode> left, in SeparatedSyntaxList<TNode> right) =>
+            left.Equals(right);
 
-        public static bool operator !=(in SeparatedSyntaxList<TNode> left, in SeparatedSyntaxList<TNode> right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(in SeparatedSyntaxList<TNode> left, in SeparatedSyntaxList<TNode> right) =>
+            !left.Equals(right);
 
-        public bool Equals(SeparatedSyntaxList<TNode> other)
-        {
-            return _list == other._list;
-        }
+        public bool Equals(SeparatedSyntaxList<TNode> other) => _list == other._list;
 
-        public override bool Equals(object? obj)
-        {
-            return (obj is SeparatedSyntaxList<TNode> list) && Equals(list);
-        }
+        public override bool Equals(object? obj) => (obj is SeparatedSyntaxList<TNode> list) && Equals(list);
 
-        public override int GetHashCode()
-        {
-            return _list.GetHashCode();
-        }
+        public override int GetHashCode() => _list.GetHashCode();
 
         public static implicit operator SeparatedSyntaxList<GreenNode>(SeparatedSyntaxList<TNode> list)
         {

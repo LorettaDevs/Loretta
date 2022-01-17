@@ -80,9 +80,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Determine if the character in question is any line break character
         /// </summary>
-        internal static bool IsAnyLineBreakCharacter(char c)
-        {
-            return c is '\n' or '\r' or '\u0085' or '\u2028' or '\u2029';
-        }
+        internal static bool IsAnyLineBreakCharacter(char c) =>
+            c is '\n' or '\r' or '\u0085' or '\u2028' or '\u2029';
     }
 }

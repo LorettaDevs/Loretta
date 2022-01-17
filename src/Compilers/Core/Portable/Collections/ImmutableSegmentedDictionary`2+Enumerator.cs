@@ -55,10 +55,7 @@ namespace Loretta.CodeAnalysis.Collections
             public bool MoveNext()
                 => _enumerator.MoveNext();
 
-            public void Reset()
-            {
-                _enumerator = _dictionary.GetEnumerator();
-            }
+            public void Reset() => _enumerator = _dictionary.GetEnumerator();
         }
     }
 }

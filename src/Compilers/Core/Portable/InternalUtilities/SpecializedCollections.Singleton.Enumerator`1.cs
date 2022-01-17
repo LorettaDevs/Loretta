@@ -40,10 +40,7 @@ namespace Loretta.Utilities
                     return false;
                 }
 
-                public void Reset()
-                {
-                    _moveNextCalled = false;
-                }
+                public void Reset() => _moveNextCalled = false;
             }
         }
     }

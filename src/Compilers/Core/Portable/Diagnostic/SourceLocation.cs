@@ -51,29 +51,11 @@ namespace Loretta.CodeAnalysis
             // when binding executable code anywhere, so it has no use.
         }
 
-        public override LocationKind Kind
-        {
-            get
-            {
-                return LocationKind.SourceFile;
-            }
-        }
+        public override LocationKind Kind => LocationKind.SourceFile;
 
-        public override TextSpan SourceSpan
-        {
-            get
-            {
-                return _span;
-            }
-        }
+        public override TextSpan SourceSpan => _span;
 
-        public override SyntaxTree SourceTree
-        {
-            get
-            {
-                return _syntaxTree;
-            }
-        }
+        public override SyntaxTree SourceTree => _syntaxTree;
 
         public override FileLinePositionSpan GetLineSpan()
         {
@@ -99,20 +81,13 @@ namespace Loretta.CodeAnalysis
             return other != null && other._syntaxTree == _syntaxTree && other._span == _span;
         }
 
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as SourceLocation);
-        }
+        public override bool Equals(object? obj) => Equals(obj as SourceLocation);
 
-        public override int GetHashCode()
-        {
-            return Hash.Combine(_syntaxTree, _span.GetHashCode());
-        }
+        public override int GetHashCode() => Hash.Combine(_syntaxTree, _span.GetHashCode());
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1845:Use span-based 'string.Concat'", Justification = "This is only used for the debugger.")]
-        protected override string GetDebuggerDisplay()
-        {
-            return base.GetDebuggerDisplay() + "\"" + _syntaxTree.ToString().Substring(_span.Start, _span.Length) + "\"";
-        }
+#pragma warning restore IDE0079 // Remove unnecessary suppression
+        protected override string GetDebuggerDisplay() => base.GetDebuggerDisplay() + "\"" + _syntaxTree.ToString().Substring(_span.Start, _span.Length) + "\"";
     }
 }

@@ -17,18 +17,9 @@ namespace Loretta.CodeAnalysis.Syntax
             _count = 0;
         }
 
-        public static SyntaxTokenListBuilder Create()
-        {
-            return new SyntaxTokenListBuilder(8);
-        }
+        public static SyntaxTokenListBuilder Create() => new SyntaxTokenListBuilder(8);
 
-        public int Count
-        {
-            get
-            {
-                return _count;
-            }
-        }
+        public int Count => _count;
 
         public void Add(SyntaxToken item)
         {
@@ -42,10 +33,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _nodes[_count++] = item;
         }
 
-        public void Add(SyntaxTokenList list)
-        {
-            Add(list, 0, list.Count);
-        }
+        public void Add(SyntaxTokenList list) => Add(list, 0, list.Count);
 
         public void Add(SyntaxTokenList list, int offset, int length)
         {
@@ -54,10 +42,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _count += length;
         }
 
-        public void Add(SyntaxToken[] list)
-        {
-            Add(list, 0, list.Length);
-        }
+        public void Add(SyntaxToken[] list) => Add(list, 0, list.Length);
 
         public void Add(SyntaxToken[] list, int offset, int length)
         {

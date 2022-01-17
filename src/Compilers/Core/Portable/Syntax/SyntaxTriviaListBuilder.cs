@@ -16,10 +16,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _nodes = new SyntaxTrivia[size];
         }
 
-        public static SyntaxTriviaListBuilder Create()
-        {
-            return new SyntaxTriviaListBuilder(4);
-        }
+        public static SyntaxTriviaListBuilder Create() => new SyntaxTriviaListBuilder(4);
 
         public static SyntaxTriviaList Create(IEnumerable<SyntaxTrivia>? trivia)
         {
@@ -33,15 +30,9 @@ namespace Loretta.CodeAnalysis.Syntax
             return builder.ToList();
         }
 
-        public int Count
-        {
-            get { return _count; }
-        }
+        public int Count => _count;
 
-        public void Clear()
-        {
-            _count = 0;
-        }
+        public void Clear() => _count = 0;
 
         public SyntaxTrivia this[int index]
         {
@@ -78,10 +69,7 @@ namespace Loretta.CodeAnalysis.Syntax
             return this;
         }
 
-        public void Add(SyntaxTrivia[] items)
-        {
-            Add(items, 0, items.Length);
-        }
+        public void Add(SyntaxTrivia[] items) => Add(items, 0, items.Length);
 
         public void Add(SyntaxTrivia[] items, int offset, int length)
         {
@@ -94,10 +82,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _count += length;
         }
 
-        public void Add(in SyntaxTriviaList list)
-        {
-            Add(list, 0, list.Count);
-        }
+        public void Add(in SyntaxTriviaList list) => Add(list, 0, list.Count);
 
         public void Add(in SyntaxTriviaList list, int offset, int length)
         {

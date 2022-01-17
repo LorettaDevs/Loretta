@@ -41,10 +41,7 @@ namespace Loretta.Utilities
             return newArray;
         }
 
-        internal static T[] Append<T>(this T[] array, T item)
-        {
-            return InsertAt(array, array.Length, item);
-        }
+        internal static T[] Append<T>(this T[] array, T item) => InsertAt(array, array.Length, item);
 
         internal static T[] InsertAt<T>(this T[] array, int position, T[] items)
         {
@@ -63,15 +60,9 @@ namespace Loretta.Utilities
             return newArray;
         }
 
-        internal static T[] Append<T>(this T[] array, T[] items)
-        {
-            return InsertAt(array, array.Length, items);
-        }
+        internal static T[] Append<T>(this T[] array, T[] items) => InsertAt(array, array.Length, items);
 
-        internal static T[] RemoveAt<T>(this T[] array, int position)
-        {
-            return RemoveAt(array, position, 1);
-        }
+        internal static T[] RemoveAt<T>(this T[] array, int position) => RemoveAt(array, position, 1);
 
         internal static T[] RemoveAt<T>(this T[] array, int position, int length)
         {
@@ -102,15 +93,11 @@ namespace Loretta.Utilities
             return newArray;
         }
 
-        internal static T[] ReplaceAt<T>(this T[] array, int position, int length, T[] items)
-        {
-            return InsertAt(RemoveAt(array, position, length), position, items);
-        }
+        internal static T[] ReplaceAt<T>(this T[] array, int position, int length, T[] items) =>
+            InsertAt(RemoveAt(array, position, length), position, items);
 
-        internal static void ReverseContents<T>(this T[] array)
-        {
+        internal static void ReverseContents<T>(this T[] array) =>
             ReverseContents(array, 0, array.Length);
-        }
 
         internal static void ReverseContents<T>(this T[] array, int start, int count)
         {

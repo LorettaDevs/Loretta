@@ -43,10 +43,7 @@ namespace Loretta.CodeAnalysis
             _syntaxTree = syntaxTree;
         }
 
-        private string GetDebuggerDisplay()
-        {
-            return GetType().Name + " " + KindText + " " + ToString();
-        }
+        private string GetDebuggerDisplay() => GetType().Name + " " + KindText + " " + ToString();
 
         /// <summary>
         /// An integer representing the language specific kind of this node.
@@ -288,28 +285,19 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <returns>The string representation of this node, not including its leading and trailing trivia.</returns>
         /// <remarks>The length of the returned string is always the same as Span.Length</remarks>
-        public override string ToString()
-        {
-            return Green.ToString();
-        }
+        public override string ToString() => Green.ToString();
 
         /// <summary>
         /// Returns full string representation of this node including its leading and trailing trivia.
         /// </summary>
         /// <returns>The full string representation of this node including its leading and trailing trivia.</returns>
         /// <remarks>The length of the returned string is always the same as FullSpan.Length</remarks>
-        public virtual string ToFullString()
-        {
-            return Green.ToFullString();
-        }
+        public virtual string ToFullString() => Green.ToFullString();
 
         /// <summary>
         /// Writes the full text of this node to the specified <see cref="TextWriter"/>.
         /// </summary>
-        public virtual void WriteTo(TextWriter writer)
-        {
-            Green.WriteTo(writer, leading: true, trailing: true);
-        }
+        public virtual void WriteTo(TextWriter writer) => Green.WriteTo(writer, leading: true, trailing: true);
 
         /// <summary>
         /// Gets the full text of this node as a new <see cref="SourceText"/> instance.
@@ -372,13 +360,7 @@ namespace Loretta.CodeAnalysis
         /// represent constructs that should have been present in the source code in order to
         /// compile successfully but were actually missing.
         /// </summary>
-        public bool IsMissing
-        {
-            get
-            {
-                return Green.IsMissing;
-            }
-        }
+        public bool IsMissing => Green.IsMissing;
 
         /// <summary>
         /// Determines whether this node is a descendant of a structured trivia.
@@ -397,57 +379,27 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether this node represents a structured trivia.
         /// </summary>
-        public bool IsStructuredTrivia
-        {
-            get
-            {
-                return Green.IsStructuredTrivia;
-            }
-        }
+        public bool IsStructuredTrivia => Green.IsStructuredTrivia;
 
         /// <summary>
         /// Determines whether a descendant trivia of this node is structured.
         /// </summary>
-        public bool HasStructuredTrivia
-        {
-            get
-            {
-                return Green.ContainsStructuredTrivia && !Green.IsStructuredTrivia;
-            }
-        }
+        public bool HasStructuredTrivia => Green.ContainsStructuredTrivia && !Green.IsStructuredTrivia;
 
         /// <summary>
         /// Determines whether this node has any descendant skipped text.
         /// </summary>
-        public bool ContainsSkippedText
-        {
-            get
-            {
-                return Green.ContainsSkippedText;
-            }
-        }
+        public bool ContainsSkippedText => Green.ContainsSkippedText;
 
         /// <summary>
         /// Determines whether this node has any descendant preprocessor directives.
         /// </summary>
-        public bool ContainsDirectives
-        {
-            get
-            {
-                return Green.ContainsDirectives;
-            }
-        }
+        public bool ContainsDirectives => Green.ContainsDirectives;
 
         /// <summary>
         /// Determines whether this node or any of its descendant nodes, tokens or trivia have any diagnostics on them. 
         /// </summary>
-        public bool ContainsDiagnostics
-        {
-            get
-            {
-                return Green.ContainsDiagnostics;
-            }
-        }
+        public bool ContainsDiagnostics => Green.ContainsDiagnostics;
 
         /// <summary>
         /// Determines if the specified node is a descendant of this node.
@@ -487,24 +439,12 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether this node has any leading trivia.
         /// </summary>
-        public bool HasLeadingTrivia
-        {
-            get
-            {
-                return GetLeadingTrivia().Count > 0;
-            }
-        }
+        public bool HasLeadingTrivia => GetLeadingTrivia().Count > 0;
 
         /// <summary>
         /// Determines whether this node has any trailing trivia.
         /// </summary>
-        public bool HasTrailingTrivia
-        {
-            get
-            {
-                return GetTrailingTrivia().Count > 0;
-            }
-        }
+        public bool HasTrailingTrivia => GetTrailingTrivia().Count > 0;
 
         /// <summary>
         /// Gets a node at given node index without forcing its creation.
@@ -568,10 +508,7 @@ namespace Loretta.CodeAnalysis
         /// Returns the <see cref="CodeAnalysis.Location"/> for this node.
         /// </summary>
         /// <returns></returns>
-        public Location GetLocation()
-        {
-            return SyntaxTree.GetLocation(Span);
-        }
+        public Location GetLocation() => SyntaxTree.GetLocation(Span);
 
         internal Location Location
         {
@@ -597,60 +534,33 @@ namespace Loretta.CodeAnalysis
         /// This method does not filter diagnostics based on #pragmas and compiler options
         /// like nowarn, warnaserror etc.
         /// </summary>
-        public IEnumerable<Diagnostic> GetDiagnostics()
-        {
-            return SyntaxTree.GetDiagnostics(this);
-        }
+        public IEnumerable<Diagnostic> GetDiagnostics() => SyntaxTree.GetDiagnostics(this);
 
         /// <summary>
         /// Gets a <see cref="SyntaxReference"/> for this syntax node. CommonSyntaxReferences can be used to
         /// regain access to a syntax node without keeping the entire tree and source text in
         /// memory.
         /// </summary>
-        public SyntaxReference GetReference()
-        {
-            return SyntaxTree.GetReference(this);
-        }
+        public SyntaxReference GetReference() => SyntaxTree.GetReference(this);
 
         #region Node Lookup
 
         /// <summary>
         /// The node that contains this node in its <see cref="ChildNodes"/> collection.
         /// </summary>
-        public SyntaxNode? Parent
-        {
-            get
-            {
-                return _parent;
-            }
-        }
+        public SyntaxNode? Parent => _parent;
 
         /// <summary>
         /// The parent trivia for this node in case it is part of structured trivia.
         /// </summary>
-        public virtual SyntaxTrivia ParentTrivia
-        {
-            get
-            {
-                return default(SyntaxTrivia);
-            }
-        }
+        public virtual SyntaxTrivia ParentTrivia => default(SyntaxTrivia);
 
-        internal SyntaxNode? ParentOrStructuredTriviaParent
-        {
-            get
-            {
-                return GetParent(this, ascendOutOfTrivia: true);
-            }
-        }
+        internal SyntaxNode? ParentOrStructuredTriviaParent => GetParent(this, ascendOutOfTrivia: true);
 
         /// <summary>
         /// The list of child nodes and tokens of this node, where each element is a SyntaxNodeOrToken instance.
         /// </summary>
-        public ChildSyntaxList ChildNodesAndTokens()
-        {
-            return new ChildSyntaxList(this);
-        }
+        public ChildSyntaxList ChildNodesAndTokens() => new ChildSyntaxList(this);
 
         /// <summary>
         /// Returns the child node or token that contains the provided position.
@@ -776,10 +686,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="descendIntoChildren">An optional function that determines if the search descends into the argument node's children.</param>
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
-        public IEnumerable<SyntaxNode> DescendantNodes(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: false);
-        }
+        public IEnumerable<SyntaxNode> DescendantNodes(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: false);
 
         /// <summary>
         /// Gets a list of descendant nodes in prefix document order.
@@ -787,20 +695,16 @@ namespace Loretta.CodeAnalysis
         /// <param name="span">The span the node's full span must intersect.</param>
         /// <param name="descendIntoChildren">An optional function that determines if the search descends into the argument node's children.</param>
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
-        public IEnumerable<SyntaxNode> DescendantNodes(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesImpl(span, descendIntoChildren, descendIntoTrivia, includeSelf: false);
-        }
+        public IEnumerable<SyntaxNode> DescendantNodes(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesImpl(span, descendIntoChildren, descendIntoTrivia, includeSelf: false);
 
         /// <summary>
         /// Gets a list of descendant nodes (including this node) in prefix document order.
         /// </summary>
         /// <param name="descendIntoChildren">An optional function that determines if the search descends into the argument node's children.</param>
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
-        public IEnumerable<SyntaxNode> DescendantNodesAndSelf(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: true);
-        }
+        public IEnumerable<SyntaxNode> DescendantNodesAndSelf(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: true);
 
         /// <summary>
         /// Gets a list of descendant nodes (including this node) in prefix document order.
@@ -808,20 +712,16 @@ namespace Loretta.CodeAnalysis
         /// <param name="span">The span the node's full span must intersect.</param>
         /// <param name="descendIntoChildren">An optional function that determines if the search descends into the argument node's children.</param>
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
-        public IEnumerable<SyntaxNode> DescendantNodesAndSelf(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesImpl(span, descendIntoChildren, descendIntoTrivia, includeSelf: true);
-        }
+        public IEnumerable<SyntaxNode> DescendantNodesAndSelf(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesImpl(span, descendIntoChildren, descendIntoTrivia, includeSelf: true);
 
         /// <summary>
         /// Gets a list of descendant nodes and tokens in prefix document order.
         /// </summary>
         /// <param name="descendIntoChildren">An optional function that determines if the search descends into the argument node's children.</param>
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
-        public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokens(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesAndTokensImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: false);
-        }
+        public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokens(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesAndTokensImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: false);
 
         /// <summary>
         /// Gets a list of the descendant nodes and tokens in prefix document order.
@@ -829,20 +729,16 @@ namespace Loretta.CodeAnalysis
         /// <param name="span">The span the node's full span must intersect.</param>
         /// <param name="descendIntoChildren">An optional function that determines if the search descends into the argument node's children.</param>
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
-        public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokens(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesAndTokensImpl(span, descendIntoChildren, descendIntoTrivia, includeSelf: false);
-        }
+        public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokens(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesAndTokensImpl(span, descendIntoChildren, descendIntoTrivia, includeSelf: false);
 
         /// <summary>
         /// Gets a list of descendant nodes and tokens (including this node) in prefix document order.
         /// </summary>
         /// <param name="descendIntoChildren">An optional function that determines if the search descends into the argument node's children.</param>
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
-        public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokensAndSelf(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesAndTokensImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: true);
-        }
+        public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokensAndSelf(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesAndTokensImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: true);
 
         /// <summary>
         /// Gets a list of the descendant nodes and tokens (including this node) in prefix document order.
@@ -850,10 +746,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="span">The span the node's full span must intersect.</param>
         /// <param name="descendIntoChildren">An optional function that determines if the search descends into the argument node's children.</param>
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
-        public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokensAndSelf(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesAndTokensImpl(span, descendIntoChildren, descendIntoTrivia, includeSelf: true);
-        }
+        public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokensAndSelf(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesAndTokensImpl(span, descendIntoChildren, descendIntoTrivia, includeSelf: true);
 
         /// <summary>
         /// Finds the node with the smallest <see cref="FullSpan"/> that contains <paramref name="span"/>.
@@ -907,28 +801,22 @@ namespace Loretta.CodeAnalysis
         /// True to return tokens that are part of trivia. If false finds the token whose full span (including trivia)
         /// includes the position.
         /// </param>
-        public SyntaxToken FindToken(int position, bool findInsideTrivia = false)
-        {
-            return FindTokenCore(position, findInsideTrivia);
-        }
+        public SyntaxToken FindToken(int position, bool findInsideTrivia = false) =>
+            FindTokenCore(position, findInsideTrivia);
 
         /// <summary>
         /// Gets the first token of the tree rooted by this node. Skips zero-width tokens.
         /// </summary>
         /// <returns>The first token or <c>default(SyntaxToken)</c> if it doesn't exist.</returns>
-        public SyntaxToken GetFirstToken(bool includeZeroWidth = false, bool includeSkipped = false, bool includeDirectives = false, bool includeDocumentationComments = false)
-        {
-            return SyntaxNavigator.Instance.GetFirstToken(this, includeZeroWidth, includeSkipped, includeDirectives, includeDocumentationComments);
-        }
+        public SyntaxToken GetFirstToken(bool includeZeroWidth = false, bool includeSkipped = false, bool includeDirectives = false, bool includeDocumentationComments = false) =>
+            SyntaxNavigator.Instance.GetFirstToken(this, includeZeroWidth, includeSkipped, includeDirectives, includeDocumentationComments);
 
         /// <summary>
         /// Gets the last token of the tree rooted by this node. Skips zero-width tokens.
         /// </summary>
         /// <returns>The last token or <c>default(SyntaxToken)</c> if it doesn't exist.</returns>
-        public SyntaxToken GetLastToken(bool includeZeroWidth = false, bool includeSkipped = false, bool includeDirectives = false, bool includeDocumentationComments = false)
-        {
-            return SyntaxNavigator.Instance.GetLastToken(this, includeZeroWidth, includeSkipped, includeDirectives, includeDocumentationComments);
-        }
+        public SyntaxToken GetLastToken(bool includeZeroWidth = false, bool includeSkipped = false, bool includeDirectives = false, bool includeDocumentationComments = false) =>
+            SyntaxNavigator.Instance.GetLastToken(this, includeZeroWidth, includeSkipped, includeDirectives, includeDocumentationComments);
 
         /// <summary>
         /// Gets a list of the direct child tokens of this node.
@@ -947,18 +835,14 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets a list of all the tokens in the span of this node.
         /// </summary>
-        public IEnumerable<SyntaxToken> DescendantTokens(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesAndTokens(descendIntoChildren, descendIntoTrivia).Where(sn => sn.IsToken).Select(sn => sn.AsToken());
-        }
+        public IEnumerable<SyntaxToken> DescendantTokens(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesAndTokens(descendIntoChildren, descendIntoTrivia).Where(sn => sn.IsToken).Select(sn => sn.AsToken());
 
         /// <summary>
         /// Gets a list of all the tokens in the full span of this node.
         /// </summary>
-        public IEnumerable<SyntaxToken> DescendantTokens(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantNodesAndTokens(span, descendIntoChildren, descendIntoTrivia).Where(sn => sn.IsToken).Select(sn => sn.AsToken());
-        }
+        public IEnumerable<SyntaxToken> DescendantTokens(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantNodesAndTokens(span, descendIntoChildren, descendIntoTrivia).Where(sn => sn.IsToken).Select(sn => sn.AsToken());
 
         #endregion
 
@@ -967,19 +851,15 @@ namespace Loretta.CodeAnalysis
         /// The list of trivia that appears before this node in the source code and are attached to a token that is a
         /// descendant of this node.
         /// </summary>
-        public SyntaxTriviaList GetLeadingTrivia()
-        {
-            return GetFirstToken(includeZeroWidth: true).LeadingTrivia;
-        }
+        public SyntaxTriviaList GetLeadingTrivia() =>
+            GetFirstToken(includeZeroWidth: true).LeadingTrivia;
 
         /// <summary>
         /// The list of trivia that appears after this node in the source code and are attached to a token that is a
         /// descendant of this node.
         /// </summary>
-        public SyntaxTriviaList GetTrailingTrivia()
-        {
-            return GetLastToken(includeZeroWidth: true).TrailingTrivia;
-        }
+        public SyntaxTriviaList GetTrailingTrivia() =>
+            GetLastToken(includeZeroWidth: true).TrailingTrivia;
 
         /// <summary>
         /// Finds a descendant trivia of this node whose span includes the supplied position.
@@ -989,10 +869,8 @@ namespace Loretta.CodeAnalysis
         /// True to return tokens that are part of trivia. If false finds the token whose full span (including trivia)
         /// includes the position.
         /// </param>
-        public SyntaxTrivia FindTrivia(int position, bool findInsideTrivia = false)
-        {
-            return FindTrivia(position, findInsideTrivia ? SyntaxTrivia.Any : null);
-        }
+        public SyntaxTrivia FindTrivia(int position, bool findInsideTrivia = false) =>
+            FindTrivia(position, findInsideTrivia ? SyntaxTrivia.Any : null);
 
         /// <summary>
         /// Finds a descendant trivia of this node at the specified position, where the position is
@@ -1084,18 +962,14 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Get a list of all the trivia associated with the descendant nodes and tokens.
         /// </summary>
-        public IEnumerable<SyntaxTrivia> DescendantTrivia(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantTriviaImpl(FullSpan, descendIntoChildren, descendIntoTrivia);
-        }
+        public IEnumerable<SyntaxTrivia> DescendantTrivia(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantTriviaImpl(FullSpan, descendIntoChildren, descendIntoTrivia);
 
         /// <summary>
         /// Get a list of all the trivia associated with the descendant nodes and tokens.
         /// </summary>
-        public IEnumerable<SyntaxTrivia> DescendantTrivia(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
-        {
-            return DescendantTriviaImpl(span, descendIntoChildren, descendIntoTrivia);
-        }
+        public IEnumerable<SyntaxTrivia> DescendantTrivia(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false) =>
+            DescendantTriviaImpl(span, descendIntoChildren, descendIntoTrivia);
 
         #endregion
 
@@ -1104,55 +978,34 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether this node or any sub node, token or trivia has annotations.
         /// </summary>
-        public bool ContainsAnnotations
-        {
-            get { return Green.ContainsAnnotations; }
-        }
+        public bool ContainsAnnotations => Green.ContainsAnnotations;
 
         /// <summary>
         /// Determines whether this node has any annotations with the specific annotation kind.
         /// </summary>
-        public bool HasAnnotations(string annotationKind)
-        {
-            return Green.HasAnnotations(annotationKind);
-        }
+        public bool HasAnnotations(string annotationKind) => Green.HasAnnotations(annotationKind);
 
         /// <summary>
         /// Determines whether this node has any annotations with any of the specific annotation kinds.
         /// </summary>
-        public bool HasAnnotations(IEnumerable<string> annotationKinds)
-        {
-            return Green.HasAnnotations(annotationKinds);
-        }
+        public bool HasAnnotations(IEnumerable<string> annotationKinds) => Green.HasAnnotations(annotationKinds);
 
         /// <summary>
         /// Determines whether this node has the specific annotation.
         /// </summary>
-        public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation)
-        {
-            return Green.HasAnnotation(annotation);
-        }
+        public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation) => Green.HasAnnotation(annotation);
 
         /// <summary>
         /// Gets all the annotations with the specified annotation kind. 
         /// </summary>
-        public IEnumerable<SyntaxAnnotation> GetAnnotations(string annotationKind)
-        {
-            return Green.GetAnnotations(annotationKind);
-        }
+        public IEnumerable<SyntaxAnnotation> GetAnnotations(string annotationKind) => Green.GetAnnotations(annotationKind);
 
         /// <summary>
         /// Gets all the annotations with the specified annotation kinds. 
         /// </summary>
-        public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds)
-        {
-            return Green.GetAnnotations(annotationKinds);
-        }
+        public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds) => Green.GetAnnotations(annotationKinds);
 
-        internal SyntaxAnnotation[] GetAnnotations()
-        {
-            return Green.GetAnnotations();
-        }
+        internal SyntaxAnnotation[] GetAnnotations() => Green.GetAnnotations();
 
         /// <summary>
         /// Gets all nodes and tokens with an annotation of the specified annotation kind.
@@ -1184,36 +1037,28 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Gets all nodes with the specified annotation.
         /// </summary>
-        public IEnumerable<SyntaxNode> GetAnnotatedNodes(SyntaxAnnotation syntaxAnnotation)
-        {
-            return GetAnnotatedNodesAndTokens(syntaxAnnotation).Where(n => n.IsNode).Select(n => n.AsNode()!);
-        }
+        public IEnumerable<SyntaxNode> GetAnnotatedNodes(SyntaxAnnotation syntaxAnnotation) =>
+            GetAnnotatedNodesAndTokens(syntaxAnnotation).Where(n => n.IsNode).Select(n => n.AsNode()!);
 
         /// <summary>
         /// Gets all nodes with the specified annotation kind.
         /// </summary>
         /// <param name="annotationKind"></param>
         /// <returns></returns>
-        public IEnumerable<SyntaxNode> GetAnnotatedNodes(string annotationKind)
-        {
-            return GetAnnotatedNodesAndTokens(annotationKind).Where(n => n.IsNode).Select(n => n.AsNode()!);
-        }
+        public IEnumerable<SyntaxNode> GetAnnotatedNodes(string annotationKind) =>
+            GetAnnotatedNodesAndTokens(annotationKind).Where(n => n.IsNode).Select(n => n.AsNode()!);
 
         /// <summary>
         /// Gets all tokens with the specified annotation.
         /// </summary>
-        public IEnumerable<SyntaxToken> GetAnnotatedTokens(SyntaxAnnotation syntaxAnnotation)
-        {
-            return GetAnnotatedNodesAndTokens(syntaxAnnotation).Where(n => n.IsToken).Select(n => n.AsToken());
-        }
+        public IEnumerable<SyntaxToken> GetAnnotatedTokens(SyntaxAnnotation syntaxAnnotation) =>
+            GetAnnotatedNodesAndTokens(syntaxAnnotation).Where(n => n.IsToken).Select(n => n.AsToken());
 
         /// <summary>
         /// Gets all tokens with the specified annotation kind.
         /// </summary>
-        public IEnumerable<SyntaxToken> GetAnnotatedTokens(string annotationKind)
-        {
-            return GetAnnotatedNodesAndTokens(annotationKind).Where(n => n.IsToken).Select(n => n.AsToken());
-        }
+        public IEnumerable<SyntaxToken> GetAnnotatedTokens(string annotationKind) =>
+            GetAnnotatedNodesAndTokens(annotationKind).Where(n => n.IsToken).Select(n => n.AsToken());
 
         /// <summary>
         /// Gets all trivia with an annotation of the specified annotation kind.
@@ -1242,15 +1087,11 @@ namespace Loretta.CodeAnalysis
                        .Where(tr => tr.HasAnnotation(annotation));
         }
 
-        internal SyntaxNode WithAdditionalAnnotationsInternal(IEnumerable<SyntaxAnnotation> annotations)
-        {
-            return Green.WithAdditionalAnnotationsGreen(annotations).CreateRed();
-        }
+        internal SyntaxNode WithAdditionalAnnotationsInternal(IEnumerable<SyntaxAnnotation> annotations) =>
+            Green.WithAdditionalAnnotationsGreen(annotations).CreateRed();
 
-        internal SyntaxNode GetNodeWithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations)
-        {
-            return Green.WithoutAnnotationsGreen(annotations).CreateRed();
-        }
+        internal SyntaxNode GetNodeWithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations) =>
+            Green.WithoutAnnotationsGreen(annotations).CreateRed();
 
         /// <summary>
         /// Copies all SyntaxAnnotations, if any, from this SyntaxNode instance and attaches them to a new instance based on <paramref name="node" />.
@@ -1290,10 +1131,8 @@ namespace Loretta.CodeAnalysis
         /// differences of nodes inside method bodies or initializer expressions, otherwise all
         /// nodes and tokens must be equivalent. 
         /// </param>
-        public bool IsEquivalentTo(SyntaxNode node, bool topLevel = false)
-        {
-            return IsEquivalentToCore(node, topLevel);
-        }
+        public bool IsEquivalentTo(SyntaxNode node, bool topLevel = false) =>
+            IsEquivalentToCore(node, topLevel);
 
         /// <summary>
         /// Serializes the node to the given <paramref name="stream"/>.
@@ -1320,10 +1159,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determine if this node is structurally equivalent to another.
         /// </summary>
-        protected virtual bool EquivalentToCore(SyntaxNode other)
-        {
-            return IsEquivalentTo(other);
-        }
+        protected virtual bool EquivalentToCore(SyntaxNode other) =>
+            IsEquivalentTo(other);
 
         /// <summary>
         /// Returns SyntaxTree that owns the node. If the node does not belong to a tree then
@@ -1401,10 +1238,8 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        private SyntaxToken FindToken(int position, Func<SyntaxTrivia, bool> findInsideTrivia)
-        {
-            return FindTokenCore(position, findInsideTrivia);
-        }
+        private SyntaxToken FindToken(int position, Func<SyntaxTrivia, bool> findInsideTrivia) =>
+            FindTokenCore(position, findInsideTrivia);
 
         /// <summary>
         /// Finds a descendant token of this node whose span includes the supplied position. 
@@ -1469,10 +1304,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="position">The character position of the trivia relative to the beginning of the file.</param>
         /// <param name="findInsideTrivia">Whether to search inside structured trivia.</param>
-        protected virtual SyntaxTrivia FindTriviaCore(int position, bool findInsideTrivia)
-        {
-            return FindTrivia(position, findInsideTrivia);
-        }
+        protected virtual SyntaxTrivia FindTriviaCore(int position, bool findInsideTrivia) =>
+            FindTrivia(position, findInsideTrivia);
 
         /// <summary>
         /// Creates a new tree of nodes with the specified nodes, tokens or trivia replaced.
@@ -1528,10 +1361,7 @@ namespace Loretta.CodeAnalysis
         /// For example, in C# the statements of a Block-Node that is parented by a 
         /// MethodDeclaration will be held weakly.
         /// </summary>
-        internal virtual bool ShouldCreateWeakList()
-        {
-            return false;
-        }
+        internal virtual bool ShouldCreateWeakList() => false;
 
         internal bool HasErrors
         {

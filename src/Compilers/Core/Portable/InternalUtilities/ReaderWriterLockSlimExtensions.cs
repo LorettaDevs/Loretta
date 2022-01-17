@@ -8,10 +8,8 @@ namespace Loretta.Utilities
 {
     internal static class ReaderWriterLockSlimExtensions
     {
-        internal static ReadLockExiter DisposableRead(this ReaderWriterLockSlim @lock)
-        {
-            return new ReadLockExiter(@lock);
-        }
+        internal static ReadLockExiter DisposableRead(this ReaderWriterLockSlim @lock) =>
+            new ReadLockExiter(@lock);
 
         [NonCopyable]
         internal readonly struct ReadLockExiter : IDisposable
@@ -24,16 +22,11 @@ namespace Loretta.Utilities
                 @lock.EnterReadLock();
             }
 
-            public void Dispose()
-            {
-                _lock.ExitReadLock();
-            }
+            public void Dispose() => _lock.ExitReadLock();
         }
 
-        internal static UpgradeableReadLockExiter DisposableUpgradeableRead(this ReaderWriterLockSlim @lock)
-        {
-            return new UpgradeableReadLockExiter(@lock);
-        }
+        internal static UpgradeableReadLockExiter DisposableUpgradeableRead(this ReaderWriterLockSlim @lock) =>
+            new UpgradeableReadLockExiter(@lock);
 
         [NonCopyable]
         internal readonly struct UpgradeableReadLockExiter : IDisposable
@@ -56,16 +49,11 @@ namespace Loretta.Utilities
                 _lock.ExitUpgradeableReadLock();
             }
 
-            public void EnterWrite()
-            {
-                _lock.EnterWriteLock();
-            }
+            public void EnterWrite() => _lock.EnterWriteLock();
         }
 
-        internal static WriteLockExiter DisposableWrite(this ReaderWriterLockSlim @lock)
-        {
-            return new WriteLockExiter(@lock);
-        }
+        internal static WriteLockExiter DisposableWrite(this ReaderWriterLockSlim @lock) =>
+            new WriteLockExiter(@lock);
 
         [NonCopyable]
         internal readonly struct WriteLockExiter : IDisposable
@@ -78,10 +66,7 @@ namespace Loretta.Utilities
                 @lock.EnterWriteLock();
             }
 
-            public void Dispose()
-            {
-                _lock.ExitWriteLock();
-            }
+            public void Dispose() => _lock.ExitWriteLock();
         }
 
         internal static void AssertCanRead(this ReaderWriterLockSlim @lock)

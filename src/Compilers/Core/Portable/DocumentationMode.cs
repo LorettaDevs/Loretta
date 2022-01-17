@@ -29,9 +29,7 @@ namespace Loretta.CodeAnalysis
 
     internal static partial class DocumentationModeEnumBounds
     {
-        internal static bool IsValid(this DocumentationMode value)
-        {
-            return value is >= DocumentationMode.None and <= DocumentationMode.Diagnose;
-        }
+        internal static bool IsValid(this DocumentationMode value) =>
+            value is >= DocumentationMode.None and <= DocumentationMode.Diagnose;
     }
 }

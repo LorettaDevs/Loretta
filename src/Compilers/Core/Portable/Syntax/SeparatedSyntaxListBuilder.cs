@@ -16,10 +16,8 @@ namespace Loretta.CodeAnalysis.Syntax
         {
         }
 
-        public static SeparatedSyntaxListBuilder<TNode> Create()
-        {
-            return new SeparatedSyntaxListBuilder<TNode>(8);
-        }
+        public static SeparatedSyntaxListBuilder<TNode> Create() =>
+            new SeparatedSyntaxListBuilder<TNode>(8);
 
         internal SeparatedSyntaxListBuilder(SyntaxListBuilder builder)
         {
@@ -27,26 +25,11 @@ namespace Loretta.CodeAnalysis.Syntax
             _expectedSeparator = false;
         }
 
-        public bool IsNull
-        {
-            get
-            {
-                return _builder == null;
-            }
-        }
+        public bool IsNull => _builder == null;
 
-        public int Count
-        {
-            get
-            {
-                return _builder.Count;
-            }
-        }
+        public int Count => _builder.Count;
 
-        public void Clear()
-        {
-            _builder.Clear();
-        }
+        public void Clear() => _builder.Clear();
 
         private void CheckExpectedElement()
         {

@@ -41,10 +41,7 @@ namespace Loretta.CodeAnalysis
             Node = token;
         }
 
-        private string GetDebuggerDisplay()
-        {
-            return GetType().Name + " " + (Node != null ? Node.KindText : "None") + " " + ToString();
-        }
+        private string GetDebuggerDisplay() => GetType().Name + " " + (Node != null ? Node.KindText : "None") + " " + ToString();
 
         /// <summary>
         /// An integer representing the language specific kind of this token.
@@ -101,18 +98,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The absolute span of this token in characters, not including its leading and trailing trivia.
         /// </summary>
-        public TextSpan Span
-        {
-            get
-            {
-                return Node != null ? new TextSpan(Position + Node.GetLeadingTriviaWidth(), Node.Width) : default(TextSpan);
-            }
-        }
+        public TextSpan Span => Node != null ? new TextSpan(Position + Node.GetLeadingTriviaWidth(), Node.Width) : default(TextSpan);
 
-        internal int EndPosition
-        {
-            get { return Node != null ? Position + Node.FullWidth : 0; }
-        }
+        internal int EndPosition => Node != null ? Position + Node.FullWidth : 0;
 
         /// <summary>
         /// Same as accessing <see cref="TextSpan.Start"/> on <see cref="Span"/>.
@@ -120,10 +108,7 @@ namespace Loretta.CodeAnalysis
         /// <remarks>
         /// Slight performance improvement.
         /// </remarks>
-        public int SpanStart
-        {
-            get { return Node != null ? Position + Node.GetLeadingTriviaWidth() : 0; }
-        }
+        public int SpanStart => Node != null ? Position + Node.GetLeadingTriviaWidth() : 0;
 
         /// <summary>
         /// The absolute span of this token in characters, including its leading and trailing trivia.
@@ -159,36 +144,24 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <returns>The string representation of this token, not including its leading and trailing trivia.</returns>
         /// <remarks>The length of the returned string is always the same as Span.Length</remarks>
-        public override string ToString()
-        {
-            return Node != null ? Node.ToString() : string.Empty;
-        }
+        public override string ToString() => Node != null ? Node.ToString() : string.Empty;
 
         /// <summary>
         /// Returns the full string representation of this token including its leading and trailing trivia.
         /// </summary>
         /// <returns>The full string representation of this token including its leading and trailing trivia.</returns>
         /// <remarks>The length of the returned string is always the same as FullSpan.Length</remarks>
-        public string ToFullString()
-        {
-            return Node != null ? Node.ToFullString() : string.Empty;
-        }
+        public string ToFullString() => Node != null ? Node.ToFullString() : string.Empty;
 
         /// <summary>
         /// Writes the full text of this token to the specified <paramref name="writer"/>.
         /// </summary>
-        public void WriteTo(System.IO.TextWriter writer)
-        {
-            Node?.WriteTo(writer);
-        }
+        public void WriteTo(System.IO.TextWriter writer) => Node?.WriteTo(writer);
 
         /// <summary>
         /// Writes the text of this token to the specified TextWriter, optionally including trivia.
         /// </summary>
-        internal void WriteTo(System.IO.TextWriter writer, bool leading, bool trailing)
-        {
-            Node?.WriteTo(writer, leading, trailing);
-        }
+        internal void WriteTo(System.IO.TextWriter writer, bool leading, bool trailing) => Node?.WriteTo(writer, leading, trailing);
 
         /// <summary>
         /// Determines whether this token has any leading trivia.
@@ -223,10 +196,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether this token is a descendant of a structured trivia.
         /// </summary>
-        public bool IsPartOfStructuredTrivia()
-        {
-            return Parent?.IsPartOfStructuredTrivia() ?? false;
-        }
+        public bool IsPartOfStructuredTrivia() => Parent?.IsPartOfStructuredTrivia() ?? false;
 
         /// <summary>
         /// Determines whether any of this token's trivia is structured.
@@ -243,59 +213,45 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// True if this token has annotations of the specified annotation kind.
         /// </summary>
-        public bool HasAnnotations(string annotationKind)
-        {
-            return Node?.HasAnnotations(annotationKind) ?? false;
-        }
+        public bool HasAnnotations(string annotationKind) =>
+            Node?.HasAnnotations(annotationKind) ?? false;
 
         /// <summary>
         /// True if this token has annotations of the specified annotation kinds.
         /// </summary>
-        public bool HasAnnotations(params string[] annotationKinds)
-        {
-            return Node?.HasAnnotations(annotationKinds) ?? false;
-        }
+        public bool HasAnnotations(params string[] annotationKinds) =>
+            Node?.HasAnnotations(annotationKinds) ?? false;
 
         /// <summary>
         /// True if this token has the specified annotation.
         /// </summary>
-        public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation)
-        {
-            return Node?.HasAnnotation(annotation) ?? false;
-        }
+        public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation) =>
+            Node?.HasAnnotation(annotation) ?? false;
 
         /// <summary>
         /// Gets all the annotations of the specified annotation kind.
         /// </summary>
-        public IEnumerable<SyntaxAnnotation> GetAnnotations(string annotationKind)
-        {
-            return Node?.GetAnnotations(annotationKind) ?? SpecializedCollections.EmptyEnumerable<SyntaxAnnotation>();
-        }
+        public IEnumerable<SyntaxAnnotation> GetAnnotations(string annotationKind) =>
+            Node?.GetAnnotations(annotationKind) ?? SpecializedCollections.EmptyEnumerable<SyntaxAnnotation>();
 
         /// <summary>
         /// Gets all the annotations of the specified annotation kind.
         /// </summary>
-        public IEnumerable<SyntaxAnnotation> GetAnnotations(params string[] annotationKinds)
-        {
-            return GetAnnotations((IEnumerable<string>) annotationKinds);
-        }
+        public IEnumerable<SyntaxAnnotation> GetAnnotations(params string[] annotationKinds) =>
+            GetAnnotations((IEnumerable<string>) annotationKinds);
 
         /// <summary>
         /// Gets all the annotations of the specified annotation kind.
         /// </summary>
-        public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds)
-        {
-            return Node?.GetAnnotations(annotationKinds) ?? SpecializedCollections.EmptyEnumerable<SyntaxAnnotation>();
-        }
+        public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds) =>
+            Node?.GetAnnotations(annotationKinds) ?? SpecializedCollections.EmptyEnumerable<SyntaxAnnotation>();
 
         /// <summary>
         /// Adds this annotation to a given syntax token, creating a new syntax token of the same type with the
         /// annotation on it.
         /// </summary>
-        public SyntaxToken WithAdditionalAnnotations(params SyntaxAnnotation[] annotations)
-        {
-            return WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
-        }
+        public SyntaxToken WithAdditionalAnnotations(params SyntaxAnnotation[] annotations) =>
+            WithAdditionalAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
 
         /// <summary>
         /// Adds this annotation to a given syntax token, creating a new syntax token of the same type with the
@@ -323,10 +279,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new syntax token identical to this one without the specified annotations.
         /// </summary>
-        public SyntaxToken WithoutAnnotations(params SyntaxAnnotation[] annotations)
-        {
-            return WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
-        }
+        public SyntaxToken WithoutAnnotations(params SyntaxAnnotation[] annotations) =>
+            WithoutAnnotations((IEnumerable<SyntaxAnnotation>) annotations);
 
         /// <summary>
         /// Creates a new syntax token identical to this one without the specified annotations.
@@ -451,26 +405,20 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new token from this token with the leading and trailing trivia from the specified token.
         /// </summary>
-        public SyntaxToken WithTriviaFrom(SyntaxToken token)
-        {
-            return WithLeadingTrivia(token.LeadingTrivia).WithTrailingTrivia(token.TrailingTrivia);
-        }
+        public SyntaxToken WithTriviaFrom(SyntaxToken token) =>
+            WithLeadingTrivia(token.LeadingTrivia).WithTrailingTrivia(token.TrailingTrivia);
 
         /// <summary>
         /// Creates a new token from this token with the leading trivia specified.
         /// </summary>
-        public SyntaxToken WithLeadingTrivia(SyntaxTriviaList trivia)
-        {
-            return WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
-        }
+        public SyntaxToken WithLeadingTrivia(SyntaxTriviaList trivia) =>
+            WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
 
         /// <summary>
         /// Creates a new token from this token with the leading trivia specified..
         /// </summary>
-        public SyntaxToken WithLeadingTrivia(params SyntaxTrivia[]? trivia)
-        {
-            return WithLeadingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
-        }
+        public SyntaxToken WithLeadingTrivia(params SyntaxTrivia[]? trivia) =>
+            WithLeadingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
 
         /// <summary>
         /// Creates a new token from this token with the leading trivia specified.
@@ -485,18 +433,14 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new token from this token with the trailing trivia specified.
         /// </summary>
-        public SyntaxToken WithTrailingTrivia(SyntaxTriviaList trivia)
-        {
-            return WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
-        }
+        public SyntaxToken WithTrailingTrivia(SyntaxTriviaList trivia) =>
+            WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
 
         /// <summary>
         /// Creates a new token from this token with the trailing trivia specified.
         /// </summary>
-        public SyntaxToken WithTrailingTrivia(params SyntaxTrivia[]? trivia)
-        {
-            return WithTrailingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
-        }
+        public SyntaxToken WithTrailingTrivia(params SyntaxTrivia[]? trivia) =>
+            WithTrailingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
 
         /// <summary>
         /// Creates a new token from this token with the trailing trivia specified.
@@ -534,18 +478,14 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether two <see cref="SyntaxToken"/>s are equal.
         /// </summary>
-        public static bool operator ==(SyntaxToken left, SyntaxToken right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(SyntaxToken left, SyntaxToken right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Determines whether two <see cref="SyntaxToken"/>s are unequal.
         /// </summary>
-        public static bool operator !=(SyntaxToken left, SyntaxToken right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(SyntaxToken left, SyntaxToken right) =>
+            !left.Equals(right);
 
         /// <summary>
         /// Determines whether the supplied <see cref="SyntaxToken"/> is equal to this
@@ -563,18 +503,14 @@ namespace Loretta.CodeAnalysis
         /// Determines whether the supplied <see cref="SyntaxToken"/> is equal to this
         /// <see cref="SyntaxToken"/>.
         /// </summary>
-        public override bool Equals(object? obj)
-        {
-            return obj is SyntaxToken token && Equals(token);
-        }
+        public override bool Equals(object? obj) =>
+            obj is SyntaxToken token && Equals(token);
 
         /// <summary>
         /// Serves as hash function for <see cref="SyntaxToken"/>.
         /// </summary>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(Parent, Hash.Combine(Node, Hash.Combine(Position, Index)));
-        }
+        public override int GetHashCode() =>
+            Hash.Combine(Parent, Hash.Combine(Node, Hash.Combine(Position, Index)));
 
         /// <summary>
         /// Gets the token that follows this token in the syntax tree.
@@ -628,10 +564,8 @@ namespace Loretta.CodeAnalysis
         /// true.</param>
         /// <param name="stepInto">Delegate applied to trivia.  If this delegate is present then trailing trivia is
         /// included in the search.</param>
-        internal SyntaxToken GetPreviousToken(Func<SyntaxToken, bool> predicate, Func<SyntaxTrivia, bool>? stepInto = null)
-        {
-            return SyntaxNavigator.Instance.GetPreviousToken(this, predicate, stepInto);
-        }
+        internal SyntaxToken GetPreviousToken(Func<SyntaxToken, bool> predicate, Func<SyntaxTrivia, bool>? stepInto = null) =>
+            SyntaxNavigator.Instance.GetPreviousToken(this, predicate, stepInto);
 
         /// <summary>
         /// The SyntaxTree that contains this token.

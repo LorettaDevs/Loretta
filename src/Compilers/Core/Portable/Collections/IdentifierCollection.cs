@@ -78,12 +78,10 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        private void AddInitialSpelling(string identifier)
-        {
+        private void AddInitialSpelling(string identifier) =>
             // We didn't have any spellings for this word already.  Just
             // add the word as the single known spelling.
             _map.Add(identifier, identifier);
-        }
 
         public bool ContainsIdentifier(string identifier, bool caseSensitive)
         {
@@ -99,13 +97,11 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        private bool CaseInsensitiveContains(string identifier)
-        {
+        private bool CaseInsensitiveContains(string identifier) =>
             // Simple case.  Just check if we've mapped this word to 
             // anything.  The map will take care of the case insensitive
             // lookup for us.
-            return _map.ContainsKey(identifier);
-        }
+            _map.ContainsKey(identifier);
 
         private bool CaseSensitiveContains(string identifier)
         {
@@ -124,14 +120,10 @@ namespace Loretta.CodeAnalysis
             return false;
         }
 
-        public ICollection<string> AsCaseSensitiveCollection()
-        {
-            return new CaseSensitiveCollection(this);
-        }
+        public ICollection<string> AsCaseSensitiveCollection() =>
+            new CaseSensitiveCollection(this);
 
-        public ICollection<string> AsCaseInsensitiveCollection()
-        {
-            return new CaseInsensitiveCollection(this);
-        }
+        public ICollection<string> AsCaseInsensitiveCollection() =>
+            new CaseInsensitiveCollection(this);
     }
 }

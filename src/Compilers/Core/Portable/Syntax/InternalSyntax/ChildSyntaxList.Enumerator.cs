@@ -85,10 +85,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 return false;
             }
 
-            public GreenNode Current
-            {
-                get { return _currentChild!; }
-            }
+            public GreenNode Current => _currentChild!;
         }
     }
 }

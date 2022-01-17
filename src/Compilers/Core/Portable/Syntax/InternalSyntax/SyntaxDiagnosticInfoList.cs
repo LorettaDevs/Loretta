@@ -16,10 +16,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             _node = node;
         }
 
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(_node);
-        }
+        public Enumerator GetEnumerator() => new Enumerator(_node);
 
         internal bool Any(Func<DiagnosticInfo, bool> predicate)
         {
@@ -146,10 +143,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 _count++;
             }
 
-            private void Pop()
-            {
-                _count--;
-            }
+            private void Pop() => _count--;
         }
     }
 }

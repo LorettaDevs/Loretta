@@ -104,9 +104,7 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        public static TNode WithDiagnosticsGreen<TNode>(this TNode node, DiagnosticInfo[]? diagnostics) where TNode : GreenNode
-        {
-            return (TNode) node.SetDiagnostics(diagnostics);
-        }
+        public static TNode WithDiagnosticsGreen<TNode>(this TNode node, DiagnosticInfo[]? diagnostics) where TNode : GreenNode =>
+            (TNode) node.SetDiagnostics(diagnostics);
     }
 }

@@ -11,7 +11,7 @@ using Loretta.Utilities;
 namespace Loretta.CodeAnalysis.Text
 {
     /// <summary>
-    /// Implementation of SourceText based on a <see cref="String"/> input
+    /// Implementation of SourceText based on a <see cref="string"/> input
     /// </summary>
     internal sealed class StringText : SourceText
     {
@@ -50,16 +50,11 @@ namespace Loretta.CodeAnalysis.Text
         /// <returns>The character.</returns>
         /// <exception cref="ArgumentOutOfRangeException">When position is negative or 
         /// greater than <see cref="Length"/>.</exception>
-        public override char this[int position]
-        {
-            get
-            {
+        public override char this[int position] =>
                 // NOTE: we are not validating position here as that would not 
                 //       add any value to the range check that string accessor performs anyways.
 
-                return _source[position];
-            }
-        }
+                _source[position];
 
         /// <summary>
         /// Provides a string representation of the StringText located within given span.
@@ -80,10 +75,8 @@ namespace Loretta.CodeAnalysis.Text
             return Source.Substring(span.Start, span.Length);
         }
 
-        public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count)
-        {
+        public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count) =>
             Source.CopyTo(sourceIndex, destination, destinationIndex, count);
-        }
 
         public override void Write(TextWriter textWriter, TextSpan span, CancellationToken cancellationToken = default(CancellationToken))
         {

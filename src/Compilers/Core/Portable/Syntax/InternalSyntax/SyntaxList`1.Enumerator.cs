@@ -28,13 +28,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 return false;
             }
 
-            public TNode Current
-            {
-                get
-                {
-                    return _list[_index]!;
-                }
-            }
+            public TNode Current => _list[_index]!;
         }
     }
 }

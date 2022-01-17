@@ -17,17 +17,13 @@ namespace Loretta.CodeAnalysis.Syntax
             _nodes = new ArrayElement<GreenNode?>[size];
         }
 
-        public void Clear()
-        {
-            Count = 0;
-        }
+        public void Clear() => Count = 0;
 
-        public void Add(SyntaxNode item)
-        {
-            AddInternal(item.Green);
-        }
+        public void Add(SyntaxNode item) => AddInternal(item.Green);
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0016:Use 'throw' expression", Justification = "The throw exception being early avoids resizing in the error case.")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         internal void AddInternal(GreenNode item)
         {
             if (item == null)
@@ -43,10 +39,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _nodes[Count++].Value = item;
         }
 
-        public void AddRange(SyntaxNode[] items)
-        {
-            AddRange(items, 0, items.Length);
-        }
+        public void AddRange(SyntaxNode[] items) => AddRange(items, 0, items.Length);
 
         public void AddRange(SyntaxNode[] items, int offset, int length)
         {
@@ -77,10 +70,7 @@ namespace Loretta.CodeAnalysis.Syntax
             }
         }
 
-        public void AddRange(SyntaxList<SyntaxNode> list)
-        {
-            AddRange(list, 0, list.Count);
-        }
+        public void AddRange(SyntaxList<SyntaxNode> list) => AddRange(list, 0, list.Count);
 
         public void AddRange(SyntaxList<SyntaxNode> list, int offset, int count)
         {
@@ -101,20 +91,14 @@ namespace Loretta.CodeAnalysis.Syntax
             Validate(start, Count);
         }
 
-        public void AddRange<TNode>(SyntaxList<TNode> list) where TNode : SyntaxNode
-        {
+        public void AddRange<TNode>(SyntaxList<TNode> list) where TNode : SyntaxNode =>
             AddRange(list, 0, list.Count);
-        }
 
-        public void AddRange<TNode>(SyntaxList<TNode> list, int offset, int count) where TNode : SyntaxNode
-        {
+        public void AddRange<TNode>(SyntaxList<TNode> list, int offset, int count) where TNode : SyntaxNode =>
             AddRange(new SyntaxList<SyntaxNode>(list.Node), offset, count);
-        }
 
-        public void AddRange(SyntaxNodeOrTokenList list)
-        {
+        public void AddRange(SyntaxNodeOrTokenList list) =>
             AddRange(list, 0, list.Count);
-        }
 
         public void AddRange(SyntaxNodeOrTokenList list, int offset, int count)
         {
@@ -135,10 +119,8 @@ namespace Loretta.CodeAnalysis.Syntax
             Validate(start, Count);
         }
 
-        public void AddRange(SyntaxTokenList list)
-        {
+        public void AddRange(SyntaxTokenList list) =>
             AddRange(list, 0, list.Count);
-        }
 
         public void AddRange(SyntaxTokenList list, int offset, int length)
         {

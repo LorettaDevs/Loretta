@@ -250,10 +250,8 @@ namespace Loretta.CodeAnalysis.Text
         /// the collection is cached.
         /// </summary>
         /// <returns>A new <see cref="TextLineCollection"/> representing the individual text lines.</returns>
-        protected override TextLineCollection GetLinesCore()
-        {
-            return new LineInfo(this, ParseLineStarts());
-        }
+        protected override TextLineCollection GetLinesCore() =>
+            new LineInfo(this, ParseLineStarts());
 
         private int[] ParseLineStarts()
         {

@@ -29,9 +29,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
         /// <summary>
         /// Get the location of the assembly that contains this type
         /// </summary>
-        internal static string GetAssemblyLocation(Type type)
-        {
-            return type.GetTypeInfo().Assembly.Location;
-        }
+        internal static string GetAssemblyLocation(Type type) =>
+            type.GetTypeInfo().Assembly.Location;
     }
 }

@@ -18,13 +18,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal GreenNode? Node => _node;
 
-        public int Count
-        {
-            get
-            {
-                return _node == null ? 0 : (_node.IsList ? _node.SlotCount : 1);
-            }
-        }
+        public int Count => _node == null ? 0 : (_node.IsList ? _node.SlotCount : 1);
 
         public TNode? this[int index]
         {
@@ -72,10 +66,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return node;
         }
 
-        public bool Any()
-        {
-            return _node != null;
-        }
+        public bool Any() => _node != null;
 
         public bool Any(int kind)
         {
@@ -118,10 +109,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
+        public Enumerator GetEnumerator() => new Enumerator(this);
 
         internal void CopyTo(int offset, ArrayElement<GreenNode>[] array, int arrayOffset, int count)
         {
@@ -131,35 +119,20 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public static bool operator ==(SyntaxList<TNode> left, SyntaxList<TNode> right)
-        {
-            return left._node == right._node;
-        }
+        public static bool operator ==(SyntaxList<TNode> left, SyntaxList<TNode> right) =>
+            left._node == right._node;
 
-        public static bool operator !=(SyntaxList<TNode> left, SyntaxList<TNode> right)
-        {
-            return left._node != right._node;
-        }
+        public static bool operator !=(SyntaxList<TNode> left, SyntaxList<TNode> right) =>
+            left._node != right._node;
 
-        public bool Equals(SyntaxList<TNode> other)
-        {
-            return _node == other._node;
-        }
+        public bool Equals(SyntaxList<TNode> other) => _node == other._node;
 
-        public override bool Equals(object? obj)
-        {
-            return (obj is SyntaxList<TNode> list) && Equals(list);
-        }
+        public override bool Equals(object? obj) => (obj is SyntaxList<TNode> list) && Equals(list);
 
-        public override int GetHashCode()
-        {
-            return _node != null ? _node.GetHashCode() : 0;
-        }
+        public override int GetHashCode() => _node != null ? _node.GetHashCode() : 0;
 
-        public SeparatedSyntaxList<TOther> AsSeparatedList<TOther>() where TOther : GreenNode
-        {
-            return new SeparatedSyntaxList<TOther>(this);
-        }
+        public SeparatedSyntaxList<TOther> AsSeparatedList<TOther>() where TOther : GreenNode =>
+            new SeparatedSyntaxList<TOther>(this);
 
         public static implicit operator SyntaxList<TNode>(TNode node)
         {

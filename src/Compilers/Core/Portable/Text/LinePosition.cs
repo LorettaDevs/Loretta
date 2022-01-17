@@ -68,69 +68,49 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// The line number. The first line in a file is defined as line 0 (zero based line numbering).
         /// </summary>
-        public int Line
-        {
-            get { return _line; }
-        }
+        public int Line => _line;
 
         /// <summary>
         /// The character position within the line.
         /// </summary>
-        public int Character
-        {
-            get { return _character; }
-        }
+        public int Character => _character;
 
         /// <summary>
         /// Determines whether two <see cref="LinePosition"/> are the same.
         /// </summary>
-        public static bool operator ==(LinePosition left, LinePosition right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(LinePosition left, LinePosition right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Determines whether two <see cref="LinePosition"/> are different.
         /// </summary>
-        public static bool operator !=(LinePosition left, LinePosition right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(LinePosition left, LinePosition right) =>
+            !left.Equals(right);
 
         /// <summary>
         /// Determines whether two <see cref="LinePosition"/> are the same.
         /// </summary>
         /// <param name="other">The object to compare.</param>
-        public bool Equals(LinePosition other)
-        {
-            return other.Line == Line && other.Character == Character;
-        }
+        public bool Equals(LinePosition other) =>
+            other.Line == Line && other.Character == Character;
 
         /// <summary>
         /// Determines whether two <see cref="LinePosition"/> are the same.
         /// </summary>
         /// <param name="obj">The object to compare.</param>
-        public override bool Equals(object? obj)
-        {
-            return obj is LinePosition position && Equals(position);
-        }
+        public override bool Equals(object? obj) =>
+            obj is LinePosition position && Equals(position);
 
         /// <summary>
         /// Provides a hash function for <see cref="LinePosition"/>.
         /// </summary>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(Line, Character);
-        }
+        public override int GetHashCode() => Hash.Combine(Line, Character);
 
         /// <summary>
         /// Provides a string representation for <see cref="LinePosition"/>.
         /// </summary>
         /// <example>0,10</example>
-        public override string ToString()
-        {
-            return Line + "," + Character;
-        }
+        public override string ToString() => Line + "," + Character;
 
         /// <inheritdoc/>
         public int CompareTo(LinePosition other)
@@ -145,10 +125,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator >(LinePosition left, LinePosition right)
-        {
-            return left.CompareTo(right) > 0;
-        }
+        public static bool operator >(LinePosition left, LinePosition right) =>
+            left.CompareTo(right) > 0;
 
         /// <summary>
         /// Checks whether one position is located after or at the same location as another.
@@ -156,10 +134,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator >=(LinePosition left, LinePosition right)
-        {
-            return left.CompareTo(right) >= 0;
-        }
+        public static bool operator >=(LinePosition left, LinePosition right) =>
+            left.CompareTo(right) >= 0;
 
         /// <summary>
         /// Checks whether one position is located before another.
@@ -167,10 +143,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator <(LinePosition left, LinePosition right)
-        {
-            return left.CompareTo(right) < 0;
-        }
+        public static bool operator <(LinePosition left, LinePosition right) =>
+            left.CompareTo(right) < 0;
 
         /// <summary>
         /// Checks whether one position is located before or at the same location as another.
@@ -178,9 +152,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator <=(LinePosition left, LinePosition right)
-        {
-            return left.CompareTo(right) <= 0;
-        }
+        public static bool operator <=(LinePosition left, LinePosition right) =>
+            left.CompareTo(right) <= 0;
     }
 }

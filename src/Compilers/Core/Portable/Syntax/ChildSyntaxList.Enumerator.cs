@@ -61,10 +61,7 @@ namespace Loretta.CodeAnalysis
             }
 
             /// <summary>Sets the enumerator to its initial position, which is before the first element in the collection.</summary>
-            public void Reset()
-            {
-                _childIndex = -1;
-            }
+            public void Reset() => _childIndex = -1;
 
             internal bool TryMoveNextAndGetCurrent(out SyntaxNodeOrToken current)
             {
@@ -108,10 +105,7 @@ namespace Loretta.CodeAnalysis
             /// <returns>
             /// The element in the collection at the current position of the enumerator.
             ///   </returns>
-            public SyntaxNodeOrToken Current
-            {
-                get { return _enumerator.Current; }
-            }
+            public SyntaxNodeOrToken Current => _enumerator.Current;
 
             /// <summary>
             /// Gets the element in the collection at the current position of the enumerator.
@@ -119,10 +113,7 @@ namespace Loretta.CodeAnalysis
             /// <returns>
             /// The element in the collection at the current position of the enumerator.
             ///   </returns>
-            object IEnumerator.Current
-            {
-                get { return _enumerator.Current; }
-            }
+            object IEnumerator.Current => _enumerator.Current;
 
             /// <summary>
             /// Advances the enumerator to the next element of the collection.
@@ -130,18 +121,12 @@ namespace Loretta.CodeAnalysis
             /// <returns>
             /// true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
             /// </returns>
-            public bool MoveNext()
-            {
-                return _enumerator.MoveNext();
-            }
+            public bool MoveNext() => _enumerator.MoveNext();
 
             /// <summary>
             /// Sets the enumerator to its initial position, which is before the first element in the collection.
             /// </summary>
-            public void Reset()
-            {
-                _enumerator.Reset();
-            }
+            public void Reset() => _enumerator.Reset();
 
             /// <summary>
             /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

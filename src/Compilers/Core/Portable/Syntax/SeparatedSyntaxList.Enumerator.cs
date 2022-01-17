@@ -16,7 +16,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The enumerator for <see cref="SeparatedSyntaxList{TNode}"/>.
         /// </summary>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         public struct Enumerator
         {
             private readonly SeparatedSyntaxList<TNode> _list;
@@ -42,19 +44,10 @@ namespace Loretta.CodeAnalysis
             }
 
             /// <inheritdoc cref="IEnumerator{T}.Current"/>
-            public TNode Current
-            {
-                get
-                {
-                    return _list[_index];
-                }
-            }
+            public TNode Current => _list[_index];
 
             /// <inheritdoc cref="IEnumerator.Reset"/>
-            public void Reset()
-            {
-                _index = -1;
-            }
+            public void Reset() => _index = -1;
 
             /// <summary>
             /// Not supported. Do not call.
@@ -64,10 +57,7 @@ namespace Loretta.CodeAnalysis
             /// <exception cref="NotSupportedException">
             /// Always thrown.
             /// </exception>
-            public override bool Equals(object? obj)
-            {
-                throw new NotSupportedException();
-            }
+            public override bool Equals(object? obj) => throw new NotSupportedException();
 
             /// <summary>
             /// Not supported. Do not call.
@@ -76,10 +66,7 @@ namespace Loretta.CodeAnalysis
             /// <exception cref="NotSupportedException">
             /// Always thrown.
             /// </exception>
-            public override int GetHashCode()
-            {
-                throw new NotSupportedException();
-            }
+            public override int GetHashCode() => throw new NotSupportedException();
         }
 
         // IEnumerator wrapper for Enumerator.
@@ -92,35 +79,17 @@ namespace Loretta.CodeAnalysis
                 _e = new Enumerator(in list);
             }
 
-            public TNode Current
-            {
-                get
-                {
-                    return _e.Current;
-                }
-            }
+            public TNode Current => _e.Current;
 
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return _e.Current;
-                }
-            }
+            object IEnumerator.Current => _e.Current;
 
             public void Dispose()
             {
             }
 
-            public bool MoveNext()
-            {
-                return _e.MoveNext();
-            }
+            public bool MoveNext() => _e.MoveNext();
 
-            public void Reset()
-            {
-                _e.Reset();
-            }
+            public void Reset() => _e.Reset();
         }
     }
 }

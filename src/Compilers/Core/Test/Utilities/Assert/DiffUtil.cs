@@ -46,10 +46,8 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                 _comparer = comparer;
             }
 
-            protected override bool ItemsEqual(IList<T> sequenceA, int indexA, IList<T> sequenceB, int indexB)
-            {
-                return _comparer.Equals(sequenceA[indexA], sequenceB[indexB]);
-            }
+            protected override bool ItemsEqual(IList<T> sequenceA, int indexA, IList<T> sequenceB, int indexB) =>
+                _comparer.Equals(sequenceA[indexA], sequenceB[indexB]);
 
             public IEnumerable<string> CalculateDiff(IList<T> sequenceA, IList<T> sequenceB, Func<T, string> toString)
             {
@@ -86,10 +84,8 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
         private static readonly char[] s_lineSplitChars = new[] { '\r', '\n' };
 
-        public static string[] Lines(string s)
-        {
-            return s.Split(s_lineSplitChars, StringSplitOptions.RemoveEmptyEntries);
-        }
+        public static string[] Lines(string s) =>
+            s.Split(s_lineSplitChars, StringSplitOptions.RemoveEmptyEntries);
 
         public static string DiffReport(string expected, string actual)
         {

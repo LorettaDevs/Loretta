@@ -53,10 +53,8 @@ namespace Loretta.CodeAnalysis
         }
 
         // return a set of text changes that when applied to the old document produces the new document
-        internal static IList<TextChange> GetTextChanges(SyntaxNode oldNode, SyntaxNode newNode)
-        {
-            return new SyntaxDiffer(oldNode, newNode, computeNewText: true).ComputeTextChangesFromOld();
-        }
+        internal static IList<TextChange> GetTextChanges(SyntaxNode oldNode, SyntaxNode newNode) =>
+            new SyntaxDiffer(oldNode, newNode, computeNewText: true).ComputeTextChangesFromOld();
 
         private IList<TextChange> ComputeTextChangesFromOld()
         {
@@ -89,10 +87,8 @@ namespace Loretta.CodeAnalysis
         }
 
         // return which spans of text in the new document are possibly different than text in the old document
-        internal static IList<TextSpan> GetPossiblyDifferentTextSpans(SyntaxNode oldNode, SyntaxNode newNode)
-        {
-            return new SyntaxDiffer(oldNode, newNode, computeNewText: false).ComputeSpansInNew();
-        }
+        internal static IList<TextSpan> GetPossiblyDifferentTextSpans(SyntaxNode oldNode, SyntaxNode newNode) =>
+            new SyntaxDiffer(oldNode, newNode, computeNewText: false).ComputeSpansInNew();
 
         private IList<TextSpan> ComputeSpansInNew()
         {
@@ -501,15 +497,11 @@ namespace Loretta.CodeAnalysis
             return w;
         }
 
-        private static bool AreIdentical(in SyntaxNodeOrToken node1, in SyntaxNodeOrToken node2)
-        {
-            return node1.UnderlyingNode == node2.UnderlyingNode;
-        }
+        private static bool AreIdentical(in SyntaxNodeOrToken node1, in SyntaxNodeOrToken node2) =>
+            node1.UnderlyingNode == node2.UnderlyingNode;
 
-        private static bool AreSimilar(in SyntaxNodeOrToken node1, in SyntaxNodeOrToken node2)
-        {
-            return node1.RawKind == node2.RawKind;
-        }
+        private static bool AreSimilar(in SyntaxNodeOrToken node1, in SyntaxNodeOrToken node2) =>
+            node1.RawKind == node2.RawKind;
 
         private readonly struct ChangeRecord
         {

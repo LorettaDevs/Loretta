@@ -34,16 +34,9 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 _childOffsets = CalculateOffsets(children);
             }
 
-            internal override void WriteTo(ObjectWriter writer)
-            {
-                base.WriteTo(writer);
-                // don't write offsets out, recompute them on construction
-            }
+            internal override void WriteTo(ObjectWriter writer) => base.WriteTo(writer);// don't write offsets out, recompute them on construction
 
-            public override int GetSlotOffset(int index)
-            {
-                return _childOffsets[index];
-            }
+            public override int GetSlotOffset(int index) => _childOffsets[index];
 
             /// <summary>
             /// Find the slot that contains the given offset.
@@ -73,15 +66,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 return childOffsets;
             }
 
-            internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors)
-            {
-                return new WithLotsOfChildren(errors, GetAnnotations(), children, _childOffsets);
-            }
+            internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors) =>
+                new WithLotsOfChildren(errors, GetAnnotations(), children, _childOffsets);
 
-            internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
-            {
-                return new WithLotsOfChildren(GetDiagnostics(), annotations, children, _childOffsets);
-            }
+            internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations) =>
+                new WithLotsOfChildren(GetDiagnostics(), annotations, children, _childOffsets);
         }
     }
 }

@@ -40,25 +40,13 @@ namespace Loretta.CodeAnalysis.Text
             }
         }
 
-        public override Encoding? Encoding
-        {
-            get { return _encoding; }
-        }
+        public override Encoding? Encoding => _encoding;
 
-        public override int Length
-        {
-            get { return _length; }
-        }
+        public override int Length => _length;
 
-        internal override int StorageSize
-        {
-            get { return _storageSize; }
-        }
+        internal override int StorageSize => _storageSize;
 
-        internal override ImmutableArray<SourceText> Segments
-        {
-            get { return _segments; }
-        }
+        internal override ImmutableArray<SourceText> Segments => _segments;
 
         public override char this[int position]
         {

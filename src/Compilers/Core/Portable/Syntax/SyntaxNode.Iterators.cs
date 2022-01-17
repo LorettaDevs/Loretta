@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            public bool IsNotEmpty { get { return _stackPtr >= 0; } }
+            public bool IsNotEmpty => _stackPtr >= 0;
 
             public bool TryGetNextInSpan(in TextSpan span, out SyntaxNodeOrToken value)
             {
@@ -209,7 +209,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            public bool IsNotEmpty { get { return _discriminatorStack?.Count > 0; } }
+            public bool IsNotEmpty => _discriminatorStack?.Count > 0;
 
             public Which PeekNext()
             {
@@ -304,7 +304,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            public bool IsNotEmpty { get { return _discriminatorStack?.Count > 0; } }
+            public bool IsNotEmpty => _discriminatorStack?.Count > 0;
 
             public Which PeekNext()
             {

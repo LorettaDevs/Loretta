@@ -178,10 +178,7 @@ namespace Loretta.CodeAnalysis
         /// The string representation of the tokens in this list, not including 
         /// the first token's leading trivia and the last token's trailing trivia.
         /// </returns>
-        public override string ToString()
-        {
-            return Node != null ? Node.ToString() : string.Empty;
-        }
+        public override string ToString() => Node != null ? Node.ToString() : string.Empty;
 
         /// <summary>
         /// Returns the full string representation of the tokens in this list including 
@@ -191,10 +188,7 @@ namespace Loretta.CodeAnalysis
         /// The full string representation of the tokens in this list including 
         /// the first token's leading trivia and the last token's trailing trivia.
         /// </returns>
-        public string ToFullString()
-        {
-            return Node != null ? Node.ToFullString() : string.Empty;
-        }
+        public string ToFullString() => Node != null ? Node.ToFullString() : string.Empty;
 
         /// <summary>
         /// Returns the first token in the list.
@@ -230,19 +224,13 @@ namespace Loretta.CodeAnalysis
         /// Tests whether the list is non-empty.
         /// </summary>
         /// <returns>True if the list contains any tokens.</returns>
-        public bool Any()
-        {
-            return Node != null;
-        }
+        public bool Any() => Node != null;
 
         /// <summary>
         /// Returns a list which contains all elements of <see cref="SyntaxTokenList"/> in reversed order.
         /// </summary>
         /// <returns><see cref="Reversed"/> which contains all elements of <see cref="SyntaxTokenList"/> in reversed order</returns>
-        public Reversed Reverse()
-        {
-            return new Reversed(this);
-        }
+        public Reversed Reverse() => new Reversed(this);
 
         internal void CopyTo(int offset, GreenNode?[] array, int arrayOffset, int count)
         {
@@ -308,19 +296,13 @@ namespace Loretta.CodeAnalysis
         /// Creates a new <see cref="SyntaxTokenList"/> with the specified token added to the end.
         /// </summary>
         /// <param name="token">The token to add.</param>
-        public SyntaxTokenList Add(SyntaxToken token)
-        {
-            return Insert(Count, token);
-        }
+        public SyntaxTokenList Add(SyntaxToken token) => Insert(Count, token);
 
         /// <summary>
         /// Creates a new <see cref="SyntaxTokenList"/> with the specified tokens added to the end.
         /// </summary>
         /// <param name="tokens">The tokens to add.</param>
-        public SyntaxTokenList AddRange(IEnumerable<SyntaxToken> tokens)
-        {
-            return InsertRange(Count, tokens);
-        }
+        public SyntaxTokenList AddRange(IEnumerable<SyntaxToken> tokens) => InsertRange(Count, tokens);
 
         /// <summary>
         /// Creates a new <see cref="SyntaxTokenList"/> with the specified token insert at the index.
@@ -442,10 +424,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Returns an enumerator for the tokens in the <see cref="SyntaxTokenList"/>
         /// </summary>
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(in this);
-        }
+        public Enumerator GetEnumerator() => new Enumerator(in this);
 
         IEnumerator<SyntaxToken> IEnumerable<SyntaxToken>.GetEnumerator()
         {
@@ -473,10 +452,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns>True if the two <see cref="SyntaxTokenList"/>s are equal.</returns>
-        public static bool operator ==(SyntaxTokenList left, SyntaxTokenList right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(SyntaxTokenList left, SyntaxTokenList right) => left.Equals(right);
 
         /// <summary>
         /// Compares <paramref name="left"/> and <paramref name="right"/> for inequality.
@@ -484,42 +460,28 @@ namespace Loretta.CodeAnalysis
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns>True if the two <see cref="SyntaxTokenList"/>s are not equal.</returns>
-        public static bool operator !=(SyntaxTokenList left, SyntaxTokenList right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(SyntaxTokenList left, SyntaxTokenList right) => !left.Equals(right);
 
         /// <inheritdoc/>
-        public bool Equals(SyntaxTokenList other)
-        {
-            return Node == other.Node && _parent == other._parent && _index == other._index;
-        }
+        public bool Equals(SyntaxTokenList other) => Node == other.Node && _parent == other._parent && _index == other._index;
 
         /// <summary>
         /// Compares this <see cref=" SyntaxTokenList"/> with the <paramref name="obj"/> for equality.
         /// </summary>
         /// <returns>True if the two objects are equal.</returns>
-        public override bool Equals(object? obj)
-        {
-            return obj is SyntaxTokenList list && Equals(list);
-        }
+        public override bool Equals(object? obj) => obj is SyntaxTokenList list && Equals(list);
 
         /// <summary>
         /// Serves as a hash function for the <see cref="SyntaxTokenList"/>
         /// </summary>
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() =>
             // Not call GHC on parent as it's expensive
-            return Hash.Combine(Node, _index);
-        }
+            Hash.Combine(Node, _index);
 
         /// <summary>
         /// Create a new Token List
         /// </summary>
         /// <param name="token">Element of the return Token List</param>
-        public static SyntaxTokenList Create(SyntaxToken token)
-        {
-            return new SyntaxTokenList(token);
-        }
+        public static SyntaxTokenList Create(SyntaxToken token) => new SyntaxTokenList(token);
     }
 }

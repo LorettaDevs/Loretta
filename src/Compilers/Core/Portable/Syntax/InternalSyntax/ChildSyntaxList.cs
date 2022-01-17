@@ -56,14 +56,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(_node);
-        }
+        public Enumerator GetEnumerator() => new Enumerator(_node);
 
-        public Reversed Reverse()
-        {
-            return new Reversed(_node);
-        }
+        public Reversed Reverse() => new Reversed(_node);
     }
 }

@@ -180,12 +180,10 @@ namespace Loretta.CodeAnalysis.Collections
             }
         }
 
-        private static bool IsCompatibleObject(object? value)
-        {
+        private static bool IsCompatibleObject(object? value) =>
             // Non-null values are fine.  Only accept nulls if T is a class or Nullable<U>.
             // Note that default(T) is not equal to null for value types except when T is Nullable<U>.
-            return (value is T) || (value == null && default(T) == null);
-        }
+            (value is T) || (value == null && default(T) == null);
 
         object? IList.this[int index]
         {
@@ -325,8 +323,7 @@ namespace Loretta.CodeAnalysis.Collections
         // It does a linear, O(n) search.  Equality is determined by calling
         // EqualityComparer<T>.Default.Equals().
         //
-        public bool Contains(T item)
-        {
+        public bool Contains(T item) =>
             // PERF: IndexOf calls Array.IndexOf, which internally
             // calls EqualityComparer<T>.Default.IndexOf, which
             // is specialized for different types. This
@@ -335,8 +332,7 @@ namespace Loretta.CodeAnalysis.Collections
             // via EqualityComparer<T>.Default.Equals, we
             // only make one virtual call to EqualityComparer.IndexOf.
 
-            return _size != 0 && IndexOf(item) != -1;
-        }
+            _size != 0 && IndexOf(item) != -1;
 
         bool IList.Contains(object? item)
         {
@@ -403,11 +399,9 @@ namespace Loretta.CodeAnalysis.Collections
             SegmentedArray.Copy(_items, index, array, arrayIndex, count);
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
-        {
+        public void CopyTo(T[] array, int arrayIndex) =>
             // Delegate rest of error checking to Array.Copy.
             SegmentedArray.Copy(_items, 0, array, arrayIndex, _size);
-        }
 
         // Ensures that the capacity of this list is at least the given minimum
         // value. If the current capacity of the list is less than min, the

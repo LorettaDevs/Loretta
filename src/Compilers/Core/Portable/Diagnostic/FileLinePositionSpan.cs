@@ -23,7 +23,7 @@ namespace Loretta.CodeAnalysis
         /// <remarks>
         /// Path may be <see cref="string.Empty"/> if not available.
         /// </remarks>
-        public string Path { get { return _path; } }
+        public string Path => _path;
 
         /// <summary>
         /// True if the <see cref="Path"/> is a mapped path.
@@ -31,30 +31,24 @@ namespace Loretta.CodeAnalysis
         /// <remarks>
         /// A mapped path is a path specified in source via <c>#line</c> (C#) or <c>#ExternalSource</c> (VB) directives.
         /// </remarks>
-        public bool HasMappedPath { get { return _hasMappedPath; } }
+        public bool HasMappedPath => _hasMappedPath;
 
         /// <summary>
         /// Gets the <see cref="LinePosition"/> of the start of the span.
         /// </summary>
         /// <returns></returns>
-        public LinePosition StartLinePosition { get { return _span.Start; } }
+        public LinePosition StartLinePosition => _span.Start;
 
         /// <summary>
         /// Gets the <see cref="LinePosition"/> of the end of the span.
         /// </summary>
         /// <returns></returns>
-        public LinePosition EndLinePosition { get { return _span.End; } }
+        public LinePosition EndLinePosition => _span.End;
 
         /// <summary>
         /// Gets the span.
         /// </summary>
-        public LinePositionSpan Span
-        {
-            get
-            {
-                return _span;
-            }
-        }
+        public LinePositionSpan Span => _span;
 
         /// <summary>
         /// Initializes the <see cref="FileLinePositionSpan"/> instance.
@@ -96,14 +90,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Returns true if the span represents a valid location.
         /// </summary>
-        public bool IsValid
-        {
-            get
-            {
-                // invalid span can be constructed by new FileLinePositionSpan()
-                return _path != null;
-            }
-        }
+        public bool IsValid =>
+            // invalid span can be constructed by new FileLinePositionSpan()
+            _path != null;
 
         /// <summary>
         /// Determines if two FileLinePositionSpan objects are equal.
@@ -121,10 +110,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines if two FileLinePositionSpan objects are equal.
         /// </summary>
-        public override bool Equals(object? other)
-        {
-            return other is FileLinePositionSpan span && Equals(span);
-        }
+        public override bool Equals(object? other) => other is FileLinePositionSpan span && Equals(span);
 
         /// <summary>
         /// Serves as a hash function for FileLinePositionSpan.
@@ -133,20 +119,14 @@ namespace Loretta.CodeAnalysis
         /// <remarks>
         /// The path is treated as an opaque string, i.e. a case-sensitive hash is calculated.
         /// </remarks>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(_path, Hash.Combine(_hasMappedPath, _span.GetHashCode()));
-        }
+        public override int GetHashCode() => Hash.Combine(_path, Hash.Combine(_hasMappedPath, _span.GetHashCode()));
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents FileLinePositionSpan.
+        /// Returns a <see cref="string"/> that represents FileLinePositionSpan.
         /// </summary>
         /// <returns>The string representation of FileLinePositionSpan.</returns>
         /// <example>Path: (0,0)-(5,6)</example>
-        public override string ToString()
-        {
-            return _path + ": " + _span;
-        }
+        public override string ToString() => _path + ": " + _span;
 
         /// <summary>
         /// Checks whether two spans are equal.
@@ -154,10 +134,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(FileLinePositionSpan left, FileLinePositionSpan right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(FileLinePositionSpan left, FileLinePositionSpan right) => left.Equals(right);
 
         /// <summary>
         /// Checks whether two spans are not equal.
@@ -165,9 +142,6 @@ namespace Loretta.CodeAnalysis
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(FileLinePositionSpan left, FileLinePositionSpan right)
-        {
-            return !(left == right);
-        }
+        public static bool operator !=(FileLinePositionSpan left, FileLinePositionSpan right) => !(left == right);
     }
 }

@@ -18,20 +18,11 @@ namespace Loretta.CodeAnalysis.Syntax
             _count = 0;
         }
 
-        public static SyntaxNodeOrTokenListBuilder Create()
-        {
-            return new SyntaxNodeOrTokenListBuilder(8);
-        }
+        public static SyntaxNodeOrTokenListBuilder Create() => new SyntaxNodeOrTokenListBuilder(8);
 
-        public int Count
-        {
-            get { return _count; }
-        }
+        public int Count => _count;
 
-        public void Clear()
-        {
-            _count = 0;
-        }
+        public void Clear() => _count = 0;
 
         public SyntaxNodeOrToken this[int index]
         {
@@ -50,10 +41,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 }
             }
 
-            set
-            {
-                _nodes[index] = value.UnderlyingNode;
-            }
+            set => _nodes[index] = value.UnderlyingNode;
         }
 
         internal void Add(GreenNode item)
@@ -66,10 +54,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _nodes[_count++] = item;
         }
 
-        public void Add(SyntaxNode item)
-        {
-            Add(item.Green);
-        }
+        public void Add(SyntaxNode item) => Add(item.Green);
 
         public void Add(in SyntaxToken item)
         {
@@ -83,10 +68,7 @@ namespace Loretta.CodeAnalysis.Syntax
             Add(item.UnderlyingNode);
         }
 
-        public void Add(SyntaxNodeOrTokenList list)
-        {
-            Add(list, 0, list.Count);
-        }
+        public void Add(SyntaxNodeOrTokenList list) => Add(list, 0, list.Count);
 
         public void Add(SyntaxNodeOrTokenList list, int offset, int length)
         {

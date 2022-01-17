@@ -48,16 +48,12 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Provides a string representation for <see cref="TextChange"/>.
         /// </summary>
-        public override string ToString()
-        {
-            return string.Format("{0}: {{ {1}, \"{2}\" }}", GetType().Name, Span, NewText);
-        }
+        public override string ToString() =>
+            string.Format("{0}: {{ {1}, \"{2}\" }}", GetType().Name, Span, NewText);
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return obj is TextChange change && Equals(change);
-        }
+        public override bool Equals(object? obj) =>
+            obj is TextChange change && Equals(change);
 
         /// <inheritdoc/>
         public bool Equals(TextChange other)
@@ -68,10 +64,8 @@ namespace Loretta.CodeAnalysis.Text
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return Hash.Combine(Span.GetHashCode(), NewText?.GetHashCode() ?? 0);
-        }
+        public override int GetHashCode() =>
+            Hash.Combine(Span.GetHashCode(), NewText?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Checks whether two text changes are equal.
@@ -79,10 +73,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(TextChange left, TextChange right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(TextChange left, TextChange right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Checks whether two text changes are not equal.
@@ -90,10 +82,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(TextChange left, TextChange right)
-        {
-            return !(left == right);
-        }
+        public static bool operator !=(TextChange left, TextChange right) =>
+            !(left == right);
 
         /// <summary>
         /// Converts a <see cref="TextChange"/> to a <see cref="TextChangeRange"/>.

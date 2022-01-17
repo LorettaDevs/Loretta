@@ -66,26 +66,15 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() =>
+                GetEnumerator();
 
             #region Unsupported  
-            public void Add(string item)
-            {
-                throw new NotSupportedException();
-            }
+            public void Add(string item) => throw new NotSupportedException();
 
-            public void Clear()
-            {
-                throw new NotSupportedException();
-            }
+            public void Clear() => throw new NotSupportedException();
 
-            public bool Remove(string item)
-            {
-                throw new NotSupportedException();
-            }
+            public bool Remove(string item) => throw new NotSupportedException();
             #endregion
         }
 

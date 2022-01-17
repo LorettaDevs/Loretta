@@ -56,16 +56,12 @@ namespace Loretta.CodeAnalysis
             }
 
             /// <inheritdoc/>
-            public override int GetHashCode()
-            {
-                return _node != null ? Hash.Combine(_node.GetHashCode(), _count) : 0;
-            }
+            public override int GetHashCode() =>
+                _node != null ? Hash.Combine(_node.GetHashCode(), _count) : 0;
 
             /// <inheritdoc/>
-            public override bool Equals(object? obj)
-            {
-                return (obj is Reversed r) && Equals(r);
-            }
+            public override bool Equals(object? obj) =>
+                (obj is Reversed r) && Equals(r);
 
             /// <inheritdoc/>
             public bool Equals(Reversed other)
@@ -95,10 +91,7 @@ namespace Loretta.CodeAnalysis
                 /// </summary>
                 /// <returns>Whether there was another element to move to.</returns>
                 [MemberNotNullWhen(true, nameof(_node))]
-                public bool MoveNext()
-                {
-                    return --_childIndex >= 0;
-                }
+                public bool MoveNext() => --_childIndex >= 0;
 
                 /// <summary>
                 /// The element the enumerator is at.
@@ -115,10 +108,7 @@ namespace Loretta.CodeAnalysis
                 /// <summary>
                 /// Resets the enumerator to the last element.
                 /// </summary>
-                public void Reset()
-                {
-                    _childIndex = _count;
-                }
+                public void Reset() => _childIndex = _count;
             }
 
             private class EnumeratorImpl : IEnumerator<SyntaxNodeOrToken>
@@ -136,10 +126,7 @@ namespace Loretta.CodeAnalysis
                 /// <returns>
                 /// The element in the collection at the current position of the enumerator.
                 ///   </returns>
-                public SyntaxNodeOrToken Current
-                {
-                    get { return _enumerator.Current; }
-                }
+                public SyntaxNodeOrToken Current => _enumerator.Current;
 
                 /// <summary>
                 /// Gets the element in the collection at the current position of the enumerator.
@@ -147,10 +134,7 @@ namespace Loretta.CodeAnalysis
                 /// <returns>
                 /// The element in the collection at the current position of the enumerator.
                 ///   </returns>
-                object IEnumerator.Current
-                {
-                    get { return _enumerator.Current; }
-                }
+                object IEnumerator.Current => _enumerator.Current;
 
                 /// <summary>
                 /// Advances the enumerator to the next element of the collection.
@@ -159,19 +143,13 @@ namespace Loretta.CodeAnalysis
                 /// true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
                 /// </returns>
                 /// <exception cref="InvalidOperationException">The collection was modified after the enumerator was created. </exception>
-                public bool MoveNext()
-                {
-                    return _enumerator.MoveNext();
-                }
+                public bool MoveNext() => _enumerator.MoveNext();
 
                 /// <summary>
                 /// Sets the enumerator to its initial position, which is before the first element in the collection.
                 /// </summary>
                 /// <exception cref="InvalidOperationException">The collection was modified after the enumerator was created. </exception>
-                public void Reset()
-                {
-                    _enumerator.Reset();
-                }
+                public void Reset() => _enumerator.Reset();
 
                 /// <summary>
                 /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
