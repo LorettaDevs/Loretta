@@ -297,7 +297,7 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
                     }
                     var r = unchecked((int) xn) & 0x7; // (lsb, bit below lsb, logical OR of all bits below the bit below lsb)
                     xn >>= 2; // truncate to maxBits
-                    if (r >= 6 || r == 3)
+                    if (r is >= 6 or 3)
                     {
                         xn++;
                         xn &= mask;

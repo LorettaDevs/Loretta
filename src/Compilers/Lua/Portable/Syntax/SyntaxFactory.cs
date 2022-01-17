@@ -532,7 +532,7 @@ namespace Loretta.CodeAnalysis.Lua
             for (int i = 0, n = list.Count; i < n; i++)
             {
                 var element = list[i];
-                if (element.IsNode && !(element.AsNode() is TNode))
+                if (element.IsNode && element.AsNode() is not TNode)
                 {
                     return false;
                 }

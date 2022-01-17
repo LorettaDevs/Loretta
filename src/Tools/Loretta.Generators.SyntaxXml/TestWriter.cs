@@ -75,7 +75,7 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteNodeGenerators(bool isGreen)
         {
-            var nodes = Tree.Types.Where(n => !(n is PredefinedNode) && !(n is AbstractNode));
+            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode));
             var first = true;
             foreach (var node in nodes)
             {
@@ -207,7 +207,7 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteFactoryPropertyTests(bool isGreen)
         {
-            var nodes = Tree.Types.Where(n => !(n is PredefinedNode) && !(n is AbstractNode));
+            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode));
             var first = true;
             foreach (var node in nodes)
             {
@@ -314,7 +314,7 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteRewriterTests()
         {
-            var nodes = Tree.Types.Where(n => !(n is PredefinedNode) && !(n is AbstractNode));
+            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode));
             var first = true;
             foreach (var node in nodes)
             {

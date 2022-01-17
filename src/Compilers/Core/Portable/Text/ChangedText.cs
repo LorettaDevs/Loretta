@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis.Text
             : base(checksumAlgorithm: oldText.ChecksumAlgorithm)
         {
             LorettaDebug.Assert(newText != null);
-            LorettaDebug.Assert(newText is CompositeText || newText is SubText || newText is StringText || newText is LargeText);
+            LorettaDebug.Assert(newText is CompositeText or SubText or StringText or LargeText);
             LorettaDebug.Assert(oldText != null);
             LorettaDebug.Assert(oldText != newText);
             LorettaDebug.Assert(!changeRanges.IsDefault);

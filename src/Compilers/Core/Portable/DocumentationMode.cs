@@ -33,7 +33,7 @@ namespace Loretta.CodeAnalysis
     {
         internal static bool IsValid(this DocumentationMode value)
         {
-            return value >= DocumentationMode.None && value <= DocumentationMode.Diagnose;
+            return value is >= DocumentationMode.None and <= DocumentationMode.Diagnose;
         }
     }
 }

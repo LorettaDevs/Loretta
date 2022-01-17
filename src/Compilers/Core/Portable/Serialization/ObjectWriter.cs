@@ -332,16 +332,16 @@ namespace Loretta.Utilities
 
         private void WriteEncodedInt32(int v)
         {
-            if (v >= 0 && v <= 10)
+            if (v is >= 0 and <= 10)
             {
                 _writer.Write((byte) ((int) EncodingKind.Int32_0 + v));
             }
-            else if (v >= 0 && v < byte.MaxValue)
+            else if (v is >= 0 and < byte.MaxValue)
             {
                 _writer.Write((byte) EncodingKind.Int32_1Byte);
                 _writer.Write((byte) v);
             }
-            else if (v >= 0 && v < ushort.MaxValue)
+            else if (v is >= 0 and < ushort.MaxValue)
             {
                 _writer.Write((byte) EncodingKind.Int32_2Bytes);
                 _writer.Write((ushort) v);
@@ -355,16 +355,16 @@ namespace Loretta.Utilities
 
         private void WriteEncodedUInt32(uint v)
         {
-            if (v >= 0 && v <= 10)
+            if (v is >= 0 and <= 10)
             {
                 _writer.Write((byte) ((int) EncodingKind.UInt32_0 + v));
             }
-            else if (v >= 0 && v < byte.MaxValue)
+            else if (v is >= 0 and < byte.MaxValue)
             {
                 _writer.Write((byte) EncodingKind.UInt32_1Byte);
                 _writer.Write((byte) v);
             }
-            else if (v >= 0 && v < ushort.MaxValue)
+            else if (v is >= 0 and < ushort.MaxValue)
             {
                 _writer.Write((byte) EncodingKind.UInt32_2Bytes);
                 _writer.Write((ushort) v);

@@ -129,8 +129,8 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return _info.Severity == InternalDiagnosticSeverity.Unknown ||
-                    _info.Severity == InternalDiagnosticSeverity.Void;
+                return _info.Severity is InternalDiagnosticSeverity.Unknown
+                                      or InternalDiagnosticSeverity.Void;
             }
         }
 

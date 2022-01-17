@@ -225,7 +225,7 @@ namespace Loretta.CodeAnalysis
         public void Invert()
         {
             _bits0 = ~_bits0;
-            if (!(_bits is null))
+            if (_bits is not null)
             {
                 for (int i = 0; i < _bits.Length; i++)
                 {
