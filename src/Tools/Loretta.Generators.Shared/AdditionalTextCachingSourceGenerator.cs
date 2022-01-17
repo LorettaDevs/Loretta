@@ -51,13 +51,13 @@ namespace Loretta.Generators
                 && cachedResult!.Checksum.SequenceEqual(currentChecksum))
             {
                 // Add the previously-cached sources, and leave the cache as it was
-                AddSources(in context, cachedResult.RelativePath, sources: cachedResult.Sources);
+                AddSources(in context, sources: cachedResult.Sources);
                 return;
             }
 
             if (TryGenerateSources(input, inputText, out var sources, out var diagnostics, out var relativePath, context.CancellationToken))
             {
-                AddSources(in context, relativePath, sources);
+                AddSources(in context, sources);
 
                 if (diagnostics.IsEmpty)
                 {
@@ -86,7 +86,6 @@ namespace Loretta.Generators
 
         private static void AddSources(
             in GeneratorExecutionContext context,
-            string relativePath,
             ImmutableArray<(string hintName, SourceText sourceText)> sources)
         {
             foreach (var (hintName, sourceText) in sources)

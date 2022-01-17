@@ -33,7 +33,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
                 return;
             }
 
-            GenerateSyntaxFacts(context, syntaxKindType, kinds);
+            GenerateSyntaxFacts(context, kinds);
         }
     }
 }

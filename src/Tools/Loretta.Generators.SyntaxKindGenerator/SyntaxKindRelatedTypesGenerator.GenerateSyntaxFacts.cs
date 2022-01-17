@@ -10,7 +10,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
 {
     public sealed partial class SyntaxKindRelatedTypesGenerator
     {
-        private static void GenerateSyntaxFacts(GeneratorExecutionContext context, INamedTypeSymbol syntaxKindType, KindList kinds)
+        private static void GenerateSyntaxFacts(GeneratorExecutionContext context, KindList kinds)
         {
             SourceText sourceText;
             using (var writer = new SourceWriter())

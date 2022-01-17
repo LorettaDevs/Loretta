@@ -38,7 +38,7 @@ namespace Loretta.UnusedStuffFinder
         private bool ShouldAnalyze(ISymbol symbol) =>
             _toAnalyze.Contains(symbol.ContainingAssembly.Identity.Name, StringComparer.Ordinal);
 
-        private bool CanCheckSymbol(SymbolKind kind) =>
+        private static bool CanCheckSymbol(SymbolKind kind) =>
             kind is SymbolKind.Event
                  or SymbolKind.Field
                  or SymbolKind.Method
