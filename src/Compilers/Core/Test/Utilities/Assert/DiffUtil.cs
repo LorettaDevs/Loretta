@@ -74,7 +74,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
         public static string DiffReport<T>(IEnumerable<T> expected, IEnumerable<T> actual, string separator, IEqualityComparer<T> comparer = null, Func<T, string> toString = null)
         {
             var lcs = (comparer != null) ? new LCS<T>(comparer) : LCS<T>.Default;
-            toString = toString ?? new Func<T, string>(obj => obj.ToString());
+            toString ??= new Func<T, string>(obj => obj.ToString());
 
             IList<T> expectedList = expected as IList<T> ?? new List<T>(expected);
             IList<T> actualList = actual as IList<T> ?? new List<T>(actual);

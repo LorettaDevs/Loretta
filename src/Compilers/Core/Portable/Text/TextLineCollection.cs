@@ -111,7 +111,7 @@ namespace Loretta.CodeAnalysis.Text
             {
                 if (_index < _lines.Count - 1)
                 {
-                    _index = _index + 1;
+                    _index++;
                     return true;
                 }
 
@@ -158,7 +158,9 @@ namespace Loretta.CodeAnalysis.Text
             /// <exception cref="NotSupportedException">
             /// Always thrown.
             /// </exception>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
             [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
             public static bool operator ==(Enumerator left, Enumerator right) =>
                 throw new NotSupportedException();
 
@@ -171,7 +173,9 @@ namespace Loretta.CodeAnalysis.Text
             /// <exception cref="NotSupportedException">
             /// Always thrown.
             /// </exception>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
             [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
             public static bool operator !=(Enumerator left, Enumerator right) =>
                 throw new NotSupportedException();
         }

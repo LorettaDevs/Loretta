@@ -12,9 +12,15 @@ namespace Loretta.UnusedStuffFinder
     {
         private T[] _array;
 
-        public CompactList() => _array = Array.Empty<T>();
+        public CompactList()
+        {
+            _array = Array.Empty<T>();
+        }
 
-        public CompactList(IEnumerable<T> values) => _array = values.ToArray();
+        public CompactList(IEnumerable<T> values)
+        {
+            _array = values.ToArray();
+        }
 
         public T this[int index]
         {

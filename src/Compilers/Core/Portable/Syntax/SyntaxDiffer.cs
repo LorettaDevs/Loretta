@@ -597,7 +597,7 @@ namespace Loretta.CodeAnalysis
             _changes.Add(new ChangeRecord(textChangeRange, CreateQueue(removedNode), CreateQueue(insertedNode)));
 
             // Local Functions
-            Queue<SyntaxNodeOrToken> CreateQueue(SyntaxNodeOrToken nodeOrToken)
+            static Queue<SyntaxNodeOrToken> CreateQueue(SyntaxNodeOrToken nodeOrToken)
             {
                 var queue = new Queue<SyntaxNodeOrToken>();
                 queue.Enqueue(nodeOrToken);
@@ -803,7 +803,7 @@ namespace Loretta.CodeAnalysis
             }
 
             // don't double count the chars we matched at the start of the strings
-            maxChars = maxChars - commonLeadingCount;
+            maxChars -= commonLeadingCount;
 
             commonTrailingCount = 0;
             for (; commonTrailingCount < maxChars; commonTrailingCount++)

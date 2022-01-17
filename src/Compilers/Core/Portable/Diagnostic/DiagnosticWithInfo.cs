@@ -109,22 +109,17 @@ namespace Loretta.CodeAnalysis
 
         private string GetDebuggerDisplay()
         {
-            switch (_info.Severity)
+            return _info.Severity switch
             {
-                case InternalDiagnosticSeverity.Unknown:
-                    // If we called ToString before the diagnostic was resolved,
-                    // we would risk infinite recursion (e.g. if we were still computing
-                    // member lists).
-                    return "Unresolved diagnostic at " + Location;
-
-                case InternalDiagnosticSeverity.Void:
-                    // If we called ToString on a void diagnostic, the MessageProvider
-                    // would complain about the code.
-                    return "Void diagnostic at " + Location;
-
-                default:
-                    return ToString();
-            }
+                // If we called ToString before the diagnostic was resolved,
+                // we would risk infinite recursion (e.g. if we were still computing
+                // member lists).
+                InternalDiagnosticSeverity.Unknown => "Unresolved diagnostic at " + Location,
+                // If we called ToString on a void diagnostic, the MessageProvider
+                // would complain about the code.
+                InternalDiagnosticSeverity.Void => "Void diagnostic at " + Location,
+                _ => ToString(),
+            };
         }
 
         internal override Diagnostic WithLocation(Location location)

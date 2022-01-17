@@ -378,22 +378,17 @@ namespace Loretta.CodeAnalysis
 
         private string GetDebuggerDisplay()
         {
-            switch (Severity)
+            return Severity switch
             {
-                case InternalDiagnosticSeverity.Unknown:
-                    // If we called ToString before the diagnostic was resolved,
-                    // we would risk infinite recursion (e.g. if we were still computing
-                    // member lists).
-                    return "Unresolved diagnostic at " + Location;
-
-                case InternalDiagnosticSeverity.Void:
-                    // If we called ToString on a void diagnostic, the MessageProvider
-                    // would complain about the code.
-                    return "Void diagnostic at " + Location;
-
-                default:
-                    return ToString();
-            }
+                // If we called ToString before the diagnostic was resolved,
+                // we would risk infinite recursion (e.g. if we were still computing
+                // member lists).
+                InternalDiagnosticSeverity.Unknown => "Unresolved diagnostic at " + Location,
+                // If we called ToString on a void diagnostic, the MessageProvider
+                // would complain about the code.
+                InternalDiagnosticSeverity.Void => "Void diagnostic at " + Location,
+                _ => ToString(),
+            };
         }
 
         /// <summary>
@@ -472,15 +467,11 @@ namespace Loretta.CodeAnalysis
         /// <returns>The default compiler warning level for <paramref name="severity"/>.</returns>
         internal static int GetDefaultWarningLevel(DiagnosticSeverity severity)
         {
-            switch (severity)
+            return severity switch
             {
-                case DiagnosticSeverity.Error:
-                    return 0;
-
-                case DiagnosticSeverity.Warning:
-                default:
-                    return 1;
-            }
+                DiagnosticSeverity.Error => 0,
+                _ => 1,
+            };
         }
 
         /// <summary>

@@ -175,7 +175,9 @@ namespace Loretta.CodeAnalysis
                 /// <exception cref="NotSupportedException">
                 /// Always thrown.
                 /// </exception>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
                 [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
                 public static bool operator ==(Enumerator left, Enumerator right) =>
                     throw new NotSupportedException();
 
@@ -188,7 +190,9 @@ namespace Loretta.CodeAnalysis
                 /// <exception cref="NotSupportedException">
                 /// Always thrown.
                 /// </exception>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
                 [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
                 public static bool operator !=(Enumerator left, Enumerator right) =>
                     throw new NotSupportedException();
             }

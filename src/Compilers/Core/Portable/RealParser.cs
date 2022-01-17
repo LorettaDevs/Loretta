@@ -678,10 +678,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Return the number of significant bits set. 
         /// </summary>
-        private static uint CountSignificantBits(BigInteger data)
-        {
-            return CountSignificantBits(data, out var dataBytes);
-        }
+        private static uint CountSignificantBits(BigInteger data) =>
+            CountSignificantBits(data, out _);
 
         /// <summary>
         /// Computes value / 2^shift, then rounds the result according to the current  
@@ -746,7 +744,7 @@ namespace Loretta.CodeAnalysis
         private static void ShiftLeft(ref BigInteger number, uint shift)
         {
             var powerOfTwo = BigInteger.Pow(s_bigTwo, (int) shift);
-            number = number * powerOfTwo;
+            number *= powerOfTwo;
         }
 
         /// <summary>
@@ -757,7 +755,7 @@ namespace Loretta.CodeAnalysis
         private static void MultiplyByPowerOfTen(ref BigInteger number, uint power)
         {
             var powerOfTen = BigInteger.Pow(s_bigTen, (int) power);
-            number = number * powerOfTen;
+            number *= powerOfTen;
         }
 
         /// <summary>

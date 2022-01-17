@@ -326,18 +326,16 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         /// <returns></returns>
         private static bool CanConvertToBoolean(SyntaxNode node)
         {
-            switch (node.Kind())
+            return node.Kind() switch
             {
-                case SyntaxKind.NilLiteralExpression:
-                case SyntaxKind.TrueLiteralExpression:
-                case SyntaxKind.FalseLiteralExpression:
-                case SyntaxKind.NumericalLiteralExpression:
-                case SyntaxKind.StringLiteralExpression:
-                case SyntaxKind.AnonymousFunctionExpression:
-                    return true;
-                default:
-                    return false;
-            }
+                SyntaxKind.NilLiteralExpression
+                or SyntaxKind.TrueLiteralExpression
+                or SyntaxKind.FalseLiteralExpression
+                or SyntaxKind.NumericalLiteralExpression
+                or SyntaxKind.StringLiteralExpression
+                or SyntaxKind.AnonymousFunctionExpression => true,
+                _ => false,
+            };
         }
 
         /// <summary>

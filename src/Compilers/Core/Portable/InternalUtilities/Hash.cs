@@ -348,7 +348,6 @@ namespace Loretta.Utilities
         public static uint GetJenkinsOneAtATimeHashCode(ReadOnlySpan<char> input)
         {
             uint hash = 0;
-            var len = input.Length;
 
             foreach (var c in input)
             {

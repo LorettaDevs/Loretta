@@ -55,15 +55,12 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
             internal override GreenNode? GetSlot(int index)
             {
-                switch (index)
+                return index switch
                 {
-                    case 0:
-                        return _child0;
-                    case 1:
-                        return _child1;
-                    default:
-                        return null;
-                }
+                    0 => _child0,
+                    1 => _child1,
+                    _ => null,
+                };
             }
 
             internal override void CopyTo(ArrayElement<GreenNode>[] array, int offset)

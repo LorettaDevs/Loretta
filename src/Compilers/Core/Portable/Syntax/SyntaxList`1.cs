@@ -418,14 +418,14 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="nodes"></param>
         public static implicit operator SyntaxList<TNode>(SyntaxList<SyntaxNode> nodes) =>
-            new SyntaxList<TNode>(nodes._node);
+            new(nodes._node);
 
         /// <summary>
         /// Converts a typed node list into an opaquely typed node list.
         /// </summary>
         /// <param name="nodes"></param>
         public static implicit operator SyntaxList<SyntaxNode>(SyntaxList<TNode> nodes) =>
-            new SyntaxList<SyntaxNode>(nodes.Node);
+            new(nodes.Node);
 
         /// <summary>
         /// The index of the node in this list, or -1 if the node is not in the list.

@@ -166,7 +166,7 @@ namespace Loretta.Utilities
                         oldChange = new TextChangeRange(oldChange.Span, oldChange.NewLength - newChange.SpanLength);
 
                         // the new change deletion is equal to the subset of the old change insertion that we are consuming this iteration
-                        oldDelta = oldDelta + newChange.SpanLength;
+                        oldDelta += newChange.SpanLength;
 
                         // since the new change insertion occurs before the old change, consume it now
                         newChange = new UnadjustedNewChange(newChange.SpanEnd, spanLength: 0, newChange.NewLength);
@@ -279,11 +279,9 @@ namespace Loretta.Utilities
                 add(builder, oldChange);
             }
 
-            static void adjustAndAddNewChange(ArrayBuilder<TextChangeRange> builder, int oldDelta, UnadjustedNewChange newChange)
-            {
+            static void adjustAndAddNewChange(ArrayBuilder<TextChangeRange> builder, int oldDelta, UnadjustedNewChange newChange) =>
                 // unadjusted new change is relative to the original text with old changes applied. Subtract oldDelta to make it relative to the original text.
                 add(builder, new TextChangeRange(new TextSpan(newChange.SpanStart - oldDelta, newChange.SpanLength), newChange.NewLength));
-            }
 
             static void add(ArrayBuilder<TextChangeRange> builder, TextChangeRange change)
             {

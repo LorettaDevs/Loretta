@@ -18,32 +18,24 @@ namespace Loretta.CodeAnalysis.Syntax
 
             internal override SyntaxNode? GetNodeSlot(int index)
             {
-                switch (index)
+                return index switch
                 {
-                    case 0:
-                        return GetRedElement(ref _child0, 0);
-                    case 1:
-                        return GetRedElementIfNotToken(ref _child1);
-                    case 2:
-                        return GetRedElement(ref _child2, 2);
-                    default:
-                        return null;
-                }
+                    0 => GetRedElement(ref _child0, 0),
+                    1 => GetRedElementIfNotToken(ref _child1),
+                    2 => GetRedElement(ref _child2, 2),
+                    _ => null,
+                };
             }
 
             internal override SyntaxNode? GetCachedSlot(int index)
             {
-                switch (index)
+                return index switch
                 {
-                    case 0:
-                        return _child0;
-                    case 1:
-                        return _child1;
-                    case 2:
-                        return _child2;
-                    default:
-                        return null;
-                }
+                    0 => _child0,
+                    1 => _child1,
+                    2 => _child2,
+                    _ => null,
+                };
             }
         }
     }

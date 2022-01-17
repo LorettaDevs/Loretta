@@ -131,7 +131,7 @@ namespace System
         public override string ToString()
         {
             if (IsFromEnd)
-                return $"^{((uint)Value).ToString()}";
+                return $"^{(uint)Value}";
 
             return ((uint)Value).ToString();
         }

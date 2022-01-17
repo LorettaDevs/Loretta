@@ -42,7 +42,10 @@ namespace Loretta.UnusedStuffFinder
 
         private IImmutableSet<string> _publicApiSymbols;
 
-        public PublicApiContainer() => _publicApiSymbols = ImmutableHashSet.Create<string>(StringComparer.Ordinal);
+        public PublicApiContainer()
+        {
+            _publicApiSymbols = ImmutableHashSet.Create<string>(StringComparer.Ordinal);
+        }
 
         public void Load(string path)
         {

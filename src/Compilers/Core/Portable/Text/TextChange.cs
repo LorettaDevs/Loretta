@@ -36,13 +36,8 @@ namespace Loretta.CodeAnalysis.Text
         public TextChange(TextSpan span, string newText)
             : this()
         {
-            if (newText == null)
-            {
-                throw new ArgumentNullException(nameof(newText));
-            }
-
             Span = span;
-            NewText = newText;
+            NewText = newText ?? throw new ArgumentNullException(nameof(newText));
         }
 
         /// <summary>

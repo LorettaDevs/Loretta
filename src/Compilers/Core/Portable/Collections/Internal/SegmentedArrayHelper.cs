@@ -37,11 +37,9 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
             return segmentSize;
 
-            static int ArraySize(int elementSize, int segmentSize)
-            {
+            static int ArraySize(int elementSize, int segmentSize) =>
                 // Array object header, plus space for the elements
-                return (2 * IntPtr.Size) + (elementSize * segmentSize);
-            }
+                (2 * IntPtr.Size) + (elementSize * segmentSize);
         }
 
         /// <summary>

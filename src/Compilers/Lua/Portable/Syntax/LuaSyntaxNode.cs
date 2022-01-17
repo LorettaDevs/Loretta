@@ -52,7 +52,7 @@ namespace Loretta.CodeAnalysis.Lua
         private static SyntaxTree ComputeSyntaxTree(LuaSyntaxNode node)
         {
             ArrayBuilder<LuaSyntaxNode>? nodes = null;
-            SyntaxTree? tree = null;
+            SyntaxTree? tree;
 
             // Find the nearest parent with a non-null syntax tree
             while (true)
@@ -79,7 +79,7 @@ namespace Loretta.CodeAnalysis.Lua
                     break;
                 }
 
-                (nodes ?? (nodes = ArrayBuilder<LuaSyntaxNode>.GetInstance())).Add(node);
+                (nodes ??= ArrayBuilder<LuaSyntaxNode>.GetInstance()).Add(node);
                 node = parent;
             }
 

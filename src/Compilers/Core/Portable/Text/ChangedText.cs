@@ -80,7 +80,7 @@ namespace Loretta.CodeAnalysis.Text
                 ChangeInfo? lastInfo = this;
                 for (ChangeInfo? info = this; info != null; info = info.Previous)
                 {
-                    if (info.WeakOldText.TryGetTarget(out var tmp))
+                    if (info.WeakOldText.TryGetTarget(out _))
                     {
                         lastInfo = info;
                     }

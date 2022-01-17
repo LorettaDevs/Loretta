@@ -97,8 +97,12 @@ namespace Loretta.Utilities
                 return null;
             }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning disable IDE0078 // Use pattern matching (may change code meaning)
             if (stream.ReadByte() != VersionByte1 ||
                 stream.ReadByte() != VersionByte2)
+#pragma warning restore IDE0078 // Use pattern matching (may change code meaning)
+#pragma warning restore IDE0079 // Remove unnecessary suppression
             {
                 return null;
             }
@@ -215,86 +219,77 @@ namespace Loretta.Utilities
         private object ReadValueWorker()
         {
             var kind = (EncodingKind) _reader.ReadByte();
-            switch (kind)
+            return kind switch
             {
-                case EncodingKind.Null: return null;
-                case EncodingKind.Boolean_True: return true;
-                case EncodingKind.Boolean_False: return false;
-                case EncodingKind.Int8: return _reader.ReadSByte();
-                case EncodingKind.UInt8: return _reader.ReadByte();
-                case EncodingKind.Int16: return _reader.ReadInt16();
-                case EncodingKind.UInt16: return _reader.ReadUInt16();
-                case EncodingKind.Int32: return _reader.ReadInt32();
-                case EncodingKind.Int32_1Byte: return (int) _reader.ReadByte();
-                case EncodingKind.Int32_2Bytes: return (int) _reader.ReadUInt16();
-                case EncodingKind.Int32_0:
-                case EncodingKind.Int32_1:
-                case EncodingKind.Int32_2:
-                case EncodingKind.Int32_3:
-                case EncodingKind.Int32_4:
-                case EncodingKind.Int32_5:
-                case EncodingKind.Int32_6:
-                case EncodingKind.Int32_7:
-                case EncodingKind.Int32_8:
-                case EncodingKind.Int32_9:
-                case EncodingKind.Int32_10:
-                    return (int) kind - (int) EncodingKind.Int32_0;
-                case EncodingKind.UInt32: return _reader.ReadUInt32();
-                case EncodingKind.UInt32_1Byte: return (uint) _reader.ReadByte();
-                case EncodingKind.UInt32_2Bytes: return (uint) _reader.ReadUInt16();
-                case EncodingKind.UInt32_0:
-                case EncodingKind.UInt32_1:
-                case EncodingKind.UInt32_2:
-                case EncodingKind.UInt32_3:
-                case EncodingKind.UInt32_4:
-                case EncodingKind.UInt32_5:
-                case EncodingKind.UInt32_6:
-                case EncodingKind.UInt32_7:
-                case EncodingKind.UInt32_8:
-                case EncodingKind.UInt32_9:
-                case EncodingKind.UInt32_10:
-                    return (uint) ((int) kind - (int) EncodingKind.UInt32_0);
-                case EncodingKind.Int64: return _reader.ReadInt64();
-                case EncodingKind.UInt64: return _reader.ReadUInt64();
-                case EncodingKind.Float4: return _reader.ReadSingle();
-                case EncodingKind.Float8: return _reader.ReadDouble();
-                case EncodingKind.Decimal: return _reader.ReadDecimal();
-                case EncodingKind.Char:
-                    // read as ushort because BinaryWriter fails on chars that are unicode surrogates
-                    return (char) _reader.ReadUInt16();
-                case EncodingKind.StringUtf8:
-                case EncodingKind.StringUtf16:
-                case EncodingKind.StringRef_4Bytes:
-                case EncodingKind.StringRef_1Byte:
-                case EncodingKind.StringRef_2Bytes:
-                    return ReadStringValue(kind);
-                case EncodingKind.ObjectRef_4Bytes: return _objectReferenceMap.GetValue(_reader.ReadInt32());
-                case EncodingKind.ObjectRef_1Byte: return _objectReferenceMap.GetValue(_reader.ReadByte());
-                case EncodingKind.ObjectRef_2Bytes: return _objectReferenceMap.GetValue(_reader.ReadUInt16());
-                case EncodingKind.Object: return ReadObject();
-                case EncodingKind.DateTime: return DateTime.FromBinary(_reader.ReadInt64());
-                case EncodingKind.Array:
-                case EncodingKind.Array_0:
-                case EncodingKind.Array_1:
-                case EncodingKind.Array_2:
-                case EncodingKind.Array_3:
-                    return ReadArray(kind);
-
-                case EncodingKind.EncodingName: return Encoding.GetEncoding(ReadString());
-                case EncodingKind.EncodingUTF8: return s_encodingUTF8;
-                case EncodingKind.EncodingUTF8_BOM: return Encoding.UTF8;
-                case EncodingKind.EncodingUTF32_BE: return s_encodingUTF32_BE;
-                case EncodingKind.EncodingUTF32_BE_BOM: return s_encodingUTF32_BE_BOM;
-                case EncodingKind.EncodingUTF32_LE: return s_encodingUTF32_LE;
-                case EncodingKind.EncodingUTF32_LE_BOM: return Encoding.UTF32;
-                case EncodingKind.EncodingUnicode_BE: return s_encodingUnicode_BE;
-                case EncodingKind.EncodingUnicode_BE_BOM: return Encoding.BigEndianUnicode;
-                case EncodingKind.EncodingUnicode_LE: return s_encodingUnicode_LE;
-                case EncodingKind.EncodingUnicode_LE_BOM: return Encoding.Unicode;
-
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(kind);
-            }
+                EncodingKind.Null => null,
+                EncodingKind.Boolean_True => true,
+                EncodingKind.Boolean_False => false,
+                EncodingKind.Int8 => _reader.ReadSByte(),
+                EncodingKind.UInt8 => _reader.ReadByte(),
+                EncodingKind.Int16 => _reader.ReadInt16(),
+                EncodingKind.UInt16 => _reader.ReadUInt16(),
+                EncodingKind.Int32 => _reader.ReadInt32(),
+                EncodingKind.Int32_1Byte => (int) _reader.ReadByte(),
+                EncodingKind.Int32_2Bytes => (int) _reader.ReadUInt16(),
+                EncodingKind.Int32_0
+                or EncodingKind.Int32_1
+                or EncodingKind.Int32_2
+                or EncodingKind.Int32_3
+                or EncodingKind.Int32_4
+                or EncodingKind.Int32_5
+                or EncodingKind.Int32_6
+                or EncodingKind.Int32_7
+                or EncodingKind.Int32_8
+                or EncodingKind.Int32_9
+                or EncodingKind.Int32_10 => (int) kind - (int) EncodingKind.Int32_0,
+                EncodingKind.UInt32 => _reader.ReadUInt32(),
+                EncodingKind.UInt32_1Byte => (uint) _reader.ReadByte(),
+                EncodingKind.UInt32_2Bytes => (uint) _reader.ReadUInt16(),
+                EncodingKind.UInt32_0
+                or EncodingKind.UInt32_1
+                or EncodingKind.UInt32_2
+                or EncodingKind.UInt32_3
+                or EncodingKind.UInt32_4
+                or EncodingKind.UInt32_5
+                or EncodingKind.UInt32_6
+                or EncodingKind.UInt32_7
+                or EncodingKind.UInt32_8
+                or EncodingKind.UInt32_9
+                or EncodingKind.UInt32_10 => (uint) ((int) kind - (int) EncodingKind.UInt32_0),
+                EncodingKind.Int64 => _reader.ReadInt64(),
+                EncodingKind.UInt64 => _reader.ReadUInt64(),
+                EncodingKind.Float4 => _reader.ReadSingle(),
+                EncodingKind.Float8 => _reader.ReadDouble(),
+                EncodingKind.Decimal => _reader.ReadDecimal(),
+                // read as ushort because BinaryWriter fails on chars that are unicode surrogates
+                EncodingKind.Char => (char) _reader.ReadUInt16(),
+                EncodingKind.StringUtf8
+                or EncodingKind.StringUtf16
+                or EncodingKind.StringRef_4Bytes
+                or EncodingKind.StringRef_1Byte or EncodingKind.StringRef_2Bytes => ReadStringValue(kind),
+                EncodingKind.ObjectRef_4Bytes => _objectReferenceMap.GetValue(_reader.ReadInt32()),
+                EncodingKind.ObjectRef_1Byte => _objectReferenceMap.GetValue(_reader.ReadByte()),
+                EncodingKind.ObjectRef_2Bytes => _objectReferenceMap.GetValue(_reader.ReadUInt16()),
+                EncodingKind.Object => ReadObject(),
+                EncodingKind.DateTime => DateTime.FromBinary(_reader.ReadInt64()),
+                EncodingKind.Array
+                or EncodingKind.Array_0
+                or EncodingKind.Array_1
+                or EncodingKind.Array_2
+                or EncodingKind.Array_3 => ReadArray(kind),
+                EncodingKind.EncodingName => Encoding.GetEncoding(ReadString()),
+                EncodingKind.EncodingUTF8 => s_encodingUTF8,
+                EncodingKind.EncodingUTF8_BOM => Encoding.UTF8,
+                EncodingKind.EncodingUTF32_BE => s_encodingUTF32_BE,
+                EncodingKind.EncodingUTF32_BE_BOM => s_encodingUTF32_BE_BOM,
+                EncodingKind.EncodingUTF32_LE => s_encodingUTF32_LE,
+                EncodingKind.EncodingUTF32_LE_BOM => Encoding.UTF32,
+                EncodingKind.EncodingUnicode_BE => s_encodingUnicode_BE,
+                EncodingKind.EncodingUnicode_BE_BOM => Encoding.BigEndianUnicode,
+                EncodingKind.EncodingUnicode_LE => s_encodingUnicode_LE,
+                EncodingKind.EncodingUnicode_LE_BOM => Encoding.Unicode,
+                _ => throw ExceptionUtilities.UnexpectedValue(kind),
+            };
         }
 
         private static readonly Encoding s_encodingUTF8 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
@@ -383,24 +378,14 @@ namespace Loretta.Utilities
 
         private string ReadStringValue(EncodingKind kind)
         {
-            switch (kind)
+            return kind switch
             {
-                case EncodingKind.StringRef_1Byte:
-                    return _stringReferenceMap.GetValue(_reader.ReadByte());
-
-                case EncodingKind.StringRef_2Bytes:
-                    return _stringReferenceMap.GetValue(_reader.ReadUInt16());
-
-                case EncodingKind.StringRef_4Bytes:
-                    return _stringReferenceMap.GetValue(_reader.ReadInt32());
-
-                case EncodingKind.StringUtf16:
-                case EncodingKind.StringUtf8:
-                    return ReadStringLiteral(kind);
-
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(kind);
-            }
+                EncodingKind.StringRef_1Byte => _stringReferenceMap.GetValue(_reader.ReadByte()),
+                EncodingKind.StringRef_2Bytes => _stringReferenceMap.GetValue(_reader.ReadUInt16()),
+                EncodingKind.StringRef_4Bytes => _stringReferenceMap.GetValue(_reader.ReadInt32()),
+                EncodingKind.StringUtf16 or EncodingKind.StringUtf8 => ReadStringLiteral(kind),
+                _ => throw ExceptionUtilities.UnexpectedValue(kind),
+            };
         }
 
         private unsafe string ReadStringLiteral(EncodingKind kind)
@@ -427,25 +412,14 @@ namespace Loretta.Utilities
 
         private Array ReadArray(EncodingKind kind)
         {
-            int length;
-            switch (kind)
+            var length = kind switch
             {
-                case EncodingKind.Array_0:
-                    length = 0;
-                    break;
-                case EncodingKind.Array_1:
-                    length = 1;
-                    break;
-                case EncodingKind.Array_2:
-                    length = 2;
-                    break;
-                case EncodingKind.Array_3:
-                    length = 3;
-                    break;
-                default:
-                    length = (int) ReadCompressedUInt();
-                    break;
-            }
+                EncodingKind.Array_0 => 0,
+                EncodingKind.Array_1 => 1,
+                EncodingKind.Array_2 => 2,
+                EncodingKind.Array_3 => 3,
+                _ => (int) ReadCompressedUInt(),
+            };
 
             // SUBTLE: If it was a primitive array, only the EncodingKind byte of the element type was written, instead of encoding as a type.
             var elementKind = (EncodingKind) _reader.ReadByte();
@@ -487,21 +461,20 @@ namespace Loretta.Utilities
             if (type == typeof(bool)) { return ReadBooleanArrayElements(CreateArray<bool>(length)); }
 
             // otherwise, read elements directly from underlying binary writer
-            switch (kind)
+            return kind switch
             {
-                case EncodingKind.Int8: return ReadInt8ArrayElements(CreateArray<sbyte>(length));
-                case EncodingKind.Int16: return ReadInt16ArrayElements(CreateArray<short>(length));
-                case EncodingKind.Int32: return ReadInt32ArrayElements(CreateArray<int>(length));
-                case EncodingKind.Int64: return ReadInt64ArrayElements(CreateArray<long>(length));
-                case EncodingKind.UInt16: return ReadUInt16ArrayElements(CreateArray<ushort>(length));
-                case EncodingKind.UInt32: return ReadUInt32ArrayElements(CreateArray<uint>(length));
-                case EncodingKind.UInt64: return ReadUInt64ArrayElements(CreateArray<ulong>(length));
-                case EncodingKind.Float4: return ReadFloat4ArrayElements(CreateArray<float>(length));
-                case EncodingKind.Float8: return ReadFloat8ArrayElements(CreateArray<double>(length));
-                case EncodingKind.Decimal: return ReadDecimalArrayElements(CreateArray<decimal>(length));
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(kind);
-            }
+                EncodingKind.Int8 => ReadInt8ArrayElements(CreateArray<sbyte>(length)),
+                EncodingKind.Int16 => ReadInt16ArrayElements(CreateArray<short>(length)),
+                EncodingKind.Int32 => ReadInt32ArrayElements(CreateArray<int>(length)),
+                EncodingKind.Int64 => ReadInt64ArrayElements(CreateArray<long>(length)),
+                EncodingKind.UInt16 => ReadUInt16ArrayElements(CreateArray<ushort>(length)),
+                EncodingKind.UInt32 => ReadUInt32ArrayElements(CreateArray<uint>(length)),
+                EncodingKind.UInt64 => ReadUInt64ArrayElements(CreateArray<ulong>(length)),
+                EncodingKind.Float4 => ReadFloat4ArrayElements(CreateArray<float>(length)),
+                EncodingKind.Float8 => ReadFloat8ArrayElements(CreateArray<double>(length)),
+                EncodingKind.Decimal => ReadDecimalArrayElements(CreateArray<decimal>(length)),
+                _ => throw ExceptionUtilities.UnexpectedValue(kind),
+            };
         }
 
         private bool[] ReadBooleanArrayElements(bool[] array)

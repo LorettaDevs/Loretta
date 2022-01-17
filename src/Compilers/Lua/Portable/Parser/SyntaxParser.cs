@@ -251,7 +251,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return result;
         }
 
-        protected SyntaxToken CurrentToken => _currentToken ?? (_currentToken = FetchCurrentToken());
+        protected SyntaxToken CurrentToken => _currentToken ??= FetchCurrentToken();
 
         private SyntaxToken FetchCurrentToken()
         {

@@ -141,25 +141,10 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentException(CodeAnalysisResources.DiagnosticIdCantBeNullOrWhitespace, nameof(id));
             }
 
-            if (messageFormat == null)
-            {
-                throw new ArgumentNullException(nameof(messageFormat));
-            }
-
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
-
-            if (title == null)
-            {
-                throw new ArgumentNullException(nameof(title));
-            }
-
             Id = id;
-            Title = title;
-            Category = category;
-            MessageFormat = messageFormat;
+            Title = title ?? throw new ArgumentNullException(nameof(title));
+            Category = category ?? throw new ArgumentNullException(nameof(category));
+            MessageFormat = messageFormat ?? throw new ArgumentNullException(nameof(messageFormat));
             DefaultSeverity = defaultSeverity;
             IsEnabledByDefault = isEnabledByDefault;
             Description = description ?? string.Empty;

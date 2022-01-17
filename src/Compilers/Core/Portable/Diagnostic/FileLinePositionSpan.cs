@@ -70,12 +70,7 @@ namespace Loretta.CodeAnalysis
         /// <exception cref="ArgumentNullException"><paramref name="path"/> is null.</exception>
         public FileLinePositionSpan(string path, LinePositionSpan span)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-
-            _path = path;
+            _path = path ?? throw new ArgumentNullException(nameof(path));
             _span = span;
             _hasMappedPath = false;
         }

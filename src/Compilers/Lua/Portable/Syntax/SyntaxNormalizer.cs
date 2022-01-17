@@ -123,7 +123,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 // all line breaks except the first will be leading trivia of this token. The first line break
                 // is trailing trivia of the previous token.
                 if (numLineBreaksBefore > 0 && IsLastTokenOnLine(_previousToken))
-                    numLineBreaksBefore -= 1;
+                    _ = 1;
 
                 tk = tk.WithLeadingTrivia(
                     RewriteTrivia(
@@ -308,14 +308,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (EndsInLineBreak(trivia))
                 return false;
 
-            switch (nextTrivia.Kind())
+            return nextTrivia.Kind() switch
             {
-                case SyntaxKind.SingleLineCommentTrivia:
-                    return !isTrailingTrivia;
-
-                default:
-                    return false;
-            }
+                SyntaxKind.SingleLineCommentTrivia => !isTrailingTrivia,
+                _ => false,
+            };
         }
 
         private static bool NeedsLineBreakAfter(SyntaxTrivia trivia) =>

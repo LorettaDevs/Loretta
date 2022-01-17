@@ -83,7 +83,11 @@ namespace Loretta.CodeAnalysis
         private sealed class StringRope : Rope
         {
             private readonly string _value;
-            public StringRope(string value) => _value = value;
+            public StringRope(string value)
+            {
+                _value = value;
+            }
+
             public override string ToString() => _value;
             public override int Length => _value.Length;
             protected override IEnumerable<char> GetChars() => _value;

@@ -36,12 +36,12 @@ namespace Loretta.CodeAnalysis
 
         public static object Box(int i)
         {
-            switch (i)
+            return i switch
             {
-                case 0: return BoxedInt32Zero;
-                case 1: return BoxedInt32One;
-                default: return i;
-            }
+                0 => BoxedInt32Zero,
+                1 => BoxedInt32One,
+                _ => i,
+            };
         }
 
         public static object Box(uint u) => u == 0 ? BoxedUInt32Zero : u;

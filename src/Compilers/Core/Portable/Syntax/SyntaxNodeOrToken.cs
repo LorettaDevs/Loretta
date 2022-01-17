@@ -764,7 +764,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>
         /// A <see cref="SyntaxNodeOrToken"/> that wraps the supplied token.
         /// </returns>
-        public static implicit operator SyntaxNodeOrToken(SyntaxToken token) => new SyntaxNodeOrToken(token.Parent, token.Node, token.Position, token.Index);
+        public static implicit operator SyntaxNodeOrToken(SyntaxToken token) => new(token.Parent, token.Node, token.Position, token.Index);
 
         /// <summary>
         /// Returns the underlying token wrapped by the supplied <see cref="SyntaxNodeOrToken"/>.
