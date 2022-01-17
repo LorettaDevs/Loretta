@@ -504,11 +504,50 @@ namespace Loretta.CodeAnalysis
             {
             }
 
-            /// <inheritdoc/>
+            /// <summary>
+            /// Not supported. Do not use.
+            /// </summary>
+            /// <param name="obj"></param>
+            /// <returns></returns>
+            /// <exception cref="NotSupportedException">
+            /// Always thrown.
+            /// </exception>
             public override bool Equals(object? obj) => throw new NotSupportedException();
 
-            /// <inheritdoc/>
+            /// <summary>
+            /// Not supported. Do not use.
+            /// </summary>
+            /// <returns></returns>
+            /// <exception cref="NotSupportedException">
+            /// Always thrown.
+            /// </exception>
             public override int GetHashCode() => throw new NotSupportedException();
+
+            /// <summary>
+            /// Not supported. Do not use.
+            /// </summary>
+            /// <param name="left"></param>
+            /// <param name="right"></param>
+            /// <returns></returns>
+            /// <exception cref="NotSupportedException">
+            /// Always thrown.
+            /// </exception>
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+            public static bool operator ==(Enumerator left, Enumerator right) =>
+                throw new NotSupportedException();
+
+            /// <summary>
+            /// Not supported. Do not use.
+            /// </summary>
+            /// <param name="left"></param>
+            /// <param name="right"></param>
+            /// <returns></returns>
+            /// <exception cref="NotSupportedException">
+            /// Always thrown.
+            /// </exception>
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+            public static bool operator !=(Enumerator left, Enumerator right) =>
+                throw new NotSupportedException();
         }
     }
 }

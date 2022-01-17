@@ -71,6 +71,22 @@ namespace Loretta.CodeAnalysis
             }
 
             /// <summary>
+            /// Checks whether two reversed lists are equal.
+            /// </summary>
+            /// <param name="left"></param>
+            /// <param name="right"></param>
+            /// <returns></returns>
+            public static bool operator ==(Reversed left, Reversed right) => left.Equals(right);
+
+            /// <summary>
+            /// Checks whether two reversed lists are not equal.
+            /// </summary>
+            /// <param name="left"></param>
+            /// <param name="right"></param>
+            /// <returns></returns>
+            public static bool operator !=(Reversed left, Reversed right) => !(left == right);
+
+            /// <summary>
             /// Enumerates the nodes in this reversed children list.
             /// </summary>
             public struct Enumerator

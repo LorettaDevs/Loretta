@@ -64,11 +64,26 @@ namespace Loretta.CodeAnalysis
             public override int GetHashCode() => _list.GetHashCode();
 
             /// <summary>
+            /// Checks whether two reversed lists are equal.
+            /// </summary>
+            /// <param name="left"></param>
+            /// <param name="right"></param>
+            /// <returns></returns>
+            public static bool operator ==(Reversed left, Reversed right) =>
+                left.Equals(right);
+
+            /// <summary>
+            /// Checks whether two reversed lists are equal.
+            /// </summary>
+            /// <param name="left"></param>
+            /// <param name="right"></param>
+            /// <returns></returns>
+            public static bool operator !=(Reversed left, Reversed right) =>
+                !(left == right);
+
+            /// <summary>
             /// The enumerator for this reversed list.
             /// </summary>
-#pragma warning disable IDE0079 // Remove unnecessary suppression
-            [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
-#pragma warning restore IDE0079 // Remove unnecessary suppression
             [StructLayout(LayoutKind.Auto)]
             public struct Enumerator
             {
@@ -132,11 +147,50 @@ namespace Loretta.CodeAnalysis
                     }
                 }
 
-                /// <inheritdoc/>
+                /// <summary>
+                /// Not supported. Do not use.
+                /// </summary>
+                /// <param name="obj"></param>
+                /// <returns></returns>
+                /// <exception cref="NotSupportedException">
+                /// Always thrown.
+                /// </exception>
                 public override bool Equals(object? obj) => throw new NotSupportedException();
 
-                /// <inheritdoc/>
+                /// <summary>
+                /// Not supported. Do not use.
+                /// </summary>
+                /// <returns></returns>
+                /// <exception cref="NotSupportedException">
+                /// Always thrown.
+                /// </exception>
                 public override int GetHashCode() => throw new NotSupportedException();
+
+                /// <summary>
+                /// Not supported. Do not use.
+                /// </summary>
+                /// <param name="left"></param>
+                /// <param name="right"></param>
+                /// <returns></returns>
+                /// <exception cref="NotSupportedException">
+                /// Always thrown.
+                /// </exception>
+                [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+                public static bool operator ==(Enumerator left, Enumerator right) =>
+                    throw new NotSupportedException();
+
+                /// <summary>
+                /// Not supported. Do not use.
+                /// </summary>
+                /// <param name="left"></param>
+                /// <param name="right"></param>
+                /// <returns></returns>
+                /// <exception cref="NotSupportedException">
+                /// Always thrown.
+                /// </exception>
+                [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+                public static bool operator !=(Enumerator left, Enumerator right) =>
+                    throw new NotSupportedException();
             }
 
             private class EnumeratorImpl : IEnumerator<SyntaxToken>

@@ -65,6 +65,32 @@ namespace Loretta.CodeAnalysis
             /// Always thrown.
             /// </exception>
             public override int GetHashCode() => throw new NotSupportedException();
+
+
+            /// <summary>
+            /// Not supported. Do not use.
+            /// </summary>
+            /// <param name="left"></param>
+            /// <param name="right"></param>
+            /// <returns></returns>
+            /// <exception cref="NotSupportedException">
+            /// Always thrown.
+            /// </exception>
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+            public static bool operator ==(SyntaxList<TNode>.Enumerator left, SyntaxList<TNode>.Enumerator right) =>
+                throw new NotSupportedException();
+
+            /// <summary>
+            /// Not supported. Do not use.
+            /// </summary>
+            /// <param name="left"></param>
+            /// <param name="right"></param>
+            /// <exception cref="NotSupportedException">
+            /// Always thrown.
+            /// </exception>
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required.")]
+            public static bool operator !=(SyntaxList<TNode>.Enumerator left, SyntaxList<TNode>.Enumerator right) =>
+                throw new NotSupportedException();
         }
 
         private class EnumeratorImpl : IEnumerator<TNode>
