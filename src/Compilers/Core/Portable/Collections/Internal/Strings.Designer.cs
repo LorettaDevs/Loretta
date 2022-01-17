@@ -8,10 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Loretta.CodeAnalysis.Collections.Internal {
+namespace Loretta.CodeAnalysis.Collections.Internal
+{
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,292 +23,356 @@ namespace Loretta.CodeAnalysis.Collections.Internal {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SR {
-        
+    internal class SR
+    {
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SR() {
+        internal SR()
+        {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        internal static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Loretta.CodeAnalysis.Collections.Internal.Strings", typeof(SR).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
-            get {
+        internal static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Destination array is not long enough to copy all the items in the collection. Check array index and length..
         /// </summary>
-        internal static string Arg_ArrayPlusOffTooSmall {
-            get {
+        internal static string Arg_ArrayPlusOffTooSmall
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_ArrayPlusOffTooSmall", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unable to sort because the IComparer.Compare() method returns inconsistent results. Either a value does not compare equal to itself, or one value repeatedly compared to another value yields different results. IComparer: &apos;{0}&apos;..
         /// </summary>
-        internal static string Arg_BogusIComparer {
-            get {
+        internal static string Arg_BogusIComparer
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_BogusIComparer", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Hashtable&apos;s capacity overflowed and went negative. Check load factor, capacity and the current size of the table..
         /// </summary>
-        internal static string Arg_HTCapacityOverflow {
-            get {
+        internal static string Arg_HTCapacityOverflow
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_HTCapacityOverflow", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The given key &apos;{0}&apos; was not present in the dictionary..
         /// </summary>
-        internal static string Arg_KeyNotFoundWithKey {
-            get {
+        internal static string Arg_KeyNotFoundWithKey
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_KeyNotFoundWithKey", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Destination array was not long enough. Check the destination index, length, and the array&apos;s lower bounds..
         /// </summary>
-        internal static string Arg_LongerThanDestArray {
-            get {
+        internal static string Arg_LongerThanDestArray
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_LongerThanDestArray", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Source array was not long enough. Check the source index, length, and the array&apos;s lower bounds..
         /// </summary>
-        internal static string Arg_LongerThanSrcArray {
-            get {
+        internal static string Arg_LongerThanSrcArray
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_LongerThanSrcArray", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The lower bound of target array must be zero..
         /// </summary>
-        internal static string Arg_NonZeroLowerBound {
-            get {
+        internal static string Arg_NonZeroLowerBound
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_NonZeroLowerBound", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Only single dimensional arrays are supported for the requested action..
         /// </summary>
-        internal static string Arg_RankMultiDimNotSupported {
-            get {
+        internal static string Arg_RankMultiDimNotSupported
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_RankMultiDimNotSupported", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The value &quot;{0}&quot; is not of type &quot;{1}&quot; and cannot be used in this generic collection..
         /// </summary>
-        internal static string Arg_WrongType {
-            get {
+        internal static string Arg_WrongType
+        {
+            get
+            {
                 return ResourceManager.GetString("Arg_WrongType", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to An item with the same key has already been added. Key: {0}.
         /// </summary>
-        internal static string Argument_AddingDuplicateWithKey {
-            get {
+        internal static string Argument_AddingDuplicateWithKey
+        {
+            get
+            {
                 return ResourceManager.GetString("Argument_AddingDuplicateWithKey", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Target array type is not compatible with the type of items in the collection..
         /// </summary>
-        internal static string Argument_InvalidArrayType {
-            get {
+        internal static string Argument_InvalidArrayType
+        {
+            get
+            {
                 return ResourceManager.GetString("Argument_InvalidArrayType", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection..
         /// </summary>
-        internal static string Argument_InvalidOffLen {
-            get {
+        internal static string Argument_InvalidOffLen
+        {
+            get
+            {
                 return ResourceManager.GetString("Argument_InvalidOffLen", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Object is not a array with the same number of elements as the array to compare it to..
         /// </summary>
-        internal static string ArgumentException_OtherNotArrayOfCorrectLength {
-            get {
+        internal static string ArgumentException_OtherNotArrayOfCorrectLength
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentException_OtherNotArrayOfCorrectLength", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Number was less than the array&apos;s lower bound in the first dimension..
         /// </summary>
-        internal static string ArgumentOutOfRange_ArrayLB {
-            get {
+        internal static string ArgumentOutOfRange_ArrayLB
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentOutOfRange_ArrayLB", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Larger than collection size..
         /// </summary>
-        internal static string ArgumentOutOfRange_BiggerThanCollection {
-            get {
+        internal static string ArgumentOutOfRange_BiggerThanCollection
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentOutOfRange_BiggerThanCollection", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Count must be positive and count must refer to a location within the string/array/collection..
         /// </summary>
-        internal static string ArgumentOutOfRange_Count {
-            get {
+        internal static string ArgumentOutOfRange_Count
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentOutOfRange_Count", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Index was out of range. Must be non-negative and less than the size of the collection..
         /// </summary>
-        internal static string ArgumentOutOfRange_Index {
-            get {
+        internal static string ArgumentOutOfRange_Index
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentOutOfRange_Index", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Index must be within the bounds of the List..
         /// </summary>
-        internal static string ArgumentOutOfRange_ListInsert {
-            get {
+        internal static string ArgumentOutOfRange_ListInsert
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentOutOfRange_ListInsert", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Non-negative number required..
         /// </summary>
-        internal static string ArgumentOutOfRange_NeedNonNegNum {
-            get {
+        internal static string ArgumentOutOfRange_NeedNonNegNum
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentOutOfRange_NeedNonNegNum", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to capacity was less than the current size..
         /// </summary>
-        internal static string ArgumentOutOfRange_SmallCapacity {
-            get {
+        internal static string ArgumentOutOfRange_SmallCapacity
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentOutOfRange_SmallCapacity", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Operations that change non-concurrent collections must have exclusive access. A concurrent update was performed on this collection and corrupted its state. The collection&apos;s state is no longer correct..
         /// </summary>
-        internal static string InvalidOperation_ConcurrentOperationsNotSupported {
-            get {
+        internal static string InvalidOperation_ConcurrentOperationsNotSupported
+        {
+            get
+            {
                 return ResourceManager.GetString("InvalidOperation_ConcurrentOperationsNotSupported", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Collection was modified; enumeration operation may not execute..
         /// </summary>
-        internal static string InvalidOperation_EnumFailedVersion {
-            get {
+        internal static string InvalidOperation_EnumFailedVersion
+        {
+            get
+            {
                 return ResourceManager.GetString("InvalidOperation_EnumFailedVersion", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enumeration has either not started or has already finished..
         /// </summary>
-        internal static string InvalidOperation_EnumOpCantHappen {
-            get {
+        internal static string InvalidOperation_EnumOpCantHappen
+        {
+            get
+            {
                 return ResourceManager.GetString("InvalidOperation_EnumOpCantHappen", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Failed to compare two elements in the array..
         /// </summary>
-        internal static string InvalidOperation_IComparerFailed {
-            get {
+        internal static string InvalidOperation_IComparerFailed
+        {
+            get
+            {
                 return ResourceManager.GetString("InvalidOperation_IComparerFailed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Collection was of a fixed size..
         /// </summary>
-        internal static string NotSupported_FixedSizeCollection {
-            get {
+        internal static string NotSupported_FixedSizeCollection
+        {
+            get
+            {
                 return ResourceManager.GetString("NotSupported_FixedSizeCollection", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Mutating a key collection derived from a dictionary is not allowed..
         /// </summary>
-        internal static string NotSupported_KeyCollectionSet {
-            get {
+        internal static string NotSupported_KeyCollectionSet
+        {
+            get
+            {
                 return ResourceManager.GetString("NotSupported_KeyCollectionSet", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Mutating a value collection derived from a dictionary is not allowed..
         /// </summary>
-        internal static string NotSupported_ValueCollectionSet {
-            get {
+        internal static string NotSupported_ValueCollectionSet
+        {
+            get
+            {
                 return ResourceManager.GetString("NotSupported_ValueCollectionSet", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The specified arrays must have the same number of dimensions..
         /// </summary>
-        internal static string Rank_MustMatch {
-            get {
+        internal static string Rank_MustMatch
+        {
+            get
+            {
                 return ResourceManager.GetString("Rank_MustMatch", resourceCulture);
             }
         }
