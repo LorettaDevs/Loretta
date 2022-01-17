@@ -242,7 +242,7 @@ namespace Loretta.CLI
         {
             var options = LuaParseOptions.Default;
             string code;
-            var presetName = input.Substring(0, input.IndexOf(' '));
+            var presetName = input[..input.IndexOf(' ')];
             if (Enum.TryParse<LuaOptionsPreset>(presetName, true, out var presetEnum))
             {
                 code = input[(input.IndexOf(' ') + 1)..];

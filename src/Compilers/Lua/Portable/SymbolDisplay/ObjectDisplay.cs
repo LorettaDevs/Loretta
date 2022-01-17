@@ -213,7 +213,7 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             Span<char> startBuffer = stackalloc char[bufferSize], endBuffer = stackalloc char[bufferSize];
             var idx = 1;
 
-            while (value.Contains(startBuffer.Slice(0, idx + 1), StringComparison.Ordinal) || value.Contains(endBuffer.Slice(0, idx + 1), StringComparison.Ordinal))
+            while (value.Contains(startBuffer[..(idx + 1)], StringComparison.Ordinal) || value.Contains(endBuffer[..(idx + 1)], StringComparison.Ordinal))
             {
                 if (idx >= bufferSize - 1)
                 {

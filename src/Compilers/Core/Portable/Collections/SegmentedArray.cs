@@ -396,7 +396,7 @@ namespace Loretta.CodeAnalysis.Collections
                     var firstSegment = _firstSegments[(_completed + _firstOffset) / segmentLength];
                     var secondSegment = _secondSegments[(_completed + _secondOffset) / segmentLength];
                     var currentSegmentLength = Math.Min(segmentLength, _length - _completed);
-                    _current = (firstSegment.AsMemory().Slice(0, currentSegmentLength), secondSegment.AsMemory().Slice(0, currentSegmentLength));
+                    _current = (firstSegment.AsMemory()[..currentSegmentLength], secondSegment.AsMemory()[..currentSegmentLength]);
                     _completed += currentSegmentLength;
                     return true;
                 }
@@ -572,7 +572,7 @@ namespace Loretta.CodeAnalysis.Collections
                 else
                 {
                     var segment = _segments[(_completed + _offset) / segmentLength];
-                    _current = segment.AsMemory().Slice(0, Math.Min(segmentLength, _length - _completed));
+                    _current = segment.AsMemory()[..Math.Min(segmentLength, _length - _completed)];
                     _completed += _current.Length;
                     return true;
                 }
@@ -623,7 +623,7 @@ namespace Loretta.CodeAnalysis.Collections
                     else
                     {
                         var segment = _segments[(_completed + _offset) / segmentLength];
-                        _current = segment.AsMemory().Slice(0, Math.Min(segmentLength, _length - _completed));
+                        _current = segment.AsMemory()[..Math.Min(segmentLength, _length - _completed)];
                         _completed += _current.Length;
                         return true;
                     }

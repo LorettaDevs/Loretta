@@ -160,21 +160,21 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                         return;
                     }
 
-                    InsertionSort(keys.Slice(0, partitionSize), comparer);
+                    InsertionSort(keys[..partitionSize], comparer);
                     return;
                 }
 
                 if (depthLimit == 0)
                 {
-                    HeapSort(keys.Slice(0, partitionSize), comparer);
+                    HeapSort(keys[..partitionSize], comparer);
                     return;
                 }
                 depthLimit--;
 
-                int p = PickPivotAndPartition(keys.Slice(0, partitionSize), comparer);
+                int p = PickPivotAndPartition(keys[..partitionSize], comparer);
 
                 // Note we've already partitioned around the pivot and do not have to move the pivot again.
-                IntroSort(keys.Slice(p + 1, partitionSize - (p + 1)), depthLimit, comparer);
+                IntroSort(keys[(p + 1)..partitionSize], depthLimit, comparer);
                 partitionSize = p;
             }
         }

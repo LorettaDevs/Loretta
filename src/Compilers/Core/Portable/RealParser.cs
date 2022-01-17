@@ -351,7 +351,7 @@ namespace Loretta.CodeAnalysis
                     if (int.TryParse(source.AsSpan(firstExponent, lastExponent - firstExponent), out exponentMagnitude) &&
                         exponentMagnitude <= MAX_EXP)
 #else
-                    if (int.TryParse(source.Substring(firstExponent, lastExponent - firstExponent), out exponentMagnitude) &&
+                    if (int.TryParse(source[firstExponent..lastExponent], out exponentMagnitude) &&
                         exponentMagnitude <= MAX_EXP)
 #endif
                     {
