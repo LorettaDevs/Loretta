@@ -114,7 +114,7 @@ namespace Loretta.CodeAnalysis.Text
 
             return overlapStart < overlapEnd
                 ? FromBounds(overlapStart, overlapEnd)
-                : (TextSpan?) null;
+                : null;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Loretta.CodeAnalysis.Text
 
             return intersectStart <= intersectEnd
                 ? FromBounds(intersectStart, intersectEnd)
-                : (TextSpan?) null;
+                : null;
         }
 
         /// <summary>

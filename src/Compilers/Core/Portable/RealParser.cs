@@ -598,7 +598,7 @@ namespace Loretta.CodeAnalysis
             int bottomElementIndex = Math.Max(0, topElementIndex - (64 / 8) + 1);
             exponent = baseExponent + bottomElementIndex * 8;
             mantissa = 0;
-            for (int i = (int) topElementIndex; i >= bottomElementIndex; i--)
+            for (int i = topElementIndex; i >= bottomElementIndex; i--)
             {
                 mantissa <<= 8;
                 mantissa |= integerValueAsBytes[i];

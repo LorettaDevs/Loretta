@@ -119,8 +119,8 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             _isWarningAsError = d.IsWarningAsError;
             _isSuppressed = d.IsSuppressed;
             _location = d.Location;
-            _defaultSeverityOpt = includeDefaultSeverity ? d.DefaultSeverity : (DiagnosticSeverity?) null;
-            _effectiveSeverityOpt = includeEffectiveSeverity ? d.Severity : (DiagnosticSeverity?) null;
+            _defaultSeverityOpt = includeDefaultSeverity ? d.DefaultSeverity : null;
+            _effectiveSeverityOpt = includeEffectiveSeverity ? d.Severity : null;
 
             DiagnosticWithInfo dinfo = null;
             if (d.Code == 0)

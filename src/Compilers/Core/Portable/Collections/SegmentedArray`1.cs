@@ -263,7 +263,7 @@ namespace Loretta.CodeAnalysis.Collections
             if (other is not SegmentedArray<T> o)
                 return false;
 
-            if ((object) _items == o._items)
+            if (_items == o._items)
                 return true;
 
             if (Length != o.Length)

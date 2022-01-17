@@ -39,7 +39,7 @@ namespace Loretta.CodeAnalysis.Collections
                 => GetEnumerator();
 
             void ICollection<TValue>.CopyTo(TValue[] array, int arrayIndex)
-                => ((ICollection<TValue>) _dictionary._dictionary.Values).CopyTo(array, arrayIndex);
+                => _dictionary._dictionary.Values.CopyTo(array, arrayIndex);
 
             void ICollection.CopyTo(Array array, int index)
                 => ((ICollection) _dictionary._dictionary.Values).CopyTo(array, index);

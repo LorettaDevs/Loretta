@@ -72,7 +72,7 @@ namespace Loretta.CodeAnalysis
         {
             int result = Length;
             foreach (char c in GetChars())
-                result = Hash.Combine((int) c, result);
+                result = Hash.Combine(c, result);
 
             return result;
         }

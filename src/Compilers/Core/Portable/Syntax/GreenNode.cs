@@ -345,7 +345,7 @@ namespace Loretta.CodeAnalysis
 
         internal virtual void WriteTo(ObjectWriter writer)
         {
-            var kindBits = (ushort) _kind;
+            var kindBits = _kind;
             var hasDiagnostics = GetDiagnostics().Length > 0;
             var hasAnnotations = GetAnnotations().Length > 0;
 
