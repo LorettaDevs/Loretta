@@ -566,13 +566,13 @@ namespace Loretta.CodeAnalysis
             var index = nodesWithSeps.IndexOf(separatorToken);
             if (index < 0)
             {
-                throw new ArgumentException("separatorToken");
+                throw new ArgumentException("Separator was not found in this list.", nameof(separatorToken));
             }
 
             if (newSeparator.RawKind != nodesWithSeps[index].RawKind ||
                 newSeparator.Language != nodesWithSeps[index].Language)
             {
-                throw new ArgumentException("newSeparator");
+                throw new ArgumentException($"'{nameof(newSeparator)}' must have the same kind and language as the one being replaced.", nameof(newSeparator));
             }
 
             return new SeparatedSyntaxList<TNode>(nodesWithSeps.Replace(separatorToken, newSeparator));

@@ -274,7 +274,7 @@ namespace Loretta.CodeAnalysis
             }
             else
             {
-                throw new ArgumentException(nameof(nodeInList));
+                throw new ArgumentException($"'{nameof(nodeInList)}' was not found in the list.", nameof(nodeInList));
             }
         }
 
