@@ -7,5 +7,5 @@ using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 {
-    record SourceFile(string FileName, SourceText Text);
+    internal record SourceFile(string FileName, SourceText Text);
 }

@@ -1,6 +1,6 @@
 ﻿namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 {
-    record FileStatistics(
+    internal record FileStatistics(
         string FileName,
         ParseStatistics ParseStatistics,
         TokenStatistics? TokenStatistics,

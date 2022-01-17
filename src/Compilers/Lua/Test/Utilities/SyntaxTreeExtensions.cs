@@ -63,8 +63,8 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
         private class LuaSyntaxPrinter : LuaSyntaxWalker
         {
-            readonly PooledStringBuilder _builder;
-            int _indent = 0;
+            private readonly PooledStringBuilder _builder;
+            private int _indent = 0;
 
             internal LuaSyntaxPrinter()
             {

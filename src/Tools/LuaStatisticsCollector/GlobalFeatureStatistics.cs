@@ -1,6 +1,6 @@
 ﻿namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 {
-    record GlobalFeatureStatistics(
+    internal record GlobalFeatureStatistics(
         int HasBinaryNumbers,
         int HasCComments,
         int HasCompoundAssignments,

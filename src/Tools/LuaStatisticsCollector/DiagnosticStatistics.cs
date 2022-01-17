@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 {
-    record DiagnosticStatistics(
+    internal record DiagnosticStatistics(
         int ErrorCount,
         int WarningCount,
         int InformationCount,
@@ -11,7 +11,7 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
     {
         public class Builder
         {
-            int _errorCount, _warningCount, _informationCount;
+            private int _errorCount, _warningCount, _informationCount;
 
             public void Add(Diagnostic diagnostic)
             {

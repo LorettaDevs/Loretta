@@ -2,7 +2,7 @@
 
 namespace Loretta.UnusedStuffFinder
 {
-    class SymbolEx
+    internal class SymbolEx
     {
         public SymbolEx(ISymbol symbol)
         {
