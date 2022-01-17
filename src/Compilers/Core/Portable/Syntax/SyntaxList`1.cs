@@ -124,13 +124,13 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                if (this.Count == 0)
+                if (Count == 0)
                 {
                     return default(TextSpan);
                 }
                 else
                 {
-                    return TextSpan.FromBounds(this[0].FullSpan.Start, this[this.Count - 1].FullSpan.End);
+                    return TextSpan.FromBounds(this[0].FullSpan.Start, this[Count - 1].FullSpan.End);
                 }
             }
         }
@@ -142,13 +142,13 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                if (this.Count == 0)
+                if (Count == 0)
                 {
                     return default(TextSpan);
                 }
                 else
                 {
-                    return TextSpan.FromBounds(this[0].Span.Start, this[this.Count - 1].Span.End);
+                    return TextSpan.FromBounds(this[0].Span.Start, this[Count - 1].Span.End);
                 }
             }
         }
@@ -185,7 +185,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="node">The node to add.</param>
         public SyntaxList<TNode> Add(TNode node)
         {
-            return this.Insert(this.Count, node);
+            return Insert(Count, node);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="nodes">The nodes to add.</param>
         public SyntaxList<TNode> AddRange(IEnumerable<TNode> nodes)
         {
-            return this.InsertRange(this.Count, nodes);
+            return InsertRange(Count, nodes);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="nodes">The nodes to insert.</param>
         public SyntaxList<TNode> InsertRange(int index, IEnumerable<TNode> nodes)
         {
-            if (index < 0 || index > this.Count)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -248,12 +248,12 @@ namespace Loretta.CodeAnalysis
         /// <param name="index">The index of the element to remove.</param>
         public SyntaxList<TNode> RemoveAt(int index)
         {
-            if (index < 0 || index > this.Count)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            return this.Remove(this[index]);
+            return Remove(this[index]);
         }
 
         /// <summary>
@@ -292,8 +292,8 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(newNodes));
             }
 
-            var index = this.IndexOf(nodeInList);
-            if (index >= 0 && index < this.Count)
+            var index = IndexOf(nodeInList);
+            if (index >= 0 && index < Count)
             {
                 var list = this.ToList();
                 list.RemoveAt(index);
@@ -330,7 +330,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public TNode? FirstOrDefault()
         {
-            if (this.Any())
+            if (Any())
             {
                 return this[0];
             }
@@ -345,7 +345,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public TNode Last()
         {
-            return this[this.Count - 1];
+            return this[Count - 1];
         }
 
         /// <summary>
@@ -353,9 +353,9 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public TNode? LastOrDefault()
         {
-            if (this.Any())
+            if (Any())
             {
-                return this[this.Count - 1];
+                return this[Count - 1];
             }
             else
             {
@@ -403,7 +403,7 @@ namespace Loretta.CodeAnalysis
 
         IEnumerator<TNode> IEnumerable<TNode>.GetEnumerator()
         {
-            if (this.Any())
+            if (Any())
             {
                 return new EnumeratorImpl(this);
             }
@@ -413,7 +413,7 @@ namespace Loretta.CodeAnalysis
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            if (this.Any())
+            if (Any())
             {
                 return new EnumeratorImpl(this);
             }
@@ -544,7 +544,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>-1 if not found.</returns>
         public int LastIndexOf(TNode node)
         {
-            for (int i = this.Count - 1; i >= 0; i--)
+            for (int i = Count - 1; i >= 0; i--)
             {
                 if (object.Equals(this[i], node))
                 {
@@ -562,7 +562,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public int LastIndexOf(Func<TNode, bool> predicate)
         {
-            for (int i = this.Count - 1; i >= 0; i--)
+            for (int i = Count - 1; i >= 0; i--)
             {
                 if (predicate(this[i]))
                 {

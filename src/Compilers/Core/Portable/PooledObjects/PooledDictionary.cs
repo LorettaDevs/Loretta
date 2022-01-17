@@ -23,16 +23,16 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         public ImmutableDictionary<K, V> ToImmutableDictionaryAndFree()
         {
-            var result = this.ToImmutableDictionary(this.Comparer);
-            this.Free();
+            var result = this.ToImmutableDictionary(Comparer);
+            Free();
             return result;
         }
 
-        public ImmutableDictionary<K, V> ToImmutableDictionary() => this.ToImmutableDictionary(this.Comparer);
+        public ImmutableDictionary<K, V> ToImmutableDictionary() => this.ToImmutableDictionary(Comparer);
 
         public void Free()
         {
-            this.Clear();
+            Clear();
             _pool?.Free(this);
         }
 

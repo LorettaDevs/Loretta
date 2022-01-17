@@ -112,7 +112,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         public int End
         {
-            get { return _endIncludingBreaks - this.LineBreakLength; }
+            get { return _endIncludingBreaks - LineBreakLength; }
         }
 
         private int LineBreakLength
@@ -144,7 +144,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         public TextSpan Span
         {
-            get { return TextSpan.FromBounds(this.Start, this.End); }
+            get { return TextSpan.FromBounds(Start, End); }
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         public TextSpan SpanIncludingLineBreak
         {
-            get { return TextSpan.FromBounds(this.Start, this.EndIncludingLineBreak); }
+            get { return TextSpan.FromBounds(Start, EndIncludingLineBreak); }
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Loretta.CodeAnalysis.Text
             }
             else
             {
-                return _text.ToString(this.Span);
+                return _text.ToString(Span);
             }
         }
 

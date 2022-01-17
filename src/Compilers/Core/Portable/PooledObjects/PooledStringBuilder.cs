@@ -28,12 +28,12 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         public int Length
         {
-            get { return this.Builder.Length; }
+            get { return Builder.Length; }
         }
 
         public void Free()
         {
-            var builder = this.Builder;
+            var builder = Builder;
 
             // do not store builders that are too large.
             if (builder.Capacity <= 1024)
@@ -50,21 +50,21 @@ namespace Loretta.CodeAnalysis.PooledObjects
         [System.Obsolete("Consider calling ToStringAndFree instead.")]
         public new string ToString()
         {
-            return this.Builder.ToString();
+            return Builder.ToString();
         }
 
         public string ToStringAndFree()
         {
-            var result = this.Builder.ToString();
-            this.Free();
+            var result = Builder.ToString();
+            Free();
 
             return result;
         }
 
         public string ToStringAndFree(int startIndex, int length)
         {
-            var result = this.Builder.ToString(startIndex, length);
-            this.Free();
+            var result = Builder.ToString(startIndex, length);
+            Free();
 
             return result;
         }

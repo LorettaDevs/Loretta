@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>The original referenced syntax node.</returns>
         public virtual Task<SyntaxNode> GetSyntaxAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(this.GetSyntax(cancellationToken));
+            return Task.FromResult(GetSyntax(cancellationToken));
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Loretta.CodeAnalysis
         /// </remarks>
         internal Location GetLocation()
         {
-            return this.SyntaxTree.GetLocation(this.Span);
+            return SyntaxTree.GetLocation(Span);
         }
     }
 }

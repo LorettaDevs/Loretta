@@ -19,7 +19,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
             internal override SyntaxNode? GetNodeSlot(int index)
             {
-                return this.GetRedElement(ref _children[index].Value, index);
+                return GetRedElement(ref _children[index].Value, index);
             }
 
             internal override SyntaxNode? GetCachedSlot(int index)

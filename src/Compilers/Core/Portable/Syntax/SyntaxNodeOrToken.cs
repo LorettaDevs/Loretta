@@ -158,7 +158,7 @@ namespace Loretta.CodeAnalysis
         {
             if (_token != null)
             {
-                return new SyntaxToken(_nodeOrParent, _token, this.Position, _tokenIndex);
+                return new SyntaxToken(_nodeOrParent, _token, Position, _tokenIndex);
             }
 
             return default(SyntaxToken);
@@ -228,7 +228,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (_token != null)
                 {
-                    return this.AsToken().Span;
+                    return AsToken().Span;
                 }
 
                 if (_nodeOrParent != null)
@@ -348,7 +348,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether the underlying node or token has any leading trivia.
         /// </summary>
-        public bool HasLeadingTrivia => this.GetLeadingTrivia().Count > 0;
+        public bool HasLeadingTrivia => GetLeadingTrivia().Count > 0;
 
         /// <summary>
         /// The list of trivia that appear before the underlying node or token in the source code and are attached to a
@@ -358,7 +358,7 @@ namespace Loretta.CodeAnalysis
         {
             if (_token != null)
             {
-                return this.AsToken().LeadingTrivia;
+                return AsToken().LeadingTrivia;
             }
 
             if (_nodeOrParent != null)
@@ -372,7 +372,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether the underlying node or token has any trailing trivia.
         /// </summary>
-        public bool HasTrailingTrivia => this.GetTrailingTrivia().Count > 0;
+        public bool HasTrailingTrivia => GetTrailingTrivia().Count > 0;
 
         /// <summary>
         /// The list of trivia that appear after the underlying node or token in the source code and are attached to a
@@ -382,7 +382,7 @@ namespace Loretta.CodeAnalysis
         {
             if (_token != null)
             {
-                return this.AsToken().TrailingTrivia;
+                return AsToken().TrailingTrivia;
             }
 
             if (_nodeOrParent != null)
@@ -479,7 +479,7 @@ namespace Loretta.CodeAnalysis
         {
             if (_token != null)
             {
-                return this.AsToken().GetDiagnostics();
+                return AsToken().GetDiagnostics();
             }
 
             if (_nodeOrParent != null)
@@ -643,7 +643,7 @@ namespace Loretta.CodeAnalysis
 
             if (_token != null)
             {
-                return this.AsToken().WithAdditionalAnnotations(annotations);
+                return AsToken().WithAdditionalAnnotations(annotations);
             }
 
             if (_nodeOrParent != null)
@@ -674,7 +674,7 @@ namespace Loretta.CodeAnalysis
 
             if (_token != null)
             {
-                return this.AsToken().WithoutAnnotations(annotations);
+                return AsToken().WithoutAnnotations(annotations);
             }
 
             if (_nodeOrParent != null)
@@ -695,9 +695,9 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotationKind));
             }
 
-            if (this.HasAnnotations(annotationKind))
+            if (HasAnnotations(annotationKind))
             {
-                return this.WithoutAnnotations(this.GetAnnotations(annotationKind));
+                return WithoutAnnotations(GetAnnotations(annotationKind));
             }
 
             return this;
@@ -759,12 +759,12 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public bool IsEquivalentTo(SyntaxNodeOrToken other)
         {
-            if (this.IsNode != other.IsNode)
+            if (IsNode != other.IsNode)
             {
                 return false;
             }
 
-            var thisUnderlying = this.UnderlyingNode;
+            var thisUnderlying = UnderlyingNode;
             var otherUnderlying = other.UnderlyingNode;
 
             return (thisUnderlying == otherUnderlying) || (thisUnderlying != null && thisUnderlying.IsEquivalentTo(otherUnderlying));
@@ -774,7 +774,7 @@ namespace Loretta.CodeAnalysis
         /// See <see cref="SyntaxNode.IsIncrementallyIdenticalTo"/> and <see cref="SyntaxToken.IsIncrementallyIdenticalTo"/>.
         /// </summary>
         public bool IsIncrementallyIdenticalTo(SyntaxNodeOrToken other)
-            => this.UnderlyingNode != null && this.UnderlyingNode == other.UnderlyingNode;
+            => UnderlyingNode != null && UnderlyingNode == other.UnderlyingNode;
 
         /// <summary>
         /// Returns a new <see cref="SyntaxNodeOrToken"/> that wraps the supplied token.
@@ -921,7 +921,7 @@ namespace Loretta.CodeAnalysis
 
         internal int FullWidth => _token?.FullWidth ?? _nodeOrParent?.FullWidth ?? 0;
 
-        internal int EndPosition => _position + this.FullWidth;
+        internal int EndPosition => _position + FullWidth;
 
         /// <summary>
         /// Returns the index of the first child of the provided node that contains the provided position.
@@ -988,7 +988,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public SyntaxNodeOrToken GetNextSibling()
         {
-            var parent = this.Parent;
+            var parent = Parent;
             if (parent == null)
             {
                 return default(SyntaxNodeOrToken);
@@ -1007,12 +1007,12 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public SyntaxNodeOrToken GetPreviousSibling()
         {
-            if (this.Parent != null)
+            if (Parent != null)
             {
                 // walk reverse in parent's child list until we find ourself 
                 // and then return the next child
                 var returnNext = false;
-                foreach (var child in this.Parent.ChildNodesAndTokens().Reverse())
+                foreach (var child in Parent.ChildNodesAndTokens().Reverse())
                 {
                     if (returnNext)
                     {

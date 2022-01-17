@@ -63,7 +63,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         internal GreenNode? ItemUntyped(int index)
         {
             LorettaDebug.Assert(_node is not null);
-            var node = this._node;
+            var node = _node;
             if (node.IsList)
             {
                 return node.GetSlot(index);
@@ -95,8 +95,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                var arr = new TNode[this.Count];
-                for (int i = 0; i < this.Count; i++)
+                var arr = new TNode[Count];
+                for (int i = 0; i < Count; i++)
                 {
                     arr[i] = GetRequiredItem(i);
                 }
@@ -109,7 +109,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             get
             {
                 LorettaDebug.Assert(_node is not null);
-                var node = this._node;
+                var node = _node;
                 if (node.IsList)
                 {
                     return (TNode?) node.GetSlot(node.SlotCount - 1);

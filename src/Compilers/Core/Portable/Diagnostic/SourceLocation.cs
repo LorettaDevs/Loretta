@@ -102,7 +102,7 @@ namespace Loretta.CodeAnalysis
 
         public override bool Equals(object? obj)
         {
-            return this.Equals(obj as SourceLocation);
+            return Equals(obj as SourceLocation);
         }
 
         public override int GetHashCode()

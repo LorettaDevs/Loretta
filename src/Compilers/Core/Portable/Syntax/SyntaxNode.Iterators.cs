@@ -388,7 +388,7 @@ namespace Loretta.CodeAnalysis
 
         private IEnumerable<SyntaxNode> DescendantNodesOnly(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren, bool includeSelf)
         {
-            if (includeSelf && IsInSpan(in span, this.FullSpan))
+            if (includeSelf && IsInSpan(in span, FullSpan))
             {
                 yield return this;
             }
@@ -413,7 +413,7 @@ namespace Loretta.CodeAnalysis
 
         private IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokensOnly(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren, bool includeSelf)
         {
-            if (includeSelf && IsInSpan(in span, this.FullSpan))
+            if (includeSelf && IsInSpan(in span, FullSpan))
             {
                 yield return this;
             }
@@ -442,7 +442,7 @@ namespace Loretta.CodeAnalysis
 
         private IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokensIntoTrivia(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren, bool includeSelf)
         {
-            if (includeSelf && IsInSpan(in span, this.FullSpan))
+            if (includeSelf && IsInSpan(in span, FullSpan))
             {
                 yield return this;
             }

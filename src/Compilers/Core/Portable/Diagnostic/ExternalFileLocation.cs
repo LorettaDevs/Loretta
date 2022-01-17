@@ -46,7 +46,7 @@ namespace Loretta.CodeAnalysis
 
         public override bool Equals(object? obj)
         {
-            return this.Equals(obj as ExternalFileLocation);
+            return Equals(obj as ExternalFileLocation);
         }
 
         public bool Equals(ExternalFileLocation? obj)

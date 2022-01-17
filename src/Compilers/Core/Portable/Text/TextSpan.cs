@@ -54,7 +54,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Determines whether or not the span is empty.
         /// </summary>
-        public bool IsEmpty => this.Length == 0;
+        public bool IsEmpty => Length == 0;
 
         /// <summary>
         /// Determines whether the position lies within the span.
@@ -82,7 +82,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </returns>
         public bool Contains(TextSpan span)
         {
-            return span.Start >= Start && span.End <= this.End;
+            return span.Start >= Start && span.End <= End;
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Loretta.CodeAnalysis.Text
         public bool OverlapsWith(TextSpan span)
         {
             int overlapStart = Math.Max(Start, span.Start);
-            int overlapEnd = Math.Min(this.End, span.End);
+            int overlapEnd = Math.Min(End, span.End);
 
             return overlapStart < overlapEnd;
         }
@@ -116,7 +116,7 @@ namespace Loretta.CodeAnalysis.Text
         public TextSpan? Overlap(TextSpan span)
         {
             int overlapStart = Math.Max(Start, span.Start);
-            int overlapEnd = Math.Min(this.End, span.End);
+            int overlapEnd = Math.Min(End, span.End);
 
             return overlapStart < overlapEnd
                 ? TextSpan.FromBounds(overlapStart, overlapEnd)
@@ -136,7 +136,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </returns>
         public bool IntersectsWith(TextSpan span)
         {
-            return span.Start <= this.End && span.End >= Start;
+            return span.Start <= End && span.End >= Start;
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Loretta.CodeAnalysis.Text
         public TextSpan? Intersection(TextSpan span)
         {
             int intersectStart = Math.Max(Start, span.Start);
-            int intersectEnd = Math.Min(this.End, span.End);
+            int intersectEnd = Math.Min(End, span.End);
 
             return intersectStart <= intersectEnd
                 ? TextSpan.FromBounds(intersectStart, intersectEnd)

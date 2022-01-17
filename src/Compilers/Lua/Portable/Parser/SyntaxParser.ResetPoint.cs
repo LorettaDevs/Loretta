@@ -15,9 +15,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             internal ResetPoint(int resetCount, int position, GreenNode prevTokenTrailingTrivia)
             {
-                this.ResetCount = resetCount;
-                this.Position = position;
-                this.PrevTokenTrailingTrivia = prevTokenTrailingTrivia;
+                ResetCount = resetCount;
+                Position = position;
+                PrevTokenTrailingTrivia = prevTokenTrailingTrivia;
             }
         }
     }

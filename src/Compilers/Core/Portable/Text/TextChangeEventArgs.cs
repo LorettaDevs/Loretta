@@ -27,9 +27,9 @@ namespace Loretta.CodeAnalysis.Text
                 throw new ArgumentNullException(nameof(changes));
             }
 
-            this.OldText = oldText;
-            this.NewText = newText;
-            this.Changes = changes.ToImmutableArray();
+            OldText = oldText;
+            NewText = newText;
+            Changes = changes.ToImmutableArray();
         }
 
         /// <summary>

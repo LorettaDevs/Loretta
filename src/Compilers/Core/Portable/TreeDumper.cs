@@ -205,9 +205,9 @@ namespace Loretta.CodeAnalysis
     {
         public TreeDumperNode(string text, object? value, IEnumerable<TreeDumperNode>? children)
         {
-            this.Text = text;
-            this.Value = value;
-            this.Children = children ?? SpecializedCollections.EmptyEnumerable<TreeDumperNode>();
+            Text = text;
+            Value = value;
+            Children = children ?? SpecializedCollections.EmptyEnumerable<TreeDumperNode>();
         }
 
         public TreeDumperNode(string text) : this(text, null, null) { }

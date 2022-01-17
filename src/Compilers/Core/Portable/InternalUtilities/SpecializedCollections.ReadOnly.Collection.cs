@@ -30,19 +30,19 @@ namespace Loretta.Utilities
 
                 public bool Contains(T item)
                 {
-                    return this.Underlying.Contains(item);
+                    return Underlying.Contains(item);
                 }
 
                 public void CopyTo(T[] array, int arrayIndex)
                 {
-                    this.Underlying.CopyTo(array, arrayIndex);
+                    Underlying.CopyTo(array, arrayIndex);
                 }
 
                 public int Count
                 {
                     get
                     {
-                        return this.Underlying.Count;
+                        return Underlying.Count;
                     }
                 }
 

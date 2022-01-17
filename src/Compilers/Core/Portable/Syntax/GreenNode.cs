@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis
     {
         private string GetDebuggerDisplay()
         {
-            return this.GetType().Name + " " + this.KindText + " " + this.ToString();
+            return GetType().Name + " " + KindText + " " + ToString();
         }
 
         internal const int ListKind = 1;
@@ -55,7 +55,7 @@ namespace Loretta.CodeAnalysis
             _fullWidth = fullWidth;
             if (diagnostics?.Length > 0)
             {
-                this.flags |= NodeFlags.ContainsDiagnostics;
+                flags |= NodeFlags.ContainsDiagnostics;
                 s_diagnosticsTable.Add(this, diagnostics);
             }
         }
@@ -65,7 +65,7 @@ namespace Loretta.CodeAnalysis
             _kind = kind;
             if (diagnostics?.Length > 0)
             {
-                this.flags |= NodeFlags.ContainsDiagnostics;
+                flags |= NodeFlags.ContainsDiagnostics;
                 s_diagnosticsTable.Add(this, diagnostics);
             }
         }
@@ -80,7 +80,7 @@ namespace Loretta.CodeAnalysis
                     if (annotation == null) throw new ArgumentException(paramName: nameof(annotations), message: "" /*CSharpResources.ElementsCannotBeNull*/);
                 }
 
-                this.flags |= NodeFlags.ContainsAnnotations;
+                flags |= NodeFlags.ContainsAnnotations;
                 s_annotationsTable.Add(this, annotations);
             }
         }
@@ -95,7 +95,7 @@ namespace Loretta.CodeAnalysis
                     if (annotation == null) throw new ArgumentException(paramName: nameof(annotations), message: "" /*CSharpResources.ElementsCannotBeNull*/);
                 }
 
-                this.flags |= NodeFlags.ContainsAnnotations;
+                flags |= NodeFlags.ContainsAnnotations;
                 s_annotationsTable.Add(this, annotations);
             }
         }
@@ -103,7 +103,7 @@ namespace Loretta.CodeAnalysis
         protected void AdjustFlagsAndWidth(GreenNode node)
         {
             LorettaDebug.Assert(node != null, "PERF: caller must ensure that node!=null, we do not want to re-check that here.");
-            this.flags |= node.flags & NodeFlags.InheritMask;
+            flags |= node.flags & NodeFlags.InheritMask;
             _fullWidth += node._fullWidth;
         }
 
@@ -174,7 +174,7 @@ namespace Loretta.CodeAnalysis
             int offset = 0;
             for (int i = 0; i < index; i++)
             {
-                var child = this.GetSlot(i);
+                var child = GetSlot(i);
                 if (child != null)
                 {
                     offset += child.FullWidth;
@@ -197,7 +197,7 @@ namespace Loretta.CodeAnalysis
             yield return this;
 
             var stack = new Stack<Syntax.InternalSyntax.ChildSyntaxList.Enumerator>(24);
-            stack.Push(this.ChildNodesAndTokens().GetEnumerator());
+            stack.Push(ChildNodesAndTokens().GetEnumerator());
 
             while (stack.Count > 0)
             {
@@ -277,7 +277,7 @@ namespace Loretta.CodeAnalysis
 
         internal NodeFlags Flags
         {
-            get { return this.flags; }
+            get { return flags; }
         }
 
         internal void SetFlags(NodeFlags flags)
@@ -295,7 +295,7 @@ namespace Loretta.CodeAnalysis
             get
             {
                 // flag has reversed meaning hence "=="
-                return (this.flags & NodeFlags.IsNotMissing) == 0;
+                return (flags & NodeFlags.IsNotMissing) == 0;
             }
         }
 
@@ -303,7 +303,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return (this.flags & NodeFlags.FactoryContextIsInAsync) != 0;
+                return (flags & NodeFlags.FactoryContextIsInAsync) != 0;
             }
         }
 
@@ -311,7 +311,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return (this.flags & NodeFlags.FactoryContextIsInQuery) != 0;
+                return (flags & NodeFlags.FactoryContextIsInQuery) != 0;
             }
         }
 
@@ -319,7 +319,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return (this.flags & NodeFlags.FactoryContextIsInIterator) != 0;
+                return (flags & NodeFlags.FactoryContextIsInIterator) != 0;
             }
         }
 
@@ -327,7 +327,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return (this.flags & NodeFlags.ContainsSkippedText) != 0;
+                return (flags & NodeFlags.ContainsSkippedText) != 0;
             }
         }
 
@@ -335,7 +335,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return (this.flags & NodeFlags.ContainsStructuredTrivia) != 0;
+                return (flags & NodeFlags.ContainsStructuredTrivia) != 0;
             }
         }
 
@@ -343,7 +343,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return (this.flags & NodeFlags.ContainsDirectives) != 0;
+                return (flags & NodeFlags.ContainsDirectives) != 0;
             }
         }
 
@@ -351,7 +351,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return (this.flags & NodeFlags.ContainsDiagnostics) != 0;
+                return (flags & NodeFlags.ContainsDiagnostics) != 0;
             }
         }
 
@@ -359,7 +359,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return (this.flags & NodeFlags.ContainsAnnotations) != 0;
+                return (flags & NodeFlags.ContainsAnnotations) != 0;
             }
         }
         #endregion
@@ -382,21 +382,21 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return _fullWidth - this.GetLeadingTriviaWidth() - this.GetTrailingTriviaWidth();
+                return _fullWidth - GetLeadingTriviaWidth() - GetTrailingTriviaWidth();
             }
         }
 
         public virtual int GetLeadingTriviaWidth()
         {
-            return this.FullWidth != 0 ?
-                this.GetFirstTerminal()!.GetLeadingTriviaWidth() :
+            return FullWidth != 0 ?
+                GetFirstTerminal()!.GetLeadingTriviaWidth() :
                 0;
         }
 
         public virtual int GetTrailingTriviaWidth()
         {
-            return this.FullWidth != 0 ?
-                this.GetLastTerminal()!.GetTrailingTriviaWidth() :
+            return FullWidth != 0 ?
+                GetLastTerminal()!.GetTrailingTriviaWidth() :
                 0;
         }
 
@@ -404,7 +404,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.GetLeadingTriviaWidth() != 0;
+                return GetLeadingTriviaWidth() != 0;
             }
         }
 
@@ -412,7 +412,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.GetTrailingTriviaWidth() != 0;
+                return GetTrailingTriviaWidth() != 0;
             }
         }
         #endregion
@@ -431,14 +431,14 @@ namespace Loretta.CodeAnalysis
                 var diagnostics = (DiagnosticInfo[]) reader.ReadValue();
                 if (diagnostics != null && diagnostics.Length > 0)
                 {
-                    this.flags |= NodeFlags.ContainsDiagnostics;
+                    flags |= NodeFlags.ContainsDiagnostics;
                     s_diagnosticsTable.Add(this, diagnostics);
                 }
 
                 var annotations = (SyntaxAnnotation[]) reader.ReadValue();
                 if (annotations != null && annotations.Length > 0)
                 {
-                    this.flags |= NodeFlags.ContainsAnnotations;
+                    flags |= NodeFlags.ContainsAnnotations;
                     s_annotationsTable.Add(this, annotations);
                 }
             }
@@ -446,25 +446,25 @@ namespace Loretta.CodeAnalysis
 
         bool IObjectWritable.ShouldReuseInSerialization => ShouldReuseInSerialization;
 
-        internal virtual bool ShouldReuseInSerialization => this.IsCacheable;
+        internal virtual bool ShouldReuseInSerialization => IsCacheable;
 
         void IObjectWritable.WriteTo(ObjectWriter writer)
         {
-            this.WriteTo(writer);
+            WriteTo(writer);
         }
 
         internal virtual void WriteTo(ObjectWriter writer)
         {
             var kindBits = (UInt16) _kind;
-            var hasDiagnostics = this.GetDiagnostics().Length > 0;
-            var hasAnnotations = this.GetAnnotations().Length > 0;
+            var hasDiagnostics = GetDiagnostics().Length > 0;
+            var hasAnnotations = GetAnnotations().Length > 0;
 
             if (hasDiagnostics || hasAnnotations)
             {
                 kindBits |= ExtendedSerializationInfoMask;
                 writer.WriteUInt16(kindBits);
-                writer.WriteValue(hasDiagnostics ? this.GetDiagnostics() : null);
-                writer.WriteValue(hasAnnotations ? this.GetAnnotations() : null);
+                writer.WriteValue(hasDiagnostics ? GetDiagnostics() : null);
+                writer.WriteValue(hasAnnotations ? GetAnnotations() : null);
             }
             else
             {
@@ -477,7 +477,7 @@ namespace Loretta.CodeAnalysis
         #region Annotations 
         public bool HasAnnotations(string annotationKind)
         {
-            var annotations = this.GetAnnotations();
+            var annotations = GetAnnotations();
             if (annotations == s_noAnnotations)
             {
                 return false;
@@ -496,7 +496,7 @@ namespace Loretta.CodeAnalysis
 
         public bool HasAnnotations(IEnumerable<string> annotationKinds)
         {
-            var annotations = this.GetAnnotations();
+            var annotations = GetAnnotations();
             if (annotations == s_noAnnotations)
             {
                 return false;
@@ -515,7 +515,7 @@ namespace Loretta.CodeAnalysis
 
         public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation)
         {
-            var annotations = this.GetAnnotations();
+            var annotations = GetAnnotations();
             if (annotations == s_noAnnotations)
             {
                 return false;
@@ -539,7 +539,7 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotationKind));
             }
 
-            var annotations = this.GetAnnotations();
+            var annotations = GetAnnotations();
 
             if (annotations == s_noAnnotations)
             {
@@ -567,7 +567,7 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotationKinds));
             }
 
-            var annotations = this.GetAnnotations();
+            var annotations = GetAnnotations();
 
             if (annotations == s_noAnnotations)
             {
@@ -590,7 +590,7 @@ namespace Loretta.CodeAnalysis
 
         public SyntaxAnnotation[] GetAnnotations()
         {
-            if (this.ContainsAnnotations)
+            if (ContainsAnnotations)
             {
                 SyntaxAnnotation[]? annotations;
                 if (s_annotationsTable.TryGetValue(this, out annotations))
@@ -610,7 +610,7 @@ namespace Loretta.CodeAnalysis
         #region Diagnostics
         internal DiagnosticInfo[] GetDiagnostics()
         {
-            if (this.ContainsDiagnostics)
+            if (ContainsDiagnostics)
             {
                 DiagnosticInfo[]? diags;
                 if (s_diagnosticsTable.TryGetValue(this, out diags))
@@ -631,7 +631,7 @@ namespace Loretta.CodeAnalysis
         {
             var sb = PooledStringBuilder.GetInstance();
             var writer = new System.IO.StringWriter(sb.Builder, System.Globalization.CultureInfo.InvariantCulture);
-            this.WriteTo(writer, leading: true, trailing: true);
+            WriteTo(writer, leading: true, trailing: true);
             return sb.ToStringAndFree();
         }
 
@@ -639,13 +639,13 @@ namespace Loretta.CodeAnalysis
         {
             var sb = PooledStringBuilder.GetInstance();
             var writer = new System.IO.StringWriter(sb.Builder, System.Globalization.CultureInfo.InvariantCulture);
-            this.WriteTo(writer, leading: false, trailing: false);
+            WriteTo(writer, leading: false, trailing: false);
             return sb.ToStringAndFree();
         }
 
         public void WriteTo(System.IO.TextWriter writer)
         {
-            this.WriteTo(writer, leading: true, trailing: true);
+            WriteTo(writer, leading: true, trailing: true);
         }
 
         protected internal void WriteTo(TextWriter writer, bool leading, bool trailing)
@@ -746,7 +746,7 @@ namespace Loretta.CodeAnalysis
 
         #region Tokens 
 
-        public virtual int RawContextualKind { get { return this.RawKind; } }
+        public virtual int RawContextualKind { get { return RawKind; } }
         public virtual object? GetValue() { return null; }
         public virtual string GetValueText() { return string.Empty; }
         public virtual GreenNode? GetLeadingTriviaCore() { return null; }
@@ -978,17 +978,17 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return ((this.flags & NodeFlags.InheritMask) == NodeFlags.IsNotMissing) &&
-                    this.SlotCount <= GreenNode.MaxCachedChildNum;
+                return ((flags & NodeFlags.InheritMask) == NodeFlags.IsNotMissing) &&
+                    SlotCount <= GreenNode.MaxCachedChildNum;
             }
         }
 
         internal int GetCacheHash()
         {
-            LorettaDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(IsCacheable);
 
-            int code = (int) this.flags ^ this.RawKind;
-            int cnt = this.SlotCount;
+            int code = (int) flags ^ RawKind;
+            int cnt = SlotCount;
             for (int i = 0; i < cnt; i++)
             {
                 var child = GetSlot(i);
@@ -1003,32 +1003,32 @@ namespace Loretta.CodeAnalysis
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1)
         {
-            LorettaDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(IsCacheable);
 
-            return this.RawKind == kind &&
+            return RawKind == kind &&
                 this.flags == flags &&
-                this.GetSlot(0) == child1;
+                GetSlot(0) == child1;
         }
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1, GreenNode? child2)
         {
-            LorettaDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(IsCacheable);
 
-            return this.RawKind == kind &&
+            return RawKind == kind &&
                 this.flags == flags &&
-                this.GetSlot(0) == child1 &&
-                this.GetSlot(1) == child2;
+                GetSlot(0) == child1 &&
+                GetSlot(1) == child2;
         }
 
         internal bool IsCacheEquivalent(int kind, NodeFlags flags, GreenNode? child1, GreenNode? child2, GreenNode? child3)
         {
-            LorettaDebug.Assert(this.IsCacheable);
+            LorettaDebug.Assert(IsCacheable);
 
-            return this.RawKind == kind &&
+            return RawKind == kind &&
                 this.flags == flags &&
-                this.GetSlot(0) == child1 &&
-                this.GetSlot(1) == child2 &&
-                this.GetSlot(2) == child3;
+                GetSlot(0) == child1 &&
+                GetSlot(1) == child2 &&
+                GetSlot(2) == child3;
         }
         #endregion //Caching
 

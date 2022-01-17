@@ -182,10 +182,10 @@ namespace Loretta.CodeAnalysis.PooledObjects
         }
 
         public int FindIndex(Predicate<T> match)
-            => FindIndex(0, this.Count, match);
+            => FindIndex(0, Count, match);
 
         public int FindIndex(int startIndex, Predicate<T> match)
-            => FindIndex(startIndex, this.Count - startIndex, match);
+            => FindIndex(startIndex, Count - startIndex, match);
 
         public int FindIndex(int startIndex, int count, Predicate<T> match)
         {
@@ -274,7 +274,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
                 return default;
             }
 
-            return this.ToImmutable();
+            return ToImmutable();
         }
 
         /// <summary>
@@ -318,14 +318,14 @@ namespace Loretta.CodeAnalysis.PooledObjects
                 result = ToImmutable();
             }
 
-            this.Free();
+            Free();
             return result;
         }
 
         public T[] ToArrayAndFree()
         {
-            var result = this.ToArray();
-            this.Free();
+            var result = ToArray();
+            Free();
             return result;
         }
 
@@ -349,9 +349,9 @@ namespace Loretta.CodeAnalysis.PooledObjects
                 // Overall perf does not seem to be very sensitive to this number, so I picked 128 as a limit.
                 if (_builder.Capacity < 128)
                 {
-                    if (this.Count != 0)
+                    if (Count != 0)
                     {
-                        this.Clear();
+                        Clear();
                     }
 
                     pool.Free(this);
@@ -426,7 +426,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
         internal Dictionary<K, ImmutableArray<T>> ToDictionary<K>(Func<T, K> keySelector, IEqualityComparer<K>? comparer = null)
             where K : notnull
         {
-            if (this.Count == 1)
+            if (Count == 1)
             {
                 var dictionary1 = new Dictionary<K, ImmutableArray<T>>(1, comparer);
                 var value = this[0];
@@ -434,7 +434,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
                 return dictionary1;
             }
 
-            if (this.Count == 0)
+            if (Count == 0)
             {
                 return new Dictionary<K, ImmutableArray<T>>(comparer);
             }

@@ -18,14 +18,14 @@ namespace Loretta.CodeAnalysis
 
             protected CollectionBase(IdentifierCollection identifierCollection)
             {
-                this.IdentifierCollection = identifierCollection;
+                IdentifierCollection = identifierCollection;
             }
 
             public abstract bool Contains(string item);
 
             public void CopyTo(string[] array, int arrayIndex)
             {
-                using (var enumerator = this.GetEnumerator())
+                using (var enumerator = GetEnumerator())
                 {
                     while (arrayIndex < array.Length && enumerator.MoveNext())
                     {
@@ -41,7 +41,7 @@ namespace Loretta.CodeAnalysis
                 {
                     if (_count == -1)
                     {
-                        _count = this.IdentifierCollection._map.Values.Sum(o => o is string ? 1 : ((ISet<string>) o).Count);
+                        _count = IdentifierCollection._map.Values.Sum(o => o is string ? 1 : ((ISet<string>) o).Count);
                     }
 
                     return _count;
@@ -52,7 +52,7 @@ namespace Loretta.CodeAnalysis
 
             public IEnumerator<string> GetEnumerator()
             {
-                foreach (var obj in this.IdentifierCollection._map.Values)
+                foreach (var obj in IdentifierCollection._map.Values)
                 {
                     if (obj is HashSet<string> strs)
                     {
@@ -70,7 +70,7 @@ namespace Loretta.CodeAnalysis
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
             {
-                return this.GetEnumerator();
+                return GetEnumerator();
             }
 
             #region Unsupported  

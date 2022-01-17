@@ -24,7 +24,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 if ((i & 1) == 0)
                 {
                     // not a separator
-                    result = GetWeakRedElement(ref this._children[i >> 1].Value, i);
+                    result = GetWeakRedElement(ref _children[i >> 1].Value, i);
                 }
 
                 return result;
@@ -37,7 +37,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 if ((i & 1) == 0)
                 {
                     // not a separator
-                    var weak = this._children[i >> 1].Value;
+                    var weak = _children[i >> 1].Value;
                     if (weak != null)
                     {
                         weak.TryGetTarget(out result);

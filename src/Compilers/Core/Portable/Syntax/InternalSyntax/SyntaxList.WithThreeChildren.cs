@@ -21,37 +21,37 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
             internal WithThreeChildren(GreenNode child0, GreenNode child1, GreenNode child2)
             {
-                this.SlotCount = 3;
-                this.AdjustFlagsAndWidth(child0);
+                SlotCount = 3;
+                AdjustFlagsAndWidth(child0);
                 _child0 = child0;
-                this.AdjustFlagsAndWidth(child1);
+                AdjustFlagsAndWidth(child1);
                 _child1 = child1;
-                this.AdjustFlagsAndWidth(child2);
+                AdjustFlagsAndWidth(child2);
                 _child2 = child2;
             }
 
             internal WithThreeChildren(DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations, GreenNode child0, GreenNode child1, GreenNode child2)
                 : base(diagnostics, annotations)
             {
-                this.SlotCount = 3;
-                this.AdjustFlagsAndWidth(child0);
+                SlotCount = 3;
+                AdjustFlagsAndWidth(child0);
                 _child0 = child0;
-                this.AdjustFlagsAndWidth(child1);
+                AdjustFlagsAndWidth(child1);
                 _child1 = child1;
-                this.AdjustFlagsAndWidth(child2);
+                AdjustFlagsAndWidth(child2);
                 _child2 = child2;
             }
 
             internal WithThreeChildren(ObjectReader reader)
                 : base(reader)
             {
-                this.SlotCount = 3;
+                SlotCount = 3;
                 _child0 = (GreenNode) reader.ReadValue();
-                this.AdjustFlagsAndWidth(_child0);
+                AdjustFlagsAndWidth(_child0);
                 _child1 = (GreenNode) reader.ReadValue();
-                this.AdjustFlagsAndWidth(_child1);
+                AdjustFlagsAndWidth(_child1);
                 _child2 = (GreenNode) reader.ReadValue();
-                this.AdjustFlagsAndWidth(_child2);
+                AdjustFlagsAndWidth(_child2);
             }
 
             internal override void WriteTo(ObjectWriter writer)
@@ -91,7 +91,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
             internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors)
             {
-                return new WithThreeChildren(errors, this.GetAnnotations(), _child0, _child1, _child2);
+                return new WithThreeChildren(errors, GetAnnotations(), _child0, _child1, _child2);
             }
 
             internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)

@@ -151,7 +151,7 @@ namespace Loretta.CodeAnalysis
                     return default(TextSpan);
                 }
 
-                return new TextSpan(this.Position, Node.FullWidth);
+                return new TextSpan(Position, Node.FullWidth);
             }
         }
 
@@ -196,7 +196,7 @@ namespace Loretta.CodeAnalysis
         {
             if (Any())
             {
-                return this[this.Count - 1];
+                return this[Count - 1];
             }
 
             throw new InvalidOperationException();
@@ -235,7 +235,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>-1 if not found.</returns>
         public int IndexOf(SyntaxTrivia triviaInList)
         {
-            for (int i = 0, n = this.Count; i < n; i++)
+            for (int i = 0, n = Count; i < n; i++)
             {
                 var trivia = this[i];
                 if (trivia == triviaInList)
@@ -249,7 +249,7 @@ namespace Loretta.CodeAnalysis
 
         internal int IndexOf(int rawKind)
         {
-            for (int i = 0, n = this.Count; i < n; i++)
+            for (int i = 0, n = Count; i < n; i++)
             {
                 if (this[i].RawKind == rawKind)
                 {
@@ -266,7 +266,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="trivia">The trivia to add.</param>
         public SyntaxTriviaList Add(SyntaxTrivia trivia)
         {
-            return Insert(this.Count, trivia);
+            return Insert(Count, trivia);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="trivia">The trivia to add.</param>
         public SyntaxTriviaList AddRange(IEnumerable<SyntaxTrivia> trivia)
         {
-            return InsertRange(this.Count, trivia);
+            return InsertRange(Count, trivia);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="trivia">The trivia to insert.</param>
         public SyntaxTriviaList InsertRange(int index, IEnumerable<SyntaxTrivia> trivia)
         {
-            var thisCount = this.Count;
+            var thisCount = Count;
             if (index < 0 || index > thisCount)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -366,7 +366,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="index">The index identifying the element to remove.</param>
         public SyntaxTriviaList RemoveAt(int index)
         {
-            if (index < 0 || index >= this.Count)
+            if (index < 0 || index >= Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -382,10 +382,10 @@ namespace Loretta.CodeAnalysis
         /// <param name="triviaInList">The trivia element to remove.</param>
         public SyntaxTriviaList Remove(SyntaxTrivia triviaInList)
         {
-            var index = this.IndexOf(triviaInList);
-            if (index >= 0 && index < this.Count)
+            var index = IndexOf(triviaInList);
+            if (index >= 0 && index < Count)
             {
-                return this.RemoveAt(index);
+                return RemoveAt(index);
             }
 
             return this;
@@ -413,8 +413,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="newTrivia">The trivia to replace the element with.</param>
         public SyntaxTriviaList ReplaceRange(SyntaxTrivia triviaInList, IEnumerable<SyntaxTrivia> newTrivia)
         {
-            var index = this.IndexOf(triviaInList);
-            if (index >= 0 && index < this.Count)
+            var index = IndexOf(triviaInList);
+            if (index >= 0 && index < Count)
             {
                 var list = this.ToList();
                 list.RemoveAt(index);
@@ -508,7 +508,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal void CopyTo(int offset, SyntaxTrivia[] array, int arrayOffset, int count)
         {
-            if (offset < 0 || count < 0 || this.Count < offset + count)
+            if (offset < 0 || count < 0 || Count < offset + count)
             {
                 throw new IndexOutOfRangeException();
             }

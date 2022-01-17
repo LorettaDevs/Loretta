@@ -112,9 +112,9 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
                 internal Edit(EditKind kind, int indexA, int indexB)
                 {
-                    this.Kind = kind;
-                    this.IndexA = indexA;
-                    this.IndexB = indexB;
+                    Kind = kind;
+                    IndexA = indexA;
+                    IndexB = indexB;
                 }
             }
 

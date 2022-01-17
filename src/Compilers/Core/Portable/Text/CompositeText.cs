@@ -131,7 +131,7 @@ namespace Loretta.CodeAnalysis.Text
             if (destinationIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(destinationIndex));
 
-            if (count < 0 || count > this.Length - sourceIndex || count > destination.Length - destinationIndex)
+            if (count < 0 || count > Length - sourceIndex || count > destination.Length - destinationIndex)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
             return count > 0;

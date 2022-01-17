@@ -11,7 +11,7 @@ namespace Loretta.CLI
 
         public ConsoleTimingLoggerTextWriter(ConsoleTimingLogger logger)
         {
-            this._logger = logger;
+            _logger = logger;
         }
 
         public override Encoding Encoding => Console.OutputEncoding;

@@ -68,29 +68,29 @@ namespace Loretta.CodeAnalysis.Text
         /// <exception cref="ArgumentOutOfRangeException">When given span is outside of the text range.</exception>
         public override string ToString(TextSpan span)
         {
-            if (span.End > this.Source.Length)
+            if (span.End > Source.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(span));
             }
 
-            if (span.Start == 0 && span.Length == this.Length)
+            if (span.Start == 0 && span.Length == Length)
             {
-                return this.Source;
+                return Source;
             }
 
-            return this.Source.Substring(span.Start, span.Length);
+            return Source.Substring(span.Start, span.Length);
         }
 
         public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count)
         {
-            this.Source.CopyTo(sourceIndex, destination, destinationIndex, count);
+            Source.CopyTo(sourceIndex, destination, destinationIndex, count);
         }
 
         public override void Write(TextWriter textWriter, TextSpan span, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (span.Start == 0 && span.End == this.Length)
+            if (span.Start == 0 && span.End == Length)
             {
-                textWriter.Write(this.Source);
+                textWriter.Write(Source);
             }
             else
             {

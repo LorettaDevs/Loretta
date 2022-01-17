@@ -19,7 +19,7 @@ namespace Loretta.Utilities
 
                 public new IEnumerator<T> GetEnumerator()
                 {
-                    return this.Underlying.GetEnumerator();
+                    return Underlying.GetEnumerator();
                 }
             }
         }

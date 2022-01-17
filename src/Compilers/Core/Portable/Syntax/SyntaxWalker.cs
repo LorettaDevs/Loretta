@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="depth">Syntax the <see cref="SyntaxWalker"/> should descend into.</param>
         protected SyntaxWalker(SyntaxWalkerDepth depth = SyntaxWalkerDepth.Node)
         {
-            this.Depth = depth;
+            Depth = depth;
         }
 
         /// <summary>
@@ -35,14 +35,14 @@ namespace Loretta.CodeAnalysis
             {
                 if (child.IsNode)
                 {
-                    if (this.Depth >= SyntaxWalkerDepth.Node)
+                    if (Depth >= SyntaxWalkerDepth.Node)
                     {
                         Visit(child.AsNode()!);
                     }
                 }
                 else if (child.IsToken)
                 {
-                    if (this.Depth >= SyntaxWalkerDepth.Token)
+                    if (Depth >= SyntaxWalkerDepth.Token)
                     {
                         VisitToken(child.AsToken());
                     }
@@ -58,10 +58,10 @@ namespace Loretta.CodeAnalysis
         /// <param name="token">The current token that the walker is visiting.</param>
         protected virtual void VisitToken(SyntaxToken token)
         {
-            if (this.Depth >= SyntaxWalkerDepth.Trivia)
+            if (Depth >= SyntaxWalkerDepth.Trivia)
             {
-                this.VisitLeadingTrivia(token);
-                this.VisitTrailingTrivia(token);
+                VisitLeadingTrivia(token);
+                VisitTrailingTrivia(token);
             }
         }
 
@@ -95,9 +95,9 @@ namespace Loretta.CodeAnalysis
         /// <param name="trivia">The current trivia syntax that the walker is visiting.</param>
         protected virtual void VisitTrivia(SyntaxTrivia trivia)
         {
-            if (this.Depth >= SyntaxWalkerDepth.StructuredTrivia && trivia.HasStructure)
+            if (Depth >= SyntaxWalkerDepth.StructuredTrivia && trivia.HasStructure)
             {
-                this.Visit(trivia.GetStructure()!);
+                Visit(trivia.GetStructure()!);
             }
         }
     }

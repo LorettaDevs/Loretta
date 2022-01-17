@@ -21,31 +21,31 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
             internal WithTwoChildren(GreenNode child0, GreenNode child1)
             {
-                this.SlotCount = 2;
-                this.AdjustFlagsAndWidth(child0);
+                SlotCount = 2;
+                AdjustFlagsAndWidth(child0);
                 _child0 = child0;
-                this.AdjustFlagsAndWidth(child1);
+                AdjustFlagsAndWidth(child1);
                 _child1 = child1;
             }
 
             internal WithTwoChildren(DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations, GreenNode child0, GreenNode child1)
                 : base(diagnostics, annotations)
             {
-                this.SlotCount = 2;
-                this.AdjustFlagsAndWidth(child0);
+                SlotCount = 2;
+                AdjustFlagsAndWidth(child0);
                 _child0 = child0;
-                this.AdjustFlagsAndWidth(child1);
+                AdjustFlagsAndWidth(child1);
                 _child1 = child1;
             }
 
             internal WithTwoChildren(ObjectReader reader)
                 : base(reader)
             {
-                this.SlotCount = 2;
+                SlotCount = 2;
                 _child0 = (GreenNode) reader.ReadValue();
-                this.AdjustFlagsAndWidth(_child0);
+                AdjustFlagsAndWidth(_child0);
                 _child1 = (GreenNode) reader.ReadValue();
-                this.AdjustFlagsAndWidth(_child1);
+                AdjustFlagsAndWidth(_child1);
             }
 
             internal override void WriteTo(ObjectWriter writer)
@@ -81,7 +81,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
             internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors)
             {
-                return new WithTwoChildren(errors, this.GetAnnotations(), _child0, _child1);
+                return new WithTwoChildren(errors, GetAnnotations(), _child0, _child1);
             }
 
             internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)

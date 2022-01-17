@@ -95,7 +95,7 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             CheckExpectedElement();
             SyntaxNodeOrTokenList list = nodes.GetWithSeparators();
-            _builder.AddRange(list, this.Count, Math.Min(count << 1, list.Count));
+            _builder.AddRange(list, Count, Math.Min(count << 1, list.Count));
             _expectedSeparator = (_builder.Count & 1) != 0;
             return this;
         }

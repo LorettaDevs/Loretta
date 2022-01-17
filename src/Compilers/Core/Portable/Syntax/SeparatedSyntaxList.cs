@@ -211,7 +211,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public TNode? FirstOrDefault()
         {
-            if (this.Any())
+            if (Any())
             {
                 return this[0];
             }
@@ -225,7 +225,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public TNode Last()
         {
-            return this[this.Count - 1];
+            return this[Count - 1];
         }
 
         /// <summary>
@@ -235,9 +235,9 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public TNode? LastOrDefault()
         {
-            if (this.Any())
+            if (Any())
             {
-                return this[this.Count - 1];
+                return this[Count - 1];
             }
 
             return null;
@@ -250,7 +250,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public bool Contains(TNode node)
         {
-            return this.IndexOf(node) >= 0;
+            return IndexOf(node) >= 0;
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>-1 if the node was not found.</returns>
         public int IndexOf(TNode node)
         {
-            for (int i = 0, n = this.Count; i < n; i++)
+            for (int i = 0, n = Count; i < n; i++)
             {
                 if (object.Equals(this[i], node))
                 {
@@ -278,7 +278,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>-1 if not found.</returns>
         public int IndexOf(Func<TNode, bool> predicate)
         {
-            for (int i = 0, n = this.Count; i < n; i++)
+            for (int i = 0, n = Count; i < n; i++)
             {
                 if (predicate(this[i]))
                 {
@@ -291,7 +291,7 @@ namespace Loretta.CodeAnalysis
 
         internal int IndexOf(int rawKind)
         {
-            for (int i = 0, n = this.Count; i < n; i++)
+            for (int i = 0, n = Count; i < n; i++)
             {
                 if (this[i].RawKind == rawKind)
                 {
@@ -309,7 +309,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>-1 if not found.</returns>
         public int LastIndexOf(TNode node)
         {
-            for (int i = this.Count - 1; i >= 0; i--)
+            for (int i = Count - 1; i >= 0; i--)
             {
                 if (object.Equals(this[i], node))
                 {
@@ -327,7 +327,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>-1 if not found.</returns>
         public int LastIndexOf(Func<TNode, bool> predicate)
         {
-            for (int i = this.Count - 1; i >= 0; i--)
+            for (int i = Count - 1; i >= 0; i--)
             {
                 if (predicate(this[i]))
                 {
@@ -354,7 +354,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         internal bool Any(Func<TNode, bool> predicate)
         {
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (predicate(this[i]))
                 {
@@ -420,7 +420,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="node">The node to add.</param>
         public SeparatedSyntaxList<TNode> Add(TNode node)
         {
-            return Insert(this.Count, node);
+            return Insert(Count, node);
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="nodes">The nodes to add.</param>
         public SeparatedSyntaxList<TNode> AddRange(IEnumerable<TNode> nodes)
         {
-            return InsertRange(this.Count, nodes);
+            return InsertRange(Count, nodes);
         }
 
         /// <summary>
@@ -459,13 +459,13 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(nodes));
             }
 
-            if (index < 0 || index > this.Count)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            var nodesWithSeps = this.GetWithSeparators();
-            int insertionIndex = index < this.Count ? nodesWithSeps.IndexOf(this[index]) : nodesWithSeps.Count;
+            var nodesWithSeps = GetWithSeparators();
+            int insertionIndex = index < Count ? nodesWithSeps.IndexOf(this[index]) : nodesWithSeps.Count;
 
             // determine how to deal with separators (commas)
             if (insertionIndex > 0 && insertionIndex < nodesWithSeps.Count)
@@ -526,12 +526,12 @@ namespace Loretta.CodeAnalysis
         /// <param name="index">The index of the element to remove.</param>
         public SeparatedSyntaxList<TNode> RemoveAt(int index)
         {
-            if (index < 0 || index > this.Count)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            return this.Remove(this[index]);
+            return Remove(this[index]);
         }
 
         /// <summary>
@@ -540,7 +540,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="node">The element to remove.</param>
         public SeparatedSyntaxList<TNode> Remove(TNode node)
         {
-            var nodesWithSeps = this.GetWithSeparators();
+            var nodesWithSeps = GetWithSeparators();
             int index = nodesWithSeps.IndexOf(node);
 
             if (index >= 0 && index <= nodesWithSeps.Count)
@@ -575,10 +575,10 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(newNode));
             }
 
-            var index = this.IndexOf(nodeInList);
-            if (index >= 0 && index < this.Count)
+            var index = IndexOf(nodeInList);
+            if (index >= 0 && index < Count)
             {
-                return new SeparatedSyntaxList<TNode>(this.GetWithSeparators().Replace(nodeInList, newNode));
+                return new SeparatedSyntaxList<TNode>(GetWithSeparators().Replace(nodeInList, newNode));
             }
 
             throw new ArgumentOutOfRangeException(nameof(nodeInList));
@@ -596,16 +596,16 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(newNodes));
             }
 
-            var index = this.IndexOf(nodeInList);
-            if (index >= 0 && index < this.Count)
+            var index = IndexOf(nodeInList);
+            if (index >= 0 && index < Count)
             {
                 var newNodeList = newNodes.ToList();
                 if (newNodeList.Count == 0)
                 {
-                    return this.Remove(nodeInList);
+                    return Remove(nodeInList);
                 }
 
-                var listWithFirstReplaced = this.Replace(nodeInList, newNodeList[0]);
+                var listWithFirstReplaced = Replace(nodeInList, newNodeList[0]);
 
                 if (newNodeList.Count > 1)
                 {
@@ -626,7 +626,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="newSeparator">The new separator token.</param>
         public SeparatedSyntaxList<TNode> ReplaceSeparator(SyntaxToken separatorToken, SyntaxToken newSeparator)
         {
-            var nodesWithSeps = this.GetWithSeparators();
+            var nodesWithSeps = GetWithSeparators();
             var index = nodesWithSeps.IndexOf(separatorToken);
             if (index < 0)
             {
@@ -666,7 +666,7 @@ namespace Loretta.CodeAnalysis
 
         IEnumerator<TNode> IEnumerable<TNode>.GetEnumerator()
         {
-            if (this.Any())
+            if (Any())
             {
                 return new EnumeratorImpl(this);
             }
@@ -676,7 +676,7 @@ namespace Loretta.CodeAnalysis
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            if (this.Any())
+            if (Any())
             {
                 return new EnumeratorImpl(this);
             }

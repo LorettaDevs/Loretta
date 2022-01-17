@@ -40,7 +40,7 @@ namespace Loretta.CodeAnalysis
         internal SyntaxNode(GreenNode green, int position, SyntaxTree? syntaxTree)
             : this(green, null, position)
         {
-            this._syntaxTree = syntaxTree;
+            _syntaxTree = syntaxTree;
         }
 
         private string GetDebuggerDisplay()
@@ -73,16 +73,16 @@ namespace Loretta.CodeAnalysis
         /// Returns SyntaxTree that owns the node or null if node does not belong to a
         /// SyntaxTree
         /// </summary>
-        public SyntaxTree SyntaxTree => this.SyntaxTreeCore;
+        public SyntaxTree SyntaxTree => SyntaxTreeCore;
 
-        internal bool IsList => this.Green.IsList;
+        internal bool IsList => Green.IsList;
 
         /// <summary>
         /// The absolute span of this node in characters, including its leading and trailing trivia.
         /// </summary>
-        public TextSpan FullSpan => new(this.Position, this.Green.FullWidth);
+        public TextSpan FullSpan => new(Position, Green.FullWidth);
 
-        internal int SlotCount => this.Green.SlotCount;
+        internal int SlotCount => Green.SlotCount;
 
         /// <summary>
         /// The absolute span of this node in characters, not including its leading and trailing trivia.
@@ -93,15 +93,15 @@ namespace Loretta.CodeAnalysis
             {
                 // Start with the full span.
                 var start = Position;
-                var width = this.Green.FullWidth;
+                var width = Green.FullWidth;
 
                 // adjust for preceding trivia (avoid calling this twice, do not call Green.Width)
-                var precedingWidth = this.Green.GetLeadingTriviaWidth();
+                var precedingWidth = Green.GetLeadingTriviaWidth();
                 start += precedingWidth;
                 width -= precedingWidth;
 
                 // adjust for following trivia width
-                width -= this.Green.GetTrailingTriviaWidth();
+                width -= Green.GetTrailingTriviaWidth();
 
                 LorettaDebug.Assert(width >= 0);
                 return new TextSpan(start, width);
@@ -122,14 +122,14 @@ namespace Loretta.CodeAnalysis
         /// <remarks>
         /// The Width property returns the same value as Span.Length, but is somewhat more efficient.
         /// </remarks>
-        internal int Width => this.Green.Width;
+        internal int Width => Green.Width;
 
         /// <summary>
         /// The complete width of the node in characters, including leading and trailing trivia.
         /// </summary>
         /// <remarks>The FullWidth property returns the same value as FullSpan.Length, but is
         /// somewhat more efficient.</remarks>
-        internal int FullWidth => this.Green.FullWidth;
+        internal int FullWidth => Green.FullWidth;
 
         // this is used in cases where we know that a child is a node of particular type.
         internal SyntaxNode? GetRed(ref SyntaxNode? field, int slot)
@@ -138,10 +138,10 @@ namespace Loretta.CodeAnalysis
 
             if (result == null)
             {
-                var green = this.Green.GetSlot(slot);
+                var green = Green.GetSlot(slot);
                 if (green != null)
                 {
-                    Interlocked.CompareExchange(ref field, green.CreateRed(this, this.GetChildPosition(slot)), null);
+                    Interlocked.CompareExchange(ref field, green.CreateRed(this, GetChildPosition(slot)), null);
                     result = field;
                 }
             }
@@ -156,10 +156,10 @@ namespace Loretta.CodeAnalysis
 
             if (result == null)
             {
-                var green = this.Green.GetSlot(0);
+                var green = Green.GetSlot(0);
                 if (green != null)
                 {
-                    Interlocked.CompareExchange(ref field, green.CreateRed(this, this.Position), null);
+                    Interlocked.CompareExchange(ref field, green.CreateRed(this, Position), null);
                     result = field;
                 }
             }
@@ -174,10 +174,10 @@ namespace Loretta.CodeAnalysis
 
             if (result == null)
             {
-                var green = this.Green.GetSlot(slot);
+                var green = Green.GetSlot(slot);
                 if (green != null)
                 {
-                    Interlocked.CompareExchange(ref field, (T) green.CreateRed(this, this.GetChildPosition(slot)), null);
+                    Interlocked.CompareExchange(ref field, (T) green.CreateRed(this, GetChildPosition(slot)), null);
                     result = field;
                 }
             }
@@ -193,10 +193,10 @@ namespace Loretta.CodeAnalysis
 
             if (result == null)
             {
-                var green = this.Green.GetSlot(0);
+                var green = Green.GetSlot(0);
                 if (green != null)
                 {
-                    Interlocked.CompareExchange(ref field, (T) green.CreateRed(this, this.Position), null);
+                    Interlocked.CompareExchange(ref field, (T) green.CreateRed(this, Position), null);
                     result = field;
                 }
             }
@@ -211,15 +211,15 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal SyntaxNode? GetRedElement(ref SyntaxNode? element, int slot)
         {
-            LorettaDebug.Assert(this.IsList);
+            LorettaDebug.Assert(IsList);
 
             var result = element;
 
             if (result == null)
             {
-                var green = this.Green.GetRequiredSlot(slot);
+                var green = Green.GetRequiredSlot(slot);
                 // passing list's parent
-                Interlocked.CompareExchange(ref element, green.CreateRed(this.Parent, this.GetChildPosition(slot)), null);
+                Interlocked.CompareExchange(ref element, green.CreateRed(Parent, GetChildPosition(slot)), null);
                 result = element;
             }
 
@@ -231,17 +231,17 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         internal SyntaxNode? GetRedElementIfNotToken(ref SyntaxNode? element)
         {
-            LorettaDebug.Assert(this.IsList);
+            LorettaDebug.Assert(IsList);
 
             var result = element;
 
             if (result == null)
             {
-                var green = this.Green.GetRequiredSlot(1);
+                var green = Green.GetRequiredSlot(1);
                 if (!green.IsToken)
                 {
                     // passing list's parent
-                    Interlocked.CompareExchange(ref element, green.CreateRed(this.Parent, this.GetChildPosition(1)), null);
+                    Interlocked.CompareExchange(ref element, green.CreateRed(Parent, GetChildPosition(1)), null);
                     result = element;
                 }
             }
@@ -263,8 +263,8 @@ namespace Loretta.CodeAnalysis
         // handle a miss
         private SyntaxNode CreateWeakItem(ref WeakReference<SyntaxNode>? slot, int index)
         {
-            var greenChild = this.Green.GetRequiredSlot(index);
-            var newNode = greenChild.CreateRed(this.Parent, GetChildPosition(index));
+            var greenChild = Green.GetRequiredSlot(index);
+            var newNode = greenChild.CreateRed(Parent, GetChildPosition(index));
             var newWeakReference = new WeakReference<SyntaxNode>(newNode);
 
             while (true)
@@ -290,7 +290,7 @@ namespace Loretta.CodeAnalysis
         /// <remarks>The length of the returned string is always the same as Span.Length</remarks>
         public override string ToString()
         {
-            return this.Green.ToString();
+            return Green.ToString();
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Loretta.CodeAnalysis
         /// <remarks>The length of the returned string is always the same as FullSpan.Length</remarks>
         public virtual string ToFullString()
         {
-            return this.Green.ToFullString();
+            return Green.ToFullString();
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public virtual void WriteTo(TextWriter writer)
         {
-            this.Green.WriteTo(writer, leading: true, trailing: true);
+            Green.WriteTo(writer, leading: true, trailing: true);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Loretta.CodeAnalysis
         public SourceText GetText(Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
         {
             var builder = new StringBuilder();
-            this.WriteTo(new StringWriter(builder));
+            WriteTo(new StringWriter(builder));
             return new StringBuilderText(builder, encoding, checksumAlgorithm);
         }
 
@@ -346,7 +346,7 @@ namespace Loretta.CodeAnalysis
                 return false;
             }
 
-            return this.Green.IsEquivalentTo(other.Green);
+            return Green.IsEquivalentTo(other.Green);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Loretta.CodeAnalysis
         /// identical nodes could have different parents and may occur at different positions in their respective trees.
         /// </remarks>
         public bool IsIncrementallyIdenticalTo([NotNullWhen(true)] SyntaxNode? other)
-            => this.Green != null && this.Green == other?.Green;
+            => Green != null && Green == other?.Green;
 
         /// <summary>
         /// Determines whether the node represents a language construct that was actually parsed
@@ -376,7 +376,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.Green.IsMissing;
+                return Green.IsMissing;
             }
         }
 
@@ -401,7 +401,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.Green.IsStructuredTrivia;
+                return Green.IsStructuredTrivia;
             }
         }
 
@@ -412,7 +412,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.Green.ContainsStructuredTrivia && !this.Green.IsStructuredTrivia;
+                return Green.ContainsStructuredTrivia && !Green.IsStructuredTrivia;
             }
         }
 
@@ -423,7 +423,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.Green.ContainsSkippedText;
+                return Green.ContainsSkippedText;
             }
         }
 
@@ -434,7 +434,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.Green.ContainsDirectives;
+                return Green.ContainsDirectives;
             }
         }
 
@@ -445,7 +445,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.Green.ContainsDiagnostics;
+                return Green.ContainsDiagnostics;
             }
         }
 
@@ -455,7 +455,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public bool Contains(SyntaxNode? node)
         {
-            if (node == null || !this.FullSpan.Contains(node.FullSpan))
+            if (node == null || !FullSpan.Contains(node.FullSpan))
             {
                 return false;
             }
@@ -491,7 +491,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.GetLeadingTrivia().Count > 0;
+                return GetLeadingTrivia().Count > 0;
             }
         }
 
@@ -502,7 +502,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.GetTrailingTrivia().Count > 0;
+                return GetTrailingTrivia().Count > 0;
             }
         }
 
@@ -517,7 +517,7 @@ namespace Loretta.CodeAnalysis
             int index = 0;
             for (int i = 0; i < slot; i++)
             {
-                var item = this.Green.GetSlot(i);
+                var item = Green.GetSlot(i);
                 if (item != null)
                 {
                     if (item.IsList)
@@ -545,11 +545,11 @@ namespace Loretta.CodeAnalysis
         internal virtual int GetChildPosition(int index)
         {
             int offset = 0;
-            var green = this.Green;
+            var green = Green;
             while (index > 0)
             {
                 index--;
-                var prevSibling = this.GetCachedSlot(index);
+                var prevSibling = GetCachedSlot(index);
                 if (prevSibling != null)
                 {
                     return prevSibling.EndPosition + offset;
@@ -561,7 +561,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            return this.Position + offset;
+            return Position + offset;
         }
 
         /// <summary>
@@ -570,7 +570,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public Location GetLocation()
         {
-            return this.SyntaxTree.GetLocation(this.Span);
+            return SyntaxTree.GetLocation(Span);
         }
 
         internal Location Location
@@ -586,7 +586,7 @@ namespace Loretta.CodeAnalysis
                 // For scenario (b), at present, we do not expose the diagnostics for speculative binding, hence we can return NoLocation.
                 // In future, if we decide to support this, we will need some mechanism to distinguish between scenarios (a) and (b) here.
 
-                var tree = this.SyntaxTree;
+                var tree = SyntaxTree;
                 LorettaDebug.Assert(tree != null);
                 return !tree.SupportsLocations ? NoLocation.Singleton : new SourceLocation(this);
             }
@@ -599,7 +599,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<Diagnostic> GetDiagnostics()
         {
-            return this.SyntaxTree.GetDiagnostics(this);
+            return SyntaxTree.GetDiagnostics(this);
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxReference GetReference()
         {
-            return this.SyntaxTree.GetReference(this);
+            return SyntaxTree.GetReference(this);
         }
 
         #region Node Lookup
@@ -693,7 +693,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxNode> ChildNodes()
         {
-            foreach (var nodeOrToken in this.ChildNodesAndTokens())
+            foreach (var nodeOrToken in ChildNodesAndTokens())
             {
                 if (nodeOrToken.AsNode(out var node))
                 {
@@ -707,7 +707,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxNode> Ancestors(bool ascendOutOfTrivia = true)
         {
-            return this.Parent?
+            return Parent?
                 .AncestorsAndSelf(ascendOutOfTrivia) ??
                 SpecializedCollections.EmptyEnumerable<SyntaxNode>();
         }
@@ -778,7 +778,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
         public IEnumerable<SyntaxNode> DescendantNodes(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
         {
-            return DescendantNodesImpl(this.FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: false);
+            return DescendantNodesImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: false);
         }
 
         /// <summary>
@@ -799,7 +799,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
         public IEnumerable<SyntaxNode> DescendantNodesAndSelf(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
         {
-            return DescendantNodesImpl(this.FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: true);
+            return DescendantNodesImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: true);
         }
 
         /// <summary>
@@ -820,7 +820,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
         public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokens(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
         {
-            return DescendantNodesAndTokensImpl(this.FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: false);
+            return DescendantNodesAndTokensImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: false);
         }
 
         /// <summary>
@@ -841,7 +841,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="descendIntoTrivia">Determines if nodes that are part of structured trivia are included in the list.</param>
         public IEnumerable<SyntaxNodeOrToken> DescendantNodesAndTokensAndSelf(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
         {
-            return DescendantNodesAndTokensImpl(this.FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: true);
+            return DescendantNodesAndTokensImpl(FullSpan, descendIntoChildren, descendIntoTrivia, includeSelf: true);
         }
 
         /// <summary>
@@ -867,7 +867,7 @@ namespace Loretta.CodeAnalysis
         /// <exception cref="ArgumentOutOfRangeException">This exception is thrown if <see cref="FullSpan"/> doesn't contain the given span.</exception>
         public SyntaxNode FindNode(TextSpan span, bool findInsideTrivia = false, bool getInnermostNodeForTie = false)
         {
-            if (!this.FullSpan.Contains(span))
+            if (!FullSpan.Contains(span))
             {
                 throw new ArgumentOutOfRangeException(nameof(span));
             }
@@ -935,7 +935,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxToken> ChildTokens()
         {
-            foreach (var nodeOrToken in this.ChildNodesAndTokens())
+            foreach (var nodeOrToken in ChildNodesAndTokens())
             {
                 if (nodeOrToken.IsToken)
                 {
@@ -949,7 +949,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxToken> DescendantTokens(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
         {
-            return this.DescendantNodesAndTokens(descendIntoChildren, descendIntoTrivia).Where(sn => sn.IsToken).Select(sn => sn.AsToken());
+            return DescendantNodesAndTokens(descendIntoChildren, descendIntoTrivia).Where(sn => sn.IsToken).Select(sn => sn.AsToken());
         }
 
         /// <summary>
@@ -957,7 +957,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxToken> DescendantTokens(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
         {
-            return this.DescendantNodesAndTokens(span, descendIntoChildren, descendIntoTrivia).Where(sn => sn.IsToken).Select(sn => sn.AsToken());
+            return DescendantNodesAndTokens(span, descendIntoChildren, descendIntoTrivia).Where(sn => sn.IsToken).Select(sn => sn.AsToken());
         }
 
         #endregion
@@ -1005,9 +1005,9 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public SyntaxTrivia FindTrivia(int position, Func<SyntaxTrivia, bool>? stepInto)
         {
-            if (this.FullSpan.Contains(position))
+            if (FullSpan.Contains(position))
             {
-                return FindTriviaByOffset(this, position - this.Position, stepInto);
+                return FindTriviaByOffset(this, position - Position, stepInto);
             }
 
             return default(SyntaxTrivia);
@@ -1086,7 +1086,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxTrivia> DescendantTrivia(Func<SyntaxNode, bool>? descendIntoChildren = null, bool descendIntoTrivia = false)
         {
-            return DescendantTriviaImpl(this.FullSpan, descendIntoChildren, descendIntoTrivia);
+            return DescendantTriviaImpl(FullSpan, descendIntoChildren, descendIntoTrivia);
         }
 
         /// <summary>
@@ -1106,7 +1106,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public bool ContainsAnnotations
         {
-            get { return this.Green.ContainsAnnotations; }
+            get { return Green.ContainsAnnotations; }
         }
 
         /// <summary>
@@ -1114,7 +1114,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public bool HasAnnotations(string annotationKind)
         {
-            return this.Green.HasAnnotations(annotationKind);
+            return Green.HasAnnotations(annotationKind);
         }
 
         /// <summary>
@@ -1122,7 +1122,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public bool HasAnnotations(IEnumerable<string> annotationKinds)
         {
-            return this.Green.HasAnnotations(annotationKinds);
+            return Green.HasAnnotations(annotationKinds);
         }
 
         /// <summary>
@@ -1130,7 +1130,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation)
         {
-            return this.Green.HasAnnotation(annotation);
+            return Green.HasAnnotation(annotation);
         }
 
         /// <summary>
@@ -1138,7 +1138,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxAnnotation> GetAnnotations(string annotationKind)
         {
-            return this.Green.GetAnnotations(annotationKind);
+            return Green.GetAnnotations(annotationKind);
         }
 
         /// <summary>
@@ -1146,12 +1146,12 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds)
         {
-            return this.Green.GetAnnotations(annotationKinds);
+            return Green.GetAnnotations(annotationKinds);
         }
 
         internal SyntaxAnnotation[] GetAnnotations()
         {
-            return this.Green.GetAnnotations();
+            return Green.GetAnnotations();
         }
 
         /// <summary>
@@ -1159,7 +1159,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxNodeOrToken> GetAnnotatedNodesAndTokens(string annotationKind)
         {
-            return this.DescendantNodesAndTokensAndSelf(n => n.ContainsAnnotations, descendIntoTrivia: true)
+            return DescendantNodesAndTokensAndSelf(n => n.ContainsAnnotations, descendIntoTrivia: true)
                 .Where(t => t.HasAnnotations(annotationKind));
         }
 
@@ -1168,7 +1168,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxNodeOrToken> GetAnnotatedNodesAndTokens(params string[] annotationKinds)
         {
-            return this.DescendantNodesAndTokensAndSelf(n => n.ContainsAnnotations, descendIntoTrivia: true)
+            return DescendantNodesAndTokensAndSelf(n => n.ContainsAnnotations, descendIntoTrivia: true)
                 .Where(t => t.HasAnnotations(annotationKinds));
         }
 
@@ -1177,7 +1177,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxNodeOrToken> GetAnnotatedNodesAndTokens(SyntaxAnnotation annotation)
         {
-            return this.DescendantNodesAndTokensAndSelf(n => n.ContainsAnnotations, descendIntoTrivia: true)
+            return DescendantNodesAndTokensAndSelf(n => n.ContainsAnnotations, descendIntoTrivia: true)
                 .Where(t => t.HasAnnotation(annotation));
         }
 
@@ -1186,7 +1186,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxNode> GetAnnotatedNodes(SyntaxAnnotation syntaxAnnotation)
         {
-            return this.GetAnnotatedNodesAndTokens(syntaxAnnotation).Where(n => n.IsNode).Select(n => n.AsNode()!);
+            return GetAnnotatedNodesAndTokens(syntaxAnnotation).Where(n => n.IsNode).Select(n => n.AsNode()!);
         }
 
         /// <summary>
@@ -1196,7 +1196,7 @@ namespace Loretta.CodeAnalysis
         /// <returns></returns>
         public IEnumerable<SyntaxNode> GetAnnotatedNodes(string annotationKind)
         {
-            return this.GetAnnotatedNodesAndTokens(annotationKind).Where(n => n.IsNode).Select(n => n.AsNode()!);
+            return GetAnnotatedNodesAndTokens(annotationKind).Where(n => n.IsNode).Select(n => n.AsNode()!);
         }
 
         /// <summary>
@@ -1204,7 +1204,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxToken> GetAnnotatedTokens(SyntaxAnnotation syntaxAnnotation)
         {
-            return this.GetAnnotatedNodesAndTokens(syntaxAnnotation).Where(n => n.IsToken).Select(n => n.AsToken());
+            return GetAnnotatedNodesAndTokens(syntaxAnnotation).Where(n => n.IsToken).Select(n => n.AsToken());
         }
 
         /// <summary>
@@ -1212,7 +1212,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxToken> GetAnnotatedTokens(string annotationKind)
         {
-            return this.GetAnnotatedNodesAndTokens(annotationKind).Where(n => n.IsToken).Select(n => n.AsToken());
+            return GetAnnotatedNodesAndTokens(annotationKind).Where(n => n.IsToken).Select(n => n.AsToken());
         }
 
         /// <summary>
@@ -1220,7 +1220,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxTrivia> GetAnnotatedTrivia(string annotationKind)
         {
-            return this.DescendantTrivia(n => n.ContainsAnnotations, descendIntoTrivia: true)
+            return DescendantTrivia(n => n.ContainsAnnotations, descendIntoTrivia: true)
                        .Where(tr => tr.HasAnnotations(annotationKind));
         }
 
@@ -1229,7 +1229,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxTrivia> GetAnnotatedTrivia(params string[] annotationKinds)
         {
-            return this.DescendantTrivia(n => n.ContainsAnnotations, descendIntoTrivia: true)
+            return DescendantTrivia(n => n.ContainsAnnotations, descendIntoTrivia: true)
                        .Where(tr => tr.HasAnnotations(annotationKinds));
         }
 
@@ -1238,18 +1238,18 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxTrivia> GetAnnotatedTrivia(SyntaxAnnotation annotation)
         {
-            return this.DescendantTrivia(n => n.ContainsAnnotations, descendIntoTrivia: true)
+            return DescendantTrivia(n => n.ContainsAnnotations, descendIntoTrivia: true)
                        .Where(tr => tr.HasAnnotation(annotation));
         }
 
         internal SyntaxNode WithAdditionalAnnotationsInternal(IEnumerable<SyntaxAnnotation> annotations)
         {
-            return this.Green.WithAdditionalAnnotationsGreen(annotations).CreateRed();
+            return Green.WithAdditionalAnnotationsGreen(annotations).CreateRed();
         }
 
         internal SyntaxNode GetNodeWithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations)
         {
-            return this.Green.WithoutAnnotationsGreen(annotations).CreateRed();
+            return Green.WithoutAnnotationsGreen(annotations).CreateRed();
         }
 
         /// <summary>
@@ -1271,7 +1271,7 @@ namespace Loretta.CodeAnalysis
                 return null;
             }
 
-            var annotations = this.Green.GetAnnotations();
+            var annotations = Green.GetAnnotations();
             if (annotations?.Length > 0)
             {
                 return (T) node.Green.WithAdditionalAnnotationsGreen(annotations).CreateRed();
@@ -1343,26 +1343,26 @@ namespace Loretta.CodeAnalysis
         {
             if (findInsideTrivia)
             {
-                return this.FindToken(position, SyntaxTrivia.Any);
+                return FindToken(position, SyntaxTrivia.Any);
             }
 
             SyntaxToken EoF;
-            if (this.TryGetEofAt(position, out EoF))
+            if (TryGetEofAt(position, out EoF))
             {
                 return EoF;
             }
 
-            if (!this.FullSpan.Contains(position))
+            if (!FullSpan.Contains(position))
             {
                 throw new ArgumentOutOfRangeException(nameof(position));
             }
 
-            return this.FindTokenInternal(position);
+            return FindTokenInternal(position);
         }
 
         private bool TryGetEofAt(int position, out SyntaxToken Eof)
         {
-            if (position == this.EndPosition)
+            if (position == EndPosition)
             {
                 if (this is ICompilationUnitSyntax compilationUnit)
                 {
@@ -1416,7 +1416,7 @@ namespace Loretta.CodeAnalysis
         /// </param>
         protected virtual SyntaxToken FindTokenCore(int position, Func<SyntaxTrivia, bool> stepInto)
         {
-            var token = this.FindToken(position, findInsideTrivia: false);
+            var token = FindToken(position, findInsideTrivia: false);
             if (stepInto != null)
             {
                 var trivia = GetTriviaFromSyntaxToken(position, token);
@@ -1537,7 +1537,7 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                if (!this.ContainsDiagnostics)
+                if (!ContainsDiagnostics)
                 {
                     return false;
                 }
@@ -1548,7 +1548,7 @@ namespace Loretta.CodeAnalysis
 
         private bool HasErrorsSlow()
         {
-            return new Syntax.InternalSyntax.SyntaxDiagnosticInfoList(this.Green).Any(
+            return new Syntax.InternalSyntax.SyntaxDiagnosticInfoList(Green).Any(
                 info => info.Severity == DiagnosticSeverity.Error);
         }
 

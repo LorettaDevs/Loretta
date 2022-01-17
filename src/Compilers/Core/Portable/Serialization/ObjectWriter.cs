@@ -545,7 +545,7 @@ namespace Loretta.Utilities
                     break;
                 default:
                     _writer.Write((byte) EncodingKind.Array);
-                    this.WriteCompressedUInt((uint) length);
+                    WriteCompressedUInt((uint) length);
                     break;
             }
 
@@ -553,13 +553,13 @@ namespace Loretta.Utilities
 
             if (s_typeMap.TryGetValue(elementType, out var elementKind))
             {
-                this.WritePrimitiveType(elementType, elementKind);
-                this.WritePrimitiveTypeArrayElements(elementType, elementKind, array);
+                WritePrimitiveType(elementType, elementKind);
+                WritePrimitiveTypeArrayElements(elementType, elementKind, array);
             }
             else
             {
                 // emit header up front
-                this.WriteKnownType(elementType);
+                WriteKnownType(elementType);
 
                 // recursive: write elements now
                 var oldDepth = _recursionDepth;
@@ -600,7 +600,7 @@ namespace Loretta.Utilities
         {
             for (int i = 0; i < array.Length; i++)
             {
-                this.WriteValue(array.GetValue(i));
+                WriteValue(array.GetValue(i));
             }
         }
 
@@ -782,13 +782,13 @@ namespace Loretta.Utilities
         public void WriteType(Type type)
         {
             _writer.Write((byte) EncodingKind.Type);
-            this.WriteString(type.AssemblyQualifiedName);
+            WriteString(type.AssemblyQualifiedName);
         }
 
         private void WriteKnownType(Type type)
         {
             _writer.Write((byte) EncodingKind.Type);
-            this.WriteInt32(_binderSnapshot.GetTypeId(type));
+            WriteInt32(_binderSnapshot.GetTypeId(type));
         }
 
         public void WriteEncoding(Encoding? encoding)
@@ -925,7 +925,7 @@ namespace Loretta.Utilities
 
             // Directly write out the type-id for this object.  i.e. no need to write out the 'Type'
             // tag since we just wrote out the 'Object' tag
-            this.WriteInt32(_binderSnapshot.GetTypeId(writable.GetType()));
+            WriteInt32(_binderSnapshot.GetTypeId(writable.GetType()));
             writable.WriteTo(this);
         }
 

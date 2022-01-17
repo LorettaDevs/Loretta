@@ -111,7 +111,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                int count = this.Count;
+                int count = Count;
                 TNode[] array = new TNode[count];
                 for (int i = 0; i < count; i++)
                 {

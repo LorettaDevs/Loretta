@@ -29,7 +29,7 @@ namespace Loretta.CodeAnalysis
 
         public IdentifierCollection(IEnumerable<string> identifiers)
         {
-            this.AddIdentifiers(identifiers);
+            AddIdentifiers(identifiers);
         }
 
         public void AddIdentifiers(IEnumerable<string> identifiers)

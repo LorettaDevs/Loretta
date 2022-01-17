@@ -60,7 +60,7 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             if (_count >= _nodes.Length)
             {
-                this.Grow(_count == 0 ? 8 : _nodes.Length * 2);
+                Grow(_count == 0 ? 8 : _nodes.Length * 2);
             }
 
             _nodes[_count++] = item;
@@ -68,31 +68,31 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void Add(SyntaxNode item)
         {
-            this.Add(item.Green);
+            Add(item.Green);
         }
 
         public void Add(in SyntaxToken item)
         {
             LorettaDebug.Assert(item.Node is not null);
-            this.Add(item.Node);
+            Add(item.Node);
         }
 
         public void Add(in SyntaxNodeOrToken item)
         {
             LorettaDebug.Assert(item.UnderlyingNode is not null);
-            this.Add(item.UnderlyingNode);
+            Add(item.UnderlyingNode);
         }
 
         public void Add(SyntaxNodeOrTokenList list)
         {
-            this.Add(list, 0, list.Count);
+            Add(list, 0, list.Count);
         }
 
         public void Add(SyntaxNodeOrTokenList list, int offset, int length)
         {
             if (_count + length > _nodes.Length)
             {
-                this.Grow(_count + length);
+                Grow(_count + length);
             }
 
             list.CopyTo(offset, _nodes, _count, length);
@@ -103,7 +103,7 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             foreach (var n in nodeOrTokens)
             {
-                this.Add(n);
+                Add(n);
             }
         }
 

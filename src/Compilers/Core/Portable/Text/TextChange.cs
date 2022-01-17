@@ -41,8 +41,8 @@ namespace Loretta.CodeAnalysis.Text
                 throw new ArgumentNullException(nameof(newText));
             }
 
-            this.Span = span;
-            this.NewText = newText;
+            Span = span;
+            NewText = newText;
         }
 
         /// <summary>
@@ -50,27 +50,27 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         public override string ToString()
         {
-            return string.Format("{0}: {{ {1}, \"{2}\" }}", this.GetType().Name, Span, NewText);
+            return string.Format("{0}: {{ {1}, \"{2}\" }}", GetType().Name, Span, NewText);
         }
 
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            return obj is TextChange change && this.Equals(change);
+            return obj is TextChange change && Equals(change);
         }
 
         /// <inheritdoc/>
         public bool Equals(TextChange other)
         {
             return
-                EqualityComparer<TextSpan>.Default.Equals(this.Span, other.Span) &&
-                EqualityComparer<string?>.Default.Equals(this.NewText, other.NewText);
+                EqualityComparer<TextSpan>.Default.Equals(Span, other.Span) &&
+                EqualityComparer<string?>.Default.Equals(NewText, other.NewText);
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return Hash.Combine(this.Span.GetHashCode(), this.NewText?.GetHashCode() ?? 0);
+            return Hash.Combine(Span.GetHashCode(), NewText?.GetHashCode() ?? 0);
         }
 
         /// <summary>

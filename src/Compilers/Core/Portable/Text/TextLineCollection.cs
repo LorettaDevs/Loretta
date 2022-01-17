@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <returns></returns>
         public virtual TextLine GetLineFromPosition(int position)
         {
-            return this[this.IndexOf(position)];
+            return this[IndexOf(position)];
         }
 
         /// <summary>
@@ -83,12 +83,12 @@ namespace Loretta.CodeAnalysis.Text
 
         IEnumerator<TextLine> IEnumerable<TextLine>.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         /// <summary>
@@ -137,12 +137,12 @@ namespace Loretta.CodeAnalysis.Text
 
             object IEnumerator.Current
             {
-                get { return this.Current; }
+                get { return Current; }
             }
 
             bool IEnumerator.MoveNext()
             {
-                return this.MoveNext();
+                return MoveNext();
             }
 
             void IEnumerator.Reset()

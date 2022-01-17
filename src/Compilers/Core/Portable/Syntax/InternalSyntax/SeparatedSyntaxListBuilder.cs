@@ -90,7 +90,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         public void AddRange(in SeparatedSyntaxList<TNode> nodes, int count)
         {
             var list = nodes.GetWithSeparators();
-            _builder!.AddRange(list, this.Count, Math.Min(count * 2, list.Count));
+            _builder!.AddRange(list, Count, Math.Min(count * 2, list.Count));
         }
 
         public bool Any(int kind)

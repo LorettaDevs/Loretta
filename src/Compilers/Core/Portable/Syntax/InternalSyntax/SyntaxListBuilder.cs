@@ -24,7 +24,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public void Clear()
         {
-            this.Count = 0;
+            Count = 0;
         }
 
         public GreenNode? this[int index]
@@ -53,7 +53,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
                 for (int i = 0; i < slotCount; i++)
                 {
-                    this.Add(item.GetSlot(i));
+                    Add(item.GetSlot(i));
                 }
             }
             else
@@ -66,7 +66,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public void AddRange(GreenNode[] items)
         {
-            this.AddRange(items, 0, items.Length);
+            AddRange(items, 0, items.Length);
         }
 
         public void AddRange(GreenNode[] items, int offset, int length)
@@ -74,14 +74,14 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             // Necessary, but not sufficient (e.g. for nested lists).
             EnsureAdditionalCapacity(length - offset);
 
-            int oldCount = this.Count;
+            int oldCount = Count;
 
             for (int i = offset; i < length; i++)
             {
                 Add(items[i]);
             }
 
-            Validate(oldCount, this.Count);
+            Validate(oldCount, Count);
         }
 
         [Conditional("DEBUG")]
@@ -95,7 +95,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public void AddRange(SyntaxList<GreenNode> list)
         {
-            this.AddRange(list, 0, list.Count);
+            AddRange(list, 0, list.Count);
         }
 
         public void AddRange(SyntaxList<GreenNode> list, int offset, int length)
@@ -103,24 +103,24 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             // Necessary, but not sufficient (e.g. for nested lists).
             EnsureAdditionalCapacity(length - offset);
 
-            int oldCount = this.Count;
+            int oldCount = Count;
 
             for (int i = offset; i < length; i++)
             {
                 Add(list[i]);
             }
 
-            Validate(oldCount, this.Count);
+            Validate(oldCount, Count);
         }
 
         public void AddRange<TNode>(SyntaxList<TNode> list) where TNode : GreenNode
         {
-            this.AddRange(list, 0, list.Count);
+            AddRange(list, 0, list.Count);
         }
 
         public void AddRange<TNode>(SyntaxList<TNode> list, int offset, int length) where TNode : GreenNode
         {
-            this.AddRange(new SyntaxList<GreenNode>(list.Node), offset, length);
+            AddRange(new SyntaxList<GreenNode>(list.Node), offset, length);
         }
 
         public void RemoveLast()
@@ -132,7 +132,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         private void EnsureAdditionalCapacity(int additionalCount)
         {
             int currentSize = _nodes.Length;
-            int requiredSize = this.Count + additionalCount;
+            int requiredSize = Count + additionalCount;
 
             if (requiredSize <= currentSize) return;
 
@@ -160,7 +160,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public GreenNode[] ToArray()
         {
-            var array = new GreenNode[this.Count];
+            var array = new GreenNode[Count];
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = _nodes[i]!;
@@ -171,7 +171,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal GreenNode? ToListNode()
         {
-            switch (this.Count)
+            switch (Count)
             {
                 case 0:
                     return null;
@@ -182,8 +182,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 case 3:
                     return SyntaxList.List(_nodes[0]!, _nodes[1]!, _nodes[2]!);
                 default:
-                    var tmp = new ArrayElement<GreenNode>[this.Count];
-                    Array.Copy(_nodes, tmp, this.Count);
+                    var tmp = new ArrayElement<GreenNode>[Count];
+                    Array.Copy(_nodes, tmp, Count);
                     return SyntaxList.List(tmp);
             }
         }

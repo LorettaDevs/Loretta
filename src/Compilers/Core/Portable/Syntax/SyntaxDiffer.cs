@@ -61,8 +61,8 @@ namespace Loretta.CodeAnalysis
 
         private IList<TextChange> ComputeTextChangesFromOld()
         {
-            this.ComputeChangeRecords();
-            var reducedChanges = this.ReduceChanges(_changes);
+            ComputeChangeRecords();
+            var reducedChanges = ReduceChanges(_changes);
 
             return reducedChanges.Select(c => new TextChange(c.Range.Span, c.NewText!)).ToList();
         }
@@ -97,7 +97,7 @@ namespace Loretta.CodeAnalysis
 
         private IList<TextSpan> ComputeSpansInNew()
         {
-            this.ComputeChangeRecords();
+            ComputeChangeRecords();
             var reducedChanges = ReduceChanges(_changes);
 
             // this algorithm assumes changes are in non-overlapping document order
@@ -193,8 +193,8 @@ namespace Loretta.CodeAnalysis
             public DiffAction(DiffOp operation, int count)
             {
                 Loretta.Utilities.LorettaDebug.Assert(count >= 0);
-                this.Operation = operation;
-                this.Count = count;
+                Operation = operation;
+                Count = count;
             }
         }
 
@@ -520,9 +520,9 @@ namespace Loretta.CodeAnalysis
 
             internal ChangeRecord(TextChangeRange range, Queue<SyntaxNodeOrToken>? oldNodes, Queue<SyntaxNodeOrToken>? newNodes)
             {
-                this.Range = range;
-                this.OldNodes = oldNodes;
-                this.NewNodes = newNodes;
+                Range = range;
+                OldNodes = oldNodes;
+                NewNodes = newNodes;
             }
         }
 
@@ -746,8 +746,8 @@ namespace Loretta.CodeAnalysis
 
             public ChangeRangeWithText(TextChangeRange range, string? newText)
             {
-                this.Range = range;
-                this.NewText = newText;
+                Range = range;
+                NewText = newText;
             }
         }
 

@@ -24,10 +24,10 @@ namespace Loretta.Utilities
             public readonly string Text;
             public readonly T Item;
 
-            public SharedEntryValue(string Text, T item)
+            public SharedEntryValue(string text, T item)
             {
-                this.Text = Text;
-                this.Item = item;
+                Text = text;
+                Item = item;
             }
         }
 

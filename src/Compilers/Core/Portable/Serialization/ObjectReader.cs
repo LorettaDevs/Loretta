@@ -445,7 +445,7 @@ namespace Loretta.Utilities
                     length = 3;
                     break;
                 default:
-                    length = (int) this.ReadCompressedUInt();
+                    length = (int) ReadCompressedUInt();
                     break;
             }
 
@@ -455,19 +455,19 @@ namespace Loretta.Utilities
             var elementType = ObjectWriter.s_reverseTypeMap[(int) elementKind];
             if (elementType != null)
             {
-                return this.ReadPrimitiveTypeArrayElements(elementType, elementKind, length);
+                return ReadPrimitiveTypeArrayElements(elementType, elementKind, length);
             }
             else
             {
                 // custom type case
-                elementType = this.ReadTypeAfterTag();
+                elementType = ReadTypeAfterTag();
 
                 // recursive: create instance and read elements next in stream
                 Array array = Array.CreateInstance(elementType, length);
 
                 for (int i = 0; i < length; ++i)
                 {
-                    var value = this.ReadValue();
+                    var value = ReadValue();
                     array.SetValue(value, i);
                 }
 
@@ -549,7 +549,7 @@ namespace Loretta.Utilities
         {
             for (var i = 0; i < array.Length; i++)
             {
-                array[i] = this.ReadStringValue();
+                array[i] = ReadStringValue();
             }
 
             return array;
@@ -662,7 +662,7 @@ namespace Loretta.Utilities
         }
 
         private Type ReadTypeAfterTag()
-            => _binderSnapshot.GetTypeFromId(this.ReadInt32());
+            => _binderSnapshot.GetTypeFromId(ReadInt32());
 
         private object ReadObject()
         {
@@ -671,7 +671,7 @@ namespace Loretta.Utilities
             // reading an object may recurse.  So we need to grab our ID up front as we'll
             // end up making our sub-objects before we make this object.
 
-            var typeReader = _binderSnapshot.GetTypeReaderFromId(this.ReadInt32());
+            var typeReader = _binderSnapshot.GetTypeReaderFromId(ReadInt32());
 
             // recursive: read and construct instance immediately from member elements encoding next in the stream
             var instance = typeReader(this);

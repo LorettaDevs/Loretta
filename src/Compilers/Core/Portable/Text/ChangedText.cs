@@ -68,9 +68,9 @@ namespace Loretta.CodeAnalysis.Text
 
             public ChangeInfo(ImmutableArray<TextChangeRange> changeRanges, WeakReference<SourceText> weakOldText, ChangeInfo? previous)
             {
-                this.ChangeRanges = changeRanges;
-                this.WeakOldText = weakOldText;
-                this.Previous = previous;
+                ChangeRanges = changeRanges;
+                WeakOldText = weakOldText;
+                Previous = previous;
                 Clean();
             }
 

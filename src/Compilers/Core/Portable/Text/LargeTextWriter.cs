@@ -28,7 +28,7 @@ namespace Loretta.CodeAnalysis.Text
 
         public override SourceText ToSourceText()
         {
-            this.Flush();
+            Flush();
             return new LargeText(_chunks.ToImmutableAndFree(), _encoding, default(ImmutableArray<byte>), _checksumAlgorithm);
         }
 
@@ -122,11 +122,11 @@ namespace Loretta.CodeAnalysis.Text
         {
             if (CanFitInAllocatedBuffer(chunk.Length))
             {
-                this.Write(chunk, 0, chunk.Length);
+                Write(chunk, 0, chunk.Length);
             }
             else
             {
-                this.Flush();
+                Flush();
                 _chunks.Add(chunk);
             }
         }

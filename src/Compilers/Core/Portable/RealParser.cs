@@ -113,20 +113,20 @@ namespace Loretta.CodeAnalysis
                 // correct position, and compute the resulting base two exponent for the  
                 // normalized mantissa:  
                 uint initialMantissaBits = CountSignificantBits(initialMantissa);
-                int normalMantissaShift = this.NormalMantissaBits - (int) initialMantissaBits;
+                int normalMantissaShift = NormalMantissaBits - (int) initialMantissaBits;
                 int normalExponent = initialExponent - normalMantissaShift;
 
                 ulong mantissa = initialMantissa;
                 int exponent = normalExponent;
 
-                if (normalExponent > this.MaxBinaryExponent)
+                if (normalExponent > MaxBinaryExponent)
                 {
                     // The exponent is too large to be represented by the floating point  
                     // type; report the overflow condition:
-                    result = this.Infinity;
+                    result = Infinity;
                     return Status.Overflow;
                 }
-                else if (normalExponent < this.MinBinaryExponent)
+                else if (normalExponent < MinBinaryExponent)
                 {
                     // The exponent is too small to be represented by the floating point  
                     // type as a normal value, but it may be representable as a denormal  
@@ -137,12 +137,12 @@ namespace Loretta.CodeAnalysis
                     int denormalMantissaShift =
                         normalMantissaShift +
                         normalExponent +
-                        this.ExponentBias -
+                        ExponentBias -
                         1;
 
                     // Denormal values have an exponent of zero, so the debiased exponent is  
                     // the negation of the exponent bias:  
-                    exponent = -this.ExponentBias;
+                    exponent = -ExponentBias;
 
                     if (denormalMantissaShift < 0)
                     {
@@ -154,7 +154,7 @@ namespace Loretta.CodeAnalysis
                         // If the mantissa is now zero, we have underflowed:  
                         if (mantissa == 0)
                         {
-                            result = this.Zero;
+                            result = Zero;
                             return Status.Underflow;
                         }
 
@@ -174,7 +174,7 @@ namespace Loretta.CodeAnalysis
                         //  
                         // We detect this case here and re-adjust the mantissa and exponent  
                         // appropriately, to form a normal number:  
-                        if (mantissa > this.DenormalMantissaMask)
+                        if (mantissa > DenormalMantissaMask)
                         {
                             // We add one to the denormal_mantissa_shift to account for the  
                             // hidden mantissa bit (we subtracted one to account for this bit  
@@ -202,16 +202,16 @@ namespace Loretta.CodeAnalysis
                         // When we round the mantissa, it may produce a result that is too  
                         // large.  In this case, we divide the mantissa by two and increment  
                         // the exponent (this does not change the value).  
-                        if (mantissa > this.NormalMantissaMask)
+                        if (mantissa > NormalMantissaMask)
                         {
                             mantissa >>= 1;
                             ++exponent;
 
                             // The increment of the exponent may have generated a value too  
                             // large to be represented.  In this case, report the overflow:  
-                            if (exponent > this.MaxBinaryExponent)
+                            if (exponent > MaxBinaryExponent)
                             {
-                                result = this.Infinity;
+                                result = Infinity;
                                 return Status.Overflow;
                             }
                         }
@@ -224,13 +224,13 @@ namespace Loretta.CodeAnalysis
 
                 // Unset the hidden bit in the mantissa and assemble the floating point value  
                 // from the computed components:  
-                mantissa &= this.DenormalMantissaMask;
+                mantissa &= DenormalMantissaMask;
 
                 LorettaDebug.Assert((DenormalMantissaMask & (1UL << DenormalMantissaBits)) == 0);
-                ulong shiftedExponent = ((ulong) (exponent + this.ExponentBias)) << DenormalMantissaBits;
+                ulong shiftedExponent = ((ulong) (exponent + ExponentBias)) << DenormalMantissaBits;
                 LorettaDebug.Assert((shiftedExponent & DenormalMantissaMask) == 0);
                 LorettaDebug.Assert((mantissa & ~DenormalMantissaMask) == 0);
-                LorettaDebug.Assert((shiftedExponent & ~(((1UL << this.ExponentBits) - 1) << DenormalMantissaBits)) == 0); // exponent fits in its place
+                LorettaDebug.Assert((shiftedExponent & ~(((1UL << ExponentBits) - 1) << DenormalMantissaBits)) == 0); // exponent fits in its place
                 result = shiftedExponent | mantissa;
                 return Status.OK;
             }

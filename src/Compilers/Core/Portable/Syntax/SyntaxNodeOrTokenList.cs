@@ -115,7 +115,7 @@ namespace Loretta.CodeAnalysis
                             var green = _node.Green.GetRequiredSlot(index);
                             if (green.IsToken)
                             {
-                                return new SyntaxToken(this.Parent, green, _node.GetChildPosition(index), this.index + index);
+                                return new SyntaxToken(Parent, green, _node.GetChildPosition(index), this.index + index);
                             }
 
                             return _node.GetRequiredNodeSlot(index);
@@ -180,7 +180,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxNodeOrToken FirstOrDefault()
         {
-            return this.Any()
+            return Any()
                 ? this[0]
                 : default(SyntaxNodeOrToken);
         }
@@ -190,7 +190,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxNodeOrToken Last()
         {
-            return this[this.Count - 1];
+            return this[Count - 1];
         }
 
         /// <summary>
@@ -198,8 +198,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxNodeOrToken LastOrDefault()
         {
-            return this.Any()
-                ? this[this.Count - 1]
+            return Any()
+                ? this[Count - 1]
                 : default(SyntaxNodeOrToken);
         }
 
@@ -254,7 +254,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="nodeOrToken">The node or token to add.</param>
         public SyntaxNodeOrTokenList Add(SyntaxNodeOrToken nodeOrToken)
         {
-            return Insert(this.Count, nodeOrToken);
+            return Insert(Count, nodeOrToken);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="nodesOrTokens">The nodes or tokens to add.</param>
         public SyntaxNodeOrTokenList AddRange(IEnumerable<SyntaxNodeOrToken> nodesOrTokens)
         {
-            return InsertRange(this.Count, nodesOrTokens);
+            return InsertRange(Count, nodesOrTokens);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="nodesAndTokens">The nodes or tokens to insert.</param>
         public SyntaxNodeOrTokenList InsertRange(int index, IEnumerable<SyntaxNodeOrToken> nodesAndTokens)
         {
-            if (index < 0 || index > this.Count)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -333,7 +333,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="index">The index of the element to remove.</param>
         public SyntaxNodeOrTokenList RemoveAt(int index)
         {
-            if (index < 0 || index >= this.Count)
+            if (index < 0 || index >= Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -349,10 +349,10 @@ namespace Loretta.CodeAnalysis
         /// <param name="nodeOrTokenInList">The element to remove.</param>
         public SyntaxNodeOrTokenList Remove(SyntaxNodeOrToken nodeOrTokenInList)
         {
-            var index = this.IndexOf(nodeOrTokenInList);
-            if (index >= 0 && index < this.Count)
+            var index = IndexOf(nodeOrTokenInList);
+            if (index >= 0 && index < Count)
             {
-                return this.RemoveAt(index);
+                return RemoveAt(index);
             }
 
             return this;
@@ -380,8 +380,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="newNodesAndTokens">The new nodes and tokens.</param>
         public SyntaxNodeOrTokenList ReplaceRange(SyntaxNodeOrToken nodeOrTokenInList, IEnumerable<SyntaxNodeOrToken> newNodesAndTokens)
         {
-            var index = this.IndexOf(nodeOrTokenInList);
-            if (index >= 0 && index < this.Count)
+            var index = IndexOf(nodeOrTokenInList);
+            if (index >= 0 && index < Count)
             {
                 var nodes = this.ToList();
                 nodes.RemoveAt(index);
@@ -416,7 +416,7 @@ namespace Loretta.CodeAnalysis
         {
             return _node == null
                 ? SpecializedCollections.EmptyEnumerator<SyntaxNodeOrToken>()
-                : this.GetEnumerator();
+                : GetEnumerator();
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Loretta.CodeAnalysis
         {
             return _node == null
                 ? SpecializedCollections.EmptyEnumerator<SyntaxNodeOrToken>()
-                : this.GetEnumerator();
+                : GetEnumerator();
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Loretta.CodeAnalysis
             /// <inheritdoc cref="IEnumerator{T}.Current"/>
             public SyntaxNodeOrToken Current => _list[_index];
 
-            object IEnumerator.Current => this.Current;
+            object IEnumerator.Current => Current;
 
             /// <inheritdoc cref="IEnumerator.Reset"/>
             void IEnumerator.Reset()

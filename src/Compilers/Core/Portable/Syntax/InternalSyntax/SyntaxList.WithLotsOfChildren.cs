@@ -33,7 +33,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             internal WithLotsOfChildren(ObjectReader reader)
                 : base(reader)
             {
-                _childOffsets = CalculateOffsets(this.children);
+                _childOffsets = CalculateOffsets(children);
             }
 
             internal override void WriteTo(ObjectWriter writer)
@@ -77,7 +77,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
             internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors)
             {
-                return new WithLotsOfChildren(errors, this.GetAnnotations(), children, _childOffsets);
+                return new WithLotsOfChildren(errors, GetAnnotations(), children, _childOffsets);
             }
 
             internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)

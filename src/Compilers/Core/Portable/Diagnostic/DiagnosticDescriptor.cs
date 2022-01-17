@@ -157,15 +157,15 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(title));
             }
 
-            this.Id = id;
-            this.Title = title;
-            this.Category = category;
-            this.MessageFormat = messageFormat;
-            this.DefaultSeverity = defaultSeverity;
-            this.IsEnabledByDefault = isEnabledByDefault;
-            this.Description = description ?? string.Empty;
-            this.HelpLinkUri = helpLinkUri ?? string.Empty;
-            this.CustomTags = customTags;
+            Id = id;
+            Title = title;
+            Category = category;
+            MessageFormat = messageFormat;
+            DefaultSeverity = defaultSeverity;
+            IsEnabledByDefault = isEnabledByDefault;
+            Description = description ?? string.Empty;
+            HelpLinkUri = helpLinkUri ?? string.Empty;
+            CustomTags = customTags;
         }
 
         /// <inheritdoc/>
@@ -178,14 +178,14 @@ namespace Loretta.CodeAnalysis
 
             return
                 other != null &&
-                this.Category == other.Category &&
-                this.DefaultSeverity == other.DefaultSeverity &&
-                this.Description.Equals(other.Description) &&
-                this.HelpLinkUri == other.HelpLinkUri &&
-                this.Id == other.Id &&
-                this.IsEnabledByDefault == other.IsEnabledByDefault &&
-                this.MessageFormat.Equals(other.MessageFormat) &&
-                this.Title.Equals(other.Title);
+                Category == other.Category &&
+                DefaultSeverity == other.DefaultSeverity &&
+                Description.Equals(other.Description) &&
+                HelpLinkUri == other.HelpLinkUri &&
+                Id == other.Id &&
+                IsEnabledByDefault == other.IsEnabledByDefault &&
+                MessageFormat.Equals(other.MessageFormat) &&
+                Title.Equals(other.Title);
         }
 
         /// <inheritdoc/>
@@ -197,14 +197,14 @@ namespace Loretta.CodeAnalysis
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return Hash.Combine(this.Category.GetHashCode(),
-                Hash.Combine(this.DefaultSeverity.GetHashCode(),
-                Hash.Combine(this.Description.GetHashCode(),
-                Hash.Combine(this.HelpLinkUri.GetHashCode(),
-                Hash.Combine(this.Id.GetHashCode(),
-                Hash.Combine(this.IsEnabledByDefault.GetHashCode(),
-                Hash.Combine(this.MessageFormat.GetHashCode(),
-                    this.Title.GetHashCode())))))));
+            return Hash.Combine(Category.GetHashCode(),
+                Hash.Combine(DefaultSeverity.GetHashCode(),
+                Hash.Combine(Description.GetHashCode(),
+                Hash.Combine(HelpLinkUri.GetHashCode(),
+                Hash.Combine(Id.GetHashCode(),
+                Hash.Combine(IsEnabledByDefault.GetHashCode(),
+                Hash.Combine(MessageFormat.GetHashCode(),
+                    Title.GetHashCode())))))));
         }
     }
 }

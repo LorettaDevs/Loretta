@@ -35,14 +35,14 @@ namespace Loretta.CodeAnalysis
 
         public override IReadOnlyList<Location> AdditionalLocations
         {
-            get { return this.Info.AdditionalLocations; }
+            get { return Info.AdditionalLocations; }
         }
 
         internal override IReadOnlyList<string> CustomTags
         {
             get
             {
-                return this.Info.CustomTags;
+                return Info.CustomTags;
             }
         }
 
@@ -50,33 +50,33 @@ namespace Loretta.CodeAnalysis
         {
             get
             {
-                return this.Info.Descriptor;
+                return Info.Descriptor;
             }
         }
 
         public override string Id
         {
-            get { return this.Info.MessageIdentifier; }
+            get { return Info.MessageIdentifier; }
         }
 
         internal override string Category
         {
-            get { return this.Info.Category; }
+            get { return Info.Category; }
         }
 
         internal sealed override int Code
         {
-            get { return this.Info.Code; }
+            get { return Info.Code; }
         }
 
         public sealed override DiagnosticSeverity Severity
         {
-            get { return this.Info.Severity; }
+            get { return Info.Severity; }
         }
 
         public sealed override DiagnosticSeverity DefaultSeverity
         {
-            get { return this.Info.DefaultSeverity; }
+            get { return Info.DefaultSeverity; }
         }
 
         internal sealed override bool IsEnabledByDefault
@@ -92,17 +92,17 @@ namespace Loretta.CodeAnalysis
 
         public sealed override int WarningLevel
         {
-            get { return this.Info.WarningLevel; }
+            get { return Info.WarningLevel; }
         }
 
         public override string GetMessage(IFormatProvider? formatProvider = null)
         {
-            return this.Info.GetMessage(formatProvider);
+            return Info.GetMessage(formatProvider);
         }
 
         internal override IReadOnlyList<object?> Arguments
         {
-            get { return this.Info.Arguments; }
+            get { return Info.Arguments; }
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Loretta.CodeAnalysis
 
         public override int GetHashCode()
         {
-            return Hash.Combine(this.Location.GetHashCode(), this.Info.GetHashCode());
+            return Hash.Combine(Location.GetHashCode(), Info.GetHashCode());
         }
 
         public override bool Equals(object? obj)
@@ -151,15 +151,15 @@ namespace Loretta.CodeAnalysis
                 return true;
             }
 
-            if (obj is not DiagnosticWithInfo other || this.GetType() != other.GetType())
+            if (obj is not DiagnosticWithInfo other || GetType() != other.GetType())
             {
                 return false;
             }
 
             return
-                this.Location.Equals(other._location) &&
-                this.Info.Equals(other.Info) &&
-                this.AdditionalLocations.SequenceEqual(other.AdditionalLocations);
+                Location.Equals(other._location) &&
+                Info.Equals(other.Info) &&
+                AdditionalLocations.SequenceEqual(other.AdditionalLocations);
         }
 
         private string GetDebuggerDisplay()
@@ -170,12 +170,12 @@ namespace Loretta.CodeAnalysis
                     // If we called ToString before the diagnostic was resolved,
                     // we would risk infinite recursion (e.g. if we were still computing
                     // member lists).
-                    return "Unresolved diagnostic at " + this.Location;
+                    return "Unresolved diagnostic at " + Location;
 
                 case InternalDiagnosticSeverity.Void:
                     // If we called ToString on a void diagnostic, the MessageProvider
                     // would complain about the code.
-                    return "Void diagnostic at " + this.Location;
+                    return "Void diagnostic at " + Location;
 
                 default:
                     return ToString();
@@ -199,9 +199,9 @@ namespace Loretta.CodeAnalysis
 
         internal override Diagnostic WithSeverity(DiagnosticSeverity severity)
         {
-            if (this.Severity != severity)
+            if (Severity != severity)
             {
-                return new DiagnosticWithInfo(this.Info.GetInstanceWithSeverity(severity), _location, _isSuppressed);
+                return new DiagnosticWithInfo(Info.GetInstanceWithSeverity(severity), _location, _isSuppressed);
             }
 
             return this;
@@ -209,9 +209,9 @@ namespace Loretta.CodeAnalysis
 
         internal override Diagnostic WithIsSuppressed(bool isSuppressed)
         {
-            if (this.IsSuppressed != isSuppressed)
+            if (IsSuppressed != isSuppressed)
             {
-                return new DiagnosticWithInfo(this.Info, _location, isSuppressed);
+                return new DiagnosticWithInfo(Info, _location, isSuppressed);
             }
 
             return this;
@@ -219,7 +219,7 @@ namespace Loretta.CodeAnalysis
 
         internal sealed override bool IsNotConfigurable()
         {
-            return this.Info.IsNotConfigurable();
+            return Info.IsNotConfigurable();
         }
     }
 }

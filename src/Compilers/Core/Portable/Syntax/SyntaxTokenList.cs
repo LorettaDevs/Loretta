@@ -150,7 +150,7 @@ namespace Loretta.CodeAnalysis
                     return default(TextSpan);
                 }
 
-                return new TextSpan(this.Position, Node.FullWidth);
+                return new TextSpan(Position, Node.FullWidth);
             }
         }
 
@@ -221,7 +221,7 @@ namespace Loretta.CodeAnalysis
         {
             if (Any())
             {
-                return this[this.Count - 1];
+                return this[Count - 1];
             }
 
             throw new InvalidOperationException();
@@ -247,7 +247,7 @@ namespace Loretta.CodeAnalysis
 
         internal void CopyTo(int offset, GreenNode?[] array, int arrayOffset, int count)
         {
-            LorettaDebug.Assert(this.Count >= offset + count);
+            LorettaDebug.Assert(Count >= offset + count);
 
             for (int i = 0; i < count; i++)
             {
@@ -280,7 +280,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>-1 if not found.</returns>
         public int IndexOf(SyntaxToken tokenInList)
         {
-            for (int i = 0, n = this.Count; i < n; i++)
+            for (int i = 0, n = Count; i < n; i++)
             {
                 var token = this[i];
                 if (token == tokenInList)
@@ -294,7 +294,7 @@ namespace Loretta.CodeAnalysis
 
         internal int IndexOf(int rawKind)
         {
-            for (int i = 0, n = this.Count; i < n; i++)
+            for (int i = 0, n = Count; i < n; i++)
             {
                 if (this[i].RawKind == rawKind)
                 {
@@ -311,7 +311,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="token">The token to add.</param>
         public SyntaxTokenList Add(SyntaxToken token)
         {
-            return Insert(this.Count, token);
+            return Insert(Count, token);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="tokens">The tokens to add.</param>
         public SyntaxTokenList AddRange(IEnumerable<SyntaxToken> tokens)
         {
-            return InsertRange(this.Count, tokens);
+            return InsertRange(Count, tokens);
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="tokens">The tokens to insert.</param>
         public SyntaxTokenList InsertRange(int index, IEnumerable<SyntaxToken> tokens)
         {
-            if (index < 0 || index > this.Count)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -378,7 +378,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="index">The index of the token to remove.</param>
         public SyntaxTokenList RemoveAt(int index)
         {
-            if (index < 0 || index >= this.Count)
+            if (index < 0 || index >= Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -394,8 +394,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="tokenInList">The token to remove.</param>
         public SyntaxTokenList Remove(SyntaxToken tokenInList)
         {
-            var index = this.IndexOf(tokenInList);
-            if (index >= 0 && index <= this.Count)
+            var index = IndexOf(tokenInList);
+            if (index >= 0 && index <= Count)
             {
                 return RemoveAt(index);
             }
@@ -425,8 +425,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="newTokens">The new tokens.</param>
         public SyntaxTokenList ReplaceRange(SyntaxToken tokenInList, IEnumerable<SyntaxToken> newTokens)
         {
-            var index = this.IndexOf(tokenInList);
-            if (index >= 0 && index <= this.Count)
+            var index = IndexOf(tokenInList);
+            if (index >= 0 && index <= Count)
             {
                 var list = this.ToList();
                 list.RemoveAt(index);

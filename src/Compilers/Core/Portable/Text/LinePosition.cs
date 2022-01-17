@@ -103,7 +103,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="other">The object to compare.</param>
         public bool Equals(LinePosition other)
         {
-            return other.Line == this.Line && other.Character == this.Character;
+            return other.Line == Line && other.Character == Character;
         }
 
         /// <summary>

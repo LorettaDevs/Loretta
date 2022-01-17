@@ -39,8 +39,8 @@ namespace Loretta.CodeAnalysis.Text
                 throw new ArgumentOutOfRangeException(nameof(newLength));
             }
 
-            this.Span = span;
-            this.NewLength = newLength;
+            Span = span;
+            NewLength = newLength;
         }
 
         /// <summary>
@@ -49,8 +49,8 @@ namespace Loretta.CodeAnalysis.Text
         public bool Equals(TextChangeRange other)
         {
             return
-                other.Span == this.Span &&
-                other.NewLength == this.NewLength;
+                other.Span == Span &&
+                other.NewLength == NewLength;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return Hash.Combine(this.NewLength, this.Span.GetHashCode());
+            return Hash.Combine(NewLength, Span.GetHashCode());
         }
 
         /// <summary>

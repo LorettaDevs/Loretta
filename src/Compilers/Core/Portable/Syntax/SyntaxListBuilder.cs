@@ -19,7 +19,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void Clear()
         {
-            this.Count = 0;
+            Count = 0;
         }
 
         public void Add(SyntaxNode item)
@@ -37,7 +37,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
             if (Count >= _nodes.Length)
             {
-                this.Grow(Count == 0 ? 8 : _nodes.Length * 2);
+                Grow(Count == 0 ? 8 : _nodes.Length * 2);
             }
 
             _nodes[Count++].Value = item;
@@ -45,14 +45,14 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void AddRange(SyntaxNode[] items)
         {
-            this.AddRange(items, 0, items.Length);
+            AddRange(items, 0, items.Length);
         }
 
         public void AddRange(SyntaxNode[] items, int offset, int length)
         {
             if (Count + length > _nodes.Length)
             {
-                this.Grow(Count + length);
+                Grow(Count + length);
             }
 
             for (int i = offset, j = Count; i < offset + length; ++i, ++j)
@@ -79,17 +79,17 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void AddRange(SyntaxList<SyntaxNode> list)
         {
-            this.AddRange(list, 0, list.Count);
+            AddRange(list, 0, list.Count);
         }
 
         public void AddRange(SyntaxList<SyntaxNode> list, int offset, int count)
         {
-            if (this.Count + count > _nodes.Length)
+            if (Count + count > _nodes.Length)
             {
-                this.Grow(Count + count);
+                Grow(Count + count);
             }
 
-            var dst = this.Count;
+            var dst = Count;
             for (int i = offset, limit = offset + count; i < limit; i++)
             {
                 _nodes[dst].Value = list.ItemInternal(i)!.Green;
@@ -103,27 +103,27 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void AddRange<TNode>(SyntaxList<TNode> list) where TNode : SyntaxNode
         {
-            this.AddRange(list, 0, list.Count);
+            AddRange(list, 0, list.Count);
         }
 
         public void AddRange<TNode>(SyntaxList<TNode> list, int offset, int count) where TNode : SyntaxNode
         {
-            this.AddRange(new SyntaxList<SyntaxNode>(list.Node), offset, count);
+            AddRange(new SyntaxList<SyntaxNode>(list.Node), offset, count);
         }
 
         public void AddRange(SyntaxNodeOrTokenList list)
         {
-            this.AddRange(list, 0, list.Count);
+            AddRange(list, 0, list.Count);
         }
 
         public void AddRange(SyntaxNodeOrTokenList list, int offset, int count)
         {
-            if (this.Count + count > _nodes.Length)
+            if (Count + count > _nodes.Length)
             {
-                this.Grow(Count + count);
+                Grow(Count + count);
             }
 
-            var dst = this.Count;
+            var dst = Count;
             for (int i = offset, limit = offset + count; i < limit; i++)
             {
                 _nodes[dst].Value = list[i].UnderlyingNode;
@@ -137,13 +137,13 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void AddRange(SyntaxTokenList list)
         {
-            this.AddRange(list, 0, list.Count);
+            AddRange(list, 0, list.Count);
         }
 
         public void AddRange(SyntaxTokenList list, int offset, int length)
         {
             LorettaDebug.Assert(list.Node is not null);
-            this.AddRange(new SyntaxList<SyntaxNode>(list.Node.CreateRed()), offset, length);
+            AddRange(new SyntaxList<SyntaxNode>(list.Node.CreateRed()), offset, length);
         }
 
         private void Grow(int size)
@@ -168,7 +168,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
         internal GreenNode? ToListNode()
         {
-            switch (this.Count)
+            switch (Count)
             {
                 case 0:
                     return null;
@@ -179,8 +179,8 @@ namespace Loretta.CodeAnalysis.Syntax
                 case 3:
                     return InternalSyntax.SyntaxList.List(_nodes[0].Value!, _nodes[1].Value!, _nodes[2].Value!);
                 default:
-                    var tmp = new ArrayElement<GreenNode>[this.Count];
-                    for (int i = 0; i < this.Count; i++)
+                    var tmp = new ArrayElement<GreenNode>[Count];
+                    for (int i = 0; i < Count; i++)
                     {
                         tmp[i].Value = _nodes[i].Value!;
                     }
@@ -201,8 +201,8 @@ namespace Loretta.CodeAnalysis.Syntax
 
         internal void RemoveLast()
         {
-            this.Count -= 1;
-            this._nodes[Count] = default;
+            Count -= 1;
+            _nodes[Count] = default;
         }
     }
 }

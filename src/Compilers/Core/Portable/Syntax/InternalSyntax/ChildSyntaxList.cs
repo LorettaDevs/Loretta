@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             {
                 if (_count == -1)
                 {
-                    _count = this.CountNodes();
+                    _count = CountNodes();
                 }
 
                 return _count;
@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         private int CountNodes()
         {
             int n = 0;
-            var enumerator = this.GetEnumerator();
+            var enumerator = GetEnumerator();
             while (enumerator.MoveNext())
             {
                 n++;
@@ -44,7 +44,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                var result = new GreenNode[this.Count];
+                var result = new GreenNode[Count];
                 var i = 0;
 
                 foreach (var n in this)

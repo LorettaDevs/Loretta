@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis
             Position = position;
             Index = index;
 
-            LorettaDebug.Assert(this.RawKind != 0 || this.Equals(default(SyntaxTrivia)));
+            LorettaDebug.Assert(RawKind != 0 || Equals(default(SyntaxTrivia)));
         }
 
         /// <summary>
@@ -306,11 +306,11 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotations));
             }
 
-            if (this.UnderlyingNode != null)
+            if (UnderlyingNode != null)
             {
                 return new SyntaxTrivia(
                     token: default(SyntaxToken),
-                    triviaNode: this.UnderlyingNode.WithAdditionalAnnotationsGreen(annotations),
+                    triviaNode: UnderlyingNode.WithAdditionalAnnotationsGreen(annotations),
                     position: 0, index: 0);
             }
 
@@ -335,11 +335,11 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotations));
             }
 
-            if (this.UnderlyingNode != null)
+            if (UnderlyingNode != null)
             {
                 return new SyntaxTrivia(
                     token: default(SyntaxToken),
-                    triviaNode: this.UnderlyingNode.WithoutAnnotationsGreen(annotations),
+                    triviaNode: UnderlyingNode.WithoutAnnotationsGreen(annotations),
                     position: 0, index: 0);
             }
 
@@ -356,9 +356,9 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotationKind));
             }
 
-            if (this.HasAnnotations(annotationKind))
+            if (HasAnnotations(annotationKind))
             {
-                return this.WithoutAnnotations(this.GetAnnotations(annotationKind));
+                return WithoutAnnotations(GetAnnotations(annotationKind));
             }
 
             return this;
@@ -374,12 +374,12 @@ namespace Loretta.CodeAnalysis
                 return default(SyntaxTrivia);
             }
 
-            if (this.UnderlyingNode == null)
+            if (UnderlyingNode == null)
             {
                 return trivia;
             }
 
-            var annotations = this.UnderlyingNode.GetAnnotations();
+            var annotations = UnderlyingNode.GetAnnotations();
             if (annotations == null || annotations.Length == 0)
             {
                 return trivia;
@@ -409,7 +409,7 @@ namespace Loretta.CodeAnalysis
         public Location GetLocation()
         {
             // https://github.com/dotnet/roslyn/issues/40773
-            return SyntaxTree != null ? SyntaxTree.GetLocation(this.Span) : Location.None;
+            return SyntaxTree != null ? SyntaxTree.GetLocation(Span) : Location.None;
         }
 
         /// <summary>

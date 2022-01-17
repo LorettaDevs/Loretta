@@ -43,9 +43,9 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
                 internal NodeIteration(GreenNode node)
                 {
-                    this.Node = node;
-                    this.SlotIndex = -1;
-                    this.DiagnosticIndex = -1;
+                    Node = node;
+                    SlotIndex = -1;
+                    DiagnosticIndex = -1;
                 }
             }
 
@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 if (node != null && node.ContainsDiagnostics)
                 {
                     _stack = new NodeIteration[8];
-                    this.PushNodeOrToken(node);
+                    PushNodeOrToken(node);
                 }
             }
 
@@ -93,11 +93,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                         }
 
                         _stack[_count - 1].SlotIndex = slotIndex;
-                        this.PushNodeOrToken(child);
+                        PushNodeOrToken(child);
                     }
                     else
                     {
-                        this.Pop();
+                        Pop();
                     }
                 }
 
@@ -108,11 +108,11 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             {
                 if (node.IsToken)
                 {
-                    this.PushToken(node);
+                    PushToken(node);
                 }
                 else
                 {
-                    this.Push(node);
+                    Push(node);
                 }
             }
 
@@ -121,14 +121,14 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 var trailing = token.GetTrailingTriviaCore();
                 if (trailing != null)
                 {
-                    this.Push(trailing);
+                    Push(trailing);
                 }
 
-                this.Push(token);
+                Push(token);
                 var leading = token.GetLeadingTriviaCore();
                 if (leading != null)
                 {
-                    this.Push(leading);
+                    Push(leading);
                 }
             }
 

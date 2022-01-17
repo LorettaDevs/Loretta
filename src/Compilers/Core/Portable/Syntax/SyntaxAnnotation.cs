@@ -55,7 +55,7 @@ namespace Loretta.CodeAnalysis
         public SyntaxAnnotation(string? kind)
             : this()
         {
-            this.Kind = kind;
+            Kind = kind;
         }
 
         /// <summary>
@@ -66,14 +66,14 @@ namespace Loretta.CodeAnalysis
         public SyntaxAnnotation(string? kind, string? data)
             : this(kind)
         {
-            this.Data = data;
+            Data = data;
         }
 
         private SyntaxAnnotation(ObjectReader reader)
         {
             _id = reader.ReadInt64();
-            this.Kind = reader.ReadString();
-            this.Data = reader.ReadString();
+            Kind = reader.ReadString();
+            Data = reader.ReadString();
         }
 
         bool IObjectWritable.ShouldReuseInSerialization => true;
@@ -81,13 +81,13 @@ namespace Loretta.CodeAnalysis
         void IObjectWritable.WriteTo(ObjectWriter writer)
         {
             writer.WriteInt64(_id);
-            writer.WriteString(this.Kind);
-            writer.WriteString(this.Data);
+            writer.WriteString(Kind);
+            writer.WriteString(Data);
         }
 
         private string GetDebuggerDisplay()
         {
-            return string.Format("Annotation: Kind='{0}' Data='{1}'", this.Kind ?? "", this.Data ?? "");
+            return string.Format("Annotation: Kind='{0}' Data='{1}'", Kind ?? "", Data ?? "");
         }
 
         /// <inheritdoc/>
@@ -124,7 +124,7 @@ namespace Loretta.CodeAnalysis
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            return this.Equals(obj as SyntaxAnnotation);
+            return Equals(obj as SyntaxAnnotation);
         }
 
         /// <inheritdoc/>

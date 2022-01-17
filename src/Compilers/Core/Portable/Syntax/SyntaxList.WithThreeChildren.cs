@@ -23,11 +23,11 @@ namespace Loretta.CodeAnalysis.Syntax
                 switch (index)
                 {
                     case 0:
-                        return this.GetRedElement(ref _child0, 0);
+                        return GetRedElement(ref _child0, 0);
                     case 1:
-                        return this.GetRedElementIfNotToken(ref _child1);
+                        return GetRedElementIfNotToken(ref _child1);
                     case 2:
-                        return this.GetRedElement(ref _child2, 2);
+                        return GetRedElement(ref _child2, 2);
                     default:
                         return null;
                 }

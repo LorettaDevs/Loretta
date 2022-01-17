@@ -41,19 +41,19 @@ namespace Loretta.CodeAnalysis.Text
 
         internal override int StorageSize
         {
-            get { return this.UnderlyingText.StorageSize; }
+            get { return UnderlyingText.StorageSize; }
         }
 
         internal override SourceText StorageKey
         {
-            get { return this.UnderlyingText.StorageKey; }
+            get { return UnderlyingText.StorageKey; }
         }
 
         public override char this[int position]
         {
             get
             {
-                if (position < 0 || position > this.Length)
+                if (position < 0 || position > Length)
                 {
                     throw new ArgumentOutOfRangeException(nameof(position));
                 }

@@ -132,7 +132,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 // The new text is either behind the cursor, or the cursor is done.  In either event,
                 // we need to lex a real token from the stream.
-                var token = this.LexNewToken();
+                var token = LexNewToken();
 
                 // If the oldTreeCursor was finished, then the below code isn't really necessary.
                 // We'll just repeat the outer reader loop and call right back into ReadNewToken.

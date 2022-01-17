@@ -193,12 +193,12 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Determines whether this token has any leading trivia.
         /// </summary>
-        public bool HasLeadingTrivia => this.LeadingTrivia.Count > 0;
+        public bool HasLeadingTrivia => LeadingTrivia.Count > 0;
 
         /// <summary>
         /// Determines whether this token has any trailing trivia.
         /// </summary>
-        public bool HasTrailingTrivia => this.TrailingTrivia.Count > 0;
+        public bool HasTrailingTrivia => TrailingTrivia.Count > 0;
 
         /// <summary>
         /// Full width of the leading trivia of this token.
@@ -308,7 +308,7 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotations));
             }
 
-            if (this.Node != null)
+            if (Node != null)
             {
                 return new SyntaxToken(
                     parent: null,
@@ -338,7 +338,7 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotations));
             }
 
-            if (this.Node != null)
+            if (Node != null)
             {
                 return new SyntaxToken(
                     parent: null,
@@ -360,9 +360,9 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentNullException(nameof(annotationKind));
             }
 
-            if (this.HasAnnotations(annotationKind))
+            if (HasAnnotations(annotationKind))
             {
-                return this.WithoutAnnotations(this.GetAnnotations(annotationKind));
+                return WithoutAnnotations(GetAnnotations(annotationKind));
             }
 
             return this;
@@ -386,7 +386,7 @@ namespace Loretta.CodeAnalysis
                 return token;
             }
 
-            var annotations = this.Node.GetAnnotations();
+            var annotations = Node.GetAnnotations();
             if (annotations?.Length > 0)
             {
                 return new SyntaxToken(
@@ -409,7 +409,7 @@ namespace Loretta.CodeAnalysis
             get
             {
                 return Node != null
-                    ? new SyntaxTriviaList(this, Node.GetLeadingTriviaCore(), this.Position)
+                    ? new SyntaxTriviaList(this, Node.GetLeadingTriviaCore(), Position)
                     : default(SyntaxTriviaList);
             }
         }
@@ -435,7 +435,7 @@ namespace Loretta.CodeAnalysis
                 }
 
                 var trailingGreen = Node.GetTrailingTriviaCore();
-                int trailingPosition = Position + this.FullWidth;
+                int trailingPosition = Position + FullWidth;
                 if (trailingGreen != null)
                 {
                     trailingPosition -= trailingGreen.FullWidth;
@@ -453,7 +453,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithTriviaFrom(SyntaxToken token)
         {
-            return this.WithLeadingTrivia(token.LeadingTrivia).WithTrailingTrivia(token.TrailingTrivia);
+            return WithLeadingTrivia(token.LeadingTrivia).WithTrailingTrivia(token.TrailingTrivia);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithLeadingTrivia(SyntaxTriviaList trivia)
         {
-            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
+            return WithLeadingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithLeadingTrivia(params SyntaxTrivia[]? trivia)
         {
-            return this.WithLeadingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
+            return WithLeadingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithTrailingTrivia(SyntaxTriviaList trivia)
         {
-            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
+            return WithTrailingTrivia((IEnumerable<SyntaxTrivia>) trivia);
         }
 
         /// <summary>
@@ -495,7 +495,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public SyntaxToken WithTrailingTrivia(params SyntaxTrivia[]? trivia)
         {
-            return this.WithTrailingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
+            return WithTrailingTrivia((IEnumerable<SyntaxTrivia>?) trivia);
         }
 
         /// <summary>
@@ -513,19 +513,19 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public IEnumerable<SyntaxTrivia> GetAllTrivia()
         {
-            if (this.HasLeadingTrivia)
+            if (HasLeadingTrivia)
             {
-                if (this.HasTrailingTrivia)
+                if (HasTrailingTrivia)
                 {
-                    return this.LeadingTrivia.Concat(this.TrailingTrivia);
+                    return LeadingTrivia.Concat(TrailingTrivia);
                 }
 
-                return this.LeadingTrivia;
+                return LeadingTrivia;
             }
 
-            if (this.HasTrailingTrivia)
+            if (HasTrailingTrivia)
             {
-                return this.TrailingTrivia;
+                return TrailingTrivia;
             }
 
             return SpecializedCollections.EmptyEnumerable<SyntaxTrivia>();
@@ -701,6 +701,6 @@ namespace Loretta.CodeAnalysis
         /// identical tokens could have different parents and may occur at different positions in their respective trees.
         /// </remarks>
         public bool IsIncrementallyIdenticalTo(SyntaxToken token)
-            => this.Node != null && this.Node == token.Node;
+            => Node != null && Node == token.Node;
     }
 }

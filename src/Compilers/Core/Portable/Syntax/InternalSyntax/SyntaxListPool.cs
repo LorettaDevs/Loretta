@@ -44,12 +44,12 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         internal SyntaxListBuilder<TNode> Allocate<TNode>() where TNode : GreenNode
         {
-            return new SyntaxListBuilder<TNode>(this.Allocate());
+            return new SyntaxListBuilder<TNode>(Allocate());
         }
 
         internal SeparatedSyntaxListBuilder<TNode> AllocateSeparated<TNode>() where TNode : GreenNode
         {
-            return new SeparatedSyntaxListBuilder<TNode>(this.Allocate());
+            return new SeparatedSyntaxListBuilder<TNode>(Allocate());
         }
 
         internal void Free<TNode>(in SeparatedSyntaxListBuilder<TNode> item) where TNode : GreenNode
@@ -63,7 +63,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             item.Clear();
             if (_freeIndex >= _freeList.Length)
             {
-                this.Grow();
+                Grow();
             }
 #if DEBUG
             LorettaDebug.Assert(_allocated.Contains(item));

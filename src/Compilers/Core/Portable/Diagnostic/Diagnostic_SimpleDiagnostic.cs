@@ -161,7 +161,7 @@ namespace Loretta.CodeAnalysis
 
             public override bool Equals(object? obj)
             {
-                return this.Equals(obj as Diagnostic);
+                return Equals(obj as Diagnostic);
             }
 
             public override int GetHashCode()
@@ -189,7 +189,7 @@ namespace Loretta.CodeAnalysis
 
             internal override Diagnostic WithSeverity(DiagnosticSeverity severity)
             {
-                if (this.Severity != severity)
+                if (Severity != severity)
                 {
                     var warningLevel = GetDefaultWarningLevel(severity);
                     return new SimpleDiagnostic(_descriptor, severity, warningLevel, _location, _additionalLocations, _messageArgs, _properties, _isSuppressed);
@@ -200,7 +200,7 @@ namespace Loretta.CodeAnalysis
 
             internal override Diagnostic WithIsSuppressed(bool isSuppressed)
             {
-                if (this.IsSuppressed != isSuppressed)
+                if (IsSuppressed != isSuppressed)
                 {
                     return new SimpleDiagnostic(_descriptor, _severity, _warningLevel, _location, _additionalLocations, _messageArgs, _properties, isSuppressed);
                 }

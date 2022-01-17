@@ -21,7 +21,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         public void Free()
         {
-            this.Clear();
+            Clear();
             _pool?.Free(this);
         }
 

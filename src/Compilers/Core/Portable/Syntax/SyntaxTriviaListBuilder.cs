@@ -63,7 +63,7 @@ namespace Loretta.CodeAnalysis.Syntax
             {
                 foreach (var item in items)
                 {
-                    this.Add(item);
+                    Add(item);
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace Loretta.CodeAnalysis.Syntax
         {
             if (_count >= _nodes.Length)
             {
-                this.Grow(_count == 0 ? 8 : _nodes.Length * 2);
+                Grow(_count == 0 ? 8 : _nodes.Length * 2);
             }
 
             _nodes[_count++] = item;
@@ -81,14 +81,14 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void Add(SyntaxTrivia[] items)
         {
-            this.Add(items, 0, items.Length);
+            Add(items, 0, items.Length);
         }
 
         public void Add(SyntaxTrivia[] items, int offset, int length)
         {
             if (_count + length > _nodes.Length)
             {
-                this.Grow(_count + length);
+                Grow(_count + length);
             }
 
             Array.Copy(items, offset, _nodes, _count, length);
@@ -97,14 +97,14 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public void Add(in SyntaxTriviaList list)
         {
-            this.Add(list, 0, list.Count);
+            Add(list, 0, list.Count);
         }
 
         public void Add(in SyntaxTriviaList list, int offset, int length)
         {
             if (_count + length > _nodes.Length)
             {
-                this.Grow(_count + length);
+                Grow(_count + length);
             }
 
             list.CopyTo(offset, _nodes, _count, length);

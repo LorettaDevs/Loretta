@@ -115,8 +115,8 @@ namespace Loretta.CodeAnalysis
         internal CachingBase(int size)
         {
             var alignedSize = AlignSize(size);
-            this.mask = alignedSize - 1;
-            this.entries = new TEntry[alignedSize];
+            mask = alignedSize - 1;
+            entries = new TEntry[alignedSize];
         }
 
         private static int AlignSize(int size)
