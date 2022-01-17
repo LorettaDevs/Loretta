@@ -64,7 +64,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 return builder.ToList();
             }
 
-            return default(SyntaxList<TNode>);
+            return default;
         }
 
         public SyntaxList<TDerived> ToList<TDerived>() where TDerived : GreenNode =>

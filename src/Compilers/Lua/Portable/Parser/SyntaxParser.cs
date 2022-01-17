@@ -41,11 +41,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             Lua.LuaSyntaxNode oldTree,
             IEnumerable<TextChangeRange> changes,
             bool preLexIfNotIncremental = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             _lexer = lexer;
             _cancellationToken = cancellationToken;
-            _currentNode = default(BlendedNode);
+            _currentNode = default;
             _isIncremental = oldTree != null;
 
             if (IsIncremental)
@@ -55,7 +55,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else
             {
-                _firstBlender = default(Blender);
+                _firstBlender = default;
                 _lexedTokens = new ArrayElement<SyntaxToken>[32];
             }
 
@@ -152,7 +152,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             LorettaDebug.Assert(offset >= 0 && offset < _tokenCount);
             _tokenOffset = offset;
             _currentToken = null;
-            _currentNode = default(BlendedNode);
+            _currentNode = default;
             _prevTokenTrailingTrivia = point.PrevTokenTrailingTrivia;
             if (_blendedTokens != null)
             {
@@ -245,7 +245,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             _tokenCount = _tokenOffset; // forget anything after this slot
 
             // erase current state
-            _currentNode = default(BlendedNode);
+            _currentNode = default;
             _currentToken = null;
 
             return result;
@@ -418,7 +418,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             if (_blendedTokens != null)
             {
-                _currentNode = default(BlendedNode);
+                _currentNode = default;
             }
 
             _tokenOffset++;

@@ -56,7 +56,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     return MoveToParent().MoveToNextSibling();
                 }
 
-                return default(Cursor);
+                return default;
             }
 
             private Cursor MoveToParent()

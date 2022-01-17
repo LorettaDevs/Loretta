@@ -29,7 +29,7 @@ namespace Loretta.CodeAnalysis.Text
         public override SourceText ToSourceText()
         {
             Flush();
-            return new LargeText(_chunks.ToImmutableAndFree(), _encoding, default(ImmutableArray<byte>), _checksumAlgorithm);
+            return new LargeText(_chunks.ToImmutableAndFree(), _encoding, default, _checksumAlgorithm);
         }
 
         // https://github.com/dotnet/roslyn/issues/40830

@@ -98,7 +98,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The absolute span of this token in characters, not including its leading and trailing trivia.
         /// </summary>
-        public TextSpan Span => Node != null ? new TextSpan(Position + Node.GetLeadingTriviaWidth(), Node.Width) : default(TextSpan);
+        public TextSpan Span => Node != null ? new TextSpan(Position + Node.GetLeadingTriviaWidth(), Node.Width) : default;
 
         internal int EndPosition => Node != null ? Position + Node.FullWidth : 0;
 
@@ -273,7 +273,7 @@ namespace Loretta.CodeAnalysis
                     index: 0);
             }
 
-            return default(SyntaxToken);
+            return default;
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Loretta.CodeAnalysis
                     index: 0);
             }
 
-            return default(SyntaxToken);
+            return default;
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Loretta.CodeAnalysis
         {
             if (token.Node == null)
             {
-                return default(SyntaxToken);
+                return default;
             }
 
             if (Node == null)
@@ -364,7 +364,7 @@ namespace Loretta.CodeAnalysis
             {
                 return Node != null
                     ? new SyntaxTriviaList(this, Node.GetLeadingTriviaCore(), Position)
-                    : default(SyntaxTriviaList);
+                    : default;
             }
         }
 
@@ -378,7 +378,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (Node == null)
                 {
-                    return default(SyntaxTriviaList);
+                    return default;
                 }
 
                 var leading = Node.GetLeadingTriviaCore();
@@ -427,7 +427,7 @@ namespace Loretta.CodeAnalysis
         {
             return Node != null
                 ? new SyntaxToken(null, Node.WithLeadingTrivia(GreenNode.CreateList(trivia, static t => t.RequiredUnderlyingNode)), position: 0, index: 0)
-                : default(SyntaxToken);
+                : default;
         }
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace Loretta.CodeAnalysis
         {
             return Node != null
                 ? new SyntaxToken(null, Node.WithTrailingTrivia(GreenNode.CreateList(trivia, static t => t.RequiredUnderlyingNode)), position: 0, index: 0)
-                : default(SyntaxToken);
+                : default;
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Loretta.CodeAnalysis
         {
             if (Node == null)
             {
-                return default(SyntaxToken);
+                return default;
             }
 
             return SyntaxNavigator.Instance.GetNextToken(this, includeZeroWidth, includeSkipped, includeDirectives, includeDocumentationComments);
@@ -537,7 +537,7 @@ namespace Loretta.CodeAnalysis
         {
             if (Node == null)
             {
-                return default(SyntaxToken);
+                return default;
             }
 
             return SyntaxNavigator.Instance.GetNextToken(this, predicate, stepInto);
@@ -551,7 +551,7 @@ namespace Loretta.CodeAnalysis
         {
             if (Node == null)
             {
-                return default(SyntaxToken);
+                return default;
             }
 
             return SyntaxNavigator.Instance.GetPreviousToken(this, includeZeroWidth, includeSkipped, includeDirectives, includeDocumentationComments);

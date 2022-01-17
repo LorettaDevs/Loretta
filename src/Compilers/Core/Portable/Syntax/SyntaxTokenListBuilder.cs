@@ -93,7 +93,7 @@ namespace Loretta.CodeAnalysis.Syntax
             }
             else
             {
-                return default(SyntaxTokenList);
+                return default;
             }
         }
 

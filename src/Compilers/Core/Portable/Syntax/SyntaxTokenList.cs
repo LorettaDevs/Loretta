@@ -146,7 +146,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (Node == null)
                 {
-                    return default(TextSpan);
+                    return default;
                 }
 
                 return new TextSpan(Position, Node.FullWidth);
@@ -162,7 +162,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (Node == null)
                 {
-                    return default(TextSpan);
+                    return default;
                 }
 
                 return TextSpan.FromBounds(Position + Node.GetLeadingTriviaWidth(),
@@ -311,7 +311,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="token">The token to insert.</param>
         public SyntaxTokenList Insert(int index, SyntaxToken token)
         {
-            if (token == default(SyntaxToken))
+            if (token == default)
             {
                 throw new ArgumentOutOfRangeException(nameof(token));
             }
@@ -391,7 +391,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="newToken">The new token.</param>
         public SyntaxTokenList Replace(SyntaxToken tokenInList, SyntaxToken newToken)
         {
-            if (newToken == default(SyntaxToken))
+            if (newToken == default)
             {
                 throw new ArgumentOutOfRangeException(nameof(newToken));
             }

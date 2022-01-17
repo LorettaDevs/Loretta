@@ -21,7 +21,7 @@ namespace Loretta.CodeAnalysis.Text
         internal StringText(
             string source,
             Encoding? encodingOpt,
-            ImmutableArray<byte> checksum = default(ImmutableArray<byte>),
+            ImmutableArray<byte> checksum = default,
             SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
             : base(checksum, checksumAlgorithm)
         {
@@ -78,7 +78,7 @@ namespace Loretta.CodeAnalysis.Text
         public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count) =>
             Source.CopyTo(sourceIndex, destination, destinationIndex, count);
 
-        public override void Write(TextWriter textWriter, TextSpan span, CancellationToken cancellationToken = default(CancellationToken))
+        public override void Write(TextWriter textWriter, TextSpan span, CancellationToken cancellationToken = default)
         {
             if (span.Start == 0 && span.End == Length)
             {

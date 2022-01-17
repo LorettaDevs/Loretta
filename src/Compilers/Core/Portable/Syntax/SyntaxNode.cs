@@ -551,7 +551,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// The parent trivia for this node in case it is part of structured trivia.
         /// </summary>
-        public virtual SyntaxTrivia ParentTrivia => default(SyntaxTrivia);
+        public virtual SyntaxTrivia ParentTrivia => default;
 
         internal SyntaxNode? ParentOrStructuredTriviaParent => GetParent(this, ascendOutOfTrivia: true);
 
@@ -886,7 +886,7 @@ namespace Loretta.CodeAnalysis
                 return FindTriviaByOffset(this, position - Position, stepInto);
             }
 
-            return default(SyntaxTrivia);
+            return default;
         }
 
         internal static SyntaxTrivia FindTriviaByOffset(SyntaxNode node, int textOffset, Func<SyntaxTrivia, bool>? stepInto = null)
@@ -946,7 +946,7 @@ namespace Loretta.CodeAnalysis
                                 }
                             }
 
-                            return default(SyntaxTrivia);
+                            return default;
                         }
                     }
 
@@ -954,7 +954,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            return default(SyntaxTrivia);
+            return default;
         }
 
         /// <summary>
@@ -1206,7 +1206,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            Eof = default(SyntaxToken);
+            Eof = default;
             return false;
         }
 
@@ -1293,7 +1293,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            return default(SyntaxTrivia);
+            return default;
         }
 
         /// <summary>

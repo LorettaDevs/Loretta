@@ -158,7 +158,7 @@ namespace Loretta.CodeAnalysis
                 return new SyntaxToken(_nodeOrParent, _token, Position, _tokenIndex);
             }
 
-            return default(SyntaxToken);
+            return default;
         }
 
         internal bool AsToken(out SyntaxToken token)
@@ -233,7 +233,7 @@ namespace Loretta.CodeAnalysis
                     return _nodeOrParent.Span;
                 }
 
-                return default(TextSpan);
+                return default;
             }
         }
 
@@ -279,7 +279,7 @@ namespace Loretta.CodeAnalysis
                     return _nodeOrParent.FullSpan;
                 }
 
-                return default(TextSpan);
+                return default;
             }
         }
 
@@ -363,7 +363,7 @@ namespace Loretta.CodeAnalysis
                 return _nodeOrParent.GetLeadingTrivia();
             }
 
-            return default(SyntaxTriviaList);
+            return default;
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Loretta.CodeAnalysis
                 return _nodeOrParent.GetTrailingTrivia();
             }
 
-            return default(SyntaxTriviaList);
+            return default;
         }
 
         /// <summary>
@@ -972,7 +972,7 @@ namespace Loretta.CodeAnalysis
             var parent = Parent;
             if (parent == null)
             {
-                return default(SyntaxNodeOrToken);
+                return default;
             }
 
             var siblings = parent.ChildNodesAndTokens();
@@ -1007,7 +1007,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            return default(SyntaxNodeOrToken);
+            return default;
         }
 
         private SyntaxNodeOrToken GetNextSiblingFromStart(ChildSyntaxList siblings)
@@ -1026,7 +1026,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            return default(SyntaxNodeOrToken);
+            return default;
         }
 
         private SyntaxNodeOrToken GetNextSiblingWithSearch(ChildSyntaxList siblings)
@@ -1049,7 +1049,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            return default(SyntaxNodeOrToken);
+            return default;
         }
     }
 }

@@ -114,14 +114,14 @@ namespace Loretta.CodeAnalysis.Syntax
                 switch (_count)
                 {
                     case 1:
-                        return new SyntaxTriviaList(default(SyntaxToken), _nodes[0].UnderlyingNode, position: 0, index: 0);
+                        return new SyntaxTriviaList(default, _nodes[0].UnderlyingNode, position: 0, index: 0);
                     case 2:
-                        return new SyntaxTriviaList(default(SyntaxToken),
+                        return new SyntaxTriviaList(default,
                             InternalSyntax.SyntaxList.List(
                             _nodes[0].UnderlyingNode!,
                             _nodes[1].UnderlyingNode!), position: 0, index: 0);
                     case 3:
-                        return new SyntaxTriviaList(default(SyntaxToken),
+                        return new SyntaxTriviaList(default,
                             InternalSyntax.SyntaxList.List(
                                 _nodes[0].UnderlyingNode!,
                                 _nodes[1].UnderlyingNode!,
@@ -135,14 +135,14 @@ namespace Loretta.CodeAnalysis.Syntax
                             tmp[i].Value = _nodes[i].UnderlyingNode!;
                         }
 
-                        return new SyntaxTriviaList(default(SyntaxToken),
+                        return new SyntaxTriviaList(default,
                             InternalSyntax.SyntaxList.List(tmp), position: 0, index: 0);
                     }
                 }
             }
             else
             {
-                return default(SyntaxTriviaList);
+                return default;
             }
         }
     }

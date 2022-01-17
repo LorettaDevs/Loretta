@@ -139,7 +139,7 @@ namespace Loretta.CodeAnalysis.Syntax
             }
             else
             {
-                return default(SyntaxNodeOrTokenList);
+                return default;
             }
         }
     }

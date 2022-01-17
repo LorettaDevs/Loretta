@@ -113,7 +113,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (Count == 0)
                 {
-                    return default(TextSpan);
+                    return default;
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (Count == 0)
                 {
-                    return default(TextSpan);
+                    return default;
                 }
                 else
                 {
@@ -282,7 +282,7 @@ namespace Loretta.CodeAnalysis
         {
             if (items.Count == 0)
             {
-                return default(SyntaxList<TNode>);
+                return default;
             }
 
             var newGreen = GreenNode.CreateList(items, static n => n.Green);

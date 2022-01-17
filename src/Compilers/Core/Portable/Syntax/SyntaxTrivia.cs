@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis
             Position = position;
             Index = index;
 
-            LorettaDebug.Assert(RawKind != 0 || Equals(default(SyntaxTrivia)));
+            LorettaDebug.Assert(RawKind != 0 || Equals(default));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Loretta.CodeAnalysis
             {
                 return UnderlyingNode != null
                     ? new TextSpan(Position + UnderlyingNode.GetLeadingTriviaWidth(), UnderlyingNode.Width)
-                    : default(TextSpan);
+                    : default;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Loretta.CodeAnalysis
         /// will include spans of any leading or trailing trivia present on the child non-terminal node of this trivia.
         /// </summary>
         public TextSpan FullSpan =>
-            UnderlyingNode != null ? new TextSpan(Position, UnderlyingNode.FullWidth) : default(TextSpan);
+            UnderlyingNode != null ? new TextSpan(Position, UnderlyingNode.FullWidth) : default;
 
         /// <summary>
         /// Determines whether this trivia has any diagnostics on it. If this trivia is a structured trivia then the
@@ -271,12 +271,12 @@ namespace Loretta.CodeAnalysis
             if (UnderlyingNode != null)
             {
                 return new SyntaxTrivia(
-                    token: default(SyntaxToken),
+                    token: default,
                     triviaNode: UnderlyingNode.WithAdditionalAnnotationsGreen(annotations),
                     position: 0, index: 0);
             }
 
-            return default(SyntaxTrivia);
+            return default;
         }
 
         /// <summary>
@@ -298,12 +298,12 @@ namespace Loretta.CodeAnalysis
             if (UnderlyingNode != null)
             {
                 return new SyntaxTrivia(
-                    token: default(SyntaxToken),
+                    token: default,
                     triviaNode: UnderlyingNode.WithoutAnnotationsGreen(annotations),
                     position: 0, index: 0);
             }
 
-            return default(SyntaxTrivia);
+            return default;
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Loretta.CodeAnalysis
         {
             if (trivia.UnderlyingNode == null)
             {
-                return default(SyntaxTrivia);
+                return default;
             }
 
             if (UnderlyingNode == null)
@@ -346,7 +346,7 @@ namespace Loretta.CodeAnalysis
             }
 
             return new SyntaxTrivia(
-                token: default(SyntaxToken),
+                token: default,
                 triviaNode: trivia.UnderlyingNode.WithAdditionalAnnotationsGreen(annotations),
                 position: 0, index: 0);
         }

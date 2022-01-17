@@ -114,7 +114,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 return builder.ToList();
             }
 
-            return default(SeparatedSyntaxList<TNode>);
+            return default;
         }
     }
 }

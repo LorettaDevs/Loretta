@@ -88,7 +88,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                     }
                     else
                     {
-                        return default(SyntaxTriviaList);
+                        return default;
                     }
                 }
             }
@@ -210,7 +210,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                         if (removeNextSeparator)
                         {
                             removeNextSeparator = false;
-                            visited = default(SyntaxNodeOrToken);
+                            visited = default;
                         }
                         else
                         {

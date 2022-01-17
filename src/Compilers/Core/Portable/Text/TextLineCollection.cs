@@ -101,7 +101,7 @@ namespace Loretta.CodeAnalysis.Text
                     }
                     else
                     {
-                        return default(TextLine);
+                        return default;
                     }
                 }
             }

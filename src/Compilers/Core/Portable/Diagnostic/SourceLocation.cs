@@ -63,7 +63,7 @@ namespace Loretta.CodeAnalysis
             // then just return an invalid span.
             if (_syntaxTree == null)
             {
-                FileLinePositionSpan result = default(FileLinePositionSpan);
+                FileLinePositionSpan result = default;
                 LorettaDebug.Assert(!result.IsValid);
                 return result;
             }

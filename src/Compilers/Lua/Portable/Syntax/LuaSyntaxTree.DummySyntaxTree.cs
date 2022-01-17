@@ -50,7 +50,7 @@ namespace Loretta.CodeAnalysis.Lua
             public override bool HasCompilationUnitRoot => true;
 
             public override FileLinePositionSpan GetLineSpan(TextSpan span, CancellationToken cancellationToken = default) =>
-                default(FileLinePositionSpan);
+                default;
 
             public override SyntaxTree WithRootAndOptions(SyntaxNode root, ParseOptions options) =>
                 SyntaxFactory.SyntaxTree(root, options: options, path: FilePath, encoding: null);
