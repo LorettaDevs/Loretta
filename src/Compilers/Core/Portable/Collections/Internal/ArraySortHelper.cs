@@ -112,9 +112,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
             if (comparer(keys[i], keys[j]) > 0)
             {
-                T key = keys[i];
-                keys[i] = keys[j];
-                keys[j] = key;
+                (keys[j], keys[i]) = (keys[i], keys[j]);
             }
         }
 
@@ -123,9 +121,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         {
             LorettaDebug.Assert(i != j);
 
-            T t = a[i];
-            a[i] = a[j];
-            a[j] = t;
+            (a[j], a[i]) = (a[i], a[j]);
         }
 
         internal static void IntrospectiveSort(SegmentedArraySegment<T> keys, Comparison<T> comparer)
@@ -316,15 +312,10 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                     (typeof(TKey) == typeof(float) && float.IsNaN((float) (object) keys[i])) ||
                     (typeof(TKey) == typeof(Half) && Half.IsNaN((Half) (object) keys[i])))
                 {
-                    TKey temp = keys[left];
-                    keys[left] = keys[i];
-                    keys[i] = temp;
-
+                    (keys[i], keys[left]) = (keys[left], keys[i]);
                     if ((uint) i < (uint) values.Length) // check to see if we have values
                     {
-                        TValue tempValue = values[left];
-                        values[left] = values[i];
-                        values[i] = tempValue;
+                        (values[i], values[left]) = (values[left], values[i]);
                     }
 
                     left++;

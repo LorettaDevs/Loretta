@@ -249,9 +249,7 @@ namespace Loretta.CodeAnalysis.Collections
             var lastIndex = index + length - 1;
             do
             {
-                var temp = array[firstIndex];
-                array[firstIndex] = array[lastIndex];
-                array[lastIndex] = temp;
+                (array[lastIndex], array[firstIndex]) = (array[firstIndex], array[lastIndex]);
                 firstIndex++;
                 lastIndex--;
             } while (firstIndex < lastIndex);
