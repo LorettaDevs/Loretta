@@ -113,7 +113,7 @@ namespace Loretta.CodeAnalysis.Text
             int overlapEnd = Math.Min(End, span.End);
 
             return overlapStart < overlapEnd
-                ? TextSpan.FromBounds(overlapStart, overlapEnd)
+                ? FromBounds(overlapStart, overlapEnd)
                 : (TextSpan?) null;
         }
 
@@ -158,7 +158,7 @@ namespace Loretta.CodeAnalysis.Text
             int intersectEnd = Math.Min(End, span.End);
 
             return intersectStart <= intersectEnd
-                ? TextSpan.FromBounds(intersectStart, intersectEnd)
+                ? FromBounds(intersectStart, intersectEnd)
                 : (TextSpan?) null;
         }
 

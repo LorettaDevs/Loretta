@@ -496,7 +496,7 @@ namespace Loretta.CodeAnalysis
         {
             for (int i = Count - 1; i >= 0; i--)
             {
-                if (object.Equals(this[i], node))
+                if (Equals(this[i], node))
                 {
                     return i;
                 }

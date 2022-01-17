@@ -54,7 +54,7 @@ namespace Loretta.Utilities
                 // Should end up with a constrained virtual call to object.GetHashCode (i.e. avoid boxing where possible).
                 if (value != null)
                 {
-                    hashCode = Hash.Combine(value.GetHashCode(), hashCode);
+                    hashCode = Combine(value.GetHashCode(), hashCode);
                 }
             }
 
@@ -78,7 +78,7 @@ namespace Loretta.Utilities
                 // Should end up with a constrained virtual call to object.GetHashCode (i.e. avoid boxing where possible).
                 if (value != null)
                 {
-                    hashCode = Hash.Combine(value.GetHashCode(), hashCode);
+                    hashCode = Combine(value.GetHashCode(), hashCode);
                 }
             }
 
@@ -104,7 +104,7 @@ namespace Loretta.Utilities
                 // Should end up with a constrained virtual call to object.GetHashCode (i.e. avoid boxing where possible).
                 if (value != null)
                 {
-                    hashCode = Hash.Combine(value.GetHashCode(), hashCode);
+                    hashCode = Combine(value.GetHashCode(), hashCode);
                 }
             }
 
@@ -129,7 +129,7 @@ namespace Loretta.Utilities
 
                 if (value != null)
                 {
-                    hashCode = Hash.Combine(stringComparer.GetHashCode(value), hashCode);
+                    hashCode = Combine(stringComparer.GetHashCode(value), hashCode);
                 }
             }
 
@@ -156,11 +156,11 @@ namespace Loretta.Utilities
         /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
         internal static int GetFNVHashCode(byte[] data)
         {
-            int hashCode = Hash.FnvOffsetBias;
+            int hashCode = FnvOffsetBias;
 
             for (int i = 0; i < data.Length; i++)
             {
-                hashCode = unchecked((hashCode ^ data[i]) * Hash.FnvPrime);
+                hashCode = unchecked((hashCode ^ data[i]) * FnvPrime);
             }
 
             return hashCode;
@@ -177,7 +177,7 @@ namespace Loretta.Utilities
         /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
         internal static int GetFNVHashCode(ReadOnlySpan<byte> data, out bool isAscii)
         {
-            int hashCode = Hash.FnvOffsetBias;
+            int hashCode = FnvOffsetBias;
 
             byte asciiMask = 0;
 
@@ -185,7 +185,7 @@ namespace Loretta.Utilities
             {
                 byte b = data[i];
                 asciiMask |= b;
-                hashCode = unchecked((hashCode ^ b) * Hash.FnvPrime);
+                hashCode = unchecked((hashCode ^ b) * FnvPrime);
             }
 
             isAscii = (asciiMask & 0x80) == 0;
@@ -200,11 +200,11 @@ namespace Loretta.Utilities
         /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
         internal static int GetFNVHashCode(ImmutableArray<byte> data)
         {
-            int hashCode = Hash.FnvOffsetBias;
+            int hashCode = FnvOffsetBias;
 
             for (int i = 0; i < data.Length; i++)
             {
-                hashCode = unchecked((hashCode ^ data[i]) * Hash.FnvPrime);
+                hashCode = unchecked((hashCode ^ data[i]) * FnvPrime);
             }
 
             return hashCode;
@@ -220,11 +220,11 @@ namespace Loretta.Utilities
         /// </summary>
         internal static int GetFNVHashCode(ReadOnlySpan<char> data)
         {
-            int hashCode = Hash.FnvOffsetBias;
+            int hashCode = FnvOffsetBias;
 
             for (int i = 0; i < data.Length; i++)
             {
-                hashCode = unchecked((hashCode ^ data[i]) * Hash.FnvPrime);
+                hashCode = unchecked((hashCode ^ data[i]) * FnvPrime);
             }
 
             return hashCode;
@@ -260,7 +260,7 @@ namespace Loretta.Utilities
         /// </summary>
         /// <param name="text">The input string</param>
         /// <returns>The FNV-1a hash code of <paramref name="text"/></returns>
-        internal static int GetFNVHashCode(string text) => CombineFNVHash(Hash.FnvOffsetBias, text);
+        internal static int GetFNVHashCode(string text) => CombineFNVHash(FnvOffsetBias, text);
 
         /// <summary>
         /// Compute the hashcode of a string using FNV-1a
@@ -270,12 +270,12 @@ namespace Loretta.Utilities
         /// <returns>The FNV-1a hash code of <paramref name="text"/></returns>
         internal static int GetFNVHashCode(System.Text.StringBuilder text)
         {
-            int hashCode = Hash.FnvOffsetBias;
+            int hashCode = FnvOffsetBias;
             int end = text.Length;
 
             for (int i = 0; i < end; i++)
             {
-                hashCode = unchecked((hashCode ^ text[i]) * Hash.FnvPrime);
+                hashCode = unchecked((hashCode ^ text[i]) * FnvPrime);
             }
 
             return hashCode;
@@ -291,12 +291,12 @@ namespace Loretta.Utilities
         /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending after <paramref name="length"/> characters.</returns>
         internal static int GetFNVHashCode(char[] text, int start, int length)
         {
-            int hashCode = Hash.FnvOffsetBias;
+            int hashCode = FnvOffsetBias;
             int end = start + length;
 
             for (int i = start; i < end; i++)
             {
-                hashCode = unchecked((hashCode ^ text[i]) * Hash.FnvPrime);
+                hashCode = unchecked((hashCode ^ text[i]) * FnvPrime);
             }
 
             return hashCode;
@@ -311,7 +311,7 @@ namespace Loretta.Utilities
         /// </summary>
         /// <param name="ch">The character to hash</param>
         /// <returns>The FNV-1a hash code of the character.</returns>
-        internal static int GetFNVHashCode(char ch) => Hash.CombineFNVHash(Hash.FnvOffsetBias, ch);
+        internal static int GetFNVHashCode(char ch) => CombineFNVHash(FnvOffsetBias, ch);
 
         /// <summary>
         /// Combine a string with an existing FNV-1a hash code
@@ -324,7 +324,7 @@ namespace Loretta.Utilities
         {
             foreach (char ch in text)
             {
-                hashCode = unchecked((hashCode ^ ch) * Hash.FnvPrime);
+                hashCode = unchecked((hashCode ^ ch) * FnvPrime);
             }
 
             return hashCode;
@@ -337,7 +337,7 @@ namespace Loretta.Utilities
         /// <param name="hashCode">The accumulated hash code</param>
         /// <param name="ch">The new character to combine</param>
         /// <returns>The result of combining <paramref name="hashCode"/> with <paramref name="ch"/> using the FNV-1a algorithm</returns>
-        internal static int CombineFNVHash(int hashCode, char ch) => unchecked((hashCode ^ ch) * Hash.FnvPrime);
+        internal static int CombineFNVHash(int hashCode, char ch) => unchecked((hashCode ^ ch) * FnvPrime);
 
         /// <summary>
         /// Jenkins's one_at_a_time hash is adapted here from a WWW page by Bob Jenkins

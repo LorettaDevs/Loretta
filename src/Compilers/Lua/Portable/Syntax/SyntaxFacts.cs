@@ -65,8 +65,8 @@ namespace Loretta.CodeAnalysis.Lua
             if (kindBText is null)
                 throw new ArgumentNullException(nameof(kindBText));
 
-            var kindAIsKeyword = SyntaxFacts.IsKeyword(kindA);
-            var kindBIsKeyowrd = SyntaxFacts.IsKeyword(kindB);
+            var kindAIsKeyword = IsKeyword(kindA);
+            var kindBIsKeyowrd = IsKeyword(kindB);
 
             if (kindA is SyntaxKind.IdentifierToken && kindB is SyntaxKind.IdentifierToken)
                 return true;

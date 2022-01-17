@@ -309,7 +309,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">The raw text of the bad token.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
         public static SyntaxToken BadToken(SyntaxTriviaList leading, string text, SyntaxTriviaList trailing) =>
-            new(Syntax.InternalSyntax.SyntaxFactory.BadToken(leading.Node, text, trailing.Node));
+            new(InternalSyntax.SyntaxFactory.BadToken(leading.Node, text, trailing.Node));
 
         /// <summary>
         /// Creates an empty list of syntax nodes.

@@ -8,12 +8,12 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
     internal abstract partial class SyntaxList : GreenNode
     {
         internal SyntaxList()
-            : base(GreenNode.ListKind)
+            : base(ListKind)
         {
         }
 
         internal SyntaxList(DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations)
-            : base(GreenNode.ListKind, diagnostics, annotations)
+            : base(ListKind, diagnostics, annotations)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             LorettaDebug.Assert(child0 != null);
             LorettaDebug.Assert(child1 != null);
 
-            GreenNode? cached = SyntaxNodeCache.TryGetNode(GreenNode.ListKind, child0, child1, out var hash);
+            GreenNode? cached = SyntaxNodeCache.TryGetNode(ListKind, child0, child1, out var hash);
             if (cached != null)
                 return (WithTwoChildren) cached;
 
@@ -48,7 +48,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             LorettaDebug.Assert(child1 != null);
             LorettaDebug.Assert(child2 != null);
 
-            GreenNode? cached = SyntaxNodeCache.TryGetNode(GreenNode.ListKind, child0, child1, child2, out var hash);
+            GreenNode? cached = SyntaxNodeCache.TryGetNode(ListKind, child0, child1, child2, out var hash);
             if (cached != null)
                 return (WithThreeChildren) cached;
 

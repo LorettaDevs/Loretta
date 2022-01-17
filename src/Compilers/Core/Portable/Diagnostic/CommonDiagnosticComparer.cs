@@ -16,7 +16,7 @@ namespace Loretta.CodeAnalysis
 
         public bool Equals(Diagnostic? x, Diagnostic? y)
         {
-            if (object.ReferenceEquals(x, y))
+            if (ReferenceEquals(x, y))
             {
                 return true;
             }
@@ -31,7 +31,7 @@ namespace Loretta.CodeAnalysis
 
         public int GetHashCode(Diagnostic obj)
         {
-            if (object.ReferenceEquals(obj, null))
+            if (obj is null)
             {
                 return 0;
             }

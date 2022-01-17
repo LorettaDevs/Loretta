@@ -178,7 +178,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         {
             // Note that default(T) is not equal to null for value types except when T is Nullable<U>.
             if (!(default(T) == null) && value == null)
-                ThrowHelper.ThrowArgumentNullException(argName);
+                ThrowArgumentNullException(argName);
         }
 
         private static string GetArgumentName(ExceptionArgument argument)

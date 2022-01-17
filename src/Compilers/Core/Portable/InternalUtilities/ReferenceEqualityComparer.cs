@@ -19,7 +19,7 @@ namespace Loretta.Utilities
 
         bool IEqualityComparer<object?>.Equals(object? a, object? b) => a == b;
 
-        int IEqualityComparer<object?>.GetHashCode(object? a) => ReferenceEqualityComparer.GetHashCode(a);
+        int IEqualityComparer<object?>.GetHashCode(object? a) => GetHashCode(a);
 
         public static int GetHashCode(object? a) =>
             // https://github.com/dotnet/roslyn/issues/41539

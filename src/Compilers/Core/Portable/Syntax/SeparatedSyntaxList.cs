@@ -221,7 +221,7 @@ namespace Loretta.CodeAnalysis
         {
             for (int i = 0, n = Count; i < n; i++)
             {
-                if (object.Equals(this[i], node))
+                if (Equals(this[i], node))
                 {
                     return i;
                 }
@@ -270,7 +270,7 @@ namespace Loretta.CodeAnalysis
         {
             for (int i = Count - 1; i >= 0; i--)
             {
-                if (object.Equals(this[i], node))
+                if (Equals(this[i], node))
                 {
                     return i;
                 }

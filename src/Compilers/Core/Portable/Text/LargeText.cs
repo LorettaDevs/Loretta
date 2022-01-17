@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis.Text
         /// <remarks>
         /// internal for unit testing
         /// </remarks>
-        internal const int ChunkSize = SourceText.LargeObjectHeapLimitInChars; // 40K Unicode chars is 80KB which is less than the large object heap limit.
+        internal const int ChunkSize = LargeObjectHeapLimitInChars; // 40K Unicode chars is 80KB which is less than the large object heap limit.
 
         private readonly ImmutableArray<char[]> _chunks;
         private readonly int[] _chunkStartOffsets;
@@ -56,7 +56,7 @@ namespace Loretta.CodeAnalysis.Text
             long longLength = stream.Length;
             if (longLength == 0)
             {
-                return SourceText.From(string.Empty, encoding, checksumAlgorithm);
+                return From(string.Empty, encoding, checksumAlgorithm);
             }
 
             var maxCharRemainingGuess = encoding.GetMaxCharCountOrThrowIfHuge(stream);
@@ -78,7 +78,7 @@ namespace Loretta.CodeAnalysis.Text
         {
             if (length == 0)
             {
-                return SourceText.From(string.Empty, encodingOpt, checksumAlgorithm);
+                return From(string.Empty, encodingOpt, checksumAlgorithm);
             }
 
             // throwIfBinaryDetected == false since we are given text reader from the beginning

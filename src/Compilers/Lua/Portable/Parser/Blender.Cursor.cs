@@ -100,7 +100,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 if (node.SlotCount > 0)
                 {
-                    var child = Loretta.CodeAnalysis.ChildSyntaxList.ItemInternal(node, 0);
+                    var child = ChildSyntaxList.ItemInternal(node, 0);
                     if (IsNonZeroWidthOrIsEndOfFile(child))
                     {
                         return new Cursor(child, 0);

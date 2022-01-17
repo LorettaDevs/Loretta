@@ -66,7 +66,7 @@ namespace Loretta.CodeAnalysis
 
         internal static IList<TextSpan> GetPossiblyDifferentTextSpans(SyntaxTree? before, SyntaxTree? after)
         {
-            if (object.ReferenceEquals(before, after))
+            if (ReferenceEquals(before, after))
             {
                 // They're the same, so nothing changed.
                 return SpecializedCollections.EmptyList<TextSpan>();
@@ -187,7 +187,7 @@ namespace Loretta.CodeAnalysis
 
             public DiffAction(DiffOp operation, int count)
             {
-                Loretta.Utilities.LorettaDebug.Assert(count >= 0);
+                LorettaDebug.Assert(count >= 0);
                 Operation = operation;
                 Count = count;
             }

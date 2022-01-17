@@ -484,7 +484,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (s_annotationsTable.TryGetValue(this, out var annotations))
                 {
-                    Loretta.Utilities.LorettaDebug.Assert(annotations.Length != 0, "we should return nonempty annotations or NoAnnotations");
+                    LorettaDebug.Assert(annotations.Length != 0, "we should return nonempty annotations or NoAnnotations");
                     return annotations;
                 }
             }
@@ -852,7 +852,7 @@ namespace Loretta.CodeAnalysis
             get
             {
                 return ((flags & NodeFlags.InheritMask) == NodeFlags.IsNotMissing) &&
-                    SlotCount <= GreenNode.MaxCachedChildNum;
+                    SlotCount <= MaxCachedChildNum;
             }
         }
 

@@ -114,7 +114,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     {
                         if (!structsInParent.TryGetValue(trivia, out structure))
                         {
-                            structure = Lua.Syntax.StructuredTriviaSyntax.Create(trivia);
+                            structure = Syntax.StructuredTriviaSyntax.Create(trivia);
                             structsInParent.Add(trivia, structure);
                         }
                     }
@@ -123,7 +123,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 }
                 else
                 {
-                    return Lua.Syntax.StructuredTriviaSyntax.Create(trivia);
+                    return Syntax.StructuredTriviaSyntax.Create(trivia);
                 }
             }
 

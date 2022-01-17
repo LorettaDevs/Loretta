@@ -25,7 +25,7 @@ namespace Loretta.CodeAnalysis.Syntax
                 return new SyntaxTriviaList();
             }
 
-            var builder = SyntaxTriviaListBuilder.Create();
+            var builder = Create();
             builder.AddRange(trivia);
             return builder.ToList();
         }

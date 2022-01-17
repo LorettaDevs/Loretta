@@ -353,7 +353,7 @@ namespace Loretta.CodeAnalysis
                     result = true;
                     for (var i = 0; i < _arguments.Length; i++)
                     {
-                        if (!object.Equals(_arguments[i], other._arguments[i]))
+                        if (!Equals(_arguments[i], other._arguments[i]))
                         {
                             result = false;
                             break;

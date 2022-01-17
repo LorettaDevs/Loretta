@@ -20,7 +20,7 @@ namespace Loretta.Utilities
         {
         }
 
-        bool IEqualityComparer<string>.Equals(string? a, string? b) => StringOrdinalComparer.Equals(a, b);
+        bool IEqualityComparer<string>.Equals(string? a, string? b) => Equals(a, b);
 
         public static bool Equals(string? a, string? b) =>
             // this is fast enough

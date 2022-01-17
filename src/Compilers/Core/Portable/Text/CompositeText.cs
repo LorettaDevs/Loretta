@@ -161,7 +161,7 @@ namespace Loretta.CodeAnalysis.Text
 
             if (segments.Count == 0)
             {
-                return SourceText.From(string.Empty, original.Encoding, original.ChecksumAlgorithm);
+                return From(string.Empty, original.Encoding, original.ChecksumAlgorithm);
             }
             else if (segments.Count == 1)
             {

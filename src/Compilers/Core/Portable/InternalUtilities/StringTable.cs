@@ -118,7 +118,7 @@ namespace Loretta.Utilities
             if (text != null && arr[idx].HashCode == hashCode)
             {
                 var result = arr[idx].Text;
-                if (StringTable.TextEquals(result, span))
+                if (TextEquals(result, span))
                 {
                     return result;
                 }
@@ -152,7 +152,7 @@ namespace Loretta.Utilities
             if (text != null && arr[idx].HashCode == hashCode)
             {
                 var result = arr[idx].Text;
-                if (StringTable.TextEquals(result, span))
+                if (TextEquals(result, span))
                 {
                     return result;
                 }
@@ -186,7 +186,7 @@ namespace Loretta.Utilities
             if (text != null && arr[idx].HashCode == hashCode)
             {
                 var result = arr[idx].Text;
-                if (StringTable.TextEquals(result, chars, start, len))
+                if (TextEquals(result, chars, start, len))
                 {
                     return result;
                 }
@@ -254,7 +254,7 @@ namespace Loretta.Utilities
             if (text != null && arr[idx].HashCode == hashCode)
             {
                 var result = arr[idx].Text;
-                if (StringTable.TextEquals(result, chars))
+                if (TextEquals(result, chars))
                 {
                     return result;
                 }
@@ -728,7 +728,7 @@ namespace Loretta.Utilities
 
         private int LocalNextRandom() => _localRandom++;
 
-        private static int SharedNextRandom() => Interlocked.Increment(ref StringTable.s_sharedRandom);
+        private static int SharedNextRandom() => Interlocked.Increment(ref s_sharedRandom);
 
         internal static bool TextEquals(string array, string text, int start, int length)
         {

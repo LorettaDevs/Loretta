@@ -403,7 +403,7 @@ namespace Loretta.CodeAnalysis.Text
             var spanLength = span.Length;
             if (spanLength == 0)
             {
-                return SourceText.From(string.Empty, Encoding, ChecksumAlgorithm);
+                return From(string.Empty, Encoding, ChecksumAlgorithm);
             }
             else if (spanLength == Length && span.Start == 0)
             {
@@ -600,7 +600,7 @@ namespace Loretta.CodeAnalysis.Text
 
                     if (newTextLength > 0)
                     {
-                        var segment = SourceText.From(change.NewText!, Encoding, ChecksumAlgorithm);
+                        var segment = From(change.NewText!, Encoding, ChecksumAlgorithm);
                         CompositeText.AddSegments(segments, segment);
                     }
 

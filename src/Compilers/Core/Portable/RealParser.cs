@@ -33,7 +33,7 @@ namespace Loretta.CodeAnalysis
         {
             var str = DecimalFloatingPointString.FromSource(s);
             var dbl = DoubleFloatingPointType.Instance;
-            var status = RealParser.ConvertDecimalToFloatingPointBits(str, dbl, out var result);
+            var status = ConvertDecimalToFloatingPointBits(str, dbl, out var result);
             d = BitConverter.Int64BitsToDouble((long) result);
             return status != Status.Overflow;
         }
@@ -50,7 +50,7 @@ namespace Loretta.CodeAnalysis
         {
             var str = DecimalFloatingPointString.FromSource(s);
             var dbl = FloatFloatingPointType.Instance;
-            var status = RealParser.ConvertDecimalToFloatingPointBits(str, dbl, out var result);
+            var status = ConvertDecimalToFloatingPointBits(str, dbl, out var result);
             f = Int32BitsToFloat((uint) result);
             return status != Status.Overflow;
         }
