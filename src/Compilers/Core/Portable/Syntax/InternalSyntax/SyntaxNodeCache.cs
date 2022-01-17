@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using Loretta.CodeAnalysis.Syntax.InternalSyntax;
 using Loretta.Utilities;
 
 #if STATS

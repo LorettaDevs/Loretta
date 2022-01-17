@@ -12,7 +12,6 @@ using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.Utilities;
 
 #if DEBUG
-using System.Diagnostics;
 #endif
 
 namespace Loretta.Utilities

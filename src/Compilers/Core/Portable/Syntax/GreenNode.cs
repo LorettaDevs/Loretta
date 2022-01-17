@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Loretta.CodeAnalysis.Collections;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
 using Loretta.Utilities;

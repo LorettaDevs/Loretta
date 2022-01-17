@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Threading;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua

@@ -2,16 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.PooledObjects;
-using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.Utilities
 {

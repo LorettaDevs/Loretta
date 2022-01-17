@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Immutable;
-using Loretta.CodeAnalysis.Lua.Syntax;
 
 namespace Loretta.CodeAnalysis.Lua
 {

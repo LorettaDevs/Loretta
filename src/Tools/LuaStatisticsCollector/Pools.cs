@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Loretta.CodeAnalysis.Collections;
+﻿using Loretta.CodeAnalysis.Collections;
 using Loretta.CodeAnalysis.PooledObjects;
 
 namespace Loretta.CodeAnalysis.Lua.StatisticsCollector

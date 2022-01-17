@@ -8,7 +8,6 @@ using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis;
 
 #if DEBUG
-using System.Diagnostics;
 #endif
 
 namespace Loretta.Utilities

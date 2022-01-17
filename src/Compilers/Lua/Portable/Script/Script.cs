@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Xml.Linq;
-using Loretta.CodeAnalysis.Lua.Syntax;
-using Loretta.CodeAnalysis.PooledObjects;
-using Loretta.Utilities;
 using Tsu;
 
 namespace Loretta.CodeAnalysis.Lua

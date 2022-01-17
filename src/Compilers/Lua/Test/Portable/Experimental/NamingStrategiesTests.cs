@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Loretta.CodeAnalysis.Lua.Experimental;
+﻿using Loretta.CodeAnalysis.Lua.Experimental;
 using Loretta.CodeAnalysis.Lua.Experimental.Minifying;
 using Loretta.CodeAnalysis.Lua.Test.Utilities;
 using Xunit;

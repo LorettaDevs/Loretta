@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.PooledObjects

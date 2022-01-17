@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Loretta.CodeAnalysis.Lua.Syntax;
 
 namespace Loretta.CodeAnalysis.Lua
