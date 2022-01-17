@@ -85,9 +85,7 @@ namespace Loretta.CodeAnalysis.Text
                     FillBuffer();
                 }
 
-                int charsUsed, bytesUsed;
-                bool ignored;
-                _encoder.Convert(_charBuffer, _bufferOffset, _bufferUnreadChars, buffer, offset, count, flush: false, charsUsed: out charsUsed, bytesUsed: out bytesUsed, completed: out ignored);
+                _encoder.Convert(_charBuffer, _bufferOffset, _bufferUnreadChars, buffer, offset, count, flush: false, charsUsed: out var charsUsed, bytesUsed: out var bytesUsed, completed: out var ignored);
                 _position += charsUsed;
                 _bufferOffset += charsUsed;
                 _bufferUnreadChars -= charsUsed;

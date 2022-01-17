@@ -421,8 +421,7 @@ namespace Loretta.CodeAnalysis
             {
                 while (stack.IsNotEmpty)
                 {
-                    SyntaxNodeOrToken value;
-                    if (stack.TryGetNextInSpan(in span, out value))
+                    if (stack.TryGetNextInSpan(in span, out var value))
                     {
                         // PERF: Push before yield return so that "value" is 'dead' after the yield
                         // and therefore doesn't need to be stored in the iterator state machine. This
@@ -533,8 +532,7 @@ namespace Loretta.CodeAnalysis
             {
                 while (stack.IsNotEmpty)
                 {
-                    SyntaxNodeOrToken value;
-                    if (stack.TryGetNextInSpan(in span, out value))
+                    if (stack.TryGetNextInSpan(in span, out var value))
                     {
                         if (value.AsNode(out var nodeValue))
                         {

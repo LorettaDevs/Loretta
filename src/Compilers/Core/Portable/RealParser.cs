@@ -33,8 +33,7 @@ namespace Loretta.CodeAnalysis
         {
             var str = DecimalFloatingPointString.FromSource(s);
             var dbl = DoubleFloatingPointType.Instance;
-            ulong result;
-            var status = RealParser.ConvertDecimalToFloatingPointBits(str, dbl, out result);
+            var status = RealParser.ConvertDecimalToFloatingPointBits(str, dbl, out var result);
             d = BitConverter.Int64BitsToDouble((long) result);
             return status != Status.Overflow;
         }
@@ -51,8 +50,7 @@ namespace Loretta.CodeAnalysis
         {
             var str = DecimalFloatingPointString.FromSource(s);
             var dbl = FloatFloatingPointType.Instance;
-            ulong result;
-            var status = RealParser.ConvertDecimalToFloatingPointBits(str, dbl, out result);
+            var status = RealParser.ConvertDecimalToFloatingPointBits(str, dbl, out var result);
             f = Int32BitsToFloat((uint) result);
             return status != Status.Overflow;
         }
@@ -345,13 +343,12 @@ namespace Loretta.CodeAnalysis
                     int lastExponent = i;
                     while (i < source.Length && source[i] >= '0' && source[i] <= '9') lastExponent = ++i;
 
-                    int exponentMagnitude = 0;
 
 #if NETCOREAPP
-                    if (int.TryParse(source.AsSpan(firstExponent, lastExponent - firstExponent), out exponentMagnitude) &&
+                    if (int.TryParse(source.AsSpan(firstExponent, lastExponent - firstExponent), out var exponentMagnitude) &&
                         exponentMagnitude <= MAX_EXP)
 #else
-                    if (int.TryParse(source[firstExponent..lastExponent], out exponentMagnitude) &&
+                    if (int.TryParse(source[firstExponent..lastExponent], out var exponentMagnitude) &&
                         exponentMagnitude <= MAX_EXP)
 #endif
                     {
@@ -434,8 +431,7 @@ namespace Loretta.CodeAnalysis
             // of the mantissa.  If either [1] this number has more than the required
             // number of bits of precision or [2] the mantissa has no fractional part,
             // then we can assemble the result immediately:
-            byte[] integerValueAsBytes;
-            uint integerBitsOfPrecision = CountSignificantBits(integerValue, out integerValueAsBytes);
+            uint integerBitsOfPrecision = CountSignificantBits(integerValue, out var integerValueAsBytes);
             if (integerBitsOfPrecision >= requiredBitsOfPrecision ||
                 fractionalDigitsPresent == 0)
             {
@@ -533,8 +529,7 @@ namespace Loretta.CodeAnalysis
                 : fractionalShift;
 
             ShiftLeft(ref fractionalNumerator, remainingBitsOfPrecisionRequired);
-            BigInteger fractionalRemainder;
-            BigInteger bigFractionalMantissa = BigInteger.DivRem(fractionalNumerator, fractionalDenominator, out fractionalRemainder);
+            BigInteger bigFractionalMantissa = BigInteger.DivRem(fractionalNumerator, fractionalDenominator, out var fractionalRemainder);
             ulong fractionalMantissa = (ulong) bigFractionalMantissa;
 
             bool hasZeroTail = fractionalRemainder.IsZero;
@@ -686,8 +681,7 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         private static uint CountSignificantBits(BigInteger data)
         {
-            byte[] dataBytes;
-            return CountSignificantBits(data, out dataBytes);
+            return CountSignificantBits(data, out var dataBytes);
         }
 
         /// <summary>

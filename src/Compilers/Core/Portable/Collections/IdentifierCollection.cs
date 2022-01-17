@@ -44,8 +44,7 @@ namespace Loretta.CodeAnalysis
         {
             LorettaDebug.Assert(identifier != null);
 
-            object? value;
-            if (!_map.TryGetValue(identifier, out value))
+            if (!_map.TryGetValue(identifier, out var value))
             {
                 AddInitialSpelling(identifier);
             }
@@ -105,8 +104,7 @@ namespace Loretta.CodeAnalysis
 
         private bool CaseSensitiveContains(string identifier)
         {
-            object? spellings;
-            if (_map.TryGetValue(identifier, out spellings))
+            if (_map.TryGetValue(identifier, out var spellings))
             {
                 if (spellings is string spelling)
                 {

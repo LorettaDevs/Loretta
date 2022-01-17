@@ -128,8 +128,7 @@ namespace Loretta.CodeAnalysis
 
         private static SyntaxAnnotation? GetId(SyntaxNode original)
         {
-            SyntaxAnnotation? id;
-            s_nodeToIdMap.TryGetValue(original, out id);
+            s_nodeToIdMap.TryGetValue(original, out var id);
             return id;
         }
 
@@ -196,8 +195,7 @@ namespace Loretta.CodeAnalysis
                     LorettaDebug.Assert(node is not null);
                     foreach (var id in node.GetAnnotations(IdAnnotationKind))
                     {
-                        List<SyntaxNode>? list;
-                        if (!map.TryGetValue(id, out list))
+                        if (!map.TryGetValue(id, out var list))
                         {
                             list = new List<SyntaxNode>();
                             map.Add(id, list);
@@ -212,8 +210,7 @@ namespace Loretta.CodeAnalysis
 
             public IReadOnlyList<SyntaxNode> GetNodes(SyntaxAnnotation id)
             {
-                IReadOnlyList<SyntaxNode>? nodes;
-                if (_idToNodeMap.TryGetValue(id, out nodes))
+                if (_idToNodeMap.TryGetValue(id, out var nodes))
                 {
                     return nodes;
                 }

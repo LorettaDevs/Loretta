@@ -109,9 +109,7 @@ namespace Loretta.CodeAnalysis.Text
                     return 0;
                 }
 
-                int startLineBreak;
-                int lineBreakLength;
-                TextUtilities.GetStartAndLengthOfLineBreakEndingAt(_text, _endIncludingBreaks - 1, out startLineBreak, out lineBreakLength);
+                TextUtilities.GetStartAndLengthOfLineBreakEndingAt(_text, _endIncludingBreaks - 1, out var startLineBreak, out var lineBreakLength);
                 return lineBreakLength;
             }
         }

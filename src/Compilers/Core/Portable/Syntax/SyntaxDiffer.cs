@@ -199,13 +199,9 @@ namespace Loretta.CodeAnalysis
             bool newIsToken = _newNodes.Peek().IsToken;
 
             // look for exact match
-            int indexOfOldInNew;
-            int similarityOfOldInNew;
-            int indexOfNewInOld;
-            int similarityOfNewInOld;
 
-            FindBestMatch(_newNodes, _oldNodes.Peek(), out indexOfOldInNew, out similarityOfOldInNew);
-            FindBestMatch(_oldNodes, _newNodes.Peek(), out indexOfNewInOld, out similarityOfNewInOld);
+            FindBestMatch(_newNodes, _oldNodes.Peek(), out var indexOfOldInNew, out var similarityOfOldInNew);
+            FindBestMatch(_oldNodes, _newNodes.Peek(), out var indexOfNewInOld, out var similarityOfNewInOld);
 
             if (indexOfOldInNew == 0 && indexOfNewInOld == 0)
             {
@@ -242,9 +238,7 @@ namespace Loretta.CodeAnalysis
                     if (indexOfOldInNew > 0)
                     {
                         // look ahead to see if the old node also appears again later in its own list
-                        int indexOfOldInOld;
-                        int similarityOfOldInOld;
-                        FindBestMatch(_oldNodes, _oldNodes.Peek(), out indexOfOldInOld, out similarityOfOldInOld, 1);
+                        FindBestMatch(_oldNodes, _oldNodes.Peek(), out var indexOfOldInOld, out var similarityOfOldInOld, 1);
 
                         // don't declare an insert if the node also appeared later in the original list
                         var oldHasSimilarSibling = indexOfOldInOld >= 1 && similarityOfOldInOld >= similarityOfOldInNew;
@@ -759,9 +753,7 @@ namespace Loretta.CodeAnalysis
                     CopyText(cr.OldNodes, oldText);
                     CopyText(cr.NewNodes, newText);
 
-                    int commonLeadingCount;
-                    int commonTrailingCount;
-                    GetCommonEdgeLengths(oldText, newText, out commonLeadingCount, out commonTrailingCount);
+                    GetCommonEdgeLengths(oldText, newText, out var commonLeadingCount, out var commonTrailingCount);
 
                     // did we have any common leading or trailing characters between the strings?
                     if (commonLeadingCount > 0 || commonTrailingCount > 0)

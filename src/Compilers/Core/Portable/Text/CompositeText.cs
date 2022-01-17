@@ -52,9 +52,7 @@ namespace Loretta.CodeAnalysis.Text
         {
             get
             {
-                int index;
-                int offset;
-                GetIndexAndOffset(position, out index, out offset);
+                GetIndexAndOffset(position, out var index, out var offset);
                 return _segments[index][offset];
             }
         }
@@ -66,9 +64,7 @@ namespace Loretta.CodeAnalysis.Text
             var sourceIndex = span.Start;
             var count = span.Length;
 
-            int segIndex;
-            int segOffset;
-            GetIndexAndOffset(sourceIndex, out segIndex, out segOffset);
+            GetIndexAndOffset(sourceIndex, out var segIndex, out var segOffset);
 
             var newSegments = ArrayBuilder<SourceText>.GetInstance();
             try
@@ -127,9 +123,7 @@ namespace Loretta.CodeAnalysis.Text
             if (!CheckCopyToArguments(sourceIndex, destination, destinationIndex, count))
                 return;
 
-            int segIndex;
-            int segOffset;
-            GetIndexAndOffset(sourceIndex, out segIndex, out segOffset);
+            GetIndexAndOffset(sourceIndex, out var segIndex, out var segOffset);
 
             while (segIndex < _segments.Length && count > 0)
             {
@@ -336,8 +330,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         private static void TrimInaccessibleText(ArrayBuilder<SourceText> segments)
         {
-            int length, size;
-            ComputeLengthAndStorageSize(segments, out length, out size);
+            ComputeLengthAndStorageSize(segments, out var length, out var size);
 
             // if more than half of the storage is unused, compress into a single new segment
             if (length < size / 2)

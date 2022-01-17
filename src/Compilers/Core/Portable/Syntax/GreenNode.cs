@@ -482,8 +482,7 @@ namespace Loretta.CodeAnalysis
         {
             if (ContainsAnnotations)
             {
-                SyntaxAnnotation[]? annotations;
-                if (s_annotationsTable.TryGetValue(this, out annotations))
+                if (s_annotationsTable.TryGetValue(this, out var annotations))
                 {
                     Loretta.Utilities.LorettaDebug.Assert(annotations.Length != 0, "we should return nonempty annotations or NoAnnotations");
                     return annotations;
@@ -502,8 +501,7 @@ namespace Loretta.CodeAnalysis
         {
             if (ContainsDiagnostics)
             {
-                DiagnosticInfo[]? diags;
-                if (s_diagnosticsTable.TryGetValue(this, out diags))
+                if (s_diagnosticsTable.TryGetValue(this, out var diags))
                 {
                     return diags;
                 }

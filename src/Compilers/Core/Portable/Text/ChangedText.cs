@@ -80,8 +80,7 @@ namespace Loretta.CodeAnalysis.Text
                 ChangeInfo? lastInfo = this;
                 for (ChangeInfo? info = this; info != null; info = info.Previous)
                 {
-                    SourceText? tmp;
-                    if (info.WeakOldText.TryGetTarget(out tmp))
+                    if (info.WeakOldText.TryGetTarget(out var tmp))
                     {
                         lastInfo = info;
                     }
@@ -148,8 +147,7 @@ namespace Loretta.CodeAnalysis.Text
             }
 
             // try this quick check first
-            SourceText? actualOldText;
-            if (_info.WeakOldText.TryGetTarget(out actualOldText) && actualOldText == oldText)
+            if (_info.WeakOldText.TryGetTarget(out var actualOldText) && actualOldText == oldText)
             {
                 // the supplied old text is the one we directly reference, so the changes must be the ones we have.
                 return _info.ChangeRanges;
@@ -179,8 +177,7 @@ namespace Loretta.CodeAnalysis.Text
         {
             for (ChangeInfo? info = _info; info != null; info = info.Previous)
             {
-                SourceText? text;
-                if (info.WeakOldText.TryGetTarget(out text) && text == oldText)
+                if (info.WeakOldText.TryGetTarget(out var text) && text == oldText)
                 {
                     return true;
                 }
@@ -198,8 +195,7 @@ namespace Loretta.CodeAnalysis.Text
 
             while (change != null)
             {
-                SourceText? actualOldText;
-                change.WeakOldText.TryGetTarget(out actualOldText);
+                change.WeakOldText.TryGetTarget(out var actualOldText);
 
                 if (actualOldText == oldText)
                 {
@@ -236,10 +232,8 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         protected override TextLineCollection GetLinesCore()
         {
-            SourceText? oldText;
-            TextLineCollection? oldLineInfo;
 
-            if (!_info.WeakOldText.TryGetTarget(out oldText) || !oldText.TryGetLines(out oldLineInfo))
+            if (!_info.WeakOldText.TryGetTarget(out var oldText) || !oldText.TryGetLines(out var oldLineInfo))
             {
                 // no old line starts? do it the hard way.
                 return base.GetLinesCore();

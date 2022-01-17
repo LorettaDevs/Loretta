@@ -194,8 +194,7 @@ namespace Loretta.CodeAnalysis
 
             foreach (var trivia in list.Reverse())
             {
-                SyntaxToken token;
-                if (TryGetLastTokenForStructuredTrivia(trivia, predicate, stepInto, out token))
+                if (TryGetLastTokenForStructuredTrivia(trivia, predicate, stepInto, out var token))
                 {
                     return token;
                 }
@@ -394,8 +393,7 @@ namespace Loretta.CodeAnalysis
             {
                 if (returnPrevious)
                 {
-                    SyntaxToken token;
-                    if (TryGetLastTokenForStructuredTrivia(trivia, predicate, stepInto, out token))
+                    if (TryGetLastTokenForStructuredTrivia(trivia, predicate, stepInto, out var token))
                     {
                         return token;
                     }

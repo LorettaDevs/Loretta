@@ -248,8 +248,7 @@ namespace Loretta.CodeAnalysis
 
         internal SyntaxNode GetWeakRedElement(ref WeakReference<SyntaxNode>? slot, int index)
         {
-            SyntaxNode? value = null;
-            if (slot?.TryGetTarget(out value) == true)
+            if (slot?.TryGetTarget(out var value) == true)
             {
                 return value!;
             }
@@ -266,9 +265,8 @@ namespace Loretta.CodeAnalysis
 
             while (true)
             {
-                SyntaxNode? previousNode = null;
                 WeakReference<SyntaxNode>? previousWeakReference = slot;
-                if (previousWeakReference?.TryGetTarget(out previousNode) == true)
+                if (previousWeakReference?.TryGetTarget(out var previousNode) == true)
                 {
                     return previousNode!;
                 }
@@ -1183,8 +1181,7 @@ namespace Loretta.CodeAnalysis
                 return FindToken(position, SyntaxTrivia.Any);
             }
 
-            SyntaxToken EoF;
-            if (TryGetEofAt(position, out EoF))
+            if (TryGetEofAt(position, out var EoF))
             {
                 return EoF;
             }
