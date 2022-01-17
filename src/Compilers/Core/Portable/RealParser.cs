@@ -343,7 +343,6 @@ namespace Loretta.CodeAnalysis
                     int lastExponent = i;
                     while (i < source.Length && source[i] >= '0' && source[i] <= '9') lastExponent = ++i;
 
-
 #if NETCOREAPP
                     if (int.TryParse(source.AsSpan(firstExponent, lastExponent - firstExponent), out var exponentMagnitude) &&
                         exponentMagnitude <= MAX_EXP)

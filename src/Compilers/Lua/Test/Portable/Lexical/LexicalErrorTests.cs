@@ -1,5 +1,5 @@
-﻿using Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
-using Loretta.CodeAnalysis.Lua.Test.Utilities;
+﻿using Loretta.CodeAnalysis.Lua.Test.Utilities;
+using Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Xunit;
 

@@ -40,7 +40,6 @@ namespace Loretta.CodeAnalysis.Syntax
                         return null;
                 }
             }
-
         }
     }
 }

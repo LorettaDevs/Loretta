@@ -300,7 +300,6 @@ namespace Loretta.Utilities
                     {
                         throw new ArgumentOutOfRangeException(nameof(change));
                     }
-
                 }
 
                 builder.Add(change);
