@@ -9,8 +9,8 @@ namespace Loretta.CodeAnalysis.Lua
 {
     internal static partial class ErrorFacts
     {
-        private const string s_titleSuffix = "_Title";
-        private const string s_descriptionSuffix = "_Description";
+        private const string TitleSuffix = "_Title";
+        private const string DescriptionSuffix = "_Description";
         private static readonly Lazy<ImmutableDictionary<ErrorCode, string>> s_categoriesMap = new(CreateCategoriesMap);
 
         public static string GetId(ErrorCode errorCode) =>
@@ -68,10 +68,10 @@ namespace Loretta.CodeAnalysis.Lua
             => new(code.ToString(), ResourceManager, typeof(ErrorFacts));
 
         public static LocalizableResourceString GetTitle(ErrorCode code)
-            => new(code.ToString() + s_titleSuffix, ResourceManager, typeof(ErrorFacts));
+            => new(code.ToString() + TitleSuffix, ResourceManager, typeof(ErrorFacts));
 
         public static LocalizableResourceString GetDescription(ErrorCode code)
-            => new(code.ToString() + s_descriptionSuffix, ResourceManager, typeof(ErrorFacts));
+            => new(code.ToString() + DescriptionSuffix, ResourceManager, typeof(ErrorFacts));
 
         public static string GetCategory(ErrorCode code)
             => s_categoriesMap.Value.TryGetValue(code, out var category)

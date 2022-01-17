@@ -19,9 +19,9 @@ namespace Loretta.CodeAnalysis
 
         // Cannot expose the following two field publicly because this structure is mutable
         // and might become not null/empty, unless we restrict access to it.
-        private static Word[] s_emptyArray => Array.Empty<Word>();
+        private static Word[] EmptyArray => Array.Empty<Word>();
         private static readonly BitVector s_nullValue = default;
-        private static readonly BitVector s_emptyValue = new(0, s_emptyArray, 0);
+        private static readonly BitVector s_emptyValue = new(0, EmptyArray, 0);
 
         private Word _bits0;
         private Word[] _bits;
@@ -144,7 +144,7 @@ namespace Loretta.CodeAnalysis
         public static BitVector Create(int capacity)
         {
             int requiredWords = WordsForCapacity(capacity);
-            Word[] bits = (requiredWords == 0) ? s_emptyArray : new Word[requiredWords];
+            Word[] bits = (requiredWords == 0) ? EmptyArray : new Word[requiredWords];
             return new BitVector(0, bits, capacity);
         }
 
@@ -161,7 +161,7 @@ namespace Loretta.CodeAnalysis
             }
 
             int requiredWords = WordsForCapacity(capacity);
-            Word[] bits = (requiredWords == 0) ? s_emptyArray : new Word[requiredWords];
+            Word[] bits = (requiredWords == 0) ? EmptyArray : new Word[requiredWords];
             int lastWord = requiredWords - 1;
             Word bits0 = ~ZeroWord;
             for (int j = 0; j < lastWord; j++)
@@ -197,7 +197,7 @@ namespace Loretta.CodeAnalysis
             Word[] newBits;
             if (_bits is null || _bits.Length == 0)
             {
-                newBits = s_emptyArray;
+                newBits = EmptyArray;
             }
             else
             {

@@ -84,6 +84,9 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             Console.WriteLine("RateOfCacheable: " + (cacheHits * 100 / (cacheableNodes)) + "%");
         }
 #else
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Used in the other overload.")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         internal static void NoteGreen(GreenNode node)
         {
         }

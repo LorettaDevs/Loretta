@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
         // where this is not the case. In the unlikely event anyone ever runs this code on a
         // platform where this is not the case the unit tests will detect the problem.
 
-        private static readonly byte[] asciiHexValuePlus1s = {
+        private static readonly byte[] s_asciiHexValuePlus1s = {
             0,  0,  0,  0,  0,  0,  0, 0, 0,  0, 0, 0, 0, 0, 0, 0,
             0,  0,  0,  0,  0,  0,  0, 0, 0,  0, 0, 0, 0, 0, 0, 0,
             0,  0,  0,  0,  0,  0,  0, 0, 0,  0, 0, 0, 0, 0, 0, 0,
@@ -152,7 +152,7 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
                 }
                 var c = s[i++];
                 int h;
-                if (c < 128 && (h = asciiHexValuePlus1s[c]) != 0)
+                if (c < 128 && (h = s_asciiHexValuePlus1s[c]) != 0)
                 {
                     --h;
                     if (nBits <= 0)
