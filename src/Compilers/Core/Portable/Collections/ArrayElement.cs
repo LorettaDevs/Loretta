@@ -11,10 +11,7 @@ namespace Loretta.CodeAnalysis
     {
         internal T Value;
 
-        public static implicit operator T(ArrayElement<T> element)
-        {
-            return element.Value;
-        }
+        public static implicit operator T(ArrayElement<T> element) => element.Value;
 
         //NOTE: there is no opposite conversion operator T -> ArrayElement<T>
         //

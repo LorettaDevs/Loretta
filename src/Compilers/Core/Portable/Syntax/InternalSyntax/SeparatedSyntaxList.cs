@@ -63,10 +63,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public override int GetHashCode() => _list.GetHashCode();
 
-        public static implicit operator SeparatedSyntaxList<GreenNode>(SeparatedSyntaxList<TNode> list)
-        {
-            return new SeparatedSyntaxList<GreenNode>(list.GetWithSeparators());
-        }
+        public static implicit operator SeparatedSyntaxList<GreenNode>(SeparatedSyntaxList<TNode> list) =>
+            new SeparatedSyntaxList<GreenNode>(list.GetWithSeparators());
 
 #if DEBUG
         [Obsolete("For debugging only", true)]

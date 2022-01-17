@@ -44,10 +44,7 @@ namespace Loretta.CodeAnalysis.Syntax
 
         public SyntaxList<TNode> ToList() => _builder.ToList();
 
-        public static implicit operator SyntaxListBuilder?(SyntaxListBuilder<TNode> builder)
-        {
-            return builder._builder;
-        }
+        public static implicit operator SyntaxListBuilder?(SyntaxListBuilder<TNode> builder) => builder._builder;
 
         public static implicit operator SyntaxList<TNode>(SyntaxListBuilder<TNode> builder)
         {

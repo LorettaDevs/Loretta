@@ -77,14 +77,8 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         /// </remarks>
         internal SyntaxListBuilder? UnderlyingBuilder => _builder;
 
-        public static implicit operator SeparatedSyntaxList<TNode>(in SeparatedSyntaxListBuilder<TNode> builder)
-        {
-            return builder.ToList();
-        }
+        public static implicit operator SeparatedSyntaxList<TNode>(in SeparatedSyntaxListBuilder<TNode> builder) => builder.ToList();
 
-        public static implicit operator SyntaxListBuilder?(in SeparatedSyntaxListBuilder<TNode> builder)
-        {
-            return builder._builder;
-        }
+        public static implicit operator SyntaxListBuilder?(in SeparatedSyntaxListBuilder<TNode> builder) => builder._builder;
     }
 }

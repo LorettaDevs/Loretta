@@ -97,9 +97,6 @@ namespace Loretta.CodeAnalysis.Syntax
             }
         }
 
-        public static implicit operator SyntaxTokenList(SyntaxTokenListBuilder builder)
-        {
-            return builder.ToList();
-        }
+        public static implicit operator SyntaxTokenList(SyntaxTokenListBuilder builder) => builder.ToList();
     }
 }

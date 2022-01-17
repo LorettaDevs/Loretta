@@ -764,10 +764,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>
         /// A <see cref="SyntaxNodeOrToken"/> that wraps the supplied token.
         /// </returns>
-        public static implicit operator SyntaxNodeOrToken(SyntaxToken token)
-        {
-            return new SyntaxNodeOrToken(token.Parent, token.Node, token.Position, token.Index);
-        }
+        public static implicit operator SyntaxNodeOrToken(SyntaxToken token) => new SyntaxNodeOrToken(token.Parent, token.Node, token.Position, token.Index);
 
         /// <summary>
         /// Returns the underlying token wrapped by the supplied <see cref="SyntaxNodeOrToken"/>.
@@ -778,10 +775,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>
         /// The underlying token wrapped by the supplied <see cref="SyntaxNodeOrToken"/>.
         /// </returns>
-        public static explicit operator SyntaxToken(SyntaxNodeOrToken nodeOrToken)
-        {
-            return nodeOrToken.AsToken();
-        }
+        public static explicit operator SyntaxToken(SyntaxNodeOrToken nodeOrToken) => nodeOrToken.AsToken();
 
         /// <summary>
         /// Returns a new <see cref="SyntaxNodeOrToken"/> that wraps the supplied node.
@@ -806,10 +800,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>
         /// The underlying node wrapped by the supplied <see cref="SyntaxNodeOrToken"/>.
         /// </returns>
-        public static explicit operator SyntaxNode?(SyntaxNodeOrToken nodeOrToken)
-        {
-            return nodeOrToken.AsNode();
-        }
+        public static explicit operator SyntaxNode?(SyntaxNodeOrToken nodeOrToken) => nodeOrToken.AsNode();
 
         /// <summary>
         /// SyntaxTree which contains current SyntaxNodeOrToken.

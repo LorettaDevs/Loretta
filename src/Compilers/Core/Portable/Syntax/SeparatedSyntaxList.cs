@@ -619,18 +619,14 @@ namespace Loretta.CodeAnalysis
         /// Converts a typed node list into an opaquely typed node list.
         /// </summary>
         /// <param name="nodes"></param>
-        public static implicit operator SeparatedSyntaxList<SyntaxNode>(SeparatedSyntaxList<TNode> nodes)
-        {
-            return new SeparatedSyntaxList<SyntaxNode>(nodes._list);
-        }
+        public static implicit operator SeparatedSyntaxList<SyntaxNode>(SeparatedSyntaxList<TNode> nodes) =>
+            new SeparatedSyntaxList<SyntaxNode>(nodes._list);
 
         /// <summary>
         /// Converts a list of opaquely typed nodes into a list of typed nodes.
         /// </summary>
         /// <param name="nodes"></param>
-        public static implicit operator SeparatedSyntaxList<TNode>(SeparatedSyntaxList<SyntaxNode> nodes)
-        {
-            return new SeparatedSyntaxList<TNode>(nodes._list);
-        }
+        public static implicit operator SeparatedSyntaxList<TNode>(SeparatedSyntaxList<SyntaxNode> nodes) =>
+            new SeparatedSyntaxList<TNode>(nodes._list);
     }
 }

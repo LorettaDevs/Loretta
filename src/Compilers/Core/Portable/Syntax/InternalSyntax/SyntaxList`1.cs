@@ -134,19 +134,13 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
         public SeparatedSyntaxList<TOther> AsSeparatedList<TOther>() where TOther : GreenNode =>
             new(this);
 
-        public static implicit operator SyntaxList<TNode>(TNode node)
-        {
-            return new SyntaxList<TNode>(node);
-        }
+        public static implicit operator SyntaxList<TNode>(TNode node) =>
+            new SyntaxList<TNode>(node);
 
-        public static implicit operator SyntaxList<TNode>(SyntaxList<GreenNode> nodes)
-        {
-            return new SyntaxList<TNode>(nodes._node);
-        }
+        public static implicit operator SyntaxList<TNode>(SyntaxList<GreenNode> nodes) =>
+            new SyntaxList<TNode>(nodes._node);
 
-        public static implicit operator SyntaxList<GreenNode>(SyntaxList<TNode> nodes)
-        {
-            return new SyntaxList<GreenNode>(nodes.Node);
-        }
+        public static implicit operator SyntaxList<GreenNode>(SyntaxList<TNode> nodes) =>
+            new SyntaxList<GreenNode>(nodes.Node);
     }
 }

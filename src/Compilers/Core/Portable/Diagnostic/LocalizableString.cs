@@ -37,19 +37,13 @@ namespace Loretta.CodeAnalysis
         /// Converts a <see cref="LocalizableString"/> to a <see cref="string"/> with the default UI culture.
         /// </summary>
         /// <param name="localizableResource"></param>
-        public static explicit operator string?(LocalizableString localizableResource)
-        {
-            return localizableResource.ToString(null);
-        }
+        public static explicit operator string?(LocalizableString localizableResource) => localizableResource.ToString(null);
 
         /// <summary>
         /// Converts a <see cref="string"/> to a <see cref="LocalizableString"/>.
         /// </summary>
         /// <param name="fixedResource"></param>
-        public static implicit operator LocalizableString(string? fixedResource)
-        {
-            return FixedLocalizableString.Create(fixedResource);
-        }
+        public static implicit operator LocalizableString(string? fixedResource) => FixedLocalizableString.Create(fixedResource);
 
         /// <inheritdoc/>
         public sealed override string ToString() => ToString(null);

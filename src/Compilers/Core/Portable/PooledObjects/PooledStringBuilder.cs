@@ -85,9 +85,6 @@ namespace Loretta.CodeAnalysis.PooledObjects
             return builder;
         }
 
-        public static implicit operator StringBuilder(PooledStringBuilder obj)
-        {
-            return obj.Builder;
-        }
+        public static implicit operator StringBuilder(PooledStringBuilder obj) => obj.Builder;
     }
 }

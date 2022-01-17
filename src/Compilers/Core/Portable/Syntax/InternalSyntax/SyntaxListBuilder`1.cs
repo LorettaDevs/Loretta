@@ -52,10 +52,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public GreenNode? ToListNode() => _builder.ToListNode();
 
-        public static implicit operator SyntaxListBuilder(SyntaxListBuilder<TNode> builder)
-        {
-            return builder._builder;
-        }
+        public static implicit operator SyntaxListBuilder(SyntaxListBuilder<TNode> builder) => builder._builder;
 
         public static implicit operator SyntaxList<TNode>(SyntaxListBuilder<TNode> builder)
         {

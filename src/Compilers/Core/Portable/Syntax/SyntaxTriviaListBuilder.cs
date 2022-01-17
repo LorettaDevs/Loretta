@@ -102,10 +102,7 @@ namespace Loretta.CodeAnalysis.Syntax
             _nodes = tmp;
         }
 
-        public static implicit operator SyntaxTriviaList(SyntaxTriviaListBuilder builder)
-        {
-            return builder.ToList();
-        }
+        public static implicit operator SyntaxTriviaList(SyntaxTriviaListBuilder builder) => builder.ToList();
 
         public SyntaxTriviaList ToList()
         {
