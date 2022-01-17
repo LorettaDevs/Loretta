@@ -769,9 +769,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return SyntaxFirstTokenReplacer.Replace(node, oldToken, newToken, skippedSyntax.FullWidth);
         }
 
-        protected void AddTrailingSkippedSyntax(SyntaxListBuilder list, GreenNode skippedSyntax) => list[list.Count - 1] = AddTrailingSkippedSyntax((LuaSyntaxNode) list[list.Count - 1], skippedSyntax);
+        protected void AddTrailingSkippedSyntax(SyntaxListBuilder list, GreenNode skippedSyntax) => list[^1] = AddTrailingSkippedSyntax((LuaSyntaxNode) list[^1], skippedSyntax);
 
-        protected void AddTrailingSkippedSyntax<TNode>(SyntaxListBuilder<TNode> list, GreenNode skippedSyntax) where TNode : LuaSyntaxNode => list[list.Count - 1] = AddTrailingSkippedSyntax(list[list.Count - 1], skippedSyntax);
+        protected void AddTrailingSkippedSyntax<TNode>(SyntaxListBuilder<TNode> list, GreenNode skippedSyntax) where TNode : LuaSyntaxNode => list[^1] = AddTrailingSkippedSyntax(list[^1], skippedSyntax);
 
         protected TNode AddTrailingSkippedSyntax<TNode>(TNode node, GreenNode skippedSyntax) where TNode : LuaSyntaxNode
         {

@@ -169,7 +169,7 @@ namespace Loretta.CodeAnalysis
             return false;
         }
 
-        public static T Peek<T>(this ArrayBuilder<T> builder) => builder[builder.Count - 1];
+        public static T Peek<T>(this ArrayBuilder<T> builder) => builder[^1];
 
         public static ImmutableArray<T> ToImmutableOrEmptyAndFree<T>(this ArrayBuilder<T>? builder) =>
             builder?.ToImmutableAndFree() ?? ImmutableArray<T>.Empty;

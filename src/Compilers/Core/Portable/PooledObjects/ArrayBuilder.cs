@@ -186,7 +186,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
 
         public void CopyTo(T[] array, int start) => _builder.CopyTo(array, start);
 
-        public T Last() => _builder[_builder.Count - 1];
+        public T Last() => _builder[^1];
 
         public T First() => _builder[0];
 

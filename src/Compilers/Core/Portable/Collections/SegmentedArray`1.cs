@@ -70,7 +70,7 @@ namespace Loretta.CodeAnalysis.Collections
                 // Avoid using (length & s_offsetMask) because it doesn't handle a last page size of s_segmentSize.
                 var lastPageSize = length - ((_items.Length - 1) << s_segmentShift);
 
-                _items[_items.Length - 1] = new T[lastPageSize];
+                _items[^1] = new T[lastPageSize];
                 _length = length;
             }
         }
