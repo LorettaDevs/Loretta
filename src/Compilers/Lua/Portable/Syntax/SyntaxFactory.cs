@@ -418,35 +418,33 @@ namespace Loretta.CodeAnalysis.Lua
                 return default;
             }
 
-            using (var enumerator = nodes.GetEnumerator())
+            using var enumerator = nodes.GetEnumerator();
+            if (!enumerator.MoveNext())
             {
-                if (!enumerator.MoveNext())
-                {
-                    return default;
-                }
-
-                var firstNode = enumerator.Current;
-
-                if (!enumerator.MoveNext())
-                {
-                    return SingletonSeparatedList(firstNode);
-                }
-
-                var builder = new SeparatedSyntaxListBuilder<TNode>(collection != null ? collection.Count : 3);
-
-                builder.Add(firstNode);
-
-                var commaToken = Token(SyntaxKind.CommaToken);
-
-                do
-                {
-                    builder.AddSeparator(commaToken);
-                    builder.Add(enumerator.Current);
-                }
-                while (enumerator.MoveNext());
-
-                return builder.ToList();
+                return default;
             }
+
+            var firstNode = enumerator.Current;
+
+            if (!enumerator.MoveNext())
+            {
+                return SingletonSeparatedList(firstNode);
+            }
+
+            var builder = new SeparatedSyntaxListBuilder<TNode>(collection != null ? collection.Count : 3);
+
+            builder.Add(firstNode);
+
+            var commaToken = Token(SyntaxKind.CommaToken);
+
+            do
+            {
+                builder.AddSeparator(commaToken);
+                builder.Add(enumerator.Current);
+            }
+            while (enumerator.MoveNext());
+
+            return builder.ToList();
         }
 
         /// <summary>

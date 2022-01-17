@@ -591,21 +591,19 @@ namespace System.Linq
 
         public static T? AggregateOrDefault<T>(this IEnumerable<T> source, Func<T, T, T> func)
         {
-            using (var e = source.GetEnumerator())
+            using var e = source.GetEnumerator();
+            if (!e.MoveNext())
             {
-                if (!e.MoveNext())
-                {
-                    return default;
-                }
-
-                var result = e.Current;
-                while (e.MoveNext())
-                {
-                    result = func(result, e.Current);
-                }
-
-                return result;
+                return default;
             }
+
+            var result = e.Current;
+            while (e.MoveNext())
+            {
+                result = func(result, e.Current);
+            }
+
+            return result;
         }
     }
 }

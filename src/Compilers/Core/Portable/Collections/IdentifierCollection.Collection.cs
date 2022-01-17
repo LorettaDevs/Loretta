@@ -23,13 +23,11 @@ namespace Loretta.CodeAnalysis
 
             public void CopyTo(string[] array, int arrayIndex)
             {
-                using (var enumerator = GetEnumerator())
+                using var enumerator = GetEnumerator();
+                while (arrayIndex < array.Length && enumerator.MoveNext())
                 {
-                    while (arrayIndex < array.Length && enumerator.MoveNext())
-                    {
-                        array[arrayIndex] = enumerator.Current;
-                        arrayIndex++;
-                    }
+                    array[arrayIndex] = enumerator.Current;
+                    arrayIndex++;
                 }
             }
 

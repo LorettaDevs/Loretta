@@ -392,20 +392,18 @@ namespace Loretta.CodeAnalysis
                 yield return this;
             }
 
-            using (var stack = new ChildSyntaxListEnumeratorStack(this, descendIntoChildren))
+            using var stack = new ChildSyntaxListEnumeratorStack(this, descendIntoChildren);
+            while (stack.IsNotEmpty)
             {
-                while (stack.IsNotEmpty)
+                SyntaxNode? nodeValue = stack.TryGetNextAsNodeInSpan(in span);
+                if (nodeValue != null)
                 {
-                    SyntaxNode? nodeValue = stack.TryGetNextAsNodeInSpan(in span);
-                    if (nodeValue != null)
-                    {
-                        // PERF: Push before yield return so that "nodeValue" is 'dead' after the yield
-                        // and therefore doesn't need to be stored in the iterator state machine. This
-                        // saves a field.
-                        stack.PushChildren(nodeValue, descendIntoChildren);
+                    // PERF: Push before yield return so that "nodeValue" is 'dead' after the yield
+                    // and therefore doesn't need to be stored in the iterator state machine. This
+                    // saves a field.
+                    stack.PushChildren(nodeValue, descendIntoChildren);
 
-                        yield return nodeValue;
-                    }
+                    yield return nodeValue;
                 }
             }
         }
@@ -417,23 +415,21 @@ namespace Loretta.CodeAnalysis
                 yield return this;
             }
 
-            using (var stack = new ChildSyntaxListEnumeratorStack(this, descendIntoChildren))
+            using var stack = new ChildSyntaxListEnumeratorStack(this, descendIntoChildren);
+            while (stack.IsNotEmpty)
             {
-                while (stack.IsNotEmpty)
+                if (stack.TryGetNextInSpan(in span, out var value))
                 {
-                    if (stack.TryGetNextInSpan(in span, out var value))
+                    // PERF: Push before yield return so that "value" is 'dead' after the yield
+                    // and therefore doesn't need to be stored in the iterator state machine. This
+                    // saves a field.
+                    var nodeValue = value.AsNode();
+                    if (nodeValue != null)
                     {
-                        // PERF: Push before yield return so that "value" is 'dead' after the yield
-                        // and therefore doesn't need to be stored in the iterator state machine. This
-                        // saves a field.
-                        var nodeValue = value.AsNode();
-                        if (nodeValue != null)
-                        {
-                            stack.PushChildren(nodeValue, descendIntoChildren);
-                        }
-
-                        yield return value;
+                        stack.PushChildren(nodeValue, descendIntoChildren);
                     }
+
+                    yield return value;
                 }
             }
         }
@@ -445,117 +441,113 @@ namespace Loretta.CodeAnalysis
                 yield return this;
             }
 
-            using (var stack = new ThreeEnumeratorListStack(this, descendIntoChildren))
+            using var stack = new ThreeEnumeratorListStack(this, descendIntoChildren);
+            while (stack.IsNotEmpty)
             {
-                while (stack.IsNotEmpty)
+                switch (stack.PeekNext())
                 {
-                    switch (stack.PeekNext())
-                    {
-                        case ThreeEnumeratorListStack.Which.Node:
-                            SyntaxNodeOrToken value;
-                            if (stack.TryGetNextInSpan(in span, out value))
+                    case ThreeEnumeratorListStack.Which.Node:
+                        SyntaxNodeOrToken value;
+                        if (stack.TryGetNextInSpan(in span, out value))
+                        {
+                            // PERF: The following code has an unusual structure (note the 'break' out of
+                            // the case statement from inside an if body) in order to convince the compiler
+                            // that it can save a field in the iterator machinery.
+                            if (value.IsNode)
                             {
-                                // PERF: The following code has an unusual structure (note the 'break' out of
-                                // the case statement from inside an if body) in order to convince the compiler
-                                // that it can save a field in the iterator machinery.
-                                if (value.IsNode)
-                                {
-                                    // parent nodes come before children (prefix document order)
-                                    stack.PushChildren(value.AsNode()!, descendIntoChildren);
-                                }
-                                else if (value.IsToken)
-                                {
-                                    var token = value.AsToken();
+                                // parent nodes come before children (prefix document order)
+                                stack.PushChildren(value.AsNode()!, descendIntoChildren);
+                            }
+                            else if (value.IsToken)
+                            {
+                                var token = value.AsToken();
 
-                                    // only look through trivia if this node has structured trivia
-                                    if (token.HasStructuredTrivia)
+                                // only look through trivia if this node has structured trivia
+                                if (token.HasStructuredTrivia)
+                                {
+                                    // trailing trivia comes last
+                                    if (token.HasTrailingTrivia)
                                     {
-                                        // trailing trivia comes last
-                                        if (token.HasTrailingTrivia)
-                                        {
-                                            stack.PushTrailingTrivia(in token);
-                                        }
-
-                                        // tokens come between leading and trailing trivia
-                                        stack.PushToken(in value);
-
-                                        // leading trivia comes first
-                                        if (token.HasLeadingTrivia)
-                                        {
-                                            stack.PushLeadingTrivia(in token);
-                                        }
-
-                                        // Exit the case block without yielding (see PERF note above)
-                                        break;
+                                        stack.PushTrailingTrivia(in token);
                                     }
-                                    // no structure trivia, so just yield this token now
-                                }
 
-                                // PERF: Yield here (rather than inside the if bodies above) so that it's
-                                // obvious to the compiler that 'value' is not used beyond this point and,
-                                // therefore, doesn't need to be kept in a field.
-                                yield return value;
+                                    // tokens come between leading and trailing trivia
+                                    stack.PushToken(in value);
+
+                                    // leading trivia comes first
+                                    if (token.HasLeadingTrivia)
+                                    {
+                                        stack.PushLeadingTrivia(in token);
+                                    }
+
+                                    // Exit the case block without yielding (see PERF note above)
+                                    break;
+                                }
+                                // no structure trivia, so just yield this token now
                             }
 
-                            break;
+                            // PERF: Yield here (rather than inside the if bodies above) so that it's
+                            // obvious to the compiler that 'value' is not used beyond this point and,
+                            // therefore, doesn't need to be kept in a field.
+                            yield return value;
+                        }
 
-                        case ThreeEnumeratorListStack.Which.Trivia:
-                            // yield structure nodes and enumerate their children
-                            SyntaxTrivia trivia;
-                            if (stack.TryGetNext(out trivia))
+                        break;
+
+                    case ThreeEnumeratorListStack.Which.Trivia:
+                        // yield structure nodes and enumerate their children
+                        SyntaxTrivia trivia;
+                        if (stack.TryGetNext(out trivia))
+                        {
+                            if (trivia.TryGetStructure(out var structureNode) && IsInSpan(in span, trivia.FullSpan))
                             {
-                                if (trivia.TryGetStructure(out var structureNode) && IsInSpan(in span, trivia.FullSpan))
-                                {
-                                    // parent nodes come before children (prefix document order)
+                                // parent nodes come before children (prefix document order)
 
-                                    // PERF: Push before yield return so that "structureNode" is 'dead' after the yield
-                                    // and therefore doesn't need to be stored in the iterator state machine. This
-                                    // saves a field.
-                                    stack.PushChildren(structureNode, descendIntoChildren);
+                                // PERF: Push before yield return so that "structureNode" is 'dead' after the yield
+                                // and therefore doesn't need to be stored in the iterator state machine. This
+                                // saves a field.
+                                stack.PushChildren(structureNode, descendIntoChildren);
 
-                                    yield return structureNode;
-                                }
+                                yield return structureNode;
                             }
-                            break;
+                        }
+                        break;
 
-                        case ThreeEnumeratorListStack.Which.Token:
-                            yield return stack.PopToken();
-                            break;
-                    }
+                    case ThreeEnumeratorListStack.Which.Token:
+                        yield return stack.PopToken();
+                        break;
                 }
             }
         }
 
         private IEnumerable<SyntaxTrivia> DescendantTriviaOnly(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren)
         {
-            using (var stack = new ChildSyntaxListEnumeratorStack(this, descendIntoChildren))
+            using var stack = new ChildSyntaxListEnumeratorStack(this, descendIntoChildren);
+            while (stack.IsNotEmpty)
             {
-                while (stack.IsNotEmpty)
+                if (stack.TryGetNextInSpan(in span, out var value))
                 {
-                    if (stack.TryGetNextInSpan(in span, out var value))
+                    if (value.AsNode(out var nodeValue))
                     {
-                        if (value.AsNode(out var nodeValue))
-                        {
-                            stack.PushChildren(nodeValue, descendIntoChildren);
-                        }
-                        else if (value.IsToken)
-                        {
-                            var token = value.AsToken();
+                        stack.PushChildren(nodeValue, descendIntoChildren);
+                    }
+                    else if (value.IsToken)
+                    {
+                        var token = value.AsToken();
 
-                            foreach (var trivia in token.LeadingTrivia)
+                        foreach (var trivia in token.LeadingTrivia)
+                        {
+                            if (IsInSpan(in span, trivia.FullSpan))
                             {
-                                if (IsInSpan(in span, trivia.FullSpan))
-                                {
-                                    yield return trivia;
-                                }
+                                yield return trivia;
                             }
+                        }
 
-                            foreach (var trivia in token.TrailingTrivia)
+                        foreach (var trivia in token.TrailingTrivia)
+                        {
+                            if (IsInSpan(in span, trivia.FullSpan))
                             {
-                                if (IsInSpan(in span, trivia.FullSpan))
-                                {
-                                    yield return trivia;
-                                }
+                                yield return trivia;
                             }
                         }
                     }
@@ -565,59 +557,57 @@ namespace Loretta.CodeAnalysis
 
         private IEnumerable<SyntaxTrivia> DescendantTriviaIntoTrivia(TextSpan span, Func<SyntaxNode, bool>? descendIntoChildren)
         {
-            using (var stack = new TwoEnumeratorListStack(this, descendIntoChildren))
+            using var stack = new TwoEnumeratorListStack(this, descendIntoChildren);
+            while (stack.IsNotEmpty)
             {
-                while (stack.IsNotEmpty)
+                switch (stack.PeekNext())
                 {
-                    switch (stack.PeekNext())
-                    {
-                        case TwoEnumeratorListStack.Which.Node:
-                            SyntaxNodeOrToken value;
-                            if (stack.TryGetNextInSpan(in span, out value))
+                    case TwoEnumeratorListStack.Which.Node:
+                        SyntaxNodeOrToken value;
+                        if (stack.TryGetNextInSpan(in span, out value))
+                        {
+                            if (value.AsNode(out var nodeValue))
                             {
-                                if (value.AsNode(out var nodeValue))
+                                stack.PushChildren(nodeValue, descendIntoChildren);
+                            }
+                            else if (value.IsToken)
+                            {
+                                var token = value.AsToken();
+
+                                if (token.HasTrailingTrivia)
                                 {
-                                    stack.PushChildren(nodeValue, descendIntoChildren);
+                                    stack.PushTrailingTrivia(in token);
                                 }
-                                else if (value.IsToken)
+
+                                if (token.HasLeadingTrivia)
                                 {
-                                    var token = value.AsToken();
-
-                                    if (token.HasTrailingTrivia)
-                                    {
-                                        stack.PushTrailingTrivia(in token);
-                                    }
-
-                                    if (token.HasLeadingTrivia)
-                                    {
-                                        stack.PushLeadingTrivia(in token);
-                                    }
+                                    stack.PushLeadingTrivia(in token);
                                 }
                             }
+                        }
 
-                            break;
+                        break;
 
-                        case TwoEnumeratorListStack.Which.Trivia:
-                            // yield structure nodes and enumerate their children
-                            SyntaxTrivia trivia;
-                            if (stack.TryGetNext(out trivia))
+                    case TwoEnumeratorListStack.Which.Trivia:
+                        // yield structure nodes and enumerate their children
+                        SyntaxTrivia trivia;
+                        if (stack.TryGetNext(out trivia))
+                        {
+                            // PERF: Push before yield return so that "trivia" is 'dead' after the yield
+                            // and therefore doesn't need to be stored in the iterator state machine. This
+                            // saves a field.
+                            if (trivia.TryGetStructure(out var structureNode))
                             {
-                                // PERF: Push before yield return so that "trivia" is 'dead' after the yield
-                                // and therefore doesn't need to be stored in the iterator state machine. This
-                                // saves a field.
-                                if (trivia.TryGetStructure(out var structureNode))
-                                {
-                                    stack.PushChildren(structureNode, descendIntoChildren);
-                                }
-
-                                if (IsInSpan(in span, trivia.FullSpan))
-                                {
-                                    yield return trivia;
-                                }
+                                stack.PushChildren(structureNode, descendIntoChildren);
                             }
 
-                            break;
-                    }
+                            if (IsInSpan(in span, trivia.FullSpan))
+                            {
+                                yield return trivia;
+                            }
+                        }
+
+                        break;
                 }
             }
         }

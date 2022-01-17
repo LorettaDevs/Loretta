@@ -63,15 +63,13 @@ namespace Loretta.CodeAnalysis.Text
             LorettaDebug.Assert(longLength is > 0 and <= int.MaxValue); // GetMaxCharCountOrThrowIfHuge should have thrown.
             int length = (int) longLength;
 
-            using (var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true, bufferSize: Math.Min(length, 4096), leaveOpen: true))
-            {
-                var chunks = ReadChunksFromTextReader(reader, maxCharRemainingGuess, throwIfBinaryDetected);
+            using var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true, bufferSize: Math.Min(length, 4096), leaveOpen: true);
+            var chunks = ReadChunksFromTextReader(reader, maxCharRemainingGuess, throwIfBinaryDetected);
 
-                // We must compute the checksum and embedded text blob now while we still have the original bytes in hand.
-                // We cannot re-encode to obtain checksum and blob as the encoding is not guaranteed to round-trip.
-                var checksum = CalculateChecksum(stream, checksumAlgorithm);
-                return new LargeText(chunks, reader.CurrentEncoding, checksum, checksumAlgorithm);
-            }
+            // We must compute the checksum and embedded text blob now while we still have the original bytes in hand.
+            // We cannot re-encode to obtain checksum and blob as the encoding is not guaranteed to round-trip.
+            var checksum = CalculateChecksum(stream, checksumAlgorithm);
+            return new LargeText(chunks, reader.CurrentEncoding, checksum, checksumAlgorithm);
         }
 
         internal static SourceText Decode(TextReader reader, int length, Encoding? encodingOpt, SourceHashAlgorithm checksumAlgorithm)
