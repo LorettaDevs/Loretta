@@ -351,8 +351,11 @@ namespace Loretta.CodeAnalysis
             return true;
         }
 
-        // for debugging
+#if DEBUG
+        [Obsolete("For debugging only", true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "For debugging only")]
         private TNode[] Nodes => this.ToArray();
+#endif
 
         /// <summary>
         /// Gets the enumerator for this list.

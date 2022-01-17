@@ -342,7 +342,6 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             Log2SoftwareFallback(value);
 #endif
 
-
 #if !NETCOREAPP
         /// <summary>
         /// Returns the integer (floor) log of the specified value, base 2.

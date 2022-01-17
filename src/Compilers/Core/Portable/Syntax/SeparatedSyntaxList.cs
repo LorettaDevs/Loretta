@@ -578,10 +578,15 @@ namespace Loretta.CodeAnalysis
             return new SeparatedSyntaxList<TNode>(nodesWithSeps.Replace(separatorToken, newSeparator));
         }
 
-        // for debugging
+#if DEBUG
+        [Obsolete("For debugging only", true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "For debugging only")]
         private TNode[] Nodes => this.ToArray();
 
+        [Obsolete("For debugging only", true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "For debugging only")]
         private SyntaxNodeOrToken[] NodesWithSeparators => _list.ToArray();
+#endif
 
         /// <summary>
         /// Returns the enumerator for this list.

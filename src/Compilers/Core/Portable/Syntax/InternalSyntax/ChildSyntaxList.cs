@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+
 namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 {
     internal partial struct ChildSyntaxList
@@ -39,7 +41,9 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             return n;
         }
 
-        // for debugging
+#if DEBUG
+        [Obsolete("For debugging only", true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "For debugging only")]
         private GreenNode[] Nodes
         {
             get
@@ -55,6 +59,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
                 return result;
             }
         }
+#endif
 
         public Enumerator GetEnumerator() => new Enumerator(_node);
 

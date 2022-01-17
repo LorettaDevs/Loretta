@@ -553,23 +553,6 @@ namespace Loretta.Generators.SyntaxXml
             CloseBlock();
         }
 
-        private void WriteContextualGreenFactories()
-        {
-            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode)).ToList();
-            WriteLine();
-            WriteLine("internal partial class ContextAwareSyntax");
-            OpenBlock();
-            WriteLine();
-            WriteLine("private SyntaxFactoryContext context;");
-
-            WriteLine();
-            WriteLine("public ContextAwareSyntax(SyntaxFactoryContext context)");
-            WriteLine("    => this.context = context;");
-
-            WriteGreenFactories(nodes, withSyntaxFactoryContext: true);
-            CloseBlock();
-        }
-
         private void WriteStaticGreenFactories()
         {
             var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode)).ToList();

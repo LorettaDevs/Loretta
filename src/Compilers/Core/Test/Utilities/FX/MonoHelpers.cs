@@ -3,7 +3,6 @@
 
 #nullable disable
 
-
 namespace Loretta.CodeAnalysis.Test.Utilities
 {
     public static class MonoHelpers

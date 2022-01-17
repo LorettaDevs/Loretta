@@ -375,8 +375,11 @@ namespace Loretta.CodeAnalysis
             throw new ArgumentOutOfRangeException(nameof(nodeOrTokenInList));
         }
 
-        // for debugging
+#if DEBUG
+        [Obsolete("For debugging only", true)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "For debugging only")]
         private SyntaxNodeOrToken[] Nodes => this.ToArray();
+#endif
 
         /// <summary>
         /// Gets the enumerator.

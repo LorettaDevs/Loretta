@@ -85,13 +85,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             Add(new TreeDumperNode(trivia.Kind().ToString(), ObjectDisplay.FormatPrimitive(trivia.ToFullString(), ObjectDisplayOptions.EscapeNonPrintableCharacters), children));
         }
 
-        private IEnumerable<TreeDumperNode>? WithNewList(Action action)
-        {
-            _childrenStack.Push(new List<TreeDumperNode?>());
-            action();
-            return ToEnumerable(_childrenStack.Pop());
-        }
-
         private IEnumerable<TreeDumperNode>? WithNewList<TArg>(Action<TArg> action, TArg arg)
         {
             _childrenStack.Push(new List<TreeDumperNode?>());
