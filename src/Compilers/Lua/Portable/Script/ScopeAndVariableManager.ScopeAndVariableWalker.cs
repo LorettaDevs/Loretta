@@ -136,8 +136,7 @@ namespace Loretta.CodeAnalysis.Lua
             public override void VisitAssignmentStatement(AssignmentStatementSyntax node)
             {
                 // Visit values first so that we don't end up with circular references.
-                foreach (var value in node.Values)
-                    Visit(value);
+                Visit(node.EqualsValues);
 
                 foreach (var assignee in node.Variables)
                 {
@@ -294,8 +293,7 @@ namespace Loretta.CodeAnalysis.Lua
 
             public override void VisitLocalVariableDeclarationStatement(LocalVariableDeclarationStatementSyntax node)
             {
-                foreach (var values in node.Values)
-                    Visit(values);
+                Visit(node.EqualsValues);
                 foreach (var name in node.Names)
                 {
                     if (name.IsMissing || string.IsNullOrWhiteSpace(name.Name))
