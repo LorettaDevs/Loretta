@@ -857,6 +857,29 @@
 
   <!-- Assignment statement -->
 
+  <Node Name="EqualsValuesClauseSyntax" Base="LuaSyntaxNode">
+    <TypeComment>
+      <summary>Represents the values being assigned to the names in an assignment or variable declaration.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="EqualsValueClauseSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="EqualsValuesClause" />
+    <Field Name="EqualsToken" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The equals token.</summary>
+      </PropertyComment>
+      <Kind Name="EqualsToken" />
+    </Field>
+    <Field Name="Values" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
+      <PropertyComment>
+        <summary>The list of values being assigned.</summary>
+      </PropertyComment>
+    </Field>
+  </Node>
+
   <Node Name="AssignmentStatementSyntax" Base="StatementSyntax">
     <TypeComment>
       <summary>Represents an assignment statement.</summary>
