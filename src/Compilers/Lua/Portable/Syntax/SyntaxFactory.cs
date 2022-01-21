@@ -917,5 +917,19 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static StatementListSyntax StatementList(IEnumerable<StatementSyntax> statements) =>
             StatementList(List(statements));
+
+        /// <summary>
+        /// Creates a new <see cref="AssignmentStatementSyntax"/> node.
+        /// </summary>
+        public static AssignmentStatementSyntax AssignmentStatement(SeparatedSyntaxList<PrefixExpressionSyntax> variables, SeparatedSyntaxList<ExpressionSyntax> values) =>
+            AssignmentStatement(variables, EqualsValuesClause(values));
+
+        /// <summary>
+        /// Creates a new <see cref="LocalVariableDeclarationStatementSyntax"/> node.
+        /// </summary>
+        public static LocalVariableDeclarationStatementSyntax LocalVariableDeclarationStatement(
+            SeparatedSyntaxList<IdentifierNameSyntax> variables,
+            SeparatedSyntaxList<ExpressionSyntax> values) =>
+            LocalVariableDeclarationStatement(variables, EqualsValuesClause(values));
     }
 }
