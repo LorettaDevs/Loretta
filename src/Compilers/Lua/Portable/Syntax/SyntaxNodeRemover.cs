@@ -371,23 +371,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                     AddResidualTrivia(SyntaxFactory.TriviaList(SyntaxFactory.ElasticMarker));
                 }
             }
-
-            private TextSpan GetRemovedSpan(TextSpan span, TextSpan fullSpan)
-            {
-                var removedSpan = fullSpan;
-
-                if ((_options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
-                {
-                    removedSpan = TextSpan.FromBounds(span.Start, removedSpan.End);
-                }
-
-                if ((_options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
-                {
-                    removedSpan = TextSpan.FromBounds(removedSpan.Start, span.End);
-                }
-
-                return removedSpan;
-            }
         }
     }
 }
