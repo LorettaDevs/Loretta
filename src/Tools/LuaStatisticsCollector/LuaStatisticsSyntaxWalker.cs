@@ -19,11 +19,11 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 
         public FileFeatureStatistics FeatureStatistics => _featureStatisticsBuilder.Summarize();
 
-        public override void VisitAssignmentStatement(AssignmentStatementSyntax node)
+        public override void VisitCompoundAssignmentStatement(CompoundAssignmentStatementSyntax node)
         {
-            if (!_featureStatisticsBuilder.HasCompoundAssignments && node.EqualsToken.Kind != SyntaxKind.EqualsToken)
+            if (!_featureStatisticsBuilder.HasCompoundAssignments)
                 _featureStatisticsBuilder.HasCompoundAssignments = true;
-            base.VisitAssignmentStatement(node);
+            base.VisitCompoundAssignmentStatement(node);
         }
 
         public override void VisitEmptyStatement(EmptyStatementSyntax node)
