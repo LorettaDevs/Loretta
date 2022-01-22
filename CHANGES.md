@@ -59,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `LuaSyntaxVisitor<TResult>.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`;
 	- `LuaSyntaxWalker.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`;
 	- `LuaSyntaxRewriter.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`.
+- Added `SyntaxFacts.GetKeywordKind(ReadOnlySpan<char> span)`.
 
 ## v0.2.7-beta.11
 ### Fixed

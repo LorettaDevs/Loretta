@@ -269,19 +269,36 @@ namespace Loretta.Generators.SyntaxKindGenerator
 
         private static void GenerateGetKeywordKind(KindList kinds, SourceWriter writer)
         {
-            writer.WriteLine("/// <summary>");
-            writer.WriteLine("/// Returns the <see cref=\"SyntaxKind\"/> for a given keyword.");
-            writer.WriteLine("/// </summary>");
-            writer.WriteLine("/// <param name=\"text\"></param>");
-            writer.WriteLine("/// <returns></returns>");
-            using (writer.Indenter("public static SyntaxKind GetKeywordKind(String text) =>"))
-            using (writer.CurlyIndenter("text switch", ";"))
+            var optimized = new OptimizedSwitch();
+            foreach (var keyword in kinds.Keywords.OrderBy(kind => kind.Field.Name))
             {
-                foreach (var keyword in kinds.Keywords.OrderBy(kind => kind.Field.Name))
+                optimized.AddClause(keyword.TokenInfo!.Value.Text!, writer =>
                 {
-                    writer.WriteLine($"\"{keyword.TokenInfo!.Value.Text}\" => SyntaxKind.{keyword.Field.Name},");
-                }
-                writer.WriteLine($"_ => SyntaxKind.IdentifierToken,");
+                    writer.Write("return SyntaxKind.");
+                    writer.Write(keyword.Field.Name);
+                    writer.WriteLine(';');
+                });
+            }
+            optimized.DefaultBodyWriter = writer => writer.WriteLine("return SyntaxKind.IdentifierToken;");
+
+            writeHeader(writer);
+            using (writer.CurlyIndenter("public static SyntaxKind GetKeywordKind(String text)"))
+            {
+                optimized.Generate(writer, "text", false);
+            }
+
+            writer.WriteLine();
+            writeHeader(writer);
+            using (writer.CurlyIndenter("public static SyntaxKind GetKeywordKind(ReadOnlySpan<char> span)"))
+            {
+                optimized.Generate(writer, "span", true);
+            }
+
+            static void writeHeader(SourceWriter writer)
+            {
+                writer.WriteLine("/// <summary>");
+                writer.WriteLine("/// Returns the <see cref=\"SyntaxKind\"/> for a given keyword or <see cref=\"SyntaxKind.IdentifierName\"/> if not a keyword.");
+                writer.WriteLine("/// </summary>");
             }
         }
 
