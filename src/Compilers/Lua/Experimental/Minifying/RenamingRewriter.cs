@@ -33,23 +33,21 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         public override SyntaxNode? VisitLocalVariableDeclarationStatement(LocalVariableDeclarationStatementSyntax node)
         {
             // This needs to happen first.
-            var values = VisitList(node.Values);
+            var equalsValues = (EqualsValuesClauseSyntax?) Visit(node.EqualsValues);
             return node.Update(
                 node.LocalKeyword,
                 VisitList(node.Names),
-                node.EqualsToken,
-                values,
+                equalsValues,
                 node.SemicolonToken);
         }
 
         public override SyntaxNode? VisitAssignmentStatement(AssignmentStatementSyntax node)
         {
             // This needs to happen first.
-            var values = VisitList(node.Values);
+            var equalsValues = (EqualsValuesClauseSyntax) (Visit(node.EqualsValues) ?? throw ExceptionUtilities.Unreachable);
             return node.Update(
-                base.VisitList(node.Variables),
-                node.EqualsToken,
-                values,
+                VisitList(node.Variables),
+                equalsValues,
                 node.SemicolonToken);
         }
 

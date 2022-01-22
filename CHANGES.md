@@ -5,6 +5,60 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+- [Breaking] The following were changed as a result of the move to `EqualsValuesClauseSyntax`:
+	- Replaced `EqualsToken` and `Values` in `AssignmentStatementSyntax` by `EqualsValues`;
+	- Replaced `EqualsToken` and `Values` in `LocalVariableDeclarationStatementSyntax` by `EqualsValues`.
+
+### Removed
+- [Breaking] The following were removed as a result of the move to `EqualsValuesClauseSyntax`:
+	- `AssignmentStatementSyntax.EqualsToken`;
+	- `AssignmentStatementSyntax.Values`;
+	- `AssignmentStatementSyntax.Update(SeparatedSyntaxList<PrefixExpressionSyntax> variables, SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values, SyntaxToken semicolonToken)`;
+	- `AssignmentStatementSyntax.AddValues(params ExpressionSyntax[] items)`;
+	- `AssignmentStatementSyntax.WithEqualsToken(SyntaxToken equalsToken)`;
+	- `AssignmentStatementSyntax.WithValues(SeparatedSyntaxList<ExpressionSyntax> values)`;
+	- `LocalVariableDeclarationStatementSyntax.AddValues(params ExpressionSyntax[] items)`;
+	- `LocalVariableDeclarationStatementSyntax.EqualsToken`;
+	- `LocalVariableDeclarationStatementSyntax.Update(SyntaxToken localKeyword, SeparatedSyntaxList<IdentifierNameSyntax> names, SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values, SyntaxToken semicolonToken)`;
+	- `LocalVariableDeclarationStatementSyntax.Values`;
+	- `LocalVariableDeclarationStatementSyntax.WithEqualsToken(SyntaxToken equalsToken)`;
+	- `LocalVariableDeclarationStatementSyntax.WithValues(SeparatedSyntaxList<ExpressionSyntax> values)`;
+	- `SyntaxFactory.AssignmentStatement()`;
+	- `SyntaxFactory.AssignmentStatement(SeparatedSyntaxList<PrefixExpressionSyntax> variables, SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values, SyntaxToken semicolonToken)`;
+	- `SyntaxFactory.LocalVariableDeclarationStatement()`;
+	- `SyntaxFactory.LocalVariableDeclarationStatement(SeparatedSyntaxList<IdentifierNameSyntax> names, SeparatedSyntaxList<ExpressionSyntax> values)`;
+	- `SyntaxFactory.LocalVariableDeclarationStatement(SyntaxToken localKeyword, SeparatedSyntaxList<IdentifierNameSyntax> names, SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values, SyntaxToken semicolonToken)`.
+
+### Added
+- The following were added as a result of the move to `EqualsValuesClauseSyntax`:
+	- `SyntaxKind.EqualsValuesClause`;
+	- `EqualsValuesClauseSyntax`;
+	- `EqualsValuesClauseSyntax.EqualsToken`;
+	- `EqualsValuesClauseSyntax.Values`;
+	- `EqualsValuesClauseSyntax.Update(SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values)`;
+	- `EqualsValuesClauseSyntax.WithEqualsToken(SyntaxToken equalsToken)`;
+	- `EqualsValuesClauseSyntax.AddValues(params ExpressionSyntax[] items)`;
+	- `EqualsValuesClauseSyntax.WithValues(SeparatedSyntaxList<ExpressionSyntax> values)`;
+	- `EqualsValuesClauseSyntax.Accept(LuaSyntaxVisitor visitor)`;
+	- `EqualsValuesClauseSyntax.Accept<TResult>(LuaSyntaxVisitor<TResult> visitor)`;
+	- `AssignmentStatementSyntax.EqualsValues`;
+	- `AssignmentStatementSyntax.Update(SeparatedSyntaxList<PrefixExpressionSyntax> variables, EqualsValuesClauseSyntax equalsValues, SyntaxToken semicolonToken)`;
+	- `AssignmentStatementSyntax.AddEqualsValuesValues(params ExpressionSyntax[] items)`;
+	- `AssignmentStatementSyntax.WithEqualsValues(EqualsValuesClauseSyntax equalsValues)`;
+	- `LocalVariableDeclarationStatementSyntax.EqualsValues`;
+	- `LocalVariableDeclarationStatementSyntax.Update(SyntaxToken localKeyword, SeparatedSyntaxList<IdentifierNameSyntax> names, EqualsValuesClauseSyntax? equalsValues, SyntaxToken semicolonToken)`;
+	- `LocalVariableDeclarationStatementSyntax.AddEqualsValuesValues(params ExpressionSyntax[] items)`;
+	- `LocalVariableDeclarationStatementSyntax.WithEqualsValues(Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax? equalsValues)`;
+	- `SyntaxFactory.AssignmentStatement(SeparatedSyntaxList<PrefixExpressionSyntax> variables, EqualsValuesClauseSyntax equalsValues, SyntaxToken semicolonToken)`;
+	- `SyntaxFactory.AssignmentStatement(SeparatedSyntaxList<PrefixExpressionSyntax> variables, EqualsValuesClauseSyntax equalsValues)`;
+	- `SyntaxFactory.EqualsValuesClause(SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values)`;
+	- `SyntaxFactory.LocalVariableDeclarationStatement(SeparatedSyntaxList<IdentifierNameSyntax> names, EqualsValuesClauseSyntax? equalsValues)`;
+	- `SyntaxFactory.LocalVariableDeclarationStatement(SyntaxToken localKeyword, SeparatedSyntaxList<IdentifierNameSyntax> names, EqualsValuesClauseSyntax? equalsValues, SyntaxToken semicolonToken)`;
+	- `LuaSyntaxVisitor.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`;
+	- `LuaSyntaxVisitor<TResult>.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`;
+	- `LuaSyntaxWalker.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`;
+	- `LuaSyntaxRewriter.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`.
 
 ## v0.2.7-beta.11
 ### Fixed

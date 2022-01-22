@@ -232,6 +232,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
 
             var names = _pool.ToListAndFree(namesAndSeparatorsBuilder);
+
+            EqualsValuesClauseSyntax? equalsValuesClause = null;
             if (CurrentToken.Kind == SyntaxKind.EqualsToken)
             {
                 var equalsToken = EatToken(SyntaxKind.EqualsToken);
@@ -251,28 +253,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     expressionsAndSeparatorsBuilder.Add(value);
                 }
 
-                var semicolonToken = TryMatchSemicolon();
-
                 var values = _pool.ToListAndFree(expressionsAndSeparatorsBuilder);
-
-                return SyntaxFactory.LocalVariableDeclarationStatement(
-                    localKeyword,
-                    names,
-                    equalsToken,
-                    values,
-                    semicolonToken);
+                equalsValuesClause = SyntaxFactory.EqualsValuesClause(equalsToken, values);
             }
-            else
-            {
-                var semicolonToken = TryMatchSemicolon();
 
-                return SyntaxFactory.LocalVariableDeclarationStatement(
-                    localKeyword,
-                    names,
-                    equalsToken: null,
-                    values: default,
-                    semicolonToken);
-            }
+            var semicolonToken = TryMatchSemicolon();
+
+            return SyntaxFactory.LocalVariableDeclarationStatement(
+                localKeyword,
+                names,
+                equalsValuesClause,
+                semicolonToken);
         }
 
         private LocalFunctionDeclarationStatementSyntax ParseLocalFunctionDeclarationStatement()
@@ -621,8 +612,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var values = _pool.ToListAndFree(valuesAndSeparatorsBuilder);
             return SyntaxFactory.AssignmentStatement(
                 variables,
-                equalsToken,
-                values,
+                SyntaxFactory.EqualsValuesClause(
+                    equalsToken,
+                    values),
                 semicolonToken);
         }
 

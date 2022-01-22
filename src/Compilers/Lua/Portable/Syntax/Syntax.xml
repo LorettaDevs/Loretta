@@ -857,6 +857,29 @@
 
   <!-- Assignment statement -->
 
+  <Node Name="EqualsValuesClauseSyntax" Base="LuaSyntaxNode">
+    <TypeComment>
+      <summary>Represents the values being assigned to the names in an assignment or variable declaration.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="EqualsValueClauseSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="EqualsValuesClause" />
+    <Field Name="EqualsToken" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The equals token.</summary>
+      </PropertyComment>
+      <Kind Name="EqualsToken" />
+    </Field>
+    <Field Name="Values" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
+      <PropertyComment>
+        <summary>The list of values being assigned.</summary>
+      </PropertyComment>
+    </Field>
+  </Node>
+
   <Node Name="AssignmentStatementSyntax" Base="StatementSyntax">
     <TypeComment>
       <summary>Represents an assignment statement.</summary>
@@ -872,15 +895,9 @@
         <summary>The variables being assigned to.</summary>
       </PropertyComment>
     </Field>
-    <Field Name="EqualsToken" Type="SyntaxToken">
+    <Field Name="EqualsValues" Type="EqualsValuesClauseSyntax">
       <PropertyComment>
-        <summary>The equals token.</summary>
-      </PropertyComment>
-      <Kind Name="EqualsToken" />
-    </Field>
-    <Field Name="Values" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
-      <PropertyComment>
-        <summary>The values being assigned.</summary>
+        <summary>The values being assigned to the names (if any).</summary>
       </PropertyComment>
     </Field>
     <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -927,6 +944,40 @@
     <Field Name="Expression" Type="ExpressionSyntax">
       <PropertyComment>
         <summary>The expression on the right side of the operator.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+      <PropertyComment>
+        <summary>The semicolon at the end of the statement (if any).</summary>
+      </PropertyComment>
+      <Kind Name="SemicolonToken" />
+    </Field>
+  </Node>
+
+  <Node Name="LocalVariableDeclarationStatementSyntax" Base="StatementSyntax">
+    <TypeComment>
+      <summary>Represents a local variable declaration statement.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="LocalVariableDeclarationStatementSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="LocalVariableDeclarationStatement" />
+    <Field Name="LocalKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The 'local' keyword.</summary>
+      </PropertyComment>
+      <Kind Name="LocalKeyword" />
+    </Field>
+    <Field Name="Names" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
+      <PropertyComment>
+        <summary>The list of names being assigned to.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="EqualsValues" Type="EqualsValuesClauseSyntax" Optional="true">
+      <PropertyComment>
+        <summary>The values being assigned to the names (if any).</summary>
       </PropertyComment>
     </Field>
     <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -1384,51 +1435,6 @@
       </PropertyComment>
       <Kind Name="ContinueKeyword" />
     </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="LocalVariableDeclarationStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a local variable declaration statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="LocalVariableDeclarationStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="LocalVariableDeclarationStatement" />
-    <Field Name="LocalKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'local' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="LocalKeyword" />
-    </Field>
-    <Field Name="Names" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
-      <PropertyComment>
-        <summary>The list of names being assigned to.</summary>
-      </PropertyComment>
-    </Field>
-    <Sequence Optional="true">
-      <Field Name="EqualsToken" Type="SyntaxToken">
-        <PropertyComment>
-          <summary>
-            The equals token.
-            May be None if no values were assigned.
-          </summary>
-        </PropertyComment>
-        <Kind Name="EqualsToken" />
-      </Field>
-      <Field Name="Values" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
-        <PropertyComment>
-          <summary>The list of values being assigned.</summary>
-        </PropertyComment>
-      </Field>
-    </Sequence>
     <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
       <PropertyComment>
         <summary>The semicolon at the end of the statement (if any).</summary>
