@@ -610,7 +610,7 @@ namespace Loretta.Generators.SyntaxXml
                 {
                     WriteLine($"case SyntaxKind.{kind.Name}:{(kind == nd.Kinds.Last() ? " break;" : "")}");
                 }
-                WriteLine("default: throw new ArgumentException(nameof(kind));");
+                WriteLine("default: throw new ArgumentException(\"Invalid kind provided.\", nameof(kind));");
                 CloseBlock();
             }
 
@@ -626,7 +626,7 @@ namespace Loretta.Generators.SyntaxXml
                 }
                 if (IsAnyList(field.Type) && field.MinCount > 0)
                 {
-                    WriteLine($"if ({pname}.Count < {field.MinCount}) throw new ArgumentException(\"'{{nameof({pname})}}' does not have at least {field.MinCount} elements.\", nameof({pname}));");
+                    WriteLine($"if ({pname}.Count < {field.MinCount}) throw new ArgumentException($\"'{{nameof({pname})}}' does not have at least {field.MinCount} elements.\", nameof({pname}));");
                 }
                 if (field.Type == "SyntaxToken" && field.Kinds != null && field.Kinds.Count > 0)
                 {
@@ -638,7 +638,7 @@ namespace Loretta.Generators.SyntaxXml
 
                     if (field.Kinds.Count == 1 && !IsOptional(field))
                     {
-                        WriteLine($"if ({pname}.Kind != SyntaxKind.{field.Kinds[0].Name}) throw new ArgumentException(nameof({pname}));");
+                        WriteLine($"if ({pname}.Kind != SyntaxKind.{field.Kinds[0].Name}) throw new ArgumentException($\"Invalid kind provided. Expected {field.Kinds[0].Name} but got {{{pname}.Kind}}.\", nameof({pname}));");
                     }
                     else
                     {
@@ -656,7 +656,7 @@ namespace Loretta.Generators.SyntaxXml
                             WriteLine($"case SyntaxKind.{kind.Name}:{(kind == kinds.Last() ? " break;" : "")}");
                         }
 
-                        WriteLine($"default: throw new ArgumentException(nameof({pname}));");
+                        WriteLine($"default: throw new ArgumentException(\"Provided kind is not one of the valid ones.\", nameof({pname}));");
                         CloseBlock();
                     }
 
@@ -1513,7 +1513,7 @@ namespace Loretta.Generators.SyntaxXml
                 {
                     WriteLine($"case SyntaxKind.{kind.Name}:{(kind == nd.Kinds.Last() ? " break;" : "")}");
                 }
-                WriteLine("default: throw new ArgumentException(nameof(kind));");
+                WriteLine("default: throw new ArgumentException(\"Provided kind is not one of the valid ones.\", nameof(kind));");
                 CloseBlock();
             }
 
@@ -1534,7 +1534,7 @@ namespace Loretta.Generators.SyntaxXml
 
                         if (kinds.Count == 1)
                         {
-                            WriteLine($"if ({pname}.Kind() != SyntaxKind.{kinds[0].Name}) throw new ArgumentException(nameof({pname}));");
+                            WriteLine($"if ({pname}.Kind() != SyntaxKind.{kinds[0].Name}) throw new ArgumentException($\"Invalid kind provided. Expected {field.Kinds[0].Name} but got {{{pname}.Kind()}}.\", nameof({pname}));");
                         }
                         else
                         {
@@ -1544,7 +1544,7 @@ namespace Loretta.Generators.SyntaxXml
                             {
                                 WriteLine($"case SyntaxKind.{kind.Name}:{(kind == kinds.Last() ? " break;" : "")}");
                             }
-                            WriteLine($"default: throw new ArgumentException(nameof({pname}));");
+                            WriteLine($"default: throw new ArgumentException(\"Provided kind is not one of the valid ones.\", nameof({pname}));");
                             CloseBlock();
                         }
                     }
@@ -1555,7 +1555,7 @@ namespace Loretta.Generators.SyntaxXml
                 }
                 else if (IsAnyList(field.Type) && field.MinCount > 0)
                 {
-                    WriteLine($"if ({pname}.Count < {field.MinCount}) throw new ArgumentException(\"'{{nameof({pname})}}' does not have at least {field.MinCount} elements.\", nameof({pname}));");
+                    WriteLine($"if ({pname}.Count < {field.MinCount}) throw new ArgumentException($\"'{{nameof({pname})}}' does not have at least {field.MinCount} elements.\", nameof({pname}));");
                 }
             }
 
