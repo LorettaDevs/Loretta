@@ -610,7 +610,7 @@ namespace Loretta.Generators.SyntaxXml
                 {
                     WriteLine($"case SyntaxKind.{kind.Name}:{(kind == nd.Kinds.Last() ? " break;" : "")}");
                 }
-                WriteLine("default: throw new ArgumentException(nameof(kind));");
+                WriteLine("default: throw new ArgumentException(\"Invalid kind provided.\", nameof(kind));");
                 CloseBlock();
             }
 
@@ -622,7 +622,11 @@ namespace Loretta.Generators.SyntaxXml
 
                 if (!IsAnyList(field.Type) && !IsOptional(field))
                 {
-                    WriteLine($"if ({CamelCase(field.Name)} == null) throw new ArgumentNullException(nameof({CamelCase(field.Name)}));");
+                    WriteLine($"if ({pname} == null) throw new ArgumentNullException(nameof({pname}));");
+                }
+                if (IsAnyList(field.Type) && field.MinCount > 0)
+                {
+                    WriteLine($"if ({pname}.Count < {field.MinCount}) throw new ArgumentException($\"'{{nameof({pname})}}' does not have at least {field.MinCount} elements.\", nameof({pname}));");
                 }
                 if (field.Type == "SyntaxToken" && field.Kinds != null && field.Kinds.Count > 0)
                 {
@@ -634,7 +638,7 @@ namespace Loretta.Generators.SyntaxXml
 
                     if (field.Kinds.Count == 1 && !IsOptional(field))
                     {
-                        WriteLine($"if ({pname}.Kind != SyntaxKind.{field.Kinds[0].Name}) throw new ArgumentException(nameof({pname}));");
+                        WriteLine($"if ({pname}.Kind != SyntaxKind.{field.Kinds[0].Name}) throw new ArgumentException($\"Invalid kind provided. Expected {field.Kinds[0].Name} but got {{{pname}.Kind}}.\", nameof({pname}));");
                     }
                     else
                     {
@@ -652,7 +656,7 @@ namespace Loretta.Generators.SyntaxXml
                             WriteLine($"case SyntaxKind.{kind.Name}:{(kind == kinds.Last() ? " break;" : "")}");
                         }
 
-                        WriteLine($"default: throw new ArgumentException(nameof({pname}));");
+                        WriteLine($"default: throw new ArgumentException(\"Provided kind is not one of the valid ones.\", nameof({pname}));");
                         CloseBlock();
                     }
 
@@ -1443,7 +1447,9 @@ namespace Loretta.Generators.SyntaxXml
             return referencedNode != null && RequiredFactoryArgumentCount(referencedNode) == 0;
         }
 
-        private bool IsRequiredFactoryField(Node node, Field field) => (!IsOptional(field) && !IsAnyList(field.Type) && !CanBeAutoCreated(node, field)) || IsValueField(field);
+        private bool IsRequiredFactoryField(Node node, Field field) =>
+            (!IsOptional(field) && (!IsAnyList(field.Type) || field.MinCount > 0) && !CanBeAutoCreated(node, field))
+            || IsValueField(field);
 
         private bool IsValueField(Field field) => !IsNodeOrNodeList(field.Type);
 
@@ -1490,7 +1496,7 @@ namespace Loretta.Generators.SyntaxXml
             var valueFields = nd.Fields.Where(n => IsValueField(n)).ToList();
             var nodeFields = nd.Fields.Where(n => !IsValueField(n)).ToList();
 
-            WriteComment($"<summary>Creates a new {nd.Name} instance.</summary>");
+            WriteComment(nd.FactoryComment, "");
 
             Write($"public static {nd.Name} {StripPost(nd.Name, "Syntax")}(");
             WriteRedFactoryParameters(nd);
@@ -1507,7 +1513,7 @@ namespace Loretta.Generators.SyntaxXml
                 {
                     WriteLine($"case SyntaxKind.{kind.Name}:{(kind == nd.Kinds.Last() ? " break;" : "")}");
                 }
-                WriteLine("default: throw new ArgumentException(nameof(kind));");
+                WriteLine("default: throw new ArgumentException(\"Provided kind is not one of the valid ones.\", nameof(kind));");
                 CloseBlock();
             }
 
@@ -1528,7 +1534,7 @@ namespace Loretta.Generators.SyntaxXml
 
                         if (kinds.Count == 1)
                         {
-                            WriteLine($"if ({pname}.Kind() != SyntaxKind.{kinds[0].Name}) throw new ArgumentException(nameof({pname}));");
+                            WriteLine($"if ({pname}.Kind() != SyntaxKind.{kinds[0].Name}) throw new ArgumentException($\"Invalid kind provided. Expected {field.Kinds[0].Name} but got {{{pname}.Kind()}}.\", nameof({pname}));");
                         }
                         else
                         {
@@ -1538,14 +1544,18 @@ namespace Loretta.Generators.SyntaxXml
                             {
                                 WriteLine($"case SyntaxKind.{kind.Name}:{(kind == kinds.Last() ? " break;" : "")}");
                             }
-                            WriteLine($"default: throw new ArgumentException(nameof({pname}));");
+                            WriteLine($"default: throw new ArgumentException(\"Provided kind is not one of the valid ones.\", nameof({pname}));");
                             CloseBlock();
                         }
                     }
                 }
                 else if (!IsAnyList(field.Type) && !IsOptional(field))
                 {
-                    WriteLine($"if ({CamelCase(field.Name)} == null) throw new ArgumentNullException(nameof({CamelCase(field.Name)}));");
+                    WriteLine($"if ({pname} == null) throw new ArgumentNullException(nameof({pname}));");
+                }
+                else if (IsAnyList(field.Type) && field.MinCount > 0)
+                {
+                    WriteLine($"if ({pname}.Count < {field.MinCount}) throw new ArgumentException($\"'{{nameof({pname})}}' does not have at least {field.MinCount} elements.\", nameof({pname}));");
                 }
             }
 
