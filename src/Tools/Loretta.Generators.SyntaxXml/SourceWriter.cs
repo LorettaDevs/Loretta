@@ -622,7 +622,11 @@ namespace Loretta.Generators.SyntaxXml
 
                 if (!IsAnyList(field.Type) && !IsOptional(field))
                 {
-                    WriteLine($"if ({CamelCase(field.Name)} == null) throw new ArgumentNullException(nameof({CamelCase(field.Name)}));");
+                    WriteLine($"if ({pname} == null) throw new ArgumentNullException(nameof({pname}));");
+                }
+                if (IsAnyList(field.Type) && field.MinCount > 0)
+                {
+                    WriteLine($"if ({pname}.Count < {field.MinCount}) throw new ArgumentException(\"'{{nameof({pname})}}' does not have at least {field.MinCount} elements.\", nameof({pname}));");
                 }
                 if (field.Type == "SyntaxToken" && field.Kinds != null && field.Kinds.Count > 0)
                 {
@@ -1547,7 +1551,11 @@ namespace Loretta.Generators.SyntaxXml
                 }
                 else if (!IsAnyList(field.Type) && !IsOptional(field))
                 {
-                    WriteLine($"if ({CamelCase(field.Name)} == null) throw new ArgumentNullException(nameof({CamelCase(field.Name)}));");
+                    WriteLine($"if ({pname} == null) throw new ArgumentNullException(nameof({pname}));");
+                }
+                else if (IsAnyList(field.Type) && field.MinCount > 0)
+                {
+                    WriteLine($"if ({pname}.Count < {field.MinCount}) throw new ArgumentException(\"'{{nameof({pname})}}' does not have at least {field.MinCount} elements.\", nameof({pname}));");
                 }
             }
 
