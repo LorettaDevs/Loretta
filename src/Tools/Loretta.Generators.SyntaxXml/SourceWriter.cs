@@ -1443,7 +1443,9 @@ namespace Loretta.Generators.SyntaxXml
             return referencedNode != null && RequiredFactoryArgumentCount(referencedNode) == 0;
         }
 
-        private bool IsRequiredFactoryField(Node node, Field field) => (!IsOptional(field) && !IsAnyList(field.Type) && !CanBeAutoCreated(node, field)) || IsValueField(field);
+        private bool IsRequiredFactoryField(Node node, Field field) =>
+            (!IsOptional(field) && (!IsAnyList(field.Type) || field.MinCount > 0) && !CanBeAutoCreated(node, field))
+            || IsValueField(field);
 
         private bool IsValueField(Field field) => !IsNodeOrNodeList(field.Type);
 
