@@ -863,7 +863,7 @@
     </TypeComment>
     <FactoryComment>
       <summary>
-        Creates a new <see cref="EqualsValueClauseSyntax" /> node.
+        Creates a new <see cref="EqualsValuesClauseSyntax" /> node.
       </summary>
     </FactoryComment>
     <Kind Name="EqualsValuesClause" />
