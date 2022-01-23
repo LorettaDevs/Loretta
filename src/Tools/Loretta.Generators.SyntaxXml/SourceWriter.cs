@@ -1496,7 +1496,7 @@ namespace Loretta.Generators.SyntaxXml
             var valueFields = nd.Fields.Where(n => IsValueField(n)).ToList();
             var nodeFields = nd.Fields.Where(n => !IsValueField(n)).ToList();
 
-            WriteComment($"<summary>Creates a new {nd.Name} instance.</summary>");
+            WriteComment(nd.FactoryComment, "");
 
             Write($"public static {nd.Name} {StripPost(nd.Name, "Syntax")}(");
             WriteRedFactoryParameters(nd);
