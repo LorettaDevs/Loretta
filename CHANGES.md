@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Breaking] The following were changed as a result of the move to `EqualsValuesClauseSyntax`:
 	- Replaced `EqualsToken` and `Values` in `AssignmentStatementSyntax` by `EqualsValues`;
 	- Replaced `EqualsToken` and `Values` in `LocalVariableDeclarationStatementSyntax` by `EqualsValues`.
+- [Breaking] `SyntaxFactory` methods will now throw exceptions if the lists provided to them do not have the minimum amount of items required.
 
 ### Removed
 - [Breaking] The following were removed as a result of the move to `EqualsValuesClauseSyntax`:
@@ -29,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `SyntaxFactory.LocalVariableDeclarationStatement()`;
 	- `SyntaxFactory.LocalVariableDeclarationStatement(SeparatedSyntaxList<IdentifierNameSyntax> names, SeparatedSyntaxList<ExpressionSyntax> values)`;
 	- `SyntaxFactory.LocalVariableDeclarationStatement(SyntaxToken localKeyword, SeparatedSyntaxList<IdentifierNameSyntax> names, SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values, SyntaxToken semicolonToken)`.
+- [Breaking] The following were removed as a result of the `MinCount` fix for `Syntax.xml`:
+	- `SyntaxFactory.GenericForStatement(StatementListSyntax? body = null)`.
 
 ### Added
 - The following were added as a result of the move to `EqualsValuesClauseSyntax`:
@@ -44,22 +47,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `EqualsValuesClauseSyntax.Accept<TResult>(LuaSyntaxVisitor<TResult> visitor)`;
 	- `AssignmentStatementSyntax.EqualsValues`;
 	- `AssignmentStatementSyntax.Update(SeparatedSyntaxList<PrefixExpressionSyntax> variables, EqualsValuesClauseSyntax equalsValues, SyntaxToken semicolonToken)`;
-	- `AssignmentStatementSyntax.AddEqualsValuesValues(params ExpressionSyntax[] items)`;
 	- `AssignmentStatementSyntax.WithEqualsValues(EqualsValuesClauseSyntax equalsValues)`;
 	- `LocalVariableDeclarationStatementSyntax.EqualsValues`;
 	- `LocalVariableDeclarationStatementSyntax.Update(SyntaxToken localKeyword, SeparatedSyntaxList<IdentifierNameSyntax> names, EqualsValuesClauseSyntax? equalsValues, SyntaxToken semicolonToken)`;
-	- `LocalVariableDeclarationStatementSyntax.AddEqualsValuesValues(params ExpressionSyntax[] items)`;
 	- `LocalVariableDeclarationStatementSyntax.WithEqualsValues(Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax? equalsValues)`;
 	- `SyntaxFactory.AssignmentStatement(SeparatedSyntaxList<PrefixExpressionSyntax> variables, EqualsValuesClauseSyntax equalsValues, SyntaxToken semicolonToken)`;
 	- `SyntaxFactory.AssignmentStatement(SeparatedSyntaxList<PrefixExpressionSyntax> variables, EqualsValuesClauseSyntax equalsValues)`;
 	- `SyntaxFactory.EqualsValuesClause(SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values)`;
-	- `SyntaxFactory.LocalVariableDeclarationStatement(SeparatedSyntaxList<IdentifierNameSyntax> names, EqualsValuesClauseSyntax? equalsValues)`;
+	- `SyntaxFactory.EqualsValuesClause(SeparatedSyntaxList<ExpressionSyntax> values)`;
 	- `SyntaxFactory.LocalVariableDeclarationStatement(SyntaxToken localKeyword, SeparatedSyntaxList<IdentifierNameSyntax> names, EqualsValuesClauseSyntax? equalsValues, SyntaxToken semicolonToken)`;
+	- `SyntaxFactory.LocalVariableDeclarationStatement(SeparatedSyntaxList<IdentifierNameSyntax> names, EqualsValuesClauseSyntax? equalsValues)`;
+	- `SyntaxFactory.LocalVariableDeclarationStatement(SeparatedSyntaxList<IdentifierNameSyntax> names)`;
 	- `LuaSyntaxVisitor.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`;
 	- `LuaSyntaxVisitor<TResult>.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`;
 	- `LuaSyntaxWalker.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`;
 	- `LuaSyntaxRewriter.VisitEqualsValuesClause(EqualsValuesClauseSyntax node)`.
 - Added `SyntaxFacts.GetKeywordKind(ReadOnlySpan<char> span)`.
+- The following were added as a result of the `MinCount` fix for `Syntax.xml`:
+	- `SyntaxFactory.GenericForStatement(SeparatedSyntaxList<IdentifierNameSyntax> identifiers, SeparatedSyntaxList<ExpressionSyntax> expressions)`.
 
 ## v0.2.7-beta.11
 ### Fixed
