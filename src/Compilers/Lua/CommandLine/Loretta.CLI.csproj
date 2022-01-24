@@ -13,7 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tsu" Version="2.1.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta2.21617.1" />
+    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta2.21617.1" />
+    <PackageReference Include="Tsu" Version="2.2.2" />
     <PackageReference Include="Tsu.CLI" Version="10.0.1" />
   </ItemGroup>
 
