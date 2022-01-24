@@ -57,9 +57,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 var variable = _script.GetVariable(node);
                 if (variable is null)
                     throw ExceptionUtilities.Unreachable;
-                if (variable.Kind is not (VariableKind.Iteration or VariableKind.Local or VariableKind.Parameter))
-                    return null;
-                if (variable.Declaration is null)
+                if (!MinifyingUtils.CanRename(variable))
                     return null;
 
                 // Get or calculate the new name for the variable of the

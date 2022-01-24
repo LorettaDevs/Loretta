@@ -14,27 +14,6 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         // We'll add up to 5 prefixes otherwise we'll call quits.
         private const int MaxPrefixCount = 5;
 
-        private static IImmutableSet<string> ListVisibleVariableNames(IEnumerable<IScope> scopes)
-        {
-            var result = ImmutableHashSet.CreateBuilder(StringOrdinalComparer.Instance);
-            foreach (var scope in scopes)
-            {
-                IScope? tmpScope = scope;
-                do
-                {
-                    foreach (var variable in tmpScope.DeclaredVariables)
-                    {
-                        //if (renamedSet.Contains(variable))
-                        //    continue;
-                        result.Add(variable.Name);
-                    }
-                    tmpScope = tmpScope.ContainingScope;
-                }
-                while (tmpScope != null);
-            }
-            return result.ToImmutable();
-        }
-
         private static string StringSequentialCore(
             int slot,
             IEnumerable<IScope> scopes,
@@ -56,11 +35,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             while (slot > 0);
 
             var prefixes = minPrefixCount;
-            var visibleNames = ListVisibleVariableNames(scopes);
+            var unavailableNames = MinifyingUtils.GetUnavailableNames(scopes);
             while (prefixes <= MaxPrefixCount)
             {
                 var name = fullName[(MaxPrefixCount - prefixes)..].ToString();
-                if (SyntaxFacts.GetKeywordKind(name) == SyntaxKind.IdentifierToken && !visibleNames.Contains(name))
+                if (SyntaxFacts.GetKeywordKind(name) == SyntaxKind.IdentifierToken && !unavailableNames.Contains(name))
                     return name;
                 prefixes++;
             }
@@ -124,11 +103,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 }
 
                 var prefixes = 0;
-                var visibleNames = ListVisibleVariableNames(scopes);
+                var unavailableNames = MinifyingUtils.GetUnavailableNames(scopes);
                 while (prefixes <= MaxPrefixCount)
                 {
                     var strName = name.ToString();
-                    if (SyntaxFacts.GetKeywordKind(strName) == SyntaxKind.IdentifierToken && !visibleNames.Contains(strName))
+                    if (SyntaxFacts.GetKeywordKind(strName) == SyntaxKind.IdentifierToken && !unavailableNames.Contains(strName))
                         return strName;
                     name.Insert(0, prefix);
                     prefixes++;
