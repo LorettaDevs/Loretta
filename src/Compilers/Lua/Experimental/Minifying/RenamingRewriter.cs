@@ -5,12 +5,10 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
     internal partial class RenamingRewriter : LuaSyntaxRewriter
     {
-        private readonly Script _script;
         private readonly RenameTable _renameTable;
 
         public RenamingRewriter(Script script, NamingStrategy namingStrategy, ISlotAllocator slotAllocator)
         {
-            _script = script;
             _renameTable = new RenameTable(script, namingStrategy, slotAllocator);
         }
 
