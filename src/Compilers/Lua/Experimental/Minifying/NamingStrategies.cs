@@ -47,7 +47,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             while (prefixes <= MaxPrefixCount)
             {
                 var name = fullName[(MaxPrefixCount - prefixes)..];
-                if (FindVariable(scope, name) == null)
+                if (FindVariable(scope, name) == null && SyntaxFacts.GetKeywordKind(name) != SyntaxKind.IdentifierToken)
                     return name.ToString();
                 prefixes++;
             }
