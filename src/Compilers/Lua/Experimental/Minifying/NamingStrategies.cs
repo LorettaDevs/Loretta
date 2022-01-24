@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
+using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
@@ -12,25 +14,14 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         // We'll add up to 5 prefixes otherwise we'll call quits.
         private const int MaxPrefixCount = 5;
 
-        private static IVariable? FindVariable(IScope scope, ReadOnlySpan<char> name)
+        private static string StringSequentialCore(
+            int slot,
+            IEnumerable<IScope> scopes,
+            char prefix,
+            string alphabet,
+            int minPrefixCount)
         {
-            IScope? currentScope = scope;
-            while (currentScope is not null)
-            {
-                foreach (var variable in currentScope.DeclaredVariables)
-                {
-                    if (name.SequenceEqual(variable.Name.AsSpan()))
-                        return variable;
-                }
-                currentScope = currentScope.ContainingScope;
-            }
-
-            return null;
-        }
-
-        private static string StringSequentialCore(IScope scope, int slot, char prefix, string alphabet, int minPrefixCount)
-        {
-            var len = getDigits(slot, alphabet.Length) + MaxPrefixCount;
+            var len = getMaxDigits(slot, alphabet.Length) + MaxPrefixCount;
             Span<char> fullName = stackalloc char[len];
             fullName.Fill(prefix);
             var pos = len - 1;
@@ -43,22 +34,19 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             while (slot > 0);
 
-            var prefixes = minPrefixCount;
-            while (prefixes <= MaxPrefixCount)
+            var firstNameChar = pos + 1;
+            var prefixes = firstNameChar - minPrefixCount;
+            var unavailableNames = MinifyingUtils.GetUnavailableNames(scopes);
+            while (prefixes > 0)
             {
-                var name = fullName[(MaxPrefixCount - prefixes)..];
-                if (FindVariable(scope, name) == null)
-                    return name.ToString();
-                prefixes++;
+                var name = fullName[prefixes..].ToString();
+                if (SyntaxFacts.GetKeywordKind(name) == SyntaxKind.IdentifierToken && !unavailableNames.Contains(name))
+                    return name;
+                prefixes--;
             }
-            throw new Exception($"Code has too many variables named {fullName[10..].ToString()} with '{prefix}'s at the start.");
+            throw new Exception($"Code has too many variables named {fullName[firstNameChar..].ToString()} with '{prefix}'s at the start.");
 
-            static int getDigits(int slot, int @base)
-            {
-                if (slot <= 1)
-                    return 1;
-                return (int) Math.Ceiling(Math.Log(slot, @base));
-            }
+            static int getMaxDigits(int slot, int @base) => slot <= 1 ? 1 : (int) Math.Ceiling(Math.Log(slot, @base) + 1);
         }
 
         /// <summary>
@@ -100,7 +88,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             if (alphabet.Length < 2)
                 throw new ArgumentException("Alphabet must have at least 2 elements.", nameof(alphabet));
 
-            return (IScope scope, int slot) =>
+            return (int slot, IEnumerable<IScope> scopes) =>
             {
                 var name = new StringBuilder();
                 while (slot > 0)
@@ -111,10 +99,12 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 }
 
                 var prefixes = 0;
+                var unavailableNames = MinifyingUtils.GetUnavailableNames(scopes);
                 while (prefixes <= MaxPrefixCount)
                 {
-                    if (FindVariable(scope, name.ToString().AsSpan()) == null)
-                        return name.ToString();
+                    var strName = name.ToString();
+                    if (SyntaxFacts.GetKeywordKind(strName) == SyntaxKind.IdentifierToken && !unavailableNames.Contains(strName))
+                        return strName;
                     name.Insert(0, prefix);
                     prefixes++;
                 }
@@ -130,14 +120,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// It is more optimized than <see cref="Sequential(char, ImmutableArray{string})"/> so use this
         /// instead of it whenever possible.
         /// </summary>
-        /// <param name="scope"><inheritdoc cref="NamingStrategy" path="/param[name='scope']"/></param>
-        /// <param name="slot"></param>
-        /// <returns></returns>
-        public static string Alphabetical(IScope scope, int slot)
+        public static string Alphabetical(int slot, IEnumerable<IScope> scopes)
         {
             const char prefix = '_';
             const string alphabet = "abcdefghijklmnopqrstuvwxyz";
-            return StringSequentialCore(scope, slot, prefix, alphabet, 0);
+            return StringSequentialCore(slot, scopes, prefix, alphabet, 0);
         }
 
         /// <summary>
@@ -148,14 +135,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// It is more optimized than <see cref="Sequential(char, ImmutableArray{string})"/> so use this
         /// instead of it whenever possible.
         /// </summary>
-        /// <param name="scope"><inheritdoc cref="NamingStrategy" path="/param[name='scope']"/></param>
-        /// <param name="slot"></param>
-        /// <returns></returns>
-        public static string Numerical(IScope scope, int slot)
+        public static string Numerical(int slot, IEnumerable<IScope> scopes)
         {
             const char prefix = '_';
             const string alphabet = "0123456789";
-            return StringSequentialCore(scope, slot, prefix, alphabet, 1);
+            return StringSequentialCore(slot, scopes, prefix, alphabet, 1);
         }
 
         /// <summary>
@@ -164,19 +148,15 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// With <c>prefix</c> as <c>_</c> and <c>alphabet</c> as zero width unicode characters.
         /// It is more optimized than <see cref="Sequential(char, ImmutableArray{string})"/> so use this
         /// instead of it whenever possible.
-        /// 
         /// </summary>
-        /// <param name="scope"><inheritdoc cref="NamingStrategy" path="/param[name='scope']"/></param>
-        /// <param name="slot"></param>
-        /// <returns></returns>
-        public static string ZeroWidth(IScope scope, int slot)
+        public static string ZeroWidth(int slot, IEnumerable<IScope> scopes)
         {
             const char prefix = '\u200B'; // ZERO WIDTH SPACE
             const string alphabet = "\u200C" // ZERO WIDTH NON-JOINER
                 + "\u200D" // ZERO WIDTH JOINER
                 + "\uFEFF" // ZERO WIDTH NO-BREAK SPACE
                 ;
-            return StringSequentialCore(scope, slot, prefix, alphabet, 0);
+            return StringSequentialCore(slot, scopes, prefix, alphabet, 0);
         }
     }
 }

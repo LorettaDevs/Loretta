@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                     {
                         _lastUseCache[variable] = use =
                             variable.ReadLocations.Concat(variable.WriteLocations)
-                                                  .OrderByDescending(node => node.Location.SourceSpan.Start)
+                                                  .OrderByDescending(node => node.Location.SourceSpan.End)
                                                   .FirstOrDefault() ?? variable.Declaration;
                     }
                 }
@@ -47,19 +47,17 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             /// <summary>
             /// Gets the new variable name to be used for this node.
             /// </summary>
-            /// <param name="scope"></param>
             /// <param name="node"></param>
+            /// 
             /// <returns>
             /// If <see langword="null"/>, remains unchanged.
             /// </returns>
-            public string? GetNewVariableName(IScope scope, SyntaxNode node)
+            public string? GetNewVariableName(SyntaxNode node)
             {
                 var variable = _script.GetVariable(node);
                 if (variable is null)
                     throw ExceptionUtilities.Unreachable;
-                if (variable.Kind is not (VariableKind.Iteration or VariableKind.Local or VariableKind.Parameter))
-                    return null;
-                if (variable.Declaration is null)
+                if (!MinifyingUtils.CanRename(variable))
                     return null;
 
                 // Get or calculate the new name for the variable of the
@@ -67,7 +65,16 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 if (!_variableMap.TryGetValue(variable, out var name))
                 {
                     var slot = _slotAllocator.AllocateSlot();
-                    name = (slot, _namingStrategy(scope, slot));
+                    var scopes = variable.ReadLocations.Concat(variable.WriteLocations)
+                                                       .Concat(variable.Declaration)
+                                                       .Where(n => n is not null)
+                                                       .Select(n =>
+                                                       {
+                                                           var scope = _script.FindScope(n!);
+                                                           LorettaDebug.AssertNotNull(scope);
+                                                           return scope;
+                                                       });
+                    name = (slot, _namingStrategy(slot, scopes));
                     _variableMap[variable] = name;
                 }
 
