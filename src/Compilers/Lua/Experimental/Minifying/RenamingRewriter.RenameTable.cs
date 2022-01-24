@@ -70,7 +70,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                                                        .Where(n => n is not null)
                                                        .Select(n =>
                                                        {
-                                                           var scope = _script.FindScope(n);
+                                                           var scope = _script.FindScope(n!);
                                                            LorettaDebug.AssertNotNull(scope);
                                                            return scope;
                                                        });
