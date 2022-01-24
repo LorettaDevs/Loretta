@@ -10,7 +10,6 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
     /// </summary>
     /// <param name="slot">The slot to convert to a variable name.</param>
     /// <param name="scopes">The scopes the slot will be used in.</param>
-    /// <param name="renamedVariables">Variables that have already been renamed.</param>
     /// <returns></returns>
-    public delegate string NamingStrategy(int slot, IEnumerable<IScope> scopes, IEnumerable<IVariable> renamedVariables);
+    public delegate string NamingStrategy(int slot, IEnumerable<IScope> scopes);
 }

@@ -14,9 +14,8 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         // We'll add up to 5 prefixes otherwise we'll call quits.
         private const int MaxPrefixCount = 5;
 
-        private static IImmutableSet<string> ListVisibleVariableNames(IEnumerable<IScope> scopes, IEnumerable<IVariable> renamedVariables)
+        private static IImmutableSet<string> ListVisibleVariableNames(IEnumerable<IScope> scopes)
         {
-            var renamedSet = ImmutableHashSet.CreateRange(renamedVariables);
             var result = ImmutableHashSet.CreateBuilder(StringOrdinalComparer.Instance);
             foreach (var scope in scopes)
             {
@@ -25,8 +24,8 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 {
                     foreach (var variable in tmpScope.DeclaredVariables)
                     {
-                        if (renamedSet.Contains(variable))
-                            continue;
+                        //if (renamedSet.Contains(variable))
+                        //    continue;
                         result.Add(variable.Name);
                     }
                     tmpScope = tmpScope.ContainingScope;
@@ -39,7 +38,6 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         private static string StringSequentialCore(
             int slot,
             IEnumerable<IScope> scopes,
-            IEnumerable<IVariable> renamedVariables,
             char prefix,
             string alphabet,
             int minPrefixCount)
@@ -58,7 +56,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             while (slot > 0);
 
             var prefixes = minPrefixCount;
-            var visibleNames = ListVisibleVariableNames(scopes, renamedVariables);
+            var visibleNames = ListVisibleVariableNames(scopes);
             while (prefixes <= MaxPrefixCount)
             {
                 var name = fullName[(MaxPrefixCount - prefixes)..].ToString();
@@ -115,7 +113,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             if (alphabet.Length < 2)
                 throw new ArgumentException("Alphabet must have at least 2 elements.", nameof(alphabet));
 
-            return (int slot, IEnumerable<IScope> scopes, IEnumerable<IVariable> renamedVariables) =>
+            return (int slot, IEnumerable<IScope> scopes) =>
             {
                 var name = new StringBuilder();
                 while (slot > 0)
@@ -126,7 +124,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 }
 
                 var prefixes = 0;
-                var visibleNames = ListVisibleVariableNames(scopes, renamedVariables);
+                var visibleNames = ListVisibleVariableNames(scopes);
                 while (prefixes <= MaxPrefixCount)
                 {
                     var strName = name.ToString();
@@ -147,11 +145,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// It is more optimized than <see cref="Sequential(char, ImmutableArray{string})"/> so use this
         /// instead of it whenever possible.
         /// </summary>
-        public static string Alphabetical(int slot, IEnumerable<IScope> scopes, IEnumerable<IVariable> renamedVariables)
+        public static string Alphabetical(int slot, IEnumerable<IScope> scopes)
         {
             const char prefix = '_';
             const string alphabet = "abcdefghijklmnopqrstuvwxyz";
-            return StringSequentialCore(slot, scopes, renamedVariables, prefix, alphabet, 0);
+            return StringSequentialCore(slot, scopes, prefix, alphabet, 0);
         }
 
         /// <summary>
@@ -162,11 +160,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// It is more optimized than <see cref="Sequential(char, ImmutableArray{string})"/> so use this
         /// instead of it whenever possible.
         /// </summary>
-        public static string Numerical(int slot, IEnumerable<IScope> scopes, IEnumerable<IVariable> renamedVariables)
+        public static string Numerical(int slot, IEnumerable<IScope> scopes)
         {
             const char prefix = '_';
             const string alphabet = "0123456789";
-            return StringSequentialCore(slot, scopes, renamedVariables, prefix, alphabet, 1);
+            return StringSequentialCore(slot, scopes, prefix, alphabet, 1);
         }
 
         /// <summary>
@@ -176,14 +174,14 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         /// It is more optimized than <see cref="Sequential(char, ImmutableArray{string})"/> so use this
         /// instead of it whenever possible.
         /// </summary>
-        public static string ZeroWidth(int slot, IEnumerable<IScope> scopes, IEnumerable<IVariable> renamedVariables)
+        public static string ZeroWidth(int slot, IEnumerable<IScope> scopes)
         {
             const char prefix = '\u200B'; // ZERO WIDTH SPACE
             const string alphabet = "\u200C" // ZERO WIDTH NON-JOINER
                 + "\u200D" // ZERO WIDTH JOINER
                 + "\uFEFF" // ZERO WIDTH NO-BREAK SPACE
                 ;
-            return StringSequentialCore(slot, scopes, renamedVariables, prefix, alphabet, 0);
+            return StringSequentialCore(slot, scopes, prefix, alphabet, 0);
         }
     }
 }

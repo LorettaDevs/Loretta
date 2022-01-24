@@ -76,7 +76,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                                                            LorettaDebug.AssertNotNull(scope);
                                                            return scope;
                                                        });
-                    name = (slot, _namingStrategy(slot, scopes, _variableMap.Keys.Concat(variable)));
+                    name = (slot, _namingStrategy(slot, scopes));
                     _variableMap[variable] = name;
                 }
 
