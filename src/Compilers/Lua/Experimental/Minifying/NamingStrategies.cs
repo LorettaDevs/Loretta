@@ -21,7 +21,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             string alphabet,
             int minPrefixCount)
         {
-            var len = getDigits(slot, alphabet.Length) + MaxPrefixCount;
+            var len = getMaxDigits(slot, alphabet.Length) + MaxPrefixCount;
             Span<char> fullName = stackalloc char[len];
             fullName.Fill(prefix);
             var pos = len - 1;
@@ -34,23 +34,19 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
             }
             while (slot > 0);
 
-            var prefixes = minPrefixCount;
+            var firstNameChar = pos + 1;
+            var prefixes = firstNameChar - minPrefixCount;
             var unavailableNames = MinifyingUtils.GetUnavailableNames(scopes);
-            while (prefixes <= MaxPrefixCount)
+            while (prefixes > 0)
             {
-                var name = fullName[(MaxPrefixCount - prefixes)..].ToString();
+                var name = fullName[prefixes..].ToString();
                 if (SyntaxFacts.GetKeywordKind(name) == SyntaxKind.IdentifierToken && !unavailableNames.Contains(name))
                     return name;
-                prefixes++;
+                prefixes--;
             }
-            throw new Exception($"Code has too many variables named {fullName[MaxPrefixCount..].ToString()} with '{prefix}'s at the start.");
+            throw new Exception($"Code has too many variables named {fullName[firstNameChar..].ToString()} with '{prefix}'s at the start.");
 
-            static int getDigits(int slot, int @base)
-            {
-                if (slot <= 1)
-                    return 1;
-                return (int) Math.Ceiling(Math.Log(slot, @base));
-            }
+            static int getMaxDigits(int slot, int @base) => slot <= 1 ? 1 : (int) Math.Ceiling(Math.Log(slot, @base) + 1);
         }
 
         /// <summary>
