@@ -20,15 +20,19 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
 
         [Fact]
         [Trait("Category", "Experimental/Minifying/NamingStrategies/Alphabetical")]
-        // This test was added because I found out that the naming strategies were
+        // This test was added because I found out that the naming strategies were falling into
+        // infinite loops when they found an existing variable in the scope that they were inserting.
         public void NamingStrategies_Alphabetic_DoesNotFallIntoAnInfiniteLoop()
         {
-            const string code = @"local a, b = 1, 2";
+            // Here it'll try to rename 'c' to 'b' but will fail because there's already a global with
+            // the same name so it should proceed to prefix it with '_'s.
+            const string code = "local a, c = 1, 2\r\n" +
+                                "print(a, b)";
             var tree = ParseAndValidate(code);
 
             var minified = AssertEx.RunsWithin(1000, () =>
                 tree.Minify(NamingStrategies.Alphabetical));
-            Assert.Equal("local _a,_a=1,2", minified.ToString());
+            Assert.Equal("local a,_b=1,2 print(a,b)", minified.ToString());
         }
     }
 }
