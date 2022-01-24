@@ -18,7 +18,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
             return parsedTree;
         }
 
-        [Fact]
+        [Fact(Timeout = 1000)]
         [Trait("Category", "Experimental/Minifying/NamingStrategies/Alphabetical")]
         // This test was added because I found out that the naming strategies were falling into
         // infinite loops when they found an existing variable in the scope that they were inserting.
@@ -30,8 +30,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
                                 "print(a, b)";
             var tree = ParseAndValidate(code);
 
-            var minified = AssertEx.RunsWithin(1000, () =>
-                tree.Minify(NamingStrategies.Alphabetical));
+            var minified = tree.Minify(NamingStrategies.Alphabetical);
             Assert.Equal("local a,_b=1,2 print(a,b)", minified.ToString());
         }
     }
