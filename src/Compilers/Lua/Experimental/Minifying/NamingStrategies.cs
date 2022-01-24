@@ -23,7 +23,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                 IScope? tmpScope = scope;
                 do
                 {
-                    foreach (var variable in scope.DeclaredVariables)
+                    foreach (var variable in tmpScope.DeclaredVariables)
                     {
                         if (renamedSet.Contains(variable))
                             continue;
