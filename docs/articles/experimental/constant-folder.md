@@ -8,7 +8,7 @@ To use the constant folder, just add the following using to the top of your file
 ```cs
 using Loretta.CodeAnalysis.Lua.Experimental;
 ```
-and then use the `ConstantFold` extension method for `SyntaxNode` to constant fold that node and its children.
+and then use the [`ConstantFold`](xref:Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.ConstantFold*) extension method to constant fold that node and its children.
 
 ### Example
 The following `Program.cs` file is a simple console program that will constant fold the code in a file passed as an argument:
