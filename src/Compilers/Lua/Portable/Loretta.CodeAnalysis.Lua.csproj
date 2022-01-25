@@ -49,7 +49,7 @@
   </ItemGroup>
 
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(DocGen)' != 'true'">
     <Folder Include="Generated\" />
 
     <AdditionalFiles Include="Syntax\Syntax.xml" />

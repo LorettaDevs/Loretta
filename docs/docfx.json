@@ -5,25 +5,31 @@
         {
           "src": "..",
           "files": [
-            // "src/Compilers/Core/Portable/Loretta.CodeAnalysis.csproj",
-            // "src/Compilers/Lua/Portable/Generated/**.cs",
-            // "src/Compilers/Lua/Portable/Loretta.CodeAnalysis.Lua.csproj",
-            // "src/Compilers/Lua/Experimental/Loretta.CodeAnalysis.Lua.Experimental.csproj"
-            "src/Compilers/Core/Portable/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.dll",
-            "src/Compilers/Lua/Portable/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.Lua.dll",
-            "src/Compilers/Lua/Experimental/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.Lua.Experimental.dll"
-            // "src/Compilers/Core/Portable/**.cs",
-            // "src/Compilers/Lua/Portable/**.cs",
-            // "src/Compilers/Lua/Experimental/**.cs"
-          ]//,
-          // "exclude": [
-          //   "**/obj/**",
-          //   "**/bin/**"
-          // ]
+            // "src/Compilers/Core/Portable/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.dll",
+            // "src/Compilers/Lua/Portable/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.Lua.dll",
+            // "src/Compilers/Lua/Experimental/bin/Release/netcoreapp3.1/Loretta.CodeAnalysis.Lua.Experimental.dll"
+            "src/Compilers/Core/Portable/**.csproj",
+            "src/Compilers/Lua/Portable/**.csproj",
+            "src/Compilers/Lua/Experimental/**.csproj",
+            "src/Compilers/Core/Portable/**.cs",
+            "src/Compilers/Lua/Portable/**.cs",
+            "src/Compilers/Lua/Experimental/**.cs"
+          ],
+          "exclude": [
+            "**/obj/**",
+            "**/bin/**"
+          ]
         }
       ],
       "dest": "api",
-      "filter": "unwanted-filter.yml"
+      "globalNamespaceId": "Loretta.CodeAnalysis",
+      "filter": "unwanted-filter.yml",
+      "properties": {
+        "TargetFramework": "netcoreapp3.1",
+        "DocGen": "true"
+      },
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false
     }
   ],
   "build": {
@@ -68,14 +74,23 @@
       "default",
       "templates/darkfx/darkfx"
     ],
-    "postProcessors": [ "ExtractSearchIndex" ],
+    "postProcessors": [
+      "ExtractSearchIndex"
+    ],
     "globalMetadata": {
-      "_enableSearch": "true"
+      "_enableSearch": "true",
+      "_appTitle": "Loretta",
+      "_appFooter": "Copyright GGG KILLER",
+      "_disableBreadcrumb": true,
+      "_enableNewTab": true
     },
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
     "keepFileLink": false,
     "cleanupCacheHistory": false,
-    "disableGitFeatures": false
+    "disableGitFeatures": false,
+    "xrefService": [
+      "https://xref.docs.microsoft.com/query?uid={uid}"
+    ]
   }
 }
