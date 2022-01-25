@@ -52,9 +52,9 @@ var syntaxTree = LuaSyntaxTree.ParseText(sourceText, options: new LuaParseOption
 syntaxTree = syntaxTree.Minify();
 // Examples of alternative calls:
 // // Numeric variable names (_0, _1, _2, etc.):
-// syntaxTree = syntaxTree.Minify(NamingStrategies.Numeric);
+// syntaxTree = syntaxTree.Minify(NamingStrategies.Numerical);
 // // No variable name reuse:
-// syntaxTree = syntaxTree.Minify(NamingStrategies.Alphabetic, new SequentialSlotAllocator());
+// syntaxTree = syntaxTree.Minify(NamingStrategies.Alphabetical, new SequentialSlotAllocator());
 
 // Write the tree back to the file
 using (var writer = File.OpenText(Path.ChangeExtension(path, ".min.lua")))
