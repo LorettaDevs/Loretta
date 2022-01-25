@@ -82,11 +82,11 @@ The trivial removal step removes all trivia (comments and whitespace) and only i
 ### `NamingStrategy`
 A naming strategy is provided two things:
     - The slot to convert to a name;
-    - The scope the name will be added to.
+    - The scopes the name will be added to.
 
 The naming slot must:
-    - be deterministc (given the same slot and scope it must generate the same variable name);
-    - not generate names that conflict with others in the provided scope (or its parent scopes);
+    - be deterministc (given the same slot and scope set it must generate the same variable name);
+    - not generate names that conflict with others in the provided scopes (or its parent scopes);
     - generate valid identifier names.
 
 Since none of these are validated by the minifier, you should have your own test suite for it.
