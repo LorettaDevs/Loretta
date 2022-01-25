@@ -1,11 +1,1 @@
 ﻿#nullable enable
-*REMOVED*static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabetical(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
-*REMOVED*static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Numerical(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
-*REMOVED*static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.ZeroWidth(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
-Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.CanRename(Loretta.CodeAnalysis.Lua.IVariable! variable) -> bool
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.GetUnavailableNames(Loretta.CodeAnalysis.Lua.IScope! scope) -> System.Collections.Immutable.IImmutableSet<string!>!
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.GetUnavailableNames(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> System.Collections.Immutable.IImmutableSet<string!>!
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabetical(int slot, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> string!
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Numerical(int slot, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> string!
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.ZeroWidth(int slot, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> string!

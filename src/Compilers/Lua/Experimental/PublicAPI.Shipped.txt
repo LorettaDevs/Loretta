@@ -3,6 +3,7 @@ Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.AllocateSlot() -> int
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.ReleaseSlot(int slot) -> void
+Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator
@@ -18,8 +19,11 @@ static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.ConstantFold(this Lor
 static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree, Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy! namingStrategy, Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator! slotAllocator) -> Loretta.CodeAnalysis.SyntaxTree!
 static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree, Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy! namingStrategy) -> Loretta.CodeAnalysis.SyntaxTree!
 static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree) -> Loretta.CodeAnalysis.SyntaxTree!
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabetical(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Numerical(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.CanRename(Loretta.CodeAnalysis.Lua.IVariable! variable) -> bool
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.GetUnavailableNames(Loretta.CodeAnalysis.Lua.IScope! scope) -> System.Collections.Immutable.IImmutableSet<string!>!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.GetUnavailableNames(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> System.Collections.Immutable.IImmutableSet<string!>!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabetical(int slot, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> string!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Numerical(int slot, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> string!
 static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Sequential(char prefix, System.Collections.Immutable.ImmutableArray<string!> alphabet) -> Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy!
-static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.ZeroWidth(Loretta.CodeAnalysis.Lua.IScope! scope, int slot) -> string!
+static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.ZeroWidth(int slot, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> string!
 static Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants(this Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxNode!
