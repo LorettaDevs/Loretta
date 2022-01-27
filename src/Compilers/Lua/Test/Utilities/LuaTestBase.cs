@@ -147,5 +147,18 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
         }
 
         #endregion Compilation Factories
+
+#nullable enable
+        public static SyntaxTree ParseAndValidate(
+            string text,
+            LuaSyntaxOptions? options = null)
+        {
+            var parsedTree = ParseWithRoundTripCheck(
+                text,
+                new(options ?? LuaSyntaxOptions.All));
+            parsedTree.GetDiagnostics().Verify();
+            return parsedTree;
+        }
+#nullable disable
     }
 }
