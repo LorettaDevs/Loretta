@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
                     {
                         _lastUseCache[variable] = use =
                             variable.ReadLocations.Concat(variable.WriteLocations)
-                                                  .OrderByDescending(node => node.Location.SourceSpan.End)
+                                                  .OrderByDescending(node => node.Location.SourceSpan)
                                                   .FirstOrDefault() ?? variable.Declaration;
                     }
                 }
