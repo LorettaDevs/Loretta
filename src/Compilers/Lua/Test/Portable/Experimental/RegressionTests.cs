@@ -25,17 +25,24 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
             Assert.Equal("local a,_b=1,2 print(a,b)", minified.ToString());
         }
 
-        [Fact]
+        [Theory]
+        [WorkItem(55, "https://github.com/GGG-KILLER/Loretta/issues/55")]
         [Trait("Type", TestType.Regression)]
         [Trait("Category", TestCategory.Experimental_Minifying)]
-        public void Minifier_DoesNotDoubleFree_OnReadAndWriteEndingInTheSamePlace()
+        [InlineData(
+            "local x = 0\r\n" +
+            "x = x + 1",
+            "local a=0 a=a+1")]
+        [InlineData(
+            "local x = 0\r\n" +
+            "x += x + 1",
+            "local a=0 a+=a+1")]
+        public void Minifier_DoesNotDoubleFree_OnReadAndWriteEndingInTheSamePlace(string code, string expected)
         {
-            const string code = "local x = 0\r\n" +
-                                "x = x + 1";
             var tree = ParseAndValidate(code);
 
             var minified = tree.Minify(NamingStrategies.Alphabetical);
-            Assert.Equal("local a=0 a=a+1", minified.ToString());
+            Assert.Equal(expected, minified.ToString());
         }
     }
 }
