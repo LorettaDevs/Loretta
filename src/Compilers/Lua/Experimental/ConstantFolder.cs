@@ -42,6 +42,8 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     && TryGetInt64(operand, out var value)
                     && TryConvertToDouble(~value, out var result) =>
                     LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result)),
+                SyntaxKind.LengthExpression when HasEFlag(operandFlags, ExpressionFlags.IsStr) =>
+                    LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(GetValue<string>(operand).Length)),
                 _ => node.Update(node.OperatorToken, operand),
             };
         }
