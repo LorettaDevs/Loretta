@@ -1034,7 +1034,7 @@
       </PropertyComment>
       <Kind Name="LocalKeyword" />
     </Field>
-    <Field Name="Names" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
+    <Field Name="Names" Type="SeparatedSyntaxList&lt;LocalDeclarationNameSyntax&gt;" MinCount="1">
       <PropertyComment>
         <summary>The list of names being assigned to.</summary>
       </PropertyComment>

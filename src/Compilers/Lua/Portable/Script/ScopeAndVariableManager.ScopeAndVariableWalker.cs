@@ -294,11 +294,13 @@ namespace Loretta.CodeAnalysis.Lua
             public override void VisitLocalVariableDeclarationStatement(LocalVariableDeclarationStatementSyntax node)
             {
                 Visit(node.EqualsValues);
-                foreach (var name in node.Names)
+                foreach (var localName in node.Names)
                 {
+                    var name = localName.IdentifierName;
                     if (name.IsMissing || string.IsNullOrWhiteSpace(name.Name))
                         continue;
                     var variable = Scope.CreateVariable(VariableKind.Local, name.Name, node);
+                    _variables.Add(localName, variable);
                     _variables.Add(name, variable);
                     variable.AddWriteLocation(node);
                     variable.AddReferencingScope(Scope);
