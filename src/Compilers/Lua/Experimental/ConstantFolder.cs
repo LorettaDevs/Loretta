@@ -24,8 +24,8 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         {
             var innerExpr = (ExpressionSyntax) Visit(node.Expression)!;
             if (innerExpr is ParenthesizedExpressionSyntax innerParenthesized)
-                return innerParenthesized;
-            return node.Update(node.OpenParenthesisToken, innerExpr, node.CloseParenthesisToken);
+                return WithTriviaFrom(innerParenthesized, node);
+            return node.WithExpression(innerExpr);
         }
 
         public override SyntaxNode? VisitUnaryExpression(UnaryExpressionSyntax node)
@@ -35,15 +35,15 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             return node.Kind() switch
             {
                 SyntaxKind.UnaryMinusExpression when HasEFlag(operandFlags, ExpressionFlags.IsNum) =>
-                    LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(-GetValue<double>(operand))),
+                    LiteralExpressionWithTriviaFrom(-GetValue<double>(operand), operand),
                 SyntaxKind.LogicalNotExpression when TryConvertToBool(operand, out var value) =>
-                    LiteralExpression(!value ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression),
+                    LiteralExpressionWithTriviaFrom(!value, operand),
                 SyntaxKind.BitwiseNotExpression when HasEFlag(operandFlags, ExpressionFlags.IsNum)
                     && TryGetInt64(operand, out var value)
                     && TryConvertToDouble(~value, out var result) =>
-                    LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result)),
+                    LiteralExpressionWithTriviaFrom(result, operand),
                 SyntaxKind.LengthExpression when HasEFlag(operandFlags, ExpressionFlags.IsStr) =>
-                    LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(GetValue<string>(operand).Length)),
+                    LiteralExpressionWithTriviaFrom(GetValue<string>(operand).Length, operand),
                 _ => node.Update(node.OperatorToken, operand),
             };
         }
@@ -62,7 +62,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     var result = GetValue<double>(left) + GetValue<double>(right);
                     if (double.IsNaN(result) && double.IsInfinity(result))
                         break;
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.SubtractExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
@@ -71,7 +71,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     var result = GetValue<double>(left) - GetValue<double>(right);
                     if (double.IsNaN(result) && double.IsInfinity(result))
                         break;
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.MultiplyExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
@@ -80,7 +80,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     var result = GetValue<double>(left) * GetValue<double>(right);
                     if (double.IsNaN(result) && double.IsInfinity(result))
                         break;
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.DivideExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
@@ -89,7 +89,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     var result = GetValue<double>(left) / GetValue<double>(right);
                     if (double.IsNaN(result) && double.IsInfinity(result))
                         break;
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.ModuloExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
@@ -98,7 +98,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     var result = GetValue<double>(left) % GetValue<double>(right);
                     if (double.IsNaN(result) && double.IsInfinity(result))
                         break;
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.ExponentiateExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
@@ -107,7 +107,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     var result = Math.Pow(GetValue<double>(left), GetValue<double>(right));
                     if (double.IsNaN(result) && double.IsInfinity(result))
                         break;
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.ConcatExpression when HasEFlag(leftFlags, ExpressionFlags.IsStr | ExpressionFlags.IsBool)
@@ -127,47 +127,45 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                         SyntaxKind.StringLiteralExpression => GetValue<string>(right),
                         _ => throw ExceptionUtilities.Unreachable,
                     };
-                    return LiteralExpression(
-                        SyntaxKind.StringLiteralExpression,
-                        Literal(leftStr + rightStr));
+                    return LiteralExpressionWithTriviaFrom(leftStr + rightStr, node);
                 }
 
                 case SyntaxKind.EqualsExpression when HasEFlag(leftFlags, ExpressionFlags.IsScalar)
                     && HasEFlag(rightFlags, ExpressionFlags.IsScalar):
                 {
                     var result = exprEquals(left, right, leftFlags, rightFlags);
-                    return LiteralExpression(result ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
+                    return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.NotEqualsExpression when HasEFlag(leftFlags, ExpressionFlags.IsScalar)
                     && HasEFlag(rightFlags, ExpressionFlags.IsScalar):
                 {
                     var result = !exprEquals(left, right, leftFlags, rightFlags);
-                    return LiteralExpression(result ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
+                    return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.LessThanExpression when canCompare(leftFlags, rightFlags):
                 {
                     var result = compare(left, right, leftFlags, rightFlags);
-                    return LiteralExpression(result < 0 ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
+                    return LiteralExpressionWithTriviaFrom(result < 0, node);
                 }
 
                 case SyntaxKind.LessThanOrEqualExpression when canCompare(leftFlags, rightFlags):
                 {
                     var result = compare(left, right, leftFlags, rightFlags);
-                    return LiteralExpression(result <= 0 ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
+                    return LiteralExpressionWithTriviaFrom(result <= 0, node);
                 }
 
                 case SyntaxKind.GreaterThanExpression when canCompare(leftFlags, rightFlags):
                 {
                     var result = compare(left, right, leftFlags, rightFlags);
-                    return LiteralExpression(result > 0 ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
+                    return LiteralExpressionWithTriviaFrom(result > 0, node);
                 }
 
                 case SyntaxKind.GreaterThanOrEqualExpression when canCompare(leftFlags, rightFlags):
                 {
                     var result = compare(left, right, leftFlags, rightFlags);
-                    return LiteralExpression(result >= 0 ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
+                    return LiteralExpressionWithTriviaFrom(result >= 0, node);
                 }
 
                 case SyntaxKind.LogicalAndExpression when TryConvertToBool(left, out var result):
@@ -181,35 +179,35 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     && TryGetInt64(left, out var leftValue)
                     && TryGetInt64(right, out var rightValue)
                     && TryConvertToDouble(leftValue | rightValue, out var result):
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
 
                 case SyntaxKind.BitwiseAndExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
                     && HasEFlag(rightFlags, ExpressionFlags.IsNum)
                     && TryGetInt64(left, out var leftValue)
                     && TryGetInt64(right, out var rightValue)
                     && TryConvertToDouble(leftValue & rightValue, out var result):
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
 
                 case SyntaxKind.RightShiftExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
                     && HasEFlag(rightFlags, ExpressionFlags.IsNum)
                     && TryGetInt64(left, out var leftValue)
                     && TryGetInt32(right, out var rightValue)
                     && TryConvertToDouble(leftValue >> rightValue, out var result):
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
 
                 case SyntaxKind.LeftShiftExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
                     && HasEFlag(rightFlags, ExpressionFlags.IsNum)
                     && TryGetInt64(left, out var leftValue)
                     && TryGetInt32(right, out var rightValue)
                     && TryConvertToDouble(leftValue << rightValue, out var result):
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
 
                 case SyntaxKind.ExclusiveOrExpression when HasEFlag(leftFlags, ExpressionFlags.IsNum)
                     && HasEFlag(rightFlags, ExpressionFlags.IsNum)
                     && TryGetInt64(left, out var leftValue)
                     && TryGetInt64(right, out var rightValue)
                     && TryConvertToDouble(leftValue ^ rightValue, out var result):
-                    return LiteralExpression(SyntaxKind.NumericalLiteralExpression, Literal(result));
+                    return LiteralExpressionWithTriviaFrom(result, node);
             }
 
             return node.Update(left, node.OperatorToken, right);
@@ -254,7 +252,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                     {
                         var typedField = (IdentifierKeyedTableFieldSyntax) field;
                         if (string.Equals(typedField.Identifier.Text, node.MemberName.Text, StringComparison.Ordinal))
-                            return typedField.Value;
+                            return WithTriviaFrom(typedField.Value, node);
                     }
                     else if (field.IsKind(SyntaxKind.ExpressionKeyedTableField))
                     {
@@ -262,7 +260,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                         if (HasEFlag(typedField.Key, ExpressionFlags.IsStr)
                             && string.Equals(GetValue<string>(typedField.Key), node.MemberName.Text, StringComparison.Ordinal))
                         {
-                            return typedField.Value;
+                            return WithTriviaFrom(typedField.Value, node);
                         }
                     }
                 }
@@ -270,8 +268,8 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
 
             var baseExpr = expression is PrefixExpressionSyntax prefix
                 ? prefix
-                : ParenthesizedExpression(expression);
-            return node.Update(baseExpr, node.DotSeparator, node.MemberName);
+                : (ParenthesizedExpressionSyntax) WithTriviaFrom(ParenthesizedExpression(expression), node.Expression);
+            return node.WithExpression(baseExpr);
         }
 
         public override SyntaxNode? VisitElementAccessExpression(ElementAccessExpressionSyntax node)
@@ -294,7 +292,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                                 typedField.Identifier.Text,
                                 StringComparison.Ordinal))
                         {
-                            return typedField.Value;
+                            return WithTriviaFrom(typedField.Value, node);
                         }
                     }
 
@@ -303,7 +301,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                         var typedField = (ExpressionKeyedTableFieldSyntax) field;
                         if (typedField.Key.IsEquivalentTo(keyExpression))
                         {
-                            return typedField.Value;
+                            return WithTriviaFrom(typedField.Value, node);
                         }
                     }
                 }
@@ -311,8 +309,40 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
 
             var basePrefixExpr = baseExpression is PrefixExpressionSyntax prefix
                 ? prefix
-                : ParenthesizedExpression(baseExpression);
+                : (ParenthesizedExpressionSyntax) WithTriviaFrom(ParenthesizedExpression(baseExpression), node.Expression);
             return node.Update(basePrefixExpr, node.OpenBracketToken, keyExpression, node.CloseBracketToken);
+        }
+
+        private static LiteralExpressionSyntax LiteralExpressionWithTriviaFrom(double value, SyntaxNode triviaContainer)
+        {
+            var literal = Literal(value);
+            return LiteralExpression(SyntaxKind.NumericalLiteralExpression, WithTriviaFrom(literal, triviaContainer));
+        }
+
+        private static LiteralExpressionSyntax LiteralExpressionWithTriviaFrom(string value, SyntaxNode triviaContainer)
+        {
+            var literal = Literal(value);
+            return LiteralExpression(SyntaxKind.StringLiteralExpression, WithTriviaFrom(literal, triviaContainer));
+        }
+
+        private static LiteralExpressionSyntax LiteralExpressionWithTriviaFrom(bool value, SyntaxNode triviaContainer)
+        {
+            var literal = Token(value ? SyntaxKind.TrueKeyword : SyntaxKind.FalseKeyword);
+            return LiteralExpression(
+                value ? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression,
+                WithTriviaFrom(literal, triviaContainer));
+        }
+
+        private static SyntaxToken WithTriviaFrom(SyntaxToken token, SyntaxNode triviaContainer)
+        {
+            return token.WithLeadingTrivia(triviaContainer.GetLeadingTrivia())
+                        .WithTrailingTrivia(triviaContainer.GetTrailingTrivia());
+        }
+
+        private static SyntaxNode WithTriviaFrom(SyntaxNode node, SyntaxNode triviaContainer)
+        {
+            return node.WithLeadingTrivia(triviaContainer.GetLeadingTrivia())
+                       .WithTrailingTrivia(node.GetTrailingTrivia());
         }
 
         private static SyntaxNode GetInnerExpression(SyntaxNode node) =>

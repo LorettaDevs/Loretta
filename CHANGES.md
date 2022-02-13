@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added support for string length to the constant folder.
 
+### Changed
+- Constant folder now attempts to preserve trivia around nodes that were folded.
+
 ## v0.2.7-beta.13
 ### Fixed
 - Fixed `Minify` double-freeing a slot.
