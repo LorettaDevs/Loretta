@@ -7,9 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Added support for string length to the constant folder.
+- The following were added as a part of implementing local variable attributes:
+	- `Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax`;
+	- `SyntaxKind.LocalDeclarationName`;
+	- `SyntaxFactory.LocalDeclarationName`;
+	- `LuaSyntaxVisitor.VisitLocalDeclarationName`;
+	- `LuaSyntaxVisitor<TResult>.VisitLocalDeclarationName`;
+	- `LuaSyntaxRewriter.VisitLocalDeclarationName`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax`;
+	- `SyntaxKind.VariableAttribute`;
+	- `SyntaxFactory.VariableAttribute`;
+	- `LuaSyntaxVisitor.VisitVariableAttribute`;
+	- `LuaSyntaxVisitor<TResult>.VisitVariableAttribute`.
+	- `LuaSyntaxRewriter.VisitVariableAttribute`;
 
 ### Changed
 - Constant folder now attempts to preserve trivia around nodes that were folded.
+- [Breaking] The following were changed as a result of implementing local variable attributes:
+	- `LocalVariableDeclarationStatementSyntax.Names` now returns a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`;
+	- `LocalVariableDeclarationStatementSyntax.Update` now receives a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`;
+	- `LocalVariableDeclarationStatementSyntax.AddNames` now receives a `params LocalDeclarationNameSyntax[]` instead of `params IdentifierNameSyntax[]`;
+	- `LocalVariableDeclarationStatementSyntax.WithNames` now receives a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`;
+	- `SyntaxFactory.LocalVariableDeclarationStatement` overloads now receive a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`.
 
 ## v0.2.7-beta.13
 ### Fixed
