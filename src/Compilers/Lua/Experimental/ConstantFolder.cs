@@ -10,11 +10,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
 {
     internal partial class ConstantFolder : LuaSyntaxRewriter
     {
-        public static SyntaxNode Fold(SyntaxNode input)
-        {
-            var folder = new ConstantFolder();
-            return folder.Visit(input)!;
-        }
+        public static readonly ConstantFolder Instance = new();
 
         private ConstantFolder()
         {
@@ -441,6 +437,6 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         [Obsolete("Use ConstantFold instead.")]
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public static SyntaxNode FoldConstants(this SyntaxNode node) =>
-            ConstantFolder.Fold(node);
+            ConstantFolder.Instance.Visit(node);
     }
 }

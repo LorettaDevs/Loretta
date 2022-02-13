@@ -13,7 +13,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         /// <param name="node"></param>
         /// <returns></returns>
         public static SyntaxNode ConstantFold(this SyntaxNode node) =>
-            ConstantFolder.Fold(node);
+            ConstantFolder.Instance.Visit(node);
 
         /// <inheritdoc cref="Minify(SyntaxTree, Minifying.NamingStrategy, Minifying.ISlotAllocator)"/>
         public static SyntaxTree Minify(this SyntaxTree tree) =>
