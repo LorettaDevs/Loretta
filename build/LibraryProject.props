@@ -7,12 +7,10 @@
     <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
-  <!-- Compilation props -->
+  <!-- Allow packing -->
   <PropertyGroup>
-    <LangVersion>preview</LangVersion>
-    <Nullable>enable</Nullable>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <IsPackable>true</IsPackable>
+    <IsPublishable>true</IsPublishable>
   </PropertyGroup>
 
   <!-- Package props -->

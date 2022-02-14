@@ -11,6 +11,8 @@
     <Nullable>enable</Nullable>
     <AnalysisLevel>latest</AnalysisLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <IsPackable>false</IsPackable>
+    <IsPublishable>false</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>
