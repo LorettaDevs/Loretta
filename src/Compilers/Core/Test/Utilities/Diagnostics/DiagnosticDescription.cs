@@ -3,16 +3,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Test.Utilities;
-using Loretta.Utilities;
 using Xunit;
 
 namespace Loretta.CodeAnalysis.Test.Utilities

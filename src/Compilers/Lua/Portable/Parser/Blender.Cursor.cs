@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using Loretta.Utilities;
-
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal partial struct Blender

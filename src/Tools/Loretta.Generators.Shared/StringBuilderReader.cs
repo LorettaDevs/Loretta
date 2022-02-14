@@ -3,8 +3,6 @@
 
 #nullable enable
 
-using System;
-using System.IO;
 using System.Text;
 
 namespace Loretta.Generators

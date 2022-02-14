@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System;
 using System.Reflection;
 
 namespace Loretta.CodeAnalysis.Test.Utilities

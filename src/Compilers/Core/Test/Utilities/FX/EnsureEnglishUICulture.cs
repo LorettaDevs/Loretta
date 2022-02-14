@@ -3,10 +3,8 @@
 
 #nullable disable
 
-using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Threading;
 
 namespace Loretta.Test.Utilities
 {

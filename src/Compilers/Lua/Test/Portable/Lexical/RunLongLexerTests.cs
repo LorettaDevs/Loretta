@@ -1,5 +1,4 @@
-﻿using System;
-using Loretta.Test.Utilities;
+﻿using Loretta.Test.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {

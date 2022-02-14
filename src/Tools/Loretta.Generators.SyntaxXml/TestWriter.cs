@@ -3,10 +3,6 @@
 
 #nullable disable
 
-using System.IO;
-using System.Linq;
-using System.Threading;
-
 namespace Loretta.Generators.SyntaxXml
 {
     internal class TestWriter : AbstractFileWriter

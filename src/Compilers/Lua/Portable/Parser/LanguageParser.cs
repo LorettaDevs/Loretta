@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using Loretta.CodeAnalysis.Text;
-using Loretta.Utilities;
+﻿using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {

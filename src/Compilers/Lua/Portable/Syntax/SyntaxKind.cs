@@ -1,6 +1,5 @@
 ﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member (still not sure of how to document this)
 
-using System;
 using System.ComponentModel;
 
 namespace Loretta.CodeAnalysis.Lua

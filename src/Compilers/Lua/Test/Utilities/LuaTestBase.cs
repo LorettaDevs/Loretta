@@ -4,10 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Test.Utilities;

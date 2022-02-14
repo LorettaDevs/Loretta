@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
+﻿namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
     /// <summary>
     /// The sorted slot allocator.

@@ -4,8 +4,6 @@
 // brevity. 32-bit floating point related code was also removed since it was not relevant to this
 // project. Unsafe code was removed as well.
 
-using System;
-
 namespace Loretta.CodeAnalysis.Lua.Utilities
 {
     internal static class HexFloat

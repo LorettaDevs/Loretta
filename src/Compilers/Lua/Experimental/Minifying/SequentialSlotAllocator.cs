@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
+﻿namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
     /// <summary>
     /// A sequential slot allocator.

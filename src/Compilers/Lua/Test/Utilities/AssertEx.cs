@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit.Sdk;
+﻿using Xunit.Sdk;
 
 namespace Loretta.CodeAnalysis.Lua.Test.Utilities
 {

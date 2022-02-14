@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Loretta.Utilities;
-
-namespace Loretta.CodeAnalysis.Lua
+﻿namespace Loretta.CodeAnalysis.Lua
 {
     internal partial class ScopeAndVariableManager
     {

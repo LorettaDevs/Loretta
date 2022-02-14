@@ -3,12 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-
 namespace Loretta.Generators.SyntaxXml
 {
     internal abstract class AbstractFileWriter

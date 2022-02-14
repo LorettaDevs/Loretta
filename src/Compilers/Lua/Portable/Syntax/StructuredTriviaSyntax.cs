@@ -1,6 +1,4 @@
-﻿using Loretta.Utilities;
-
-namespace Loretta.CodeAnalysis.Lua.Syntax
+﻿namespace Loretta.CodeAnalysis.Lua.Syntax
 {
     /// <summary>
     /// It's a non terminal Trivia CSharpSyntaxNode that has a tree underneath it.

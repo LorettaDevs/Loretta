@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Loretta.Utilities
 {
     [AttributeUsage(AttributeTargets.Struct | AttributeTargets.GenericParameter)]

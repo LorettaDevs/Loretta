@@ -3,9 +3,7 @@
 
 #nullable disable
 
-using System;
 using Loretta.CodeAnalysis.Text;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Debugging
 {

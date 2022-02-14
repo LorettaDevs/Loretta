@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Loretta.Utilities;
+﻿using System.Runtime.CompilerServices;
 
 namespace Loretta.CodeAnalysis.Lua
 {

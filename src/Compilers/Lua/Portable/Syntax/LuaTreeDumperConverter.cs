@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Loretta.CodeAnalysis.Lua.SymbolDisplay;
-using Loretta.Utilities;
+﻿using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax
 {

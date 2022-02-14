@@ -33,11 +33,8 @@
 // multiple times for different instantiation.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Collections.Internal
 {

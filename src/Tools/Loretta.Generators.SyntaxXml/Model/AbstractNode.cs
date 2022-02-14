@@ -2,8 +2,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
 namespace Loretta.Generators.SyntaxXml
 {
     public class AbstractNode : TreeType

@@ -1,6 +1,4 @@
-﻿using System;
-using Loretta.CodeAnalysis.PooledObjects;
-using Loretta.Utilities;
+﻿using Loretta.CodeAnalysis.PooledObjects;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {

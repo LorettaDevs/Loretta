@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
+﻿namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 {
     using Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax;
 
@@ -66,11 +64,11 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
                                                          || !_featureStatisticsBuilder.HasUnderscoreInNumericLiterals:
                 {
                     var text = token.Text;
-                    if (!_featureStatisticsBuilder.HasBinaryNumbers && text.StartsWith("0b", System.StringComparison.OrdinalIgnoreCase))
+                    if (!_featureStatisticsBuilder.HasBinaryNumbers && text.StartsWith("0b", StringComparison.OrdinalIgnoreCase))
                         _featureStatisticsBuilder.HasBinaryNumbers = true;
-                    else if (!_featureStatisticsBuilder.HasOctalNumbers && text.StartsWith("0o", System.StringComparison.OrdinalIgnoreCase))
+                    else if (!_featureStatisticsBuilder.HasOctalNumbers && text.StartsWith("0o", StringComparison.OrdinalIgnoreCase))
                         _featureStatisticsBuilder.HasOctalNumbers = true;
-                    else if (!_featureStatisticsBuilder.HasHexFloatLiterals && text.StartsWith("0x") && (text.Contains('.') || text.Contains('p', System.StringComparison.OrdinalIgnoreCase)))
+                    else if (!_featureStatisticsBuilder.HasHexFloatLiterals && text.StartsWith("0x") && (text.Contains('.') || text.Contains('p', StringComparison.OrdinalIgnoreCase)))
                         _featureStatisticsBuilder.HasHexFloatLiterals = true;
 
                     if (!_featureStatisticsBuilder.HasUnderscoreInNumericLiterals && text.Contains('_'))
@@ -78,7 +76,7 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
                 }
                 break;
 
-                case SyntaxKind.StringLiteralToken when !_featureStatisticsBuilder.HasHexEscapesInStrings && token.Text.Contains("\\x", System.StringComparison.OrdinalIgnoreCase):
+                case SyntaxKind.StringLiteralToken when !_featureStatisticsBuilder.HasHexEscapesInStrings && token.Text.Contains("\\x", StringComparison.OrdinalIgnoreCase):
                     _featureStatisticsBuilder.HasHexEscapesInStrings = true;
                     break;
 
@@ -94,8 +92,8 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
         {
             switch (trivia.Kind)
             {
-                case SyntaxKind.SingleLineCommentTrivia when !_featureStatisticsBuilder.HasCComments && trivia.Text.StartsWith("//", System.StringComparison.Ordinal):
-                case SyntaxKind.MultiLineCommentTrivia when !_featureStatisticsBuilder.HasCComments && trivia.Text.StartsWith("/*", System.StringComparison.Ordinal):
+                case SyntaxKind.SingleLineCommentTrivia when !_featureStatisticsBuilder.HasCComments && trivia.Text.StartsWith("//", StringComparison.Ordinal):
+                case SyntaxKind.MultiLineCommentTrivia when !_featureStatisticsBuilder.HasCComments && trivia.Text.StartsWith("/*", StringComparison.Ordinal):
                     _featureStatisticsBuilder.HasCComments = true;
                     break;
                 case SyntaxKind.ShebangTrivia when !_featureStatisticsBuilder.HasShebang:

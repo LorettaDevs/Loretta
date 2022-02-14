@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Loretta.CodeAnalysis.Lua.Utilities
+﻿namespace Loretta.CodeAnalysis.Lua.Utilities
 {
     /// <summary>
     /// A class with utilities for strings.

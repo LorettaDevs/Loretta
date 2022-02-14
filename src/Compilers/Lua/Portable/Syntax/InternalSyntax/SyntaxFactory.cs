@@ -1,7 +1,4 @@
-﻿using System;
-using Loretta.Utilities;
-
-namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
+﻿namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal static partial class SyntaxFactory
     {

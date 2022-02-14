@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-
-namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
+﻿namespace Loretta.CodeAnalysis.Lua.StatisticsCollector
 {
     internal record DiagnosticStatistics(
         int ErrorCount,

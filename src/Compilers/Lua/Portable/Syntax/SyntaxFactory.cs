@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Text;
 using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Syntax;

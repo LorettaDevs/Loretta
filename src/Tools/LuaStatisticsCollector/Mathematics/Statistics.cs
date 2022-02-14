@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Loretta.CodeAnalysis.Collections;
+﻿using Loretta.CodeAnalysis.Collections;
 using Perfolizer.Mathematics.OutlierDetection;
 using Perfolizer.Mathematics.QuantileEstimators;
 

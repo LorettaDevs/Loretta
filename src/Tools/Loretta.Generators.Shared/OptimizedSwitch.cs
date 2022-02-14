@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
+﻿using System.Runtime.InteropServices;
 using Microsoft.CodeAnalysis.CSharp;
 
 namespace Loretta.Generators

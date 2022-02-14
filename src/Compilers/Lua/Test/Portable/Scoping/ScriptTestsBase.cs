@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using Loretta.CodeAnalysis.Lua.Test.Utilities;
+﻿using Loretta.CodeAnalysis.Lua.Test.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
 {

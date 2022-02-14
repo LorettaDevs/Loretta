@@ -1,7 +1,4 @@
-﻿using System;
-using Loretta.Utilities;
-
-namespace Loretta.CodeAnalysis.Lua
+﻿namespace Loretta.CodeAnalysis.Lua
 {
     internal class SyntaxDiagnosticInfo : DiagnosticInfo
     {
