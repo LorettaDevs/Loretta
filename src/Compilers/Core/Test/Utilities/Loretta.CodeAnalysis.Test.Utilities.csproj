@@ -8,8 +8,6 @@
     <OutputType>Library</OutputType>
     <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0;net472</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net5.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
-    <IsPackable>false</IsPackable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>

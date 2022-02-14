@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="$(MSBuildThisFileDirectory)../../../../../build/BaseProject.props" />
-  
+
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
     <TargetFrameworks>net472</TargetFrameworks>
   </PropertyGroup>
@@ -9,9 +9,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(TargetFrameworks);net5.0;net6.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net5.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
-    <IsPackable>false</IsPackable>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

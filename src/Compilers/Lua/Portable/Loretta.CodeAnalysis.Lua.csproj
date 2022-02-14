@@ -13,6 +13,7 @@
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />

@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="$(MSBuildThisFileDirectory)../../../build/BaseProject.props" />
-  
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <IsPackable>false</IsPackable>
-    <Nullable>enable</Nullable>
-    <!-- Treat all non-nullable reference types warnings as errors (as it should be). -->
-    <WarningsAsErrors>CS8600;CS8601;CS8602;CS8603;CS8604;CS8605;CS8607;CS8608;CS8609;CS8610;CS8611;CS8612;CS8613;CS8614;CS8615;CS8616;CS8617;CS8618;CS8619;CS8620;CS8621;CS8622;CS8624;CS8625;CS8629;CS8631;CS8633;CS8634;CS8643;CS8644;CS8645;CS8655;CS8667;CS8670;CS8714</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
