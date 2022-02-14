@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
-using Tsu;
+﻿using Tsu;
 
 namespace Loretta.CodeAnalysis.Lua
 {

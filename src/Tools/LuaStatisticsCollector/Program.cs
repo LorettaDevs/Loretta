@@ -1,13 +1,7 @@
-﻿using System;
-using System.CodeDom.Compiler;
+﻿using System.CodeDom.Compiler;
 using System.Collections.Concurrent;
-using System.Collections.Immutable;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Loretta.CodeAnalysis.Collections;
 using Loretta.CodeAnalysis.Lua.StatisticsCollector.Mathematics;
 using Loretta.CodeAnalysis.Text;

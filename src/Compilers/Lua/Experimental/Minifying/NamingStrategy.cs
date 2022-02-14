@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
+﻿namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
     /// <summary>
     /// The naming strategy to use to convert a slot into a variable

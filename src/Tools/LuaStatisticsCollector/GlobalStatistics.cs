@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Loretta.CodeAnalysis.Collections;
+﻿using Loretta.CodeAnalysis.Collections;
 using Loretta.CodeAnalysis.Lua.StatisticsCollector.Mathematics;
 
 namespace Loretta.CodeAnalysis.Lua.StatisticsCollector

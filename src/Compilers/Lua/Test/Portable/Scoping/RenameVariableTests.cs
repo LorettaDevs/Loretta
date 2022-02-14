@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Xunit;
+﻿using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
 {

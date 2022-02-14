@@ -1,5 +1,4 @@
 ﻿using Loretta.CodeAnalysis.Lua.Syntax;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {

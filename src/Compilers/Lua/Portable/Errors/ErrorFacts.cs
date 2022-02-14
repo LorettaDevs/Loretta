@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Globalization;
-using System.Threading;
-using Loretta.Utilities;
+﻿using System.Globalization;
 
 namespace Loretta.CodeAnalysis.Lua
 {

@@ -3,13 +3,8 @@
 
 #nullable enable
 
-using System;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.CodeAnalysis;
@@ -27,7 +22,6 @@ namespace Loretta.Generators.SyntaxXml
             category: "SyntaxGenerator",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
-        [SuppressMessage("MicrosoftCodeAnalysisDesign", "RS1032:Define diagnostic message correctly", Justification = "It is a question mark.")]
         private static readonly DiagnosticDescriptor s_unableToReadSyntaxXml = new(
             "LSSG1002",
             title: "Syntax.xml could not be read",

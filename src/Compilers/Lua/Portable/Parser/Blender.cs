@@ -3,11 +3,7 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using Loretta.CodeAnalysis.Text;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {

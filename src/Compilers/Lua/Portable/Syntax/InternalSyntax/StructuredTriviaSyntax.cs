@@ -1,6 +1,4 @@
-﻿using Loretta.Utilities;
-
-namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
+﻿namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal abstract partial class StructuredTriviaSyntax : LuaSyntaxNode
     {

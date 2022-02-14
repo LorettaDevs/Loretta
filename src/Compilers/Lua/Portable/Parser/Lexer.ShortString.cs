@@ -1,5 +1,4 @@
 ﻿using Loretta.CodeAnalysis.Lua.Utilities;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {

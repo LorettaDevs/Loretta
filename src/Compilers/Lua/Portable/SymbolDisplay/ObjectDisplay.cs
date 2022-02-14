@@ -1,10 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.PooledObjects;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
 {

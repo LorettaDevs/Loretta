@@ -1,4 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)../../../../../build/BaseProject.props" />
 
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
     <TargetFrameworks>net472</TargetFrameworks>
@@ -7,10 +9,12 @@
   <PropertyGroup>
     <TargetFrameworks>$(TargetFrameworks);net5.0;net6.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net5.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
-    <IsPackable>false</IsPackable>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <!-- Implicit Usings -->
+  <ItemGroup>
+    <Using Include="Loretta.Utilities" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
@@ -23,6 +27,10 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.2.0-2.22114.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 

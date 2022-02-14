@@ -3,13 +3,8 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Loretta.Test.Utilities;
-using Loretta.Utilities;
 using Xunit;
 
 namespace Loretta.CodeAnalysis

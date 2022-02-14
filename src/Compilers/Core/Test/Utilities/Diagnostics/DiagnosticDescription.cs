@@ -3,16 +3,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Test.Utilities;
-using Loretta.Utilities;
 using Xunit;
 
 namespace Loretta.CodeAnalysis.Test.Utilities
@@ -348,7 +344,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
             if (_squiggledText != null)
             {
-                if (_squiggledText.Contains("\n") || _squiggledText.Contains("\\") || _squiggledText.Contains("\""))
+                if (_squiggledText.Contains('\n') || _squiggledText.Contains('\\') || _squiggledText.Contains('"'))
                 {
                     sb.Append(", @\"");
                     sb.Append(_squiggledText.Replace("\"", "\"\""));

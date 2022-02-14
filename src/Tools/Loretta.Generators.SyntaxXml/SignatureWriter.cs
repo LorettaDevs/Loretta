@@ -3,11 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
 namespace Loretta.Generators.SyntaxXml
 {
     internal class SignatureWriter
@@ -106,9 +101,9 @@ namespace Loretta.Generators.SyntaxXml
             }
         }
 
-        private bool IsSeparatedNodeList(string typeName) => typeName.StartsWith("SeparatedSyntaxList<", StringComparison.Ordinal);
+        private static bool IsSeparatedNodeList(string typeName) => typeName.StartsWith("SeparatedSyntaxList<", StringComparison.Ordinal);
 
-        private bool IsNodeList(string typeName) => typeName.StartsWith("SyntaxList<", StringComparison.Ordinal);
+        private static bool IsNodeList(string typeName) => typeName.StartsWith("SyntaxList<", StringComparison.Ordinal);
 
         public bool IsNodeOrNodeList(string typeName) => IsNode(typeName) || IsNodeList(typeName) || IsSeparatedNodeList(typeName);
 

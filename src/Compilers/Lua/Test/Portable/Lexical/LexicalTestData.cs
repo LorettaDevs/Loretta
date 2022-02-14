@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Text;
 using static Tsu.Option;
@@ -138,7 +134,7 @@ fourth line \xFF.";
             yield return new ShortToken(
                 SyntaxKind.HashStringLiteralToken,
                 $"`{shortStringContentText}`",
-                Loretta.Utilities.Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
+                Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
 
             #endregion Strings
 

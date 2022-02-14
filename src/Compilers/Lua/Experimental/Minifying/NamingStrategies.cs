@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Text;
-using Loretta.Utilities;
+﻿using System.Text;
 
 namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {

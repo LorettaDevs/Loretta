@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using Loretta.Utilities;
-
-namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
+﻿namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
     /// <summary>
     /// A class with helper methods for minifying.

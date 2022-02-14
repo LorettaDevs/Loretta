@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using Loretta.Test.Utilities;
 
 namespace Loretta.CodeAnalysis.Test.Utilities

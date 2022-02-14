@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using Loretta.CodeAnalysis.Lua.Syntax;
+﻿using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.PooledObjects;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua
 {

@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Xml.Linq;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Test.Utilities;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.IO;
-using System.Linq;
-using Loretta.CodeAnalysis.Lua.StatisticsCollector.Mathematics;
+﻿using Loretta.CodeAnalysis.Lua.StatisticsCollector.Mathematics;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using Tsu.Numerics;

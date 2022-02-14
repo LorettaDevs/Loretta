@@ -1,5 +1,4 @@
-﻿using System;
-using Tsu;
+﻿using Tsu;
 
 namespace Loretta.CodeAnalysis.Lua
 {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-
-namespace Loretta.CodeAnalysis.Lua.Experimental
+﻿namespace Loretta.CodeAnalysis.Lua.Experimental
 {
     /// <summary>
     /// The extension methods for 

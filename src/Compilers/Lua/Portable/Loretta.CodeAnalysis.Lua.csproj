@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../../../../build/LibraryProject.props" />
+  <Import Project="$(MSBuildThisFileDirectory)../../../../build/LibraryProject.props" />
 
   <!-- Package data -->
   <PropertyGroup>
@@ -13,6 +13,7 @@
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />

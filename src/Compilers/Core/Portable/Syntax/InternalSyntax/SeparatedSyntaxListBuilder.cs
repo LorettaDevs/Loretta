@@ -1,8 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-
 namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 {
     // The null-suppression uses in this type are covered under the following issue to

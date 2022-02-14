@@ -7,8 +7,6 @@
 // See the commentary in https://github.com/dotnet/roslyn/pull/50156 for notes on incorporating changes made to the
 // reference implementation.
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Loretta.CodeAnalysis.Collections.Internal

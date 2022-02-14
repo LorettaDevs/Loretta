@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
+﻿namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal class LuaSyntaxWalker : LuaSyntaxVisitor
     {

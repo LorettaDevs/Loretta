@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Loretta.CodeAnalysis.PooledObjects;
+﻿using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing

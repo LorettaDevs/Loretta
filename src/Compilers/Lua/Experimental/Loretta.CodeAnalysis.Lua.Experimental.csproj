@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../../../../build/LibraryProject.props" />
+  <Import Project="$(MSBuildThisFileDirectory)../../../../build/LibraryProject.props" />
 
   <!-- Package data -->
   <PropertyGroup>

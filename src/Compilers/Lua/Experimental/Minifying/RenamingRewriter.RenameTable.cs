@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Loretta.Utilities;
-
-namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
+﻿namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
 {
     internal partial class RenamingRewriter
     {

@@ -3,7 +3,6 @@
 
 using System.Security.Cryptography;
 using Loretta.CodeAnalysis.Text;
-using Loretta.Utilities;
 
 namespace Loretta.CodeAnalysis
 {
