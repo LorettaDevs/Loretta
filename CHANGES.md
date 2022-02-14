@@ -18,8 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `SyntaxKind.VariableAttribute`;
 	- `SyntaxFactory.VariableAttribute`;
 	- `LuaSyntaxVisitor.VisitVariableAttribute`;
-	- `LuaSyntaxVisitor<TResult>.VisitVariableAttribute`.
+	- `LuaSyntaxVisitor<TResult>.VisitVariableAttribute`;
 	- `LuaSyntaxRewriter.VisitVariableAttribute`;
+	- `LuaSyntaxOptions.AcceptLocalVariableAttributes`;
+	- `LuaSyntaxOptions.Lua54` preset.
 
 ### Changed
 - Constant folder now attempts to preserve trivia around nodes that were folded.
@@ -28,7 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `LocalVariableDeclarationStatementSyntax.Update` now receives a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`;
 	- `LocalVariableDeclarationStatementSyntax.AddNames` now receives a `params LocalDeclarationNameSyntax[]` instead of `params IdentifierNameSyntax[]`;
 	- `LocalVariableDeclarationStatementSyntax.WithNames` now receives a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`;
-	- `SyntaxFactory.LocalVariableDeclarationStatement` overloads now receive a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`.
+	- `SyntaxFactory.LocalVariableDeclarationStatement` overloads now receive a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`;
+	- `LuaSyntaxOptions` constructor and `With` method now accept an `acceptLocalVariableAttributes` parameter.
 
 ## v0.2.7-beta.13
 ### Fixed
