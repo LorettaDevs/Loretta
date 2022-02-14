@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `LuaSyntaxRewriter.VisitVariableAttribute`;
 	- `LuaSyntaxOptions.AcceptLocalVariableAttributes`;
 	- `LuaSyntaxOptions.Lua54` preset.
+- Added `SyntaxFactory.HashString` for creating FiveM hash string literal tokens.
 
 ### Changed
 - Constant folder now attempts to preserve trivia around nodes that were folded.
