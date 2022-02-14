@@ -857,6 +857,70 @@
 
   <!-- Assignment statement -->
 
+  <Node Name="VariableAttributeSyntax" Base="LuaSyntaxNode">
+    <TypeComment>
+      <summary>Represents a variable attribute syntax.</summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="VariableAttributeSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="VariableAttribute" />
+    <Field Name="LessThanToken" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>
+          The leading <c>&lt;</c> token.
+        </summary>
+      </PropertyComment>
+      <Kind Name="LessThanToken" />
+    </Field>
+    <Field Name="Identifier" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>The attribute name identifier token.</summary>
+      </PropertyComment>
+      <Kind Name="IdentifierToken" />
+    </Field>
+    <Field Name="GreaterThanToken" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>
+          The trailing <c>&gt;</c> token.
+        </summary>
+      </PropertyComment>
+      <Kind Name="GreaterThanToken" />
+    </Field>
+  </Node>
+
+  <Node Name="LocalDeclarationNameSyntax" Base="LuaSyntaxNode">
+    <TypeComment>
+      <summary>
+        Represents a variable name in a <see cref="LocalVariableDeclarationStatementSyntax" /> node.
+      </summary>
+    </TypeComment>
+    <FactoryComment>
+      <summary>
+        Creates a new <see cref="LocalDeclarationNameSyntax" /> node.
+      </summary>
+    </FactoryComment>
+    <Kind Name="LocalDeclarationName" />
+    <Field Name="IdentifierName" Type="IdentifierNameSyntax">
+      <PropertyComment>
+        <summary>
+          The <see cref="IdentifierNameSyntax" /> containing the name.
+        </summary>
+      </PropertyComment>
+      <Kind Name="IdentifierName" />
+    </Field>
+    <Field Name="Attribute" Type="VariableAttributeSyntax" Optional="true">
+      <PropertyComment>
+        <summary>
+          The <see cref="VariableAttributeSyntax" /> containing the (optional) variable attribute.
+        </summary>
+      </PropertyComment>
+      <Kind Name="VariableAttribute" />
+    </Field>
+  </Node>
+
   <Node Name="EqualsValuesClauseSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>Represents the values being assigned to the names in an assignment or variable declaration.</summary>
@@ -970,7 +1034,7 @@
       </PropertyComment>
       <Kind Name="LocalKeyword" />
     </Field>
-    <Field Name="Names" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
+    <Field Name="Names" Type="SeparatedSyntaxList&lt;LocalDeclarationNameSyntax&gt;" MinCount="1">
       <PropertyComment>
         <summary>The list of names being assigned to.</summary>
       </PropertyComment>

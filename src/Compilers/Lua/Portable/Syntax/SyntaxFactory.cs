@@ -928,7 +928,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Creates a new <see cref="LocalVariableDeclarationStatementSyntax"/> node.
         /// </summary>
         public static LocalVariableDeclarationStatementSyntax LocalVariableDeclarationStatement(
-            SeparatedSyntaxList<IdentifierNameSyntax> names,
+            SeparatedSyntaxList<LocalDeclarationNameSyntax> names,
             SeparatedSyntaxList<ExpressionSyntax> values) =>
             LocalVariableDeclarationStatement(names, EqualsValuesClause(values));
     }

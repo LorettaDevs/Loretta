@@ -13,13 +13,13 @@ using Xunit.Abstractions;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 {
-    public abstract class ParsingTests : LuaTestBase, IDisposable
+    public abstract class ParsingTestsBase : LuaTestBase, IDisposable
     {
         private LuaSyntaxNode? _node;
         private IEnumerator<SyntaxNodeOrToken>? _treeEnumerator;
         private readonly ITestOutputHelper _output;
 
-        public ParsingTests(ITestOutputHelper output)
+        public ParsingTestsBase(ITestOutputHelper output)
         {
             _output = output;
         }

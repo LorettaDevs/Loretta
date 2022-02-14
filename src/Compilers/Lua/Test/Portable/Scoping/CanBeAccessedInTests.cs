@@ -12,7 +12,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
             var (tree, script) = ParseScript("local a = 1 print(a)");
             var root = Assert.IsType<CompilationUnitSyntax>(tree.GetRoot());
             var assignment = Assert.IsType<LocalVariableDeclarationStatementSyntax>(root.Statements.Statements[0]);
-            var name = Assert.IsType<IdentifierNameSyntax>(assignment.Names[0]);
+            var name = Assert.IsType<LocalDeclarationNameSyntax>(assignment.Names[0]);
 
             var variable = script.GetVariable(name);
 
@@ -30,7 +30,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
                                              "end");
             var root = Assert.IsType<CompilationUnitSyntax>(tree.GetRoot());
             var assignment = Assert.IsType<LocalVariableDeclarationStatementSyntax>(root.Statements.Statements[0]);
-            var name = Assert.IsType<IdentifierNameSyntax>(assignment.Names[0]);
+            var name = Assert.IsType<LocalDeclarationNameSyntax>(assignment.Names[0]);
             var doStatement = Assert.IsType<DoStatementSyntax>(root.Statements.Statements[1]);
 
             var variable = script.GetVariable(name);
@@ -51,7 +51,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
             var root = Assert.IsType<CompilationUnitSyntax>(tree.GetRoot());
             var doStatement = Assert.IsType<DoStatementSyntax>(root.Statements.Statements[0]);
             var assignment = Assert.IsType<LocalVariableDeclarationStatementSyntax>(doStatement.Body.Statements[0]);
-            var name = Assert.IsType<IdentifierNameSyntax>(assignment.Names[0]);
+            var name = Assert.IsType<LocalDeclarationNameSyntax>(assignment.Names[0]);
 
             var variable = script.GetVariable(name);
             var rootScope = script.GetScope(root);

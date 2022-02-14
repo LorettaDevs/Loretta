@@ -213,13 +213,30 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
+        private LocalDeclarationNameSyntax ParseLocalDeclarationName()
+        {
+            var name = ParseIdentifierName();
+
+            VariableAttributeSyntax? attribute = null;
+            if (CurrentToken.Kind is SyntaxKind.LessThanToken)
+            {
+                var lessThanToken = EatToken(SyntaxKind.LessThanToken);
+                var identifierName = EatToken(SyntaxKind.IdentifierToken);
+                var greaterThanToken = EatToken(SyntaxKind.GreaterThanToken);
+
+                attribute = SyntaxFactory.VariableAttribute(lessThanToken, identifierName, greaterThanToken);
+            }
+
+            return SyntaxFactory.LocalDeclarationName(name, attribute);
+        }
+
         private LocalVariableDeclarationStatementSyntax ParseLocalVariableDeclarationStatement()
         {
             var localKeyword = EatToken(SyntaxKind.LocalKeyword);
             var namesAndSeparatorsBuilder =
-                _pool.AllocateSeparated<IdentifierNameSyntax>();
+                _pool.AllocateSeparated<LocalDeclarationNameSyntax>();
 
-            var name = ParseIdentifierName();
+            var name = ParseLocalDeclarationName();
             namesAndSeparatorsBuilder.Add(name);
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
@@ -227,7 +244,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var separator = EatToken(SyntaxKind.CommaToken);
                 namesAndSeparatorsBuilder.AddSeparator(separator);
 
-                name = ParseIdentifierName();
+                name = ParseLocalDeclarationName();
                 namesAndSeparatorsBuilder.Add(name);
             }
 

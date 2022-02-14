@@ -524,6 +524,8 @@ namespace Loretta.CodeAnalysis.Lua
         ExpressionListFunctionArgument = 2011,
 
         EqualsValuesClause = 2083,
+        VariableAttribute = 2084,
+        LocalDeclarationName = 2085,
 
         // Primary Expressions
         [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
@@ -678,7 +680,7 @@ namespace Loretta.CodeAnalysis.Lua
         StatementList = 2072,
         EmptyStatement = 2073,
 
-        // Big gap 2084-3001 (insert new nodes here)
+        // Big gap 2086-3001 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,

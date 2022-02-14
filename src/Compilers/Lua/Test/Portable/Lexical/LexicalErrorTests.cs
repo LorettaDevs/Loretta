@@ -8,7 +8,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
     public class LexicalErrorTests : LuaTestBase
     {
         private static void ParseAndValidate(string text, LuaSyntaxOptions? options = null, params DiagnosticDescription[] expectedErrors) =>
-            ParsingTests.ParseAndValidate(text, options, expectedErrors);
+            ParsingTestsBase.ParseAndValidate(text, options, expectedErrors);
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
