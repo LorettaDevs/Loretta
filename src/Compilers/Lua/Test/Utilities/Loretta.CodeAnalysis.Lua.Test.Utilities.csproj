@@ -8,6 +8,11 @@
     <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net5.0</TargetFrameworks>
   </PropertyGroup>
 
+  <!-- Implicit Usings -->
+  <ItemGroup>
+    <Using Include="Loretta.Utilities" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
     <ProjectReference Include="..\..\..\Core\Test\Utilities\Loretta.CodeAnalysis.Test.Utilities.csproj" />

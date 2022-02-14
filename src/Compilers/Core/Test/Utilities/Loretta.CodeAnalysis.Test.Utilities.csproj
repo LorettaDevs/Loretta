@@ -10,9 +10,15 @@
     <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net5.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
     <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.UnitTests" />
+  </ItemGroup>
+
+  <!-- Implicit Usings -->
+  <ItemGroup>
+    <Using Include="Loretta.Utilities" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,6 +11,11 @@
     <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net5.0</TargetFrameworks>
   </PropertyGroup>
 
+  <!-- Implicit Usings -->
+  <ItemGroup>
+    <Using Include="Loretta.Utilities" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="Tsu" Version="2.1.1" />

@@ -13,6 +13,11 @@
     <IsPublishable>true</IsPublishable>
   </PropertyGroup>
 
+  <!-- Implicit Usings -->
+  <ItemGroup>
+    <Using Include="Loretta.Utilities" />
+  </ItemGroup>
+
   <!-- Package props -->
   <PropertyGroup>
     <Authors>GGG KILLER</Authors>

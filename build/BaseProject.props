@@ -9,11 +9,21 @@
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <AnalysisLevel>latest</AnalysisLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <!-- Nuget packing props -->
+  <PropertyGroup>
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
   </PropertyGroup>
+  
+  <!-- Implicit Usings -->
+  <ItemGroup>
+    <Using Include="System.Collections.Immutable" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.2.0-2.22114.1">
