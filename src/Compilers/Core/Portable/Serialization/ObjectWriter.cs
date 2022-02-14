@@ -12,13 +12,7 @@ namespace Loretta.Utilities
     using System.Collections.Immutable;
     using System.Threading.Tasks;
     using Loretta.CodeAnalysis.Collections;
-#if COMPILERCORE
     using Resources = CodeAnalysisResources;
-#elif CODE_STYLE
-    using Resources = CodeStyleResources;
-#else
-    using Resources = WorkspacesResources;
-#endif
 
     /// <summary>
     /// An <see cref="ObjectWriter"/> that serializes objects to a byte stream.

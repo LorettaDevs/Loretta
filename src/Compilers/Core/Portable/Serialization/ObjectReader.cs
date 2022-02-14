@@ -10,13 +10,7 @@ using Loretta.CodeAnalysis.PooledObjects;
 
 namespace Loretta.Utilities
 {
-#if COMPILERCORE
     using Resources = CodeAnalysisResources;
-#elif CODE_STYLE
-    using Resources = CodeStyleResources;
-#else
-    using Resources = WorkspacesResources;
-#endif
 
     using EncodingKind = ObjectWriter.EncodingKind;
 
