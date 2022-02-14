@@ -27,7 +27,6 @@ namespace Loretta.Generators.SyntaxXml
             category: "SyntaxGenerator",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
-        [SuppressMessage("MicrosoftCodeAnalysisDesign", "RS1032:Define diagnostic message correctly", Justification = "It is a question mark.")]
         private static readonly DiagnosticDescriptor s_unableToReadSyntaxXml = new(
             "LSSG1002",
             title: "Syntax.xml could not be read",

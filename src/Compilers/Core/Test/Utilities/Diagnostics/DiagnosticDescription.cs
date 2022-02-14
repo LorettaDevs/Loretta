@@ -348,7 +348,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
             if (_squiggledText != null)
             {
-                if (_squiggledText.Contains("\n") || _squiggledText.Contains("\\") || _squiggledText.Contains("\""))
+                if (_squiggledText.Contains('\n') || _squiggledText.Contains('\\') || _squiggledText.Contains('"'))
                 {
                     sb.Append(", @\"");
                     sb.Append(_squiggledText.Replace("\"", "\"\""));
