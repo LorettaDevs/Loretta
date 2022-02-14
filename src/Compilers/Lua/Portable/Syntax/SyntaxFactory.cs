@@ -6,6 +6,8 @@ using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Syntax;
 using Loretta.CodeAnalysis.Text;
+using Loretta.Utilities;
+using static System.Net.Mime.MediaTypeNames;
 using InternalSyntax = Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -301,6 +303,43 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="trailing">A list of trivia immediately following the token.</param>
         public static SyntaxToken Literal(SyntaxTriviaList leading, string text, string value, SyntaxTriviaList trailing) =>
             new(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
+
+        /// <summary>
+        /// Creates a FiveM hash string literal token with kind <see cref="SyntaxKind.HashStringLiteralToken"/> and
+        /// formats the provided string as a Lua string and calculates the hash from it.
+        /// </summary>
+        /// <param name="stringValue">The actual value of the string without any escapes.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="stringValue"/> is null.</exception>
+        public static SyntaxToken HashLiteral(string stringValue)
+        {
+            if (stringValue is null) throw new ArgumentNullException(nameof(stringValue));
+            var raw = ObjectDisplay.FormatLiteral(stringValue, ObjectDisplayOptions.EscapeNonPrintableCharacters | ObjectDisplayOptions.EscapeWithUtf8);
+            raw = '`' + raw + '`';
+            var hash = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
+            return new(InternalSyntax.SyntaxFactory.HashLiteral(ElasticMarker.UnderlyingNode, raw, hash, ElasticMarker.UnderlyingNode));
+        }
+
+        /// <summary>
+        /// Creates a FiveM hash string literal token with kind <see cref="SyntaxKind.HashStringLiteralToken"/> from the text
+        /// and corresponding string value.
+        /// </summary>
+        /// <param name="text">The raw text of the literal, including quotes and escape sequences.</param>
+        /// <param name="value">The hash value to be represented by the returned token.</param>
+        /// <returns></returns>
+        public static SyntaxToken HashLiteral(string text, uint value) =>
+            new(InternalSyntax.SyntaxFactory.HashLiteral(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
+
+        /// <summary>
+        /// Creates a FiveM hash string literal token with kind <see cref="SyntaxKind.HashStringLiteralToken"/> from the text
+        /// and corresponding string value.
+        /// </summary>
+        /// <param name="leading">A list of trivia immediately preceding the token.</param>
+        /// <param name="text">The raw text of the literal, including quotes and escape sequences.</param>
+        /// <param name="value">The hash value to be represented by the returned token.</param>
+        /// <param name="trailing">A list of trivia immediately following the token.</param>
+        /// <returns></returns>
+        public static SyntaxToken HashLiteral(SyntaxTriviaList leading, string text, uint value, SyntaxTriviaList trailing) =>
+            new(InternalSyntax.SyntaxFactory.HashLiteral(leading.Node, text, value, trailing.Node));
 
         /// <summary>
         /// Creates a token with kind BadToken.
