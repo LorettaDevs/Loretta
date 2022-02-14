@@ -1,5 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="$(MSBuildThisFileDirectory)../../../../../build/BaseProject.props" />
+  
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
     <TargetFrameworks>net472</TargetFrameworks>
   </PropertyGroup>
@@ -23,6 +25,10 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.2.0-2.22114.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
