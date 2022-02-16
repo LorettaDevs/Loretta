@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## v0.2.8
 ### Added
 - Added support for string length to the constant folder.
 - The following were added as a part of implementing local variable attributes:
@@ -47,7 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Breaking] The following were changed as a result of implementing integers:
 	- The Lua 5.3 preset was changed to accept integers;
 	- **IMPORTANT:** `SyntaxToken.Value` now can be a `long` when any of the `*IntegerFormat` settings are set to `IntegerFormats.Int64`;
-	- `LuaSyntaxOptions` constructor and `With` method now accept 4 `IntegerFormats` for each number format (binary, octal, decimal and hexadecimal).
+	- `LuaSyntaxOptions` constructor and `With` method now accept 4 `IntegerFormats` for each number format (binary, octal, decimal and hexadecimal);
+	- The constant folder was modified to support integers.
 
 ## v0.2.7-beta.13
 ### Fixed
