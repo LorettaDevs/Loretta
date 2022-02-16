@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `LuaSyntaxOptions.AcceptLocalVariableAttributes`;
 	- `LuaSyntaxOptions.Lua54` preset.
 - Added `SyntaxFactory.HashString` for creating FiveM hash string literal tokens.
+- The following were added as part of implementing integers:
+	- `IntegerFormats`;
+	- `LuaSyntaxOptions.AllWithIntegers`;
+	- `LuaSyntaxOptions.BinaryIntegerFormat`;
+	- `LuaSyntaxOptions.OctalIntegerFormat`;
+	- `LuaSyntaxOptions.DecimalIntegerFormat`;
+	- `LuaSyntaxOptions.HexIntegerFormat`.
 
 ### Changed
 - Constant folder now attempts to preserve trivia around nodes that were folded.
@@ -33,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `LocalVariableDeclarationStatementSyntax.WithNames` now receives a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`;
 	- `SyntaxFactory.LocalVariableDeclarationStatement` overloads now receive a `SeparatedSyntaxList<LocalDeclarationNameSyntax>` instead of `SeparatedSyntaxList<IdentifierNameSyntax>`;
 	- `LuaSyntaxOptions` constructor and `With` method now accept an `acceptLocalVariableAttributes` parameter.
+- [Breaking] The following were changed as a result of implementing integers:
+	- The Lua 5.3 preset was changed to accept integers;
+	- **IMPORTANT:** `SyntaxToken.Value` now can be a `long` when any of the `*IntegerFormat` settings are set to `IntegerFormats.Int64`;
+	- `LuaSyntaxOptions` constructor and `With` method now accept 4 `IntegerFormats` for each number format (binary, octal, decimal and hexadecimal).
 
 ## v0.2.7-beta.13
 ### Fixed
