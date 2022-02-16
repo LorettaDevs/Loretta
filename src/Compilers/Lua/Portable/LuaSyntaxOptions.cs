@@ -640,9 +640,17 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 return "Lua 5.3";
             }
+            else if (this == Lua54)
+            {
+                return "Lua 5.4";
+            }
             else if (this == LuaJIT20)
             {
-                return "LuaJIT";
+                return "LuaJIT 2.0";
+            }
+            else if (this == LuaJIT21)
+            {
+                return "LuaJIT 2.1";
             }
             else if (this == GMod)
             {
