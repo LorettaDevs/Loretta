@@ -369,10 +369,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="node">The node to insert.</param>
-        public SeparatedSyntaxList<TNode> Insert(int index, TNode node!!)
-        {
-            return InsertRange(index, new[] { node });
-        }
+        public SeparatedSyntaxList<TNode> Insert(int index, TNode node!!) =>
+            InsertRange(index, new[] { node });
 
         /// <summary>
         /// Creates a new list with the specified nodes inserted at the index.

@@ -64,10 +64,8 @@ namespace Loretta.CodeAnalysis.Text
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="checksumAlgorithm"/> is not supported.</exception>
-        public static SourceText From(string text!!, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
-        {
-            return new StringText(text, encoding, checksumAlgorithm: checksumAlgorithm);
-        }
+        public static SourceText From(string text!!, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1) =>
+            new StringText(text, encoding, checksumAlgorithm: checksumAlgorithm);
 
         /// <summary>
         /// Constructs a <see cref="SourceText"/> from text in a string.

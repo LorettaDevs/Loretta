@@ -39,9 +39,7 @@ namespace Loretta.CodeAnalysis.Collections
 
         public static ImmutableSegmentedDictionary<TKey, TValue> ToImmutableSegmentedDictionary<TKey, TValue>(this ImmutableSegmentedDictionary<TKey, TValue>.Builder builder!!)
             where TKey : notnull
-        {
-            return builder.ToImmutable();
-        }
+            => builder.ToImmutable();
 
         public static ImmutableSegmentedDictionary<TKey, TValue> ToImmutableSegmentedDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> items!!, IEqualityComparer<TKey>? keyComparer)
             where TKey : notnull

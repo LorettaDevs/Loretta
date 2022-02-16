@@ -58,10 +58,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="root">The root of the subtree containing the current node corresponding to the original tracked node.</param>
         /// <param name="node">The node instance originally tracked.</param>
         public static IEnumerable<TNode> GetCurrentNodes<TNode>(this SyntaxNode root, TNode node!!)
-            where TNode : SyntaxNode
-        {
-            return GetCurrentNodeFromTrueRoots(GetRoot(root), node).OfType<TNode>();
-        }
+            where TNode : SyntaxNode =>
+            GetCurrentNodeFromTrueRoots(GetRoot(root), node).OfType<TNode>();
 
         /// <summary>
         /// Gets the node within the subtree corresponding to the original tracked node.

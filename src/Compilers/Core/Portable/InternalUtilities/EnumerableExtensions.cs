@@ -35,15 +35,11 @@ namespace Loretta.Utilities
             return source;
         }
 
-        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> source!!)
-        {
-            return new ReadOnlyCollection<T>(source.ToList());
-        }
+        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> source!!) =>
+            new(source.ToList());
 
-        public static IEnumerable<T> Concat<T>(this IEnumerable<T> source!!, T value)
-        {
-            return source.ConcatWorker(value);
-        }
+        public static IEnumerable<T> Concat<T>(this IEnumerable<T> source!!, T value) =>
+            source.ConcatWorker(value);
 
         private static IEnumerable<T> ConcatWorker<T>(this IEnumerable<T> source, T value)
         {
@@ -55,52 +51,36 @@ namespace Loretta.Utilities
             yield return value;
         }
 
-        public static bool SetEquals<T>(this IEnumerable<T> source1!!, IEnumerable<T> source2!!, IEqualityComparer<T>? comparer)
-        {
-            return source1.ToSet(comparer).SetEquals(source2);
-        }
+        public static bool SetEquals<T>(this IEnumerable<T> source1!!, IEnumerable<T> source2!!, IEqualityComparer<T>? comparer) =>
+            source1.ToSet(comparer).SetEquals(source2);
 
-        public static bool SetEquals<T>(this IEnumerable<T> source1!!, IEnumerable<T> source2!!)
-        {
-            return source1.ToSet().SetEquals(source2);
-        }
+        public static bool SetEquals<T>(this IEnumerable<T> source1!!, IEnumerable<T> source2!!) =>
+            source1.ToSet().SetEquals(source2);
 
-        public static ISet<T> ToSet<T>(this IEnumerable<T> source!!, IEqualityComparer<T>? comparer)
-        {
-            return new HashSet<T>(source, comparer);
-        }
+        public static ISet<T> ToSet<T>(this IEnumerable<T> source!!, IEqualityComparer<T>? comparer) =>
+            new HashSet<T>(source, comparer);
 
-        public static ISet<T> ToSet<T>(this IEnumerable<T> source!!)
-        {
-            return source as ISet<T> ?? new HashSet<T>(source);
-        }
+        public static ISet<T> ToSet<T>(this IEnumerable<T> source!!) =>
+            source as ISet<T> ?? new HashSet<T>(source);
 
         public static IReadOnlyCollection<T> ToCollection<T>(this IEnumerable<T> sequence)
             => (sequence is IReadOnlyCollection<T> collection) ? collection : sequence.ToList();
 
         public static T? FirstOrNull<T>(this IEnumerable<T> source!!)
-            where T : struct
-        {
-            return source.Cast<T?>().FirstOrDefault();
-        }
+            where T : struct =>
+            source.Cast<T?>().FirstOrDefault();
 
         public static T? FirstOrNull<T>(this IEnumerable<T> source!!, Func<T, bool> predicate)
-            where T : struct
-        {
-            return source.Cast<T?>().FirstOrDefault(v => predicate(v!.Value));
-        }
+            where T : struct =>
+            source.Cast<T?>().FirstOrDefault(v => predicate(v!.Value));
 
         public static T? LastOrNull<T>(this IEnumerable<T> source!!)
-            where T : struct
-        {
-            return source.Cast<T?>().LastOrDefault();
-        }
+            where T : struct =>
+            source.Cast<T?>().LastOrDefault();
 
         public static T? SingleOrNull<T>(this IEnumerable<T> source!!, Func<T, bool> predicate)
-            where T : struct
-        {
-            return source.Cast<T?>().SingleOrDefault(v => predicate(v!.Value));
-        }
+            where T : struct =>
+            source.Cast<T?>().SingleOrDefault(v => predicate(v!.Value));
 
         public static bool IsSingle<T>(this IEnumerable<T> list)
         {
@@ -244,10 +224,8 @@ namespace Loretta.Utilities
             return -1;
         }
 
-        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> sequence!!)
-        {
-            return sequence.SelectMany(s => s);
-        }
+        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> sequence!!) =>
+            sequence.SelectMany(s => s);
 
         public static IOrderedEnumerable<T> OrderBy<T>(this IEnumerable<T> source, IComparer<T>? comparer) =>
             source.OrderBy(Functions<T>.Identity, comparer);

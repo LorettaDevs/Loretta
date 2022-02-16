@@ -125,17 +125,13 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates an instance of a <see cref="Location"/> for a span in a <see cref="SyntaxTree"/>.
         /// </summary>
-        public static Location Create(SyntaxTree syntaxTree!!, TextSpan textSpan)
-        {
-            return new SourceLocation(syntaxTree, textSpan);
-        }
+        public static Location Create(SyntaxTree syntaxTree!!, TextSpan textSpan) =>
+            new SourceLocation(syntaxTree, textSpan);
 
         /// <summary>
         /// Creates an instance of a <see cref="Location"/> for a span in a file.
         /// </summary>
-        public static Location Create(string filePath!!, TextSpan textSpan, LinePositionSpan lineSpan)
-        {
-            return new ExternalFileLocation(filePath, textSpan, lineSpan);
-        }
+        public static Location Create(string filePath!!, TextSpan textSpan, LinePositionSpan lineSpan) =>
+            new ExternalFileLocation(filePath, textSpan, lineSpan);
     }
 }

@@ -19,10 +19,7 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// A rope can wrap a simple string.
         /// </summary>
-        public static Rope ForString(string s!!)
-        {
-            return new StringRope(s);
-        }
+        public static Rope ForString(string s!!) => new StringRope(s);
 
         /// <summary>
         /// A rope can be formed from the concatenation of two ropes.

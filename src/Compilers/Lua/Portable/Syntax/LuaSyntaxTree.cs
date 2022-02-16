@@ -238,20 +238,16 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="oldTree">The old tree. Cannot be <c>null</c>.</param>
         /// <remarks>The list is pessimistic because it may claim more or larger regions than actually changed.</remarks>
-        public override IList<TextSpan> GetChangedSpans(SyntaxTree oldTree!!)
-        {
-            return SyntaxDiffer.GetPossiblyDifferentTextSpans(oldTree, this);
-        }
+        public override IList<TextSpan> GetChangedSpans(SyntaxTree oldTree!!) =>
+            SyntaxDiffer.GetPossiblyDifferentTextSpans(oldTree, this);
 
         /// <summary>
         /// Gets a list of text changes that when applied to the old tree produce this tree.
         /// </summary>
         /// <param name="oldTree">The old tree. Cannot be <c>null</c>.</param>
         /// <remarks>The list of changes may be different than the original changes that produced this tree.</remarks>
-        public override IList<TextChange> GetChanges(SyntaxTree oldTree!!)
-        {
-            return SyntaxDiffer.GetTextChanges(oldTree, this);
-        }
+        public override IList<TextChange> GetChanges(SyntaxTree oldTree!!) =>
+            SyntaxDiffer.GetTextChanges(oldTree, this);
 
         #endregion Changes
 
@@ -288,10 +284,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// This method does not filter diagnostics based on <c>#pragma</c>s and compiler options
         /// like /nowarn, /warnaserror etc.
         /// </remarks>
-        public override IEnumerable<Diagnostic> GetDiagnostics(SyntaxNode node!!)
-        {
-            return GetDiagnostics(node.Green, node.Position);
-        }
+        public override IEnumerable<Diagnostic> GetDiagnostics(SyntaxNode node!!) => GetDiagnostics(node.Green, node.Position);
 
         private IEnumerable<Diagnostic> GetDiagnostics(GreenNode greenNode, int position)
         {
