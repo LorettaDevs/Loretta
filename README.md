@@ -3,7 +3,7 @@ A C# (G)Lua lexer, parser, code analysis, transformation and code generation too
 
 ![Repo Stats](https://repobeats.axiom.co/api/embed/089a9f7dae190ea8dd0fc0750abbebceea3e86dd.svg "Repobeats analytics image")
 
-This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax of Lua](https://www.lua.org/manual/5.2/manual.html#9) with a few extensions:
+This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax of Lua](https://www.lua.org/manual/5.4/manual.html#9) with a few extensions:
 1. Operators introduced in Garry's Mod Lua (glua):
     - `&&` for `and`;
     - `||` for `or`;
@@ -16,12 +16,13 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
 4. Luau syntax (partial):
     - Roblox compound assignment: `+=`, `-=`, `*=`, `/=`, `^=`, `%=`, `..=`;
     - If expressions: `if a then b else c` and `if a then b elseif c then d else e`;
-5. Lua 5.3 bitwise operators;
-6. FiveM's hash string syntax (only parsing, manual node creation currently not possible);
-7. Continue support. The following options are available:
+5. FiveM's hash string syntax (only parsing, manual node creation currently not possible);
+6. Continue support. The following options are available:
     - No continue at all;
     - Roblox's `continue` which is a contextual keyword;
     - Garry's Mod's `continue` which is a full fledged keyword.
+
+TL;DR: This supports Lua 5.1, Lua 5.2, Lua 5.3, Lua 5.4, LuaJIT 2.0, LuaJIT 2.1, FiveM, GLua and (partially) Luau/Roblox.
 
 ## Installing Loretta v0.2
 We have two NuGet packages:
