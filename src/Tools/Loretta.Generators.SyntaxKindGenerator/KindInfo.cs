@@ -5,7 +5,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
     internal readonly struct KindInfo
     {
         public KindInfo(
-            IFieldSymbol field,
+            IFieldSymbol field!!,
             bool isTrivia,
             TokenInfo? tokenInfo,
             OperatorInfo? unaryOperatorInfo,
@@ -13,7 +13,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             ImmutableArray<string> extraCategories,
             ImmutableDictionary<string, TypedConstant> properties)
         {
-            Field = field ?? throw new ArgumentNullException(nameof(field));
+            Field = field;
             IsTrivia = isTrivia;
             TokenInfo = tokenInfo;
             UnaryOperatorInfo = unaryOperatorInfo;

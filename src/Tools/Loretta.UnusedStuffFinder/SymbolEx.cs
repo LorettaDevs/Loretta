@@ -4,9 +4,9 @@ namespace Loretta.UnusedStuffFinder
 {
     internal class SymbolEx
     {
-        public SymbolEx(ISymbol symbol)
+        public SymbolEx(ISymbol symbol!!)
         {
-            Symbol = symbol ?? throw new ArgumentNullException(nameof(symbol));
+            Symbol = symbol;
         }
 
         public ISymbol Symbol { get; }

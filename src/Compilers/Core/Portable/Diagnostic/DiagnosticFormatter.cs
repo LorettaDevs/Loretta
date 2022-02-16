@@ -17,13 +17,8 @@ namespace Loretta.CodeAnalysis
         /// <param name="diagnostic">The diagnostic.</param>
         /// <param name="formatter">The formatter; or null to use the default formatter.</param>
         /// <returns>The formatted message.</returns>
-        public virtual string Format(Diagnostic diagnostic, IFormatProvider? formatter = null)
+        public virtual string Format(Diagnostic diagnostic!!, IFormatProvider? formatter = null)
         {
-            if (diagnostic == null)
-            {
-                throw new ArgumentNullException(nameof(diagnostic));
-            }
-
             var culture = formatter as CultureInfo;
 
             switch (diagnostic.Location.Kind)

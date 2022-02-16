@@ -70,9 +70,9 @@ namespace Loretta.CodeAnalysis.Collections
 
         private readonly SegmentedDictionary<TKey, TValue> _dictionary;
 
-        private ImmutableSegmentedDictionary(SegmentedDictionary<TKey, TValue> dictionary)
+        private ImmutableSegmentedDictionary(SegmentedDictionary<TKey, TValue> dictionary!!)
         {
-            _dictionary = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
+            _dictionary = dictionary;
         }
 
         public IEqualityComparer<TKey> KeyComparer => _dictionary.Comparer;
@@ -214,11 +214,8 @@ namespace Loretta.CodeAnalysis.Collections
             return new ImmutableSegmentedDictionary<TKey, TValue>(dictionary);
         }
 
-        public ImmutableSegmentedDictionary<TKey, TValue> RemoveRange(IEnumerable<TKey> keys)
+        public ImmutableSegmentedDictionary<TKey, TValue> RemoveRange(IEnumerable<TKey> keys!!)
         {
-            if (keys is null)
-                throw new ArgumentNullException(nameof(keys));
-
             var result = ToBuilder();
             result.RemoveRange(keys);
             return result.ToImmutable();
@@ -239,11 +236,8 @@ namespace Loretta.CodeAnalysis.Collections
             return new ImmutableSegmentedDictionary<TKey, TValue>(dictionary);
         }
 
-        public ImmutableSegmentedDictionary<TKey, TValue> SetItems(IEnumerable<KeyValuePair<TKey, TValue>> items)
+        public ImmutableSegmentedDictionary<TKey, TValue> SetItems(IEnumerable<KeyValuePair<TKey, TValue>> items!!)
         {
-            if (items is null)
-                throw new ArgumentNullException(nameof(items));
-
             var result = ToBuilder();
             foreach (var item in items)
             {

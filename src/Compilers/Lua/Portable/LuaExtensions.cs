@@ -187,16 +187,11 @@ namespace Loretta.CodeAnalysis.Lua
         /// Insert one or more tokens in the list at the specified index.
         /// </summary>
         /// <returns>A new list with the tokens inserted.</returns>
-        public static SyntaxTokenList Insert(this SyntaxTokenList list, int index, params SyntaxToken[] items)
+        public static SyntaxTokenList Insert(this SyntaxTokenList list, int index, params SyntaxToken[] items!!)
         {
             if (index < 0 || index > list.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
-            }
-
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
             }
 
             if (list.Count == 0)

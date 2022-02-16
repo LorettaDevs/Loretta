@@ -369,13 +369,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="node">The node to insert.</param>
-        public SeparatedSyntaxList<TNode> Insert(int index, TNode node)
+        public SeparatedSyntaxList<TNode> Insert(int index, TNode node!!)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node));
-            }
-
             return InsertRange(index, new[] { node });
         }
 
@@ -384,13 +379,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="nodes">The nodes to insert.</param>
-        public SeparatedSyntaxList<TNode> InsertRange(int index, IEnumerable<TNode> nodes)
+        public SeparatedSyntaxList<TNode> InsertRange(int index, IEnumerable<TNode> nodes!!)
         {
-            if (nodes == null)
-            {
-                throw new ArgumentNullException(nameof(nodes));
-            }
-
             if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -500,13 +490,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="nodeInList">The element to replace.</param>
         /// <param name="newNode">The new node.</param>
-        public SeparatedSyntaxList<TNode> Replace(TNode nodeInList, TNode newNode)
+        public SeparatedSyntaxList<TNode> Replace(TNode nodeInList, TNode newNode!!)
         {
-            if (newNode == null)
-            {
-                throw new ArgumentNullException(nameof(newNode));
-            }
-
             var index = IndexOf(nodeInList);
             if (index >= 0 && index < Count)
             {
@@ -521,13 +506,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="nodeInList">The element to replace.</param>
         /// <param name="newNodes">The new nodes.</param>
-        public SeparatedSyntaxList<TNode> ReplaceRange(TNode nodeInList, IEnumerable<TNode> newNodes)
+        public SeparatedSyntaxList<TNode> ReplaceRange(TNode nodeInList, IEnumerable<TNode> newNodes!!)
         {
-            if (newNodes == null)
-            {
-                throw new ArgumentNullException(nameof(newNodes));
-            }
-
             var index = IndexOf(nodeInList);
             if (index >= 0 && index < Count)
             {

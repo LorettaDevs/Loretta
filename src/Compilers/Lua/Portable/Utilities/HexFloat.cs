@@ -94,7 +94,7 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
             }
         }
 
-        public static double DoubleFromHexString(string str)
+        public static double DoubleFromHexString(string str!!)
         {
             const int expBits = 11;    // bits for exponent
             const int maxBits = 53;    // significant bits (including implicit bit)
@@ -105,8 +105,6 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
 
             const int maxBits2 = maxBits + 2;
             const ulong mask = (1UL << (maxBits - 1)) - 1; // mask for lower (maxBits - 1) bits
-
-            if (str == null) throw new ArgumentNullException(nameof(str));
             var n = str.Length;
             if (n == 0) goto InvalidFormat;
 

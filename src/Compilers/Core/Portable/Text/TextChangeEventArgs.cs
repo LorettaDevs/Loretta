@@ -14,13 +14,8 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="oldText">The text before the change.</param>
         /// <param name="newText">The text after the change.</param>
         /// <param name="changes">A set of ranges for the change.</param>
-        public TextChangeEventArgs(SourceText oldText, SourceText newText, IEnumerable<TextChangeRange> changes)
+        public TextChangeEventArgs(SourceText oldText, SourceText newText, IEnumerable<TextChangeRange> changes!!)
         {
-            if (changes == null)
-            {
-                throw new ArgumentNullException(nameof(changes));
-            }
-
             OldText = oldText;
             NewText = newText;
             Changes = changes.ToImmutableArray();

@@ -122,9 +122,9 @@ namespace Loretta.CodeAnalysis
 
         internal DiagnosticDescriptor(
             string id,
-            LocalizableString title,
-            LocalizableString messageFormat,
-            string category,
+            LocalizableString title!!,
+            LocalizableString messageFormat!!,
+            string category!!,
             DiagnosticSeverity defaultSeverity,
             bool isEnabledByDefault,
             LocalizableString? description,
@@ -137,9 +137,9 @@ namespace Loretta.CodeAnalysis
             }
 
             Id = id;
-            Title = title ?? throw new ArgumentNullException(nameof(title));
-            Category = category ?? throw new ArgumentNullException(nameof(category));
-            MessageFormat = messageFormat ?? throw new ArgumentNullException(nameof(messageFormat));
+            Title = title;
+            Category = category;
+            MessageFormat = messageFormat;
             DefaultSeverity = defaultSeverity;
             IsEnabledByDefault = isEnabledByDefault;
             Description = description ?? string.Empty;

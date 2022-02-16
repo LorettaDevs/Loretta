@@ -3,8 +3,6 @@ using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Syntax;
 using Loretta.CodeAnalysis.Text;
-using Loretta.Utilities;
-using static System.Net.Mime.MediaTypeNames;
 using InternalSyntax = Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax;
 
 namespace Loretta.CodeAnalysis.Lua
@@ -135,11 +133,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">
         /// The actual text of this token.
         /// </param>
-        public static SyntaxTrivia SyntaxTrivia(SyntaxKind kind, string text)
+        public static SyntaxTrivia SyntaxTrivia(SyntaxKind kind, string text!!)
         {
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
             return kind switch
             {
                 SyntaxKind.ShebangTrivia
@@ -173,10 +168,6 @@ namespace Loretta.CodeAnalysis.Lua
 
         /// <summary>
         /// Creates a token corresponding to syntax kind. This method gives control over token Text and ValueText.
-        /// 
-        /// For example, consider the text '&lt;see cref="operator &amp;#43;"/&gt;'.  To create a token for the value of
-        /// the operator symbol (&amp;#43;), one would call 
-        /// Token(default(SyntaxTriviaList), SyntaxKind.PlusToken, "&amp;#43;", "+", default(SyntaxTriviaList)).
         /// </summary>
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
@@ -332,9 +323,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="stringValue">The actual value of the string without any escapes.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="stringValue"/> is null.</exception>
-        public static SyntaxToken HashLiteral(string stringValue)
+        public static SyntaxToken HashLiteral(string stringValue!!)
         {
-            if (stringValue is null) throw new ArgumentNullException(nameof(stringValue));
             var raw = ObjectDisplay.FormatLiteral(stringValue, ObjectDisplayOptions.EscapeNonPrintableCharacters | ObjectDisplayOptions.EscapeWithUtf8);
             raw = '`' + raw + '`';
             var hash = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());

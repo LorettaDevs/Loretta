@@ -130,13 +130,8 @@ namespace Loretta.CodeAnalysis.Text
             }
         }
 
-        public override IReadOnlyList<TextChangeRange> GetChangeRanges(SourceText oldText)
+        public override IReadOnlyList<TextChangeRange> GetChangeRanges(SourceText oldText!!)
         {
-            if (oldText == null)
-            {
-                throw new ArgumentNullException(nameof(oldText));
-            }
-
             if (this == oldText)
             {
                 return TextChangeRange.NoChanges;

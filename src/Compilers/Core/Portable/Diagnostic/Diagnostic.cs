@@ -121,18 +121,13 @@ namespace Loretta.CodeAnalysis
         /// <param name="messageArgs">Arguments to the message of the diagnostic.</param>
         /// <returns>The <see cref="Diagnostic"/> instance.</returns>
         public static Diagnostic Create(
-            DiagnosticDescriptor descriptor,
+            DiagnosticDescriptor descriptor!!,
             Location? location,
             DiagnosticSeverity effectiveSeverity,
             IEnumerable<Location>? additionalLocations,
             ImmutableDictionary<string, string?>? properties,
             params object?[]? messageArgs)
         {
-            if (descriptor == null)
-            {
-                throw new ArgumentNullException(nameof(descriptor));
-            }
-
             var warningLevel = GetDefaultWarningLevel(effectiveSeverity);
             return SimpleDiagnostic.Create(
                 descriptor,
@@ -224,9 +219,9 @@ namespace Loretta.CodeAnalysis
         /// </param>
         /// <returns>The <see cref="Diagnostic"/> instance.</returns>
         public static Diagnostic Create(
-            string id,
-            string category,
-            LocalizableString message,
+            string id!!,
+            string category!!,
+            LocalizableString message!!,
             DiagnosticSeverity severity,
             DiagnosticSeverity defaultSeverity,
             bool isEnabledByDefault,
@@ -240,21 +235,6 @@ namespace Loretta.CodeAnalysis
             IEnumerable<string>? customTags = null,
             ImmutableDictionary<string, string?>? properties = null)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
-
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
             return SimpleDiagnostic.Create(id, title ?? string.Empty, category, message, description ?? string.Empty, helpLink ?? string.Empty,
                 severity, defaultSeverity, isEnabledByDefault, warningLevel, location ?? Location.None, additionalLocations, customTags, properties, isSuppressed);
         }

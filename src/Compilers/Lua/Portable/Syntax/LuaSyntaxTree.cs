@@ -90,13 +90,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// Creates a new syntax tree from a syntax node.
         /// </summary>
-        public static SyntaxTree Create(LuaSyntaxNode root, LuaParseOptions? options = null, string path = "", Encoding? encoding = null)
+        public static SyntaxTree Create(LuaSyntaxNode root!!, LuaParseOptions? options = null, string path = "", Encoding? encoding = null)
         {
-            if (root == null)
-            {
-                throw new ArgumentNullException(nameof(root));
-            }
-
             return new ParsedSyntaxTree(
                 textOpt: null,
                 encodingOpt: encoding,
@@ -155,16 +150,11 @@ namespace Loretta.CodeAnalysis.Lua
         /// Produces a syntax tree by parsing the source text.
         /// </summary>
         public static SyntaxTree ParseText(
-            SourceText text,
+            SourceText text!!,
             LuaParseOptions? options = null,
             string path = "",
             CancellationToken cancellationToken = default)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-
             options ??= LuaParseOptions.Default;
 
             using var lexer = new InternalSyntax.Lexer(text, options);
@@ -213,13 +203,8 @@ namespace Loretta.CodeAnalysis.Lua
             return WithChanges(newText, new[] { new TextChangeRange(new TextSpan(0, Length), newText.Length) });
         }
 
-        private SyntaxTree WithChanges(SourceText newText, IReadOnlyList<TextChangeRange> changes)
+        private SyntaxTree WithChanges(SourceText newText, IReadOnlyList<TextChangeRange> changes!!)
         {
-            if (changes == null)
-            {
-                throw new ArgumentNullException(nameof(changes));
-            }
-
             var workingChanges = changes;
             var oldTree = this;
 
@@ -253,13 +238,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="oldTree">The old tree. Cannot be <c>null</c>.</param>
         /// <remarks>The list is pessimistic because it may claim more or larger regions than actually changed.</remarks>
-        public override IList<TextSpan> GetChangedSpans(SyntaxTree oldTree)
+        public override IList<TextSpan> GetChangedSpans(SyntaxTree oldTree!!)
         {
-            if (oldTree == null)
-            {
-                throw new ArgumentNullException(nameof(oldTree));
-            }
-
             return SyntaxDiffer.GetPossiblyDifferentTextSpans(oldTree, this);
         }
 
@@ -268,13 +248,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="oldTree">The old tree. Cannot be <c>null</c>.</param>
         /// <remarks>The list of changes may be different than the original changes that produced this tree.</remarks>
-        public override IList<TextChange> GetChanges(SyntaxTree oldTree)
+        public override IList<TextChange> GetChanges(SyntaxTree oldTree!!)
         {
-            if (oldTree == null)
-            {
-                throw new ArgumentNullException(nameof(oldTree));
-            }
-
             return SyntaxDiffer.GetTextChanges(oldTree, this);
         }
 
@@ -313,13 +288,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// This method does not filter diagnostics based on <c>#pragma</c>s and compiler options
         /// like /nowarn, /warnaserror etc.
         /// </remarks>
-        public override IEnumerable<Diagnostic> GetDiagnostics(SyntaxNode node)
+        public override IEnumerable<Diagnostic> GetDiagnostics(SyntaxNode node!!)
         {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node));
-            }
-
             return GetDiagnostics(node.Green, node.Position);
         }
 

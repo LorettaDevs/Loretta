@@ -19,25 +19,16 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// A rope can wrap a simple string.
         /// </summary>
-        public static Rope ForString(string s)
+        public static Rope ForString(string s!!)
         {
-            if (s == null)
-                throw new ArgumentNullException(nameof(s));
-
             return new StringRope(s);
         }
 
         /// <summary>
         /// A rope can be formed from the concatenation of two ropes.
         /// </summary>
-        public static Rope Concat(Rope r1, Rope r2)
+        public static Rope Concat(Rope r1!!, Rope r2!!)
         {
-            if (r1 == null)
-                throw new ArgumentNullException(nameof(r1));
-
-            if (r2 == null)
-                throw new ArgumentNullException(nameof(r2));
-
             return
                 r1.Length == 0 ? r2 :
                 r2.Length == 0 ? r1 :

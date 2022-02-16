@@ -37,21 +37,15 @@ namespace Loretta.CodeAnalysis.Collections
             where TKey : notnull
             => ToImmutableSegmentedDictionary(items, keyComparer: null);
 
-        public static ImmutableSegmentedDictionary<TKey, TValue> ToImmutableSegmentedDictionary<TKey, TValue>(this ImmutableSegmentedDictionary<TKey, TValue>.Builder builder)
+        public static ImmutableSegmentedDictionary<TKey, TValue> ToImmutableSegmentedDictionary<TKey, TValue>(this ImmutableSegmentedDictionary<TKey, TValue>.Builder builder!!)
             where TKey : notnull
         {
-            if (builder is null)
-                throw new ArgumentNullException(nameof(builder));
-
             return builder.ToImmutable();
         }
 
-        public static ImmutableSegmentedDictionary<TKey, TValue> ToImmutableSegmentedDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> items, IEqualityComparer<TKey>? keyComparer)
+        public static ImmutableSegmentedDictionary<TKey, TValue> ToImmutableSegmentedDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> items!!, IEqualityComparer<TKey>? keyComparer)
             where TKey : notnull
         {
-            if (items is null)
-                throw new ArgumentNullException(nameof(items));
-
             if (items is ImmutableSegmentedDictionary<TKey, TValue> existingDictionary)
                 return existingDictionary.WithComparer(keyComparer);
 
@@ -62,16 +56,9 @@ namespace Loretta.CodeAnalysis.Collections
             where TKey : notnull
             => ToImmutableSegmentedDictionary(source, keySelector, elementSelector, keyComparer: null);
 
-        public static ImmutableSegmentedDictionary<TKey, TValue> ToImmutableSegmentedDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TValue> elementSelector, IEqualityComparer<TKey>? keyComparer)
+        public static ImmutableSegmentedDictionary<TKey, TValue> ToImmutableSegmentedDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> source!!, Func<TSource, TKey> keySelector!!, Func<TSource, TValue> elementSelector!!, IEqualityComparer<TKey>? keyComparer)
             where TKey : notnull
         {
-            if (source is null)
-                throw new ArgumentNullException(nameof(source));
-            if (keySelector is null)
-                throw new ArgumentNullException(nameof(keySelector));
-            if (elementSelector is null)
-                throw new ArgumentNullException(nameof(elementSelector));
-
             return ImmutableSegmentedDictionary<TKey, TValue>.Empty.WithComparer(keyComparer)
                 .AddRange(source.Select(element => new KeyValuePair<TKey, TValue>(keySelector(element), elementSelector(element))));
         }

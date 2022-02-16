@@ -97,11 +97,8 @@ namespace Loretta.CodeAnalysis.Text
         /// Validates the arguments passed to <see cref="CopyTo"/> against the published contract.
         /// </summary>
         /// <returns>True if should bother to proceed with copying.</returns>
-        private bool CheckCopyToArguments(int sourceIndex, char[] destination, int destinationIndex, int count)
+        private bool CheckCopyToArguments(int sourceIndex, char[] destination!!, int destinationIndex, int count)
         {
-            if (destination == null)
-                throw new ArgumentNullException(nameof(destination));
-
             if (sourceIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(sourceIndex));
 

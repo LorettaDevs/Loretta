@@ -66,9 +66,9 @@ namespace Loretta.CodeAnalysis
         /// <param name="path">The file identifier - typically a relative or absolute path.</param>
         /// <param name="span">The span.</param>
         /// <exception cref="ArgumentNullException"><paramref name="path"/> is null.</exception>
-        public FileLinePositionSpan(string path, LinePositionSpan span)
+        public FileLinePositionSpan(string path!!, LinePositionSpan span)
         {
-            _path = path ?? throw new ArgumentNullException(nameof(path));
+            _path = path;
             _span = span;
             _hasMappedPath = false;
         }

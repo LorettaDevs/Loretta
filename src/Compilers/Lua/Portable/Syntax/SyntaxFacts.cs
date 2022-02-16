@@ -57,13 +57,8 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="kindB"></param>
         /// <param name="kindBText"></param>
         /// <returns></returns>
-        internal static bool RequiresSeparator(SyntaxKind kindA, string kindAText, SyntaxKind kindB, string kindBText)
+        internal static bool RequiresSeparator(SyntaxKind kindA, string kindAText!!, SyntaxKind kindB, string kindBText!!)
         {
-            if (kindAText is null)
-                throw new ArgumentNullException(nameof(kindAText));
-            if (kindBText is null)
-                throw new ArgumentNullException(nameof(kindBText));
-
             var kindAIsKeyword = IsKeyword(kindA);
             var kindBIsKeyowrd = IsKeyword(kindB);
 

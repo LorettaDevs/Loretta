@@ -276,9 +276,9 @@ namespace Loretta.CodeAnalysis.Collections
             return true;
         }
 
-        int IStructuralEquatable.GetHashCode(IEqualityComparer comparer)
+        int IStructuralEquatable.GetHashCode(IEqualityComparer comparer!!)
         {
-            _ = comparer ?? throw new ArgumentNullException(nameof(comparer));
+            _ = comparer;
 
             // Matches System.Array
             // https://github.com/dotnet/runtime/blob/e0ec035994179e8ebd6ccf081711ee11d4c5491b/src/libraries/System.Private.CoreLib/src/System/Array.cs#L380-L383

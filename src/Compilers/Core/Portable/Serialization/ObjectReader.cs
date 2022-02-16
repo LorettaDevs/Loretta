@@ -10,9 +10,8 @@ using Loretta.CodeAnalysis.PooledObjects;
 
 namespace Loretta.Utilities
 {
-    using Resources = CodeAnalysisResources;
-
     using EncodingKind = ObjectWriter.EncodingKind;
+    using Resources = CodeAnalysisResources;
 
     /// <summary>
     /// An <see cref="ObjectReader"/> that deserializes objects from a byte stream.

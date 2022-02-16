@@ -22,13 +22,8 @@ namespace Loretta.CodeAnalysis.Syntax
 #pragma warning disable IDE0079 // Remove unnecessary suppression
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0016:Use 'throw' expression", Justification = "The throw exception being early avoids resizing in the error case.")]
 #pragma warning restore IDE0079 // Remove unnecessary suppression
-        internal void AddInternal(GreenNode item)
+        internal void AddInternal(GreenNode item!!)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-
             if (Count >= _nodes.Length)
             {
                 Grow(Count == 0 ? 8 : _nodes.Length * 2);

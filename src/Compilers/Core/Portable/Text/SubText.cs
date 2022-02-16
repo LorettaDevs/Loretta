@@ -10,14 +10,9 @@ namespace Loretta.CodeAnalysis.Text
     /// </summary>
     internal sealed class SubText : SourceText
     {
-        public SubText(SourceText text, TextSpan span)
+        public SubText(SourceText text!!, TextSpan span)
             : base(checksumAlgorithm: text.ChecksumAlgorithm)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-
             if (span.Start < 0
                 || span.Start >= text.Length
                 || span.End < 0

@@ -118,13 +118,8 @@ namespace Loretta.CodeAnalysis
             };
         }
 
-        internal override Diagnostic WithLocation(Location location)
+        internal override Diagnostic WithLocation(Location location!!)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
             if (location != _location)
             {
                 return new DiagnosticWithInfo(_info, location, _isSuppressed);

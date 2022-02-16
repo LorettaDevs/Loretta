@@ -445,13 +445,8 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds)
+        public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds!!)
         {
-            if (annotationKinds == null)
-            {
-                throw new ArgumentNullException(nameof(annotationKinds));
-            }
-
             var annotations = GetAnnotations();
 
             if (annotations == s_noAnnotations)

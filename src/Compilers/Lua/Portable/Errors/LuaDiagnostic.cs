@@ -9,10 +9,8 @@
 
         public override string ToString() => LuaDiagnosticFormatter.Instance.Format(this);
 
-        internal override Diagnostic WithLocation(Location location)
+        internal override Diagnostic WithLocation(Location location!!)
         {
-            if (location is null)
-                throw new ArgumentNullException(nameof(location));
             if (Location != location)
                 return new LuaDiagnostic(Info, location, IsSuppressed);
             return this;

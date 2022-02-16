@@ -57,13 +57,8 @@ namespace Loretta.CodeAnalysis
         {
         }
 
-        private static SyntaxNode? CreateNode(IEnumerable<SyntaxNodeOrToken> nodesAndTokens)
+        private static SyntaxNode? CreateNode(IEnumerable<SyntaxNodeOrToken> nodesAndTokens!!)
         {
-            if (nodesAndTokens == null)
-            {
-                throw new ArgumentNullException(nameof(nodesAndTokens));
-            }
-
             var builder = new SyntaxNodeOrTokenListBuilder(8);
             builder.Add(nodesAndTokens);
             return builder.ToList().Node;
@@ -265,16 +260,11 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="nodesAndTokens">The nodes or tokens to insert.</param>
-        public SyntaxNodeOrTokenList InsertRange(int index, IEnumerable<SyntaxNodeOrToken> nodesAndTokens)
+        public SyntaxNodeOrTokenList InsertRange(int index, IEnumerable<SyntaxNodeOrToken> nodesAndTokens!!)
         {
             if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
-            }
-
-            if (nodesAndTokens == null)
-            {
-                throw new ArgumentNullException(nameof(nodesAndTokens));
             }
 
             if (nodesAndTokens.IsEmpty())

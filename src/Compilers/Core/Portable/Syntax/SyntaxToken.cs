@@ -253,13 +253,8 @@ namespace Loretta.CodeAnalysis
         /// Adds this annotation to a given syntax token, creating a new syntax token of the same type with the
         /// annotation on it.
         /// </summary>
-        public SyntaxToken WithAdditionalAnnotations(IEnumerable<SyntaxAnnotation> annotations)
+        public SyntaxToken WithAdditionalAnnotations(IEnumerable<SyntaxAnnotation> annotations!!)
         {
-            if (annotations == null)
-            {
-                throw new ArgumentNullException(nameof(annotations));
-            }
-
             if (Node != null)
             {
                 return new SyntaxToken(
@@ -281,13 +276,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new syntax token identical to this one without the specified annotations.
         /// </summary>
-        public SyntaxToken WithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations)
+        public SyntaxToken WithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations!!)
         {
-            if (annotations == null)
-            {
-                throw new ArgumentNullException(nameof(annotations));
-            }
-
             if (Node != null)
             {
                 return new SyntaxToken(
@@ -303,13 +293,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new syntax token identical to this one without annotations of the specified kind.
         /// </summary>
-        public SyntaxToken WithoutAnnotations(string annotationKind)
+        public SyntaxToken WithoutAnnotations(string annotationKind!!)
         {
-            if (annotationKind == null)
-            {
-                throw new ArgumentNullException(nameof(annotationKind));
-            }
-
             if (HasAnnotations(annotationKind))
             {
                 return WithoutAnnotations(GetAnnotations(annotationKind));

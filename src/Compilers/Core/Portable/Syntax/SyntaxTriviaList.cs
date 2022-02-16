@@ -294,17 +294,12 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index in the list to insert the trivia at.</param>
         /// <param name="trivia">The trivia to insert.</param>
-        public SyntaxTriviaList InsertRange(int index, IEnumerable<SyntaxTrivia> trivia)
+        public SyntaxTriviaList InsertRange(int index, IEnumerable<SyntaxTrivia> trivia!!)
         {
             var thisCount = Count;
             if (index < 0 || index > thisCount)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
-            }
-
-            if (trivia == null)
-            {
-                throw new ArgumentNullException(nameof(trivia));
             }
 
             // Just return ourselves if we're not being asked to add anything.

@@ -1130,13 +1130,8 @@ namespace Loretta.CodeAnalysis
         /// Serializes the node to the given <paramref name="stream"/>.
         /// Leaves the <paramref name="stream"/> open for further writes.
         /// </summary>
-        public virtual void SerializeTo(Stream stream, CancellationToken cancellationToken = default)
+        public virtual void SerializeTo(Stream stream!!, CancellationToken cancellationToken = default)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-
             if (!stream.CanWrite)
             {
                 throw new InvalidOperationException(CodeAnalysisResources.TheStreamCannotBeWrittenTo);
