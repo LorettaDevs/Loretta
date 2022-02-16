@@ -7,7 +7,16 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
     internal static class LexicalTestData
     {
-        private static double ParseNum(string str, int @base) =>
+        private static long ParseLong(string str, int @base) =>
+            @base switch
+            {
+                2 or 8 => Convert.ToInt64(str[2..].Replace("_", ""), @base),
+                10 => long.Parse(str.Replace("_", ""), NumberStyles.None, CultureInfo.InvariantCulture),
+                16 => long.Parse(str[2..].Replace("_", ""), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture),
+                _ => throw new InvalidOperationException()
+            };
+
+        private static double ParseDouble(string str, int @base) =>
             @base switch
             {
                 2 or 8 => Convert.ToInt64(str[2..].Replace("_", ""), @base),
@@ -35,19 +44,19 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             // Binary
             foreach (var text in new[] { "0b10", "0b10_10", "0B10", "0B10_10" })
             {
-                yield return new ShortToken(
-                    SyntaxKind.NumericLiteralToken,
-                    text,
-                    Some(ParseNum(text, 2)));
+                var value = Some<object?>(options.BinaryIntegerFormat == IntegerFormats.Int64
+                    ? (object) ParseLong(text, 2)
+                    : ParseDouble(text, 2));
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
             }
 
             // Octal
             foreach (var text in new[] { "0o77", "0o77_77", "0O77", "0O77_77" })
             {
-                yield return new ShortToken(
-                    SyntaxKind.NumericLiteralToken,
-                    text,
-                    Some(ParseNum(text, 8)));
+                var value = Some<object?>(options.OctalIntegerFormat == IntegerFormats.Int64
+                    ? (object) ParseLong(text, 8)
+                    : ParseDouble(text, 8));
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
             }
 
             // Decimal
@@ -67,10 +76,27 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 ".1_1e1_0"
             })
             {
+                object value;
+                if (options.DecimalIntegerFormat != IntegerFormats.NotSupported
+                    && !text.Contains('.')
+                    && !text.Contains('e'))
+                {
+                    value = options.DecimalIntegerFormat switch
+                    {
+                        IntegerFormats.Double => (double) ParseLong(text, 10),
+                        IntegerFormats.Int64 => (object) ParseLong(text, 10),
+                        _ => throw new InvalidOperationException(),
+                    };
+                }
+                else
+                {
+                    value = ParseDouble(text, 10);
+                }
+
                 yield return new ShortToken(
                     SyntaxKind.NumericLiteralToken,
                     text,
-                    Some(ParseNum(text, 10)));
+                    Some<object?>(value));
             }
 
             // Hexadecimal
@@ -90,10 +116,27 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 "0xf_fp1_0"
             })
             {
+                object value;
+                if (options.HexIntegerFormat != IntegerFormats.NotSupported
+                    && !text.Contains('.')
+                    && !text.Contains('p'))
+                {
+                    value = options.HexIntegerFormat switch
+                    {
+                        IntegerFormats.Double => (double) ParseLong(text, 16),
+                        IntegerFormats.Int64 => (object) ParseLong(text, 16),
+                        _ => throw new InvalidOperationException(),
+                    };
+                }
+                else
+                {
+                    value = ParseDouble(text, 16);
+                }
+
                 yield return new ShortToken(
                     SyntaxKind.NumericLiteralToken,
                     text,
-                    Some(ParseNum(text, 16)));
+                    Some<object?>(value));
             }
 
             #endregion Numbers
