@@ -9,17 +9,19 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         {
             None = 0,
             IsNil = 1 << 0,
-            IsNum = 1 << 1,
+            IsDouble = 1 << 1,
             IsStr = 1 << 2,
             IsBool = 1 << 3,
             IsTruthy = 1 << 4,
             IsFalsey = 1 << 5,
             IsConstantTable = 1 << 6,
             IsAnonymousFunction = 1 << 7,
+            IsLong = 1 << 8,
 
             CanConvertToBool = IsTruthy | IsFalsey,
-            IsScalar = IsNil | IsNum | IsStr | IsBool,
+            IsScalar = IsNil | IsDouble | IsLong | IsStr | IsBool,
             IsConstant = IsScalar | IsConstantTable | IsAnonymousFunction,
+            IsNum = IsDouble | IsLong,
         }
 
         private readonly Dictionary<SyntaxNode, ExpressionFlags> _exprFlags = new();
@@ -35,7 +37,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                 if (innerNode.IsKind(SyntaxKind.NilLiteralExpression))
                     flags |= ExpressionFlags.IsNil;
                 if (innerNode.IsKind(SyntaxKind.NumericalLiteralExpression))
-                    flags |= ExpressionFlags.IsNum;
+                    flags |= ((LiteralExpressionSyntax) innerNode).Token.Value is double ? ExpressionFlags.IsDouble : ExpressionFlags.IsLong;
                 if (innerNode.IsKind(SyntaxKind.StringLiteralExpression))
                     flags |= ExpressionFlags.IsStr;
                 if (innerNode.IsKind(SyntaxKind.TrueLiteralExpression) || innerNode.IsKind(SyntaxKind.FalseLiteralExpression))
