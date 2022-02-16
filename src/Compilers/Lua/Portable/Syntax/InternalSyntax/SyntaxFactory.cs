@@ -116,6 +116,9 @@
         internal static SyntaxToken Identifier(SyntaxKind contextualKind, GreenNode? leading, string text, GreenNode? trailing) =>
             SyntaxToken.Identifier(contextualKind, leading, text, trailing);
 
+        internal static SyntaxToken Literal(GreenNode? leading, string text, long value, GreenNode? trailing) =>
+            SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
+
         internal static SyntaxToken Literal(GreenNode? leading, string text, double value, GreenNode? trailing) =>
             SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
 

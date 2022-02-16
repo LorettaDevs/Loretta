@@ -15,15 +15,26 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         // So it seems reasonable to limit the sizes to some round number like 42.
         internal const int MaxCachedTokenSize = 42;
 
+        private enum ValueKind
+        {
+            None = 0,
+            String,
+            Double,
+            UInt,
+            Long
+        }
+
         private struct TokenInfo
         {
             // scanned values
             internal SyntaxKind Kind;
             internal SyntaxKind ContextualKind;
             internal string? Text;
+            internal ValueKind ValueKind;
             internal string? StringValue;
             internal double DoubleValue;
             internal uint UIntValue;
+            internal long LongValue;
         }
 
         private readonly LexerCache _cache = new();
@@ -101,31 +112,56 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             switch (info.Kind)
             {
                 case SyntaxKind.IdentifierToken:
-                    token = SyntaxFactory.Identifier(info.ContextualKind, leadingNode, info.Text!, trailingNode);
+                    LorettaDebug.AssertNotNull(info.Text);
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.None);
+
+                    token = SyntaxFactory.Identifier(info.ContextualKind, leadingNode, info.Text, trailingNode);
                     break;
 
                 case SyntaxKind.NumericLiteralToken:
-                    token = SyntaxFactory.Literal(leadingNode, info.Text!, info.DoubleValue, trailingNode);
+                    LorettaDebug.AssertNotNull(info.Text);
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.Double or ValueKind.Long);
+
+                    token = info.ValueKind switch
+                    {
+                        ValueKind.Double => SyntaxFactory.Literal(leadingNode, info.Text, info.DoubleValue, trailingNode),
+                        ValueKind.Long => SyntaxFactory.Literal(leadingNode, info.Text, info.LongValue, trailingNode),
+                        _ => throw ExceptionUtilities.UnexpectedValue(info.ValueKind),
+                    };
                     break;
 
                 case SyntaxKind.StringLiteralToken:
-                    token = SyntaxFactory.Literal(leadingNode, info.Text!, info.StringValue!, trailingNode);
+                    LorettaDebug.AssertNotNull(info.Text);
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.String);
+
+                    token = SyntaxFactory.Literal(leadingNode, info.Text, info.StringValue!, trailingNode);
                     break;
 
                 case SyntaxKind.HashStringLiteralToken:
-                    token = SyntaxFactory.HashLiteral(leadingNode, info.Text!, info.UIntValue, trailingNode);
+                    LorettaDebug.AssertNotNull(info.Text);
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.UInt);
+
+                    token = SyntaxFactory.HashLiteral(leadingNode, info.Text, info.UIntValue, trailingNode);
                     break;
 
                 case SyntaxKind.EndOfFileToken:
+                    LorettaDebug.Assert(info.Text is null);
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.None);
+
                     token = SyntaxFactory.Token(leadingNode, info.Kind, trailingNode);
                     break;
 
                 case SyntaxKind.None:
-                    token = SyntaxFactory.BadToken(leadingNode, info.Text!, trailingNode);
+                    LorettaDebug.AssertNotNull(info.Text);
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.None);
+
+                    token = SyntaxFactory.BadToken(leadingNode, info.Text, trailingNode);
                     break;
 
                 default:
                     LorettaDebug.Assert(SyntaxFacts.GetText(info.Kind) is not (null or ""));
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.None);
+
                     token = SyntaxFactory.Token(leadingNode, info.Kind, trailingNode);
                     break;
             }
@@ -399,6 +435,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                         info.Kind = SyntaxKind.StringLiteralToken;
                         info.Text = GetText(intern: false);
+                        info.ValueKind = ValueKind.String;
                         info.StringValue = contents;
                     }
                     else
@@ -648,8 +685,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             // Skip the prefix
                             _reader.Position += 2;
                             info.Kind = SyntaxKind.NumericLiteralToken;
-                            info.DoubleValue = ParseBinaryNumber();
-                            info.Text = GetText(intern: true);
+                            ParseBinaryNumber(ref info);
                             return;
 
                         // 0o[0-7_]+
@@ -658,8 +694,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             // Skip the prefix
                             _reader.Position += 2;
                             info.Kind = SyntaxKind.NumericLiteralToken;
-                            info.DoubleValue = ParseOctalNumber();
-                            info.Text = GetText(intern: true);
+                            ParseOctalNumber(ref info);
                             return;
 
                         // 0x(?:[A-Fa-f0-9]?[A-Fa-f0-9_]*)?\.(?:[A-Fa-f0-9][A-Fa-f0-9_]*)?(?:[pP][0-9]+)?
@@ -694,6 +729,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case '\'':
                 {
                     info.Kind = SyntaxKind.StringLiteralToken;
+                    info.ValueKind = ValueKind.String;
                     info.StringValue = ParseShortString();
                     info.Text = GetText(intern: true);
                     return;
@@ -705,6 +741,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     var stringValue = ParseShortString();
                     // Jenkins' one-at-a-time hash doesn't do this but FiveM does.
                     stringValue = stringValue.ToLowerInvariant();
+                    info.ValueKind = ValueKind.UInt;
                     info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
                     info.Text = GetText(intern: true);
 
@@ -816,7 +853,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     return;
             } // end switch
 
-            throw new Exception("Unreacheable.");
+            throw ExceptionUtilities.Unreachable;
         }
 
         private bool TryReadLongString([NotNullWhen(true)] out string? contents, out bool closingNotFound)
