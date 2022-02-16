@@ -49,9 +49,13 @@ override Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.Accept(Loret
 override Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(long value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.HashLiteral(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, uint value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.HashLiteral(string! stringValue) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.HashLiteral(string! text, uint value) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(long value) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, long value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, long value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalDeclarationName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName, Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax? attribute) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalDeclarationName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalDeclarationName(string! identifierName) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!

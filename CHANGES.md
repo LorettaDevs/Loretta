@@ -29,7 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `LuaSyntaxOptions.BinaryIntegerFormat`;
 	- `LuaSyntaxOptions.OctalIntegerFormat`;
 	- `LuaSyntaxOptions.DecimalIntegerFormat`;
-	- `LuaSyntaxOptions.HexIntegerFormat`.
+	- `LuaSyntaxOptions.HexIntegerFormat`;
+	- `ObjectDisplay.FormatLiteral(long value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)`;
+	- **IMPORTANT:** `SyntaxFactory.Literal(long value)`;
+	- **IMPORTANT:** `SyntaxFactory.Literal(string text, long value)`;
+	- **IMPORTANT:** `SyntaxFactory.Literal(SyntaxTriviaList leading, string text, long value, SyntaxTriviaList trailing)`.
 
 ### Changed
 - Constant folder now attempts to preserve trivia around nodes that were folded.

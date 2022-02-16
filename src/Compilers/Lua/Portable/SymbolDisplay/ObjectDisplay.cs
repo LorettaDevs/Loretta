@@ -266,6 +266,25 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             }
         }
 
+        /// <summary>
+        /// Returns a Lua number literal with the given value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="options"></param>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
+        public static string FormatLiteral(long value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)
+        {
+            if (options.IncludesOption(ObjectDisplayOptions.UseHexadecimalNumbers))
+            {
+                return value.ToString("D", GetFormatCulture(cultureInfo));
+            }
+            else
+            {
+                return value.ToString("X", GetFormatCulture(cultureInfo));
+            }
+        }
+
         private static CultureInfo GetFormatCulture(CultureInfo? cultureInfo) => cultureInfo ?? CultureInfo.InvariantCulture;
     }
 }
