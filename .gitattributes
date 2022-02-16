@@ -1,2 +1,2 @@
-src/InternalBenchmarks/samples/* linguist-detectable=false
-src/InternalBenchmarks/results/* linguist-documentation
+src/InternalBenchmarks/samples/** linguist-detectable=false
+src/InternalBenchmarks/results/** linguist-documentation
