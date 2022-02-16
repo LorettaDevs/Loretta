@@ -34,7 +34,11 @@ namespace Loretta.CodeAnalysis.Lua
             acceptIfExpression: true,
             acceptHashStrings: false,
             acceptInvalidEscapes: true,
-            acceptLocalVariableAttributes: false);
+            acceptLocalVariableAttributes: false,
+            binaryIntegerFormat: IntegerFormats.NotSupported,
+            octalIntegerFormat: IntegerFormats.NotSupported,
+            decimalIntegerFormat: IntegerFormats.NotSupported,
+            hexIntegerFormat: IntegerFormats.NotSupported);
 
         /// <summary>
         /// The Lua 5.2 preset.
@@ -52,7 +56,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static readonly LuaSyntaxOptions Lua53 = Lua52.With(
             acceptBitwiseOperators: true,
-            acceptUnicodeEscape: true);
+            acceptUnicodeEscape: true,
+            decimalIntegerFormat: IntegerFormats.Int64,
+            hexIntegerFormat: IntegerFormats.Int64);
 
         /// <summary>
         /// The Lua 5.4 preset.
@@ -83,7 +89,11 @@ namespace Loretta.CodeAnalysis.Lua
             acceptIfExpression: false,
             acceptHashStrings: false,
             acceptInvalidEscapes: false,
-            acceptLocalVariableAttributes: false);
+            acceptLocalVariableAttributes: false,
+            binaryIntegerFormat: IntegerFormats.NotSupported,
+            octalIntegerFormat: IntegerFormats.NotSupported,
+            decimalIntegerFormat: IntegerFormats.NotSupported,
+            hexIntegerFormat: IntegerFormats.NotSupported);
 
         /// <summary>
         /// The LuaJIT 2.1-beta3 preset.
@@ -123,7 +133,14 @@ namespace Loretta.CodeAnalysis.Lua
             acceptIfExpression: true,
             acceptHashStrings: false,
             acceptInvalidEscapes: true,
-            acceptLocalVariableAttributes: false);
+            acceptLocalVariableAttributes: false,
+            // Luau parses binary as a long and then converts it to a double
+            binaryIntegerFormat: IntegerFormats.Double,
+            octalIntegerFormat: IntegerFormats.NotSupported,
+            // Luau always parses decimals as doubles
+            decimalIntegerFormat: IntegerFormats.NotSupported,
+            // Luau parses hex as a long and then converts it to a double
+            hexIntegerFormat: IntegerFormats.Double);
 
         /// <summary>
         /// The FiveM preset.
@@ -132,8 +149,9 @@ namespace Loretta.CodeAnalysis.Lua
             acceptHashStrings: true);
 
         /// <summary>
-        /// The preset that sets everything to true and continue to <see
-        /// cref="ContinueType.ContextualKeyword" />.
+        /// The preset that sets everything to true,
+        /// continue to <see cref="ContinueType.ContextualKeyword" />
+        /// and integer options to <see cref="IntegerFormats.NotSupported"/>.
         /// </summary>
         public static readonly LuaSyntaxOptions All = new(
             acceptBinaryNumbers: true,
@@ -155,7 +173,21 @@ namespace Loretta.CodeAnalysis.Lua
             acceptIfExpression: true,
             acceptHashStrings: true,
             acceptInvalidEscapes: false,
-            acceptLocalVariableAttributes: true);
+            acceptLocalVariableAttributes: true,
+            binaryIntegerFormat: IntegerFormats.NotSupported,
+            octalIntegerFormat: IntegerFormats.NotSupported,
+            decimalIntegerFormat: IntegerFormats.NotSupported,
+            hexIntegerFormat: IntegerFormats.NotSupported);
+
+        /// <summary>
+        /// Same as <see cref="All"/> but with integer settings set
+        /// to <see cref="IntegerFormats.Int64"/>.
+        /// </summary>
+        public static readonly LuaSyntaxOptions AllWithIntegers = All.With(
+            binaryIntegerFormat: IntegerFormats.Int64,
+            octalIntegerFormat: IntegerFormats.Int64,
+            decimalIntegerFormat: IntegerFormats.Int64,
+            hexIntegerFormat: IntegerFormats.Int64);
 
         /// <summary>
         /// All presets that are preconfigured in <see cref="LuaSyntaxOptions"/>.
@@ -171,7 +203,8 @@ namespace Loretta.CodeAnalysis.Lua
             GMod,
             Roblox,
             FiveM,
-            All
+            All,
+            AllWithIntegers,
         });
 
         /// <summary>
@@ -197,6 +230,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="acceptHashStrings"><inheritdoc cref="AcceptHashStrings" path="/summary" /></param>
         /// <param name="acceptInvalidEscapes"><inheritdoc cref="AcceptInvalidEscapes" path="/summary" /></param>
         /// <param name="acceptLocalVariableAttributes"><inheritdoc cref="AcceptLocalVariableAttributes" path="/summary" /></param>
+        /// <param name="binaryIntegerFormat"><inheritdoc cref="BinaryIntegerFormat" path="/summary" /></param>
+        /// <param name="octalIntegerFormat"><inheritdoc cref="OctalIntegerFormat" path="/summary" /></param>
+        /// <param name="decimalIntegerFormat"><inheritdoc cref="DecimalIntegerFormat" path="/summary" /></param>
+        /// <param name="hexIntegerFormat"><inheritdoc cref="HexIntegerFormat" path="/summary" /></param>
         public LuaSyntaxOptions(
             bool acceptBinaryNumbers,
             bool acceptCCommentSyntax,
@@ -217,7 +254,11 @@ namespace Loretta.CodeAnalysis.Lua
             bool acceptIfExpression,
             bool acceptHashStrings,
             bool acceptInvalidEscapes,
-            bool acceptLocalVariableAttributes)
+            bool acceptLocalVariableAttributes,
+            IntegerFormats binaryIntegerFormat,
+            IntegerFormats octalIntegerFormat,
+            IntegerFormats decimalIntegerFormat,
+            IntegerFormats hexIntegerFormat)
         {
             AcceptBinaryNumbers = acceptBinaryNumbers;
             AcceptCCommentSyntax = acceptCCommentSyntax;
@@ -239,6 +280,10 @@ namespace Loretta.CodeAnalysis.Lua
             AcceptHashStrings = acceptHashStrings;
             AcceptInvalidEscapes = acceptInvalidEscapes;
             AcceptLocalVariableAttributes = acceptLocalVariableAttributes;
+            BinaryIntegerFormat = binaryIntegerFormat;
+            OctalIntegerFormat = octalIntegerFormat;
+            DecimalIntegerFormat = decimalIntegerFormat;
+            HexIntegerFormat = hexIntegerFormat;
         }
 
         /// <summary>
@@ -350,6 +395,26 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptLocalVariableAttributes { get; }
 
         /// <summary>
+        /// Format binary numeric literals are stored as.
+        /// </summary>
+        public IntegerFormats BinaryIntegerFormat { get; }
+
+        /// <summary>
+        /// Format octal numeric literals are stored as.
+        /// </summary>
+        public IntegerFormats OctalIntegerFormat { get; }
+
+        /// <summary>
+        /// Format decimal integer literals are stored as.
+        /// </summary>
+        public IntegerFormats DecimalIntegerFormat { get; }
+
+        /// <summary>
+        /// Format hexadecimal integer literals are stored as.
+        /// </summary>
+        public IntegerFormats HexIntegerFormat { get; }
+
+        /// <summary>
         /// Creates a new lua options changing the provided fields.
         /// </summary>
         /// <param name="acceptBinaryNumbers">
@@ -432,6 +497,22 @@ namespace Loretta.CodeAnalysis.Lua
         /// <inheritdoc cref="AcceptLocalVariableAttributes" path="/summary" /> If None uses the
         /// value of <see cref="AcceptLocalVariableAttributes"/>.
         /// </param>
+        /// <param name="binaryIntegerFormat">
+        /// <inheritdoc cref="BinaryIntegerFormat" path="/summary" /> If None uses the value
+        /// of <see cref="BinaryIntegerFormat"/>.
+        /// </param>
+        /// <param name="octalIntegerFormat">
+        /// <inheritdoc cref="OctalIntegerFormat" path="/summary" /> If None uses the value
+        /// of <see cref="OctalIntegerFormat"/>.
+        /// </param>
+        /// <param name="decimalIntegerFormat">
+        /// <inheritdoc cref="DecimalIntegerFormat" path="/summary" /> If None uses the value
+        /// of <see cref="DecimalIntegerFormat"/>.
+        /// </param>
+        /// <param name="hexIntegerFormat">
+        /// <inheritdoc cref="HexIntegerFormat" path="/summary" /> If None uses the value
+        /// of <see cref="HexIntegerFormat"/>.
+        /// </param>
         /// <returns></returns>
         public LuaSyntaxOptions With(
             Option<bool> acceptBinaryNumbers = default,
@@ -453,7 +534,11 @@ namespace Loretta.CodeAnalysis.Lua
             Option<bool> acceptIfExpression = default,
             Option<bool> acceptHashStrings = default,
             Option<bool> acceptInvalidEscapes = default,
-            Option<bool> acceptLocalVariableAttributes = default) =>
+            Option<bool> acceptLocalVariableAttributes = default,
+            Option<IntegerFormats> binaryIntegerFormat = default,
+            Option<IntegerFormats> octalIntegerFormat = default,
+            Option<IntegerFormats> decimalIntegerFormat = default,
+            Option<IntegerFormats> hexIntegerFormat = default) =>
             new(
                 acceptBinaryNumbers.UnwrapOr(AcceptBinaryNumbers),
                 acceptCCommentSyntax.UnwrapOr(AcceptCCommentSyntax),
@@ -474,7 +559,11 @@ namespace Loretta.CodeAnalysis.Lua
                 acceptIfExpression.UnwrapOr(AcceptIfExpressions),
                 acceptHashStrings.UnwrapOr(AcceptHashStrings),
                 acceptInvalidEscapes.UnwrapOr(AcceptInvalidEscapes),
-                acceptLocalVariableAttributes.UnwrapOr(AcceptLocalVariableAttributes));
+                acceptLocalVariableAttributes.UnwrapOr(AcceptLocalVariableAttributes),
+                binaryIntegerFormat.UnwrapOr(BinaryIntegerFormat),
+                octalIntegerFormat.UnwrapOr(OctalIntegerFormat),
+                decimalIntegerFormat.UnwrapOr(DecimalIntegerFormat),
+                hexIntegerFormat.UnwrapOr(HexIntegerFormat));
 
         /// <inheritdoc/>
         public override bool Equals(object? obj) =>
@@ -501,7 +590,11 @@ namespace Loretta.CodeAnalysis.Lua
                 && ContinueType == other.ContinueType
                 && AcceptIfExpressions == other.AcceptIfExpressions
                 && AcceptHashStrings == other.AcceptHashStrings
-                && AcceptLocalVariableAttributes == other.AcceptLocalVariableAttributes);
+                && AcceptLocalVariableAttributes == other.AcceptLocalVariableAttributes
+                && BinaryIntegerFormat == other.BinaryIntegerFormat
+                && OctalIntegerFormat == other.OctalIntegerFormat
+                && DecimalIntegerFormat == other.DecimalIntegerFormat
+                && HexIntegerFormat == other.HexIntegerFormat);
 
         /// <inheritdoc/>
         public override int GetHashCode()
@@ -525,6 +618,10 @@ namespace Loretta.CodeAnalysis.Lua
             hash.Add(AcceptIfExpressions);
             hash.Add(AcceptHashStrings);
             hash.Add(AcceptLocalVariableAttributes);
+            hash.Add(BinaryIntegerFormat);
+            hash.Add(OctalIntegerFormat);
+            hash.Add(DecimalIntegerFormat);
+            hash.Add(HexIntegerFormat);
             return hash.ToHashCode();
         }
 
@@ -543,9 +640,17 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 return "Lua 5.3";
             }
+            else if (this == Lua54)
+            {
+                return "Lua 5.4";
+            }
             else if (this == LuaJIT20)
             {
-                return "LuaJIT";
+                return "LuaJIT 2.0";
+            }
+            else if (this == LuaJIT21)
+            {
+                return "LuaJIT 2.1";
             }
             else if (this == GMod)
             {
@@ -561,11 +666,15 @@ namespace Loretta.CodeAnalysis.Lua
             }
             else if (this == All)
             {
-                return "All";
+                return "All (without integers)";
+            }
+            else if (this == AllWithIntegers)
+            {
+                return "All (with integers)";
             }
             else
             {
-                return $"{{ AcceptBinaryNumbers = {AcceptBinaryNumbers}, AcceptCCommentSyntax = {AcceptCCommentSyntax}, AcceptCompoundAssignment = {AcceptCompoundAssignment}, AcceptEmptyStatements = {AcceptEmptyStatements}, AcceptCBooleanOperators = {AcceptCBooleanOperators}, AcceptGoto = {AcceptGoto}, AcceptHexEscapesInStrings = {AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {AcceptHexFloatLiterals}, AcceptOctalNumbers = {AcceptOctalNumbers}, AcceptShebang = {AcceptShebang}, AcceptUnderscoreInNumberLiterals = {AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {UseLuaJitIdentifierRules}, AcceptBitwiseOperators = {AcceptBitwiseOperators}, AcceptWhitespaceEscape = {AcceptWhitespaceEscape}, ContinueType = {ContinueType}, AcceptIfExpressions = {AcceptIfExpressions}, AcceptHashStrings = {AcceptHashStrings}, AcceptLocalVariableAttributes = {AcceptLocalVariableAttributes} }}";
+                return $"{{ AcceptBinaryNumbers = {AcceptBinaryNumbers}, AcceptCCommentSyntax = {AcceptCCommentSyntax}, AcceptCompoundAssignment = {AcceptCompoundAssignment}, AcceptEmptyStatements = {AcceptEmptyStatements}, AcceptCBooleanOperators = {AcceptCBooleanOperators}, AcceptGoto = {AcceptGoto}, AcceptHexEscapesInStrings = {AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {AcceptHexFloatLiterals}, AcceptOctalNumbers = {AcceptOctalNumbers}, AcceptShebang = {AcceptShebang}, AcceptUnderscoreInNumberLiterals = {AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {UseLuaJitIdentifierRules}, AcceptBitwiseOperators = {AcceptBitwiseOperators}, AcceptWhitespaceEscape = {AcceptWhitespaceEscape}, ContinueType = {ContinueType}, AcceptIfExpressions = {AcceptIfExpressions}, AcceptHashStrings = {AcceptHashStrings}, AcceptLocalVariableAttributes = {AcceptLocalVariableAttributes}, BinaryIntegerFormat = {BinaryIntegerFormat}, OctalIntegerFormat = {OctalIntegerFormat}, DecimalIntegerFormat = {DecimalIntegerFormat}, HexIntegerFormat = {HexIntegerFormat} }}";
             }
         }
 

@@ -252,6 +252,31 @@ namespace Loretta.CodeAnalysis.Lua
             new(InternalSyntax.SyntaxFactory.Identifier(contextualKind, leading.Node, text, trailing.Node));
 
         /// <summary>
+        /// Creates a token with kind NumericLiteralToken from an 8-byte integer value.
+        /// </summary>
+        /// <param name="value">The 8-byte signed integer value to be represented by the returned token.</param>
+        public static SyntaxToken Literal(long value) =>
+            Literal(ObjectDisplay.FormatLiteral(value, ObjectDisplayOptions.None), value);
+
+        /// <summary>
+        /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte signed integer value.
+        /// </summary>
+        /// <param name="text">The raw text of the literal.</param>
+        /// <param name="value">The 8-byte signed integer value to be represented by the returned token.</param>
+        public static SyntaxToken Literal(string text, long value) =>
+            new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
+
+        /// <summary>
+        /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte signed integer value.
+        /// </summary>
+        /// <param name="leading">A list of trivia immediately preceding the token.</param>
+        /// <param name="text">The raw text of the literal.</param>
+        /// <param name="value">The 8-byte signed integer value to be represented by the returned token.</param>
+        /// <param name="trailing">A list of trivia immediately following the token.</param>
+        public static SyntaxToken Literal(SyntaxTriviaList leading, string text, long value, SyntaxTriviaList trailing) =>
+            new(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
+
+        /// <summary>
         /// Creates a token with kind NumericLiteralToken from an 8-byte floating point value.
         /// </summary>
         /// <param name="value">The 8-byte floating point value to be represented by the returned token.</param>

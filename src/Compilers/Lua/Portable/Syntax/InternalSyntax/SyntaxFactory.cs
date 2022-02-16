@@ -116,14 +116,14 @@
         internal static SyntaxToken Identifier(SyntaxKind contextualKind, GreenNode? leading, string text, GreenNode? trailing) =>
             SyntaxToken.Identifier(contextualKind, leading, text, trailing);
 
+        internal static SyntaxToken Literal(GreenNode? leading, string text, long value, GreenNode? trailing) =>
+            SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
+
         internal static SyntaxToken Literal(GreenNode? leading, string text, double value, GreenNode? trailing) =>
             SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
 
         internal static SyntaxToken Literal(GreenNode? leading, string text, string value, GreenNode? trailing) =>
             SyntaxToken.WithValue(SyntaxKind.StringLiteralToken, leading, text, value, trailing);
-
-        internal static SyntaxToken Literal(GreenNode? leading, string text, SyntaxKind kind, string value, GreenNode? trailing) =>
-            SyntaxToken.WithValue(kind, leading, text, value, trailing);
 
         internal static SyntaxToken HashLiteral(GreenNode? leading, string text, uint value, GreenNode? trailing) =>
             SyntaxToken.WithValue(SyntaxKind.HashStringLiteralToken, leading, text, value, trailing);

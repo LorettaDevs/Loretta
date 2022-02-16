@@ -66,7 +66,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             finally
             {
                 ArrayPool<char>.Shared.Return(buff);
-            };
+            }
         }
 
         public bool IsAt(int offset, char ch) => Peek(offset) == ch;
