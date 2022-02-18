@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v0.2.9-beta.1
+### Changed
+- Optimized the lexing process with a speedup of 80% in lexing and 76% in parsing.
+
 ## v0.2.8
 ### Added
 - Added support for string length to the constant folder.
