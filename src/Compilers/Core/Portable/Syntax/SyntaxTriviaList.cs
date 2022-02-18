@@ -270,7 +270,7 @@ namespace Loretta.CodeAnalysis
         }
 
         private static readonly ObjectPool<SyntaxTriviaListBuilder> s_builderPool =
-            new(() => SyntaxTriviaListBuilder.Create());
+            new(SyntaxTriviaListBuilder.Create);
 
         private static SyntaxTriviaListBuilder GetBuilder()
             => s_builderPool.Allocate();

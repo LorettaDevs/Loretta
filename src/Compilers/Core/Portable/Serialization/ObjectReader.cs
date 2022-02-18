@@ -180,7 +180,7 @@ namespace Loretta.Utilities
                 // If we're recursing too deep, move the work to another thread to do so we
                 // don't blow the stack.
                 var task = Task.Factory.StartNew(
-                    () => ReadValueWorker(),
+                    ReadValueWorker,
                     _cancellationToken,
                     TaskCreationOptions.LongRunning,
                     TaskScheduler.Default);
