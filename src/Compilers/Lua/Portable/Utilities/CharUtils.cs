@@ -85,6 +85,24 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
             ((1 << (int) unicodeCategory) & flagSet) != 0;
 
         /// <summary>
+        /// Checks whether the provided character is a binary character.
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>Whether the provided character is a decimal character.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsBinary(char ch) =>
+            IsInRange('0', ch, '1');
+
+        /// <summary>
+        /// Checks whether the provided character is an octal character (between 0 and 7).
+        /// </summary>
+        /// <param name="ch">The character to check.</param>
+        /// <returns>Whether the provided character is an octal character.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsOctal(char ch) =>
+            IsInRange('0', ch, '7');
+
+        /// <summary>
         /// Checks whether the provided character is a decimal character (between 0 and 9).
         /// </summary>
         /// <param name="ch">The character to check.</param>
@@ -92,6 +110,13 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsDecimal(char ch) =>
             IsInRange('0', ch, '9');
+
+        /// <summary>
+        /// Gets the decimal value of the provided character.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long DecimalValue(char ch) =>
+            ch - '0';
 
         /// <summary>
         /// Checks whether the provided character is a hexadecimal character.
@@ -132,6 +157,15 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
             // which simplifies to: [ \t-\r]
             // which is what has been implemented here.
             ch == ' ' || IsInRange('\t', ch, '\r');
+
+        /// <summary>
+        /// Checks whether the provided character is a newline character.
+        /// </summary>
+        /// <param name="ch"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsNewLine(char ch) =>
+            ch is '\n' or '\r';
 
         /// <summary>
         /// Checks whether the provided character is a valid first identifier character.
