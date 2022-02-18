@@ -1,4 +1,5 @@
 ﻿//#define LARGE_TESTS_DEBUG
+using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Test.Utilities;
@@ -82,16 +83,16 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             Assert.Equal(shebang, trivia.ToFullString());
             Assert.Equal(new TextSpan(0, shebang.Length), trivia.Span);
 
-            var tokens = Lex($"\n{shebang}").ToImmutableArray();
+            var tokens = Lex($"-- a\n{shebang}").ToImmutableArray();
             var expectedBrokenTokens = new[]
             {
-                new ShortToken(SyntaxKind.HashToken, "#", new TextSpan(1, 1)),
-                new ShortToken(SyntaxKind.BangToken, "!", new TextSpan(2, 1)),
-                new ShortToken(SyntaxKind.SlashToken, "/", new TextSpan(3, 1)),
-                new ShortToken(SyntaxKind.IdentifierToken, "bin", new TextSpan(4, 3)),
+                new ShortToken(SyntaxKind.HashToken, "#", new TextSpan(5, 1)),
+                new ShortToken(SyntaxKind.BangToken, "!", new TextSpan(6, 1)),
                 new ShortToken(SyntaxKind.SlashToken, "/", new TextSpan(7, 1)),
-                new ShortToken(SyntaxKind.IdentifierToken, "bash", new TextSpan(8, 4)),
-                new ShortToken(SyntaxKind.EndOfFileToken, "", new TextSpan(12, 0)),
+                new ShortToken(SyntaxKind.IdentifierToken, "bin", new TextSpan(8, 3)),
+                new ShortToken(SyntaxKind.SlashToken, "/", new TextSpan(11, 1)),
+                new ShortToken(SyntaxKind.IdentifierToken, "bash", new TextSpan(12, 4)),
+                new ShortToken(SyntaxKind.EndOfFileToken, "", new TextSpan(16, 0)),
             };
 
             Assert.Equal(expectedBrokenTokens.Length, tokens.Length);
@@ -152,7 +153,16 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             Assert.Equal(expectedToken.Text, token.Text);
             Assert.Equal(expectedToken.Span, token.Span);
             if (expectedToken.Value.IsSome)
+            {
+                if (expectedToken.Value.Value is string expectedStr)
+                {
+                    var actualStr = Assert.IsType<string>(token.Value);
+                    var formattedExpected = ObjectDisplay.FormatLiteral(expectedStr, ObjectDisplayOptions.EscapeNonPrintableCharacters);
+                    var formattedActual = ObjectDisplay.FormatLiteral(actualStr, ObjectDisplayOptions.EscapeNonPrintableCharacters);
+                    Assert.Equal(formattedExpected, formattedActual);
+                }
                 Assert.Equal(expectedToken.Value.Value, token.Value);
+            }
         }
 
         [Theory]
