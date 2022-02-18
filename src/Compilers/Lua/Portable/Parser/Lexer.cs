@@ -8,12 +8,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal sealed partial class Lexer : AbstractLexer, IDisposable
     {
-        // Maximum size of tokens/trivia that we cache and use in quick scanner.
-        // From what I see in our own codebase, tokens longer then 40-50 chars are 
-        // not very common. 
-        // So it seems reasonable to limit the sizes to some round number like 42.
-        internal const int MaxCachedTokenSize = 42;
-
         private enum ValueKind
         {
             None = 0,
@@ -58,6 +52,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             LorettaDebug.Assert(options is not null);
             _options = options;
             _createWhitespaceTriviaFunction = CreateWhitespaceTrivia;
+            _createQuickTokenFunction = CreateQuickToken;
         }
 
         public LuaParseOptions Options => _options;
@@ -68,7 +63,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             base.Dispose();
         }
 
-        public SyntaxToken Lex()
+        public SyntaxToken Lex() =>
+            QuickScanSyntaxToken() ?? LexSyntaxToken();
+
+        private SyntaxToken LexSyntaxToken()
         {
             LexSyntaxTrivia(isTrailing: false, _leadingTriviaCache);
 
