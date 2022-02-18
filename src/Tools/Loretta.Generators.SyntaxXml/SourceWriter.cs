@@ -1487,7 +1487,7 @@ namespace Loretta.Generators.SyntaxXml
         {
             WriteLine();
 
-            var valueFields = nd.Fields.Where(n => IsValueField(n)).ToList();
+            var valueFields = nd.Fields.Where(IsValueField).ToList();
             var nodeFields = nd.Fields.Where(n => !IsValueField(n)).ToList();
 
             WriteComment(nd.FactoryComment, "");
@@ -1766,7 +1766,7 @@ namespace Loretta.Generators.SyntaxXml
             WriteLine();
 
             var hasOptional = minimalFactoryfields.Any(f => !IsRequiredFactoryField(nd, f));
-            var hasAttributeOrModifiersList = nd.Fields.Any(f => IsAttributeOrModifiersList(f));
+            var hasAttributeOrModifiersList = nd.Fields.Any(IsAttributeOrModifiersList);
 
             if (hasOptional && hasAttributeOrModifiersList)
             {

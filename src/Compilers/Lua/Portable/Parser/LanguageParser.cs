@@ -54,7 +54,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             catch (InsufficientExecutionStackException)
             {
-                return CreateForGlobalFailure(_lexer.Position, createEmptyNodeFunc());
+                return CreateForGlobalFailure(_lexer.TextWindow.Position, createEmptyNodeFunc());
             }
         }
 
@@ -64,7 +64,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             // the preprocessor directive parser, which may itself run into the same problem that caused the
             // original failure.
             var builder = new SyntaxListBuilder(1);
-            builder.Add(SyntaxFactory.BadToken(null, _lexer.Text.ToString(), null));
+            builder.Add(SyntaxFactory.BadToken(null, _lexer.TextWindow.Text.ToString(), null));
             var fileAsTrivia = SyntaxFactory.SkippedTokensTrivia(builder.ToList<SyntaxToken>());
             node = AddLeadingSkippedSyntax(node, fileAsTrivia);
             ForceEndOfFile(); // force the scanner to report that it is at the end of the input.

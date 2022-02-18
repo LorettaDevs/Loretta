@@ -5,7 +5,9 @@
         private const string Cr = "\r";
         private const string Lf = "\n";
         private const string CrLf = Cr + Lf;
+        private const string LfCr = Lf + Cr;
         internal static readonly SyntaxTrivia CarriageReturnLineFeed = EndOfLine(CrLf);
+        internal static readonly SyntaxTrivia LineFeedCarriageReturn = EndOfLine(LfCr);
         internal static readonly SyntaxTrivia LineFeed = EndOfLine(Lf);
         internal static readonly SyntaxTrivia CarriageReturn = EndOfLine(Cr);
         internal static readonly SyntaxTrivia Space = Whitespace(" ");

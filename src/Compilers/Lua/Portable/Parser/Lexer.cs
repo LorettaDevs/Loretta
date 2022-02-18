@@ -6,15 +6,8 @@ using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
-
     internal sealed partial class Lexer : AbstractLexer, IDisposable
     {
-        // Maximum size of tokens/trivia that we cache and use in quick scanner.
-        // From what I see in our own codebase, tokens longer then 40-50 chars are 
-        // not very common. 
-        // So it seems reasonable to limit the sizes to some round number like 42.
-        internal const int MaxCachedTokenSize = 42;
-
         private enum ValueKind
         {
             None = 0,
@@ -37,10 +30,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal long LongValue;
         }
 
+        private readonly LuaParseOptions _options;
+        private readonly StringBuilder _builder = new();
+
         private readonly LexerCache _cache = new();
         private readonly SyntaxListBuilder _leadingTriviaCache = new(10);
         private readonly SyntaxListBuilder _trailingTriviaCache = new(10);
-        private readonly StringBuilder _builder = new();
         private int _badTokenCount; // cumulative count of bad tokens produced
 
         private static int GetFullWidth(SyntaxListBuilder builder)
@@ -55,17 +50,28 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             : base(text)
         {
             LorettaDebug.Assert(options is not null);
-            Options = options;
+            _options = options;
             _createWhitespaceTriviaFunction = CreateWhitespaceTrivia;
+            _createQuickTokenFunction = CreateQuickToken;
         }
 
-        public LuaParseOptions Options { get; }
+        public LuaParseOptions Options => _options;
 
-        public SyntaxToken Lex()
+        public override void Dispose()
+        {
+            _cache.Free();
+            base.Dispose();
+        }
+
+        public SyntaxToken Lex() =>
+            QuickScanSyntaxToken() ?? LexSyntaxToken();
+
+        private SyntaxToken LexSyntaxToken()
         {
             LexSyntaxTrivia(isTrailing: false, _leadingTriviaCache);
 
             var info = default(TokenInfo);
+
             Start();
             LexSyntaxToken(ref info);
             var errors = GetErrors(GetFullWidth(_leadingTriviaCache));
@@ -170,505 +176,318 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return token;
         }
 
-        private void LexSyntaxTrivia(bool isTrailing, SyntaxListBuilder builder)
-        {
-            builder.Clear();
-
-            while (_reader.Peek() is char peek)
-            {
-                Start();
-
-                switch (peek)
-                {
-                    case '-':
-                        if (_reader.IsAt(1, '-'))
-                        {
-                            _reader.Position += 2;
-                            if (TryReadLongString(out _, out var closingNotFound))
-                            {
-                                if (closingNotFound)
-                                    AddError(ErrorCode.ERR_UnfinishedLongComment);
-                                AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
-                            }
-                            else
-                            {
-                                while (_reader.Peek() is not (null or '\n' or '\r'))
-                                    _reader.Position += 1;
-                                AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
-                            }
-                        }
-                        else
-                        {
-                            return;
-                        }
-                        break;
-
-                    case '/':
-                        if (_reader.IsAt(1, '/'))
-                        {
-                            _reader.Position += 2;
-                            while (_reader.Peek() is not (null or '\n' or '\r'))
-                                _reader.Position += 1;
-
-                            if (!Options.SyntaxOptions.AcceptCCommentSyntax)
-                                AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
-                            AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
-                        }
-                        else if (_reader.IsAt(1, '*'))
-                        {
-                            _reader.Position += 2;
-                            _reader.SkipUntil("*/");
-
-                            if (!_reader.IsNext("*/"))
-                                AddError(ErrorCode.ERR_UnfinishedLongComment);
-                            else
-                                _reader.Position += 2;
-
-                            if (!Options.SyntaxOptions.AcceptCCommentSyntax)
-                                AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
-                            AddTrivia(SyntaxFactory.Comment(GetText(intern: false)), builder);
-                        }
-                        else
-                        {
-                            return;
-                        }
-                        break;
-
-                    case '\r':
-                        _reader.Position += 1;
-                        if (_reader.Peek() == '\n')
-                        {
-                            _reader.Position += 1;
-                            AddTrivia(SyntaxFactory.CarriageReturnLineFeed, builder);
-                        }
-                        else
-                        {
-                            AddTrivia(SyntaxFactory.CarriageReturn, builder);
-                        }
-                        if (isTrailing)
-                            return;
-                        break;
-
-                    case '\n':
-                        _reader.Position += 1;
-                        if (_reader.IsNext('\r'))
-                        {
-                            _reader.Position += 1;
-                            AddError(ErrorCode.WRN_LineBreakMayAffectErrorReporting);
-                            AddTrivia(SyntaxFactory.EndOfLine("\n\r"), builder);
-                        }
-                        else
-                        {
-                            AddTrivia(SyntaxFactory.LineFeed, builder);
-                        }
-                        if (isTrailing)
-                            return;
-                        break;
-
-                    case '\t':
-                    case '\v':
-                    case '\f':
-                    case ' ':
-                    {
-                        // Skip first char as we know it's whitespace.
-                        _reader.Position += 1;
-
-                        char ch;
-                        while ((ch = _reader.Peek().GetValueOrDefault()) != '\r'
-                                && ch != '\n'
-                                && CharUtils.IsWhitespace(ch))
-                        {
-                            _reader.Position += 1;
-                        }
-
-                        var width = _reader.Position - _start;
-                        if (width == 1 && peek == ' ')
-                        {
-                            AddTrivia(SyntaxFactory.Space, builder);
-                        }
-                        else if (width == 1 && peek == '\t')
-                        {
-                            AddTrivia(SyntaxFactory.Tab, builder);
-                        }
-                        else
-                        {
-                            var text = GetText(intern: false);
-                            var hash = Hash.GetFNVHashCode(text);
-                            AddTrivia(_cache.LookupTrivia(text, hash, _createWhitespaceTriviaFunction), builder);
-                        }
-                        break;
-                    }
-
-                    case '#':
-                        if (_reader.Position == 0 && _reader.IsAt(1, '!'))
-                        {
-                            _reader.Position += 2;
-                            _reader.SkipUntilLineBreak();
-
-                            if (!Options.SyntaxOptions.AcceptShebang)
-                                AddError(ErrorCode.ERR_ShebangNotSupportedInLuaVersion);
-                            AddTrivia(SyntaxFactory.Shebang(GetText(intern: false)), builder);
-                            break;
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    default:
-                        return;
-                }
-            }
-        }
-
-        private readonly Func<SyntaxTrivia> _createWhitespaceTriviaFunction;
-
-        private SyntaxTrivia CreateWhitespaceTrivia() => SyntaxFactory.Whitespace(GetText(intern: true));
-
-        private void AddTrivia(LuaSyntaxNode trivia, SyntaxListBuilder builder)
-        {
-            if (HasErrors) trivia = trivia.WithDiagnosticsGreen(GetErrors(leadingTriviaWidth: 0));
-            builder.Add(trivia);
-        }
-
         private void LexSyntaxToken(ref TokenInfo info)
         {
             // Initialize for new token scan
             info.Kind = SyntaxKind.None;
             info.ContextualKind = SyntaxKind.None;
             info.Text = null;
-            info.StringValue = null;
-            info.DoubleValue = default;
+            info.ValueKind = ValueKind.None;
+            var startingPosition = TextWindow.Position;
 
-            if (_reader.Peek() is not char peek0)
-            {
-                info.Kind = SyntaxKind.EndOfFileToken;
-                return;
-            }
-
-            switch (peek0)
+            char ch;
+            switch (ch = TextWindow.PeekChar())
             {
                 #region Punctuation
 
                 case '.':
-                {
-                    var peek1 = _reader.Peek(1).GetValueOrDefault();
-                    if (peek1 == '.')
+                    if ((ch = TextWindow.PeekChar(1)) == '.')
                     {
+                        TextWindow.AdvanceChar(2);
                         // \.\.\.
-                        if (_reader.IsAt(2, '.'))
+                        if ((ch = TextWindow.PeekChar()) == '.')
                         {
-                            _reader.Position += 3;
+                            TextWindow.AdvanceChar();
                             info.Kind = SyntaxKind.DotDotDotToken;
-                            return;
                         }
                         // \.\.=
-                        else if (_reader.IsAt(2, '='))
+                        else if (ch == '=')
                         {
-                            _reader.Position += 3;
+                            TextWindow.AdvanceChar();
                             info.Kind = SyntaxKind.DotDotEqualsToken;
-                            return;
                         }
                         // \.\.
                         else
                         {
-                            _reader.Position += 2;
                             info.Kind = SyntaxKind.DotDotToken;
-                            return;
                         }
                     }
                     // \.[0-9]
-                    else if (CharUtils.IsDecimal(peek1))
+                    else if (CharUtils.IsDecimal(ch))
                     {
                         goto case '1';
                     }
                     // \.
                     else
                     {
-                        _reader.Position += 1;
+                        TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.DotToken;
-                        return;
                     }
-                }
+                    break;
 
                 case ';':
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     info.Kind = SyntaxKind.SemicolonToken;
-                    return;
+                    break;
 
                 case ',':
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     info.Kind = SyntaxKind.CommaToken;
-                    return;
+                    break;
 
                 case ':':
-                    if (_reader.IsAt(1, ':'))
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == ':')
                     {
-                        _reader.Position += 2;
+                        TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.ColonColonToken;
-                        return;
                     }
                     else
                     {
-                        _reader.Position += 1;
                         info.Kind = SyntaxKind.ColonToken;
-                        return;
                     }
+                    break;
 
                 #endregion Punctuation
 
                 case '(':
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     info.Kind = SyntaxKind.OpenParenthesisToken;
-                    return;
+                    break;
 
                 case ')':
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     info.Kind = SyntaxKind.CloseParenthesisToken;
-                    return;
+                    break;
 
                 case '[':
                 {
-                    if (TryReadLongString(out var contents, out var closingNotFound))
+                    if (ConsumeLongString(true, out var contents, out var closingNotFound))
                     {
                         if (closingNotFound)
                             AddError(ErrorCode.ERR_UnfinishedString);
 
                         info.Kind = SyntaxKind.StringLiteralToken;
-                        info.Text = GetText(intern: false);
+                        info.Text = TextWindow.GetText(intern: true);
                         info.ValueKind = ValueKind.String;
                         info.StringValue = contents;
                     }
                     else
                     {
-                        _reader.Position += 1;
+                        TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.OpenBracketToken;
                     }
-                    return;
+                    break;
                 }
 
                 case ']':
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     info.Kind = SyntaxKind.CloseBracketToken;
-                    return;
+                    break;
 
                 case '{':
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     info.Kind = SyntaxKind.OpenBraceToken;
-                    return;
+                    break;
 
                 case '}':
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     info.Kind = SyntaxKind.CloseBraceToken;
-                    return;
+                    break;
 
                 #region Operators
 
-                case '+':
-                    if (_reader.IsAt(1, '='))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.PlusEqualsToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        info.Kind = SyntaxKind.PlusToken;
-                        return;
-                    }
-
-                case '-':
-                    if (_reader.IsAt(1, '='))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.MinusEqualsToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        info.Kind = SyntaxKind.MinusToken;
-                        return;
-                    }
-
-                case '*':
-                    if (_reader.IsAt(1, '='))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.StarEqualsToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        info.Kind = SyntaxKind.StarToken;
-                        return;
-                    }
-
-                case '/':
-                    if (_reader.IsAt(1, '='))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.SlashEqualsToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        info.Kind = SyntaxKind.SlashToken;
-                        return;
-                    }
-
-                case '^':
-                    if (_reader.IsAt(1, '='))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.HatEqualsToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        info.Kind = SyntaxKind.HatToken;
-                        return;
-                    }
-
-                case '%':
-                    if (_reader.IsAt(1, '='))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.PercentEqualsToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        info.Kind = SyntaxKind.PercentToken;
-                        return;
-                    }
-
-                case '=':
-                    if (_reader.IsAt(1, '='))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.EqualsEqualsToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        info.Kind = SyntaxKind.EqualsToken;
-                        return;
-                    }
-
                 case '#':
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     info.Kind = SyntaxKind.HashToken;
                     return;
 
+                case '+':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.PlusEqualsToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.PlusToken;
+                    }
+                    break;
+
+                case '-':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.MinusEqualsToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.MinusToken;
+                    }
+                    break;
+
+                case '*':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.StarEqualsToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.StarToken;
+                    }
+                    break;
+
+                case '/':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.SlashEqualsToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.SlashToken;
+                    }
+                    break;
+
+                case '^':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.HatEqualsToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.HatToken;
+                    }
+                    break;
+
+                case '%':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.PercentEqualsToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.PercentToken;
+                    }
+                    break;
+
+                case '=':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.EqualsEqualsToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.EqualsToken;
+                    }
+                    break;
+
                 case '~':
-                    if (_reader.IsAt(1, '='))
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
                     {
-                        _reader.Position += 2;
+                        TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.TildeEqualsToken;
-                        return;
                     }
                     else
                     {
-                        _reader.Position += 1;
-                        if (!Options.SyntaxOptions.AcceptBitwiseOperators)
-                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.TildeToken;
-                        return;
                     }
-
-                case '>':
-                    switch (_reader.Peek(1))
-                    {
-                        case '=':
-                            _reader.Position += 2;
-                            info.Kind = SyntaxKind.GreaterThanEqualsToken;
-                            return;
-
-                        case '>':
-                            _reader.Position += 2;
-                            if (!Options.SyntaxOptions.AcceptBitwiseOperators)
-                                AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
-                            info.Kind = SyntaxKind.GreaterThanGreaterThanToken;
-                            return;
-
-                        default:
-                            _reader.Position += 1;
-                            info.Kind = SyntaxKind.GreaterThanToken;
-                            return;
-                    }
-
-                case '<':
-                    switch (_reader.Peek(1))
-                    {
-                        case '=':
-                            _reader.Position += 2;
-                            info.Kind = SyntaxKind.LessThanEqualsToken;
-                            return;
-
-                        case '<':
-                            _reader.Position += 2;
-                            if (!Options.SyntaxOptions.AcceptBitwiseOperators)
-                                AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
-                            info.Kind = SyntaxKind.LessThanLessThanToken;
-                            return;
-
-                        default:
-                            _reader.Position += 1;
-                            info.Kind = SyntaxKind.LessThanToken;
-                            return;
-                    }
-
-                case '&':
-                    if (_reader.IsAt(1, '&'))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.AmpersandAmpersandToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        if (!Options.SyntaxOptions.AcceptBitwiseOperators)
-                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
-                        info.Kind = SyntaxKind.AmpersandToken;
-                        return;
-                    }
-
-                case '|':
-                    if (_reader.IsAt(1, '|'))
-                    {
-                        _reader.Position += 2;
-                        info.Kind = SyntaxKind.PipePipeToken;
-                        return;
-                    }
-                    else
-                    {
-                        _reader.Position += 1;
-                        if (!Options.SyntaxOptions.AcceptBitwiseOperators)
-                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
-                        info.Kind = SyntaxKind.PipeToken;
-                        return;
-                    }
+                    break;
 
                 case '!':
-                    if (_reader.IsAt(1, '='))
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '=')
                     {
-                        _reader.Position += 2;
+                        TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.BangEqualsToken;
-                        return;
                     }
                     else
                     {
-                        _reader.Position += 1;
                         info.Kind = SyntaxKind.BangToken;
-                        return;
                     }
+                    break;
+
+                case '>':
+                    TextWindow.AdvanceChar();
+                    if ((ch = TextWindow.PeekChar()) == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.GreaterThanEqualsToken;
+                    }
+                    else if (ch == '>')
+                    {
+                        TextWindow.AdvanceChar();
+                        if (!_options.SyntaxOptions.AcceptBitwiseOperators)
+                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
+                        info.Kind = SyntaxKind.GreaterThanGreaterThanToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.GreaterThanToken;
+                    }
+                    break;
+
+                case '<':
+                    TextWindow.AdvanceChar();
+                    if ((ch = TextWindow.PeekChar()) == '=')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.LessThanEqualsToken;
+                    }
+                    else if (ch == '<')
+                    {
+                        TextWindow.AdvanceChar();
+                        if (!_options.SyntaxOptions.AcceptBitwiseOperators)
+                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
+                        info.Kind = SyntaxKind.LessThanLessThanToken;
+                    }
+                    else
+                    {
+                        info.Kind = SyntaxKind.LessThanToken;
+                    }
+                    break;
+
+                case '&':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '&')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.AmpersandAmpersandToken;
+                    }
+                    else
+                    {
+                        if (!_options.SyntaxOptions.AcceptBitwiseOperators)
+                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
+                        info.Kind = SyntaxKind.AmpersandToken;
+                    }
+                    break;
+
+                case '|':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '|')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.PipePipeToken;
+                    }
+                    else
+                    {
+                        if (!_options.SyntaxOptions.AcceptBitwiseOperators)
+                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
+                        info.Kind = SyntaxKind.PipeToken;
+                    }
+                    break;
 
                 #endregion Operators
 
@@ -677,13 +496,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 #region Numbers
 
                 case '0':
-                    switch (_reader.Peek(1))
+                    switch (TextWindow.PeekChar(1))
                     {
                         // 0b[01_]+
                         case 'b':
                         case 'B':
                             // Skip the prefix
-                            _reader.Position += 2;
+                            TextWindow.AdvanceChar(2);
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             ParseBinaryNumber(ref info);
                             return;
@@ -692,7 +511,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         case 'o':
                         case 'O':
                             // Skip the prefix
-                            _reader.Position += 2;
+                            TextWindow.AdvanceChar(2);
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             ParseOctalNumber(ref info);
                             return;
@@ -701,7 +520,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         case 'x':
                         case 'X':
                             // Skip the prefix
-                            _reader.Position += 2;
+                            TextWindow.AdvanceChar(2);
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             ParseHexadecimalNumber(ref info);
                             return;
@@ -731,7 +550,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     info.Kind = SyntaxKind.StringLiteralToken;
                     info.ValueKind = ValueKind.String;
                     info.StringValue = ParseShortString();
-                    info.Text = GetText(intern: true);
+                    info.Text = TextWindow.GetText(intern: true);
                     return;
                 }
 
@@ -743,9 +562,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     stringValue = stringValue.ToLowerInvariant();
                     info.ValueKind = ValueKind.UInt;
                     info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
-                    info.Text = GetText(intern: true);
+                    info.Text = TextWindow.GetText(intern: true);
 
-                    if (!Options.SyntaxOptions.AcceptHashStrings)
+                    if (!_options.SyntaxOptions.AcceptHashStrings)
                         AddError(ErrorCode.ERR_HashStringsNotSupportedInVersion);
 
                     return;
@@ -809,86 +628,350 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case 'Z':
                 case '_':
                 {
-                    // We've already checked that the first letter is a valid identifier char. No need to re-check.
-                    _reader.Position += 1;
-                    while (CharUtils.IsValidTrailingIdentifierChar(_reader.Peek().GetValueOrDefault()))
-                        _reader.Position += 1;
-
-                    info.Text = info.StringValue = GetText(intern: true);
-                    if (!_cache.TryGetKeywordKind(info.Text, out info.Kind))
-                        info.ContextualKind = info.Kind = SyntaxKind.IdentifierToken;
-
-                    // Continue might be a contextual keyword or not a keyword at all so we have to check.
-                    if (info.Kind is SyntaxKind.ContinueKeyword && Options.SyntaxOptions.ContinueType != ContinueType.Keyword)
-                    {
-                        info.Kind = SyntaxKind.IdentifierToken;
-                        if (Options.SyntaxOptions.ContinueType == ContinueType.ContextualKeyword)
-                            info.ContextualKind = SyntaxKind.ContinueKeyword;
-                        info.Text = "continue";
-                    }
-
-                    if (!Options.SyntaxOptions.UseLuaJitIdentifierRules && info.Text.Any(ch => ch >= 0x7F))
-                        AddError(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion);
+                    ScanIdentifierOrKeyword(ref info);
                     return;
                 }
 
                 #endregion Identifiers
 
+                case SlidingTextWindow.InvalidCharacter:
+                    if (!TextWindow.IsReallyAtEnd())
+                        goto default;
+                    info.Kind = SyntaxKind.EndOfFileToken;
+                    break;
+
                 default:
-                    if (CharUtils.IsValidFirstIdentifierChar(peek0))
+                    if (CharUtils.IsValidFirstIdentifierChar(ch))
                     {
                         goto case 'a';
                     }
                     else if (_badTokenCount++ > 200)
                     {
                         // If we get too many characters that we cannot make sense of, absorb the rest of the input.
-                        info.Text = _reader.ReadToEnd();
+                        var end = TextWindow.Text.Length;
+                        var width = end - startingPosition;
+                        info.Text = TextWindow.Text.ToString(new TextSpan(startingPosition, width));
+                        TextWindow.Reset(end);
                     }
                     else
                     {
-                        _reader.Position += 1;
-                        info.Text = GetText(intern: true);
+                        TextWindow.AdvanceChar();
+                        info.Text = TextWindow.GetText(intern: true);
                     }
                     AddError(ErrorCode.ERR_BadCharacter, info.Text);
-                    return;
+                    break;
             } // end switch
-
-            throw ExceptionUtilities.Unreachable;
         }
 
-        private bool TryReadLongString([NotNullWhen(true)] out string? contents, out bool closingNotFound)
+        private int ConsumeCharSequence(char ch)
+        {
+            var start = TextWindow.Position;
+            while (TextWindow.PeekChar() == ch)
+                TextWindow.AdvanceChar();
+            return TextWindow.Position - start;
+        }
+
+        private void LexSyntaxTrivia(bool isTrailing, SyntaxListBuilder builder)
+        {
+            builder.Clear();
+
+            var onlyShebangsAndNewLines = true;
+            while (true)
+            {
+                Start();
+
+                var ch = TextWindow.PeekChar();
+                if (ch is ' ' or '\t')
+                {
+                    AddTrivia(ScanWhitespace(), builder);
+                    continue;
+                }
+
+                switch (ch)
+                {
+                    case ' ':
+                    case '\t':
+                    case '\v':
+                    case '\f':
+                        AddTrivia(ScanWhitespace(), builder);
+                        onlyShebangsAndNewLines = false;
+                        break;
+
+                    case '-':
+                        if (TextWindow.PeekChar(1) == '-')
+                        {
+                            TextWindow.AdvanceChar(2);
+
+                            if (!ConsumeLongString(false, out _, out var closingNotFound))
+                                ScanToEndOfLine();
+                            else if (closingNotFound)
+                                AddError(ErrorCode.ERR_UnfinishedLongComment);
+
+                            var text = TextWindow.GetText(false);
+                            AddTrivia(SyntaxFactory.Comment(text), builder);
+                            onlyShebangsAndNewLines = false;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                        break;
+
+                    case '/':
+                        if ((ch = TextWindow.PeekChar(1)) == '/')
+                        {
+                            ScanToEndOfLine();
+
+                            if (!_options.SyntaxOptions.AcceptCCommentSyntax)
+                                AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
+
+                            var text = TextWindow.GetText(false);
+                            AddTrivia(SyntaxFactory.Comment(text), builder);
+                            onlyShebangsAndNewLines = false;
+                        }
+                        else if (ch == '*')
+                        {
+                            ScanMultiLineCComment(out var isTerminated);
+                            if (!isTerminated)
+                                AddError(ErrorCode.ERR_UnfinishedLongComment);
+                            if (!_options.SyntaxOptions.AcceptCCommentSyntax)
+                                AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
+
+                            var text = TextWindow.GetText(false);
+                            AddTrivia(SyntaxFactory.Comment(text), builder);
+                            onlyShebangsAndNewLines = false;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                        break;
+
+                    case '\r':
+                    case '\n':
+                        AddTrivia(ScanEndOfLine()!, builder);
+                        if (isTrailing)
+                            return;
+                        break;
+
+                    case '#':
+                        if (onlyShebangsAndNewLines && TextWindow.PeekChar(1) == '!')
+                        {
+                            ScanToEndOfLine();
+                            if (!_options.SyntaxOptions.AcceptShebang)
+                                AddError(ErrorCode.ERR_ShebangNotSupportedInLuaVersion);
+
+                            var text = TextWindow.GetText(false);
+                            AddTrivia(SyntaxFactory.Shebang(text), builder);
+                            break;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    default:
+                        return;
+                }
+            }
+        }
+
+        private SyntaxTrivia ScanWhitespace()
+        {
+            _createWhitespaceTriviaFunction ??= CreateWhitespaceTrivia;
+
+            var hashCode = Hash.FnvOffsetBias;
+            char ch = SlidingTextWindow.InvalidCharacter,
+                lastCh = SlidingTextWindow.InvalidCharacter;
+
+        top:
+            lastCh = ch;
+            ch = TextWindow.PeekChar();
+
+            switch (ch)
+            {
+                case '\t':       // Horizontal tab
+                case '\v':       // Vertical Tab
+                case '\f':       // Form-feed
+                case ' ':
+                    TextWindow.AdvanceChar();
+                    hashCode = Hash.CombineFNVHash(hashCode, ch);
+                    goto top;
+
+                case '\r':      // Carriage Return
+                case '\n':      // Line-feed
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (TextWindow.Width == 1 && lastCh == ' ')
+            {
+                return SyntaxFactory.Space;
+            }
+            else if (TextWindow.Width == 1 && lastCh == '\t')
+            {
+                return SyntaxFactory.Tab;
+            }
+            else
+            {
+                var width = TextWindow.Width;
+
+                if (width < MaxCachedTokenSize)
+                {
+                    return _cache.LookupTrivia(
+                        TextWindow.CharacterWindow,
+                        TextWindow.LexemeRelativeStart,
+                        width,
+                        hashCode,
+                        _createWhitespaceTriviaFunction);
+                }
+                else
+                {
+                    return _createWhitespaceTriviaFunction();
+                }
+            }
+        }
+
+        private bool ScanMultiLineCComment(out bool isTerminated)
+        {
+            if (TextWindow.PeekChar() == '/' && TextWindow.PeekChar(1) == '*')
+            {
+                while (true)
+                {
+                    var ch = TextWindow.PeekChar();
+                    if (IsAtEnd(ch))
+                    {
+                        isTerminated = false;
+                        break;
+                    }
+                    else if (ch == '*' && TextWindow.PeekChar(1) == '/')
+                    {
+                        TextWindow.AdvanceChar(2);
+                        isTerminated = true;
+                        break;
+                    }
+                    else
+                    {
+                        TextWindow.AdvanceChar();
+                    }
+                }
+
+                return true;
+            }
+
+            isTerminated = false;
+            return false;
+        }
+
+        private Func<SyntaxTrivia> _createWhitespaceTriviaFunction;
+
+        private SyntaxTrivia CreateWhitespaceTrivia() =>
+            SyntaxFactory.Whitespace(TextWindow.GetText(intern: true));
+
+        private void AddTrivia(LuaSyntaxNode trivia, SyntaxListBuilder builder)
+        {
+            if (HasErrors) trivia = trivia.WithDiagnosticsGreen(GetErrors(leadingTriviaWidth: 0));
+            builder.Add(trivia);
+        }
+
+        private bool ConsumeLongString(bool includeContents, [NotNullWhen(true)] out string? contents, out bool closingNotFound)
         {
             closingNotFound = true;
-            var start = _reader.Position;
-            if (_reader.IsNext('[')
-                 && (_reader.IsAt(1, '=')
-                      || _reader.IsAt(1, '[')))
+            var start = TextWindow.Position;
+
+            if (TextWindow.PeekChar() == '[' && TextWindow.PeekChar(1) is '=' or '[')
             {
-                _reader.Position += 1;
-                var equalSigns = _reader.ReadStringWhile(ch => ch == '=');
-                if (_reader.IsNext('['))
+                TextWindow.AdvanceChar();
+                var initialEqualsCount = ConsumeCharSequence('=');
+
+                if (TextWindow.PeekChar() == '[')
                 {
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
 
-                    var closing = $"]{equalSigns}]";
-                    contents = _reader.ReadStringUntil(closing);
-
-                    if (_reader.IsNext(closing))
+                    var contentStart = TextWindow.Position;
+                    int contentEnd;
+                    while (true)
                     {
-                        closingNotFound = false;
-                        _reader.Position += closing.Length;
+                        var ch = TextWindow.PeekChar();
+
+                        if (IsAtEnd(ch))
+                        {
+                            contentEnd = TextWindow.Position;
+                            break;
+                        }
+
+                        if (ch != ']')
+                        {
+                            // If not a possible ending, just skip over it.
+                            TextWindow.AdvanceChar();
+                            continue;
+                        }
+
+                        contentEnd = TextWindow.Position;
+                        TextWindow.AdvanceChar();
+
+                        var equalsCount = ConsumeCharSequence('=');
+                        if (initialEqualsCount != equalsCount)
+                            continue;
+
+                        if (TextWindow.PeekChar() == ']')
+                        {
+                            TextWindow.AdvanceChar();
+                            closingNotFound = false;
+                            break;
+                        }
                     }
 
+                    contents = includeContents
+                        ? TextWindow.GetText(contentStart, contentEnd - contentStart, intern: true)
+                        : "";
                     return true;
                 }
 
-                _reader.Position = start;
+                TextWindow.Reset(start);
             }
 
             contents = null;
             return false;
         }
 
-        public void Dispose() => _cache.Free();
+        private bool IsAtEnd(char ch) =>
+            ch == SlidingTextWindow.InvalidCharacter && TextWindow.IsReallyAtEnd();
+
+        private void ScanToEndOfLine()
+        {
+            char ch;
+            while (!CharUtils.IsNewLine(ch = TextWindow.PeekChar()) && !IsAtEnd(ch))
+                TextWindow.AdvanceChar();
+        }
+
+        private SyntaxTrivia? ScanEndOfLine()
+        {
+            switch (TextWindow.PeekChar())
+            {
+                case '\n':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '\r')
+                    {
+                        TextWindow.AdvanceChar();
+                        AddError(ErrorCode.WRN_LineBreakMayAffectErrorReporting);
+                        return SyntaxFactory.LineFeedCarriageReturn;
+                    }
+                    return SyntaxFactory.LineFeed;
+
+                case '\r':
+                    TextWindow.AdvanceChar();
+                    if (TextWindow.PeekChar() == '\n')
+                    {
+                        TextWindow.AdvanceChar();
+                        return SyntaxFactory.CarriageReturnLineFeed;
+                    }
+                    return SyntaxFactory.CarriageReturn;
+
+                default:
+                    return null;
+            }
+        }
     }
 }

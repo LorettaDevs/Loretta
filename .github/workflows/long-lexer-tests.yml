@@ -46,4 +46,4 @@ jobs:
       - name: Run Full Lexer Tests
         env:
           LORETTA_LONG_LEXER_TESTS: true
-        run: dotnet test --configuration Release --no-build --framework net5.0 --framework net6.0
+        run: dotnet test --configuration Release --no-build

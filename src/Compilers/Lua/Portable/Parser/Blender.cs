@@ -58,7 +58,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 // start at lexer current position if no nodes specified
                 _oldTreeCursor = new Cursor();
-                _newPosition = lexer.Position;
+                _newPosition = lexer.TextWindow.Position;
             }
             else
             {

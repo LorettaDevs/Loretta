@@ -7,97 +7,95 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private string ParseShortString()
         {
             _builder.Clear();
-            var delim = _reader.Read()!.Value;
+            var delim = TextWindow.NextChar();
             LorettaDebug.Assert(delim is '"' or '\'' or '`');
 
-            while (_reader.Peek() is char peek && peek != delim)
+            char ch;
+            while (!IsAtEnd(ch = TextWindow.PeekChar()) && ch != delim)
             {
-                var charStart = _reader.Position;
-                switch (peek)
+                var charStart = TextWindow.Position;
+                switch (ch)
                 {
                     #region Escapes
 
                     case '\\':
                     {
-                        var escapeStart = _reader.Position;
-                        _reader.Position += 1;
+                        var escapeStart = TextWindow.Position;
+                        TextWindow.AdvanceChar();
 
-                        switch (_reader.Peek())
+                        switch (ch = TextWindow.PeekChar())
                         {
+                            case '\n':
                             case '\r':
-                                if (_reader.IsAt(1, '\n'))
+                            {
+                                _builder.Append(TextWindow.NextChar());
+                                char ch2;
+                                if (CharUtils.IsNewLine(ch2 = TextWindow.PeekChar())
+                                    && ch != ch2)
                                 {
-                                    _reader.Position += 2;
-                                    _builder.Append("\r\n");
-                                }
-                                else
-                                {
-                                    _reader.Position += 1;
-                                    _builder.Append('\r');
+                                    _builder.Append(TextWindow.NextChar());
                                 }
                                 break;
+                            }
 
                             case 'a':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\a');
                                 break;
 
                             case 'b':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\b');
                                 break;
 
                             case 'f':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\f');
                                 break;
 
                             case 'n':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\n');
                                 break;
 
                             case 'r':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\r');
                                 break;
 
                             case 't':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\t');
                                 break;
 
                             case 'v':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\v');
                                 break;
 
                             case '\\':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\\');
                                 break;
 
-                            case '\n':
-                                _reader.Position += 1;
-                                _builder.Append('\n');
-                                break;
-
                             case '\'':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('\'');
                                 break;
 
                             case '"':
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 _builder.Append('"');
                                 break;
 
                             case 'z':
-                                _reader.Position += 1;
-                                _reader.SkipWhile(static c => CharUtils.IsWhitespace(c));
+                                TextWindow.AdvanceChar();
 
-                                if (!Options.SyntaxOptions.AcceptWhitespaceEscape)
-                                    AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_WhitespaceEscapeNotSupportedInVersion);
+                                while (CharUtils.IsWhitespace(TextWindow.PeekChar()))
+                                    TextWindow.AdvanceChar();
+
+                                if (!_options.SyntaxOptions.AcceptWhitespaceEscape)
+                                    AddError(escapeStart, TextWindow.Position - escapeStart, ErrorCode.ERR_WhitespaceEscapeNotSupportedInVersion);
                                 break;
 
                             case '0':
@@ -119,38 +117,33 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                             case 'x':
                             {
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 var parsedCharInteger = parseHexadecimalEscapeInteger(escapeStart);
                                 if (parsedCharInteger != char.MaxValue)
                                     _builder.Append(parsedCharInteger);
 
-                                if (!Options.SyntaxOptions.AcceptHexEscapesInStrings)
-                                    AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_HexStringEscapesNotSupportedInVersion);
+                                if (!_options.SyntaxOptions.AcceptHexEscapesInStrings)
+                                    AddError(escapeStart, TextWindow.Position - escapeStart, ErrorCode.ERR_HexStringEscapesNotSupportedInVersion);
                             }
                             break;
 
                             case 'u':
                             {
-                                _reader.Position += 1;
+                                TextWindow.AdvanceChar();
                                 var parsed = parseUnicodeEscape(escapeStart);
                                 _builder.Append(parsed);
 
-                                if (!Options.SyntaxOptions.AcceptUnicodeEscape)
-                                    AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_UnicodeEscapesNotSupportedLuaInVersion);
+                                if (!_options.SyntaxOptions.AcceptUnicodeEscape)
+                                    AddError(escapeStart, TextWindow.Position - escapeStart, ErrorCode.ERR_UnicodeEscapesNotSupportedLuaInVersion);
                             }
                             break;
 
                             default:
-                                if (Options.SyntaxOptions.AcceptInvalidEscapes)
-                                {
-                                    // Read the char as if it were a normal char.
-                                    _builder.Append(_reader.Read()!.Value);
-                                }
-                                else
+                                if (!_options.SyntaxOptions.AcceptInvalidEscapes)
                                 {
                                     // Skip the character after the escape.
-                                    _reader.Position += 1;
-                                    AddError(escapeStart, _reader.Position - escapeStart, ErrorCode.ERR_InvalidStringEscape);
+                                    TextWindow.AdvanceChar();
+                                    AddError(escapeStart, TextWindow.Position - escapeStart, ErrorCode.ERR_InvalidStringEscape);
                                 }
                                 break;
                         }
@@ -159,65 +152,53 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                     #endregion Escapes
 
+                    case '\n':
                     case '\r':
                     {
-                        if (_reader.IsAt(1, '\n'))
+                        _builder.Append(TextWindow.NextChar());
+                        char ch2;
+                        if (CharUtils.IsNewLine(ch2 = TextWindow.PeekChar())
+                            && ch != ch2)
                         {
-                            _reader.Position += 2;
-                            _builder.Append("\r\n");
-                        }
-                        else
-                        {
-                            _reader.Position += 1;
-                            _builder.Append('\r');
+                            _builder.Append(TextWindow.NextChar());
                         }
 
-                        AddError(charStart, _reader.Position - charStart, ErrorCode.ERR_UnescapedLineBreakInString);
-                    }
-                    break;
-
-                    case '\n':
-                    {
-                        _reader.Position += 1;
-                        _builder.Append('\n');
-
-                        AddError(charStart, _reader.Position - charStart, ErrorCode.ERR_UnescapedLineBreakInString);
+                        AddError(charStart, TextWindow.Position - charStart, ErrorCode.ERR_UnescapedLineBreakInString);
                     }
                     break;
 
                     default:
-                        _reader.Position += 1;
-                        _builder.Append(peek);
+                        _builder.Append(TextWindow.NextChar());
                         break;
                 }
             }
 
-            if (_reader.IsNext(delim))
+            if (TextWindow.PeekChar() == delim)
             {
-                _reader.Position += 1;
+                TextWindow.AdvanceChar();
             }
             else
             {
                 AddError(ErrorCode.ERR_UnfinishedString);
             }
 
-            return _builder.ToString();
+            return TextWindow.Intern(_builder);
 
             char parseDecimalInteger(int start)
             {
                 var readChars = 0;
                 var num = 0;
                 char ch;
-                while (readChars < 3 && CharUtils.IsDecimal(ch = _reader.Peek().GetValueOrDefault()))
+                while (readChars < 3 && CharUtils.IsDecimal(ch = TextWindow.PeekChar()))
                 {
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
                     num = (num * 10) + (ch - '0');
                     readChars++;
                 }
 
                 if (readChars < 1 || num > 255)
                 {
-                    AddError(start, _reader.Position - start, ErrorCode.ERR_InvalidStringEscape);
+                    AddError(start, TextWindow.Position - start, ErrorCode.ERR_InvalidStringEscape);
                     return char.MaxValue;
                 }
 
@@ -230,15 +211,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var num = 0L;
                 while (readChars < maxDigits)
                 {
-                    var peek = _reader.Peek().GetValueOrDefault();
+                    var peek = TextWindow.PeekChar();
                     if (CharUtils.IsDecimal(peek))
                     {
-                        _reader.Position += 1;
+                        TextWindow.AdvanceChar();
                         num = (num << 4) | (uint) (peek - '0');
                     }
                     else if (CharUtils.IsHexadecimal(peek))
                     {
-                        _reader.Position += 1;
+                        TextWindow.AdvanceChar();
                         num = (num << 4) | (uint) (10 + CharUtils.AsciiLowerCase(peek) - 'a');
                     }
                     else
@@ -250,7 +231,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 if (readChars < 1)
                 {
-                    AddError(start, _reader.Position - start, lessThanZeroErrorCode);
+                    AddError(start, TextWindow.Position - start, lessThanZeroErrorCode);
                     return 0UL;
                 }
 
@@ -262,23 +243,23 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             string parseUnicodeEscape(int start)
             {
-                var missingOpeningBrace = _reader.Peek() is not '{';
+                var missingOpeningBrace = TextWindow.PeekChar() is not '{';
                 if (!missingOpeningBrace)
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
 
                 var codepoint = parseHexadecimalNumber(start, 16, ErrorCode.ERR_HexDigitExpected);
 
-                var missingClosingBrace = _reader.Peek() is not '}';
+                var missingClosingBrace = TextWindow.PeekChar() is not '}';
                 if (!missingClosingBrace)
-                    _reader.Position += 1;
+                    TextWindow.AdvanceChar();
 
                 if (missingOpeningBrace)
-                    AddError(start, _reader.Position - start, ErrorCode.ERR_UnicodeEscapeMissingOpenBrace);
+                    AddError(start, TextWindow.Position - start, ErrorCode.ERR_UnicodeEscapeMissingOpenBrace);
                 if (missingClosingBrace)
-                    AddError(start, _reader.Position - start, ErrorCode.ERR_UnicodeEscapeMissingCloseBrace);
+                    AddError(start, TextWindow.Position - start, ErrorCode.ERR_UnicodeEscapeMissingCloseBrace);
                 if (codepoint > 0x10FFFF)
                 {
-                    AddError(start, _reader.Position - start, ErrorCode.ERR_EscapeTooLarge, "10FFFF");
+                    AddError(start, TextWindow.Position - start, ErrorCode.ERR_EscapeTooLarge, "10FFFF");
                     codepoint = 0x10FFFF;
                 }
 

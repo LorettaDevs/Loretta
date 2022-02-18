@@ -7,15 +7,30 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal sealed partial class Lexer
     {
-        private void SkipDecimalDigits(StringBuilder builder)
+        private int ConsumeDecimalDigits(StringBuilder? builder)
         {
+            var start = TextWindow.Position;
             char digit;
-            while (CharUtils.IsDecimal(digit = _reader.Peek().GetValueOrDefault()) || digit == '_')
+            while (CharUtils.IsDecimal(digit = TextWindow.PeekChar()) || digit == '_')
             {
                 if (digit != '_')
-                    builder.Append(digit);
-                _reader.Position += 1;
+                    builder?.Append(digit);
+                TextWindow.AdvanceChar();
             }
+            return TextWindow.Position - start;
+        }
+
+        private int ConsumeHexDigits()
+        {
+            var start = TextWindow.Position;
+            char digit;
+            while (CharUtils.IsHexadecimal(digit = TextWindow.PeekChar()) || digit == '_')
+            {
+                if (digit != '_')
+                    _builder.Append(digit);
+                TextWindow.AdvanceChar();
+            }
+            return TextWindow.Position - start;
         }
 
         private void ParseBinaryNumber(ref TokenInfo info)
@@ -25,9 +40,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var hasUnderscores = false;
             var hasOverflown = false;
             char digit;
-            while (CharUtils.IsInRange('0', digit = _reader.Peek().GetValueOrDefault(), '1') || digit == '_')
+            while (CharUtils.IsBinary(digit = TextWindow.PeekChar()) || digit == '_')
             {
-                _reader.Position += 1;
+                TextWindow.AdvanceChar();
                 if (digit == '_')
                 {
                     hasUnderscores = true;
@@ -36,13 +51,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 // Next shift will overflow if 63rd bit is set
                 if ((num & 0x4000000000000000) != 0)
                     hasOverflown = true;
-                num = (num << 1) | (digit - (long) '0');
+                num = (num << 1) | CharUtils.DecimalValue(digit);
                 digits++;
             }
 
-            if (!Options.SyntaxOptions.AcceptBinaryNumbers)
+            if (!_options.SyntaxOptions.AcceptBinaryNumbers)
                 AddError(ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion);
-            if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
+            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
             if (digits < 1)
             {
@@ -55,8 +70,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 AddError(ErrorCode.ERR_NumericLiteralTooLarge);
             }
 
-            info.Text = GetText(intern: true);
-            switch (Options.SyntaxOptions.BinaryIntegerFormat)
+            info.Text = TextWindow.GetText(intern: true);
+            switch (_options.SyntaxOptions.BinaryIntegerFormat)
             {
                 case IntegerFormats.NotSupported:
                 case IntegerFormats.Double:
@@ -70,7 +85,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     break;
 
                 default:
-                    throw ExceptionUtilities.UnexpectedValue(Options.SyntaxOptions.BinaryIntegerFormat);
+                    throw ExceptionUtilities.UnexpectedValue(_options.SyntaxOptions.BinaryIntegerFormat);
             }
         }
 
@@ -81,9 +96,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var hasUnderscores = false;
             var hasOverflown = false;
             char digit;
-            while (CharUtils.IsInRange('0', digit = _reader.Peek().GetValueOrDefault(), '7') || digit == '_')
+            while (CharUtils.IsOctal(digit = TextWindow.PeekChar()) || digit == '_')
             {
-                _reader.Position += 1;
+                TextWindow.AdvanceChar();
                 if (digit == '_')
                 {
                     hasUnderscores = true;
@@ -92,13 +107,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 // If any of these bits are set, we'll overflow
                 if ((num & 0x7000000000000000) != 0)
                     hasOverflown = true;
-                num = (num << 3) | (digit - (long) '0');
+                num = (num << 3) | CharUtils.DecimalValue(digit);
                 digits++;
             }
 
-            if (!Options.SyntaxOptions.AcceptOctalNumbers)
+            if (!_options.SyntaxOptions.AcceptOctalNumbers)
                 AddError(ErrorCode.ERR_OctalNumericLiteralNotSupportedInVersion);
-            if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
+            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
             if (digits < 1)
             {
@@ -111,8 +126,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 AddError(ErrorCode.ERR_NumericLiteralTooLarge);
             }
 
-            info.Text = GetText(intern: true);
-            switch (Options.SyntaxOptions.OctalIntegerFormat)
+            info.Text = TextWindow.GetText(intern: true);
+            switch (_options.SyntaxOptions.OctalIntegerFormat)
             {
                 case IntegerFormats.NotSupported:
                 case IntegerFormats.Double:
@@ -126,7 +141,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     break;
 
                 default:
-                    throw ExceptionUtilities.UnexpectedValue(Options.SyntaxOptions.OctalIntegerFormat);
+                    throw ExceptionUtilities.UnexpectedValue(_options.SyntaxOptions.OctalIntegerFormat);
             }
         }
 
@@ -138,39 +153,41 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             _builder.Clear();
 
             var isFloat = false;
-            SkipDecimalDigits(_builder);
-            if (_reader.IsNext('.'))
+            ConsumeDecimalDigits(_builder);
+            if (TextWindow.PeekChar() == '.')
             {
+                TextWindow.AdvanceChar();
                 isFloat = true;
-                _builder.Append(_reader.Read()!.Value);
-                SkipDecimalDigits(_builder);
+                _builder.Append('.');
+                ConsumeDecimalDigits(_builder);
             }
 
-            if (CharUtils.AsciiLowerCase(_reader.Peek().GetValueOrDefault()) == 'e')
+            if (CharUtils.AsciiLowerCase(TextWindow.PeekChar()) == 'e')
             {
+                TextWindow.AdvanceChar();
                 isFloat = true;
-                _builder.Append(_reader.Read()!.Value);
-                if (_reader.IsNext('+') || _reader.IsNext('-'))
-                    _builder.Append(_reader.Read()!.Value);
-                SkipDecimalDigits(_builder);
+                _builder.Append('e');
+                if (TextWindow.PeekChar() is '+' or '-')
+                    _builder.Append(TextWindow.NextChar());
+                ConsumeDecimalDigits(_builder);
             }
 
-            info.Text = GetText(intern: true);
-            if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
+            info.Text = TextWindow.GetText(intern: true);
+            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
-            if (isFloat || Options.SyntaxOptions.DecimalIntegerFormat == IntegerFormats.NotSupported)
+            if (isFloat || _options.SyntaxOptions.DecimalIntegerFormat == IntegerFormats.NotSupported)
             {
-                if (!RealParser.TryParseDouble(Intern(_builder), out var result))
+                if (!RealParser.TryParseDouble(TextWindow.Intern(_builder), out var result))
                     AddError(ErrorCode.ERR_DoubleOverflow);
                 info.ValueKind = ValueKind.Double;
                 info.DoubleValue = result;
             }
             else
             {
-                if (!long.TryParse(Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
-                switch (Options.SyntaxOptions.DecimalIntegerFormat)
+                switch (_options.SyntaxOptions.DecimalIntegerFormat)
                 {
                     case IntegerFormats.Double:
                         info.ValueKind = ValueKind.Double;
@@ -183,7 +200,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         break;
 
                     default:
-                        throw ExceptionUtilities.UnexpectedValue(Options.SyntaxOptions.DecimalIntegerFormat);
+                        throw ExceptionUtilities.UnexpectedValue(_options.SyntaxOptions.DecimalIntegerFormat);
                 }
             }
         }
@@ -194,37 +211,39 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private void ParseHexadecimalNumber(ref TokenInfo info)
         {
             _builder.Clear();
-            skipHexDigits();
+            ConsumeHexDigits();
             var isHexFloat = false;
-            if (_reader.IsNext('.'))
+            if (TextWindow.PeekChar() == '.')
             {
+                TextWindow.AdvanceChar();
                 isHexFloat = true;
-                _builder.Append(_reader.Read()!.Value);
-                skipHexDigits();
+                _builder.Append('.');
+                ConsumeHexDigits();
             }
 
-            if (CharUtils.AsciiLowerCase(_reader.Peek().GetValueOrDefault()) == 'p')
+            if (CharUtils.AsciiLowerCase(TextWindow.PeekChar()) == 'p')
             {
+                TextWindow.AdvanceChar();
                 isHexFloat = true;
-                _builder.Append(_reader.Read()!.Value);
-                if (_reader.IsNext('+') || _reader.IsNext('-'))
-                    _builder.Append(_reader.Read()!.Value);
-                SkipDecimalDigits(_builder);
+                _builder.Append('p');
+                if (TextWindow.PeekChar() is '+' or '-')
+                    _builder.Append(TextWindow.NextChar());
+                ConsumeDecimalDigits(_builder);
             }
 
-            info.Text = GetText(intern: true);
-            if (!Options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
+            info.Text = TextWindow.GetText(intern: true);
+            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
 
-            if (isHexFloat || Options.SyntaxOptions.HexIntegerFormat == IntegerFormats.NotSupported)
+            if (isHexFloat || _options.SyntaxOptions.HexIntegerFormat == IntegerFormats.NotSupported)
             {
-                if (!Options.SyntaxOptions.AcceptHexFloatLiterals)
+                if (!_options.SyntaxOptions.AcceptHexFloatLiterals)
                     AddError(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion);
 
                 var result = 0d;
                 try
                 {
-                    result = HexFloat.DoubleFromHexString(Intern(_builder));
+                    result = HexFloat.DoubleFromHexString(TextWindow.Intern(_builder));
                 }
                 catch (OverflowException)
                 {
@@ -235,9 +254,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else
             {
-                if (!long.TryParse(Intern(_builder), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var result))
+                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
-                switch (Options.SyntaxOptions.HexIntegerFormat)
+                switch (_options.SyntaxOptions.HexIntegerFormat)
                 {
                     case IntegerFormats.Double:
                         info.ValueKind = ValueKind.Double;
@@ -250,18 +269,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         break;
 
                     default:
-                        throw ExceptionUtilities.UnexpectedValue(Options.SyntaxOptions.HexIntegerFormat);
-                }
-            }
-
-            void skipHexDigits()
-            {
-                char digit;
-                while (CharUtils.IsHexadecimal(digit = _reader.Peek().GetValueOrDefault()) || digit == '_')
-                {
-                    if (digit != '_')
-                        _builder.Append(digit);
-                    _reader.Position += 1;
+                        throw ExceptionUtilities.UnexpectedValue(_options.SyntaxOptions.HexIntegerFormat);
                 }
             }
         }
