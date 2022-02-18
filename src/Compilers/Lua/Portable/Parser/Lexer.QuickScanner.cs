@@ -1,59 +1,53 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using Loretta.CodeAnalysis.Lua.Utilities;
-using Loretta.CodeAnalysis.Syntax.InternalSyntax;
-using Loretta.CodeAnalysis.Text;
-
-namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
+﻿namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
-	internal sealed partial class Lexer
-	{
-		// Maximum size of tokens/trivia that we cache and use in quick scanner.
-		// From what I see in our own codebase, tokens longer then 40-50 chars are 
-		// not very common. 
-		// So it seems reasonable to limit the sizes to some round number like 42.
-		internal const int MaxCachedTokenSize = 42;
+    internal sealed partial class Lexer
+    {
+        // Maximum size of tokens/trivia that we cache and use in quick scanner.
+        // From what I see in our own codebase, tokens longer then 40-50 chars are 
+        // not very common. 
+        // So it seems reasonable to limit the sizes to some round number like 42.
+        internal const int MaxCachedTokenSize = 42;
 
-		private enum QuickScanState : byte
-		{
-			Initial,
-			FollowingWhite,
-			FollowingCR,
-			FollowingLF,
-			Ident,
-			Number,
-			Punctuation,
-			Dot,
-			CompoundPunctStart,
-			DoneAfterNext,
-			// we are relying on Bad state immediately following Done 
-			// to be able to detect exiting conditions in one "state >= Done" test.
-			// And we are also relying on this to be the last item in the enum.
-			Done,
-			Bad = Done + 1
-		}
+        private enum QuickScanState : byte
+        {
+            Initial,
+            FollowingWhite,
+            FollowingCR,
+            FollowingLF,
+            Ident,
+            Number,
+            Punctuation,
+            Dot,
+            CompoundPunctStart,
+            DoneAfterNext,
+            // we are relying on Bad state immediately following Done 
+            // to be able to detect exiting conditions in one "state >= Done" test.
+            // And we are also relying on this to be the last item in the enum.
+            Done,
+            Bad = Done + 1
+        }
 
-		private enum CharFlags : byte
-		{
-			White,      // simple whitespace (space/tab)
-			CR,         // carriage return
-			LF,         // line feed
-			Letter,     // letter
-			Digit,      // digit 0-9
-			Punct,      // some simple punctuation (parens, braces, comma, equals, question)
-			Dot,        // dot is different from other punctuation when followed by a digit (Ex: .9 )
-			CompoundPunctStart, // may be a part of compound punctuation. will be used only if followed by (not white) && (not punct)
-			Complex,    // complex - causes scanning to abort
-			EndOfFile,  // legal type character (except !, which is contextually dictionary lookup
-		}
+        private enum CharFlags : byte
+        {
+            White,      // simple whitespace (space/tab)
+            CR,         // carriage return
+            LF,         // line feed
+            Letter,     // letter
+            Digit,      // digit 0-9
+            Punct,      // some simple punctuation (parens, braces, comma, equals, question)
+            Dot,        // dot is different from other punctuation when followed by a digit (Ex: .9 )
+            CompoundPunctStart, // may be a part of compound punctuation. will be used only if followed by (not white) && (not punct)
+            Complex,    // complex - causes scanning to abort
+            EndOfFile,  // legal type character (except !, which is contextually dictionary lookup
+        }
 
-		// PERF: Use byte instead of QuickScanState so the compiler can use array literal initialization.
-		//       The most natural type choice, Enum arrays, are not blittable due to a CLR limitation.
-		private static readonly byte[,] s_stateTransitions = new byte[,]
-		{
+        // PERF: Use byte instead of QuickScanState so the compiler can use array literal initialization.
+        //       The most natural type choice, Enum arrays, are not blittable due to a CLR limitation.
+        private static readonly byte[,] s_stateTransitions = new byte[,]
+        {
             // Initial
             {
-				(byte)QuickScanState.Initial,             // White
+                (byte)QuickScanState.Initial,             // White
                 (byte)QuickScanState.Initial,             // CR
                 (byte)QuickScanState.Initial,             // LF
                 (byte)QuickScanState.Ident,               // Letter
@@ -67,7 +61,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Following White
             {
-				(byte)QuickScanState.FollowingWhite,      // White
+                (byte)QuickScanState.FollowingWhite,      // White
                 (byte)QuickScanState.FollowingCR,         // CR
                 (byte)QuickScanState.FollowingLF,         // LF
                 (byte)QuickScanState.Done,                // Letter
@@ -81,7 +75,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Following CR
             {
-				(byte)QuickScanState.Done,                // White
+                (byte)QuickScanState.Done,                // White
                 (byte)QuickScanState.Done,                // CR
                 (byte)QuickScanState.DoneAfterNext,       // LF
                 (byte)QuickScanState.Done,                // Letter
@@ -95,7 +89,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Following LF
             {
-				(byte)QuickScanState.Done,                // White
+                (byte)QuickScanState.Done,                // White
                 (byte)QuickScanState.DoneAfterNext,       // CR
                 (byte)QuickScanState.Done,                // LF
                 (byte)QuickScanState.Done,                // Letter
@@ -109,7 +103,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Identifier
             {
-				(byte)QuickScanState.FollowingWhite,      // White
+                (byte)QuickScanState.FollowingWhite,      // White
                 (byte)QuickScanState.FollowingCR,         // CR
                 (byte)QuickScanState.FollowingLF,         // LF
                 (byte)QuickScanState.Ident,               // Letter
@@ -123,7 +117,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Number
             {
-				(byte)QuickScanState.FollowingWhite,      // White
+                (byte)QuickScanState.FollowingWhite,      // White
                 (byte)QuickScanState.FollowingCR,         // CR
                 (byte)QuickScanState.FollowingLF,         // LF
                 (byte)QuickScanState.Bad,                 // Letter (might be 'e' or 'x' or suffix)
@@ -137,7 +131,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Punctuation
             {
-				(byte)QuickScanState.FollowingWhite,      // White
+                (byte)QuickScanState.FollowingWhite,      // White
                 (byte)QuickScanState.FollowingCR,         // CR
                 (byte)QuickScanState.FollowingLF,         // LF
                 (byte)QuickScanState.Done,                // Letter
@@ -151,7 +145,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Dot
             {
-				(byte)QuickScanState.FollowingWhite,      // White
+                (byte)QuickScanState.FollowingWhite,      // White
                 (byte)QuickScanState.FollowingCR,         // CR
                 (byte)QuickScanState.FollowingLF,         // LF
                 (byte)QuickScanState.Done,                // Letter
@@ -165,7 +159,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Compound Punctuation
             {
-				(byte)QuickScanState.FollowingWhite,      // White
+                (byte)QuickScanState.FollowingWhite,      // White
                 (byte)QuickScanState.FollowingCR,         // CR
                 (byte)QuickScanState.FollowingLF,         // LF
                 (byte)QuickScanState.Done,                // Letter
@@ -179,7 +173,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             // Done after next
             {
-				(byte)QuickScanState.Done,                // White
+                (byte)QuickScanState.Done,                // White
                 (byte)QuickScanState.Done,                // CR
                 (byte)QuickScanState.Done,                // LF
                 (byte)QuickScanState.Done,                // Letter
@@ -190,89 +184,89 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 (byte)QuickScanState.Done,                // Complex
                 (byte)QuickScanState.Done,                // EndOfFile
             },
-		};
+        };
 
-		private SyntaxToken? QuickScanSyntaxToken()
-		{
-			Start();
-			var state = QuickScanState.Initial;
-			int i = TextWindow.Offset;
-			int n = TextWindow.CharacterWindowCount;
-			n = Math.Min(n, i + MaxCachedTokenSize);
+        private SyntaxToken? QuickScanSyntaxToken()
+        {
+            Start();
+            var state = QuickScanState.Initial;
+            var i = TextWindow.Offset;
+            var n = TextWindow.CharacterWindowCount;
+            n = Math.Min(n, i + MaxCachedTokenSize);
 
-			int hashCode = Hash.FnvOffsetBias;
+            var hashCode = Hash.FnvOffsetBias;
 
-			//localize frequently accessed fields
-			var charWindow = TextWindow.CharacterWindow;
-			var charPropLength = CharProperties.Length;
+            //localize frequently accessed fields
+            var charWindow = TextWindow.CharacterWindow;
+            var charPropLength = CharProperties.Length;
 
-			for (; i < n; i++)
-			{
-				char c = charWindow[i];
-				int uc = unchecked((int) c);
+            for (; i < n; i++)
+            {
+                var c = charWindow[i];
+                var uc = unchecked((int) c);
 
-				var flags = uc < charPropLength ? (CharFlags) CharProperties[uc] : CharFlags.Letter;
+                var flags = uc < charPropLength ? (CharFlags) CharProperties[uc] : CharFlags.Letter;
 
-				state = (QuickScanState) s_stateTransitions[(int) state, (int) flags];
-				// NOTE: that Bad > Done and it is the only state like that
-				// as a result, we will exit the loop on either Bad or Done.
-				// the assert below will validate that these are the only states on which we exit
-				// Also note that we must exit on Done or Bad
-				// since the state machine does not have transitions for these states 
-				// and will promptly fail if we do not exit.
-				if (state >= QuickScanState.Done)
-				{
-					goto exitWhile;
-				}
+                state = (QuickScanState) s_stateTransitions[(int) state, (int) flags];
+                // NOTE: that Bad > Done and it is the only state like that
+                // as a result, we will exit the loop on either Bad or Done.
+                // the assert below will validate that these are the only states on which we exit
+                // Also note that we must exit on Done or Bad
+                // since the state machine does not have transitions for these states 
+                // and will promptly fail if we do not exit.
+                if (state >= QuickScanState.Done)
+                {
+                    goto exitWhile;
+                }
 
-				hashCode = unchecked((hashCode ^ uc) * Hash.FnvPrime);
-			}
+                hashCode = unchecked((hashCode ^ uc) * Hash.FnvPrime);
+            }
 
-			state = QuickScanState.Bad; // ran out of characters in window
-		exitWhile:
+            state = QuickScanState.Bad; // ran out of characters in window
+        exitWhile:
 
-			TextWindow.AdvanceChar(i - TextWindow.Offset);
-			LorettaDebug.Assert(state is QuickScanState.Done or QuickScanState.Bad, "can only exit with Bad or Done");
+            TextWindow.AdvanceChar(i - TextWindow.Offset);
+            LorettaDebug.Assert(state is QuickScanState.Done or QuickScanState.Bad, "can only exit with Bad or Done");
 
-			if (state == QuickScanState.Done)
-			{
-				// this is a good token!
-				var token = _cache.LookupToken(
-					TextWindow.CharacterWindow,
-					TextWindow.LexemeRelativeStart,
-					i - TextWindow.LexemeRelativeStart,
-					hashCode,
-					_createQuickTokenFunction);
-				return token;
-			}
-			else
-			{
-				TextWindow.Reset(TextWindow.LexemeStartPosition);
-				return null;
-			}
-		}
+            if (state == QuickScanState.Done)
+            {
+                // this is a good token!
+                var token = _cache.LookupToken(
+                    TextWindow.CharacterWindow,
+                    TextWindow.LexemeRelativeStart,
+                    i - TextWindow.LexemeRelativeStart,
+                    hashCode,
+                    _createQuickTokenFunction);
+                return token;
+            }
+            else
+            {
+                TextWindow.Reset(TextWindow.LexemeStartPosition);
+                return null;
+            }
+        }
 
-		private readonly Func<SyntaxToken> _createQuickTokenFunction;
+        private readonly Func<SyntaxToken> _createQuickTokenFunction;
 
-		private SyntaxToken CreateQuickToken()
-		{
+        private SyntaxToken CreateQuickToken()
+        {
 #if DEBUG
-			var quickWidth = TextWindow.Width;
+            var quickWidth = TextWindow.Width;
 #endif
-			TextWindow.Reset(TextWindow.LexemeStartPosition);
-			var token = LexSyntaxToken();
+            TextWindow.Reset(TextWindow.LexemeStartPosition);
+            var token = LexSyntaxToken();
 #if DEBUG
-			LorettaDebug.Assert(quickWidth == token.FullWidth);
+            LorettaDebug.Assert(quickWidth == token.FullWidth);
 #endif
-			return token;
-		}
+            return token;
+        }
 
-		// The following table classifies the first 0x180 Unicode characters. 
-		// # is marked complex as it may start directives.
-		// PERF: Use byte instead of CharFlags so the compiler can use array literal initialization.
-		//       The most natural type choice, Enum arrays, are not blittable due to a CLR limitation.
-		private static ReadOnlySpan<byte> CharProperties => new[]
-		{
+        // The following table classifies the first 0x180 Unicode characters. 
+        // # is marked complex as it may start directives.
+        // PERF: Use byte instead of CharFlags so the compiler can use array literal initialization.
+        //       The most natural type choice, Enum arrays, are not blittable due to a CLR limitation.
+        private static ReadOnlySpan<byte> CharProperties => new[]
+        {
             // 0 .. 31
             (byte)CharFlags.Complex, // NUL
             (byte)CharFlags.Complex, // SOH
@@ -282,15 +276,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             (byte)CharFlags.Complex, // ENQ
             (byte)CharFlags.Complex, // ACK
             (byte)CharFlags.Complex, // BEL
-			(byte)CharFlags.Complex, // BS
-			(byte)CharFlags.White,   // TAB
+            (byte)CharFlags.Complex, // BS
+            (byte)CharFlags.White,   // TAB
             (byte)CharFlags.LF,      // LF
             (byte)CharFlags.White,   // VT
             (byte)CharFlags.White,   // FF
             (byte)CharFlags.CR,      // CR
             (byte)CharFlags.Complex, // SO
-			(byte)CharFlags.Complex, // SI
-			(byte)CharFlags.Complex, // DLE
+            (byte)CharFlags.Complex, // SI
+            (byte)CharFlags.Complex, // DLE
             (byte)CharFlags.Complex, // DC1
             (byte)CharFlags.Complex, // DC2
             (byte)CharFlags.Complex, // DC3
@@ -298,7 +292,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             (byte)CharFlags.Complex, // NAK
             (byte)CharFlags.Complex, // SYN
             (byte)CharFlags.Complex, // ETB
-			(byte)CharFlags.Complex, // CAN
+            (byte)CharFlags.Complex, // CAN
             (byte)CharFlags.Complex, // EM
             (byte)CharFlags.Complex, // SUB
             (byte)CharFlags.Complex, // ESC
@@ -408,6 +402,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             (byte)CharFlags.Punct,    // }
             (byte)CharFlags.CompoundPunctStart,  // ~
             (byte)CharFlags.Complex   // DEL
-		};
-	}
+        };
+    }
 }
