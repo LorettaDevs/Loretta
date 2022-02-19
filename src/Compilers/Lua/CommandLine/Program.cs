@@ -16,7 +16,7 @@ namespace Loretta.CLI
     public static class Program
     {
         private static readonly ConsoleTimingLogger s_logger = new();
-        private static bool s_shouldRun, s_printCurrentDir = true, s_printOutputPrefixed = true;
+        private static bool s_shouldRun, s_printCurrentDir = false, s_printOutputPrefixed = false;
         private static readonly RootCommand s_rootCommand;
 
         private static TextWriter OutputWriter =>
@@ -364,13 +364,26 @@ namespace Loretta.CLI
 
         public static void MultiLua(string scriptPath) => RunMultiLua(scriptPath);
 
-        public static void MultiLuaExpression(string expression) => RunMultiLua("-e", expression);
+        public static void MultiLuaExpression(string expression)
+        {
+            var path = Path.GetTempFileName();
+            try
+            {
+                File.WriteAllText(path, expression);
+                RunMultiLua(path);
+            }
+            finally
+            {
+                File.Delete(path);
+            }
+        }
 
         private static void RunMultiLua(params string[] args)
         {
             const string prefixTemplate = "[00:00:00.000000]";
 
-            var versions = Directory.GetDirectories("binaries", "lua*");
+            var versions = Directory.GetDirectories("binaries");
+            Array.Sort(versions);
 
             foreach (var version in versions)
             {
@@ -420,13 +433,8 @@ namespace Loretta.CLI
                 proc.WaitForExit();
             }
 
-            static string getFormattedLuaName(string name)
-            {
-                if (name.StartsWith("luajit"))
-                    return "LuaJIT " + name["luajit".Length..];
-                else
-                    return "Lua " + name["lua".Length..];
-            }
+            static string getFormattedLuaName(string name) =>
+                name.Replace("_", " ");
         }
 
         #endregion Multi-Lua
