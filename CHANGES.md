@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed `SyntaxFacts.GetConstantValue` not returning the correct value for tokens.
 - Fixed `SyntaxFacts.GetConstantValue` not returning `None` for values outside of the valid range.
+- Fixed the constant folder turning `/` into integer division when both sides are integers.
+- Fixed the constant folder storing the length as an integer token.
 
 ## v0.2.9-beta.1
 ### Changed
