@@ -1,1992 +1,1997 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Tree Root="SyntaxNode">
 
-  <PredefinedNode Name="LuaSyntaxNode" Base="SyntaxNode" />
-  <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
-  <PredefinedNode Name="StructuredTriviaSyntax" Base="LuaSyntaxNode" />
-
-  <!-- Structured Trivia -->
-
-  <Node Name="SkippedTokensTriviaSyntax" Base="StructuredTriviaSyntax">
-    <Kind Name="SkippedTokensTrivia"/>
-    <Field Name="Tokens" Type="SyntaxList&lt;SyntaxToken&gt;"/>
-  </Node>
-
-  <!-- Statement List -->
-  <Node Name="StatementListSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>Represents a block of code.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="StatementListSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="StatementList" />
-    <Field Name="Statements" Type="SyntaxList&lt;StatementSyntax&gt;">
-      <PropertyComment>
-        <summary>The list of statements contained within this block.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <!-- Parameters -->
-
-  <AbstractNode Name="ParameterSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>The base type for parameter nodes.</summary>
-    </TypeComment>
-  </AbstractNode>
-
-  <Node Name="NamedParameterSyntax" Base="ParameterSyntax">
-    <TypeComment>
-      <summary>Represents a named function parameter.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="NamedParameterSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="NamedParameter" />
-    <Field Name="Identifier" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The name of the parameter.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-  </Node>
-
-  <Node Name="VarArgParameterSyntax" Base="ParameterSyntax">
-    <TypeComment>
-      <summary>Represents a vararg function parameter.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="VarArgParameterSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="VarArgParameter" />
-    <Field Name="VarArgToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The vararg token.</summary>
-      </PropertyComment>
-      <Kind Name="DotDotDotToken" />
-    </Field>
-  </Node>
-
-  <Node Name="ParameterListSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>Represents a function declaration's parameter list.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ParameterListSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ParameterList" />
-    <Field Name="OpenParenthesisToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The parameter list opening parenthesis.</summary>
-      </PropertyComment>
-      <Kind Name="OpenParenthesisToken" />
-    </Field>
-    <Field Name="Parameters" Type="SeparatedSyntaxList&lt;ParameterSyntax&gt;">
-      <PropertyComment>
-        <summary>The parameter list opening parenthesis.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="CloseParenthesisToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The close parenthesis token.</summary>
-      </PropertyComment>
-      <Kind Name="CloseParenthesisToken" />
-    </Field>
-  </Node>
-
-  <!-- Table Fields -->
-
-  <AbstractNode Name="TableFieldSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>The base class for table fields.</summary>
-    </TypeComment>
-  </AbstractNode>
-
-  <Node Name="IdentifierKeyedTableFieldSyntax" Base="TableFieldSyntax">
-    <TypeComment>
-      <summary>Represents a table field whose key is an identifier.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="IdentifierKeyedTableFieldSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="IdentifierKeyedTableField" />
-    <Field Name="Identifier" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The table field's key.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-    <Field Name="EqualsToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The equals token.</summary>
-      </PropertyComment>
-      <Kind Name="EqualsToken" />
-    </Field>
-    <Field Name="Value" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The table field's value.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="ExpressionKeyedTableFieldSyntax" Base="TableFieldSyntax">
-    <TypeComment>
-      <summary>Represents a table field whose key is an expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ExpressionKeyedTableFieldSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ExpressionKeyedTableField" />
-    <Field Name="OpenBracketToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The opening bracket token.</summary>
-      </PropertyComment>
-      <Kind Name="OpenBracketToken" />
-    </Field>
-    <Field Name="Key" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The table field's key.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="CloseBracketToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The closing bracket token.</summary>
-      </PropertyComment>
-      <Kind Name="CloseBracketToken" />
-    </Field>
-    <Field Name="EqualsToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The equals token.</summary>
-      </PropertyComment>
-      <Kind Name="EqualsToken" />
-    </Field>
-    <Field Name="Value" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The field's value.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="UnkeyedTableFieldSyntax" Base="TableFieldSyntax">
-    <TypeComment>
-      <summary>Represents a table field without a key.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="UnkeyedTableFieldSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="UnkeyedTableField" />
-    <Field Name="Value" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The table field's value.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <!-- Function Names -->
-
-  <AbstractNode Name="FunctionNameSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>The base class for function name nodes.</summary>
-    </TypeComment>
-    <Field Name="Name" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The member name.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-  </AbstractNode>
-
-  <Node Name="SimpleFunctionNameSyntax" Base="FunctionNameSyntax">
-    <TypeComment>
-      <summary>Represents a function name which is only an identifier.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="SimpleFunctionNameSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="SimpleFunctionName" />
-    <Field Name="Name" Type="SyntaxToken" Override="true">
-      <PropertyComment>
-        <summary>The function name.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-  </Node>
-
-  <Node Name="MemberFunctionNameSyntax" Base="FunctionNameSyntax">
-    <TypeComment>
-      <summary>Represents a function name which is a member.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="MemberFunctionNameSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="MemberFunctionName" />
-    <Field Name="BaseName" Type="FunctionNameSyntax">
-      <PropertyComment>
-        <summary>The base function name.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="DotToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The dot token.</summary>
-      </PropertyComment>
-      <Kind Name="DotToken" />
-    </Field>
-    <Field Name="Name" Type="SyntaxToken" Override="true">
-      <PropertyComment>
-        <summary>The member name.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-  </Node>
-
-  <Node Name="MethodFunctionNameSyntax" Base="FunctionNameSyntax">
-    <TypeComment>
-      <summary>Represents a method-style function name syntax.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="MethodFunctionNameSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="MethodFunctionName" />
-    <Field Name="BaseName" Type="FunctionNameSyntax">
-      <PropertyComment>
-        <summary>The base name for this method.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ColonToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The colon token.</summary>
-      </PropertyComment>
-      <Kind Name="ColonToken" />
-    </Field>
-    <Field Name="Name" Type="SyntaxToken" Override="true">
-      <PropertyComment>
-        <summary>The method name.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <!-- Function Arguments -->
-
-  <AbstractNode Name="FunctionArgumentSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>The base class for function arguments.</summary>
-    </TypeComment>
-  </AbstractNode>
-
-  <Node Name="StringFunctionArgumentSyntax" Base="FunctionArgumentSyntax">
-    <TypeComment>
-      <summary>Represents a string being passed as a function call's argument.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="StringFunctionArgumentSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="StringFunctionArgument" />
-    <Field Name="Expression" Type="LiteralExpressionSyntax">
-      <PropertyComment>
-        <summary>The string literal being passed as an argument.</summary>
-      </PropertyComment>
-      <Kind Name="StringLiteralExpression" />
-    </Field>
-  </Node>
-
-  <Node Name="TableConstructorFunctionArgumentSyntax" Base="FunctionArgumentSyntax" SkipConvenienceFactories="true">
-    <TypeComment>
-      <summary>Represents a table being passed as a function call's arguments.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="TableConstructorFunctionArgumentSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="TableConstructorFunctionArgument" />
-    <Field Name="TableConstructor" Type="TableConstructorExpressionSyntax">
-      <PropertyComment>
-        <summary>The actual table constructor.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="ExpressionListFunctionArgumentSyntax" Base="FunctionArgumentSyntax">
-    <TypeComment>
-      <summary>Represents a list of expressions being passed as a function's arguments.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ExpressionListFunctionArgumentSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ExpressionListFunctionArgument" />
-    <Field Name="OpenParenthesisToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The argument list's opening parenthesis token.</summary>
-      </PropertyComment>
-      <Kind Name="OpenParenthesisToken" />
-    </Field>
-    <Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;">
-      <PropertyComment>
-        <summary>The list of expressions.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="CloseParenthesisToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The argument list's closing parenthesis token.</summary>
-      </PropertyComment>
-      <Kind Name="CloseParenthesisToken" />
-    </Field>
-  </Node>
-
-  <!-- Expressions -->
-
-  <AbstractNode Name="ExpressionSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>The base class for expressions.</summary>
-    </TypeComment>
-  </AbstractNode>
-
-  <!-- Primary Expressions -->
-
-  <Node Name="AnonymousFunctionExpressionSyntax" Base="ExpressionSyntax">
-    <TypeComment>
-      <summary>Represents an anonymous function expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="AnonymousFunctionExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="AnonymousFunctionExpression" />
-    <Field Name="FunctionKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'function' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="FunctionKeyword" />
-    </Field>
-    <Field Name="Parameters" Type="ParameterListSyntax">
-      <PropertyComment>
-        <summary>The list of parameters.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The function's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'end' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="EndKeyword" />
-    </Field>
-  </Node>
-
-  <Node Name="TableConstructorExpressionSyntax" Base="ExpressionSyntax">
-    <TypeComment>
-      <summary>Represents a table constructor expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="TableConstructorExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="TableConstructorExpression" />
-    <Field Name="OpenBraceToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The opening brace token.</summary>
-      </PropertyComment>
-      <Kind Name="OpenBraceToken" />
-    </Field>
-    <Field Name="Fields" Type="SeparatedSyntaxList&lt;TableFieldSyntax&gt;" AllowTrailingSeparator="true">
-      <PropertyComment>
-        <summary>The list of fields.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="CloseBraceToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The closing brace token.</summary>
-      </PropertyComment>
-      <Kind Name="CloseBraceToken" />
-    </Field>
-  </Node>
-
-  <Node Name="LiteralExpressionSyntax" Base="ExpressionSyntax">
-    <TypeComment>
-      <summary>Represents a literal expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="LiteralExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="NumericalLiteralExpression" />
-    <Kind Name="StringLiteralExpression" />
-    <Kind Name="TrueLiteralExpression" />
-    <Kind Name="FalseLiteralExpression" />
-    <Kind Name="NilLiteralExpression" />
-    <Kind Name="HashStringLiteralExpression" />
-    <Field Name="Token" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The literal token.</summary>
-      </PropertyComment>
-      <Kind Name="NumericLiteralToken" />
-      <Kind Name="StringLiteralToken" />
-      <Kind Name="TrueKeyword" />
-      <Kind Name="FalseKeyword" />
-      <Kind Name="NilKeyword" />
-      <Kind Name="HashStringLiteralToken" />
-    </Field>
-  </Node>
-
-  <Node Name="VarArgExpressionSyntax" Base="ExpressionSyntax">
-    <TypeComment>
-      <summary>Represents a vararg expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="VarArgExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="VarArgExpression" />
-    <Field Name="VarArgToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The vararg token.</summary>
-      </PropertyComment>
-      <Kind Name="DotDotDotToken" />
-    </Field>
-  </Node>
-
-  <AbstractNode Name="VariableExpressionSyntax" Base="PrefixExpressionSyntax">
-    <TypeComment>
-      <summary>The base class for variable expressions (values that can be assigned to).</summary>
-    </TypeComment>
-  </AbstractNode>
-
-  <Node Name="IdentifierNameSyntax" Base="VariableExpressionSyntax">
-    <TypeComment>
-      <summary>A name expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="IdentifierNameSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="IdentifierName" />
-    <Field Name="Identifier" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The identifier.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="MemberAccessExpressionSyntax" Base="VariableExpressionSyntax">
-    <PropertyComment>
-      <summary>Represents a member access expression.</summary>
-    </PropertyComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="MemberAccessExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="MemberAccessExpression" />
-    <Field Name="Expression" Type="PrefixExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression that contains the member being accessed.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="DotSeparator" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The dot separating the expression and the identifier.</summary>
-      </PropertyComment>
-      <Kind Name="DotToken" />
-    </Field>
-    <Field Name="MemberName" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The identifier representing the member name.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-  </Node>
-
-  <Node Name="ElementAccessExpressionSyntax" Base="VariableExpressionSyntax">
-    <PropertyComment>
-      <summary>Represents an element access expression.</summary>
-    </PropertyComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ElementAccessExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ElementAccessExpression" />
-    <Field Name="Expression" Type="PrefixExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression that contains the member being accessed.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="OpenBracketToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The opening bracket token.</summary>
-      </PropertyComment>
-      <Kind Name="OpenBracketToken" />
-    </Field>
-    <Field Name="KeyExpression" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The key expression.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="CloseBracketToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The closing bracket token.</summary>
-      </PropertyComment>
-      <Kind Name="CloseBracketToken" />
-    </Field>
-  </Node>
-
-  <Node Name="UnaryExpressionSyntax" Base="ExpressionSyntax">
-    <TypeComment>
-      <summary>Represents an unary expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="UnaryExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="BitwiseNotExpression" />
-    <Kind Name="LengthExpression" />
-    <Kind Name="LogicalNotExpression" />
-    <Kind Name="UnaryMinusExpression" />
-    <Field Name="OperatorToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The operator token.</summary>
-      </PropertyComment>
-      <Kind Name="BangToken" />
-      <Kind Name="HashToken" />
-      <Kind Name="MinusToken" />
-      <Kind Name="NotKeyword" />
-      <Kind Name="TildeToken" />
-    </Field>
-    <Field Name="Operand" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The operand expression.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="BinaryExpressionSyntax" Base="ExpressionSyntax">
-    <TypeComment>
-      <summary>Represents a binary expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="BinaryExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="AddExpression" />
-    <Kind Name="BitwiseAndExpression" />
-    <Kind Name="BitwiseOrExpression" />
-    <Kind Name="ConcatExpression" />
-    <Kind Name="DivideExpression" />
-    <Kind Name="EqualsExpression" />
-    <Kind Name="ExclusiveOrExpression" />
-    <Kind Name="ExponentiateExpression" />
-    <Kind Name="GreaterThanExpression" />
-    <Kind Name="GreaterThanOrEqualExpression" />
-    <Kind Name="LeftShiftExpression" />
-    <Kind Name="LessThanExpression" />
-    <Kind Name="LessThanOrEqualExpression" />
-    <Kind Name="LogicalAndExpression" />
-    <Kind Name="LogicalOrExpression" />
-    <Kind Name="ModuloExpression" />
-    <Kind Name="MultiplyExpression" />
-    <Kind Name="NotEqualsExpression" />
-    <Kind Name="RightShiftExpression" />
-    <Kind Name="SubtractExpression" />
-    <Field Name="Left" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression on the left side of the operator.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="OperatorToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The operator token.</summary>
-      </PropertyComment>
-      <Kind Name="AmpersandAmpersandToken" />
-      <Kind Name="AmpersandToken" />
-      <Kind Name="AndKeyword" />
-      <Kind Name="BangEqualsToken" />
-      <Kind Name="DotDotToken" />
-      <Kind Name="EqualsEqualsToken" />
-      <Kind Name="GreaterThanEqualsToken" />
-      <Kind Name="GreaterThanGreaterThanToken" />
-      <Kind Name="GreaterThanToken" />
-      <Kind Name="HatToken" />
-      <Kind Name="LessThanEqualsToken" />
-      <Kind Name="LessThanLessThanToken" />
-      <Kind Name="LessThanToken" />
-      <Kind Name="MinusToken" />
-      <Kind Name="OrKeyword" />
-      <Kind Name="PercentToken" />
-      <Kind Name="PipePipeToken" />
-      <Kind Name="PipeToken" />
-      <Kind Name="PlusToken" />
-      <Kind Name="SlashToken" />
-      <Kind Name="StarToken" />
-      <Kind Name="TildeEqualsToken" />
-      <Kind Name="TildeToken" />
-    </Field>
-    <Field Name="Right" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression on the right side of the operator.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="ElseIfExpressionClauseSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>
-        Represents an elseif clause in an if expression.
-      </summary>
-    </TypeComment>
-    <FactoryComment>
-      Creates a new <see cref="ElseIfExpressionClauseSyntax" /> node.
-    </FactoryComment>
-    <Kind Name="ElseIfExpressionClause" />
-    <Field Name="ElseIfKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'elseif' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ElseIfKeyword" />
-    </Field>
-    <Field Name="Condition" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The elseif's condition.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ThenKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'then' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ThenKeyword" />
-    </Field>
-    <Field Name="Value" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The value to be returned if the condition is true.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="IfExpressionSyntax" Base="ExpressionSyntax">
-    <TypeComment>
-      <summary>
-        Represents Luau's if expression.
-      </summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="IfExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="IfExpression" />
-    <Field Name="IfKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'if' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="IfKeyword" />
-    </Field>
-    <Field Name="Condition" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The if's condition.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ThenKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'then' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ThenKeyword" />
-    </Field>
-    <Field Name="TrueValue" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The value that will be returned if condition is true.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ElseIfClauses" Type="SyntaxList&lt;ElseIfExpressionClauseSyntax&gt;">
-      <PropertyComment>
-        <summary>The elseif clauses.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ElseKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'else' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ElseKeyword" />
-    </Field>
-    <Field Name="FalseValue" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The value that will be returned if none of the previous conditions are true.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <!-- Prefix Expressions -->
-  <AbstractNode Name="PrefixExpressionSyntax" Base="ExpressionSyntax">
-    <TypeComment>
-      <summary>
-        The base node for prefix expressions (expressions that can be called as functions,
-        have methods called on them and/or have members/elements accessed on them).
-      </summary>
-    </TypeComment>
-  </AbstractNode>
-
-  <Node Name="ParenthesizedExpressionSyntax" Base="PrefixExpressionSyntax">
-    <PropertyComment>
-      <summary>Represents a parenthesized expression.</summary>
-    </PropertyComment>
-    <FactoryComment>
-      Creates a new <see cref="ParenthesizedExpressionSyntax" /> node.
-    </FactoryComment>
-    <Kind Name="ParenthesizedExpression" />
-    <Field Name="OpenParenthesisToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The opening parenthesis token.</summary>
-      </PropertyComment>
-      <Kind Name="OpenParenthesisToken" />
-    </Field>
-    <Field Name="Expression" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The inner expression.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="CloseParenthesisToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The closing parenthesis token.</summary>
-      </PropertyComment>
-      <Kind Name="CloseParenthesisToken" />
-    </Field>
-  </Node>
-
-  <Node Name="FunctionCallExpressionSyntax" Base="PrefixExpressionSyntax">
-    <TypeComment>
-      <summary>Represents a function call expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="FunctionCallExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="FunctionCallExpression" />
-    <Field Name="Expression" Type="PrefixExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression returning the function to be called.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="Argument" Type="FunctionArgumentSyntax">
-      <PropertyComment>
-        <summary>The function's arguments.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="MethodCallExpressionSyntax" Base="PrefixExpressionSyntax">
-    <TypeComment>
-      <summary>Represents a method call (obj:method args...) expression.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="MethodCallExpressionSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="MethodCallExpression" />
-    <Field Name="Expression" Type="PrefixExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression that contains the method being called.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ColonToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The colon token.</summary>
-      </PropertyComment>
-      <Kind Name="ColonToken" />
-    </Field>
-    <Field Name="Identifier" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The identifier containing the method name.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-    <Field Name="Argument" Type="FunctionArgumentSyntax">
-      <PropertyComment>
-        <summary>The method call's arguments.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <!-- Statements -->
-
-  <AbstractNode Name="StatementSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>The base class for statements.</summary>
-    </TypeComment>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </AbstractNode>
-
-  <!-- Assignment statement -->
-
-  <Node Name="VariableAttributeSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>Represents a variable attribute syntax.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="VariableAttributeSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="VariableAttribute" />
-    <Field Name="LessThanToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>
-          The leading <c>&lt;</c> token.
-        </summary>
-      </PropertyComment>
-      <Kind Name="LessThanToken" />
-    </Field>
-    <Field Name="Identifier" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The attribute name identifier token.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-    <Field Name="GreaterThanToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>
-          The trailing <c>&gt;</c> token.
-        </summary>
-      </PropertyComment>
-      <Kind Name="GreaterThanToken" />
-    </Field>
-  </Node>
-
-  <Node Name="LocalDeclarationNameSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>
-        Represents a variable name in a <see cref="LocalVariableDeclarationStatementSyntax" /> node.
-      </summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="LocalDeclarationNameSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="LocalDeclarationName" />
-    <Field Name="IdentifierName" Type="IdentifierNameSyntax">
-      <PropertyComment>
-        <summary>
-          The <see cref="IdentifierNameSyntax" /> containing the name.
-        </summary>
-      </PropertyComment>
-      <Kind Name="IdentifierName" />
-    </Field>
-    <Field Name="Attribute" Type="VariableAttributeSyntax" Optional="true">
-      <PropertyComment>
-        <summary>
-          The <see cref="VariableAttributeSyntax" /> containing the (optional) variable attribute.
-        </summary>
-      </PropertyComment>
-      <Kind Name="VariableAttribute" />
-    </Field>
-  </Node>
-
-  <Node Name="EqualsValuesClauseSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>Represents the values being assigned to the names in an assignment or variable declaration.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="EqualsValuesClauseSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="EqualsValuesClause" />
-    <Field Name="EqualsToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The equals token.</summary>
-      </PropertyComment>
-      <Kind Name="EqualsToken" />
-    </Field>
-    <Field Name="Values" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
-      <PropertyComment>
-        <summary>The list of values being assigned.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="AssignmentStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents an assignment statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="AssignmentStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="AssignmentStatement" />
-    <Field Name="Variables" Type="SeparatedSyntaxList&lt;PrefixExpressionSyntax&gt;" MinCount="1">
-      <PropertyComment>
-        <summary>The variables being assigned to.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EqualsValues" Type="EqualsValuesClauseSyntax">
-      <PropertyComment>
-        <summary>The values being assigned to the names (if any).</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="CompoundAssignmentStatementSyntax" Base="StatementSyntax">
-    <PropertyComment>
-      <summary>Represents a compound assignment expression.</summary>
-    </PropertyComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="CompoundAssignmentStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="AddAssignmentStatement" />
-    <Kind Name="SubtractAssignmentStatement" />
-    <Kind Name="MultiplyAssignmentStatement" />
-    <Kind Name="DivideAssignmentStatement" />
-    <Kind Name="ModuloAssignmentStatement" />
-    <Kind Name="ConcatAssignmentStatement" />
-    <Kind Name="ExponentiateAssignmentStatement" />
-    <Field Name="Variable" Type="PrefixExpressionSyntax">
-      <PropertyComment>
-        <summary>The variable being assigned to.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="AssignmentOperatorToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The compound assignment operator token.</summary>
-      </PropertyComment>
-      <Kind Name="PlusEqualsToken" />
-      <Kind Name="MinusEqualsToken" />
-      <Kind Name="StarEqualsToken" />
-      <Kind Name="SlashEqualsToken" />
-      <Kind Name="PercentEqualsToken" />
-      <Kind Name="DotDotEqualsToken" />
-      <Kind Name="HatEqualsToken" />
-    </Field>
-    <Field Name="Expression" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression on the right side of the operator.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="LocalVariableDeclarationStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a local variable declaration statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="LocalVariableDeclarationStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="LocalVariableDeclarationStatement" />
-    <Field Name="LocalKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'local' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="LocalKeyword" />
-    </Field>
-    <Field Name="Names" Type="SeparatedSyntaxList&lt;LocalDeclarationNameSyntax&gt;" MinCount="1">
-      <PropertyComment>
-        <summary>The list of names being assigned to.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EqualsValues" Type="EqualsValuesClauseSyntax" Optional="true">
-      <PropertyComment>
-        <summary>The values being assigned to the names (if any).</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <!-- Control Flow Statement -->
-
-  <Node Name="NumericForStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a numeric for statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="NumericForStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="NumericForStatement" />
-    <Field Name="ForKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'for' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ForKeyword" />
-    </Field>
-    <Field Name="Identifier" Type="IdentifierNameSyntax">
-      <PropertyComment>
-        <summary>The loop variable identifier.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-    <Field Name="EqualsToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The equals token.</summary>
-      </PropertyComment>
-      <Kind Name="EqualsToken" />
-    </Field>
-    <Field Name="InitialValue" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression defining the initial value of the loop variable.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="FinalValueCommaToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The comma separating the initial value from the final value.</summary>
-      </PropertyComment>
-      <Kind Name="CommaToken" />
-    </Field>
-    <Field Name="FinalValue" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The expression defining the final value of the loop variable.</summary>
-      </PropertyComment>
-    </Field>
-    <Sequence Optional="true">
-      <Field Name="StepValueCommaToken" Type="SyntaxToken">
-        <PropertyComment>
-          <summary>
-            The comma separating the final value from the step value.
-            May be None if there is no step.
-          </summary>
-        </PropertyComment>
-        <Kind Name="CommaToken" />
-      </Field>
-      <Field Name="StepValue" Type="ExpressionSyntax">
-        <PropertyComment>
-          <summary>
-            The expression defining the step value of the loop variable.
-            May be None if there is no step.
-          </summary>
-        </PropertyComment>
-      </Field>
-    </Sequence>
-    <Field Name="DoKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'do' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="DoKeyword" />
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The loop's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'end' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="EndKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="GenericForStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a generic for loop statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="GenericForStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="GenericForStatement" />
-    <Field Name="ForKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'for' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ForKeyword" />
-    </Field>
-    <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
-      <PropertyComment>
-        <summary>The list of loop variables.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="InKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'in' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="InKeyword" />
-    </Field>
-    <Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
-      <PropertyComment>
-        <summary>The list of expressions.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="DoKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'do' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="DoKeyword" />
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The loop's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'end' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="EndKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="WhileStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a while statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="WhileStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="WhileStatement" />
-    <Field Name="WhileKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'while' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="WhileKeyword" />
-    </Field>
-    <Field Name="Condition" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The while's condition.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="DoKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'do' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="DoKeyword" />
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The while's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'end' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="EndKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="RepeatUntilStatementSyntax" Base="StatementSyntax">
-    <PropertyComment>
-      <summary>Represents a repeat until statement.</summary>
-    </PropertyComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="RepeatUntilStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="RepeatUntilStatement" />
-    <Field Name="RepeatKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'repeat' until keyword.</summary>
-      </PropertyComment>
-      <Kind Name="RepeatKeyword" />
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The repeat until's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="UntilKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'until' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="UntilKeyword" />
-    </Field>
-    <Field Name="Condition" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The repeat until's condition.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <!-- If Statement -->
-
-  <Node Name="IfStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents an if statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="IfStatementSyntax" /> comment.
-      </summary>
-    </FactoryComment>
-    <Kind Name="IfStatement" />
-    <Field Name="IfKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'if' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="IfKeyword" />
-    </Field>
-    <Field Name="Condition" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The if's condition.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ThenKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'then' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ThenKeyword" />
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The if's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ElseIfClauses" Type="SyntaxList&lt;ElseIfClauseSyntax&gt;">
-      <PropertyComment>
-        <summary>The elseif clauses.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ElseClause" Type="ElseClauseSyntax" Optional="true">
-      <PropertyComment>
-        <summary>The else clause.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'end' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="EndKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="ElseIfClauseSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>Represents an elseif clause.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ElseIfClauseSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ElseIfClause" />
-    <Field Name="ElseIfKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'elseif' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ElseIfKeyword" />
-    </Field>
-    <Field Name="Condition" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The condition.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="ThenKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'then' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ThenKeyword" />
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The elseif body.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="ElseClauseSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>Represents an else clause.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ElseClauseSyntax" /> comment.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ElseClause" />
-    <Field Name="ElseKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'else' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ElseKeyword" />
-    </Field>
-    <Field Name="ElseBody" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The else's body.</summary>
-      </PropertyComment>
-    </Field>
-  </Node>
-
-  <Node Name="GotoStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a goto statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="GotoStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="GotoStatement" />
-    <Field Name="GotoKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'goto' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="GotoKeyword" />
-    </Field>
-    <Field Name="LabelName" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The name of the label being jumped to.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="BreakStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a break statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="BreakStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="BreakStatement" />
-    <Field Name="BreakKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'break' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="BreakKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="ReturnStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a return statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ReturnStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ReturnStatement" />
-    <Field Name="ReturnKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'return' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ReturnKeyword" />
-    </Field>
-    <Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;">
-      <PropertyComment>
-        <summary>The expressions being returned.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="ContinueStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a continue statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ContinueStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ContinueStatement" />
-    <Field Name="ContinueKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'continue' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="ContinueKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="LocalFunctionDeclarationStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a local function declaration statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="LocalFunctionDeclarationStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="LocalFunctionDeclarationStatement" />
-    <Field Name="LocalKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'local' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="LocalKeyword" />
-    </Field>
-    <Field Name="FunctionKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'function' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="FunctionKeyword" />
-    </Field>
-    <Field Name="Name" Type="IdentifierNameSyntax">
-      <PropertyComment>
-        <summary>The function's name.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-    <Field Name="Parameters" Type="ParameterListSyntax">
-      <PropertyComment>
-        <summary>The parameter list.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The function's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'end' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="EndKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="FunctionDeclarationStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a function declaration statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="FunctionDeclarationStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="FunctionDeclarationStatement" />
-    <Field Name="FunctionKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'function' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="FunctionKeyword" />
-    </Field>
-    <Field Name="Name" Type="FunctionNameSyntax">
-      <PropertyComment>
-        <summary>The function's name.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="Parameters" Type="ParameterListSyntax">
-      <PropertyComment>
-        <summary>The function's parameters.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The function's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'end' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="EndKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="DoStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a do statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="DoStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="DoStatement" />
-    <Field Name="DoKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'do' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="DoKeyword" />
-    </Field>
-    <Field Name="Body" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The do's body.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndKeyword" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The 'end' keyword.</summary>
-      </PropertyComment>
-      <Kind Name="EndKeyword" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="GotoLabelStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>Represents a goto label statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="GotoLabelStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="GotoLabelStatement" />
-    <Field Name="LeftDelimiterToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The delimiter on the left of the name.</summary>
-      </PropertyComment>
-      <Kind Name="ColonColonToken" />
-    </Field>
-    <Field Name="Identifier" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The label name.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken" />
-    </Field>
-    <Field Name="RightDelimiterToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The delimiter on the right of the name.</summary>
-      </PropertyComment>
-      <Kind Name="ColonColonToken" />
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="ExpressionStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>An expression as a statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="ExpressionStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="ExpressionStatement" />
-    <Field Name="Expression" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>The function call expression.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <Node Name="EmptyStatementSyntax" Base="StatementSyntax">
-    <TypeComment>
-      <summary>An empty statement.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="EmptyStatementSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="EmptyStatement" />
-    <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-      <PropertyComment>
-        <summary>The semicolon at the end of the statement (if any).</summary>
-      </PropertyComment>
-      <Kind Name="SemicolonToken" />
-    </Field>
-  </Node>
-
-  <!-- Types -->
-
-  <AbstractNode Name="TypeSyntax" Base="LuaSyntaxNode">
-  	<TypeComment>
-  		<summary>The base node for type annotations</summary>
-  	</TypeComment>
-  </AbstractNode>
-	
-  <Node Name="TypeBindingSyntax" Base="LuaSyntaxNode">
-  	<TypeComment>
-  		<summary>The node representing a type annotation</summary>
-  	</TypeComment>
-  	<FactoryComment>
-  		<summary>
-  			Creates a new <see cref="TypeBindingSyntax" /> node.
-  		</summary>
-  	</FactoryComment>
-  	<Field Name="ColonToken" Type="SyntaxToken" Optional="true" Override="true">
-  		<PropertyComment>
-  			<summary>The colon at the start of the statement (if any).</summary>
-  		</PropertyComment>
-  		<Kind Name="ColonToken" />
-  	</Field>
-  	<Field Name="Type" Type="LuaSyntaxNode" Optional="true" Override="true">
-  		<PropertyComment>
-  			<summary>The type of the statement (if any).</summary>
-  		</PropertyComment>
-  		<Kind Name="TypeSyntax" />
-  	</Field>
-  </Node>
-	
-  <Node Name="NullableTypeSyntax" Base="TypeSyntax">
-	<TypeComment>
-		<summary>Represents a nullable type binding</summary>
-	</TypeComment>
-	<FactoryComment>
-		<summary>
-			Creates a new <see cref="NullableTypeSyntax" /> node.
-		</summary>
-	</FactoryComment>
-	<Kind Name="TypeBinding" />
-	<Field Name="ColonToken" Type="SyntaxToken" Optional="true" Override="true">
-		   <PropertyComment>
-			<summary>The colon at the start of the statement (if any).</summary>
-		   </PropertyComment>
-		<Kind Name="ColonToken" />
-	</Field>
-  </Node>
-
-  <Node Name="TupleTypeSytnax" Base="TypeSyntax">
-  	<TypeComment>
-  		<summary>Represents a tuple type binding</summary>
-  	</TypeComment>
-  	<FactoryComment>
-  		<summary>
-  			Creates a new <see cref="TupleTypeStnax" /> node.
-  		</summary>
-  	</FactoryComment>
-  	<Kind Name="TypeBinding" />
-	<Field Name="OpenParenthesisToken" Type="SyntaxToken">
-	    <PropertyComment>
-	        <summary>The parameter list opening parenthesis.</summary>
-	    </PropertyComment>
-	    <Kind Name="OpenParenthesisToken" />
-	</Field>
-	<Field Name="Types" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
-		  <PropertyComment>
-			  <summary>A list of types.</summary>
-		  </PropertyComment>
-	</Field>
-	<Field Name="CloseParenthesisToken" Type="SyntaxToken">
-	    <PropertyComment>
-	        <summary>The close parenthesis token.</summary>
-	    </PropertyComment>
-	    <Kind Name="CloseParenthesisToken" />
-	</Field>
-  </Node>
-
-  <Node Name="TableTypeSyntax" Base="TypeSyntax">
-	<TypeComment>
-		<summary>Represents a table type binding</summary>
-	</TypeComment>
-	<FactoryComment>
-		<summary>
-			Creates a new <see cref="TableTypeSyntax" /> node.
-		</summary>
-	</FactoryComment>
-	<Kind Name="TypeBinding" />
-	<Field Name="ColonToken" Type="SyntaxToken" Optional="true" Override="true">
-	    <PropertyComment>
-		    <summary>The colon at the start of the statement (if any).</summary>
-	    </PropertyComment>
-	    <Kind Name="ColonToken" />
-	</Field>
-	<Field Name="Types" Type="SeparatedSyntaxList&lt;TableElementTypeSyntax&gt;">
-	  <PropertyComment>
-		  <summary>A list of types.</summary>
-	  </PropertyComment>
-	</Field>
-  </Node>
-
-  <Node Name="VarargTypeSyntax" Base="TypeSyntax">
-  	<TypeComment>
-  		<summary>Represents a vararg type binding</summary>
-  	</TypeComment>
-  	<FactoryComment>
-  		<summary>
-  			Creates a new <see cref="VarargTypeSyntax" /> node.
-  		</summary>
-  	</FactoryComment>
-  	<Kind Name="TypeBinding" />
-  </Node>
-
-  <Node Name="TypeCastSyntax" Base="ExpressionSyntax">
-  	<TypeComment>
-  		<summary>Represents a type cast</summary>
-  	</TypeComment>
-  	<FactoryComment>
-  		<summary>
-  			Creates a new <see cref="TypeCastSyntax" /> node.
-  		</summary>
-  	</FactoryComment>
-  	<Kind Name="TypeCasting" />
-  	<Field Name="Left" Type="ExpressionSyntax">
-  		<PropertyComment>
-  			<summary>The expression on the left side of the operator.</summary>
-  		</PropertyComment>
-  	</Field>
-	<Field Name ="ColonColonToken" Type="SyntaxToken">
+	<PredefinedNode Name="LuaSyntaxNode" Base="SyntaxNode" />
+	<PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
+	<PredefinedNode Name="StructuredTriviaSyntax" Base="LuaSyntaxNode" />
+
+	<!-- Structured Trivia -->
+
+	<Node Name="SkippedTokensTriviaSyntax" Base="StructuredTriviaSyntax">
+		<Kind Name="SkippedTokensTrivia"/>
+		<Field Name="Tokens" Type="SyntaxList&lt;SyntaxToken&gt;"/>
+	</Node>
+
+	<!-- Statement List -->
+	<Node Name="StatementListSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents a block of code.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="StatementListSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="StatementList" />
+		<Field Name="Statements" Type="SyntaxList&lt;StatementSyntax&gt;">
+			<PropertyComment>
+				<summary>The list of statements contained within this block.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<!-- Parameters -->
+
+	<AbstractNode Name="ParameterSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>The base type for parameter nodes.</summary>
+		</TypeComment>
+	</AbstractNode>
+
+	<Node Name="NamedParameterSyntax" Base="ParameterSyntax">
+		<TypeComment>
+			<summary>Represents a named function parameter.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="NamedParameterSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="NamedParameter" />
+		<Field Name="Identifier" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The name of the parameter.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+	</Node>
+
+	<Node Name="VarArgParameterSyntax" Base="ParameterSyntax">
+		<TypeComment>
+			<summary>Represents a vararg function parameter.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="VarArgParameterSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="VarArgParameter" />
+		<Field Name="VarArgToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The vararg token.</summary>
+			</PropertyComment>
+			<Kind Name="DotDotDotToken" />
+		</Field>
+	</Node>
+
+	<Node Name="ParameterListSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents a function declaration's parameter list.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ParameterListSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ParameterList" />
+		<Field Name="OpenParenthesisToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The parameter list opening parenthesis.</summary>
+			</PropertyComment>
+			<Kind Name="OpenParenthesisToken" />
+		</Field>
+		<Field Name="Parameters" Type="SeparatedSyntaxList&lt;ParameterSyntax&gt;">
+			<PropertyComment>
+				<summary>The parameter list opening parenthesis.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="CloseParenthesisToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The close parenthesis token.</summary>
+			</PropertyComment>
+			<Kind Name="CloseParenthesisToken" />
+		</Field>
+	</Node>
+
+	<!-- Table Fields -->
+
+	<AbstractNode Name="TableFieldSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>The base class for table fields.</summary>
+		</TypeComment>
+	</AbstractNode>
+
+	<Node Name="IdentifierKeyedTableFieldSyntax" Base="TableFieldSyntax">
+		<TypeComment>
+			<summary>Represents a table field whose key is an identifier.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="IdentifierKeyedTableFieldSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="IdentifierKeyedTableField" />
+		<Field Name="Identifier" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The table field's key.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+		<Field Name="EqualsToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The equals token.</summary>
+			</PropertyComment>
+			<Kind Name="EqualsToken" />
+		</Field>
+		<Field Name="Value" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The table field's value.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="ExpressionKeyedTableFieldSyntax" Base="TableFieldSyntax">
+		<TypeComment>
+			<summary>Represents a table field whose key is an expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ExpressionKeyedTableFieldSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ExpressionKeyedTableField" />
+		<Field Name="OpenBracketToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The opening bracket token.</summary>
+			</PropertyComment>
+			<Kind Name="OpenBracketToken" />
+		</Field>
+		<Field Name="Key" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The table field's key.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="CloseBracketToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The closing bracket token.</summary>
+			</PropertyComment>
+			<Kind Name="CloseBracketToken" />
+		</Field>
+		<Field Name="EqualsToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The equals token.</summary>
+			</PropertyComment>
+			<Kind Name="EqualsToken" />
+		</Field>
+		<Field Name="Value" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The field's value.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="UnkeyedTableFieldSyntax" Base="TableFieldSyntax">
+		<TypeComment>
+			<summary>Represents a table field without a key.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="UnkeyedTableFieldSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="UnkeyedTableField" />
+		<Field Name="Value" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The table field's value.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<!-- Function Names -->
+
+	<AbstractNode Name="FunctionNameSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>The base class for function name nodes.</summary>
+		</TypeComment>
+		<Field Name="Name" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The member name.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+	</AbstractNode>
+
+	<Node Name="SimpleFunctionNameSyntax" Base="FunctionNameSyntax">
+		<TypeComment>
+			<summary>Represents a function name which is only an identifier.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="SimpleFunctionNameSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="SimpleFunctionName" />
+		<Field Name="Name" Type="SyntaxToken" Override="true">
+			<PropertyComment>
+				<summary>The function name.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+	</Node>
+
+	<Node Name="MemberFunctionNameSyntax" Base="FunctionNameSyntax">
+		<TypeComment>
+			<summary>Represents a function name which is a member.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="MemberFunctionNameSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="MemberFunctionName" />
+		<Field Name="BaseName" Type="FunctionNameSyntax">
+			<PropertyComment>
+				<summary>The base function name.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="DotToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The dot token.</summary>
+			</PropertyComment>
+			<Kind Name="DotToken" />
+		</Field>
+		<Field Name="Name" Type="SyntaxToken" Override="true">
+			<PropertyComment>
+				<summary>The member name.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+	</Node>
+
+	<Node Name="MethodFunctionNameSyntax" Base="FunctionNameSyntax">
+		<TypeComment>
+			<summary>Represents a method-style function name syntax.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="MethodFunctionNameSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="MethodFunctionName" />
+		<Field Name="BaseName" Type="FunctionNameSyntax">
+			<PropertyComment>
+				<summary>The base name for this method.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ColonToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The colon token.</summary>
+			</PropertyComment>
+			<Kind Name="ColonToken" />
+		</Field>
+		<Field Name="Name" Type="SyntaxToken" Override="true">
+			<PropertyComment>
+				<summary>The method name.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<!-- Function Arguments -->
+
+	<AbstractNode Name="FunctionArgumentSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>The base class for function arguments.</summary>
+		</TypeComment>
+	</AbstractNode>
+
+	<Node Name="StringFunctionArgumentSyntax" Base="FunctionArgumentSyntax">
+		<TypeComment>
+			<summary>Represents a string being passed as a function call's argument.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="StringFunctionArgumentSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="StringFunctionArgument" />
+		<Field Name="Expression" Type="LiteralExpressionSyntax">
+			<PropertyComment>
+				<summary>The string literal being passed as an argument.</summary>
+			</PropertyComment>
+			<Kind Name="StringLiteralExpression" />
+		</Field>
+	</Node>
+
+	<Node Name="TableConstructorFunctionArgumentSyntax" Base="FunctionArgumentSyntax" SkipConvenienceFactories="true">
+		<TypeComment>
+			<summary>Represents a table being passed as a function call's arguments.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TableConstructorFunctionArgumentSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TableConstructorFunctionArgument" />
+		<Field Name="TableConstructor" Type="TableConstructorExpressionSyntax">
+			<PropertyComment>
+				<summary>The actual table constructor.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="ExpressionListFunctionArgumentSyntax" Base="FunctionArgumentSyntax">
+		<TypeComment>
+			<summary>Represents a list of expressions being passed as a function's arguments.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ExpressionListFunctionArgumentSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ExpressionListFunctionArgument" />
+		<Field Name="OpenParenthesisToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The argument list's opening parenthesis token.</summary>
+			</PropertyComment>
+			<Kind Name="OpenParenthesisToken" />
+		</Field>
+		<Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;">
+			<PropertyComment>
+				<summary>The list of expressions.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="CloseParenthesisToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The argument list's closing parenthesis token.</summary>
+			</PropertyComment>
+			<Kind Name="CloseParenthesisToken" />
+		</Field>
+	</Node>
+
+	<!-- Expressions -->
+
+	<AbstractNode Name="ExpressionSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>The base class for expressions.</summary>
+		</TypeComment>
+	</AbstractNode>
+
+	<!-- Primary Expressions -->
+
+	<Node Name="AnonymousFunctionExpressionSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>Represents an anonymous function expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="AnonymousFunctionExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="AnonymousFunctionExpression" />
+		<Field Name="FunctionKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'function' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="FunctionKeyword" />
+		</Field>
+		<Field Name="Parameters" Type="ParameterListSyntax">
+			<PropertyComment>
+				<summary>The list of parameters.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The function's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'end' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="EndKeyword" />
+		</Field>
+	</Node>
+
+	<Node Name="TableConstructorExpressionSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>Represents a table constructor expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TableConstructorExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TableConstructorExpression" />
+		<Field Name="OpenBraceToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The opening brace token.</summary>
+			</PropertyComment>
+			<Kind Name="OpenBraceToken" />
+		</Field>
+		<Field Name="Fields" Type="SeparatedSyntaxList&lt;TableFieldSyntax&gt;" AllowTrailingSeparator="true">
+			<PropertyComment>
+				<summary>The list of fields.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="CloseBraceToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The closing brace token.</summary>
+			</PropertyComment>
+			<Kind Name="CloseBraceToken" />
+		</Field>
+	</Node>
+
+	<Node Name="LiteralExpressionSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>Represents a literal expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="LiteralExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="NumericalLiteralExpression" />
+		<Kind Name="StringLiteralExpression" />
+		<Kind Name="TrueLiteralExpression" />
+		<Kind Name="FalseLiteralExpression" />
+		<Kind Name="NilLiteralExpression" />
+		<Kind Name="HashStringLiteralExpression" />
+		<Field Name="Token" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The literal token.</summary>
+			</PropertyComment>
+			<Kind Name="NumericLiteralToken" />
+			<Kind Name="StringLiteralToken" />
+			<Kind Name="TrueKeyword" />
+			<Kind Name="FalseKeyword" />
+			<Kind Name="NilKeyword" />
+			<Kind Name="HashStringLiteralToken" />
+		</Field>
+	</Node>
+
+	<Node Name="VarArgExpressionSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>Represents a vararg expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="VarArgExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="VarArgExpression" />
+		<Field Name="VarArgToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The vararg token.</summary>
+			</PropertyComment>
+			<Kind Name="DotDotDotToken" />
+		</Field>
+	</Node>
+
+	<AbstractNode Name="VariableExpressionSyntax" Base="PrefixExpressionSyntax">
+		<TypeComment>
+			<summary>The base class for variable expressions (values that can be assigned to).</summary>
+		</TypeComment>
+	</AbstractNode>
+
+	<Node Name="IdentifierNameSyntax" Base="VariableExpressionSyntax">
+		<TypeComment>
+			<summary>A name expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="IdentifierNameSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="IdentifierName" />
+		<Field Name="Identifier" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The identifier.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="MemberAccessExpressionSyntax" Base="VariableExpressionSyntax">
 		<PropertyComment>
-			<summary>The colon colon at the middle of the operator.</summary>
+			<summary>Represents a member access expression.</summary>
 		</PropertyComment>
-		<Kind Name="ColonColonToken" />
-	</Field>
-	<Field Name="Right" Type="TypeBindingSyntax">
-	     <PropertyComment>
-	         <summary>The type on the right side of the operator.</summary>
-	     </PropertyComment>
-	</Field>
-  </Node>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="MemberAccessExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="MemberAccessExpression" />
+		<Field Name="Expression" Type="PrefixExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression that contains the member being accessed.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="DotSeparator" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The dot separating the expression and the identifier.</summary>
+			</PropertyComment>
+			<Kind Name="DotToken" />
+		</Field>
+		<Field Name="MemberName" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The identifier representing the member name.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+	</Node>
 
-  <Node Name="TypeUnionSyntax" Base="LuaSyntaxNode">
-  	<TypeComment>
-  		<summary>Represents a type union</summary>
-  	</TypeComment>
-  	<FactoryComment>
-  		<summary>
-  			Creates a new <see cref="TypeUnionSyntax" /> node.
-  		</summary>
-  	</FactoryComment>
-  	<Kind Name="TypeUnionSyntax" />
-  	<Field Name="Left" Type="TypeBindingSyntax">
-  		<PropertyComment>
-  			<summary>The type on the left side of the operator.</summary>
-  		</PropertyComment>
-  	</Field>
-  	<Field Name ="PipeToken" Type="SyntaxToken">
-  		<PropertyComment>
-  			<summary>The pipe at the middle of the operator.</summary>
-  		</PropertyComment>
-  		<Kind Name="PipeToken" />
-  	</Field>
-  	<Field Name="Right" Type="TypeBindingSyntax">
-  		<PropertyComment>
-  			<summary>The type on the right side of the operator.</summary>
-  		</PropertyComment>
-  	</Field>
-  </Node>
+	<Node Name="ElementAccessExpressionSyntax" Base="VariableExpressionSyntax">
+		<PropertyComment>
+			<summary>Represents an element access expression.</summary>
+		</PropertyComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ElementAccessExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ElementAccessExpression" />
+		<Field Name="Expression" Type="PrefixExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression that contains the member being accessed.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="OpenBracketToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The opening bracket token.</summary>
+			</PropertyComment>
+			<Kind Name="OpenBracketToken" />
+		</Field>
+		<Field Name="KeyExpression" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The key expression.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="CloseBracketToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The closing bracket token.</summary>
+			</PropertyComment>
+			<Kind Name="CloseBracketToken" />
+		</Field>
+	</Node>
 
-  <Node Name="TypeIntersectionSyntax" Base="LuaSyntaxNode">
-  	<TypeComment>
-  		<summary>Represents a type intersection</summary>
-  	</TypeComment>
-  	<FactoryComment>
-  		<summary>
-  			Creates a new <see cref="TypeUnionSyntax" /> node.
-  		</summary>
-  	</FactoryComment>
-  	<Kind Name="TypeIntersectionSyntax" />
-  	<Field Name="Left" Type="TypeBindingSyntax">
-  		<PropertyComment>
-  			<summary>The type on the left side of the operator.</summary>
-  		</PropertyComment>
-  	</Field>
-  	<Field Name ="AmpersandToken" Type="SyntaxToken">
-  		<PropertyComment>
-  			<summary>The pipe at the middle of the operator.</summary>
-  		</PropertyComment>
-  		<Kind Name="AmpersandToken" />
-  	</Field>
-  	<Field Name="Right" Type="TypeBindingSyntax">
-  		<PropertyComment>
-  			<summary>The type on the right side of the operator.</summary>
-  		</PropertyComment>
-  	</Field>
-  </Node>
+	<Node Name="UnaryExpressionSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>Represents an unary expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="UnaryExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="BitwiseNotExpression" />
+		<Kind Name="LengthExpression" />
+		<Kind Name="LogicalNotExpression" />
+		<Kind Name="UnaryMinusExpression" />
+		<Field Name="OperatorToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The operator token.</summary>
+			</PropertyComment>
+			<Kind Name="BangToken" />
+			<Kind Name="HashToken" />
+			<Kind Name="MinusToken" />
+			<Kind Name="NotKeyword" />
+			<Kind Name="TildeToken" />
+		</Field>
+		<Field Name="Operand" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The operand expression.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
 
-  <Node Name="TypeParameterListSyntax" Base="LuaSyntaxNode">
-	<TypeComment>
-	  <summary>Represents a type parameter list</summary>
-	</TypeComment>
-	<FactoryComment>
-	  <summary>
-		  Creates a new <see cref="TypeParameterListSyntax" /> node.
-	  </summary>
-	</FactoryComment>
-	<Kind Name="TypeParameterListSyntax" />
-  	<Field Name="OpeningToken" Type="SyntaxToken">
-		<PropertyComment>
-			<summary>The parenthesis at the beginning of the operator.</summary>
-		</PropertyComment>
-  		<Kind Name="LessThanToken" />
-  	</Field>
-  	<Field Name="Names" Type="SeparatedSyntaxList&lt;SyntaxToken&gt;">
-		<PropertyComment>
-			<summary>A list of types.</summary>
-		</PropertyComment>
-  	</Field>
-  	<Field Name="ClosingToken" Type="SyntaxToken">
-		<PropertyComment>
-			<summary>The parenthesis at the beginning of the operator.</summary>
-		</PropertyComment>
-  		<Kind Name="GreaterThanToken" />
-  	</Field>
-  </Node>
-	
-  <Node Name="TypeArgumentListSyntax" Base="LuaSyntaxNode">
-	<TypeComment>
-	  <summary>Represents a type argument list</summary>
-	</TypeComment>
-	<FactoryComment>
-	  <summary>
-		  Creates a new <see cref="TypeArgumentListSyntax" /> node.
-	  </summary>
-	</FactoryComment>
-	<Kind Name="TypeArgumentListSyntax" />
-  	<Field Name="OpeningToken" Type="SyntaxToken">
-  		<Kind Name="LessThanToken" />
-  	</Field>
-  	<Field Name="Arguments" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
-		<PropertyComment>
-			<summary>A list of types.</summary>
-		</PropertyComment>
-  	</Field>
-  	<Field Name="ClosingToken" Type="SyntaxToken">
-  		<Kind Name="GreaterThanToken" />
-  	</Field>
-  </Node>
+	<Node Name="BinaryExpressionSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>Represents a binary expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="BinaryExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="AddExpression" />
+		<Kind Name="BitwiseAndExpression" />
+		<Kind Name="BitwiseOrExpression" />
+		<Kind Name="ConcatExpression" />
+		<Kind Name="DivideExpression" />
+		<Kind Name="EqualsExpression" />
+		<Kind Name="ExclusiveOrExpression" />
+		<Kind Name="ExponentiateExpression" />
+		<Kind Name="GreaterThanExpression" />
+		<Kind Name="GreaterThanOrEqualExpression" />
+		<Kind Name="LeftShiftExpression" />
+		<Kind Name="LessThanExpression" />
+		<Kind Name="LessThanOrEqualExpression" />
+		<Kind Name="LogicalAndExpression" />
+		<Kind Name="LogicalOrExpression" />
+		<Kind Name="ModuloExpression" />
+		<Kind Name="MultiplyExpression" />
+		<Kind Name="NotEqualsExpression" />
+		<Kind Name="RightShiftExpression" />
+		<Kind Name="SubtractExpression" />
+		<Field Name="Left" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression on the left side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="OperatorToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The operator token.</summary>
+			</PropertyComment>
+			<Kind Name="AmpersandAmpersandToken" />
+			<Kind Name="AmpersandToken" />
+			<Kind Name="AndKeyword" />
+			<Kind Name="BangEqualsToken" />
+			<Kind Name="DotDotToken" />
+			<Kind Name="EqualsEqualsToken" />
+			<Kind Name="GreaterThanEqualsToken" />
+			<Kind Name="GreaterThanGreaterThanToken" />
+			<Kind Name="GreaterThanToken" />
+			<Kind Name="HatToken" />
+			<Kind Name="LessThanEqualsToken" />
+			<Kind Name="LessThanLessThanToken" />
+			<Kind Name="LessThanToken" />
+			<Kind Name="MinusToken" />
+			<Kind Name="OrKeyword" />
+			<Kind Name="PercentToken" />
+			<Kind Name="PipePipeToken" />
+			<Kind Name="PipeToken" />
+			<Kind Name="PlusToken" />
+			<Kind Name="SlashToken" />
+			<Kind Name="StarToken" />
+			<Kind Name="TildeEqualsToken" />
+			<Kind Name="TildeToken" />
+		</Field>
+		<Field Name="Right" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression on the right side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
 
+	<Node Name="ElseIfExpressionClauseSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>
+				Represents an elseif clause in an if expression.
+			</summary>
+		</TypeComment>
+		<FactoryComment>
+			Creates a new <see cref="ElseIfExpressionClauseSyntax" /> node.
+		</FactoryComment>
+		<Kind Name="ElseIfExpressionClause" />
+		<Field Name="ElseIfKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'elseif' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ElseIfKeyword" />
+		</Field>
+		<Field Name="Condition" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The elseif's condition.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ThenKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'then' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ThenKeyword" />
+		</Field>
+		<Field Name="Value" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The value to be returned if the condition is true.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="IfExpressionSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>
+				Represents Luau's if expression.
+			</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="IfExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="IfExpression" />
+		<Field Name="IfKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'if' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="IfKeyword" />
+		</Field>
+		<Field Name="Condition" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The if's condition.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ThenKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'then' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ThenKeyword" />
+		</Field>
+		<Field Name="TrueValue" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The value that will be returned if condition is true.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ElseIfClauses" Type="SyntaxList&lt;ElseIfExpressionClauseSyntax&gt;">
+			<PropertyComment>
+				<summary>The elseif clauses.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ElseKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'else' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ElseKeyword" />
+		</Field>
+		<Field Name="FalseValue" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The value that will be returned if none of the previous conditions are true.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<!-- Prefix Expressions -->
+	<AbstractNode Name="PrefixExpressionSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>
+				The base node for prefix expressions (expressions that can be called as functions,
+				have methods called on them and/or have members/elements accessed on them).
+			</summary>
+		</TypeComment>
+	</AbstractNode>
+
+	<Node Name="ParenthesizedExpressionSyntax" Base="PrefixExpressionSyntax">
+		<PropertyComment>
+			<summary>Represents a parenthesized expression.</summary>
+		</PropertyComment>
+		<FactoryComment>
+			Creates a new <see cref="ParenthesizedExpressionSyntax" /> node.
+		</FactoryComment>
+		<Kind Name="ParenthesizedExpression" />
+		<Field Name="OpenParenthesisToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The opening parenthesis token.</summary>
+			</PropertyComment>
+			<Kind Name="OpenParenthesisToken" />
+		</Field>
+		<Field Name="Expression" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The inner expression.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="CloseParenthesisToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The closing parenthesis token.</summary>
+			</PropertyComment>
+			<Kind Name="CloseParenthesisToken" />
+		</Field>
+	</Node>
+
+	<Node Name="FunctionCallExpressionSyntax" Base="PrefixExpressionSyntax">
+		<TypeComment>
+			<summary>Represents a function call expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="FunctionCallExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="FunctionCallExpression" />
+		<Field Name="Expression" Type="PrefixExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression returning the function to be called.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="Argument" Type="FunctionArgumentSyntax">
+			<PropertyComment>
+				<summary>The function's arguments.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="MethodCallExpressionSyntax" Base="PrefixExpressionSyntax">
+		<TypeComment>
+			<summary>Represents a method call (obj:method args...) expression.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="MethodCallExpressionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="MethodCallExpression" />
+		<Field Name="Expression" Type="PrefixExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression that contains the method being called.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ColonToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The colon token.</summary>
+			</PropertyComment>
+			<Kind Name="ColonToken" />
+		</Field>
+		<Field Name="Identifier" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The identifier containing the method name.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+		<Field Name="Argument" Type="FunctionArgumentSyntax">
+			<PropertyComment>
+				<summary>The method call's arguments.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<!-- Statements -->
+
+	<AbstractNode Name="StatementSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>The base class for statements.</summary>
+		</TypeComment>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</AbstractNode>
+
+	<!-- Assignment statement -->
+
+	<Node Name="VariableAttributeSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents a variable attribute syntax.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="VariableAttributeSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="VariableAttribute" />
+		<Field Name="LessThanToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>
+					The leading <c>&lt;</c> token.
+				</summary>
+			</PropertyComment>
+			<Kind Name="LessThanToken" />
+		</Field>
+		<Field Name="Identifier" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The attribute name identifier token.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+		<Field Name="GreaterThanToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>
+					The trailing <c>&gt;</c> token.
+				</summary>
+			</PropertyComment>
+			<Kind Name="GreaterThanToken" />
+		</Field>
+	</Node>
+
+	<Node Name="LocalDeclarationNameSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>
+				Represents a variable name in a <see cref="LocalVariableDeclarationStatementSyntax" /> node.
+			</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="LocalDeclarationNameSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="LocalDeclarationName" />
+		<Field Name="IdentifierName" Type="IdentifierNameSyntax">
+			<PropertyComment>
+				<summary>
+					The <see cref="IdentifierNameSyntax" /> containing the name.
+				</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierName" />
+		</Field>
+		<Field Name="Attribute" Type="VariableAttributeSyntax" Optional="true">
+			<PropertyComment>
+				<summary>
+					The <see cref="VariableAttributeSyntax" /> containing the (optional) variable attribute.
+				</summary>
+			</PropertyComment>
+			<Kind Name="VariableAttribute" />
+		</Field>
+	</Node>
+
+	<Node Name="EqualsValuesClauseSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents the values being assigned to the names in an assignment or variable declaration.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="EqualsValuesClauseSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="EqualsValuesClause" />
+		<Field Name="EqualsToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The equals token.</summary>
+			</PropertyComment>
+			<Kind Name="EqualsToken" />
+		</Field>
+		<Field Name="Values" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
+			<PropertyComment>
+				<summary>The list of values being assigned.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="AssignmentStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents an assignment statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="AssignmentStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="AssignmentStatement" />
+		<Field Name="Variables" Type="SeparatedSyntaxList&lt;PrefixExpressionSyntax&gt;" MinCount="1">
+			<PropertyComment>
+				<summary>The variables being assigned to.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EqualsValues" Type="EqualsValuesClauseSyntax">
+			<PropertyComment>
+				<summary>The values being assigned to the names (if any).</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="CompoundAssignmentStatementSyntax" Base="StatementSyntax">
+		<PropertyComment>
+			<summary>Represents a compound assignment expression.</summary>
+		</PropertyComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="CompoundAssignmentStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="AddAssignmentStatement" />
+		<Kind Name="SubtractAssignmentStatement" />
+		<Kind Name="MultiplyAssignmentStatement" />
+		<Kind Name="DivideAssignmentStatement" />
+		<Kind Name="ModuloAssignmentStatement" />
+		<Kind Name="ConcatAssignmentStatement" />
+		<Kind Name="ExponentiateAssignmentStatement" />
+		<Field Name="Variable" Type="PrefixExpressionSyntax">
+			<PropertyComment>
+				<summary>The variable being assigned to.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="AssignmentOperatorToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The compound assignment operator token.</summary>
+			</PropertyComment>
+			<Kind Name="PlusEqualsToken" />
+			<Kind Name="MinusEqualsToken" />
+			<Kind Name="StarEqualsToken" />
+			<Kind Name="SlashEqualsToken" />
+			<Kind Name="PercentEqualsToken" />
+			<Kind Name="DotDotEqualsToken" />
+			<Kind Name="HatEqualsToken" />
+		</Field>
+		<Field Name="Expression" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression on the right side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="LocalVariableDeclarationStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a local variable declaration statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="LocalVariableDeclarationStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="LocalVariableDeclarationStatement" />
+		<Field Name="LocalKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'local' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="LocalKeyword" />
+		</Field>
+		<Field Name="Names" Type="SeparatedSyntaxList&lt;LocalDeclarationNameSyntax&gt;" MinCount="1">
+			<PropertyComment>
+				<summary>The list of names being assigned to.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EqualsValues" Type="EqualsValuesClauseSyntax" Optional="true">
+			<PropertyComment>
+				<summary>The values being assigned to the names (if any).</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<!-- Control Flow Statement -->
+
+	<Node Name="NumericForStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a numeric for statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="NumericForStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="NumericForStatement" />
+		<Field Name="ForKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'for' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ForKeyword" />
+		</Field>
+		<Field Name="Identifier" Type="IdentifierNameSyntax">
+			<PropertyComment>
+				<summary>The loop variable identifier.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+		<Field Name="EqualsToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The equals token.</summary>
+			</PropertyComment>
+			<Kind Name="EqualsToken" />
+		</Field>
+		<Field Name="InitialValue" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression defining the initial value of the loop variable.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="FinalValueCommaToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The comma separating the initial value from the final value.</summary>
+			</PropertyComment>
+			<Kind Name="CommaToken" />
+		</Field>
+		<Field Name="FinalValue" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression defining the final value of the loop variable.</summary>
+			</PropertyComment>
+		</Field>
+		<Sequence Optional="true">
+			<Field Name="StepValueCommaToken" Type="SyntaxToken">
+				<PropertyComment>
+					<summary>
+						The comma separating the final value from the step value.
+						May be None if there is no step.
+					</summary>
+				</PropertyComment>
+				<Kind Name="CommaToken" />
+			</Field>
+			<Field Name="StepValue" Type="ExpressionSyntax">
+				<PropertyComment>
+					<summary>
+						The expression defining the step value of the loop variable.
+						May be None if there is no step.
+					</summary>
+				</PropertyComment>
+			</Field>
+		</Sequence>
+		<Field Name="DoKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'do' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="DoKeyword" />
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The loop's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'end' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="EndKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="GenericForStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a generic for loop statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="GenericForStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="GenericForStatement" />
+		<Field Name="ForKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'for' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ForKeyword" />
+		</Field>
+		<Field Name="Identifiers" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
+			<PropertyComment>
+				<summary>The list of loop variables.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="InKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'in' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="InKeyword" />
+		</Field>
+		<Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
+			<PropertyComment>
+				<summary>The list of expressions.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="DoKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'do' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="DoKeyword" />
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The loop's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'end' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="EndKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="WhileStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a while statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="WhileStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="WhileStatement" />
+		<Field Name="WhileKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'while' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="WhileKeyword" />
+		</Field>
+		<Field Name="Condition" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The while's condition.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="DoKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'do' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="DoKeyword" />
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The while's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'end' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="EndKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="RepeatUntilStatementSyntax" Base="StatementSyntax">
+		<PropertyComment>
+			<summary>Represents a repeat until statement.</summary>
+		</PropertyComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="RepeatUntilStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="RepeatUntilStatement" />
+		<Field Name="RepeatKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'repeat' until keyword.</summary>
+			</PropertyComment>
+			<Kind Name="RepeatKeyword" />
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The repeat until's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="UntilKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'until' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="UntilKeyword" />
+		</Field>
+		<Field Name="Condition" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The repeat until's condition.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<!-- If Statement -->
+
+	<Node Name="IfStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents an if statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="IfStatementSyntax" /> comment.
+			</summary>
+		</FactoryComment>
+		<Kind Name="IfStatement" />
+		<Field Name="IfKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'if' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="IfKeyword" />
+		</Field>
+		<Field Name="Condition" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The if's condition.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ThenKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'then' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ThenKeyword" />
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The if's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ElseIfClauses" Type="SyntaxList&lt;ElseIfClauseSyntax&gt;">
+			<PropertyComment>
+				<summary>The elseif clauses.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ElseClause" Type="ElseClauseSyntax" Optional="true">
+			<PropertyComment>
+				<summary>The else clause.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'end' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="EndKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="ElseIfClauseSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents an elseif clause.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ElseIfClauseSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ElseIfClause" />
+		<Field Name="ElseIfKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'elseif' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ElseIfKeyword" />
+		</Field>
+		<Field Name="Condition" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The condition.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ThenKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'then' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ThenKeyword" />
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The elseif body.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="ElseClauseSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents an else clause.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ElseClauseSyntax" /> comment.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ElseClause" />
+		<Field Name="ElseKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'else' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ElseKeyword" />
+		</Field>
+		<Field Name="ElseBody" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The else's body.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="GotoStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a goto statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="GotoStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="GotoStatement" />
+		<Field Name="GotoKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'goto' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="GotoKeyword" />
+		</Field>
+		<Field Name="LabelName" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The name of the label being jumped to.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="BreakStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a break statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="BreakStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="BreakStatement" />
+		<Field Name="BreakKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'break' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="BreakKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="ReturnStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a return statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ReturnStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ReturnStatement" />
+		<Field Name="ReturnKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'return' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ReturnKeyword" />
+		</Field>
+		<Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;">
+			<PropertyComment>
+				<summary>The expressions being returned.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="ContinueStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a continue statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ContinueStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ContinueStatement" />
+		<Field Name="ContinueKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'continue' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="ContinueKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="LocalFunctionDeclarationStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a local function declaration statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="LocalFunctionDeclarationStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="LocalFunctionDeclarationStatement" />
+		<Field Name="LocalKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'local' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="LocalKeyword" />
+		</Field>
+		<Field Name="FunctionKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'function' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="FunctionKeyword" />
+		</Field>
+		<Field Name="Name" Type="IdentifierNameSyntax">
+			<PropertyComment>
+				<summary>The function's name.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+		<Field Name="Parameters" Type="ParameterListSyntax">
+			<PropertyComment>
+				<summary>The parameter list.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The function's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'end' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="EndKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="FunctionDeclarationStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a function declaration statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="FunctionDeclarationStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="FunctionDeclarationStatement" />
+		<Field Name="FunctionKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'function' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="FunctionKeyword" />
+		</Field>
+		<Field Name="Name" Type="FunctionNameSyntax">
+			<PropertyComment>
+				<summary>The function's name.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="Parameters" Type="ParameterListSyntax">
+			<PropertyComment>
+				<summary>The function's parameters.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The function's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'end' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="EndKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="DoStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a do statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="DoStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="DoStatement" />
+		<Field Name="DoKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'do' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="DoKeyword" />
+		</Field>
+		<Field Name="Body" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The do's body.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndKeyword" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The 'end' keyword.</summary>
+			</PropertyComment>
+			<Kind Name="EndKeyword" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="GotoLabelStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>Represents a goto label statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="GotoLabelStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="GotoLabelStatement" />
+		<Field Name="LeftDelimiterToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The delimiter on the left of the name.</summary>
+			</PropertyComment>
+			<Kind Name="ColonColonToken" />
+		</Field>
+		<Field Name="Identifier" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The label name.</summary>
+			</PropertyComment>
+			<Kind Name="IdentifierToken" />
+		</Field>
+		<Field Name="RightDelimiterToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The delimiter on the right of the name.</summary>
+			</PropertyComment>
+			<Kind Name="ColonColonToken" />
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="ExpressionStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>An expression as a statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="ExpressionStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="ExpressionStatement" />
+		<Field Name="Expression" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The function call expression.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<Node Name="EmptyStatementSyntax" Base="StatementSyntax">
+		<TypeComment>
+			<summary>An empty statement.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="EmptyStatementSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="EmptyStatement" />
+		<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The semicolon at the end of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="SemicolonToken" />
+		</Field>
+	</Node>
+
+	<!-- Types -->
+
+	<AbstractNode Name="TypeSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>The base node for type annotations</summary>
+		</TypeComment>
+	</AbstractNode>
+
+	<Node Name="TypeBindingSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>The node representing a type annotation</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TypeBindingSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Field Name="ColonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The colon at the start of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="ColonToken" />
+		</Field>
+		<Field Name="Type" Type="TypeSyntax" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The type of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="TypeSyntax" />
+		</Field>
+	</Node>
+
+	<Node Name="NullableTypeSyntax" Base="TypeSyntax">
+		<TypeComment>
+			<summary>Represents a nullable type binding</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="NullableTypeSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeBinding" />
+		<Field Name="Type" Type="TypeSyntax">
+			<PropertyComment>
+				<summary>The type of the statement (if any).</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="QuestionToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The question mark at the start of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="QuestionToken" />
+		</Field>
+	</Node>
+
+	<Node Name="TupleTypeSyntax" Base="TypeSyntax">
+		<TypeComment>
+			A
+			<summary>Represents a tuple type binding</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TupleTypeStnax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeBinding" />
+		<Field Name="OpenParenthesisToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The parameter list opening parenthesis.</summary>
+			</PropertyComment>
+			<Kind Name="OpenParenthesisToken" />
+		</Field>
+		<Field Name="Types" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
+			<PropertyComment>
+				<summary>A list of types.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="CloseParenthesisToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The close parenthesis token.</summary>
+			</PropertyComment>
+			<Kind Name="CloseParenthesisToken" />
+		</Field>
+	</Node>
+
+	<Node Name="TableTypeSyntax" Base="TypeSyntax">
+		<TypeComment>
+			<summary>Represents a table type binding</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TableTypeSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeBinding" />
+		<Field Name="ColonToken" Type="SyntaxToken" Optional="true" Override="true">
+			<PropertyComment>
+				<summary>The colon at the start of the statement (if any).</summary>
+			</PropertyComment>
+			<Kind Name="ColonToken" />
+		</Field>
+		<Field Name="Types" Type="SeparatedSyntaxList&lt;TableElementTypeSyntax&gt;">
+			<PropertyComment>
+				<summary>A list of types.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="VarargTypeSyntax" Base="TypeSyntax">
+		<TypeComment>
+			<summary>Represents a vararg type binding</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="VarargTypeSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeBinding" />
+	</Node>
+
+	<Node Name="TypeCastSyntax" Base="ExpressionSyntax">
+		<TypeComment>
+			<summary>Represents a type cast</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TypeCastSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeCasting" />
+		<Field Name="Left" Type="ExpressionSyntax">
+			<PropertyComment>
+				<summary>The expression on the left side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name ="ColonColonToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The colon colon at the middle of the operator.</summary>
+			</PropertyComment>
+			<Kind Name="ColonColonToken" />
+		</Field>
+		<Field Name="Right" Type="TypeBindingSyntax">
+			<PropertyComment>
+				<summary>The type on the right side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="TypeUnionSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents a type union</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TypeUnionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeUnionSyntax" />
+		<Field Name="Left" Type="TypeBindingSyntax">
+			<PropertyComment>
+				<summary>The type on the left side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name ="PipeToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The pipe at the middle of the operator.</summary>
+			</PropertyComment>
+			<Kind Name="PipeToken" />
+		</Field>
+		<Field Name="Right" Type="TypeBindingSyntax">
+			<PropertyComment>
+				<summary>The type on the right side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="TypeIntersectionSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents a type intersection</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TypeUnionSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeIntersectionSyntax" />
+		<Field Name="Left" Type="TypeBindingSyntax">
+			<PropertyComment>
+				<summary>The type on the left side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name ="AmpersandToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The pipe at the middle of the operator.</summary>
+			</PropertyComment>
+			<Kind Name="AmpersandToken" />
+		</Field>
+		<Field Name="Right" Type="TypeBindingSyntax">
+			<PropertyComment>
+				<summary>The type on the right side of the operator.</summary>
+			</PropertyComment>
+		</Field>
+	</Node>
+
+	<Node Name="TypeParameterListSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents a type parameter list</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TypeParameterListSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeParameterListSyntax" />
+		<Field Name="OpeningToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The parenthesis at the beginning of the operator.</summary>
+			</PropertyComment>
+			<Kind Name="LessThanToken" />
+		</Field>
+		<Field Name="Names" Type="SeparatedSyntaxList&lt;SyntaxToken&gt;">
+			<PropertyComment>
+				<summary>A list of types.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ClosingToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The parenthesis at the beginning of the operator.</summary>
+			</PropertyComment>
+			<Kind Name="GreaterThanToken" />
+		</Field>
+	</Node>
+
+	<Node Name="TypeArgumentListSyntax" Base="LuaSyntaxNode">
+		<TypeComment>
+			<summary>Represents a type argument list</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="TypeArgumentListSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="TypeArgumentListSyntax" />
+		<Field Name="OpeningToken" Type="SyntaxToken">
+			<Kind Name="LessThanToken" />
+		</Field>
+		<Field Name="Arguments" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
+			<PropertyComment>
+				<summary>A list of types.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="ClosingToken" Type="SyntaxToken">
+			<Kind Name="GreaterThanToken" />
+		</Field>
+	</Node>
 
 	<Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
-    <TypeComment>
-      <summary>The node containing all of the file's contents.</summary>
-    </TypeComment>
-    <FactoryComment>
-      <summary>
-        Creates a new <see cref="CompilationUnitSyntax" /> node.
-      </summary>
-    </FactoryComment>
-    <Kind Name="CompilationUnit" />
-    <Field Name="Statements" Type="StatementListSyntax">
-      <PropertyComment>
-        <summary>The statements in the compilation unit.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="EndOfFileToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>The end-of-file token.</summary>
-      </PropertyComment>
-      <Kind Name="EndOfFileToken" />
-    </Field>
-  </Node>
+		<TypeComment>
+			<summary>The node containing all of the file's contents.</summary>
+		</TypeComment>
+		<FactoryComment>
+			<summary>
+				Creates a new <see cref="CompilationUnitSyntax" /> node.
+			</summary>
+		</FactoryComment>
+		<Kind Name="CompilationUnit" />
+		<Field Name="Statements" Type="StatementListSyntax">
+			<PropertyComment>
+				<summary>The statements in the compilation unit.</summary>
+			</PropertyComment>
+		</Field>
+		<Field Name="EndOfFileToken" Type="SyntaxToken">
+			<PropertyComment>
+				<summary>The end-of-file token.</summary>
+			</PropertyComment>
+			<Kind Name="EndOfFileToken" />
+		</Field>
+	</Node>
 
 </Tree>

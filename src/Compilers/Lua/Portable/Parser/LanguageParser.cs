@@ -1071,6 +1071,51 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return ifExpression;
         }
 
+        private TableTypeSyntax ParseTableType()
+        {
+            
+        }
+        
+        private TupleTypeSyntax ParseTupleType()
+        {
+
+        }
+
+        private VarargTypeSyntax ParseVarargType()
+        {
+
+        }
+
+        private NullableTypeSyntax ParseNullableType()
+        {
+
+        }
+
+        private TypeParameterListSyntax ParseTypeParameterList()
+        {
+
+        }
+
+        private TypeArgumentListSyntax ParseTypeArgumentList()
+        {
+
+        }
+
+        private TypeIntersectionSyntax PrseTypeIntersection()
+        {
+
+        }
+
+        private TypeUnionSyntax ParseTypeUnion()
+        {
+
+        }
+
+        private TypeCastSyntax ParseTypeCast()
+        {
+
+        }
+
         /// <summary>
         /// Creates a missing <see cref="IdentifierNameSyntax"/>.
         /// Used for places where we expected an expression but got something else.
