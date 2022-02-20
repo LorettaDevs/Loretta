@@ -248,6 +248,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
                     break;
 
+                case '?':
+                    TextWindow.AdvanceChar();
+                    info.Kind = SyntaxKind.QuestionToken;
+                    break;
+
                 #endregion Punctuation
 
                 case '(':

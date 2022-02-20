@@ -1716,6 +1716,107 @@
     </Field>
   </Node>
 
+  <!-- Types -->
+
+  <AbstractNode Name="TypeSyntax" Base="LuaSyntaxNode">
+  	<TypeComment>
+  		<summary>The base node for type annotations</summary>
+  	</TypeComment>
+  </AbstractNode>
+	
+  <Node Name="TypeBindingSyntax" Base="LuaSyntaxNode">
+  	<TypeComment>
+  		<summary>The node representing a type annotation</summary>
+  	</TypeComment>
+  	<FactoryComment>
+  		<summary>
+  			Creates a new <see cref="TypeBindingSyntax" /> node.
+  		</summary>
+  	</FactoryComment>
+  	<Field Name="ColonToken" Type="SyntaxToken" Optional="true" Override="true">
+  		<PropertyComment>
+  			<summary>The colon at the start of the statement (if any).</summary>
+  		</PropertyComment>
+  		<Kind Name="ColonToken" />
+  	</Field>
+  	<Field Name="Type" Type="LuaSyntaxNode" Optional="true" Override="true">
+  		<PropertyComment>
+  			<summary>The type of the statement (if any).</summary>
+  		</PropertyComment>
+  		<Kind Name="TypeSyntax" />
+  	</Field>
+  </Node>
+	
+  <Node Name="NullableTypeSyntax" Base="TypeSyntax">
+	<TypeComment>
+		<summary>Represents a nullable type binding</summary>
+	</TypeComment>
+	<FactoryComment>
+		<summary>
+			Creates a new <see cref="NullableTypeSyntax" /> node.
+		</summary>
+	</FactoryComment>
+	<Kind Name="TypeBinding" />
+	<Field Name="ColonToken" Type="SyntaxToken" Optional="true" Override="true">
+		   <PropertyComment>
+			<summary>The colon at the start of the statement (if any).</summary>
+		   </PropertyComment>
+		<Kind Name="ColonToken" />
+	</Field>
+  </Node>
+
+  <Node Name="TupleTypeSytnax" Base="TypeSyntax">
+  	<TypeComment>
+  		<summary>Represents a tuple type binding</summary>
+  	</TypeComment>
+  	<FactoryComment>
+  		<summary>
+  			Creates a new <see cref="TupleTypeStnax" /> node.
+  		</summary>
+  	</FactoryComment>
+  	<Kind Name="TypeBinding" />
+	<Field Name="OpenParenthesisToken" Type="SyntaxToken">
+	    <PropertyComment>
+	        <summary>The parameter list opening parenthesis.</summary>
+	    </PropertyComment>
+	    <Kind Name="OpenParenthesisToken" />
+	</Field>
+	<Field Name="Types" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
+		  <PropertyComment>
+			  <summary>A list of types.</summary>
+		  </PropertyComment>
+	</Field>
+	<Field Name="CloseParenthesisToken" Type="SyntaxToken">
+	    <PropertyComment>
+	        <summary>The close parenthesis token.</summary>
+	    </PropertyComment>
+	    <Kind Name="CloseParenthesisToken" />
+	</Field>
+  </Node>
+
+  <Node Name="TableTypeSyntax" Base="TypeSyntax">
+	<TypeComment>
+		<summary>Represents a table type binding</summary>
+	</TypeComment>
+	<FactoryComment>
+		<summary>
+			Creates a new <see cref="TableTypeSyntax" /> node.
+		</summary>
+	</FactoryComment>
+	<Kind Name="TypeBinding" />
+	<Field Name="ColonToken" Type="SyntaxToken" Optional="true" Override="true">
+	    <PropertyComment>
+		    <summary>The colon at the start of the statement (if any).</summary>
+	    </PropertyComment>
+	    <Kind Name="ColonToken" />
+	</Field>
+	<Field Name="Types" Type="SeparatedSyntaxList&lt;TableElementTypeSyntax&gt;">
+	  <PropertyComment>
+		  <summary>A list of types.</summary>
+	  </PropertyComment>
+	</Field>
+  </Node>
+
   <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The node containing all of the file's contents.</summary>

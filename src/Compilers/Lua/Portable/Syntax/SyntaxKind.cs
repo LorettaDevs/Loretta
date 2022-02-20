@@ -351,6 +351,11 @@ namespace Loretta.CodeAnalysis.Lua
         [Token(Text = "~")]
         [UnaryOperator(precedence: 12, BitwiseNotExpression), BinaryOperator(precedence: 5, ExclusiveOrExpression)]
         TildeToken = 53,
+        /// <summary>
+        /// Represents the <c>?</c> token.
+        /// </summary>
+        [Token(Text = "?")]
+        QuestionToken = 54,
 
         // Big gap 53-500 (insert new fixed-text tokens here)
 
@@ -679,7 +684,25 @@ namespace Loretta.CodeAnalysis.Lua
         StatementList = 2072,
         EmptyStatement = 2073,
 
-        // Big gap 2086-3001 (insert new nodes here)
+        // Small gap 2074-2085
+
+        // Types
+        TypeBinding = 2086,
+        NullableType = 2087,
+        TableType = 2088,
+        TupleType = 2089,
+        TypeCast = 2090,
+        TypeComparison = 2091,
+        TypeUnion = 2092,
+        TypeIntersection = 2093,
+        Generic = 2094,
+        Type = 2095,
+        TableElementType = 2096,
+        TableTypePropertySyntax = 2097,
+        TableTypeIndexerSyntax = 2098,
+
+        // Big gap 2097-3001 (insert new nodes here)
+
 
         // Other types of nodes
         CompilationUnit = 3001,
