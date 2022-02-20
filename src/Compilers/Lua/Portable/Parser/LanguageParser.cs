@@ -443,7 +443,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 condition,
                 semicolonToken);
         }
-
+        
         private WhileStatementSyntax ParseWhileStatement()
         {
             var whileKeyword = EatToken(SyntaxKind.WhileKeyword);
@@ -494,7 +494,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private ContinueStatementSyntax ParseContinueStatement()
         {
-            LorettaDebug.Assert(Options.SyntaxOptions.Continue  is ContinueType.ContextualKeyword or ContinueType.Keyword);
+            LorettaDebug.Assert(Options.SyntaxOptions.ContinueType  is ContinueType.ContextualKeyword or ContinueType.Keyword);
             var continueKeyword = Options.SyntaxOptions.ContinueType == ContinueType.ContextualKeyword
                 ? EatContextualToken(SyntaxKind.ContinueKeyword)
                 : EatTokenWithPrejudice(SyntaxKind.ContinueKeyword);

@@ -497,7 +497,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         // Big gap 522-1000 (insert new keywords here)
 
-        // Tokens with Texth
+        // Tokens with Text
         [Token]
         BadToken = 1000,
         [Token]
