@@ -1817,6 +1817,18 @@
 	</Field>
   </Node>
 
+  <Node Name="VarargTypeSyntax" Base="TypeSyntax">
+  	<TypeComment>
+  		<summary>Represents a vararg type binding</summary>
+  	</TypeComment>
+  	<FactoryComment>
+  		<summary>
+  			Creates a new <see cref="VarargTypeSyntax" /> node.
+  		</summary>
+  	</FactoryComment>
+  	<Kind Name="TypeBinding" />
+  </Node>
+
   <Node Name="TypeCastSyntax" Base="ExpressionSyntax">
   	<TypeComment>
   		<summary>Represents a type cast</summary>
@@ -1901,7 +1913,60 @@
   	</Field>
   </Node>
 
-  <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
+  <Node Name="TypeParameterListSyntax" Base="LuaSyntaxNode">
+	<TypeComment>
+	  <summary>Represents a type parameter list</summary>
+	</TypeComment>
+	<FactoryComment>
+	  <summary>
+		  Creates a new <see cref="TypeParameterListSyntax" /> node.
+	  </summary>
+	</FactoryComment>
+	<Kind Name="TypeParameterListSyntax" />
+  	<Field Name="OpeningToken" Type="SyntaxToken">
+		<PropertyComment>
+			<summary>The parenthesis at the beginning of the operator.</summary>
+		</PropertyComment>
+  		<Kind Name="LessThanToken" />
+  	</Field>
+  	<Field Name="Names" Type="SeparatedSyntaxList&lt;SyntaxToken&gt;">
+		<PropertyComment>
+			<summary>A list of types.</summary>
+		</PropertyComment>
+  	</Field>
+  	<Field Name="ClosingToken" Type="SyntaxToken">
+		<PropertyComment>
+			<summary>The parenthesis at the beginning of the operator.</summary>
+		</PropertyComment>
+  		<Kind Name="GreaterThanToken" />
+  	</Field>
+  </Node>
+	
+  <Node Name="TypeArgumentListSyntax" Base="LuaSyntaxNode">
+	<TypeComment>
+	  <summary>Represents a type argument list</summary>
+	</TypeComment>
+	<FactoryComment>
+	  <summary>
+		  Creates a new <see cref="TypeArgumentListSyntax" /> node.
+	  </summary>
+	</FactoryComment>
+	<Kind Name="TypeArgumentListSyntax" />
+  	<Field Name="OpeningToken" Type="SyntaxToken">
+  		<Kind Name="LessThanToken" />
+  	</Field>
+  	<Field Name="Arguments" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
+		<PropertyComment>
+			<summary>A list of types.</summary>
+		</PropertyComment>
+  	</Field>
+  	<Field Name="ClosingToken" Type="SyntaxToken">
+  		<Kind Name="GreaterThanToken" />
+  	</Field>
+  </Node>
+
+
+	<Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The node containing all of the file's contents.</summary>
     </TypeComment>

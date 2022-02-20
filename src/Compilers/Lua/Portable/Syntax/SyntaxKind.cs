@@ -691,18 +691,21 @@ namespace Loretta.CodeAnalysis.Lua
         NullableType = 2087,
         TableType = 2088,
         TupleType = 2089,
-        TypeCast = 2090,
-        TypeUnion = 2091,
-        TypeIntersection = 2092,
-        Generic = 2093,
-        Type = 2094,
-        TableElementType = 2095,
-        TableTypeProperty = 2096,
-        TableTypeIndexer = 2097,
-        UnkeyedTableType = 2098,
+        VarargType = 2090,
+        TypeCast = 2091,
+        TypeUnion = 2092,
+        TypeIntersection = 2093,
+        Generic = 2094,
+        Type = 2095,
+        TableElementType = 2096,
+        TableTypeProperty = 2097,
+        TableTypeIndexer = 2098,
+        UnkeyedTableType = 2099,
+        TypeParameterListSyntax = 2100,
+        TypeArgumentListSyntax = 2101,
 
-        // Big gap 2097-3001 (insert new nodes here)
-
+        // Big gap 2105-3001 (insert new nodes here)
+        
 
         // Other types of nodes
         CompilationUnit = 3001,
