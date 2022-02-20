@@ -697,8 +697,9 @@ namespace Loretta.CodeAnalysis.Lua
         Generic = 2093,
         Type = 2094,
         TableElementType = 2095,
-        TableTypePropertySyntax = 2096,
-        TableTypeIndexerSyntax = 2097,
+        TableTypeProperty = 2096,
+        TableTypeIndexer = 2097,
+        UnkeyedTableType = 2098,
 
         // Big gap 2097-3001 (insert new nodes here)
 
