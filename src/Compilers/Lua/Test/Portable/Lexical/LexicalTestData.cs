@@ -207,9 +207,9 @@ fourth line \xFF.";
         {
             return GetSeparators().Concat(new[]
             {
-                new ShortToken ( SyntaxKind.SingleLineCommentTrivia, "-- hi" ),
-                new ShortToken ( SyntaxKind.SingleLineCommentTrivia, "// hi" ),
-                new ShortToken ( SyntaxKind.ShebangTrivia, "#!/bin/bash" ),
+                new ShortToken(SyntaxKind.SingleLineCommentTrivia, "-- hi"),
+                new ShortToken(SyntaxKind.SingleLineCommentTrivia, "// hi"),
+                new ShortToken(SyntaxKind.ShebangTrivia, "#!/bin/bash"),
             });
         }
 
@@ -217,28 +217,28 @@ fourth line \xFF.";
         {
             return new[]
             {
-                new ShortToken ( SyntaxKind.WhitespaceTrivia, " " ),
-                new ShortToken ( SyntaxKind.WhitespaceTrivia, "  " ),
-                new ShortToken ( SyntaxKind.WhitespaceTrivia, "\t" ),
-                new ShortToken ( SyntaxKind.EndOfLineTrivia, "\r" ),
-                new ShortToken ( SyntaxKind.EndOfLineTrivia, "\n" ),
-                new ShortToken ( SyntaxKind.EndOfLineTrivia, "\r\n" ),
-                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, "/**/" ),
-                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, @"/*
+                new ShortToken(SyntaxKind.WhitespaceTrivia, " "),
+                new ShortToken(SyntaxKind.WhitespaceTrivia, "  "),
+                new ShortToken(SyntaxKind.WhitespaceTrivia, "\t"),
+                new ShortToken(SyntaxKind.EndOfLineTrivia, "\r"),
+                new ShortToken(SyntaxKind.EndOfLineTrivia, "\n"),
+                new ShortToken(SyntaxKind.EndOfLineTrivia, "\r\n"),
+                new ShortToken(SyntaxKind.MultiLineCommentTrivia, "/**/"),
+                new ShortToken(SyntaxKind.MultiLineCommentTrivia, @"/*
 aaa
-*/" ),
-                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, "--[[]]" ),
+*/"),
+                new ShortToken(SyntaxKind.MultiLineCommentTrivia, "--[[]]"),
                 new ShortToken(SyntaxKind.MultiLineCommentTrivia, @"--[[
 aaa
 ]]"),
-                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, "--[=[]=]" ),
-                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, @"--[=[
+                new ShortToken(SyntaxKind.MultiLineCommentTrivia, "--[=[]=]"),
+                new ShortToken(SyntaxKind.MultiLineCommentTrivia, @"--[=[
 aaa
-]=]" ),
-                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, "--[====[]====]" ),
-                new ShortToken ( SyntaxKind.MultiLineCommentTrivia, @"--[====[
+]=]"),
+                new ShortToken(SyntaxKind.MultiLineCommentTrivia, "--[====[]====]"),
+                new ShortToken(SyntaxKind.MultiLineCommentTrivia, @"--[====[
 aaa
-]====]" ),
+]====]"),
             };
         }
 

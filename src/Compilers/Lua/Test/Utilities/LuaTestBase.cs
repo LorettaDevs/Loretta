@@ -6,6 +6,7 @@
 
 using System.Text;
 using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Loretta.CodeAnalysis.Text;
 using Xunit;
@@ -16,7 +17,11 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
     {
         #region SyntaxTree Factories
 
-        public static SyntaxTree Parse(string text, string filename = "", LuaParseOptions options = null, Encoding encoding = null)
+        public static SyntaxTree Parse(
+            string text,
+            string filename = "",
+            LuaParseOptions options = null,
+            Encoding encoding = null)
         {
             if (options is null)
             {
@@ -27,14 +32,30 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             return CheckSerializable(SyntaxFactory.ParseSyntaxTree(stringText, options, filename));
         }
 
+        public static ExpressionSyntax ParseExpression(
+            string text,
+            LuaParseOptions options = null,
+            Encoding encoding = null)
+        {
+            options ??= LuaParseOptions.Default;
+
+            var stringText = SourceText.From(text, encoding ?? Encoding.UTF8);
+            return (ExpressionSyntax) CheckSerializable(SyntaxFactory.ParseExpression(stringText, options));
+        }
+
         private static SyntaxTree CheckSerializable(SyntaxTree tree)
         {
+            _ = CheckSerializable(tree.GetRoot());
+            return tree;
+        }
+
+        private static SyntaxNode CheckSerializable(SyntaxNode node)
+        {
             var stream = new MemoryStream();
-            var root = tree.GetRoot();
-            root.SerializeTo(stream);
+            node.SerializeTo(stream);
             stream.Position = 0;
             _ = LuaSyntaxNode.DeserializeFrom(stream);
-            return tree;
+            return node;
         }
 
         public static SyntaxTree[] Parse(IEnumerable<string> sources, LuaParseOptions options = null)
@@ -57,13 +78,25 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             return sources.Select(src => Parse(src, options: options)).ToArray();
         }
 
-        public static SyntaxTree ParseWithRoundTripCheck(string text, LuaParseOptions options = null)
+        public static SyntaxTree ParseWithRoundTripCheck(
+            string text,
+            LuaParseOptions options = null)
         {
             var tree = Parse(text, options: options ?? LuaParseOptions.Default);
             var parsedText = tree.GetRoot();
             // we validate the text roundtrips
             Assert.Equal(text, parsedText.ToFullString());
             return tree;
+        }
+
+        public static ExpressionSyntax ParseExpressionWithRoundTripCheck(
+            string text,
+            LuaParseOptions options = null)
+        {
+            var node = ParseExpression(text, options: options ?? LuaParseOptions.Default);
+            // we validate the text roundtrips
+            Assert.Equal(text, node.ToFullString());
+            return node;
         }
 
         #endregion SyntaxTree Factories
@@ -154,6 +187,17 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
                 new(options ?? LuaSyntaxOptions.All));
             parsedTree.GetDiagnostics().Verify();
             return parsedTree;
+        }
+
+        public static ExpressionSyntax ParseAndValidateExpression(
+            string text,
+            LuaSyntaxOptions? options = null)
+        {
+            var parsedNode = ParseExpressionWithRoundTripCheck(
+                text,
+                new(options ?? LuaSyntaxOptions.All));
+            parsedNode.GetDiagnostics().Verify();
+            return parsedNode;
         }
 #nullable disable
     }
