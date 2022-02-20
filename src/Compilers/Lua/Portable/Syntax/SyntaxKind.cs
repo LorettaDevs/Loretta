@@ -692,14 +692,13 @@ namespace Loretta.CodeAnalysis.Lua
         TableType = 2088,
         TupleType = 2089,
         TypeCast = 2090,
-        TypeComparison = 2091,
-        TypeUnion = 2092,
-        TypeIntersection = 2093,
-        Generic = 2094,
-        Type = 2095,
-        TableElementType = 2096,
-        TableTypePropertySyntax = 2097,
-        TableTypeIndexerSyntax = 2098,
+        TypeUnion = 2091,
+        TypeIntersection = 2092,
+        Generic = 2093,
+        Type = 2094,
+        TableElementType = 2095,
+        TableTypePropertySyntax = 2096,
+        TableTypeIndexerSyntax = 2097,
 
         // Big gap 2097-3001 (insert new nodes here)
 

@@ -1817,6 +1817,90 @@
 	</Field>
   </Node>
 
+  <Node Name="TypeCastSyntax" Base="ExpressionSyntax">
+  	<TypeComment>
+  		<summary>Represents a type cast</summary>
+  	</TypeComment>
+  	<FactoryComment>
+  		<summary>
+  			Creates a new <see cref="TypeCastSyntax" /> node.
+  		</summary>
+  	</FactoryComment>
+  	<Kind Name="TypeCasting" />
+  	<Field Name="Left" Type="ExpressionSyntax">
+  		<PropertyComment>
+  			<summary>The expression on the left side of the operator.</summary>
+  		</PropertyComment>
+  	</Field>
+	<Field Name ="ColonColonToken" Type="SyntaxToken">
+		<PropertyComment>
+			<summary>The colon colon at the middle of the operator.</summary>
+		</PropertyComment>
+		<Kind Name="ColonColonToken" />
+	</Field>
+	<Field Name="Right" Type="TypeBindingSyntax">
+	     <PropertyComment>
+	         <summary>The type on the right side of the operator.</summary>
+	     </PropertyComment>
+	</Field>
+  </Node>
+
+  <Node Name="TypeUnionSyntax" Base="LuaSyntaxNode">
+  	<TypeComment>
+  		<summary>Represents a type union</summary>
+  	</TypeComment>
+  	<FactoryComment>
+  		<summary>
+  			Creates a new <see cref="TypeUnionSyntax" /> node.
+  		</summary>
+  	</FactoryComment>
+  	<Kind Name="TypeUnionSyntax" />
+  	<Field Name="Left" Type="TypeBindingSyntax">
+  		<PropertyComment>
+  			<summary>The type on the left side of the operator.</summary>
+  		</PropertyComment>
+  	</Field>
+  	<Field Name ="PipeToken" Type="SyntaxToken">
+  		<PropertyComment>
+  			<summary>The pipe at the middle of the operator.</summary>
+  		</PropertyComment>
+  		<Kind Name="PipeToken" />
+  	</Field>
+  	<Field Name="Right" Type="TypeBindingSyntax">
+  		<PropertyComment>
+  			<summary>The type on the right side of the operator.</summary>
+  		</PropertyComment>
+  	</Field>
+  </Node>
+
+  <Node Name="TypeIntersectionSyntax" Base="LuaSyntaxNode">
+  	<TypeComment>
+  		<summary>Represents a type intersection</summary>
+  	</TypeComment>
+  	<FactoryComment>
+  		<summary>
+  			Creates a new <see cref="TypeUnionSyntax" /> node.
+  		</summary>
+  	</FactoryComment>
+  	<Kind Name="TypeIntersectionSyntax" />
+  	<Field Name="Left" Type="TypeBindingSyntax">
+  		<PropertyComment>
+  			<summary>The type on the left side of the operator.</summary>
+  		</PropertyComment>
+  	</Field>
+  	<Field Name ="AmpersandToken" Type="SyntaxToken">
+  		<PropertyComment>
+  			<summary>The pipe at the middle of the operator.</summary>
+  		</PropertyComment>
+  		<Kind Name="AmpersandToken" />
+  	</Field>
+  	<Field Name="Right" Type="TypeBindingSyntax">
+  		<PropertyComment>
+  			<summary>The type on the right side of the operator.</summary>
+  		</PropertyComment>
+  	</Field>
+  </Node>
+
   <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
     <TypeComment>
       <summary>The node containing all of the file's contents.</summary>
