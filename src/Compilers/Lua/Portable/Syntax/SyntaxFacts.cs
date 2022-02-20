@@ -145,10 +145,10 @@ namespace Loretta.CodeAnalysis.Lua
         {
             return kind switch
             {
-                SyntaxKind.TrueLiteralExpression => Boxes.BoxedTrue,
-                SyntaxKind.FalseLiteralExpression => Boxes.BoxedFalse,
-                SyntaxKind.NilLiteralExpression => null,
-                _ => default
+                SyntaxKind.TrueKeyword => Boxes.BoxedTrue,
+                SyntaxKind.FalseKeyword => Boxes.BoxedFalse,
+                SyntaxKind.NilKeyword => null,
+                _ => Option.None<object?>()
             };
         }
 
