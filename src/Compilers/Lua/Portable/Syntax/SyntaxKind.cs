@@ -484,10 +484,20 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.LiteralToken)]
         [Property(SyntaxKindProperty.LiteralExpression, FalseLiteralExpression)]
         FalseKeyword = 522,
+        /// <summary>
+        /// Represents the <see langword="type"/> keyword.
+        /// </summary>
+        [Keyword("type")]
+        TypeKeyword = 523,
+        /// <summary>
+        /// Represents the <see langword="export"/> keyword.
+        /// </summary>
+        [Keyword("export")]
+        ExportKeyword = 524,
 
         // Big gap 522-1000 (insert new keywords here)
 
-        // Tokens with Text
+        // Tokens with Texth
         [Token]
         BadToken = 1000,
         [Token]

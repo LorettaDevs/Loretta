@@ -46,6 +46,8 @@ namespace Loretta.CodeAnalysis.Lua
             kind switch
             {
                 SyntaxKind.ContinueKeyword => syntaxOptions.ContinueType == ContinueType.ContextualKeyword,
+                SyntaxKind.TypeKeyword => true,
+                SyntaxKind.ExportKeyword => true,
                 _ => false
             };
 
