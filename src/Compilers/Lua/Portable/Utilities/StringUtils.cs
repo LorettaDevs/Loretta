@@ -49,5 +49,27 @@
 
             return true;
         }
+
+        public static string Trim(string value)
+        {
+            var startIdx = 0;
+            var endIdx = value.Length - 1;
+            while (CharUtils.IsWhitespace(value[startIdx]))
+                startIdx++;
+            while (CharUtils.IsWhitespace(value[endIdx]))
+                endIdx--;
+            return value[startIdx..(endIdx + 1)];
+        }
+
+        public static ReadOnlySpan<char> Trim(ReadOnlySpan<char> value)
+        {
+            var startIdx = 0;
+            var endIdx = value.Length - 1;
+            while (CharUtils.IsWhitespace(value[startIdx]))
+                startIdx++;
+            while (CharUtils.IsWhitespace(value[endIdx]))
+                endIdx--;
+            return value[startIdx..(endIdx + 1)];
+        }
     }
 }

@@ -181,7 +181,7 @@ namespace Loretta.CLI
             }
         }
 
-        public static void Parse(LuaSyntaxOptionsPreset preset, string path, bool constantFold = false, bool printTree = false)
+        public static void Parse(LuaSyntaxOptionsPreset preset, string path, bool constantFold = false, bool printTree = false, bool assumeNoOverrides = false)
         {
             if (!File.Exists(path))
             {
@@ -202,7 +202,9 @@ namespace Loretta.CLI
             if (constantFold)
             {
                 using (s_logger.BeginOperation("Constant Folding"))
-                    rootNode = rootNode.ConstantFold();
+                {
+                    rootNode = rootNode.ConstantFold(new(assumeNoOverrides));
+                }
             }
 
             using (s_logger.BeginOperation("Format"))
@@ -254,7 +256,7 @@ namespace Loretta.CLI
             foreach (var diagnostic in diagnostics)
                 s_logger.WriteLine(diagnostic.ToString());
 
-            expr = (ExpressionSyntax) expr.ConstantFold();
+            expr = (ExpressionSyntax) expr.ConstantFold(ConstantFoldingOptions.All);
             expr = expr.NormalizeWhitespace();
             expr.WriteTo(OutputWriter);
             OutputWriter.WriteLine("");
@@ -571,7 +573,11 @@ namespace Loretta.CLI
                 new Option<bool>(
                     new[] { "-t", "--print-tree" },
                     () => false,
-                    "Whether to print the parsed tree as a tree instead of back as code.")
+                    "Whether to print the parsed tree as a tree instead of back as code."),
+                new Option<bool>(
+                    new[] { "-a", "--assume-no-overrides" },
+                    () => false,
+                    "Assume debug.setmetatble and debug.getmetatable aren't being used when constant folding.")
             };
             parseCommand.Handler = CommandHandler.Create(Parse);
             parseCommand.AddAlias("parse");

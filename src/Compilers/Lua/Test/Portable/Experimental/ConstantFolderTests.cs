@@ -181,7 +181,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
                 source,
                 LuaSyntaxOptions.AllWithIntegers);
 
-            var folded = Assert.IsType<LiteralExpressionSyntax>(sourceNode.ConstantFold());
+            var folded = Assert.IsType<LiteralExpressionSyntax>(sourceNode.ConstantFold(ConstantFoldingOptions.Default));
 
             Assert.Equal(expected, folded.Token.Value);
         }
@@ -290,7 +290,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
                 source,
                 LuaSyntaxOptions.AllWithIntegers);
 
-            var folded = sourceNode.ConstantFold();
+            var folded = sourceNode.ConstantFold(ConstantFoldingOptions.Default);
 
             Assert.Equal(sourceNode, folded);
         }

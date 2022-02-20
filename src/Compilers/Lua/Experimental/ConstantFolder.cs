@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using static Loretta.CodeAnalysis.Lua.SyntaxFactory;
 
@@ -6,10 +7,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
 {
     internal partial class ConstantFolder : LuaSyntaxRewriter
     {
-        public static readonly ConstantFolder Instance = new();
+        private readonly ConstantFoldingOptions _options;
 
-        private ConstantFolder()
+        public ConstantFolder(ConstantFoldingOptions options!!)
         {
+            _options = options;
         }
 
         public override SyntaxNode? VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
@@ -26,11 +28,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             var operandFlags = GetFlags(operand);
             return node.Kind() switch
             {
-                SyntaxKind.UnaryMinusExpression when HasEFlag(operandFlags, ExpressionFlags.IsNum) =>
-                    LiteralExpressionWithTriviaFrom(-GetDynValue(operand), operand),
+                SyntaxKind.UnaryMinusExpression when TryGetNumValue(operand, out var val) =>
+                    LiteralExpressionWithTriviaFrom(-val, operand),
                 SyntaxKind.LogicalNotExpression when TryConvertToBool(operand, out var value) =>
                     LiteralExpressionWithTriviaFrom(!value, operand),
-                SyntaxKind.BitwiseNotExpression when HasEFlag(operandFlags, ExpressionFlags.IsDouble)
+                SyntaxKind.BitwiseNotExpression when HasEFlag(operandFlags, ExpressionFlags.IsDouble | ExpressionFlags.IsStringWithNumber)
                     && TryGetInt64(operand, out var value)
                     && TryConvertToDouble(~value, out var result) =>
                     LiteralExpressionWithTriviaFrom(result, operand),
@@ -52,62 +54,62 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             switch (node.Kind())
             {
                 case SyntaxKind.AddExpression
-                    when HasEFlag(leftFlags, ExpressionFlags.IsNum)
-                        && HasEFlag(rightFlags, ExpressionFlags.IsNum):
+                    when TryGetNumValue(left, out var leftNum)
+                        && TryGetNumValue(right, out var rightNum):
                 {
-                    var result = GetDynValue(left) + GetDynValue(right);
+                    var result = leftNum + rightNum;
                     if (result is double d && (double.IsNaN(d) || double.IsInfinity(d)))
                         break;
                     return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.SubtractExpression
-                    when HasEFlag(leftFlags, ExpressionFlags.IsNum)
-                        && HasEFlag(rightFlags, ExpressionFlags.IsNum):
+                    when TryGetNumValue(left, out var leftNum)
+                        && TryGetNumValue(right, out var rightNum):
                 {
-                    var result = GetDynValue(left) - GetDynValue(right);
+                    var result = leftNum - rightNum;
                     if (result is double d && (double.IsNaN(d) || double.IsInfinity(d)))
                         break;
                     return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.MultiplyExpression
-                    when HasEFlag(leftFlags, ExpressionFlags.IsNum)
-                        && HasEFlag(rightFlags, ExpressionFlags.IsNum):
+                    when TryGetNumValue(left, out var leftNum)
+                        && TryGetNumValue(right, out var rightNum):
                 {
-                    var result = GetDynValue(left) * GetDynValue(right);
+                    var result = leftNum * rightNum;
                     if (result is double d && (double.IsNaN(d) || double.IsInfinity(d)))
                         break;
                     return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.DivideExpression
-                    when HasEFlag(leftFlags, ExpressionFlags.IsNum)
-                        && HasEFlag(rightFlags, ExpressionFlags.IsNum):
+                    when TryGetNumValue(left, out var leftNum)
+                        && TryGetNumValue(right, out var rightNum):
                 {
-                    var result = GetDynValue(left) / (double) GetDynValue(right);
-                    if (result is double d && (double.IsNaN(d) || double.IsInfinity(d)))
+                    var result = (double) (leftNum / (double) rightNum);
+                    if (double.IsNaN(result) || double.IsInfinity(result))
                         break;
                     return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.ModuloExpression
-                    when HasEFlag(leftFlags, ExpressionFlags.IsNum)
-                        && HasEFlag(rightFlags, ExpressionFlags.IsNum):
+                    when TryGetNumValue(left, out var leftNum)
+                        && TryGetNumValue(right, out var rightNum):
                 {
-                    var result = GetDynValue(left) % GetDynValue(right);
+                    var result = leftNum % rightNum;
                     if (result is double d && (double.IsNaN(d) || double.IsInfinity(d)))
                         break;
                     return LiteralExpressionWithTriviaFrom(result, node);
                 }
 
                 case SyntaxKind.ExponentiateExpression
-                    when HasEFlag(leftFlags, ExpressionFlags.IsNum)
-                        && HasEFlag(rightFlags, ExpressionFlags.IsNum):
+                    when TryGetNumValue(left, out var leftNum)
+                        && TryGetNumValue(right, out var rightNum):
                 {
                     var result = Math.Pow(
-                        (double) GetDynValue(left),
-                        (double) GetDynValue(right));
+                        (double) leftNum,
+                        (double) rightNum);
                     if (double.IsNaN(result) || double.IsInfinity(result))
                         break;
                     return LiteralExpressionWithTriviaFrom(result, node);
@@ -297,23 +299,17 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
 
             return node.Update(left, node.OperatorToken, right);
 
-            static bool exprEquals(ExpressionSyntax left, ExpressionSyntax right, ExpressionFlags leftFlags, ExpressionFlags rightFlags)
+            bool exprEquals(ExpressionSyntax left, ExpressionSyntax right, ExpressionFlags leftFlags, ExpressionFlags rightFlags)
             {
                 var result = false;
                 if (HasEFlag(leftFlags, ExpressionFlags.IsNil) && HasEFlag(rightFlags, ExpressionFlags.IsNil))
                     result = true;
-                else if (HasEFlag(leftFlags, ExpressionFlags.IsDouble) && HasEFlag(rightFlags, ExpressionFlags.IsDouble))
-                    result = GetValue<double>(left) == GetValue<double>(right);
                 else if (HasEFlag(leftFlags, ExpressionFlags.IsStr) && HasEFlag(rightFlags, ExpressionFlags.IsStr))
                     result = string.Equals(GetValue<string>(left), GetValue<string>(right), StringComparison.Ordinal);
                 else if (HasEFlag(leftFlags, ExpressionFlags.IsBool) && HasEFlag(rightFlags, ExpressionFlags.IsBool))
                     result = HasEFlag(leftFlags, ExpressionFlags.IsTruthy) == HasEFlag(rightFlags, ExpressionFlags.IsTruthy);
-                else if (HasEFlag(leftFlags, ExpressionFlags.IsLong) && HasEFlag(rightFlags, ExpressionFlags.IsLong))
-                    result = GetValue<long>(left) == GetValue<long>(right);
-                else if (HasEFlag(leftFlags, ExpressionFlags.IsDouble) && HasEFlag(rightFlags, ExpressionFlags.IsLong))
-                    result = GetValue<double>(left) == GetValue<long>(right);
-                else if (HasEFlag(leftFlags, ExpressionFlags.IsLong) && HasEFlag(rightFlags, ExpressionFlags.IsDouble))
-                    result = GetValue<long>(left) == GetValue<double>(right);
+                else if (TryGetNumValue(left, out var leftNum) && TryGetNumValue(right, out var rightNum))
+                    result = leftNum == rightNum;
                 return result;
             }
 
@@ -499,9 +495,26 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         /// <returns></returns>
         private static T GetValue<T>(SyntaxNode node) => (T) GetValue(node);
 
-        private static dynamic GetDynValue(SyntaxNode node) => GetValue(node);
+        private bool TryGetNumValue(SyntaxNode node, [NotNullWhen(true)] out dynamic? value)
+        {
+            if (HasEFlag(node, ExpressionFlags.IsNum))
+            {
+                if (HasEFlag(node, ExpressionFlags.IsStringWithNumber))
+                {
+                    value = _innerStringNumericValue[node];
+                }
+                else
+                {
+                    value = GetValue(node);
+                }
+                return true;
+            }
 
-        private static bool TryGetInt32(SyntaxNode node, out int converted)
+            value = default;
+            return false;
+        }
+
+        private bool TryGetInt32(SyntaxNode node, out int converted)
         {
             if (TryGetInt64(node, out var converted64))
             {
@@ -512,20 +525,25 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             return false;
         }
 
-        private static bool TryGetInt64(SyntaxNode node, out long converted)
+        private bool TryGetInt64(SyntaxNode node, out long converted)
         {
-            var value = GetValue(node);
-            if (value is long i64)
+            if (TryGetNumValue(node, out var value))
             {
-                converted = i64;
-                return true;
+                if (value is long i64)
+                {
+                    converted = i64;
+                    return true;
+                }
+                else
+                {
+                    var tmp = (double) value;
+                    converted = (long) tmp;
+                    return tmp == converted;
+                }
             }
-            else
-            {
-                var tmp = (double) value;
-                converted = (long) tmp;
-                return tmp == converted;
-            }
+
+            converted = default;
+            return false;
         }
 
         private static bool TryConvertToBool(SyntaxNode node, out bool value)
@@ -557,10 +575,11 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
         /// Runs constant folding on the tree rooted by the provided node.
         /// </summary>
         /// <param name="node"></param>
+        /// <param name="options">Options to use when constant folding.</param>
         /// <returns></returns>
         [Obsolete("Use ConstantFold instead.")]
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        public static SyntaxNode FoldConstants(this SyntaxNode node) =>
-            ConstantFolder.Instance.Visit(node);
+        public static SyntaxNode FoldConstants(this SyntaxNode node, ConstantFoldingOptions options) =>
+            new ConstantFolder(options).Visit(node);
     }
 }
