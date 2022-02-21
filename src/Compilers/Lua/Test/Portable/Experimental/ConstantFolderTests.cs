@@ -191,11 +191,13 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
         //     Negation
         [InlineData("-a")]
         [InlineData("-{}")]
+        [InlineData("-'1'")]
         //     Logical not
         [InlineData("not func()")]
         //     Bitwise not
         [InlineData("~a")]
         [InlineData("~1.5")]
+        [InlineData("~'1'")]
         //     Length
         [InlineData("#{}")]
         [InlineData("#{nil}")]
@@ -203,24 +205,29 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
         //     Addition
         [InlineData("nil + true")]
         [InlineData("function()end + true")]
+        [InlineData("'1' + '1'")]
         //         Infinity
         [InlineData("1.7976931348623157E+308 + 1.7976931348623157E+308")]
         //     Subtraction
         [InlineData("nil - true")]
         [InlineData("function()end - true")]
+        [InlineData("'1' - '1'")]
         //        Infinity
         // [InlineData("-1.7976931348623157E+308 - 1.7976931348623157E+308")] // Can't do this because unary op gets folded.
         //     Multiplication
         [InlineData("nil * 2")]
         [InlineData("function()end * 2")]
+        [InlineData("'1' * '1'")]
         //         Infinity
         [InlineData("1.7976931348623157E+308 * 2")]
         //     Division
         [InlineData("2 / a")]
         [InlineData("1.7976931348623157E+308 / true")]
+        [InlineData("'1' / '1'")]
         //     Modulo
         [InlineData("true % 2")]
         [InlineData("2 % f()")]
+        [InlineData("'1' % '1'")]
         //     Exponentiation
         [InlineData("1.7976931348623157E+308 ^ 2")]
         //     Concatenation
@@ -263,27 +270,32 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
         [InlineData("1.1 | 1.1")]
         [InlineData("a | a")]
         [InlineData("function()end | function()end")]
+        [InlineData("'1' | '1'")]
         //     Bitwise and
         [InlineData("1.5 & 1")]
         [InlineData("1 & 1.5")]
         [InlineData("1.1 & 1.1")]
         [InlineData("a & a")]
         [InlineData("function()end & function()end")]
+        [InlineData("'1' & '1'")]
         //     Right shift
         [InlineData("1.5 >> 1")]
         [InlineData("1 >> 1.5")]
         [InlineData("1.5 >> 1.5")]
         [InlineData("a >> a")]
         [InlineData("function()end >> function()end")]
+        [InlineData("'1' >> '1'")]
         //     Left shift
         [InlineData("1.5 << 1")]
         [InlineData("1 << 1.5")]
         [InlineData("1.5 << 1.5")]
         [InlineData("a << a")]
         [InlineData("function()end << function()end")]
+        [InlineData("'1' << '1'")]
         //     Bitwise xor
         [InlineData("1.5 ~ 1.5")]
         [InlineData("1.1 ~ 1.1")]
+        [InlineData("'1' ~ '1'")]
         public void ConstantFolder_DoesNotFoldOtherOperations(string source)
         {
             var sourceNode = ParseAndValidateExpression(
@@ -293,6 +305,91 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental
             var folded = sourceNode.ConstantFold(ConstantFoldingOptions.Default);
 
             Assert.Equal(sourceNode, folded);
+        }
+        [Theory(Timeout = 250)]
+        // Unary operators
+        //     Negation
+        [InlineData("-'1'", -1L)]
+        [InlineData("-'1.0'", -1.0)]
+        [InlineData("-'1.5'", -1.5)]
+        //     Bitwise not
+        [InlineData("~'1.0'", (double) ~1L)]
+        [InlineData("~'1'", (double) ~1L)]
+        // Binary operators
+        //     Addition
+        [InlineData("'1' + 1", 2L)]
+        [InlineData("1.5 + '1.5'", 3.0)]
+        [InlineData("'1.5' + 1", 2.5)]
+        //         Overflow (can't test for doubles as infinity a that doesn't get folded)
+        [InlineData("'9223372036854775807' + 1", unchecked(9223372036854775807 + 1))]
+        //     Subtraction
+        [InlineData("'1' - 1", 0L)]
+        [InlineData("1.5 - '1.5'", 0.0)]
+        [InlineData("'1.5' - 1", 0.5)]
+        //         Underflow (can't test for doubles as infinity doesn't get folded)
+        [InlineData("'-9223372036854775808' - 2", unchecked(-9223372036854775808 - 2))]
+        //     Multiplication
+        [InlineData("'1.5' * 2.5", 1.5 * 2.5)]
+        [InlineData("1 * '2'", 1L * 2)]
+        [InlineData("'1.5' * 2", 3.0)]
+        //         Overflow
+        [InlineData("'9223372036854775807' * 2", -2L)]
+        [InlineData("'9223372036854775807' * -20", 20L)]
+        //     Division
+        [InlineData("'1.5' / 1.5", 1.0)]
+        [InlineData("'5' / 2", 2.5)]
+        [InlineData("5.0 / '2'", 2.5)]
+        [InlineData("'2' / 5", 0.4)]
+        //         Something that would overflow in division integer
+        [InlineData("'9223372036854775807' / -1", unchecked(9223372036854775807 / -1.0))]
+        //     Modulo
+        [InlineData("'5' % 2", 1L)]
+        [InlineData("5 % '2.5'", 0.0)]
+        [InlineData("'5.5' % 1", 0.5)]
+        //     Exponentiation
+        [InlineData("'2' ^ 2", 4.0)]
+        [InlineData("4 ^ '0.5'", 2.0)]
+        //     Bitwise or
+        [InlineData("'1' | 1", 1L)]
+        [InlineData("1 | '1.0'", 1L)]
+        [InlineData("'1.0' | 1", 1L)]
+        [InlineData("1.0 | '1.0'", 1.0)]
+        [InlineData("'1' | 2", 3L)]
+        //     Bitwise and
+        [InlineData("'1' & 1", 1L)]
+        [InlineData("1 & '1.0'", 1L)]
+        [InlineData("'1.0' & 1", 1L)]
+        [InlineData("1.0 & '1.0'", 1.0)]
+        [InlineData("'1' & 2", 0L)]
+        //     Right shift
+        [InlineData("'511' >> 3", 511L >> 3)]
+        [InlineData("511 >> '3.0'", 511L >> 3)]
+        [InlineData("'511.0' >> 3", 511L >> 3)]
+        [InlineData("511.0 >> '3.0'", (double) (511L >> 3))]
+        //     Left shift
+        [InlineData("'511' << 3", 511L << 3)]
+        [InlineData("511 << '3.0'", 511L << 3)]
+        [InlineData("'511.0' << 3", 511L << 3)]
+        [InlineData("511.0 << '3.0'", (double) (511L << 3))]
+        //     Bitwise xor
+        [InlineData("'42' ~ 21", 42L ^ 21L)]
+        [InlineData("42 ~ '21.0'", 42L ^ 21L)]
+        [InlineData("'42.0' ~ 21", 42L ^ 21L)]
+        [InlineData("42.0 ~ '21.0'", (double) (42L ^ 21L))]
+        [InlineData("'42' ~ 42", 0L)]
+        [InlineData("42 ~ '42.0'", 0L)]
+        [InlineData("'42.0' ~ 42", 0L)]
+        [InlineData("42.0 ~ '42.0'", 0.0)]
+        public void ConstantFolder_FoldsOperationsCorrectlyWithStringExtractionEnabled(string source, object expected)
+        {
+            var sourceNode = ParseAndValidateExpression(
+                source,
+                LuaSyntaxOptions.AllWithIntegers);
+
+            var options = ConstantFoldingOptions.Default with { ExtractNumbersFromStrings = true };
+            var folded = Assert.IsType<LiteralExpressionSyntax>(sourceNode.ConstantFold(options));
+
+            Assert.Equal(expected, folded.Token.Value);
         }
     }
 }
