@@ -97,15 +97,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// </remarks>
         public override SyntaxNode? GetStructure(CodeAnalysis.SyntaxTrivia trivia)
         {
-            throw new InvalidOperationException("There are no structured trivia currently.");
-#pragma warning disable CS0162 // Unreachable code detected (will be used once structured trivia are created)
             if (trivia.HasStructure)
-#pragma warning restore CS0162 // Unreachable code detected (will be used once structured trivia are created)
             {
                 var parent = trivia.Token.Parent;
                 if (parent != null)
                 {
-                    SyntaxNode structure;
+                    SyntaxNode? structure;
                     var structsInParent = s_structuresTable.GetOrCreateValue(parent);
                     lock (structsInParent)
                     {
