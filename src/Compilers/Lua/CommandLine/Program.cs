@@ -129,11 +129,14 @@ namespace Loretta.CLI
             Lua51,
             Lua52,
             Lua53,
+            Lua54,
             LuaJIT20,
             LuaJIT21,
             GMod,
             Roblox,
+            FiveM,
             All,
+            Alli,
         }
         private static LuaParseOptions PresetEnumToPresetOptions(LuaSyntaxOptionsPreset preset)
         {
@@ -142,11 +145,14 @@ namespace Loretta.CLI
                 LuaSyntaxOptionsPreset.Lua51 => LuaSyntaxOptions.Lua51,
                 LuaSyntaxOptionsPreset.Lua52 => LuaSyntaxOptions.Lua52,
                 LuaSyntaxOptionsPreset.Lua53 => LuaSyntaxOptions.Lua53,
+                LuaSyntaxOptionsPreset.Lua54 => LuaSyntaxOptions.Lua54,
                 LuaSyntaxOptionsPreset.LuaJIT20 => LuaSyntaxOptions.LuaJIT20,
                 LuaSyntaxOptionsPreset.LuaJIT21 => LuaSyntaxOptions.LuaJIT21,
                 LuaSyntaxOptionsPreset.GMod => LuaSyntaxOptions.GMod,
                 LuaSyntaxOptionsPreset.Roblox => LuaSyntaxOptions.Roblox,
+                LuaSyntaxOptionsPreset.FiveM => LuaSyntaxOptions.FiveM,
                 LuaSyntaxOptionsPreset.All => LuaSyntaxOptions.All,
+                LuaSyntaxOptionsPreset.Alli => LuaSyntaxOptions.AllWithIntegers,
                 _ => throw new InvalidOperationException(),
             });
         }
