@@ -713,6 +713,8 @@ namespace Loretta.CodeAnalysis.Lua
         UnkeyedTableType = 2099,
         TypeParameterListSyntax = 2100,
         TypeArgumentListSyntax = 2101,
+        SimpleTypeName = 2102,
+        ComposedTypeName = 2103,
 
         // Big gap 2105-3001 (insert new nodes here)
         

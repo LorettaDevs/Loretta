@@ -1078,12 +1078,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         
         private TupleTypeSyntax ParseTupleType()
         {
+            var openParenthesisToken = EatToken(SyntaxKind.OpenParenthesisToken);
+            var typesAndSeparatorsBuilder = _pool.AllocateSeparated<TypeSyntax>();
 
-        }
-
-        private VarargTypeSyntax ParseVarargType()
-        {
-
+            while (CurrentToken.Kind is not (SyntaxKind.CloseParenthesisToken or SyntaxKind.EndOfFileToken))
+            {
+                var argument = Parse
+            }
         }
 
         private NullableTypeSyntax ParseNullableType()
@@ -1101,18 +1102,52 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         }
 
-        private TypeIntersectionSyntax PrseTypeIntersection()
+        private IntersectionTypeSyntax PrseTypeIntersection()
         {
 
         }
 
-        private TypeUnionSyntax ParseTypeUnion()
+        private UnionTypeSyntax ParseTypeUnion()
         {
 
         }
 
-        private TypeCastSyntax ParseTypeCast()
+        private TypeCastExpressionSyntax ParseTypeCast()
         {
+
+        }
+
+        private TypeSyntax ParseSimpleType()
+        {
+            switch (CurrentToken.Kind)
+            {
+                case SyntaxKind.IdentifierToken:
+                    var firstToken = EatToken();
+
+                    if (CurrentToken.Kind == SyntaxKind.DotToken)
+                    {
+                        return SyntaxFactory.ComposedTypeNameSyntax();
+                    }
+
+                    break;
+                case SyntaxKind.OpenParenthesisToken:
+ 
+                    break;
+                case SyntaxKind.OpenBraceToken:
+
+                    break;
+                case SyntaxKind.NilKeyword:
+                case SyntaxKind.TrueKeyword:
+                case SyntaxKind.FalseKeyword:
+                    
+                    break;
+
+            }
+        }
+
+        private TypeSyntax ParseType(SyntaxKind parentOperator)
+        {
+
 
         }
 

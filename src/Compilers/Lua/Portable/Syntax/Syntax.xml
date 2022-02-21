@@ -2005,4 +2005,57 @@
         </Field>
     </Node>
 
+    <AbstractNode Name="TypeName" Base="TypeSyntax">
+        <TypeComment>
+            <summary>This node represents a type's name.</summary>
+        </TypeComment>
+    </AbstractNode>
+    
+    <Node Name="SimpleTypeNameSyntax" Base="TypeName">
+        <TypeComment>
+            <summary>This node reperesents a simple name (T).</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="SimpleNameSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="SimpleNameSyntax" />
+        <Field Name="IdentifierToken" Type="IdentifierSyntax">
+            <PropertyComment>
+                <summary>Gets the name of the type.</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+
+    <Node Name="ComposedTypeNameSyntax" Base="TypeName">
+        <TypeComment>
+            <summary>This node represents a composed name (.T)</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="ComposedNameSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="ComposedNameSyntax" />
+        <Field Name="Base" Type="TypeNameSyntax">
+            <PropertyComment>
+                <summary>Gets the name of the type.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="DotToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the . token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="DotToken" />
+        </Field>
+        <Field Name="IdentifierToken" Type="IdentifierSyntax">
+            <PropertyComment>
+                <summary>Gets the name of the type.</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+    
 </Tree>
