@@ -17,14 +17,16 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             IsConstantTable = 1 << 6,
             IsAnonymousFunction = 1 << 7,
             IsLong = 1 << 8,
+            IsStringWithNumber = 1 << 9,
 
             CanConvertToBool = IsTruthy | IsFalsey,
             IsScalar = IsNil | IsDouble | IsLong | IsStr | IsBool,
             IsConstant = IsScalar | IsConstantTable | IsAnonymousFunction,
-            IsNum = IsDouble | IsLong,
+            IsNum = IsDouble | IsLong | IsStringWithNumber,
         }
 
         private readonly Dictionary<SyntaxNode, ExpressionFlags> _exprFlags = new();
+        private readonly Dictionary<SyntaxNode, dynamic> _innerStringNumericValue = new();
 
         private ExpressionFlags GetFlags(SyntaxNode node)
         {
@@ -39,7 +41,15 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
                 if (innerNode.IsKind(SyntaxKind.NumericalLiteralExpression))
                     flags |= ((LiteralExpressionSyntax) innerNode).Token.Value is double ? ExpressionFlags.IsDouble : ExpressionFlags.IsLong;
                 if (innerNode.IsKind(SyntaxKind.StringLiteralExpression))
+                {
                     flags |= ExpressionFlags.IsStr;
+                    if (_options.ExtractNumbersFromStrings
+                        && TryParseNumberInString(GetValue<string>(innerNode), out var parsed))
+                    {
+                        flags |= ExpressionFlags.IsStringWithNumber;
+                        _innerStringNumericValue[node] = parsed!;
+                    }
+                }
                 if (innerNode.IsKind(SyntaxKind.TrueLiteralExpression) || innerNode.IsKind(SyntaxKind.FalseLiteralExpression))
                     flags |= ExpressionFlags.IsBool;
                 if (CanConvertToBoolean(innerNode))

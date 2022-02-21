@@ -9,9 +9,10 @@
         /// Runs constant folding on the tree rooted by the provided node.
         /// </summary>
         /// <param name="node"></param>
+        /// <param name="options">Options to use when constant folding.</param>
         /// <returns></returns>
-        public static SyntaxNode ConstantFold(this SyntaxNode node) =>
-            ConstantFolder.Instance.Visit(node);
+        public static SyntaxNode ConstantFold(this SyntaxNode node, ConstantFoldingOptions options) =>
+            new ConstantFolder(options).Visit(node);
 
         /// <inheritdoc cref="Minify(SyntaxTree, Minifying.NamingStrategy, Minifying.ISlotAllocator)"/>
         public static SyntaxTree Minify(this SyntaxTree tree) =>

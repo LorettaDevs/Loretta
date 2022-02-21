@@ -16,7 +16,7 @@ namespace Loretta.CLI
     public static class Program
     {
         private static readonly ConsoleTimingLogger s_logger = new();
-        private static bool s_shouldRun, s_printCurrentDir = true, s_printOutputPrefixed = true;
+        private static bool s_shouldRun, s_printCurrentDir = false, s_printOutputPrefixed = false;
         private static readonly RootCommand s_rootCommand;
 
         private static TextWriter OutputWriter =>
@@ -181,7 +181,7 @@ namespace Loretta.CLI
             }
         }
 
-        public static void Parse(LuaSyntaxOptionsPreset preset, string path, bool constantFold = false, bool printTree = false)
+        public static void Parse(LuaSyntaxOptionsPreset preset, string path, bool constantFold = false, bool printTree = false, bool assumeNoOverrides = false)
         {
             if (!File.Exists(path))
             {
@@ -202,7 +202,9 @@ namespace Loretta.CLI
             if (constantFold)
             {
                 using (s_logger.BeginOperation("Constant Folding"))
-                    rootNode = rootNode.ConstantFold();
+                {
+                    rootNode = rootNode.ConstantFold(new(assumeNoOverrides));
+                }
             }
 
             using (s_logger.BeginOperation("Format"))
@@ -254,7 +256,7 @@ namespace Loretta.CLI
             foreach (var diagnostic in diagnostics)
                 s_logger.WriteLine(diagnostic.ToString());
 
-            expr = (ExpressionSyntax) expr.ConstantFold();
+            expr = (ExpressionSyntax) expr.ConstantFold(ConstantFoldingOptions.All);
             expr = expr.NormalizeWhitespace();
             expr.WriteTo(OutputWriter);
             OutputWriter.WriteLine("");
@@ -364,13 +366,26 @@ namespace Loretta.CLI
 
         public static void MultiLua(string scriptPath) => RunMultiLua(scriptPath);
 
-        public static void MultiLuaExpression(string expression) => RunMultiLua("-e", expression);
+        public static void MultiLuaExpression(string expression)
+        {
+            var path = Path.GetTempFileName();
+            try
+            {
+                File.WriteAllText(path, expression);
+                RunMultiLua(path);
+            }
+            finally
+            {
+                File.Delete(path);
+            }
+        }
 
         private static void RunMultiLua(params string[] args)
         {
             const string prefixTemplate = "[00:00:00.000000]";
 
-            var versions = Directory.GetDirectories("binaries", "lua*");
+            var versions = Directory.GetDirectories("binaries");
+            Array.Sort(versions);
 
             foreach (var version in versions)
             {
@@ -420,13 +435,8 @@ namespace Loretta.CLI
                 proc.WaitForExit();
             }
 
-            static string getFormattedLuaName(string name)
-            {
-                if (name.StartsWith("luajit"))
-                    return "LuaJIT " + name["luajit".Length..];
-                else
-                    return "Lua " + name["lua".Length..];
-            }
+            static string getFormattedLuaName(string name) =>
+                name.Replace("_", " ");
         }
 
         #endregion Multi-Lua
@@ -563,7 +573,11 @@ namespace Loretta.CLI
                 new Option<bool>(
                     new[] { "-t", "--print-tree" },
                     () => false,
-                    "Whether to print the parsed tree as a tree instead of back as code.")
+                    "Whether to print the parsed tree as a tree instead of back as code."),
+                new Option<bool>(
+                    new[] { "-a", "--assume-no-overrides" },
+                    () => false,
+                    "Assume debug.setmetatble and debug.getmetatable aren't being used when constant folding.")
             };
             parseCommand.Handler = CommandHandler.Create(Parse);
             parseCommand.AddAlias("parse");

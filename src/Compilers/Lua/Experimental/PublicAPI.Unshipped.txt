@@ -1,1 +1,11 @@
 ﻿#nullable enable
+*REMOVED*static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.ConstantFold(this Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxNode!
+*REMOVED*static Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants(this Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxNode!
+Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions
+Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.ConstantFoldingOptions(bool ExtractNumbersFromStrings) -> void
+Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.ExtractNumbersFromStrings.get -> bool
+Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.ExtractNumbersFromStrings.init -> void
+static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.ConstantFold(this Loretta.CodeAnalysis.SyntaxNode! node, Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions! options) -> Loretta.CodeAnalysis.SyntaxNode!
+static Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants(this Loretta.CodeAnalysis.SyntaxNode! node, Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions! options) -> Loretta.CodeAnalysis.SyntaxNode!
+static readonly Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.All -> Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions!
+static readonly Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.Default -> Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions!
