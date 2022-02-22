@@ -1779,8 +1779,8 @@
             <summary>This node represents a tuple type.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>                
-               Creates a new <see cref="TupleTypeSyntax" /> node.
+            <summary>
+                Creates a new <see cref="TupleTypeSyntax" /> node.
             </summary>
         </FactoryComment>
         <Kind Name="TupleType" />
@@ -1842,7 +1842,7 @@
             <Kind Name="CloseBraceToken" />
         </Field>
     </Node>
-    
+
     <AbstractNode Name="TableElementTypeSyntax" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a type inside of a table type.</summary>
@@ -1854,7 +1854,7 @@
         </FactoryComment>
         <Kind Name="TableElementTypeSyntax" />
     </AbstractNode>
-        
+
     <Node Name="TypeCastExpressionSyntax" Base="ExpressionSyntax">
         <TypeComment>
             <summary>This node represents a type cast expression.</summary>
@@ -1945,6 +1945,62 @@
         </Field>
     </Node>
 
+    <Node Name="EqualsTypeSyntax" Base="LuaSyntaxNode">
+        <TypeComment>
+            <summary>This node represents the default type value of a type parameter.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="EqualsTypeSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="EqualsType" />
+        <Field Name="EqualsToken" Type="SyntaxToken">
+            <PropertyComment>
+                Gets the <c> = </c> token.
+            </PropertyComment>
+            <Kind Name="EqualsToken" />
+        </Field>
+        <Field Name="Type" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>Gets the type value.</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+
+    <Node Name="TypeParameterSyntax" Base="LuaSyntaxNode">
+        <TypeComment>
+            <summary>This node represents a type parameter.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="TypeParameterSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="TypeParameter" />
+        <Field Name="Identifier" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>Gets the type parameter name identifier token.</summary>
+            </PropertyComment>
+            <Kind Name="IdentifierToken" />
+        </Field>
+        <Field Name="DotDotDotToken" Type="SyntaxToken" Optional="true">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>...</c> token (if this type parameter is a type pack).
+                </summary>
+            </PropertyComment>
+            <Kind Name="DotDotDotToken" />
+        </Field>
+        <Field Name="EqualsType" Type="EqualsTypeSyntax" Optional="true">
+            <PropertyComent>
+                <summary>
+                    The default value of the type parameter (if any).
+                </summary>
+            </PropertyComent>
+        </Field>
+    </Node>
+
     <Node Name="TypeParameterListSyntax" Base="LuaSyntaxNode">
         <TypeComment>
             <summary>This node represents a type parameter list.</summary>
@@ -1963,7 +2019,7 @@
             </PropertyComment>
             <Kind Name="LessThanToken" />
         </Field>
-        <Field Name="Names" Type="SeparatedSyntaxList&lt;SyntaxToken&gt;">
+        <Field Name="Names" Type="SeparatedSyntaxList&lt;TypeParameterSyntax&gt;">
             <PropertyComment>
                 <summary>A list of types.</summary>
             </PropertyComment>
@@ -2010,13 +2066,13 @@
             <Kind Name="GreaterThanToken" />
         </Field>
     </Node>
-    
+
     <AbstractNode Name="TypeNameSyntax" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a type's name.</summary>
         </TypeComment>
     </AbstractNode>
-    
+
     <Node Name="SimpleTypeNameSyntax" Base="TypeNameSyntax">
         <TypeComment>
             <summary>This node reperesents a simple name (T).</summary>
@@ -2088,5 +2144,5 @@
             <Kind Name="EndOfFileToken" />
         </Field>
     </Node>
-    
+
 </Tree>
