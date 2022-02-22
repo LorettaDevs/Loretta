@@ -1997,8 +1997,8 @@
                 Creates a new <see cref="SimpleNameSyntax" /> node.
             </summary>
         </FactoryComment>
-        <Kind Name="SimpleNameSyntax" />
-        <Field Name="IdentifierToken" Type="IdentifierSyntax">
+        <Kind Name="IdentifierToken" />
+        <Field Name="IdentifierToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>Gets the name of the type.</summary>
             </PropertyComment>
