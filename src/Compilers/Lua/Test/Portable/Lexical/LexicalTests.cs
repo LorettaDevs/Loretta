@@ -138,6 +138,8 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             untestedTokenKinds.Remove(SyntaxKind.BadToken);
             untestedTokenKinds.Remove(SyntaxKind.EndOfFileToken);
             untestedTokenKinds.Remove(SyntaxKind.SkippedTokensTrivia);
+            untestedTokenKinds.Remove(SyntaxKind.TypeKeyword);
+            untestedTokenKinds.Remove(SyntaxKind.ExportKeyword);
             untestedTokenKinds.ExceptWith(testedTokenKinds);
 
             Assert.Empty(untestedTokenKinds);

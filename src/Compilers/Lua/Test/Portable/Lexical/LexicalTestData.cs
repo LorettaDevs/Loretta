@@ -29,11 +29,11 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
         public static IEnumerable<ShortToken> GetTokens(LuaSyntaxOptions options)
         {
-            foreach (var token in from kind in Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
+            foreach (var token in from kind in Enum.GetValues(typeof(SyntaxKind))
+                                                   .Cast<SyntaxKind>()
+                                  where !SyntaxFacts.IsContextualKeyword(kind, options)
                                   let text = SyntaxFacts.GetText(kind)
                                   where !string.IsNullOrEmpty(text)
-                                        && (kind != SyntaxKind.ContinueKeyword
-                                            || options.ContinueType == ContinueType.Keyword)
                                   select new ShortToken(kind, text))
             {
                 yield return token;
