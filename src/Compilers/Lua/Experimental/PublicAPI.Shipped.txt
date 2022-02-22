@@ -1,4 +1,8 @@
 ﻿#nullable enable
+Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions
+Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.ConstantFoldingOptions(bool ExtractNumbersFromStrings) -> void
+Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.ExtractNumbersFromStrings.get -> bool
+Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.ExtractNumbersFromStrings.init -> void
 Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.AllocateSlot() -> int
@@ -15,7 +19,7 @@ Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.AllocateSlot
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.ReleaseSlot(int slot) -> void
 Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.SortedSlotAllocator() -> void
 Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions
-static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.ConstantFold(this Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxNode!
+static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.ConstantFold(this Loretta.CodeAnalysis.SyntaxNode! node, Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions! options) -> Loretta.CodeAnalysis.SyntaxNode!
 static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree, Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy! namingStrategy, Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator! slotAllocator) -> Loretta.CodeAnalysis.SyntaxTree!
 static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree, Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy! namingStrategy) -> Loretta.CodeAnalysis.SyntaxTree!
 static Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.Minify(this Loretta.CodeAnalysis.SyntaxTree! tree) -> Loretta.CodeAnalysis.SyntaxTree!
@@ -26,4 +30,6 @@ static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabet
 static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Numerical(int slot, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> string!
 static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Sequential(char prefix, System.Collections.Immutable.ImmutableArray<string!> alphabet) -> Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy!
 static Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.ZeroWidth(int slot, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Lua.IScope!>! scopes) -> string!
-static Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants(this Loretta.CodeAnalysis.SyntaxNode! node) -> Loretta.CodeAnalysis.SyntaxNode!
+static Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants(this Loretta.CodeAnalysis.SyntaxNode! node, Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions! options) -> Loretta.CodeAnalysis.SyntaxNode!
+static readonly Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.All -> Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions!
+static readonly Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.Default -> Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions!
