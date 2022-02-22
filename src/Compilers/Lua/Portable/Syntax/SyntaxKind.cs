@@ -694,8 +694,6 @@ namespace Loretta.CodeAnalysis.Lua
         StatementList = 2072,
         EmptyStatement = 2073,
 
-        // Small gap 2074-2085
-
         // Types
         TypeBinding = 2086,
         NullableType = 2087,
@@ -720,8 +718,7 @@ namespace Loretta.CodeAnalysis.Lua
         TypeParameterList = 2106,
         TypeArgumentList = 2107,
 
-        // Big gap 2105-3001 (insert new nodes here)
-
+        // Big gap 2105-3000 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,
