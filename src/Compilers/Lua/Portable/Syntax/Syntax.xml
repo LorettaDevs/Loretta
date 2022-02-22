@@ -1733,6 +1733,7 @@
                 Creates a new <see cref="TypeBindingSyntax" /> node.
             </summary>
         </FactoryComment>
+        <Kind Name="TypeBinding" />
         <Field Name="ColonToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
