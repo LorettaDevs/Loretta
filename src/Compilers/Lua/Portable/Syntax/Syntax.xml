@@ -1988,7 +1988,7 @@
         </TypeComment>
     </AbstractNode>
     
-    <Node Name="SimpleTypeNameSyntax" Base="TypeName">
+    <Node Name="SimpleTypeNameSyntax" Base="TypeNameSyntax">
         <TypeComment>
             <summary>This node reperesents a simple name (T).</summary>
         </TypeComment>
@@ -2006,7 +2006,7 @@
         </Field>
     </Node>
 
-    <Node Name="CompositeTypeNameSyntax" Base="TypeName">
+    <Node Name="CompositeTypeNameSyntax" Base="TypeNameSyntax">
         <TypeComment>
             <summary>This node represents a composite name (.T)</summary>
         </TypeComment>
