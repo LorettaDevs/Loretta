@@ -1071,65 +1071,67 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return ifExpression;
         }
 
-        private TableTypeSyntax ParseTableType()
-        {
-            
-        }
-        
-        private TupleTypeSyntax ParseTupleType()
-        {
-            var openParenthesisToken = EatToken(SyntaxKind.OpenParenthesisToken);
-            var typesAndSeparatorsBuilder = _pool.AllocateSeparated<TypeSyntax>();
-
-            while (CurrentToken.Kind is not (SyntaxKind.CloseParenthesisToken or SyntaxKind.EndOfFileToken))
-            {
-                var argument = Parse
-            }
-        }
-
-        private NullableTypeSyntax ParseNullableType()
-        {
-
-        }
-
-        private TypeParameterListSyntax ParseTypeParameterList()
-        {
-
-        }
-
-        private TypeArgumentListSyntax ParseTypeArgumentList()
-        {
-
-        }
-
-        private IntersectionTypeSyntax PrseTypeIntersection()
-        {
-
-        }
-
-        private UnionTypeSyntax ParseTypeUnion()
-        {
-
-        }
-
-        private TypeCastExpressionSyntax ParseTypeCast()
-        {
-
-        }
+        //private TableTypeSyntax ParseTableType()
+        //{
+        //    
+        //}
+        //
+        //private TupleTypeSyntax ParseTupleType()
+        //{
+        //    var openParenthesisToken = EatToken(SyntaxKind.OpenParenthesisToken);
+        //    var typesAndSeparatorsBuilder = _pool.AllocateSeparated<TypeSyntax>();
+        //
+        //    while (CurrentToken.Kind is not (SyntaxKind.CloseParenthesisToken or SyntaxKind.EndOfFileToken))
+        //    {
+        //        var argument = Parse; 
+        //    }
+        //}
+        //
+        //private NullableTypeSyntax ParseNullableType()
+        //{
+        //
+        //}
+        //
+        //private TypeParameterListSyntax ParseTypeParameterList()
+        //{
+        //
+        //}
+        //
+        //private TypeArgumentListSyntax ParseTypeArgumentList()
+        //{
+        //
+        //}
+        //
+        //private IntersectionTypeSyntax PrseTypeIntersection()
+        //{
+        //
+        //}
+        //
+        //private UnionTypeSyntax ParseTypeUnion()
+        //{
+        //
+        //}
+        //
+        //private TypeCastExpressionSyntax ParseTypeCast()
+        //{
+        //
+        //}
 
         private TypeSyntax ParseSimpleType()
         {
             switch (CurrentToken.Kind)
             {
                 case SyntaxKind.IdentifierToken:
-                    var firstToken = EatToken();
+                    TypeNameSyntax name = SyntaxFactory.SimpleTypeName(EatToken());
 
-                    if (CurrentToken.Kind == SyntaxKind.DotToken)
+                    while (CurrentToken.Kind is SyntaxKind.DotToken)
                     {
-                        return SyntaxFactory.ComposedTypeNameSyntax();
+                        var dotToken = EatToken(SyntaxKind.DotToken);
+                        var memberName = EatToken(SyntaxKind.IdentifierName);
+                        name = SyntaxFactory.CompositeTypeName(name, dotToken, memberName);
                     }
 
-                    break;
+                    return name;
                 case SyntaxKind.OpenParenthesisToken:
  
                     break;
@@ -1143,12 +1145,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     break;
 
             }
-        }
-
-        private TypeSyntax ParseType(SyntaxKind parentOperator)
-        {
-
-
         }
 
         /// <summary>

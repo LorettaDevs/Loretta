@@ -1981,31 +1981,8 @@
             <Kind Name="GreaterThanToken" />
         </Field>
     </Node>
-
-    <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
-        <TypeComment>
-            <summary>The node containing all of the file's contents.</summary>
-        </TypeComment>
-        <FactoryComment>
-            <summary>
-                Creates a new <see cref="CompilationUnitSyntax" /> node.
-            </summary>
-        </FactoryComment>
-        <Kind Name="CompilationUnit" />
-        <Field Name="Statements" Type="StatementListSyntax">
-            <PropertyComment>
-                <summary>The statements in the compilation unit.</summary>
-            </PropertyComment>
-        </Field>
-        <Field Name="EndOfFileToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>The end-of-file token.</summary>
-            </PropertyComment>
-            <Kind Name="EndOfFileToken" />
-        </Field>
-    </Node>
-
-    <AbstractNode Name="TypeName" Base="TypeSyntax">
+    
+        <AbstractNode Name="TypeName" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a type's name.</summary>
         </TypeComment>
@@ -2028,16 +2005,16 @@
         </Field>
     </Node>
 
-    <Node Name="ComposedTypeNameSyntax" Base="TypeName">
+    <Node Name="CompositeTypeNameSyntax" Base="TypeName">
         <TypeComment>
-            <summary>This node represents a composed name (.T)</summary>
+            <summary>This node represents a composite name (.T)</summary>
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ComposedNameSyntax" /> node.
+                Creates a new <see cref="CompositeTypeNameSyntax" /> node.
             </summary>
         </FactoryComment>
-        <Kind Name="ComposedNameSyntax" />
+        <Kind Name="CompositeTypeNameSyntax" />
         <Field Name="Base" Type="TypeNameSyntax">
             <PropertyComment>
                 <summary>Gets the name of the type.</summary>
@@ -2055,6 +2032,29 @@
             <PropertyComment>
                 <summary>Gets the name of the type.</summary>
             </PropertyComment>
+        </Field>
+    </Node>
+
+    <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
+        <TypeComment>
+            <summary>The node containing all of the file's contents.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="CompilationUnitSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="CompilationUnit" />
+        <Field Name="Statements" Type="StatementListSyntax">
+            <PropertyComment>
+                <summary>The statements in the compilation unit.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="EndOfFileToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The end-of-file token.</summary>
+            </PropertyComment>
+            <Kind Name="EndOfFileToken" />
         </Field>
     </Node>
     
