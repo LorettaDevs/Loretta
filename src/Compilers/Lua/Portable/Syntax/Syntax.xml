@@ -1825,7 +1825,19 @@
             </PropertyComment>
         </Field>
     </Node>
-
+    
+    <AbstractNode Name="TableElementTypeSyntax" Base="TypeSyntax">
+        <TypeComment>
+            <summary>This node represents a type inside of a table type.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="TableElementTypeSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="TableElementTypeSyntax" />
+    </AbstractNode>
+        
     <Node Name="TypeCastExpressionSyntax" Base="ExpressionSyntax">
         <TypeComment>
             <summary>This node represents a type cast expression.</summary>

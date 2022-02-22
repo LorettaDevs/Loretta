@@ -9,6 +9,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.NullableType = 2087 -> Loretta.CodeAnalysis.
 Loretta.CodeAnalysis.Lua.SyntaxKind.QuestionToken = 54 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SimpleTypeName = 2102 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TableElementType = 2096 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TableElementType = 2104 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TableType = 2088 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TableTypeIndexer = 2098 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TableTypeProperty = 2097 -> Loretta.CodeAnalysis.Lua.SyntaxKind
