@@ -1982,7 +1982,7 @@
         </Field>
     </Node>
     
-        <AbstractNode Name="TypeName" Base="TypeSyntax">
+    <AbstractNode Name="TypeNameSyntax" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a type's name.</summary>
         </TypeComment>
