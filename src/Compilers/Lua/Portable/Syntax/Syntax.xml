@@ -1816,6 +1816,14 @@
             </summary>
         </FactoryComment>
         <Kind Name="TableType" />
+        <Field Name="OpenBraceToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>{</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="OpenBraceToken" />
+        </Field>
         <Field Name="Types" Type="SeparatedSyntaxList&lt;TableElementTypeSyntax&gt;">
             <PropertyComment>
                 <summary>Gets the list of table properties and/or a single indexer.</summary>
@@ -1823,6 +1831,14 @@
                     Can also just be a single type in the <c>{T}</c> shorthand.
                 </remarks>
             </PropertyComment>
+        </Field>
+        <Field Name="CloseBraceToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>}</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="CloseBraceToken" />
         </Field>
     </Node>
     

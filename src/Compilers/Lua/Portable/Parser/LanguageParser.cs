@@ -1135,11 +1135,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case SyntaxKind.OpenParenthesisToken: // pack
                     var openParenthesis = EatToken();
                     var name = ParseSimpleType();
-                    var packList = new SeparatedSyntaxList<TypeSyntax>();
-                    
+                    var packList = _pool.AllocateSeparated<TypeSyntax>();
+
                     while (CurrentToken.Kind is SyntaxKind.CommaToken)
                     {
-                        packList = packList.Add(ParseSimpleType());
+                        packList.Add(ParseSimpleType());
                     }
 
                     return SyntaxFactory.TupleType(
@@ -1150,11 +1150,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case SyntaxKind.OpenBraceToken: // table
                     var openBrace = EatToken();
                     var type = ParseSimpleType();
-                    var tableList = new SeparatedSyntaxList<TableElementTypeSyntax>();
+                    var tableList = _pool.AllocateSeparated<TableElementTypeSyntax>();
 
                     while (CurrentToken.Kind is SyntaxKind.CommaToken)
                     {
-                        tableList = tableList.Add(ParseSimpleType());
+                        tableList.Add(ParseSimpleType());
                     }
 
                     return SyntaxFactory.TableType(
