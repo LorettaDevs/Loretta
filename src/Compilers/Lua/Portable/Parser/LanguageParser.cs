@@ -1122,28 +1122,51 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             switch (CurrentToken.Kind)
             {
                 case SyntaxKind.IdentifierToken:
-                    TypeNameSyntax name = SyntaxFactory.SimpleTypeName(EatToken());
-
+                    TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(EatToken());
+        
                     while (CurrentToken.Kind is SyntaxKind.DotToken)
                     {
                         var dotToken = EatToken(SyntaxKind.DotToken);
                         var memberName = EatToken(SyntaxKind.IdentifierName);
-                        name = SyntaxFactory.CompositeTypeName(name, dotToken, memberName);
+                        currentName = SyntaxFactory.CompositeTypeName(currentName, dotToken, memberName);
+                    }
+        
+                    return currentName;
+                case SyntaxKind.OpenParenthesisToken: // pack
+                    var openParenthesis = EatToken();
+                    var name = ParseSimpleType();
+                    var packList = new SeparatedSyntaxList<TypeSyntax>();
+                    
+                    while (CurrentToken.Kind is SyntaxKind.CommaToken)
+                    {
+                        packList = packList.Add(ParseSimpleType());
                     }
 
-                    return name;
-                case SyntaxKind.OpenParenthesisToken:
- 
-                    break;
-                case SyntaxKind.OpenBraceToken:
+                    return SyntaxFactory.TupleType(
+                        openParenthesis,
+                        packList,
+                        EatToken(SyntaxKind.CloseParenthesisToken)
+                    );
+                case SyntaxKind.OpenBraceToken: // table
+                    var openBrace = EatToken();
+                    var type = ParseSimpleType();
+                    var tableList = new SeparatedSyntaxList<TableElementTypeSyntax>();
 
-                    break;
+                    while (CurrentToken.Kind is SyntaxKind.CommaToken)
+                    {
+                        tableList = tableList.Add(ParseSimpleType());
+                    }
+
+                    return SyntaxFactory.TableType(
+                        openBrace,
+                        tableList,
+                        EatToken(SyntaxKind.CloseBraceToken)
+                    );
                 case SyntaxKind.NilKeyword:
                 case SyntaxKind.TrueKeyword:
                 case SyntaxKind.FalseKeyword:
-                    
-                    break;
-
+                    return SyntaxFactory.SimpleTypeName(EatToken());
+        
             }
         }
 
