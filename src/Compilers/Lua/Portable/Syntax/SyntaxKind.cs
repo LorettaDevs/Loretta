@@ -702,9 +702,9 @@ namespace Loretta.CodeAnalysis.Lua
         TableType = 2088,
         TupleType = 2089,
         VarargType = 2090,
-        TypeCast = 2091,
-        TypeUnion = 2092,
-        TypeIntersection = 2093,
+        TypeCastExpression = 2091,
+        UnionType = 2092,
+        IntersectionType = 2093,
         Generic = 2094,
         Type = 2095,
         TableElementType = 2096,
@@ -714,10 +714,14 @@ namespace Loretta.CodeAnalysis.Lua
         TypeParameterListSyntax = 2100,
         TypeArgumentListSyntax = 2101,
         SimpleTypeName = 2102,
-        ComposedTypeName = 2103,
+        CompositeTypeName = 2103,
+        EqualsType = 2104,
+        TypeParameter = 2105,
+        TypeParameterList = 2106,
+        TypeArgumentList = 2107,
 
         // Big gap 2105-3001 (insert new nodes here)
-        
+
 
         // Other types of nodes
         CompilationUnit = 3001,
