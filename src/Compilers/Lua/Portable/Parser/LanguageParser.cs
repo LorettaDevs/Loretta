@@ -1137,9 +1137,57 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     SyntaxFactory.LiteralType(SyntaxKind.TrueType, EatToken(SyntaxKind.TrueKeyword)),
                 SyntaxKind.FalseKeyword =>
                     SyntaxFactory.LiteralType(SyntaxKind.FalseType, EatToken(SyntaxKind.FalseKeyword)),
+                // generic types
+                SyntaxKind.LessThanToken =>
+                    ParseGeneric(),
+
                 // If everything else fails, try to parse an identifier-based name.
                 _ => ParseTypeName(),
             };
+        }
+
+        private TypeSyntax ParseTypePack()
+        {
+            var typePack = _pool.AllocateSeparated<TypeSyntax>();
+            var type = ParseSimpleType();
+
+            typePack.Add(type);
+
+            while (CurrentToken.Kind is SyntaxKind.CommaToken)
+            {
+                var separator = EatToken(SyntaxKind.CommaToken);
+                typePack.AddSeparator(separator);
+
+                switch (CurrentToken.Kind)
+                {
+                    case SyntaxKind.DotDotDotToken:
+                        var dot3Token = EatToken();
+                        typePack.Add(SyntaxFactory.VariadicTypePack(dot3Token, ParseType());
+                        break;
+                    case SyntaxKind.OpenParenthesisToken:
+                        var parsed = ParseTypeStartingWithParenthesis(acceptPacks: true);
+                        typePack.Add(parsed);
+                        break;
+
+                    default:
+                        typePack.Add(ParseType()); 
+
+                        break;
+                }
+            }
+
+            return SyntaxFactory.TypePack(SyntaxKind.OpenParenthesisToken, typePack, SyntaxKind.CloseParenthesisToken);
+        }
+
+        private TypeSyntax ParseGeneric() 
+        {
+            var lessThanToken = EatToken();
+            var typesList = _pool.AllocateSeparated<TypeSyntax>();
+
+            while (CurrentToken.Kind is SyntaxKind.CommaToken)
+            {
+                
+            }
         }
 
         private TypeSyntax ParseReturnType()

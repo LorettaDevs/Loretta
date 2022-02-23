@@ -2358,6 +2358,29 @@
             <Kind Name="CloseParenthesisToken" />
         </Field>
     </Node>
+    
+    <Node Name="VariadicTypePackSyntax" Base="TypeSyntax">
+        <TypeComment>
+            <summary>This node represents a variadic type pack.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="VariadicTypePackSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="VariadicTypePack" />
+        <Field Name="DotDotDotToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The 3 dots token.</summary>
+            </PropertyComment>
+            <Kind Name="DotDotDotToken" />
+        </Field>
+        <Field Name="Type" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>Gets the type the expression is being cast to.</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
 
     <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
         <TypeComment>
