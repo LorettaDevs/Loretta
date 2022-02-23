@@ -703,7 +703,7 @@ namespace Loretta.CodeAnalysis.Lua
         TypeBinding = 2086,
         NullableType = 2087,
         TableType = 2088,
-        TupleType = 2089,
+        TypePack = 2089,
         VarargType = 2090,
         TypeCastExpression = 2091,
         UnionType = 2092,
@@ -722,6 +722,7 @@ namespace Loretta.CodeAnalysis.Lua
         TypeParameter = 2105,
         TypeParameterList = 2106,
         TypeArgumentList = 2107,
+        FunctionType = 2108,
 
         // Big gap 2105-3000 (insert new nodes here)
 

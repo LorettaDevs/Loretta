@@ -1774,16 +1774,16 @@
         </Field>
     </Node>
 
-    <Node Name="TupleTypeSyntax" Base="TypeSyntax">
+    <Node Name="TypePackSyntax" Base="TypeSyntax">
         <TypeComment>
-            <summary>This node represents a tuple type.</summary>
+            <summary>This node represents a type pack.</summary>
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TupleTypeSyntax" /> node.
+                Creates a new <see cref="TypePackSyntax" /> node.
             </summary>
         </FactoryComment>
-        <Kind Name="TupleType" />
+        <Kind Name="TypePack" />
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
@@ -1794,7 +1794,7 @@
         </Field>
         <Field Name="Types" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
             <PropertyComment>
-                <summary>Gets the list of the types of the tuple's elements.</summary>
+                <summary>Gets the list of the types of the pack's elements.</summary>
             </PropertyComment>
         </Field>
         <Field Name="CloseParenthesisToken" Type="SyntaxToken">
