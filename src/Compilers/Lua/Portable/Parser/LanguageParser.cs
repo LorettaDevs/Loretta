@@ -1182,28 +1182,51 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 closeParenthesisToken);
         }
 
+        private LuaSyntaxNode ParseTableBasedType()
+        {
+
+        }
+
         private TypeSyntax ParseTypeStartingWithBrace()
         {
             var openBrace = EatToken();
+            var tableList = _pool.AllocateSeparated<LuaSyntaxNode>();
+
             var type = ParseSimpleType();
-            var tableList = _pool.AllocateSeparated<TableElementTypeSyntax>();
 
-            tableList.Add(type);
-
-            while (CurrentToken.Kind is SyntaxKind.CommaToken)
+            if (PeekToken(1).Kind == SyntaxKind.CloseBraceToken) // Empty
             {
-                var separator = EatToken(SyntaxKind.CommaToken);
+               return SyntaxFactory.TableType(openBrace, tableList, EatToken(SyntaxKind.CloseBraceToken));
+            }
+
+            while (CurrentToken.Kind is (SyntaxKind.CommaToken or SyntaxKind.SemicolonToken))
+            {
+                var separator = EatToken();
                 tableList.AddSeparator(separator);
 
-                type = ParseType();
-                tableList.Add(type);
+                if (CurrentToken.Kind == SyntaxKind.OpenBracketToken) // TableTypeIndexerSyntax
+                {
+                    var openBracket = EatToken();
+                    var indexType = ParseSimpleType();
+                    var closeBracket = EatToken(SyntaxKind.CloseBracketToken);
+                    var semiColon = EatToken(SyntaxKind.SemicolonToken);
+                    var valueType = ParseSimpleType();
+
+                    tableList.Add(SyntaxFactory.TableTypeIndexer(openBracket, indexType, closeBracket, semiColon, valueType));
+                }
+                else if (PeekToken(1).Kind == SyntaxKind.ColonToken) // TableTypePropertySyntax
+                {
+                     
+                } else // Array
+                {
+
+                }
             }
 
             return tableList.Count switch
             {
-                1 => SyntaxFactory.ArrayType(openBrace, tableList[1], EatToken(SyntaxKind.CloseBraceToken)),
-                _ => SyntaxFactory.TableType(openBrace, tableList, EatToken(SyntaxKind.CloseBraceToken)
-              ),
+                0 => SyntaxFactory.ArrayType(openBrace, type, EatToken(SyntaxKind.CloseBraceToken)),
+                _ => SyntaxFactory.TableType(openBrace, tableList, EatToken(SyntaxKind.CloseBraceToken))
             };
         }
  

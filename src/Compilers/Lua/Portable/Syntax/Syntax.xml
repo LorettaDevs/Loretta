@@ -1910,7 +1910,7 @@
             </PropertyComment>
             <Kind Name="OpenBraceToken" />
         </Field>
-        <Field Name="Types" Type="SeparatedSyntaxList&lt;TableElementTypeSyntax&gt;">
+        <Field Name="Types" Type="SeparatedSyntaxList&lt;LuaSyntaxNode&gt;">
             <PropertyComment>
                 <summary>Gets the list of table properties and/or a single indexer.</summary>
                 <remarks>
@@ -1946,7 +1946,7 @@
             </PropertyComment>
             <Kind Name="OpenBraceToken" />
         </Field>
-        <Field Name="Type" Base="TypeSyntax">
+        <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
                 <summary>Gets the array's type</summary>
             </PropertyComment>
