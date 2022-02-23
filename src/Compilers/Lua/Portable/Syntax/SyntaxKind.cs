@@ -356,6 +356,11 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         [Token(Text = "?")]
         QuestionToken = 54,
+        /// <summary>
+        /// Represents the <c>-&gt;</c> token.
+        /// </summary>
+        [Token(Text = "->")]
+        SlimArrowToken = 55,
 
         // Big gap 53-500 (insert new fixed-text tokens here)
 

@@ -322,7 +322,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case '-':
                     TextWindow.AdvanceChar();
-                    if (TextWindow.PeekChar() == '=')
+                    if ((ch = TextWindow.PeekChar()) == '>')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.SlimArrowToken;
+                    }
+                    else if (ch == '=')
                     {
                         TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.MinusEqualsToken;
