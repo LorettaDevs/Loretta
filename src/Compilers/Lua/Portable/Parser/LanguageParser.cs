@@ -1110,16 +1110,23 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return CurrentToken.Kind switch
             {
                 // function or parenthesized
-                SyntaxKind.OpenParenthesisToken => ParseTypeStartingWithParenthesis(acceptPacks: true),
+                SyntaxKind.OpenParenthesisToken =>
+                    ParseTypeStartingWithParenthesis(acceptPacks: true),
                 // table
-                SyntaxKind.OpenBraceToken => ParseTableBasedType(),
+                SyntaxKind.OpenBraceToken =>
+                    ParseTableBasedType(),
                 // typeof type
-                SyntaxKind.IdentifierToken when CurrentToken.ContextualKind is SyntaxKind.TypeofKeyword => ParseTypeofType(),
+                SyntaxKind.IdentifierToken when CurrentToken.ContextualKind is SyntaxKind.TypeofKeyword =>
+                    ParseTypeofType(),
                 // literal types
-                SyntaxKind.StringLiteralToken => SyntaxFactory.LiteralType(SyntaxKind.StringType, EatToken()),
-                SyntaxKind.NilKeyword => SyntaxFactory.LiteralType(SyntaxKind.NilType, EatToken()),
-                SyntaxKind.TrueKeyword => SyntaxFactory.LiteralType(SyntaxKind.TrueType, EatToken()),
-                SyntaxKind.FalseKeyword => SyntaxFactory.LiteralType(SyntaxKind.FalseType, EatToken()),
+                SyntaxKind.StringLiteralToken =>
+                    SyntaxFactory.LiteralType(SyntaxKind.StringType, EatToken(SyntaxKind.StringLiteralToken)),
+                SyntaxKind.NilKeyword =>
+                    SyntaxFactory.LiteralType(SyntaxKind.NilType, EatToken(SyntaxKind.NilKeyword)),
+                SyntaxKind.TrueKeyword =>
+                    SyntaxFactory.LiteralType(SyntaxKind.TrueType, EatToken(SyntaxKind.TrueKeyword)),
+                SyntaxKind.FalseKeyword =>
+                    SyntaxFactory.LiteralType(SyntaxKind.FalseType, EatToken(SyntaxKind.FalseKeyword)),
                 // If everything else fails, try to parse an identifier-based name.
                 _ => ParseTypeName(),
             };
@@ -1266,7 +1273,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private TypeSyntax ParseTypeofType()
         {
-            var typeofKeyword = EatToken();
+            var typeofKeyword = EatContextualToken(SyntaxKind.TypeofKeyword);
             var openParenthesis = EatToken(SyntaxKind.OpenParenthesisToken);
             var expression = ParseExpression();
             var closeParenthesis = EatToken(SyntaxKind.CloseParenthesisToken);
