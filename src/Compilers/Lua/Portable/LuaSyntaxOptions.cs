@@ -241,7 +241,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="octalIntegerFormat"><inheritdoc cref="OctalIntegerFormat" path="/summary" /></param>
         /// <param name="decimalIntegerFormat"><inheritdoc cref="DecimalIntegerFormat" path="/summary" /></param>
         /// <param name="hexIntegerFormat"><inheritdoc cref="HexIntegerFormat" path="/summary" /></param>
-        /// <param name="acceptTypedLua"><inheritdoc cref="acceptTypedLua" path="/summary" /></param>
+        /// <param name="acceptTypedLua"><inheritdoc cref="AcceptTypedLua" path="/summary" /></param>
         public LuaSyntaxOptions(
             bool acceptBinaryNumbers,
             bool acceptCCommentSyntax,
