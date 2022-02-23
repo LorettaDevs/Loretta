@@ -443,7 +443,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 condition,
                 semicolonToken);
         }
-        
+
         private WhileStatementSyntax ParseWhileStatement()
         {
             var whileKeyword = EatToken(SyntaxKind.WhileKeyword);
@@ -494,7 +494,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private ContinueStatementSyntax ParseContinueStatement()
         {
-            LorettaDebug.Assert(Options.SyntaxOptions.ContinueType  is ContinueType.ContextualKeyword or ContinueType.Keyword);
+            LorettaDebug.Assert(Options.SyntaxOptions.ContinueType is ContinueType.ContextualKeyword or ContinueType.Keyword);
             var continueKeyword = Options.SyntaxOptions.ContinueType == ContinueType.ContextualKeyword
                 ? EatContextualToken(SyntaxKind.ContinueKeyword)
                 : EatTokenWithPrejudice(SyntaxKind.ContinueKeyword);
@@ -1117,44 +1117,87 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         //
         //}
 
+        private TypeSyntax ParseReturnType()
+        {
+            if (CurrentToken.Kind is SyntaxKind.OpenParenthesisToken)
+            {
+                return ParseTypeStartingWithParenthesis(acceptPacks: false);
+            }
+            else
+            {
+                return ParseType();
+            }
+        }
+
+        private TypeSyntax ParseTypeStartingWithParenthesis(bool acceptPacks)
+        {
+            var openParenthesisToken = EatToken();
+            var typesListBuilder = _pool.AllocateSeparated<TypeSyntax>();
+
+            if (CurrentToken.Kind != SyntaxKind.CloseParenthesisToken)
+            {
+                var type = ParseType();
+                typesListBuilder.Add(type);
+
+                while (CurrentToken.Kind is SyntaxKind.CommaToken)
+                {
+                    var separator = EatToken(SyntaxKind.CommaToken);
+                    typesListBuilder.AddSeparator(separator);
+
+                    type = ParseType();
+                    typesListBuilder.Add(type);
+                }
+            }
+
+            var typesList = _pool.ToListAndFree(typesListBuilder);
+            var closeParenthesisToken = EatToken(SyntaxKind.CloseParenthesisToken);
+
+            if (CurrentToken.Kind == SyntaxKind.SlimArrowToken
+                // If there's not an arrow, then we need to error if there's more than
+                // one type in the list and we aren't allowed to accept packs
+                || (typesList.Count != 1 && !acceptPacks))
+            {
+                var slimArrow = EatToken(SyntaxKind.SlimArrowToken);
+                var returnType = ParseReturnType();
+
+                return SyntaxFactory.FunctionType(
+                    openParenthesisToken,
+                    typesList,
+                    closeParenthesisToken,
+                    slimArrow,
+                    returnType);
+            }
+            else if (typesList.Count == 1)
+            {
+                var type = typesList[0]!;
+                return SyntaxFactory.ParenthesizedType(
+                    openParenthesisToken,
+                    type,
+                    closeParenthesisToken);
+            }
+
+            return SyntaxFactory.TypePack(
+                openParenthesisToken,
+                typesList,
+                closeParenthesisToken);
+        }
+
         private TypeSyntax ParseSimpleType()
         {
             switch (CurrentToken.Kind)
             {
-                case SyntaxKind.IdentifierToken:
-                    TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(EatToken());
-        
-                    while (CurrentToken.Kind is SyntaxKind.DotToken)
-                    {
-                        var dotToken = EatToken(SyntaxKind.DotToken);
-                        var memberName = EatToken(SyntaxKind.IdentifierName);
-                        currentName = SyntaxFactory.CompositeTypeName(currentName, dotToken, memberName);
-                    }
-        
-                    return currentName;
-                case SyntaxKind.OpenParenthesisToken: // pack
-                    var openParenthesis = EatToken();
-                    var name = ParseSimpleType();
-                    var packList = _pool.AllocateSeparated<TypeSyntax>();
+                case SyntaxKind.OpenParenthesisToken: // function or parenthesized
+                    return ParseTypeStartingWithParenthesis(acceptPacks: true);
 
-                    while (CurrentToken.Kind is SyntaxKind.CommaToken)
-                    {
-                        packList.Add(ParseSimpleType());
-                    }
-
-                    return SyntaxFactory.TupleType(
-                        openParenthesis,
-                        packList,
-                        EatToken(SyntaxKind.CloseParenthesisToken)
-                    );
                 case SyntaxKind.OpenBraceToken: // table
+                {
                     var openBrace = EatToken();
                     var type = ParseSimpleType();
                     var tableList = _pool.AllocateSeparated<TableElementTypeSyntax>();
 
                     while (CurrentToken.Kind is SyntaxKind.CommaToken)
                     {
-                        tableList.Add(ParseSimpleType());
+                        throw new NotImplementedException();
                     }
 
                     return SyntaxFactory.TableType(
@@ -1162,12 +1205,60 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         tableList,
                         EatToken(SyntaxKind.CloseBraceToken)
                     );
+                }
+
                 case SyntaxKind.NilKeyword:
                 case SyntaxKind.TrueKeyword:
                 case SyntaxKind.FalseKeyword:
                     return SyntaxFactory.SimpleTypeName(EatToken());
-        
+
+                // If everything else fails, try to parse an identifier-based name.
+                default:
+                    TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(EatToken());
+
+                    while (CurrentToken.Kind is SyntaxKind.DotToken)
+                    {
+                        var dotToken = EatToken(SyntaxKind.DotToken);
+                        var memberName = EatToken(SyntaxKind.IdentifierName);
+                        currentName = SyntaxFactory.CompositeTypeName(currentName, dotToken, memberName);
+                    }
+
+                    return currentName;
             }
+        }
+
+        private TypeSyntax ParsePossibleNullableType()
+        {
+            var type = ParseSimpleType();
+            if (CurrentToken.Kind is SyntaxKind.QuestionToken)
+            {
+                var questionToken = EatToken(SyntaxKind.QuestionToken);
+                type = SyntaxFactory.NullableType(type, questionToken);
+            }
+            return type;
+        }
+
+        public TypeSyntax ParseType()
+        {
+            var type = ParsePossibleNullableType();
+
+            while (CurrentToken.Kind is SyntaxKind.PipeToken or SyntaxKind.AmpersandToken)
+            {
+                if (CurrentToken.Kind == SyntaxKind.PipeToken)
+                {
+                    var pipeToken = EatTokenWithPrejudice(SyntaxKind.PipeToken);
+                    var rightType = ParsePossibleNullableType();
+                    type = SyntaxFactory.UnionType(type, pipeToken, rightType);
+                }
+                else
+                {
+                    var ampersandToken = EatTokenWithPrejudice(SyntaxKind.AmpersandToken);
+                    var rightType = ParsePossibleNullableType();
+                    type = SyntaxFactory.IntersectionType(type, ampersandToken, rightType);
+                }
+            }
+
+            return type;
         }
 
         /// <summary>
