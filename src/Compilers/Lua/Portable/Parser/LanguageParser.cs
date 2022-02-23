@@ -1283,7 +1283,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private TypeNameSyntax ParseTypeName()
         {
-            TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(EatToken());
+            var identifier = EatToken(SyntaxKind.IdentifierName);
+            TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(identifier);
 
             while (CurrentToken.Kind is SyntaxKind.DotToken)
             {
