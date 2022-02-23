@@ -1892,42 +1892,6 @@
         </TypeComment>
     </AbstractNode>
 
-    <Node Name="TableTypeSyntax" Base="TableBasedTypeSyntax">
-        <TypeComment>
-            <summary>This node represents a table type.</summary>
-        </TypeComment>
-        <FactoryComment>
-            <summary>
-                Creates a new <see cref="TableTypeSyntax" /> node.
-            </summary>
-        </FactoryComment>
-        <Kind Name="TableType" />
-        <Field Name="OpenBraceToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>
-                    Gets the <c>{</c> token.
-                </summary>
-            </PropertyComment>
-            <Kind Name="OpenBraceToken" />
-        </Field>
-        <Field Name="Types" Type="SeparatedSyntaxList&lt;LuaSyntaxNode&gt;">
-            <PropertyComment>
-                <summary>Gets the list of table properties and/or a single indexer.</summary>
-                <remarks>
-                    Can also just be a single type in the <c>{T}</c> shorthand.
-                </remarks>
-            </PropertyComment>
-        </Field>
-        <Field Name="CloseBraceToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>
-                    Gets the <c>}</c> token.
-                </summary>
-            </PropertyComment>
-            <Kind Name="CloseBraceToken" />
-        </Field>
-    </Node>
-
     <Node Name="ArrayTypeSyntax" Base="TableBasedTypeSyntax">
         <TypeComment>
             <summary>This node represents an array type.</summary>
@@ -1961,17 +1925,113 @@
         </Field>
     </Node>
 
-    <AbstractNode Name="TableElementTypeSyntax" Base="TypeSyntax">
+    <AbstractNode Name="TableTypeElementSyntax" Base="LuaSyntaxNode">
         <TypeComment>
             <summary>This node represents a type inside of a table type.</summary>
         </TypeComment>
+    </AbstractNode>
+
+    <Node Name="TableTypeIndexerSyntax" Base="TableTypeElementSyntax">
+        <TypeComment>
+            <summary>This node represents a table type indexer.</summary>
+        </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TableElementTypeSyntax" /> node.
+                Creates a new <see cref="TableTypeIndexerSyntax" /> node.
             </summary>
         </FactoryComment>
-        <Kind Name="TableElementTypeSyntax" />
-    </AbstractNode>
+        <Kind Name="TableTypeIndexer" />
+        <Field Name="OpenBracketToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The open bracket token.</summary>
+            </PropertyComment>
+            <Kind Name="OpenParenthesisToken" />
+        </Field>
+        <Field Name="IndexType" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>The type's index</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="CloseBracketToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The close bracket token.</summary>
+            </PropertyComment>
+            <Kind Name="CloseParenthesisToken" />
+        </Field>
+        <Field Name="ColonToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The colon token.</summary>
+            </PropertyComment>
+            <Kind Name="ColonToken" />
+        </Field>
+        <Field Name="ValueType" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>The type's value</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+
+    <Node Name="TableTypePropertySyntax" Base="TableTypeElementSyntax">
+        <TypeComment>
+            <summary>This node represents a table type property.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="TableTypePropertySyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="TableTypeProperty" />
+        <Field Name="Identifier" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The type's index</summary>
+            </PropertyComment>
+            <Kind Name="IdentifierToken" />
+        </Field>
+        <Field Name="ColonToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The colon token.</summary>
+            </PropertyComment>
+            <Kind Name="ColonToken" />
+        </Field>
+        <Field Name="ValueType" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>The type's value</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+
+    <Node Name="TableTypeSyntax" Base="TableBasedTypeSyntax">
+        <TypeComment>
+            <summary>This node represents a table type.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="TableTypeSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="TableType" />
+        <Field Name="OpenBraceToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>{</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="OpenBraceToken" />
+        </Field>
+        <Field Name="Elements" Type="SeparatedSyntaxList&lt;TableTypeElementSyntax&gt;">
+            <PropertyComment>
+                <summary>Gets the list of table properties and/or a single indexer.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="CloseBraceToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>}</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="CloseBraceToken" />
+        </Field>
+    </Node>
 
     <Node Name="TypeCastExpressionSyntax" Base="ExpressionSyntax">
         <TypeComment>
@@ -2296,74 +2356,6 @@
                 <summary>The close parenthesis token.</summary>
             </PropertyComment>
             <Kind Name="CloseParenthesisToken" />
-        </Field>
-    </Node>
-
-    <Node Name="TableTypeIndexerSyntax" Base="LuaSyntaxNode">
-        <TypeComment>
-            <summary>This node represents a table type indexer.</summary>
-        </TypeComment>
-        <FactoryComment>
-            <summary>
-                Creates a new <see cref="TableTypeIndexerSyntax" /> node.
-            </summary>
-        </FactoryComment>
-        <Kind Name="TableTypeIndexer" />
-        <Field Name="OpenBracketToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>The open bracket token.</summary>
-            </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
-        </Field>
-        <Field Name="IndexType" Type="TypeSyntax">
-            <PropertyComment>
-                <summary>The type's index</summary>
-            </PropertyComment>
-        </Field>
-        <Field Name="CloseBracketToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>The close bracket token.</summary>
-            </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
-        </Field>
-        <Field Name="ColonToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>The colon token.</summary>
-            </PropertyComment>
-            <Kind Name="ColonToken" />
-        </Field>
-        <Field Name="ValueType" Type="TypeSyntax">
-            <PropertyComment>
-                <summary>The type's value</summary>
-            </PropertyComment>
-        </Field>
-    </Node>
-
-    <Node Name="TableTypePropertySyntax" Base="LuaSyntaxNode">
-        <TypeComment>
-            <summary>This node represents a table type property.</summary>
-        </TypeComment>
-        <FactoryComment>
-            <summary>
-                Creates a new <see cref="TableTypePropertySyntax" /> node.
-            </summary>
-        </FactoryComment>
-        <Kind Name="TableTypeProperty" />
-        <Field Name="IndexType" Type="TypeSyntax">
-            <PropertyComment>
-                <summary>The type's index</summary>
-            </PropertyComment>
-        </Field>
-        <Field Name="ColonToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>The colon token.</summary>
-            </PropertyComment>
-            <Kind Name="ColonToken" />
-        </Field>
-        <Field Name="ValueType" Type="TypeSyntax">
-            <PropertyComment>
-                <summary>The type's value</summary>
-            </PropertyComment>
         </Field>
     </Node>
 

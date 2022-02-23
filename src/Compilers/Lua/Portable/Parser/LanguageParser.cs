@@ -1071,51 +1071,59 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return ifExpression;
         }
 
-        //private TableTypeSyntax ParseTableType()
-        //{
-        //    
-        //}
-        //
-        //private TupleTypeSyntax ParseTupleType()
-        //{
-        //    var openParenthesisToken = EatToken(SyntaxKind.OpenParenthesisToken);
-        //    var typesAndSeparatorsBuilder = _pool.AllocateSeparated<TypeSyntax>();
-        //
-        //    while (CurrentToken.Kind is not (SyntaxKind.CloseParenthesisToken or SyntaxKind.EndOfFileToken))
-        //    {
-        //        var argument = Parse; 
-        //    }
-        //}
-        //
-        //private NullableTypeSyntax ParseNullableType()
-        //{
-        //
-        //}
-        //
-        //private TypeParameterListSyntax ParseTypeParameterList()
-        //{
-        //
-        //}
-        //
-        //private TypeArgumentListSyntax ParseTypeArgumentList()
-        //{
-        //
-        //}
-        //
-        //private IntersectionTypeSyntax PrseTypeIntersection()
-        //{
-        //
-        //}
-        //
-        //private UnionTypeSyntax ParseTypeUnion()
-        //{
-        //
-        //}
-        //
-        //private TypeCastExpressionSyntax ParseTypeCast()
-        //{
-        //
-        //}
+        public TypeSyntax ParseType()
+        {
+            var type = ParsePossibleNullableType();
+
+            while (CurrentToken.Kind is SyntaxKind.PipeToken or SyntaxKind.AmpersandToken)
+            {
+                if (CurrentToken.Kind == SyntaxKind.PipeToken)
+                {
+                    var pipeToken = EatTokenWithPrejudice(SyntaxKind.PipeToken);
+                    var rightType = ParsePossibleNullableType();
+                    type = SyntaxFactory.UnionType(type, pipeToken, rightType);
+                }
+                else
+                {
+                    var ampersandToken = EatTokenWithPrejudice(SyntaxKind.AmpersandToken);
+                    var rightType = ParsePossibleNullableType();
+                    type = SyntaxFactory.IntersectionType(type, ampersandToken, rightType);
+                }
+            }
+
+            return type;
+        }
+
+        private TypeSyntax ParsePossibleNullableType()
+        {
+            var type = ParseSimpleType();
+            if (CurrentToken.Kind is SyntaxKind.QuestionToken)
+            {
+                var questionToken = EatToken(SyntaxKind.QuestionToken);
+                type = SyntaxFactory.NullableType(type, questionToken);
+            }
+            return type;
+        }
+
+        private TypeSyntax ParseSimpleType()
+        {
+            return CurrentToken.Kind switch
+            {
+                // function or parenthesized
+                SyntaxKind.OpenParenthesisToken => ParseTypeStartingWithParenthesis(acceptPacks: true),
+                // table
+                SyntaxKind.OpenBraceToken => ParseTableBasedType(),
+                // typeof type
+                SyntaxKind.IdentifierToken when CurrentToken.ContextualKind is SyntaxKind.TypeofKeyword => ParseTypeofType(),
+                // literal types
+                SyntaxKind.StringLiteralToken => SyntaxFactory.LiteralType(SyntaxKind.StringType, EatToken()),
+                SyntaxKind.NilKeyword => SyntaxFactory.LiteralType(SyntaxKind.NilType, EatToken()),
+                SyntaxKind.TrueKeyword => SyntaxFactory.LiteralType(SyntaxKind.TrueType, EatToken()),
+                SyntaxKind.FalseKeyword => SyntaxFactory.LiteralType(SyntaxKind.FalseType, EatToken()),
+                // If everything else fails, try to parse an identifier-based name.
+                _ => ParseTypeName(),
+            };
+        }
 
         private TypeSyntax ParseReturnType()
         {
@@ -1182,133 +1190,102 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 closeParenthesisToken);
         }
 
-        private LuaSyntaxNode ParseTableBasedType()
-        {
-
-        }
-
-        private TypeSyntax ParseTypeStartingWithBrace()
+        private TableBasedTypeSyntax ParseTableBasedType()
         {
             var openBrace = EatToken();
-            var tableList = _pool.AllocateSeparated<LuaSyntaxNode>();
 
-            var type = ParseSimpleType();
-
-            if (PeekToken(1).Kind == SyntaxKind.CloseBraceToken) // Empty
+            if (CurrentToken.Kind is SyntaxKind.OpenBracketToken or SyntaxKind.CloseBraceToken
+                || PeekToken(1).Kind == SyntaxKind.ColonToken)
             {
-               return SyntaxFactory.TableType(openBrace, tableList, EatToken(SyntaxKind.CloseBraceToken));
-            }
-
-            while (CurrentToken.Kind is (SyntaxKind.CommaToken or SyntaxKind.SemicolonToken))
-            {
-                var separator = EatToken();
-                tableList.AddSeparator(separator);
-
-                if (CurrentToken.Kind == SyntaxKind.OpenBracketToken) // TableTypeIndexerSyntax
+                var elementsBuilder = _pool.AllocateSeparated<TableTypeElementSyntax>();
+                while (CurrentToken.Kind is not (SyntaxKind.CloseBraceToken or SyntaxKind.EndOfFileToken))
                 {
-                    var openBracket = EatToken();
-                    var indexType = ParseSimpleType();
-                    var closeBracket = EatToken(SyntaxKind.CloseBracketToken);
-                    var semiColon = EatToken(SyntaxKind.SemicolonToken);
-                    var valueType = ParseSimpleType();
+                    var element = ParseTableTypeElement();
+                    elementsBuilder.Add(element);
 
-                    tableList.Add(SyntaxFactory.TableTypeIndexer(openBracket, indexType, closeBracket, semiColon, valueType));
-                }
-                else if (PeekToken(1).Kind == SyntaxKind.ColonToken) // TableTypePropertySyntax
-                {
-                     
-                } else // Array
-                {
-
-                }
-            }
-
-            return tableList.Count switch
-            {
-                0 => SyntaxFactory.ArrayType(openBrace, type, EatToken(SyntaxKind.CloseBraceToken)),
-                _ => SyntaxFactory.TableType(openBrace, tableList, EatToken(SyntaxKind.CloseBraceToken))
-            };
-        }
- 
-        private TypeSyntax ParseSimpleType()
-        {
-            switch (CurrentToken.Kind)
-            {
-                case SyntaxKind.OpenParenthesisToken: // function or parenthesized
-                    return ParseTypeStartingWithParenthesis(acceptPacks: true);
-
-                case SyntaxKind.OpenBraceToken: // table
-                    return ParseTypeStartingWithBrace();
-
-                case SyntaxKind.TypeofKeyword: // typeof type
-                {
-                    var typeofKeyword = EatToken();
-                    var openParenthesis = EatToken(SyntaxKind.OpenParenthesisToken);
-                    var expression = ParseExpression();
-                    var closeParenthesis = EatToken(SyntaxKind.CloseParenthesisToken);
-
-                    return SyntaxFactory.TypeofType(typeofKeyword, openParenthesis, expression, closeParenthesis);
-                }
-
-                case SyntaxKind.StringLiteralToken:
-                    return SyntaxFactory.LiteralType(SyntaxKind.StringType, EatToken());
-
-                case SyntaxKind.NilKeyword:
-                    return SyntaxFactory.LiteralType(SyntaxKind.NilType, EatToken());
-
-                case SyntaxKind.TrueKeyword:
-                    return SyntaxFactory.LiteralType(SyntaxKind.TrueType, EatToken());
-
-                case SyntaxKind.FalseKeyword:
-                    return SyntaxFactory.LiteralType(SyntaxKind.FalseType, EatToken());
-
-                // If everything else fails, try to parse an identifier-based name.
-                default:
-                    TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(EatToken());
-
-                    while (CurrentToken.Kind is SyntaxKind.DotToken)
+                    // If there's a separator, then there might be a field next
+                    if (CurrentToken.Kind is SyntaxKind.CommaToken or SyntaxKind.SemicolonToken)
                     {
-                        var dotToken = EatToken(SyntaxKind.DotToken);
-                        var memberName = EatToken(SyntaxKind.IdentifierName);
-                        currentName = SyntaxFactory.CompositeTypeName(currentName, dotToken, memberName);
+                        elementsBuilder.AddSeparator(EatToken());
                     }
+                    else
+                    {
+                        // Otherwise we're done.
+                        break;
+                    }
+                }
 
-                    return currentName;
+                var elements = _pool.ToListAndFree(elementsBuilder);
+                var closeBrace = EatToken(SyntaxKind.CloseBraceToken);
+                return SyntaxFactory.TableType(
+                    openBrace,
+                    elements,
+                    closeBrace);
+            }
+            else
+            {
+                var type = ParseType();
+                var closeBrace = EatToken(SyntaxKind.CloseBraceToken);
+
+                return SyntaxFactory.ArrayType(
+                    openBrace,
+                    type,
+                    closeBrace);
             }
         }
 
-        private TypeSyntax ParsePossibleNullableType()
+        private TableTypeElementSyntax ParseTableTypeElement()
         {
-            var type = ParseSimpleType();
-            if (CurrentToken.Kind is SyntaxKind.QuestionToken)
+            if (CurrentToken.Kind is SyntaxKind.OpenBracketToken)
             {
-                var questionToken = EatToken(SyntaxKind.QuestionToken);
-                type = SyntaxFactory.NullableType(type, questionToken);
+                var openBracket = EatTokenWithPrejudice(SyntaxKind.OpenBracketToken);
+                var indexType = ParseType();
+                var closeBracket = EatToken(SyntaxKind.CloseBracketToken);
+                var colon = EatToken(SyntaxKind.ColonToken);
+                var valueType = ParseType();
+
+                return SyntaxFactory.TableTypeIndexer(
+                    openBracket,
+                    indexType,
+                    closeBracket,
+                    colon,
+                    valueType);
             }
-            return type;
+            else
+            {
+                var identifier = EatTokenWithPrejudice(SyntaxKind.IdentifierName);
+                var colonToken = EatToken(SyntaxKind.ColonToken);
+                var valueType = ParseType();
+
+                return SyntaxFactory.TableTypeProperty(
+                    identifier,
+                    colonToken,
+                    valueType);
+            }
         }
 
-        public TypeSyntax ParseType()
+        private TypeSyntax ParseTypeofType()
         {
-            var type = ParsePossibleNullableType();
+            var typeofKeyword = EatToken();
+            var openParenthesis = EatToken(SyntaxKind.OpenParenthesisToken);
+            var expression = ParseExpression();
+            var closeParenthesis = EatToken(SyntaxKind.CloseParenthesisToken);
 
-            while (CurrentToken.Kind is SyntaxKind.PipeToken or SyntaxKind.AmpersandToken)
+            return SyntaxFactory.TypeofType(typeofKeyword, openParenthesis, expression, closeParenthesis);
+        }
+
+        private TypeNameSyntax ParseTypeName()
+        {
+            TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(EatToken());
+
+            while (CurrentToken.Kind is SyntaxKind.DotToken)
             {
-                if (CurrentToken.Kind == SyntaxKind.PipeToken)
-                {
-                    var pipeToken = EatTokenWithPrejudice(SyntaxKind.PipeToken);
-                    var rightType = ParsePossibleNullableType();
-                    type = SyntaxFactory.UnionType(type, pipeToken, rightType);
-                }
-                else
-                {
-                    var ampersandToken = EatTokenWithPrejudice(SyntaxKind.AmpersandToken);
-                    var rightType = ParsePossibleNullableType();
-                    type = SyntaxFactory.IntersectionType(type, ampersandToken, rightType);
-                }
+                var dotToken = EatToken(SyntaxKind.DotToken);
+                var memberName = EatToken(SyntaxKind.IdentifierName);
+                currentName = SyntaxFactory.CompositeTypeName(currentName, dotToken, memberName);
             }
 
-            return type;
+            return currentName;
         }
 
         /// <summary>
