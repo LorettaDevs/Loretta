@@ -1749,19 +1749,19 @@
         </Field>
     </Node>
 
-    <Node Name="NullableTypeSyntax" Base="TypeSyntax">
+    <Node Name="NilableTypeSyntax" Base="TypeSyntax">
         <TypeComment>
-            <summary>This node represents a nullable type.</summary>
+            <summary>This node represents a nilable type.</summary>
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="NullableTypeSyntax" /> node.
+                Creates a new <see cref="NilableTypeSyntax" /> node.
             </summary>
         </FactoryComment>
-        <Kind Name="NullableType" />
+        <Kind Name="NilableType" />
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
-                <summary>Gets the base type that's being made nullable.</summary>
+                <summary>Gets the base type that's being made nilable.</summary>
             </PropertyComment>
         </Field>
         <Field Name="QuestionToken" Type="SyntaxToken">

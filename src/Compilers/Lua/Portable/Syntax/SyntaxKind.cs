@@ -706,7 +706,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         // Types
         TypeBinding = 2086,
-        NullableType = 2087,
+        NilableType = 2087,
         TableType = 2088,
         TypePack = 2089,
         VarargType = 2090,
