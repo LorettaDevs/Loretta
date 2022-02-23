@@ -1774,6 +1774,39 @@
         </Field>
     </Node>
 
+    <Node Name="ParenthesizedTypeSyntax" Base="TypeSyntax">
+        <TypeComment>
+            <summary>This node represents a parenthesized type.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="ParenthesizedTypeSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="ParenthesizedType" />
+        <Field Name="OpenParenthesisToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>(</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="OpenParenthesisToken" />
+        </Field>
+        <Field Name="Type" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>Gets the type contained within the parenthesis.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="CloseParenthesisToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>)</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="CloseParenthesisToken" />
+        </Field>
+    </Node>
+
     <Node Name="TypePackSyntax" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a type pack.</summary>

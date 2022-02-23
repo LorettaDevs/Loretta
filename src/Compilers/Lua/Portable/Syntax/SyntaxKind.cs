@@ -723,6 +723,7 @@ namespace Loretta.CodeAnalysis.Lua
         TypeParameterList = 2106,
         TypeArgumentList = 2107,
         FunctionType = 2108,
+        ParenthesizedType = 2109,
 
         // Big gap 2105-3000 (insert new nodes here)
 
