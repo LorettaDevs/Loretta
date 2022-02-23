@@ -499,6 +499,11 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         [Keyword("export")]
         ExportKeyword = 524,
+        /// <summary>
+        /// Represents the <see langword="typeof"/> keyword.
+        /// </summary>
+        [Keyword("typeof")]
+        TypeofKeyword = 525,
 
         // Big gap 522-1000 (insert new keywords here)
 
@@ -724,8 +729,13 @@ namespace Loretta.CodeAnalysis.Lua
         TypeArgumentList = 2107,
         FunctionType = 2108,
         ParenthesizedType = 2109,
+        StringType = 2110,
+        TrueType = 2111,
+        FalseType = 2112,
+        NilType = 2113,
+        TypeofType = 2114,
 
-        // Big gap 2105-3000 (insert new nodes here)
+        // Big gap 2115-3000 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,

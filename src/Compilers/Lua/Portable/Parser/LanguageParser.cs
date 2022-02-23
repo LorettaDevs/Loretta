@@ -1182,6 +1182,31 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 closeParenthesisToken);
         }
 
+        private TypeSyntax ParseTypeStartingWithBrace()
+        {
+            var openBrace = EatToken();
+            var type = ParseSimpleType();
+            var tableList = _pool.AllocateSeparated<TableElementTypeSyntax>();
+
+            tableList.Add(type);
+
+            while (CurrentToken.Kind is SyntaxKind.CommaToken)
+            {
+                var separator = EatToken(SyntaxKind.CommaToken);
+                tableList.AddSeparator(separator);
+
+                type = ParseType();
+                tableList.Add(type);
+            }
+
+            return tableList.Count switch
+            {
+                1 => SyntaxFactory.ArrayType(openBrace, tableList[1], EatToken(SyntaxKind.CloseBraceToken)),
+                _ => SyntaxFactory.TableType(openBrace, tableList, EatToken(SyntaxKind.CloseBraceToken)
+              ),
+            };
+        }
+ 
         private TypeSyntax ParseSimpleType()
         {
             switch (CurrentToken.Kind)
@@ -1190,27 +1215,29 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     return ParseTypeStartingWithParenthesis(acceptPacks: true);
 
                 case SyntaxKind.OpenBraceToken: // table
+                    return ParseTypeStartingWithBrace();
+
+                case SyntaxKind.TypeofKeyword: // typeof type
                 {
-                    var openBrace = EatToken();
-                    var type = ParseSimpleType();
-                    var tableList = _pool.AllocateSeparated<TableElementTypeSyntax>();
+                    var typeofKeyword = EatToken();
+                    var openParenthesis = EatToken(SyntaxKind.OpenParenthesisToken);
+                    var expression = ParseExpression();
+                    var closeParenthesis = EatToken(SyntaxKind.CloseParenthesisToken);
 
-                    while (CurrentToken.Kind is SyntaxKind.CommaToken)
-                    {
-                        throw new NotImplementedException();
-                    }
-
-                    return SyntaxFactory.TableType(
-                        openBrace,
-                        tableList,
-                        EatToken(SyntaxKind.CloseBraceToken)
-                    );
+                    return SyntaxFactory.TypeofType(typeofKeyword, openParenthesis, expression, closeParenthesis);
                 }
 
+                case SyntaxKind.StringLiteralToken:
+                    return SyntaxFactory.LiteralType(SyntaxKind.StringType, EatToken());
+
                 case SyntaxKind.NilKeyword:
+                    return SyntaxFactory.LiteralType(SyntaxKind.NilType, EatToken());
+
                 case SyntaxKind.TrueKeyword:
+                    return SyntaxFactory.LiteralType(SyntaxKind.TrueType, EatToken());
+
                 case SyntaxKind.FalseKeyword:
-                    return SyntaxFactory.SimpleTypeName(EatToken());
+                    return SyntaxFactory.LiteralType(SyntaxKind.FalseType, EatToken());
 
                 // If everything else fails, try to parse an identifier-based name.
                 default:
