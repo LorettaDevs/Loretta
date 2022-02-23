@@ -1807,6 +1807,52 @@
         </Field>
     </Node>
 
+    <Node Name="FunctionTypeSyntax" Base="TypeSyntax">
+        <TypeComment>
+            <summary>This node represents a function type.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="FunctionTypeSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="FunctionType" />
+        <Field Name="OpenParenthesisToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>(</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="OpenParenthesisToken" />
+        </Field>
+        <Field Name="Parameters" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
+            <PropertyComment>
+                <summary>Gets the list of the types of the function's parameters.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="CloseParenthesisToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>)</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="CloseParenthesisToken" />
+        </Field>
+        <Field Name="SlimArrowToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the <c>-&gt;</c> token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="SlimArrowToken" />
+        </Field>
+        <Field Name="ReturnType" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>The return type of the function type.</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+
     <Node Name="TableTypeSyntax" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a table type.</summary>
