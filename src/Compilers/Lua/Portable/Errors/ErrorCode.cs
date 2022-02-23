@@ -52,6 +52,8 @@
         ERR_InvalidExpressionPart = 1011,
         ERR_InvalidStatement = 1012,
         ERR_CompoundAssignmentNotSupportedInLuaVersion = 1013,
+        ERR_MixingNilableAndIntersectionNotAllowed = 1014,
+        ERR_MixingUnionsAndIntersectionsNotAllowed = 1015,
 
         // MessageProvider stuff
         ERR_BadDocumentationMode = 2000,

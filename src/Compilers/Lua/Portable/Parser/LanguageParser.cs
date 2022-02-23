@@ -1073,35 +1073,45 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public TypeSyntax ParseType()
         {
-            var type = ParsePossibleNullableType();
+            var type = ParseSimpleType();
 
-            while (CurrentToken.Kind is SyntaxKind.PipeToken or SyntaxKind.AmpersandToken)
+            var isNilable = false;
+            var isUnion = false;
+            var isIntersection = false;
+
+            while (CurrentToken.Kind is SyntaxKind.QuestionToken or SyntaxKind.PipeToken or SyntaxKind.AmpersandToken)
             {
-                if (CurrentToken.Kind == SyntaxKind.PipeToken)
+                if (CurrentToken.Kind == SyntaxKind.QuestionToken)
+                {
+                    var questionToken = EatTokenWithPrejudice(SyntaxKind.QuestionToken);
+                    type = SyntaxFactory.NilableType(type, questionToken);
+                    isNilable = true;
+                }
+                else if (CurrentToken.Kind == SyntaxKind.PipeToken)
                 {
                     var pipeToken = EatTokenWithPrejudice(SyntaxKind.PipeToken);
-                    var rightType = ParsePossibleNullableType();
+                    var rightType = ParseType();
                     type = SyntaxFactory.UnionType(type, pipeToken, rightType);
+                    isUnion = true;
                 }
-                else
+                else if (CurrentToken.Kind == SyntaxKind.AmpersandToken)
                 {
                     var ampersandToken = EatTokenWithPrejudice(SyntaxKind.AmpersandToken);
-                    var rightType = ParsePossibleNullableType();
+                    var rightType = ParseType();
                     type = SyntaxFactory.IntersectionType(type, ampersandToken, rightType);
+                    isIntersection = true;
                 }
             }
 
-            return type;
-        }
-
-        private TypeSyntax ParsePossibleNullableType()
-        {
-            var type = ParseSimpleType();
-            if (CurrentToken.Kind is SyntaxKind.QuestionToken)
+            if (isNilable && isIntersection)
             {
-                var questionToken = EatToken(SyntaxKind.QuestionToken);
-                type = SyntaxFactory.NullableType(type, questionToken);
+                type = AddError(type, ErrorCode.ERR_MixingNilableAndIntersectionNotAllowed);
             }
+            if (isUnion && isIntersection)
+            {
+                type = AddError(type, ErrorCode.ERR_MixingUnionsAndIntersectionsNotAllowed);
+            }
+
             return type;
         }
 

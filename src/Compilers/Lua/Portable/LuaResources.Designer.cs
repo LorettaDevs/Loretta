@@ -8,11 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Loretta.CodeAnalysis.Lua
-{
+namespace Loretta.CodeAnalysis.Lua {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,609 +22,535 @@ namespace Loretta.CodeAnalysis.Lua
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LuaResources
-    {
-
+    internal class LuaResources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LuaResources()
-        {
+        internal LuaResources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Loretta.CodeAnalysis.Lua.LuaResources", typeof(LuaResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Syntax ambiguous between a function call and a new statement.
         /// </summary>
-        internal static string ERR_AmbiguousFunctionCallOrNewStatement
-        {
-            get
-            {
+        internal static string ERR_AmbiguousFunctionCallOrNewStatement {
+            get {
                 return ResourceManager.GetString("ERR_AmbiguousFunctionCallOrNewStatement", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bad character input: &apos;{0}&apos;.
         /// </summary>
-        internal static string ERR_BadCharacter
-        {
-            get
-            {
+        internal static string ERR_BadCharacter {
+            get {
                 return ResourceManager.GetString("ERR_BadCharacter", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Provided documentation mode is unsupported or invalid: &apos;{0}&apos;.
         /// </summary>
-        internal static string ERR_BadDocumentationMode
-        {
-            get
-            {
+        internal static string ERR_BadDocumentationMode {
+            get {
                 return ResourceManager.GetString("ERR_BadDocumentationMode", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Binary numeric literals are not supported in this lua version.
         /// </summary>
-        internal static string ERR_BinaryNumericLiteralNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_BinaryNumericLiteralNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_BinaryNumericLiteralNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bitwise operators are not supported in this lua version.
         /// </summary>
-        internal static string ERR_BitwiseOperatorsNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_BitwiseOperatorsNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_BitwiseOperatorsNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This expression cannot be assigned to.
         /// </summary>
-        internal static string ERR_CannotBeAssignedTo
-        {
-            get
-            {
+        internal static string ERR_CannotBeAssignedTo {
+            get {
                 return ResourceManager.GetString("ERR_CannotBeAssignedTo", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to C comments are not supported in this lua version.
         /// </summary>
-        internal static string ERR_CCommentsNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_CCommentsNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_CCommentsNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ) expected.
         /// </summary>
-        internal static string ERR_CloseParenExpected
-        {
-            get
-            {
+        internal static string ERR_CloseParenExpected {
+            get {
                 return ResourceManager.GetString("ERR_CloseParenExpected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Compound assignments are not supported in this lua version.
         /// </summary>
-        internal static string ERR_CompoundAssignmentNotSupportedInLuaVersion
-        {
-            get
-            {
+        internal static string ERR_CompoundAssignmentNotSupportedInLuaVersion {
+            get {
                 return ResourceManager.GetString("ERR_CompoundAssignmentNotSupportedInLuaVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Constant represents a value either too large or too small for a double precision floating-point number.
         /// </summary>
-        internal static string ERR_DoubleOverflow
-        {
-            get
-            {
+        internal static string ERR_DoubleOverflow {
+            get {
                 return ResourceManager.GetString("ERR_DoubleOverflow", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Escape is too large, the limit is {0}.
         /// </summary>
-        internal static string ERR_EscapeTooLarge
-        {
-            get
-            {
+        internal static string ERR_EscapeTooLarge {
+            get {
                 return ResourceManager.GetString("ERR_EscapeTooLarge", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Expression expected.
         /// </summary>
-        internal static string ERR_ExpressionExpected
-        {
-            get
-            {
+        internal static string ERR_ExpressionExpected {
+            get {
                 return ResourceManager.GetString("ERR_ExpressionExpected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hash strings are not supported in this lua version.
         /// </summary>
-        internal static string ERR_HashStringsNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_HashStringsNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_HashStringsNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hexadecimal digit expected.
         /// </summary>
-        internal static string ERR_HexDigitExpected
-        {
-            get
-            {
+        internal static string ERR_HexDigitExpected {
+            get {
                 return ResourceManager.GetString("ERR_HexDigitExpected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hexadecimal floating point numeric literals are not supported in this lua version.
         /// </summary>
-        internal static string ERR_HexFloatLiteralNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_HexFloatLiteralNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_HexFloatLiteralNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hexadecimal string escapes are not supported in this lua version.
         /// </summary>
-        internal static string ERR_HexStringEscapesNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_HexStringEscapesNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_HexStringEscapesNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Identifier expected.
         /// </summary>
-        internal static string ERR_IdentifierExpected
-        {
-            get
-            {
+        internal static string ERR_IdentifierExpected {
+            get {
                 return ResourceManager.GetString("ERR_IdentifierExpected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Identifier expected; &apos;{1}&apos; is a keyword.
         /// </summary>
-        internal static string ERR_IdentifierExpectedKW
-        {
-            get
-            {
+        internal static string ERR_IdentifierExpectedKW {
+            get {
                 return ResourceManager.GetString("ERR_IdentifierExpectedKW", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Condition not found for if expression.
         /// </summary>
-        internal static string ERR_IfExpressionConditionExpected
-        {
-            get
-            {
+        internal static string ERR_IfExpressionConditionExpected {
+            get {
                 return ResourceManager.GetString("ERR_IfExpressionConditionExpected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to If expressions require a condition but one was not found, did you perhaps forget to specify one?.
         /// </summary>
-        internal static string ERR_IfExpressionConditionExpected_Description
-        {
-            get
-            {
+        internal static string ERR_IfExpressionConditionExpected_Description {
+            get {
                 return ResourceManager.GetString("ERR_IfExpressionConditionExpected_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to If expressions require a condition.
         /// </summary>
-        internal static string ERR_IfExpressionConditionExpected_Title
-        {
-            get
-            {
+        internal static string ERR_IfExpressionConditionExpected_Title {
+            get {
                 return ResourceManager.GetString("ERR_IfExpressionConditionExpected_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to If expressions are not supported in this lua version.
         /// </summary>
-        internal static string ERR_IfExpressionsNotSupportedInLuaVersion
-        {
-            get
-            {
+        internal static string ERR_IfExpressionsNotSupportedInLuaVersion {
+            get {
                 return ResourceManager.GetString("ERR_IfExpressionsNotSupportedInLuaVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to An expression is too long or complex to compile.
         /// </summary>
-        internal static string ERR_InsufficientStack
-        {
-            get
-            {
+        internal static string ERR_InsufficientStack {
+            get {
                 return ResourceManager.GetString("ERR_InsufficientStack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid expression part &apos;{0}&apos;.
         /// </summary>
-        internal static string ERR_InvalidExpressionPart
-        {
-            get
-            {
+        internal static string ERR_InvalidExpressionPart {
+            get {
                 return ResourceManager.GetString("ERR_InvalidExpressionPart", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid number.
         /// </summary>
-        internal static string ERR_InvalidNumber
-        {
-            get
-            {
+        internal static string ERR_InvalidNumber {
+            get {
                 return ResourceManager.GetString("ERR_InvalidNumber", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid statement.
         /// </summary>
-        internal static string ERR_InvalidStatement
-        {
-            get
-            {
+        internal static string ERR_InvalidStatement {
+            get {
                 return ResourceManager.GetString("ERR_InvalidStatement", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid string escape.
         /// </summary>
-        internal static string ERR_InvalidStringEscape
-        {
-            get
-            {
+        internal static string ERR_InvalidStringEscape {
+            get {
                 return ResourceManager.GetString("ERR_InvalidStringEscape", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to { expected.
         /// </summary>
-        internal static string ERR_LbraceExpected
-        {
-            get
-            {
+        internal static string ERR_LbraceExpected {
+            get {
                 return ResourceManager.GetString("ERR_LbraceExpected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Identifiers containing characters with value above 0x7F are not supported in this lua version.
         /// </summary>
-        internal static string ERR_LuajitIdentifierRulesNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_LuajitIdentifierRulesNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_LuajitIdentifierRulesNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using nilable types directly in intersections is not allowed. The nilable types must be in parenthesis to be used in intersections.
+        /// </summary>
+        internal static string ERR_MixingNilableAndIntersectionNotAllowed_Description {
+            get {
+                return ResourceManager.GetString("ERR_MixingNilableAndIntersectionNotAllowed_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using nilable types directly in intersections is not allowed.
+        /// </summary>
+        internal static string ERR_MixingNilableAndIntersectionNotAllowed_Title {
+            get {
+                return ResourceManager.GetString("ERR_MixingNilableAndIntersectionNotAllowed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mixing unions and intersections is not allowed. The unions must be inside parenthesis to be used in intersections.
+        /// </summary>
+        internal static string ERR_MixingUnionsAndIntersectionsNotAllowed_Description {
+            get {
+                return ResourceManager.GetString("ERR_MixingUnionsAndIntersectionsNotAllowed_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mixing unions and intersections is not allowed.
+        /// </summary>
+        internal static string ERR_MixingUnionsAndIntersectionsNotAllowed_Title {
+            get {
+                return ResourceManager.GetString("ERR_MixingUnionsAndIntersectionsNotAllowed_Title", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Function calls are the only expressions that can be used as statements.
         /// </summary>
-        internal static string ERR_NonFunctionCallBeingUsedAsStatement
-        {
-            get
-            {
+        internal static string ERR_NonFunctionCallBeingUsedAsStatement {
+            get {
                 return ResourceManager.GetString("ERR_NonFunctionCallBeingUsedAsStatement", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Numeric literal is too large.
         /// </summary>
-        internal static string ERR_NumericLiteralTooLarge
-        {
-            get
-            {
+        internal static string ERR_NumericLiteralTooLarge {
+            get {
                 return ResourceManager.GetString("ERR_NumericLiteralTooLarge", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Octal numeric literals are not supported in this lua version.
         /// </summary>
-        internal static string ERR_OctalNumericLiteralNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_OctalNumericLiteralNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_OctalNumericLiteralNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to } expected.
         /// </summary>
-        internal static string ERR_RbraceExpected
-        {
-            get
-            {
+        internal static string ERR_RbraceExpected {
+            get {
                 return ResourceManager.GetString("ERR_RbraceExpected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ; expected.
         /// </summary>
-        internal static string ERR_SemicolonExpected
-        {
-            get
-            {
+        internal static string ERR_SemicolonExpected {
+            get {
                 return ResourceManager.GetString("ERR_SemicolonExpected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Shebangs are not supported in this lua version.
         /// </summary>
-        internal static string ERR_ShebangNotSupportedInLuaVersion
-        {
-            get
-            {
+        internal static string ERR_ShebangNotSupportedInLuaVersion {
+            get {
                 return ResourceManager.GetString("ERR_ShebangNotSupportedInLuaVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Syntax error, &apos;{0}&apos; expected.
         /// </summary>
-        internal static string ERR_SyntaxError
-        {
-            get
-            {
+        internal static string ERR_SyntaxError {
+            get {
                 return ResourceManager.GetString("ERR_SyntaxError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Underscores in numeric literals are not supported in this lua version.
         /// </summary>
-        internal static string ERR_UnderscoreInNumericLiteralNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_UnderscoreInNumericLiteralNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_UnderscoreInNumericLiteralNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unescaped line break in string.
         /// </summary>
-        internal static string ERR_UnescapedLineBreakInString
-        {
-            get
-            {
+        internal static string ERR_UnescapedLineBreakInString {
+            get {
                 return ResourceManager.GetString("ERR_UnescapedLineBreakInString", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unexpected token &apos;{0}&apos;.
         /// </summary>
-        internal static string ERR_UnexpectedToken
-        {
-            get
-            {
+        internal static string ERR_UnexpectedToken {
+            get {
                 return ResourceManager.GetString("ERR_UnexpectedToken", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unfinished multi-line comment.
         /// </summary>
-        internal static string ERR_UnfinishedLongComment
-        {
-            get
-            {
+        internal static string ERR_UnfinishedLongComment {
+            get {
                 return ResourceManager.GetString("ERR_UnfinishedLongComment", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unfinished string.
         /// </summary>
-        internal static string ERR_UnfinishedString
-        {
-            get
-            {
+        internal static string ERR_UnfinishedString {
+            get {
                 return ResourceManager.GetString("ERR_UnfinishedString", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unicode escape must have a closing brace (&apos;}&apos;) after the hexadecimal number.
         /// </summary>
-        internal static string ERR_UnicodeEscapeMissingCloseBrace
-        {
-            get
-            {
+        internal static string ERR_UnicodeEscapeMissingCloseBrace {
+            get {
                 return ResourceManager.GetString("ERR_UnicodeEscapeMissingCloseBrace", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unicode escape must have an opening brace (&apos;{&apos;) after &apos;\u&apos;.
         /// </summary>
-        internal static string ERR_UnicodeEscapeMissingOpenBrace
-        {
-            get
-            {
+        internal static string ERR_UnicodeEscapeMissingOpenBrace {
+            get {
                 return ResourceManager.GetString("ERR_UnicodeEscapeMissingOpenBrace", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unicode escapes are not supported in this lua version.
         /// </summary>
-        internal static string ERR_UnicodeEscapesNotSupportedLuaInVersion
-        {
-            get
-            {
+        internal static string ERR_UnicodeEscapesNotSupportedLuaInVersion {
+            get {
                 return ResourceManager.GetString("ERR_UnicodeEscapesNotSupportedLuaInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The whitespace escape (&apos;\z&apos;) is not supported in this lua version.
         /// </summary>
-        internal static string ERR_WhitespaceEscapeNotSupportedInVersion
-        {
-            get
-            {
+        internal static string ERR_WhitespaceEscapeNotSupportedInVersion {
+            get {
                 return ResourceManager.GetString("ERR_WhitespaceEscapeNotSupportedInVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This method can only be used to create tokens - {0} is not a token kind..
         /// </summary>
-        internal static string ThisMethodCanOnlyBeUsedToCreateTokens
-        {
-            get
-            {
+        internal static string ThisMethodCanOnlyBeUsedToCreateTokens {
+            get {
                 return ResourceManager.GetString("ThisMethodCanOnlyBeUsedToCreateTokens", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use Loretta.CodeAnalysis.Lua.SyntaxFactory.Identifier to create identifier tokens..
         /// </summary>
-        internal static string UseIdentifierToCreateIdentifiers
-        {
-            get
-            {
+        internal static string UseIdentifierToCreateIdentifiers {
+            get {
                 return ResourceManager.GetString("UseIdentifierToCreateIdentifiers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal to create numeric literal tokens..
         /// </summary>
-        internal static string UseLiteralForNumeric
-        {
-            get
-            {
+        internal static string UseLiteralForNumeric {
+            get {
                 return ResourceManager.GetString("UseLiteralForNumeric", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This line break (\n\r) may affect error reporting between the editor and lua.
         /// </summary>
-        internal static string WRN_LineBreakMayAffectErrorReporting
-        {
-            get
-            {
+        internal static string WRN_LineBreakMayAffectErrorReporting {
+            get {
                 return ResourceManager.GetString("WRN_LineBreakMayAffectErrorReporting", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Lua considers &apos;\n\r&apos; a single line break so error reporting between the editor and Lua may differ; use \n, \r or \r\n instead.
         /// </summary>
-        internal static string WRN_LineBreakMayAffectErrorReporting_Description
-        {
-            get
-            {
+        internal static string WRN_LineBreakMayAffectErrorReporting_Description {
+            get {
                 return ResourceManager.GetString("WRN_LineBreakMayAffectErrorReporting_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Line break may affect error reporting.
         /// </summary>
-        internal static string WRN_LineBreakMayAffectErrorReporting_Title
-        {
-            get
-            {
+        internal static string WRN_LineBreakMayAffectErrorReporting_Title {
+            get {
                 return ResourceManager.GetString("WRN_LineBreakMayAffectErrorReporting_Title", resourceCulture);
             }
         }
