@@ -734,6 +734,7 @@ namespace Loretta.CodeAnalysis.Lua
         FalseType = 2112,
         NilType = 2113,
         TypeofType = 2114,
+        ArrayType = 2115,
 
         // Big gap 2115-3000 (insert new nodes here)
 
