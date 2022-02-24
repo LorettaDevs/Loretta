@@ -138,10 +138,12 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             untestedTokenKinds.Remove(SyntaxKind.BadToken);
             untestedTokenKinds.Remove(SyntaxKind.EndOfFileToken);
             untestedTokenKinds.Remove(SyntaxKind.SkippedTokensTrivia);
-            var alwaysContextualKinds = tokenKinds.Where(kind =>
+
+            var manufacturedKinds = tokenKinds.Where(kind =>
                 LuaSyntaxOptions.AllPresets.All(preset =>
-                    SyntaxFacts.IsContextualKeyword(kind, preset)));
-            untestedTokenKinds.ExceptWith(alwaysContextualKinds);
+                    SyntaxFacts.IsManufacturedToken(kind, preset)));
+            untestedTokenKinds.ExceptWith(manufacturedKinds);
+
             untestedTokenKinds.ExceptWith(testedTokenKinds);
 
             Assert.Empty(untestedTokenKinds);
