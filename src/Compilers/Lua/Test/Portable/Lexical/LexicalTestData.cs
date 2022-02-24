@@ -31,7 +31,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         {
             foreach (var token in from kind in Enum.GetValues(typeof(SyntaxKind))
                                                    .Cast<SyntaxKind>()
-                                  where !SyntaxFacts.IsContextualKeyword(kind, options)
+                                  where !SyntaxFacts.IsManufacturedToken(kind, options)
                                   let text = SyntaxFacts.GetText(kind)
                                   where !string.IsNullOrEmpty(text)
                                   select new ShortToken(kind, text))
