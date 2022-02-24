@@ -181,7 +181,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             Assert.Equal(expectedTrivia.Span, actualTrivia.Span);
         }
 
-        [ConditionalTheory(typeof(RunLongLexerTests))]
+        [ConditionalTheory(typeof(NoLongTestsCondition))]
         [Trait("Category", "Lexer/Output")]
         [MemberData(nameof(GetTokenPairsData))]
         public void Lexer_Lexes_TokenPairs(LuaSyntaxOptions options, ShortToken tokenA, ShortToken tokenB)
@@ -199,7 +199,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             Assert.Equal(SyntaxKind.EndOfFileToken, tokens[2].Kind());
         }
 
-        [ConditionalTheory(typeof(RunLongLexerTests))]
+        [ConditionalTheory(typeof(NoLongTestsCondition))]
         [Trait("Category", "Lexer/Output")]
         [MemberData(nameof(GetTokenPairsWithSeparatorsData))]
         public void Lexer_Lexes_TokenPairs_WithSeparators(
