@@ -751,7 +751,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 }
 
                 SyntaxToken operatorToken = EatToken(tk);
-                if (operatorKind == SyntaxKind.RightShiftExpression)
+                if (operatorKind == SyntaxKind.GreaterThanGreaterThanToken)
                 {
                     var trailingToken = EatToken(SyntaxKind.GreaterThanToken);
                     operatorToken = SyntaxFactory.Token(
@@ -1211,45 +1211,46 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private TypeSyntax ParseTypePack()
         {
-            var typePack = _pool.AllocateSeparated<TypeSyntax>();
-            var type = ParseSimpleType();
+            throw new NotImplementedException();
+            //var typePack = _pool.AllocateSeparated<TypeSyntax>();
+            //var type = ParseSimpleType();
 
-            typePack.Add(type);
+            //typePack.Add(type);
 
-            while (CurrentToken.Kind is SyntaxKind.CommaToken)
-            {
-                var separator = EatToken(SyntaxKind.CommaToken);
-                typePack.AddSeparator(separator);
+            //while (CurrentToken.Kind is SyntaxKind.CommaToken)
+            //{
+            //    var separator = EatToken(SyntaxKind.CommaToken);
+            //    typePack.AddSeparator(separator);
 
-                switch (CurrentToken.Kind)
-                {
-                    case SyntaxKind.DotDotDotToken:
-                        var dot3Token = EatToken();
-                        typePack.Add(SyntaxFactory.VariadicTypePack(dot3Token, ParseType());
-                        break;
-                    case SyntaxKind.OpenParenthesisToken:
-                        var parsed = ParseTypeStartingWithParenthesis(acceptPacks: true);
-                        typePack.Add(parsed);
-                        break;
+            //    switch (CurrentToken.Kind)
+            //    {
+            //        case SyntaxKind.DotDotDotToken:
+            //            var dot3Token = EatToken();
+            //            typePack.Add(SyntaxFactory.VariadicTypePack(dot3Token, ParseType()));
+            //            break;
+            //        case SyntaxKind.OpenParenthesisToken:
+            //            var parsed = ParseTypeStartingWithParenthesis(acceptPacks: true);
+            //            typePack.Add(parsed);
+            //            break;
 
-                    default:
-                        typePack.Add(ParseType()); 
+            //        default:
+            //            typePack.Add(ParseType());
 
-                        break;
-                }
-            }
+            //            break;
+            //    }
+            //}
 
-            return SyntaxFactory.TypePack(SyntaxKind.OpenParenthesisToken, typePack, SyntaxKind.CloseParenthesisToken);
+            //return SyntaxFactory.TypePack(SyntaxKind.OpenParenthesisToken, typePack, SyntaxKind.CloseParenthesisToken);
         }
 
-        private TypeSyntax ParseGeneric() 
+        private TypeSyntax ParseGeneric()
         {
+            throw new NotImplementedException();
             var lessThanToken = EatToken();
             var typesList = _pool.AllocateSeparated<TypeSyntax>();
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
             {
-                
             }
         }
 
