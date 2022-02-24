@@ -735,6 +735,7 @@ namespace Loretta.CodeAnalysis.Lua
         NilType = 2113,
         TypeofType = 2114,
         ArrayType = 2115,
+        VariadicTypePack = 2116,
 
         // Big gap 2115-3000 (insert new nodes here)
 
