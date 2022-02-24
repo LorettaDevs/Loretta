@@ -688,17 +688,80 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var pos = -1;
             while (IsMakingProgress(ref pos))
             {
-                var operatorKind = CurrentToken.Kind;
-                var precedence = SyntaxFacts.GetBinaryOperatorPrecedence(operatorKind);
-                var comparePrecedence = !isParentUnary && parentOperator == operatorKind && SyntaxFacts.IsRightAssociative(operatorKind)
-                    ? precedence + 1
-                    : precedence;
-                if (precedence <= 0 || comparePrecedence <= parentPrecedence)
-                    break;
+                var tk = CurrentToken.Kind;
+                SyntaxKind operatorKind;
 
-                var operatorToken = EatToken();
+                if (tk == SyntaxKind.GreaterThanToken
+                    && PeekToken(1).Kind == SyntaxKind.GreaterThanToken
+                    && NoTriviaBetween(CurrentToken, PeekToken(1)))
+                {
+                    operatorKind = SyntaxKind.GreaterThanGreaterThanToken;
+                }
+                else if (SyntaxFacts.IsBinaryOperatorToken(tk))
+                {
+                    operatorKind = tk;
+                }
+                else
+                {
+                    break;
+                }
+
+                var newPrecedence = SyntaxFacts.GetBinaryOperatorPrecedence(operatorKind);
+                // If we get an invalid precedence, then quit.
+                if (newPrecedence <= 0)
+                {
+                    break;
+                }
+                // Otherwise, if we have a lower precedence then quit as well.
+                // Results in a + b * c being parsed as:
+                //     +
+                //    / \
+                //   a  *
+                //     / \
+                //    b   c
+                //
+                // But a * b + c being parsed as:
+                //     +
+                //    / \
+                //   *   c
+                //  / \
+                // a   b
+                if (newPrecedence < parentPrecedence)
+                {
+                    break;
+                }
+                // Also quit if precedence is the same and the operator is not right associative.
+                // Results in a + b + c being parsed as:
+                //     +
+                //    / \
+                //   +   c
+                //  / \
+                // a   b
+                //
+                // But a ^ b ^ c being parsed as:
+                //     ^
+                //    / \
+                //   a  ^
+                //     / \
+                //    b   c
+
+                if (newPrecedence == parentPrecedence && !SyntaxFacts.IsRightAssociative(operatorKind))
+                {
+                    break;
+                }
+
+                SyntaxToken operatorToken = EatToken(tk);
+                if (operatorKind == SyntaxKind.RightShiftExpression)
+                {
+                    var trailingToken = EatToken(SyntaxKind.GreaterThanToken);
+                    operatorToken = SyntaxFactory.Token(
+                        operatorToken.GetLeadingTrivia(),
+                        SyntaxKind.GreaterThanGreaterThanToken,
+                        trailingToken.GetTrailingTrivia());
+                }
+
                 var kind = SyntaxFacts.GetBinaryExpression(operatorToken.Kind).Value;
-                var right = ParseBinaryExpression(precedence, operatorKind, false);
+                var right = ParseBinaryExpression(newPrecedence, operatorKind, false);
                 left = new BinaryExpressionSyntax(kind, left, operatorToken, right);
             }
 
@@ -1305,6 +1368,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             return currentName;
         }
+
+        private static bool NoTriviaBetween(SyntaxToken left, SyntaxToken right) =>
+            left.GetTrailingTriviaWidth() == 0 && right.GetLeadingTriviaWidth() == 0;
+
 
         /// <summary>
         /// Creates a missing <see cref="IdentifierNameSyntax"/>.

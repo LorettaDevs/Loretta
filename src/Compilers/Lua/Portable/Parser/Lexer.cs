@@ -436,13 +436,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.GreaterThanEqualsToken;
                     }
-                    else if (ch == '>')
-                    {
-                        TextWindow.AdvanceChar();
-                        if (!_options.SyntaxOptions.AcceptBitwiseOperators)
-                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
-                        info.Kind = SyntaxKind.GreaterThanGreaterThanToken;
-                    }
                     else
                     {
                         info.Kind = SyntaxKind.GreaterThanToken;
