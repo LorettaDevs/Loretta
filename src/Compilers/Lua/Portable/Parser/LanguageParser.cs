@@ -158,6 +158,22 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     case SyntaxKind.SemicolonToken when Options.SyntaxOptions.AcceptEmptyStatements:
                         return SyntaxFactory.EmptyStatement(EatToken(SyntaxKind.SemicolonToken));
 
+                    case SyntaxKind.ExportKeyword or SyntaxKind.TypeKeyword:
+                        SyntaxToken? exportKeyword = null;
+
+                        if (CurrentToken.Kind() == SyntaxKind.ExportKeyword)
+                        {
+                            exportKeyword = EatToken();
+                        }
+
+                        var typeKeyword = EatToken(SyntaxKind.TypeKeyword);
+                        var typeName = ParseIdentifierName();
+                        var equalsToken = EatToken(SyntaxKind.EqualsToken);
+                        var type = ParseType();
+                        var semicolonToken = TryMatchSemicolon();
+
+                        return SyntaxFactory.TypeDeclarationStatement(exportKeyword, typeKeyword, typeName, equalsToken, type, semicolonToken);
+
                     default:
                     {
                         if (CurrentToken.ContextualKind == SyntaxKind.ContinueKeyword)
