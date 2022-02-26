@@ -213,16 +213,26 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var name = ParseIdentifierName();
 
             VariableAttributeSyntax? attribute = null;
-            if (CurrentToken.Kind is SyntaxKind.LessThanToken)
-            {
-                var lessThanToken = EatToken(SyntaxKind.LessThanToken);
-                var identifierName = EatToken(SyntaxKind.IdentifierToken);
-                var greaterThanToken = EatToken(SyntaxKind.GreaterThanToken);
+            TypeBindingSyntax? typeBinding = null;
 
-                attribute = SyntaxFactory.VariableAttribute(lessThanToken, identifierName, greaterThanToken);
+            switch (CurrentToken.Kind)
+            {
+                case SyntaxKind.ColonToken:
+                    var colonToken = EatToken(SyntaxKind.ColonToken);
+                    var type = ParseType();
+
+                    typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                    break;
+                case SyntaxKind.LessThanToken:
+                    var lessThanToken = EatToken(SyntaxKind.LessThanToken);
+                    var identifierName = EatToken(SyntaxKind.IdentifierToken);
+                    var greaterThanToken = EatToken(SyntaxKind.GreaterThanToken);
+
+                    attribute = SyntaxFactory.VariableAttribute(lessThanToken, identifierName, greaterThanToken);
+                    break;
             }
 
-            return SyntaxFactory.LocalDeclarationName(name, attribute);
+            return SyntaxFactory.LocalDeclarationName(name, attribute, typeBinding);
         }
 
         private LocalVariableDeclarationStatementSyntax ParseLocalVariableDeclarationStatement()
@@ -302,6 +312,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             var forKeyword = EatToken(SyntaxKind.ForKeyword);
             var identifier = ParseIdentifierName();
+
+            TypeBindingSyntax? typeBinding = null;
+
+            if (CurrentToken.Kind == SyntaxKind.ColonToken)
+            {
+                var colonToken = EatToken();
+                var type = ParseType();
+
+                typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+            }
+
             var equalsToken = EatToken(SyntaxKind.EqualsToken);
             var initialValue = ParseExpression();
             var finalValueCommaToken = EatToken(SyntaxKind.CommaToken);
@@ -320,6 +341,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return SyntaxFactory.NumericForStatement(
                 forKeyword,
                 identifier,
+                typeBinding,
                 equalsToken,
                 initialValue,
                 finalValueCommaToken,
@@ -341,6 +363,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             var identifier = ParseIdentifierName();
             identifiersAndSeparatorsBuilder.Add(identifier);
+
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
             {
                 var separator = EatToken(SyntaxKind.CommaToken);
@@ -967,13 +990,34 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 if (CurrentToken.Kind == SyntaxKind.DotDotDotToken)
                 {
                     var varArgToken = EatToken(SyntaxKind.DotDotDotToken);
-                    var varArgparameter = SyntaxFactory.VarArgParameter(varArgToken);
+
+                    TypeBindingSyntax? typeBinding = null;
+                    if (CurrentToken.Kind == SyntaxKind.ColonToken)
+                    {
+                        var colonToken = EatToken();
+                        var type = ParseType();
+
+                        typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                    }
+
+                    var varArgparameter = SyntaxFactory.VarArgParameter(varArgToken, typeBinding);
+
                     parametersAndSeparatorsBuilder.Add(varArgparameter);
                     break;
                 }
 
                 var identifier = EatToken(SyntaxKind.IdentifierToken);
-                var parameter = SyntaxFactory.NamedParameter(identifier);
+
+                TypeBindingSyntax? typeBinding = null;
+                if (CurrentToken.Kind == SyntaxKind.ColonToken)
+                {
+                    var colonToken = EatToken();
+                    var type = ParseType();
+
+                    typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                }
+
+                var parameter = SyntaxFactory.NamedParameter(identifier, typeBinding);
                 parametersAndSeparatorsBuilder.Add(parameter);
 
                 if (CurrentToken.Kind == SyntaxKind.CommaToken)

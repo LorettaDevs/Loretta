@@ -54,6 +54,14 @@
             </PropertyComment>
             <Kind Name="IdentifierToken" />
         </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
+            <PropertyComment>
+                <summary>
+                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                </summary>
+            </PropertyComment>
+            <Kind Name="TypeBinding" />
+        </Field>
     </Node>
 
     <Node Name="VarArgParameterSyntax" Base="ParameterSyntax">
@@ -71,6 +79,14 @@
                 <summary>The vararg token.</summary>
             </PropertyComment>
             <Kind Name="DotDotDotToken" />
+        </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
+            <PropertyComment>
+                <summary>
+                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                </summary>
+            </PropertyComment>
+            <Kind Name="TypeBinding" />
         </Field>
     </Node>
 
@@ -919,6 +935,14 @@
             </PropertyComment>
             <Kind Name="VariableAttribute" />
         </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
+            <PropertyComment>
+                <summary>
+                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                </summary>
+            </PropertyComment>
+            <Kind Name="TypeBinding" />
+        </Field>
     </Node>
 
     <Node Name="EqualsValuesClauseSyntax" Base="LuaSyntaxNode">
@@ -1075,6 +1099,14 @@
                 <summary>The loop variable identifier.</summary>
             </PropertyComment>
             <Kind Name="IdentifierToken" />
+        </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
+            <PropertyComment>
+                <summary>
+                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                </summary>
+            </PropertyComment>
+            <Kind Name="TypeBinding" />
         </Field>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>
@@ -2379,6 +2411,51 @@
             <PropertyComment>
                 <summary>Gets the type the expression is being cast to.</summary>
             </PropertyComment>
+        </Field>
+    </Node>
+
+    <Node Name="TypeDeclarationStatementSyntax" Base="StatementSyntax">
+        <TypeComment>
+            <summary>Represents a type declaration statement.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="TypeDeclarationStatementSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="TypeDeclarationStatement" />
+        <Field Name="ExportKeyword" Type="SyntaxToken" Optional="true">
+            <PropertyComment>
+                <summary>The 'export' keyword.</summary>
+            </PropertyComment>
+            <Kind Name="ExportKeyword" />
+        </Field>
+        <Field Name="TypeKeyword" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The 'type' keyword.</summary>
+            </PropertyComment>
+            <Kind Name="TypeKeyword" />
+        </Field>
+        <Field Name="Name" Type="IdentifierName">
+            Represents the type's name
+        </Field>
+        <Field Name="EqualsToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The equals token of the type.</summary>
+            </PropertyComment>
+            <Kind Name="TypeKeyword" />
+        </Field>
+        <Field Name="Type" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>Represents the declared type.</summary>
+            </PropertyComment>
+            <Kind Name="TypeSyntax" />
+        </Field>
+        <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+            <PropertyComment>
+                <summary>The semicolon at the end of the statement (if any).</summary>
+            </PropertyComment>
+            <Kind Name="SemicolonToken" />
         </Field>
     </Node>
 
