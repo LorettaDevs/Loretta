@@ -2437,13 +2437,16 @@
             <Kind Name="TypeKeyword" />
         </Field>
         <Field Name="Name" Type="IdentifierName">
-            Represents the type's name
+            <PropertyComment>
+                <summary>Represents the type's name.</summary>
+            </PropertyComment>
+            <Kind Name="IdentifierName" />
         </Field>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The equals token of the type.</summary>
             </PropertyComment>
-            <Kind Name="TypeKeyword" />
+            <Kind Name="EqualsToken" />
         </Field>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
