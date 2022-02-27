@@ -159,20 +159,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         return SyntaxFactory.EmptyStatement(EatToken(SyntaxKind.SemicolonToken));
 
                     case SyntaxKind.ExportKeyword or SyntaxKind.TypeKeyword:
-                        SyntaxToken? exportKeyword = null;
-
-                        if (CurrentToken.Kind == SyntaxKind.ExportKeyword)
-                        {
-                            exportKeyword = EatToken();
-                        }
-
-                        var typeKeyword = EatToken(SyntaxKind.TypeKeyword);
-                        var typeName = ParseTypeName();
-                        var equalsToken = EatToken(SyntaxKind.EqualsToken);
-                        var type = ParseType();
-                        var optionalSemiColonToken = TryMatchSemicolon();
-
-                        return SyntaxFactory.TypeDeclarationStatement(exportKeyword, typeKeyword, typeName, equalsToken, type, optionalSemiColonToken);
+                        return ParseTypeDeclarationStatement();
 
                     default:
                     {
@@ -222,6 +209,37 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 _recursionDepth--;
             }
+        }
+
+        private StatementSyntax ParseTypeDeclarationStatement()
+        {
+            SyntaxToken? exportKeyword = null;
+            if (CurrentToken.Kind == SyntaxKind.ExportKeyword)
+            {
+                exportKeyword = EatToken();
+            }
+
+            var typeKeyword = EatToken(SyntaxKind.TypeKeyword);
+            var typeName = EatToken(SyntaxKind.IdentifierToken);
+
+            TypeParameterListSyntax? typeParameterList = null;
+            if (CurrentToken.Kind == SyntaxKind.LessThanToken)
+            {
+                typeParameterList = ParseTypeParameterList(true);
+            }
+
+            var equalsToken = EatToken(SyntaxKind.EqualsToken);
+            var type = ParseType();
+            var optionalSemiColonToken = TryMatchSemicolon();
+
+            return SyntaxFactory.TypeDeclarationStatement(
+                exportKeyword,
+                typeKeyword,
+                typeName,
+                typeParameterList,
+                equalsToken,
+                type,
+                optionalSemiColonToken);
         }
 
         private LocalDeclarationNameSyntax ParseLocalDeclarationName()
@@ -306,7 +324,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var localKeyword = EatToken(SyntaxKind.LocalKeyword);
             var functionKeyword = EatToken(SyntaxKind.FunctionKeyword);
             var identifier = ParseIdentifierName();
+            TypeParameterListSyntax? typeParameterList = null;
+            if (CurrentToken.Kind != SyntaxKind.LessThanToken)
+            {
+                typeParameterList = ParseTypeParameterList(false);
+            }
             var parameters = ParseParameterList();
+            TypeBindingSyntax? typeBinding = null;
+            if (CurrentToken.Kind != SyntaxKind.ColonToken)
+            {
+                typeBinding = ParseReturnTypeBinding();
+            }
             var body = ParseStatementList(SyntaxKind.EndKeyword);
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
             var semicolonToken = TryMatchSemicolon();
@@ -315,7 +343,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 localKeyword,
                 functionKeyword,
                 identifier,
+                typeParameterList,
                 parameters,
+                typeBinding,
                 body,
                 endKeyword,
                 semicolonToken);
@@ -568,14 +598,27 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             var functionKeyword = EatToken(SyntaxKind.FunctionKeyword);
             var name = ParseFunctionName();
+            TypeParameterListSyntax? typeParameterList = null;
+            if (CurrentToken.Kind is SyntaxKind.LessThanToken)
+            {
+                typeParameterList = ParseTypeParameterList(false);
+            }
             var parameters = ParseParameterList();
+            TypeBindingSyntax? typeBinding = null;
+            if (CurrentToken.Kind is SyntaxKind.ColonToken)
+            {
+                typeBinding = ParseReturnTypeBinding();
+            }
             var body = ParseStatementList(SyntaxKind.EndKeyword);
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
             var semicolonToken = TryMatchSemicolon();
+
             return SyntaxFactory.FunctionDeclarationStatement(
                 functionKeyword,
                 name,
+                typeParameterList,
                 parameters,
+                typeBinding,
                 body,
                 endKeyword,
                 semicolonToken);
@@ -891,13 +934,25 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private AnonymousFunctionExpressionSyntax ParseAnonymousFunctionExpression()
         {
             var functionKeywordToken = EatToken(SyntaxKind.FunctionKeyword);
+            TypeParameterListSyntax? typeParameterList = null;
+            if (CurrentToken.Kind is SyntaxKind.LessThanToken)
+            {
+                typeParameterList = ParseTypeParameterList(false);
+            }
             var parameterList = ParseParameterList();
+            TypeBindingSyntax? typeBinding = null;
+            if (CurrentToken.Kind is SyntaxKind.ColonToken)
+            {
+                typeBinding = ParseReturnTypeBinding();
+            }
             var body = ParseStatementList(SyntaxKind.EndKeyword);
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
 
             return SyntaxFactory.AnonymousFunctionExpression(
                 functionKeywordToken,
+                typeParameterList,
                 parameterList,
+                typeBinding,
                 body,
                 endKeyword);
         }
@@ -1205,6 +1260,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return SyntaxFactory.TypeBinding(colonToken, type);
         }
 
+        public TypeBindingSyntax ParseReturnTypeBinding()
+        {
+            var colonToken = EatTokenWithPrejudice(SyntaxKind.ColonToken);
+            var type = ParseReturnType();
+            return SyntaxFactory.TypeBinding(colonToken, type);
+        }
+
         public TypeSyntax ParseType()
         {
             var type = ParseSimpleType();
@@ -1254,8 +1316,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return CurrentToken.Kind switch
             {
                 // function or parenthesized
-                SyntaxKind.OpenParenthesisToken =>
-                    ParseTypeStartingWithParenthesis(acceptPacks: true),
+                SyntaxKind.OpenParenthesisToken
+                or SyntaxKind.LessThanToken =>
+                    ParseTypeStartingWithParenthesis(acceptPacks: false),
                 // table
                 SyntaxKind.OpenBraceToken =>
                     ParseTableBasedType(),
@@ -1271,57 +1334,110 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     SyntaxFactory.LiteralType(SyntaxKind.TrueType, EatToken(SyntaxKind.TrueKeyword)),
                 SyntaxKind.FalseKeyword =>
                     SyntaxFactory.LiteralType(SyntaxKind.FalseType, EatToken(SyntaxKind.FalseKeyword)),
-                // generic types
-                SyntaxKind.LessThanToken =>
-                    ParseGeneric(),
 
                 // If everything else fails, try to parse an identifier-based name.
                 _ => ParseTypeName(),
             };
         }
 
-        private TypeSyntax ParseTypePack()
+        private TypeParameterListSyntax ParseTypeParameterList(bool acceptDefaults)
         {
-            throw new NotImplementedException();
-            //var typePack = _pool.AllocateSeparated<TypeSyntax>();
-            //var type = ParseSimpleType();
-
-            //typePack.Add(type);
-
-            //while (CurrentToken.Kind is SyntaxKind.CommaToken)
-            //{
-            //    var separator = EatToken(SyntaxKind.CommaToken);
-            //    typePack.AddSeparator(separator);
-
-            //    switch (CurrentToken.Kind)
-            //    {
-            //        case SyntaxKind.DotDotDotToken:
-            //            var dot3Token = EatToken();
-            //            typePack.Add(SyntaxFactory.VariadicTypePack(dot3Token, ParseType()));
-            //            break;
-            //        case SyntaxKind.OpenParenthesisToken:
-            //            var parsed = ParseTypeStartingWithParenthesis(acceptPacks: true);
-            //            typePack.Add(parsed);
-            //            break;
-
-            //        default:
-            //            typePack.Add(ParseType());
-
-            //            break;
-            //    }
-            //}
-
-            //return SyntaxFactory.TypePack(SyntaxKind.OpenParenthesisToken, typePack, SyntaxKind.CloseParenthesisToken);
-        }
-
-        private TypeSyntax ParseGeneric()
-        {
-            throw new NotImplementedException();
             var lessThanToken = EatToken();
-            var typesList = _pool.AllocateSeparated<TypeSyntax>();
+            var parametersBuilder = _pool.AllocateSeparated<TypeParameterSyntax>();
+
+            var parameter = ParseTypeParameter(acceptDefaults);
+            parametersBuilder.Add(parameter);
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
             {
+                var separator = EatToken(SyntaxKind.CommaToken);
+                parametersBuilder.AddSeparator(separator);
+
+                parameter = ParseTypeParameter(acceptDefaults);
+                parametersBuilder.Add(parameter);
+            }
+
+            var greaterThanToken = EatToken();
+
+            var parameters = _pool.ToListAndFree(parametersBuilder);
+            return SyntaxFactory.TypeParameterList(
+                lessThanToken,
+                parameters,
+                greaterThanToken);
+        }
+
+        private TypeParameterSyntax ParseTypeParameter(bool acceptDefaults)
+        {
+            var identifier = EatToken(SyntaxKind.IdentifierToken);
+            SyntaxToken? dotDotDotToken = null;
+            if (CurrentToken.Kind is SyntaxKind.DotDotDotToken)
+                dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+
+            EqualsTypeSyntax? equalsType = null;
+            if (acceptDefaults && CurrentToken.Kind is SyntaxKind.EqualsToken)
+            {
+                var equalsToken = EatToken(SyntaxKind.EqualsToken);
+                var type = dotDotDotToken is not null
+                    ? ParseVariadicTypeParameterValue()
+                    : ParseType();
+
+                equalsType = SyntaxFactory.EqualsType(
+                    equalsToken,
+                    type);
+            }
+
+            return SyntaxFactory.TypeParameter(
+                identifier,
+                dotDotDotToken,
+                equalsType);
+        }
+
+        private TypeArgumentListSyntax ParseTypeArgumentList()
+        {
+            var lessThanToken = EatToken();
+            var typesBuilder = _pool.AllocateSeparated<TypeSyntax>();
+
+            var type = ParseType();
+            typesBuilder.Add(type);
+
+            while (CurrentToken.Kind is SyntaxKind.CommaToken)
+            {
+                var separator = EatToken(SyntaxKind.CommaToken);
+                typesBuilder.AddSeparator(separator);
+
+                type = ParseType();
+                typesBuilder.Add(type);
+            }
+
+            var greaterThanToken = EatToken();
+
+            var types = _pool.ToListAndFree(typesBuilder);
+            return SyntaxFactory.TypeArgumentList(
+                lessThanToken,
+                types,
+                greaterThanToken);
+        }
+
+        private TypeSyntax ParseVariadicTypeParameterValue()
+        {
+            switch (CurrentToken.Kind)
+            {
+                case SyntaxKind.OpenParenthesisToken:
+                    return ParseTypeStartingWithParenthesis(acceptPacks: true, onlyPacks: true);
+
+                case SyntaxKind.DotDotDotToken:
+                {
+                    var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+                    var type = ParseType();
+                    return SyntaxFactory.VariadicTypePack(dotDotDotToken, type);
+                }
+
+                default:
+                {
+                    var identifier = EatToken(SyntaxKind.IdentifierToken);
+                    var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+                    return SyntaxFactory.GenericTypePack(identifier, dotDotDotToken);
+                }
             }
         }
 
@@ -1337,9 +1453,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
-        private TypeSyntax ParseTypeStartingWithParenthesis(bool acceptPacks)
+        private TypeSyntax ParseTypeStartingWithParenthesis(bool acceptPacks, bool onlyPacks = false)
         {
-            var openParenthesisToken = EatToken();
+            TypeParameterListSyntax? typeParameterList = null;
+            if (CurrentToken.Kind is SyntaxKind.LessThanToken)
+            {
+                typeParameterList = ParseTypeParameterList(true);
+            }
+
+            var openParenthesisToken = EatToken(SyntaxKind.OpenParenthesisToken);
             var typesListBuilder = _pool.AllocateSeparated<TypeSyntax>();
 
             if (CurrentToken.Kind != SyntaxKind.CloseParenthesisToken)
@@ -1360,7 +1482,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var typesList = _pool.ToListAndFree(typesListBuilder);
             var closeParenthesisToken = EatToken(SyntaxKind.CloseParenthesisToken);
 
-            if (CurrentToken.Kind == SyntaxKind.SlimArrowToken
+            if (onlyPacks)
+                goto pack;
+
+            if (typeParameterList is not null
+                || CurrentToken.Kind == SyntaxKind.SlimArrowToken
                 // If there's not an arrow, then we need to error if there's more than
                 // one type in the list and we aren't allowed to accept packs
                 || (typesList.Count != 1 && !acceptPacks))
@@ -1369,6 +1495,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var returnType = ParseReturnType();
 
                 return SyntaxFactory.FunctionType(
+                    typeParameterList,
                     openParenthesisToken,
                     typesList,
                     closeParenthesisToken,
@@ -1384,6 +1511,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     closeParenthesisToken);
             }
 
+        pack:
             return SyntaxFactory.TypePack(
                 openParenthesisToken,
                 typesList,
@@ -1477,13 +1605,31 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private TypeNameSyntax ParseTypeName()
         {
             var identifier = EatToken(SyntaxKind.IdentifierName);
-            TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(identifier);
+            TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(identifier, null);
 
             while (CurrentToken.Kind is SyntaxKind.DotToken)
             {
                 var dotToken = EatToken(SyntaxKind.DotToken);
                 var memberName = EatToken(SyntaxKind.IdentifierName);
-                currentName = SyntaxFactory.CompositeTypeName(currentName, dotToken, memberName);
+                currentName = SyntaxFactory.CompositeTypeName(currentName, dotToken, memberName, null);
+            }
+
+            if (CurrentToken.Kind is SyntaxKind.LessThanToken)
+            {
+                var typeArgumentList = ParseTypeArgumentList();
+                if (currentName is SimpleTypeNameSyntax simpleTypeName)
+                {
+                    currentName = simpleTypeName.Update(simpleTypeName.IdentifierToken, typeArgumentList);
+                }
+                else
+                {
+                    var compositeTypeName = (CompositeTypeNameSyntax) currentName;
+                    currentName = compositeTypeName.Update(
+                        compositeTypeName.Base,
+                        compositeTypeName.DotToken,
+                        compositeTypeName.identifierToken,
+                        typeArgumentList);
+                }
             }
 
             return currentName;

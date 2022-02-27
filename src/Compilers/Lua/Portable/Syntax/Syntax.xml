@@ -400,12 +400,17 @@
             </PropertyComment>
             <Kind Name="FunctionKeyword" />
         </Field>
+        <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
+            <PropertyComment>
+                <summary>Gets the type parameter list for this function (if any).</summary>
+            </PropertyComment>
+        </Field>
         <Field Name="Parameters" Type="ParameterListSyntax">
             <PropertyComment>
                 <summary>The list of parameters.</summary>
             </PropertyComment>
         </Field>
-        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optiona="true">
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
                 <summary>The function's (optional) return type.</summary>
             </PropertyComment>
@@ -1589,12 +1594,17 @@
             </PropertyComment>
             <Kind Name="IdentifierToken" />
         </Field>
+        <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
+            <PropertyComment>
+                <summary>Gets the type parameter list for this function (if any).</summary>
+            </PropertyComment>
+        </Field>
         <Field Name="Parameters" Type="ParameterListSyntax">
             <PropertyComment>
                 <summary>The parameter list.</summary>
             </PropertyComment>
         </Field>
-        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optiona="true">
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
                 <summary>The function's (optional) return type.</summary>
             </PropertyComment>
@@ -1639,12 +1649,17 @@
                 <summary>The function's name.</summary>
             </PropertyComment>
         </Field>
+        <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
+            <PropertyComment>
+                <summary>Gets the type parameter list for this function (if any).</summary>
+            </PropertyComment>
+        </Field>
         <Field Name="Parameters" Type="ParameterListSyntax">
             <PropertyComment>
                 <summary>The function's parameters.</summary>
             </PropertyComment>
         </Field>
-        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optiona="true">
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
                 <summary>The function's (optional) return type.</summary>
             </PropertyComment>
@@ -1802,11 +1817,16 @@
             </PropertyComment>
             <Kind Name="TypeKeyword" />
         </Field>
-        <Field Name="Name" Type="TypeNameSyntax">
+        <Field Name="Name" Type="SyntaxToken">
             <PropertyComment>
                 <summary>Represents the type's name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierName" />
+            <Kind Name="IdentifierToken" />
+        </Field>
+        <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
+            <PropertyComment>
+                <summary>The type parameter list for this generic type.</summary>
+            </PropertyComment>
         </Field>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>
@@ -1962,6 +1982,11 @@
             </summary>
         </FactoryComment>
         <Kind Name="FunctionType" />
+        <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
+            <PropertyComment>
+                <summary>Gets the type parameter list for this function (if any).</summary>
+            </PropertyComment>
+        </Field>
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
@@ -2361,6 +2386,11 @@
         <TypeComment>
             <summary>This node represents a type's name.</summary>
         </TypeComment>
+        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true">
+            <PropertyComment>
+                <summary>The type argument list for this generic type.</summary>
+            </PropertyComment>
+        </Field>
     </AbstractNode>
 
     <Node Name="SimpleTypeNameSyntax" Base="TypeNameSyntax">
@@ -2378,6 +2408,11 @@
                 <summary>Gets the name of the type.</summary>
             </PropertyComment>
             <Kind Name="IdentifierToken" />
+        </Field>
+        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true" Override="true">
+            <PropertyComment>
+                <summary>The type argument list for this generic type.</summary>
+            </PropertyComment>
         </Field>
     </Node>
 
@@ -2409,6 +2444,11 @@
                 <summary>Gets the name of the type.</summary>
             </PropertyComment>
             <Kind Name="IdentifierToken" />
+        </Field>
+        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true" Override="true">
+            <PropertyComment>
+                <summary>The type argument list for this generic type.</summary>
+            </PropertyComment>
         </Field>
     </Node>
 
