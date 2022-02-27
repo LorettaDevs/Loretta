@@ -161,18 +161,18 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     case SyntaxKind.ExportKeyword or SyntaxKind.TypeKeyword:
                         SyntaxToken? exportKeyword = null;
 
-                        if (CurrentToken.Kind() == SyntaxKind.ExportKeyword)
+                        if (CurrentToken.Kind == SyntaxKind.ExportKeyword)
                         {
                             exportKeyword = EatToken();
                         }
 
                         var typeKeyword = EatToken(SyntaxKind.TypeKeyword);
-                        var typeName = ParseIdentifierName();
+                        var typeName = ParseTypeName();
                         var equalsToken = EatToken(SyntaxKind.EqualsToken);
                         var type = ParseType();
-                        var semicolonToken = TryMatchSemicolon();
+                        var optionalSemiColonToken = TryMatchSemicolon();
 
-                        return SyntaxFactory.TypeDeclarationStatement(exportKeyword, typeKeyword, typeName, equalsToken, type, semicolonToken);
+                        return SyntaxFactory.TypeDeclarationStatement(exportKeyword, typeKeyword, typeName, equalsToken, type, optionalSemiColonToken);
 
                     default:
                     {
@@ -1007,16 +1007,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 {
                     var varArgToken = EatToken(SyntaxKind.DotDotDotToken);
 
-                    TypeBindingSyntax? typeBinding = null;
+                    TypeBindingSyntax? optionalTypeBinding = null;
                     if (CurrentToken.Kind == SyntaxKind.ColonToken)
                     {
                         var colonToken = EatToken();
                         var type = ParseType();
 
-                        typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                        optionalTypeBinding = SyntaxFactory.TypeBinding(colonToken, type);
                     }
 
-                    var varArgparameter = SyntaxFactory.VarArgParameter(varArgToken, typeBinding);
+                    var varArgparameter = SyntaxFactory.VarArgParameter(varArgToken, optionalTypeBinding);
 
                     parametersAndSeparatorsBuilder.Add(varArgparameter);
                     break;

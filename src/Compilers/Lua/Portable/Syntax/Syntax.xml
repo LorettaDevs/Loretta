@@ -2436,7 +2436,7 @@
             </PropertyComment>
             <Kind Name="TypeKeyword" />
         </Field>
-        <Field Name="Name" Type="IdentifierName">
+        <Field Name="Name" Type="TypeNameSyntax">
             <PropertyComment>
                 <summary>Represents the type's name.</summary>
             </PropertyComment>
