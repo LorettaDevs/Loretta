@@ -234,10 +234,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             switch (CurrentToken.Kind)
             {
                 case SyntaxKind.ColonToken:
-                    var colonToken = EatToken(SyntaxKind.ColonToken);
-                    var type = ParseType();
-
-                    typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                    typeBinding = ParseTypeBinding();
                     break;
                 case SyntaxKind.LessThanToken:
                     var lessThanToken = EatToken(SyntaxKind.LessThanToken);
@@ -333,10 +330,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             if (CurrentToken.Kind == SyntaxKind.ColonToken)
             {
-                var colonToken = EatToken();
-                var type = ParseType();
-
-                typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                typeBinding = ParseTypeBinding();
             }
 
             var forLoopVariable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
@@ -379,14 +373,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 _pool.AllocateSeparated<TypedIdentifierNameSyntax>();
 
             var identifier = ParseIdentifierName();
-            
+
             TypeBindingSyntax? typeBinding = null;
             if (CurrentToken.Kind == SyntaxKind.ColonToken)
             {
-                var colonToken = EatToken();
-                var type = ParseType();
-
-                typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                typeBinding = ParseTypeBinding();
             }
 
             var variable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
@@ -401,10 +392,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 if (CurrentToken.Kind == SyntaxKind.ColonToken)
                 {
-                    var colonToken = EatToken();
-                    var type = ParseType();
-
-                    typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                    typeBinding = ParseTypeBinding();
                 }
 
                 variable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
@@ -1032,10 +1020,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     TypeBindingSyntax? optionalTypeBinding = null;
                     if (CurrentToken.Kind == SyntaxKind.ColonToken)
                     {
-                        var colonToken = EatToken();
-                        var type = ParseType();
-
-                        optionalTypeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                        optionalTypeBinding = ParseTypeBinding();
                     }
 
                     var varArgparameter = SyntaxFactory.VarArgParameter(varArgToken, optionalTypeBinding);
@@ -1049,10 +1034,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 TypeBindingSyntax? typeBinding = null;
                 if (CurrentToken.Kind == SyntaxKind.ColonToken)
                 {
-                    var colonToken = EatToken();
-                    var type = ParseType();
-
-                    typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                    typeBinding = ParseTypeBinding();
                 }
 
                 var parameter = SyntaxFactory.NamedParameter(identifier, typeBinding);
@@ -1216,6 +1198,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return ifExpression;
         }
 
+        public TypeBindingSyntax ParseTypeBinding()
+        {
+            var colonToken = EatTokenWithPrejudice(SyntaxKind.ColonToken);
+            var type = ParseType();
+            return SyntaxFactory.TypeBinding(colonToken, type);
+        }
+
         public TypeSyntax ParseType()
         {
             var type = ParseSimpleType();
@@ -1340,7 +1329,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             if (CurrentToken.Kind is SyntaxKind.OpenParenthesisToken)
             {
-                return ParseTypeStartingWithParenthesis(acceptPacks: false);
+                return ParseTypeStartingWithParenthesis(acceptPacks: true);
             }
             else
             {
