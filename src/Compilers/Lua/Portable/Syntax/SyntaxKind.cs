@@ -566,6 +566,7 @@ namespace Loretta.CodeAnalysis.Lua
         IfExpression = 2080,
         ElseIfExpressionClause = 2081,
         HashStringLiteralExpression = 2082,
+        ForLoopVariable = 2118,
 
         // Unary Expressions
         [ExtraCategories(SyntaxKindCategory.UnaryExpression)]

@@ -1078,6 +1078,31 @@
 
     <!-- Control Flow Statement -->
 
+    <Node Name="ForLoopVariableSyntax" Base="LuaSyntaxNode">
+        <TypeComment>
+            <summary>A variable in a for loop.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="ForLoopVariableSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="ForLoopVariable" />
+        <Field Name="Name" Type="IdentifierNameSyntax">
+            <PropertyComment>
+                <summary>The identifier.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
+            <PropertyComment>
+                <summary>
+                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                </summary>
+            </PropertyComment>
+            <Kind Name="TypeBinding" />
+        </Field>
+    </Node>
+    
     <Node Name="NumericForStatementSyntax" Base="StatementSyntax">
         <TypeComment>
             <summary>Represents a numeric for statement.</summary>
@@ -1094,19 +1119,11 @@
             </PropertyComment>
             <Kind Name="ForKeyword" />
         </Field>
-        <Field Name="Identifier" Type="IdentifierNameSyntax">
+        <Field Name="Variable" Type="ForLoopVariableSyntax">
             <PropertyComment>
-                <summary>The loop variable identifier.</summary>
+                <summary>The loop variable.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
-        </Field>
-        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
-            <PropertyComment>
-                <summary>
-                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
-                </summary>
-            </PropertyComment>
-            <Kind Name="TypeBinding" />
+            <Kind Name="ForLoopVariable" />
         </Field>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>

@@ -7,6 +7,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.CompositeTypeName = 2103 -> Loretta.CodeAnal
 Loretta.CodeAnalysis.Lua.SyntaxKind.EqualsType = 2104 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ExportKeyword = 524 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FalseType = 2112 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.ForLoopVariable = 2118 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FunctionType = 2108 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.Generic = 2094 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.IntersectionType = 2093 -> Loretta.CodeAnalysis.Lua.SyntaxKind
