@@ -2476,7 +2476,7 @@
         </Field>
     </Node>
 
-    <Node Name="TypeofTypeSyntax" Base="TypeNameSyntax">
+    <Node Name="TypeofTypeSyntax" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a typeof type.</summary>
         </TypeComment>
