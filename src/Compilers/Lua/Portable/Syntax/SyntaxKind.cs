@@ -738,6 +738,7 @@ namespace Loretta.CodeAnalysis.Lua
         ArrayType = 2115,
         VariadicTypePack = 2116,
         TypeDeclarationStatement = 2117,
+        GenericTypePack = 2119,
 
         // Big gap 2115-3000 (insert new nodes here)
 

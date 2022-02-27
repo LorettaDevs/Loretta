@@ -1780,6 +1780,54 @@
         </Field>
     </Node>
 
+    <Node Name="TypeDeclarationStatementSyntax" Base="StatementSyntax">
+        <TypeComment>
+            <summary>Represents a type declaration statement.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="TypeDeclarationStatementSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="TypeDeclarationStatement" />
+        <Field Name="ExportKeyword" Type="SyntaxToken" Optional="true">
+            <PropertyComment>
+                <summary>The 'export' keyword.</summary>
+            </PropertyComment>
+            <Kind Name="ExportKeyword" />
+        </Field>
+        <Field Name="TypeKeyword" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The 'type' keyword.</summary>
+            </PropertyComment>
+            <Kind Name="TypeKeyword" />
+        </Field>
+        <Field Name="Name" Type="TypeNameSyntax">
+            <PropertyComment>
+                <summary>Represents the type's name.</summary>
+            </PropertyComment>
+            <Kind Name="IdentifierName" />
+        </Field>
+        <Field Name="EqualsToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The equals token of the type.</summary>
+            </PropertyComment>
+            <Kind Name="EqualsToken" />
+        </Field>
+        <Field Name="Type" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>Represents the declared type.</summary>
+            </PropertyComment>
+            <Kind Name="TypeSyntax" />
+        </Field>
+        <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+            <PropertyComment>
+                <summary>The semicolon at the end of the statement (if any).</summary>
+            </PropertyComment>
+            <Kind Name="SemicolonToken" />
+        </Field>
+    </Node>
+
     <!-- Types -->
 
     <AbstractNode Name="TypeSyntax" Base="LuaSyntaxNode">
@@ -2435,7 +2483,9 @@
         <Kind Name="VariadicTypePack" />
         <Field Name="DotDotDotToken" Type="SyntaxToken">
             <PropertyComment>
-                <summary>The 3 dots token.</summary>
+                <summary>
+                    The <c>...</c> token.
+                </summary>
             </PropertyComment>
             <Kind Name="DotDotDotToken" />
         </Field>
@@ -2446,51 +2496,29 @@
         </Field>
     </Node>
 
-    <Node Name="TypeDeclarationStatementSyntax" Base="StatementSyntax">
+    <Node Name="GenericTypePackSyntax" Base="TypeSyntax">
         <TypeComment>
-            <summary>Represents a type declaration statement.</summary>
+            <summary>This node represents a generic type pack.</summary>
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypeDeclarationStatementSyntax" /> node.
+                Creates a new <see cref="GenericTypePackSyntax" /> node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypeDeclarationStatement" />
-        <Field Name="ExportKeyword" Type="SyntaxToken" Optional="true">
+        <Kind Name="GenericTypePack" />
+        <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
-                <summary>The 'export' keyword.</summary>
+                <summary>The identifier token.</summary>
             </PropertyComment>
-            <Kind Name="ExportKeyword" />
+            <Kind Name="IdentifierToken" />
         </Field>
-        <Field Name="TypeKeyword" Type="SyntaxToken">
+        <Field Name="DotDotDotToken" Type="SyntaxToken">
             <PropertyComment>
-                <summary>The 'type' keyword.</summary>
+                <summary>
+                    The <c>...</c> token.
+                </summary>
             </PropertyComment>
-            <Kind Name="TypeKeyword" />
-        </Field>
-        <Field Name="Name" Type="TypeNameSyntax">
-            <PropertyComment>
-                <summary>Represents the type's name.</summary>
-            </PropertyComment>
-            <Kind Name="IdentifierName" />
-        </Field>
-        <Field Name="EqualsToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>The equals token of the type.</summary>
-            </PropertyComment>
-            <Kind Name="EqualsToken" />
-        </Field>
-        <Field Name="Type" Type="TypeSyntax">
-            <PropertyComment>
-                <summary>Represents the declared type.</summary>
-            </PropertyComment>
-            <Kind Name="TypeSyntax" />
-        </Field>
-        <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-            <PropertyComment>
-                <summary>The semicolon at the end of the statement (if any).</summary>
-            </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="DotDotDotToken" />
         </Field>
     </Node>
 
