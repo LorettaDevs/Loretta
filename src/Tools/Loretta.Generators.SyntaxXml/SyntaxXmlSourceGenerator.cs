@@ -133,7 +133,7 @@ namespace Loretta.Generators.SyntaxXml
                     sourcesBuilder.Add((hintName, sourceText));
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is not OperationCanceledException)
             {
                 var path = Path.Combine(Path.GetDirectoryName(input.Path), "SyntaxXmlException.log");
                 try { File.AppendAllText(path, "\r\n" + new string('-', 40) + "\r\n" + ex.ToString()); } catch { }
