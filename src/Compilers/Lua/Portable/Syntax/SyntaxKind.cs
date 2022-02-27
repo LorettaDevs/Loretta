@@ -550,6 +550,7 @@ namespace Loretta.CodeAnalysis.Lua
         EqualsValuesClause = 2083,
         VariableAttribute = 2084,
         LocalDeclarationName = 2085,
+        TypedIdentifierName = 2118,
 
         // Primary Expressions
         [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
@@ -566,7 +567,6 @@ namespace Loretta.CodeAnalysis.Lua
         IfExpression = 2080,
         ElseIfExpressionClause = 2081,
         HashStringLiteralExpression = 2082,
-        ForLoopVariable = 2118,
 
         // Unary Expressions
         [ExtraCategories(SyntaxKindCategory.UnaryExpression)]

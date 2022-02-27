@@ -1087,7 +1087,7 @@
                 Creates a new <see cref="TypedIdentifierNameSyntax" /> node.
             </summary>
         </FactoryComment>
-        <Kind Name="ForLoopVariable" />
+        <Kind Name="TypedIdentifierName" />
         <Field Name="IdentifierName" Type="IdentifierNameSyntax">
             <PropertyComment>
                 <summary>The identifier.</summary>
