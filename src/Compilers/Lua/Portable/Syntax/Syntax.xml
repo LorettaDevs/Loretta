@@ -1078,17 +1078,17 @@
 
     <!-- Control Flow Statement -->
 
-    <Node Name="ForLoopVariableSyntax" Base="LuaSyntaxNode">
+    <Node Name="TypedIdentifierNameSyntax" Base="LuaSyntaxNode">
         <TypeComment>
-            <summary>A variable in a for loop.</summary>
+            <summary>This node represents an identifier name with a type binding.</summary>
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ForLoopVariableSyntax" /> node.
+                Creates a new <see cref="TypedIdentifierNameSyntax" /> node.
             </summary>
         </FactoryComment>
         <Kind Name="ForLoopVariable" />
-        <Field Name="Name" Type="IdentifierNameSyntax">
+        <Field Name="IdentifierName" Type="IdentifierNameSyntax">
             <PropertyComment>
                 <summary>The identifier.</summary>
             </PropertyComment>
@@ -1096,13 +1096,13 @@
         <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
                 <summary>
-                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                    The type binding containing the type (if any).
                 </summary>
             </PropertyComment>
             <Kind Name="TypeBinding" />
         </Field>
     </Node>
-    
+
     <Node Name="NumericForStatementSyntax" Base="StatementSyntax">
         <TypeComment>
             <summary>Represents a numeric for statement.</summary>
@@ -1119,7 +1119,7 @@
             </PropertyComment>
             <Kind Name="ForKeyword" />
         </Field>
-        <Field Name="Variable" Type="ForLoopVariableSyntax">
+        <Field Name="Name" Type="TypedIdentifierNameSyntax">
             <PropertyComment>
                 <summary>The loop variable.</summary>
             </PropertyComment>
@@ -1207,7 +1207,7 @@
             </PropertyComment>
             <Kind Name="ForKeyword" />
         </Field>
-        <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;ForLoopVariableSyntax&gt;" MinCount="1">
+        <Field Name="Names" Type="SeparatedSyntaxList&lt;TypedIdentifierNameSyntax&gt;" MinCount="1">
             <PropertyComment>
                 <summary>The list of loop variables.</summary>
             </PropertyComment>
@@ -2407,7 +2407,7 @@
             <Kind Name="CloseParenthesisToken" />
         </Field>
     </Node>
-    
+
     <Node Name="VariadicTypePackSyntax" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a variadic type pack.</summary>

@@ -339,7 +339,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
             }
 
-            var forLoopVariable = SyntaxFactory.ForLoopVariable(identifier, typeBinding);
+            var forLoopVariable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
 
             var equalsToken = EatToken(SyntaxKind.EqualsToken);
             var initialValue = ParseExpression();
@@ -376,7 +376,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var forKeyword = EatToken(SyntaxKind.ForKeyword);
 
             var identifiersAndSeparatorsBuilder =
-                _pool.AllocateSeparated<ForLoopVariableSyntax>();
+                _pool.AllocateSeparated<TypedIdentifierNameSyntax>();
 
             var identifier = ParseIdentifierName();
             
@@ -389,7 +389,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
             }
 
-            var variable = SyntaxFactory.ForLoopVariable(identifier, typeBinding);
+            var variable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
             identifiersAndSeparatorsBuilder.Add(variable);
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
@@ -407,7 +407,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
                 }
 
-                variable = SyntaxFactory.ForLoopVariable(identifier, typeBinding);
+                variable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
                 identifiersAndSeparatorsBuilder.Add(variable);
             }
 
