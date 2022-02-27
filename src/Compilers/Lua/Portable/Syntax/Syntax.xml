@@ -405,6 +405,11 @@
                 <summary>The list of parameters.</summary>
             </PropertyComment>
         </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optiona="true">
+            <PropertyComment>
+                <summary>The function's (optional) return type.</summary>
+            </PropertyComment>
+        </Field>
         <Field Name="Body" Type="StatementListSyntax">
             <PropertyComment>
                 <summary>The function's body.</summary>
@@ -1589,6 +1594,11 @@
                 <summary>The parameter list.</summary>
             </PropertyComment>
         </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optiona="true">
+            <PropertyComment>
+                <summary>The function's (optional) return type.</summary>
+            </PropertyComment>
+        </Field>
         <Field Name="Body" Type="StatementListSyntax">
             <PropertyComment>
                 <summary>The function's body.</summary>
@@ -1632,6 +1642,11 @@
         <Field Name="Parameters" Type="ParameterListSyntax">
             <PropertyComment>
                 <summary>The function's parameters.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optiona="true">
+            <PropertyComment>
+                <summary>The function's (optional) return type.</summary>
             </PropertyComment>
         </Field>
         <Field Name="Body" Type="StatementListSyntax">
