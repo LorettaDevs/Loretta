@@ -31,7 +31,7 @@ namespace Loretta.CodeAnalysis.Lua
             public override SyntaxNode? VisitNamedParameter(NamedParameterSyntax node)
             {
                 if (_script.GetVariable(node) == _variable)
-                    return node.Update(CreateIdentifier(node.Identifier));
+                    return node.WithIdentifier(CreateIdentifier(node.Identifier));
                 return base.VisitNamedParameter(node);
             }
 
