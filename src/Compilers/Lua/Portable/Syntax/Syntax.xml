@@ -1207,7 +1207,7 @@
             </PropertyComment>
             <Kind Name="ForKeyword" />
         </Field>
-        <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;IdentifierNameSyntax&gt;" MinCount="1">
+        <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;ForLoopVariableSyntax&gt;" MinCount="1">
             <PropertyComment>
                 <summary>The list of loop variables.</summary>
             </PropertyComment>
