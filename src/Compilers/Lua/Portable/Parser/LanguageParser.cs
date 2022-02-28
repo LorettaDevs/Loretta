@@ -221,7 +221,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 exportKeyword = EatContextualToken(SyntaxKind.ExportKeyword);
             }
 
-            var typeKeyword = EatToken(SyntaxKind.TypeKeyword);
+            var typeKeyword = EatContextualToken(SyntaxKind.TypeKeyword);
             var typeName = EatToken(SyntaxKind.IdentifierToken);
             var typeParameterList = TryParseTypeParameterList(true);
             var equalsToken = EatToken(SyntaxKind.EqualsToken);
@@ -715,9 +715,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
 
         internal ExpressionSyntax ParseExpression() =>
-            ParseBinaryExpression(0, SyntaxKind.BadToken, false);
+            ParseBinaryExpression(0);
 
-        internal ExpressionSyntax ParseBinaryExpression(int parentPrecedence, SyntaxKind parentOperator, bool isParentUnary)
+        internal ExpressionSyntax ParseBinaryExpression(int parentPrecedence)
         {
             try
             {
@@ -741,9 +741,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var operatorToken = EatToken();
                 var kind = SyntaxFacts.GetUnaryExpression(operatorToken.Kind).Value;
                 var operand = ParseBinaryExpression(
-                    unaryOperatorPrecedence,
-                    operatorToken.Kind,
-                    true);
+                    unaryOperatorPrecedence);
                 left = new UnaryExpressionSyntax(kind, operatorToken, operand);
             }
             else
@@ -827,7 +825,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 }
 
                 var kind = SyntaxFacts.GetBinaryExpression(operatorToken.Kind).Value;
-                var right = ParseBinaryExpression(newPrecedence, operatorKind, false);
+                var right = ParseBinaryExpression(newPrecedence);
                 left = new BinaryExpressionSyntax(kind, left, operatorToken, right);
             }
 
@@ -1279,7 +1277,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return typeBinding;
         }
 
-        public TypeSyntax ParseType()
+        internal TypeSyntax ParseType()
         {
             var type = ParseSimpleType();
 
