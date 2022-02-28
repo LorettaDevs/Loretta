@@ -792,6 +792,50 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
+        /// Parse a <see cref="TypeSyntax"/> using the grammar rule for types.
+        /// </summary>
+        /// <param name="text">The text of the type.</param>
+        /// <param name="offset">Optional offset into text.</param>
+        /// <param name="options">
+        /// The optional parse options to use.
+        /// If no options are specified default options are used.
+        /// </param>
+        /// <param name="consumeFullText">
+        /// Whether all text should be consumed and an error generated if it's not.
+        /// </param>
+        /// <returns></returns>
+        public static TypeSyntax ParseType(
+            string text,
+            int offset = 0,
+            LuaParseOptions? options = null,
+            bool consumeFullText = true) =>
+            ParseType(MakeSourceText(text, offset), options, consumeFullText);
+
+        /// <summary>
+        /// Parse a <see cref="TypeSyntax"/> using the grammar rule for types.
+        /// </summary>
+        /// <param name="text">The text of the type.</param>
+        /// <param name="options">
+        /// The optional parse options to use.
+        /// If no options are specified default options are used.
+        /// </param>
+        /// <param name="consumeFullText">
+        /// Whether all text should be consumed and an error generated if it's not.
+        /// </param>
+        /// <returns></returns>
+        public static TypeSyntax ParseType(
+            SourceText text,
+            LuaParseOptions? options = null,
+            bool consumeFullText = true)
+        {
+            var lexer = MakeLexer(text, options);
+            var parser = MakeParser(lexer);
+            var node = parser.ParseType();
+            if (consumeFullText) node = parser.ConsumeUnexpectedTokens(node);
+            return (TypeSyntax) node.CreateRed();
+        }
+
+        /// <summary>
         /// Parse a <see cref="CompilationUnitSyntax"/> using the grammar rule for an entire compilation unit (file). To produce a
         /// <see cref="CodeAnalysis.SyntaxTree"/> instance, use <see cref="LuaSyntaxTree.ParseText(string, LuaParseOptions?, string, Encoding?, CancellationToken)"/>
         /// instead.
