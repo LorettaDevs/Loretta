@@ -242,6 +242,9 @@
     <value>Syntax error, '{0}' expected</value>
     <comment>{0} is the expected value</comment>
   </data>
+  <data name="ERR_TypedLuaNotSupportedInLuaVersion" xml:space="preserve">
+    <value>Typed lua is not supported in this lua version</value>
+  </data>
   <data name="ERR_UnderscoreInNumericLiteralNotSupportedInVersion" xml:space="preserve">
     <value>Underscores in numeric literals are not supported in this lua version</value>
   </data>

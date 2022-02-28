@@ -421,6 +421,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Typed lua is not supported in this lua version.
+        /// </summary>
+        internal static string ERR_TypedLuaNotSupportedInLuaVersion {
+            get {
+                return ResourceManager.GetString("ERR_TypedLuaNotSupportedInLuaVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Underscores in numeric literals are not supported in this lua version.
         /// </summary>
         internal static string ERR_UnderscoreInNumericLiteralNotSupportedInVersion {
