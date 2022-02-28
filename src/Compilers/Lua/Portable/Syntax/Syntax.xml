@@ -2399,7 +2399,7 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="SimpleNameSyntax" /> node.
+                Creates a new <see cref="SimpleTypeNameSyntax" /> node.
             </summary>
         </FactoryComment>
         <Kind Name="SimpleTypeName" />
