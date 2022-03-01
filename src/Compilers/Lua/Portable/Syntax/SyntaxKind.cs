@@ -643,6 +643,9 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
         [Property(SyntaxKindProperty.OperatorTokenKind, TildeToken)]
         ExclusiveOrExpression = 2079,
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, ColonColonToken)]
+        TypeCastExpression = 2086,
 
         // Expressions
         ParenthesizedExpression = 2040,
@@ -704,43 +707,44 @@ namespace Loretta.CodeAnalysis.Lua
         ExpressionStatement = 2070,
         StatementList = 2072,
         EmptyStatement = 2073,
+        TypeDeclarationStatement = 2087,
 
         // Types
-        TypeBinding = 2086,
-        NilableType = 2087,
-        TableType = 2088,
-        TypePack = 2089,
-        VarargType = 2090,
-        TypeCastExpression = 2091,
-        UnionType = 2092,
-        IntersectionType = 2093,
-        Generic = 2094,
-        Type = 2095,
-        TableElementType = 2096,
-        TableTypeProperty = 2097,
-        TableTypeIndexer = 2098,
-        UnkeyedTableType = 2099,
-        TypeParameterListSyntax = 2100,
-        TypeArgumentListSyntax = 2101,
-        SimpleTypeName = 2102,
-        CompositeTypeName = 2103,
-        EqualsType = 2104,
-        TypeParameter = 2105,
-        TypeParameterList = 2106,
-        TypeArgumentList = 2107,
-        FunctionType = 2108,
-        ParenthesizedType = 2109,
-        StringType = 2110,
-        TrueType = 2111,
-        FalseType = 2112,
-        NilType = 2113,
-        TypeofType = 2114,
-        ArrayType = 2115,
-        VariadicTypePack = 2116,
-        TypeDeclarationStatement = 2117,
-        GenericTypePack = 2119,
+        //     Supporting type kinds
+        EqualsType = 2088,
+        TypeParameter = 2089,
+        TypeParameterList = 2090,
+        TypeArgumentList = 2091,
+        TableTypeProperty = 2092,
+        TableTypeIndexer = 2093,
+        //     Named type
+        SimpleTypeName = 2094,
+        CompositeTypeName = 2095,
+        //     Typeof type
+        TypeofType = 2096,
+        //     Table-based types
+        ArrayType = 2097,
+        TableType = 2098,
+        //     Function types
+        FunctionType = 2099,
+        //     Literal-based types
+        StringType = 2100,
+        TrueType = 2101,
+        FalseType = 2102,
+        NilType = 2103,
+        //     Composite types (based on other types)
+        ParenthesizedType = 2104,
+        NilableType = 2105,
+        IntersectionType = 2106,
+        UnionType = 2107,
+        //     Type packs
+        TypePack = 2108,
+        VariadicTypePack = 2109,
+        GenericTypePack = 2110,
+        //     Type binding
+        TypeBinding = 2111,
 
-        // Big gap 2115-3000 (insert new nodes here)
+        // Big gap 2112-3000 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,
