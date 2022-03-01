@@ -11,8 +11,14 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 
         public static IEnumerable<object[]> GetBinaryOperatorPairsData()
         {
+            var untestedKinds = new[]
+            {
+                SyntaxKind.TypeCastExpression
+            };
             return from leftKind in SyntaxFacts.GetBinaryExpressionKinds()
+                                               .Except(untestedKinds)
                    from rightKind in SyntaxFacts.GetBinaryExpressionKinds()
+                                                .Except(untestedKinds)
                    select new object[]
                    {
                        leftKind,
