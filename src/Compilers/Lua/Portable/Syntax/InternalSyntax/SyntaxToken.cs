@@ -131,7 +131,7 @@
             => new MissingTokenWithTrivia(kind, leading, trailing);
 
         internal const SyntaxKind FirstTokenWithWellKnownText = SyntaxKind.EndOfFileToken;
-        internal const SyntaxKind LastTokenWithWellKnownText = SyntaxKind.FalseKeyword;
+        internal const SyntaxKind LastTokenWithWellKnownText = SyntaxKind.TypeofKeyword;
 
         // For now we don't have enough tokens to warrant excluding the leading elements
         private static readonly ArrayElement<SyntaxToken>[] s_tokensWithNoTrivia = new ArrayElement<SyntaxToken>[(int) LastTokenWithWellKnownText + 1];

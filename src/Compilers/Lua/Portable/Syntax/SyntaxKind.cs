@@ -505,7 +505,7 @@ namespace Loretta.CodeAnalysis.Lua
         [Keyword("typeof")]
         TypeofKeyword = 525,
 
-        // Big gap 522-1000 (insert new keywords here)
+        // Big gap 526-1000 (insert new keywords here)
 
         // Tokens with Text
         [Token]
