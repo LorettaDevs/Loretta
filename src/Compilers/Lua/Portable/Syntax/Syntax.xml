@@ -1129,7 +1129,7 @@
             </PropertyComment>
             <Kind Name="ForKeyword" />
         </Field>
-        <Field Name="Name" Type="TypedIdentifierNameSyntax">
+        <Field Name="Identifier" Type="TypedIdentifierNameSyntax">
             <PropertyComment>
                 <summary>The loop variable.</summary>
             </PropertyComment>
@@ -1217,7 +1217,7 @@
             </PropertyComment>
             <Kind Name="ForKeyword" />
         </Field>
-        <Field Name="Names" Type="SeparatedSyntaxList&lt;TypedIdentifierNameSyntax&gt;" MinCount="1">
+        <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;TypedIdentifierNameSyntax&gt;" MinCount="1">
             <PropertyComment>
                 <summary>The list of loop variables.</summary>
             </PropertyComment>
