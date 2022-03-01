@@ -2,6 +2,46 @@
 {
     internal sealed partial class LanguageParser
     {
+        private partial TypeBindingSyntax? TryParseReturnTypeBinding()
+        {
+            if (CurrentToken.Kind is SyntaxKind.ColonToken)
+            {
+                var colonToken = EatTokenWithPrejudice(SyntaxKind.ColonToken);
+                var type = ParseReturnType();
+                var typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                if (!Options.SyntaxOptions.AcceptTypedLua)
+                    typeBinding = AddError(typeBinding, ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
+                return typeBinding;
+            }
+            return null;
+        }
+
+        private partial TypeSyntax ParseReturnType()
+        {
+            if (CurrentToken.Kind is SyntaxKind.OpenParenthesisToken)
+            {
+                return ParseTypeStartingWithParenthesis(TypePackType.Some);
+            }
+            else
+            {
+                return ParseType();
+            }
+        }
+
+        private partial TypeBindingSyntax? TryParseTypeBinding()
+        {
+            if (CurrentToken.Kind is SyntaxKind.ColonToken)
+            {
+                var colonToken = EatTokenWithPrejudice(SyntaxKind.ColonToken);
+                var type = ParseType();
+                var typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
+                if (!Options.SyntaxOptions.AcceptTypedLua)
+                    typeBinding = AddError(typeBinding, ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
+                return typeBinding;
+            }
+            return null;
+        }
+
         internal partial TypeSyntax ParseType()
         {
             var type = ParseSimpleType();
@@ -231,18 +271,6 @@
                     var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
                     return SyntaxFactory.GenericTypePack(identifier, dotDotDotToken);
                 }
-            }
-        }
-
-        private partial TypeSyntax ParseReturnType()
-        {
-            if (CurrentToken.Kind is SyntaxKind.OpenParenthesisToken)
-            {
-                return ParseTypeStartingWithParenthesis(TypePackType.Some);
-            }
-            else
-            {
-                return ParseType();
             }
         }
 

@@ -1239,45 +1239,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return ifExpression;
         }
 
-        #region Type Parsing
+        #region Type Parsing Stubs
 
-        private TypeBindingSyntax? TryParseTypeBinding()
-        {
-            if (CurrentToken.Kind is SyntaxKind.ColonToken)
-            {
-                return ParseTypeBinding();
-            }
-            return null;
-        }
+        private partial TypeBindingSyntax? TryParseTypeBinding();
 
-        private TypeBindingSyntax ParseTypeBinding()
-        {
-            var colonToken = EatTokenWithPrejudice(SyntaxKind.ColonToken);
-            var type = ParseType();
-            var typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
-            if (!Options.SyntaxOptions.AcceptTypedLua)
-                typeBinding = AddError(typeBinding, ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
-            return typeBinding;
-        }
-
-        private TypeBindingSyntax? TryParseReturnTypeBinding()
-        {
-            if (CurrentToken.Kind is SyntaxKind.ColonToken)
-            {
-                return ParseReturnTypeBinding();
-            }
-            return null;
-        }
-
-        private TypeBindingSyntax ParseReturnTypeBinding()
-        {
-            var colonToken = EatTokenWithPrejudice(SyntaxKind.ColonToken);
-            var type = ParseReturnType();
-            var typeBinding = SyntaxFactory.TypeBinding(colonToken, type);
-            if (!Options.SyntaxOptions.AcceptTypedLua)
-                typeBinding = AddError(typeBinding, ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
-            return typeBinding;
-        }
+        private partial TypeBindingSyntax? TryParseReturnTypeBinding();
 
         internal partial TypeSyntax ParseType();
 
@@ -1285,7 +1251,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private partial TypeParameterListSyntax? TryParseTypeParameterList(bool acceptDefaults);
 
-        #endregion Type Parsing
+        #endregion Type Parsing Stubs
 
         private static bool NoTriviaBetween(SyntaxToken left, SyntaxToken right) =>
             left.GetTrailingTriviaWidth() == 0 && right.GetLeadingTriviaWidth() == 0;
