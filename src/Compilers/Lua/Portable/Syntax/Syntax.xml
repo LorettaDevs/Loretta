@@ -2082,7 +2082,7 @@
             <PropertyComment>
                 <summary>The open bracket token.</summary>
             </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
+            <Kind Name="OpenBracketToken" />
         </Field>
         <Field Name="IndexType" Type="TypeSyntax">
             <PropertyComment>
@@ -2093,7 +2093,7 @@
             <PropertyComment>
                 <summary>The close bracket token.</summary>
             </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
+            <Kind Name="CloseBracketToken" />
         </Field>
         <Field Name="ColonToken" Type="SyntaxToken">
             <PropertyComment>
