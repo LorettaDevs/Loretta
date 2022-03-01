@@ -1494,18 +1494,33 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var openParenthesisToken = EatToken(SyntaxKind.OpenParenthesisToken);
             var typesListBuilder = _pool.AllocateSeparated<TypeSyntax>();
 
-            if (CurrentToken.Kind != SyntaxKind.CloseParenthesisToken)
+            while (CurrentToken.Kind is not (SyntaxKind.CloseParenthesisToken or SyntaxKind.EndOfFileToken))
             {
-                var type = ParseType();
-                typesListBuilder.Add(type);
+                if (CurrentToken.Kind is SyntaxKind.DotDotDotToken)
+                {
+                    var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+                    var type = ParseType();
+                    var variadicType = SyntaxFactory.VariadicTypePack(
+                        dotDotDotToken,
+                        type);
 
-                while (CurrentToken.Kind is SyntaxKind.CommaToken)
+                    typesListBuilder.Add(variadicType);
+                    break;
+                }
+                else
+                {
+                    var type = ParseType();
+                    typesListBuilder.Add(type);
+                }
+
+                if (CurrentToken.Kind is SyntaxKind.CommaToken)
                 {
                     var separator = EatToken(SyntaxKind.CommaToken);
                     typesListBuilder.AddSeparator(separator);
-
-                    type = ParseType();
-                    typesListBuilder.Add(type);
+                }
+                else
+                {
+                    break;
                 }
             }
 
@@ -1551,7 +1566,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private TableBasedTypeSyntax ParseTableBasedType()
         {
             var hasIndexer = false;
-            var openBrace = EatToken();
+            var openBrace = EatToken(SyntaxKind.OpenBraceToken);
 
             if (CurrentToken.Kind is SyntaxKind.OpenBracketToken or SyntaxKind.CloseBraceToken
                 || PeekToken(1).Kind == SyntaxKind.ColonToken)
