@@ -771,6 +771,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 M(SyntaxKind.StatementList); { }
                 N(SyntaxKind.EndKeyword);
             }
+            EOF();
         }
 
         [Fact]
@@ -822,6 +823,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 { }
                 N(SyntaxKind.EndKeyword);
             }
+            EOF();
         }
 
         [Fact]
@@ -869,6 +871,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 M(SyntaxKind.StatementList);
                 N(SyntaxKind.EndKeyword);
             }
+            EOF();
         }
 
         [Fact]
@@ -908,6 +911,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 M(SyntaxKind.StatementList);
                 N(SyntaxKind.EndKeyword);
             }
+            EOF();
         }
 
         [Fact]
@@ -955,8 +959,93 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 M(SyntaxKind.StatementList);
                 N(SyntaxKind.EndKeyword);
             }
+            EOF();
         }
-    }
 
+        [Fact]
+        public void Parser_ParsesAnonymousFunctionParameters()
+        {
+            UsingStatement("local a = function(b:T, c:T) end");
+
+            N(SyntaxKind.LocalVariableDeclarationStatement);
+            {
+                N(SyntaxKind.LocalKeyword);
+                N(SyntaxKind.LocalDeclarationName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "a");
+                    }
+                }
+                N(SyntaxKind.EqualsValuesClause);
+                {
+                    N(SyntaxKind.EqualsToken);
+                    N(SyntaxKind.AnonymousFunctionExpression);
+                    {
+                        N(SyntaxKind.FunctionKeyword);
+                        N(SyntaxKind.ParameterList);
+                        {
+                            N(SyntaxKind.OpenParenthesisToken);
+                            N(SyntaxKind.NamedParameter);
+                            {
+                                N(SyntaxKind.IdentifierToken, "b");
+                                N(SyntaxKind.TypeBinding);
+                                {
+                                    N(SyntaxKind.ColonToken);
+                                    N(SyntaxKind.SimpleTypeName);
+                                    {
+                                        N(SyntaxKind.IdentifierToken, "T");
+                                    }
+                                }
+                            }
+                            N(SyntaxKind.CommaToken);
+                            N(SyntaxKind.NamedParameter);
+                            {
+                                N(SyntaxKind.IdentifierToken, "c");
+                                N(SyntaxKind.TypeBinding);
+                                {
+                                    N(SyntaxKind.ColonToken);
+                                    N(SyntaxKind.SimpleTypeName);
+                                    {
+                                        N(SyntaxKind.IdentifierToken, "T");
+                                    }
+                                }
+                            }
+                            N(SyntaxKind.CloseParenthesisToken);
+                        }
+                        M(SyntaxKind.StatementList);
+                        N(SyntaxKind.EndKeyword);
+                    }
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesNamedFunctionReturnType()
+        {
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesAnonymousFunctionReturnType()
+        {
+            EOF();
+        }
+
+
+        [Fact]
+        public void Parser_ParsesTypeDeclarationStatement()
+        {
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesExportedTypeDeclarationStatement()
+        {
+            EOF();
+        }
+
+    }
 
 }
