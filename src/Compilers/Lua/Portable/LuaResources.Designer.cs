@@ -385,6 +385,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only one indexer is allowed per table type.
+        /// </summary>
+        internal static string ERR_OnlyOneTableTypeIndexerIsAllowed {
+            get {
+                return ResourceManager.GetString("ERR_OnlyOneTableTypeIndexerIsAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to } expected.
         /// </summary>
         internal static string ERR_RbraceExpected {

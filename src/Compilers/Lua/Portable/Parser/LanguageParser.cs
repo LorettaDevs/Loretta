@@ -1550,6 +1550,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private TableBasedTypeSyntax ParseTableBasedType()
         {
+            var hasIndexer = false;
             var openBrace = EatToken();
 
             if (CurrentToken.Kind is SyntaxKind.OpenBracketToken or SyntaxKind.CloseBraceToken
@@ -1559,6 +1560,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 while (CurrentToken.Kind is not (SyntaxKind.CloseBraceToken or SyntaxKind.EndOfFileToken))
                 {
                     var element = ParseTableTypeElement();
+                    if (element.Kind is SyntaxKind.TableTypeIndexer)
+                    {
+                        if (hasIndexer)
+                        {
+                            element = AddError(
+                                element,
+                                ErrorCode.ERR_OnlyOneTableTypeIndexerIsAllowed);
+                        }
+                        hasIndexer = true;
+                    }
                     elementsBuilder.Add(element);
 
                     // If there's a separator, then there might be a field next
@@ -1575,6 +1586,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 var elements = _pool.ToListAndFree(elementsBuilder);
                 var closeBrace = EatToken(SyntaxKind.CloseBraceToken);
+
                 return SyntaxFactory.TableType(
                     openBrace,
                     elements,

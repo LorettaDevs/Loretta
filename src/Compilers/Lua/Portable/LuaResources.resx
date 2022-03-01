@@ -229,6 +229,9 @@
   <data name="ERR_OctalNumericLiteralNotSupportedInVersion" xml:space="preserve">
     <value>Octal numeric literals are not supported in this lua version</value>
   </data>
+  <data name="ERR_OnlyOneTableTypeIndexerIsAllowed" xml:space="preserve">
+    <value>Only one indexer is allowed per table type</value>
+  </data>
   <data name="ERR_RbraceExpected" xml:space="preserve">
     <value>} expected</value>
   </data>

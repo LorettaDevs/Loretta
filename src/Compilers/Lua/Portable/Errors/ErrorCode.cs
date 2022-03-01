@@ -55,6 +55,7 @@
         ERR_MixingNilableAndIntersectionNotAllowed = 1014,
         ERR_MixingUnionsAndIntersectionsNotAllowed = 1015,
         ERR_TypedLuaNotSupportedInLuaVersion = 1016,
+        ERR_OnlyOneTableTypeIndexerIsAllowed = 1017,
 
         // MessageProvider stuff
         ERR_BadDocumentationMode = 2000,
