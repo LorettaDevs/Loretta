@@ -654,5 +654,174 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
             }
             EOF();
         }
+
+        [Fact]
+        public void Parser_ParsesLocalVariableWithTypeBinding()
+        {
+            UsingStatement("local Var: T = true");
+
+            N(SyntaxKind.LocalVariableDeclarationStatement);
+            {
+                N(SyntaxKind.LocalKeyword);
+                N(SyntaxKind.LocalDeclarationName);
+                {
+                    N(SyntaxKind.IdentifierName); 
+                    {
+                        N(SyntaxKind.IdentifierToken, "Var");
+                    }
+                }
+                N(SyntaxKind.TypeBinding);
+                {
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                      N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+
+                N(SyntaxKind.EqualsValuesClause);
+                {
+                    N(SyntaxKind.EqualsToken);
+                    N(SyntaxKind.TrueLiteralExpression);
+                    {
+                        N(SyntaxKind.TrueKeyword);
+                    }
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesNumericForLoop()
+        {
+            UsingStatement("for i:T = 1, 5 do end");
+
+            N(SyntaxKind.NumericForStatement);
+            {
+                N(SyntaxKind.ForKeyword);
+                N(SyntaxKind.TypedIdentifierName); 
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "i");
+                    }
+                    N(SyntaxKind.TypeBinding);
+                    {
+                        N(SyntaxKind.ColonToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                          N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+                N(SyntaxKind.EqualsToken);
+                N(SyntaxKind.NumericalLiteralExpression);
+                {
+                    N(SyntaxKind.NumericLiteralToken, "1");
+                }
+                N(SyntaxKind.CommaToken);
+                N(SyntaxKind.NumericalLiteralExpression);
+                {
+                    N(SyntaxKind.NumericLiteralToken, "5");
+                }
+                N(SyntaxKind.DoKeyword);
+                M(SyntaxKind.StatementList); { }
+                N(SyntaxKind.EndKeyword);
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesGenericForLoop()
+        {
+            UsingStatement("for i:T in iter() do end");
+
+            N(SyntaxKind.GenericForStatement);
+            {
+                N(SyntaxKind.ForKeyword);
+                N(SyntaxKind.TypedIdentifierName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "i");
+                    }
+                    N(SyntaxKind.TypeBinding);
+                    {
+                        N(SyntaxKind.ColonToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+                N(SyntaxKind.InKeyword);
+                N(SyntaxKind.FunctionCallExpression);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "iter");
+                    }
+                    N(SyntaxKind.ExpressionListFunctionArgument);
+                    {
+                        N(SyntaxKind.OpenParenthesisToken);
+                        N(SyntaxKind.CloseParenthesisToken);
+                    }
+                }
+                N(SyntaxKind.DoKeyword);
+                M(SyntaxKind.StatementList); { }
+                N(SyntaxKind.EndKeyword);
+            }
+        }
+
+        [Fact]
+        public void Parser_ParsesGenericForLoopWithOccasionalTyping()
+        {
+            UsingStatement("for i: T, v in iter() do end");
+
+            N(SyntaxKind.GenericForStatement);
+            {
+                N(SyntaxKind.ForKeyword);
+                N(SyntaxKind.TypedIdentifierName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "i");
+                    }
+                    N(SyntaxKind.TypeBinding);
+                    {
+                        N(SyntaxKind.ColonToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                N(SyntaxKind.TypedIdentifierName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "v");
+                    }
+                }
+                N(SyntaxKind.InKeyword);
+                N(SyntaxKind.FunctionCallExpression);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "iter");
+                    }
+                    N(SyntaxKind.ExpressionListFunctionArgument);
+                    {
+                        N(SyntaxKind.OpenParenthesisToken);
+                        N(SyntaxKind.CloseParenthesisToken);
+                    }
+                }
+                N(SyntaxKind.DoKeyword);
+                M(SyntaxKind.StatementList);
+                { }
+                N(SyntaxKind.EndKeyword);
+            }
+        }
     }
 }

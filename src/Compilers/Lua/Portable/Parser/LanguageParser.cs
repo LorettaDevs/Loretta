@@ -120,10 +120,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             return ParseLocalVariableDeclarationStatement();
 
                     case SyntaxKind.ForKeyword:
-                        if (PeekToken(2).Kind == SyntaxKind.EqualsToken)
-                            return ParseNumericForStatement();
+                        var forKeyword = EatToken(SyntaxKind.ForKeyword);
+
+                        var identifier = ParseIdentifierName();
+                        var typeBinding = TryParseTypeBinding();
+
+                        var typedIdentifier = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
+
+                        if (CurrentToken.Kind == SyntaxKind.EqualsToken)
+                            return ParseNumericForStatement(forKeyword, typedIdentifier);
                         else
-                            return ParseGenericForStatement();
+                            return ParseGenericForStatement(forKeyword, typedIdentifier);
 
                     case SyntaxKind.IfKeyword:
                         return ParseIfStatement();
@@ -342,14 +349,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 semicolonToken);
         }
 
-        private NumericForStatementSyntax ParseNumericForStatement()
+        private NumericForStatementSyntax ParseNumericForStatement(SyntaxToken forKeyword, TypedIdentifierNameSyntax forLoopVariable)
         {
-            var forKeyword = EatToken(SyntaxKind.ForKeyword);
-
-            var identifier = ParseIdentifierName();
-            var typeBinding = TryParseTypeBinding();
-            var forLoopVariable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
-
             var equalsToken = EatToken(SyntaxKind.EqualsToken);
             var initialValue = ParseExpression();
             var finalValueCommaToken = EatToken(SyntaxKind.CommaToken);
@@ -380,16 +381,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 semicolonToken);
         }
 
-        private GenericForStatementSyntax ParseGenericForStatement()
+        private GenericForStatementSyntax ParseGenericForStatement(SyntaxToken forKeyword, TypedIdentifierNameSyntax variable)
         {
-            var forKeyword = EatToken(SyntaxKind.ForKeyword);
 
             var identifiersAndSeparatorsBuilder =
                 _pool.AllocateSeparated<TypedIdentifierNameSyntax>();
 
-            var identifier = ParseIdentifierName();
-            var typeBinding = TryParseTypeBinding();
-            var variable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
+            IdentifierNameSyntax? identifier = null;
+            TypeBindingSyntax? typeBinding = null;
+
             identifiersAndSeparatorsBuilder.Add(variable);
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
