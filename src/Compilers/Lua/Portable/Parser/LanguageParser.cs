@@ -1051,7 +1051,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     var varArgToken = EatToken(SyntaxKind.DotDotDotToken);
                     TypeBindingSyntax? optionalTypeBinding;
                     if (CurrentToken.Kind is SyntaxKind.ColonToken
-                        && PeekToken(1).Kind is SyntaxKind.IdentifierName
+                        && PeekToken(1).Kind is SyntaxKind.IdentifierToken
                         && PeekToken(2).Kind is SyntaxKind.DotDotDotToken)
                     {
                         var colonToken = EatToken(SyntaxKind.ColonToken);
@@ -1611,7 +1611,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else
             {
-                var identifier = EatTokenWithPrejudice(SyntaxKind.IdentifierName);
+                var identifier = EatTokenWithPrejudice(SyntaxKind.IdentifierToken);
                 var colonToken = EatToken(SyntaxKind.ColonToken);
                 var valueType = ParseType();
 
@@ -1634,13 +1634,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private TypeNameSyntax ParseTypeName()
         {
-            var identifier = EatToken(SyntaxKind.IdentifierName);
+            var identifier = EatToken(SyntaxKind.IdentifierToken);
             TypeNameSyntax currentName = SyntaxFactory.SimpleTypeName(identifier, null);
 
             while (CurrentToken.Kind is SyntaxKind.DotToken)
             {
                 var dotToken = EatToken(SyntaxKind.DotToken);
-                var memberName = EatToken(SyntaxKind.IdentifierName);
+                var memberName = EatToken(SyntaxKind.IdentifierToken);
                 currentName = SyntaxFactory.CompositeTypeName(currentName, dotToken, memberName, null);
             }
 
