@@ -322,6 +322,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Using nilable types directly in intersections is not allowed.
+        /// </summary>
+        internal static string ERR_MixingNilableAndIntersectionNotAllowed {
+            get {
+                return ResourceManager.GetString("ERR_MixingNilableAndIntersectionNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Using nilable types directly in intersections is not allowed. The nilable types must be in parenthesis to be used in intersections.
         /// </summary>
         internal static string ERR_MixingNilableAndIntersectionNotAllowed_Description {
@@ -340,7 +349,16 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mixing unions and intersections is not allowed. The unions must be inside parenthesis to be used in intersections.
+        ///   Looks up a localized string similar to Mixing union and intersection types is not allowed.
+        /// </summary>
+        internal static string ERR_MixingUnionsAndIntersectionsNotAllowed {
+            get {
+                return ResourceManager.GetString("ERR_MixingUnionsAndIntersectionsNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mixing union and intersection types is not allowed. The unions must be inside parenthesis to be used in intersections.
         /// </summary>
         internal static string ERR_MixingUnionsAndIntersectionsNotAllowed_Description {
             get {
@@ -349,7 +367,7 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mixing unions and intersections is not allowed.
+        ///   Looks up a localized string similar to Mixing union and intersection types is not allowed.
         /// </summary>
         internal static string ERR_MixingUnionsAndIntersectionsNotAllowed_Title {
             get {

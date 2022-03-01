@@ -208,17 +208,23 @@
   <data name="ERR_LuajitIdentifierRulesNotSupportedInVersion" xml:space="preserve">
     <value>Identifiers containing characters with value above 0x7F are not supported in this lua version</value>
   </data>
+  <data name="ERR_MixingNilableAndIntersectionNotAllowed" xml:space="preserve">
+    <value>Using nilable types directly in intersections is not allowed</value>
+  </data>
   <data name="ERR_MixingNilableAndIntersectionNotAllowed_Description" xml:space="preserve">
     <value>Using nilable types directly in intersections is not allowed. The nilable types must be in parenthesis to be used in intersections</value>
   </data>
   <data name="ERR_MixingNilableAndIntersectionNotAllowed_Title" xml:space="preserve">
     <value>Using nilable types directly in intersections is not allowed</value>
   </data>
+  <data name="ERR_MixingUnionsAndIntersectionsNotAllowed" xml:space="preserve">
+    <value>Mixing union and intersection types is not allowed</value>
+  </data>
   <data name="ERR_MixingUnionsAndIntersectionsNotAllowed_Description" xml:space="preserve">
-    <value>Mixing unions and intersections is not allowed. The unions must be inside parenthesis to be used in intersections</value>
+    <value>Mixing union and intersection types is not allowed. The unions must be inside parenthesis to be used in intersections</value>
   </data>
   <data name="ERR_MixingUnionsAndIntersectionsNotAllowed_Title" xml:space="preserve">
-    <value>Mixing unions and intersections is not allowed</value>
+    <value>Mixing union and intersection types is not allowed</value>
   </data>
   <data name="ERR_NonFunctionCallBeingUsedAsStatement" xml:space="preserve">
     <value>Function calls are the only expressions that can be used as statements</value>

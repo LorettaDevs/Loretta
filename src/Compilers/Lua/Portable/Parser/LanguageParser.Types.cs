@@ -44,32 +44,34 @@
 
         internal partial TypeSyntax ParseType()
         {
-            var type = ParseSimpleType();
+            var type = ParsePossiblyNullableType();
 
-            var isNilable = false;
+            var isNilable = type.Kind is SyntaxKind.NilableType;
             var isUnion = false;
             var isIntersection = false;
 
-            while (CurrentToken.Kind is SyntaxKind.QuestionToken or SyntaxKind.PipeToken or SyntaxKind.AmpersandToken)
+            while (CurrentToken.Kind is SyntaxKind.PipeToken or SyntaxKind.AmpersandToken)
             {
-                if (CurrentToken.Kind == SyntaxKind.QuestionToken)
-                {
-                    var questionToken = EatTokenWithPrejudice(SyntaxKind.QuestionToken);
-                    type = SyntaxFactory.NilableType(type, questionToken);
-                    isNilable = true;
-                }
-                else if (CurrentToken.Kind == SyntaxKind.PipeToken)
+                if (CurrentToken.Kind == SyntaxKind.PipeToken)
                 {
                     var pipeToken = EatTokenWithPrejudice(SyntaxKind.PipeToken);
-                    var rightType = ParseType();
-                    type = SyntaxFactory.UnionType(type, pipeToken, rightType);
+                    var right = ParsePossiblyNullableType();
+                    isNilable |= right.Kind is SyntaxKind.NilableType;
+                    type = SyntaxFactory.UnionType(
+                        type,
+                        pipeToken,
+                        right);
                     isUnion = true;
                 }
                 else if (CurrentToken.Kind == SyntaxKind.AmpersandToken)
                 {
                     var ampersandToken = EatTokenWithPrejudice(SyntaxKind.AmpersandToken);
-                    var rightType = ParseType();
-                    type = SyntaxFactory.IntersectionType(type, ampersandToken, rightType);
+                    var right = ParsePossiblyNullableType();
+                    isNilable |= right.Kind is SyntaxKind.NilableType;
+                    type = SyntaxFactory.IntersectionType(
+                        type,
+                        ampersandToken,
+                        right);
                     isIntersection = true;
                 }
             }
@@ -83,6 +85,18 @@
                 type = AddError(type, ErrorCode.ERR_MixingUnionsAndIntersectionsNotAllowed);
             }
 
+            return type;
+        }
+
+        private TypeSyntax ParsePossiblyNullableType()
+        {
+            var type = ParseSimpleType();
+            while (CurrentToken.Kind is SyntaxKind.QuestionToken)
+            {
+                type = SyntaxFactory.NilableType(
+                    type,
+                    EatTokenWithPrejudice(SyntaxKind.QuestionToken));
+            }
             return type;
         }
 
@@ -102,13 +116,21 @@
                     ParseTypeofType(),
                 // literal types
                 SyntaxKind.StringLiteralToken =>
-                    SyntaxFactory.LiteralType(SyntaxKind.StringType, EatToken(SyntaxKind.StringLiteralToken)),
+                    SyntaxFactory.LiteralType(
+                        SyntaxKind.StringType,
+                        EatTokenWithPrejudice(SyntaxKind.StringLiteralToken)),
                 SyntaxKind.NilKeyword =>
-                    SyntaxFactory.LiteralType(SyntaxKind.NilType, EatToken(SyntaxKind.NilKeyword)),
+                    SyntaxFactory.LiteralType(
+                        SyntaxKind.NilType,
+                        EatTokenWithPrejudice(SyntaxKind.NilKeyword)),
                 SyntaxKind.TrueKeyword =>
-                    SyntaxFactory.LiteralType(SyntaxKind.TrueType, EatToken(SyntaxKind.TrueKeyword)),
+                    SyntaxFactory.LiteralType(
+                        SyntaxKind.TrueType,
+                        EatTokenWithPrejudice(SyntaxKind.TrueKeyword)),
                 SyntaxKind.FalseKeyword =>
-                    SyntaxFactory.LiteralType(SyntaxKind.FalseType, EatToken(SyntaxKind.FalseKeyword)),
+                    SyntaxFactory.LiteralType(
+                        SyntaxKind.FalseType,
+                        EatTokenWithPrejudice(SyntaxKind.FalseKeyword)),
 
                 // If everything else fails, try to parse an identifier-based name.
                 _ => ParseTypeName(),
@@ -128,7 +150,7 @@
         private TypeParameterListSyntax ParseTypeParameterList(bool acceptDefaults)
         {
             var seenPackParameter = false;
-            var lessThanToken = EatToken();
+            var lessThanToken = EatTokenWithPrejudice(SyntaxKind.LessThanToken);
             var parametersBuilder = _pool.AllocateSeparated<TypeParameterSyntax>();
 
             var parameter = ParseTypeParameter(acceptDefaults);
@@ -151,7 +173,7 @@
                 parametersBuilder.Add(parameter);
             }
 
-            var greaterThanToken = EatToken();
+            var greaterThanToken = EatToken(SyntaxKind.GreaterThanToken);
 
             var parameters = _pool.ToListAndFree(parametersBuilder);
             var typeParameterList = SyntaxFactory.TypeParameterList(
@@ -195,7 +217,7 @@
 
         private TypeArgumentListSyntax ParseTypeArgumentList()
         {
-            var lessThanToken = EatToken();
+            var lessThanToken = EatTokenWithPrejudice(SyntaxKind.LessThanToken);
             var typesBuilder = _pool.AllocateSeparated<TypeSyntax>();
 
             var type = ParseTypeArgument();
@@ -210,7 +232,7 @@
                 typesBuilder.Add(type);
             }
 
-            var greaterThanToken = EatToken();
+            var greaterThanToken = EatToken(SyntaxKind.GreaterThanToken);
 
             var types = _pool.ToListAndFree(typesBuilder);
             var typeArgumentList = SyntaxFactory.TypeArgumentList(
@@ -230,17 +252,17 @@
         {
             if (CurrentToken.Kind is SyntaxKind.DotDotDotToken)
             {
-                var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+                var dotDotDotToken = EatTokenWithPrejudice(SyntaxKind.DotDotDotToken);
                 var type = ParseType();
                 return SyntaxFactory.VariadicTypePack(
                     dotDotDotToken,
                     type);
             }
             else if (CurrentToken.Kind is SyntaxKind.IdentifierToken
-                && CurrentToken.Kind is SyntaxKind.DotDotDotToken)
+                && PeekToken(1).Kind is SyntaxKind.DotDotDotToken)
             {
-                var identifier = EatToken(SyntaxKind.IdentifierToken);
-                var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+                var identifier = EatTokenWithPrejudice(SyntaxKind.IdentifierToken);
+                var dotDotDotToken = EatTokenWithPrejudice(SyntaxKind.DotDotDotToken);
                 return SyntaxFactory.GenericTypePack(
                     identifier,
                     dotDotDotToken);
@@ -360,7 +382,7 @@
         private TableBasedTypeSyntax ParseTableBasedType()
         {
             var hasIndexer = false;
-            var openBrace = EatToken(SyntaxKind.OpenBraceToken);
+            var openBrace = EatTokenWithPrejudice(SyntaxKind.OpenBraceToken);
 
             if (CurrentToken.Kind is SyntaxKind.OpenBracketToken or SyntaxKind.CloseBraceToken
                 || PeekToken(1).Kind == SyntaxKind.ColonToken)
