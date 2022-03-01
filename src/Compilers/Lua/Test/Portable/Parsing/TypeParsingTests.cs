@@ -823,5 +823,140 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 N(SyntaxKind.EndKeyword);
             }
         }
+
+        [Fact]
+        public void Parser_ParsesTypedNamedParameters()
+        {
+            UsingStatement("function a(b:T, c:A) end");
+
+            N(SyntaxKind.FunctionDeclarationStatement);
+            {
+                N(SyntaxKind.FunctionKeyword);
+                N(SyntaxKind.SimpleFunctionName);
+                {
+                  N(SyntaxKind.IdentifierToken, "a");
+                }
+                N(SyntaxKind.ParameterList);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.NamedParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "b");
+                        N(SyntaxKind.TypeBinding);
+                        {
+                            N(SyntaxKind.ColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.NamedParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "c");
+                        N(SyntaxKind.TypeBinding);
+                        {
+                            N(SyntaxKind.ColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "A");
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+                M(SyntaxKind.StatementList);
+                N(SyntaxKind.EndKeyword);
+            }
+        }
+
+        [Fact]
+        public void Parser_ParsesOccasionallyTypedNamedParameters()
+        {
+            UsingStatement("function a(b, c:A) end");
+
+            N(SyntaxKind.FunctionDeclarationStatement);
+            {
+                N(SyntaxKind.FunctionKeyword);
+                N(SyntaxKind.SimpleFunctionName);
+                {
+                    N(SyntaxKind.IdentifierToken, "a");
+                }
+                N(SyntaxKind.ParameterList);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.NamedParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "b");
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.NamedParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "c");
+                        N(SyntaxKind.TypeBinding);
+                        {
+                            N(SyntaxKind.ColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "A");
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+                M(SyntaxKind.StatementList);
+                N(SyntaxKind.EndKeyword);
+            }
+        }
+
+        [Fact]
+        public void Parser_ParsesNamedParameterAndVararg()
+        {
+            UsingStatement("function a(b:T, ...:A) end");
+
+            N(SyntaxKind.FunctionDeclarationStatement);
+            {
+                N(SyntaxKind.FunctionKeyword);
+                N(SyntaxKind.SimpleFunctionName);
+                {
+                    N(SyntaxKind.IdentifierToken, "a");
+                }
+                N(SyntaxKind.ParameterList);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.NamedParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "b");
+                        N(SyntaxKind.TypeBinding);
+                        {
+                            N(SyntaxKind.ColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.VarArgParameter);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.TypeBinding);
+                        {
+                            N(SyntaxKind.ColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "A");
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+                M(SyntaxKind.StatementList);
+                N(SyntaxKind.EndKeyword);
+            }
+        }
     }
+
+
 }
