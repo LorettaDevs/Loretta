@@ -248,24 +248,19 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private LocalDeclarationNameSyntax ParseLocalDeclarationName()
         {
             var name = ParseIdentifierName();
-
             VariableAttributeSyntax? attribute = null;
-            TypeBindingSyntax? typeBinding = null;
-
-            switch (CurrentToken.Kind)
+            if (CurrentToken.Kind is SyntaxKind.LessThanToken)
             {
-                case SyntaxKind.ColonToken:
-                    typeBinding = ParseTypeBinding();
-                    break;
+                var lessThanToken = EatToken(SyntaxKind.LessThanToken);
+                var identifier = EatToken(SyntaxKind.IdentifierToken);
+                var greaterThanToken = EatToken(SyntaxKind.GreaterThanToken);
 
-                case SyntaxKind.LessThanToken:
-                    var lessThanToken = EatToken(SyntaxKind.LessThanToken);
-                    var identifierName = EatToken(SyntaxKind.IdentifierToken);
-                    var greaterThanToken = EatToken(SyntaxKind.GreaterThanToken);
-
-                    attribute = SyntaxFactory.VariableAttribute(lessThanToken, identifierName, greaterThanToken);
-                    break;
+                attribute = SyntaxFactory.VariableAttribute(
+                    lessThanToken,
+                    identifier,
+                    greaterThanToken);
             }
+            TypeBindingSyntax? typeBinding = TryParseTypeBinding();
 
             return SyntaxFactory.LocalDeclarationName(name, attribute, typeBinding);
         }
