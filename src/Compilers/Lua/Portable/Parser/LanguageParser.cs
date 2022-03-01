@@ -1362,10 +1362,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private TypeParameterListSyntax ParseTypeParameterList(bool acceptDefaults)
         {
+            var seenPackParameter = false;
             var lessThanToken = EatToken();
             var parametersBuilder = _pool.AllocateSeparated<TypeParameterSyntax>();
 
             var parameter = ParseTypeParameter(acceptDefaults);
+            seenPackParameter |= parameter.DotDotDotToken is not null;
             parametersBuilder.Add(parameter);
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
@@ -1374,6 +1376,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 parametersBuilder.AddSeparator(separator);
 
                 parameter = ParseTypeParameter(acceptDefaults);
+                if (seenPackParameter && parameter.DotDotDotToken is null)
+                {
+                    parameter = AddError(
+                        parameter,
+                        ErrorCode.ERR_NormalTypeParametersComeBeforePacks);
+                }
+                seenPackParameter |= parameter.DotDotDotToken is not null;
                 parametersBuilder.Add(parameter);
             }
 

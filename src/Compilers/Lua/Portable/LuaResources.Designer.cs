@@ -367,6 +367,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Normal type parameters must come before pack type parameters.
+        /// </summary>
+        internal static string ERR_NormalTypeParametersComeBeforePacks {
+            get {
+                return ResourceManager.GetString("ERR_NormalTypeParametersComeBeforePacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Numeric literal is too large.
         /// </summary>
         internal static string ERR_NumericLiteralTooLarge {

@@ -223,6 +223,9 @@
   <data name="ERR_NonFunctionCallBeingUsedAsStatement" xml:space="preserve">
     <value>Function calls are the only expressions that can be used as statements</value>
   </data>
+  <data name="ERR_NormalTypeParametersComeBeforePacks" xml:space="preserve">
+    <value>Normal type parameters must come before pack type parameters</value>
+  </data>
   <data name="ERR_NumericLiteralTooLarge" xml:space="preserve">
     <value>Numeric literal is too large</value>
   </data>
