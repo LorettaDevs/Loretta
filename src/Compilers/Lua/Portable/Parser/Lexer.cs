@@ -431,7 +431,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case '>':
                     TextWindow.AdvanceChar();
-                    if ((ch = TextWindow.PeekChar()) == '=')
+                    if (TextWindow.PeekChar() == '=')
                     {
                         TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.GreaterThanEqualsToken;
