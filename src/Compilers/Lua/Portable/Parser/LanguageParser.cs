@@ -1424,7 +1424,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var lessThanToken = EatToken();
             var typesBuilder = _pool.AllocateSeparated<TypeSyntax>();
 
-            var type = ParseType();
+            var type = ParseTypeArgument();
             typesBuilder.Add(type);
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
@@ -1432,7 +1432,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var separator = EatToken(SyntaxKind.CommaToken);
                 typesBuilder.AddSeparator(separator);
 
-                type = ParseType();
+                type = ParseTypeArgument();
                 typesBuilder.Add(type);
             }
 
@@ -1450,6 +1450,31 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
             }
             return typeArgumentList;
+        }
+
+        private TypeSyntax ParseTypeArgument()
+        {
+            if (CurrentToken.Kind is SyntaxKind.DotDotDotToken)
+            {
+                var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+                var type = ParseType();
+                return SyntaxFactory.VariadicTypePack(
+                    dotDotDotToken,
+                    type);
+            }
+            else if (CurrentToken.Kind is SyntaxKind.IdentifierToken
+                && CurrentToken.Kind is SyntaxKind.DotDotDotToken)
+            {
+                var identifier = EatToken(SyntaxKind.IdentifierToken);
+                var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+                return SyntaxFactory.GenericTypePack(
+                    identifier,
+                    dotDotDotToken);
+            }
+            else
+            {
+                return ParseType();
+            }
         }
 
         private TypeSyntax ParseVariadicTypeParameterValue()
