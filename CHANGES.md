@@ -6,6 +6,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v0.2.9
+### Added
+- The following were added as a part of implementing typed-luau:
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TableBasedTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax`;
+	- `Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax`;
+	- `LuaSyntaxOptions.AcceptTypedLua`;
+
+### Changed
+- [Breaking] `GenericForStatementSyntax.Identifiers`, `GenericForStatementSyntax.Update`, `GenericForStatementSyntax.WithIdentifiers`, `GenericForStatementSyntax.AddIdentifiers`, `NumericForStatementSyntax.Identifier`, `NumericForStatementSyntax.Update` and `NumericForStatementSyntax.WithIdentifier` were changed to the `TypedIdentifierNameSyntax`.
+- [Breaking] `LuaSyntaxOptions`'s constructor and `With` were changed to accept a bool for the AcceptTypedLua.
+- `AnonymousFunctionExpressionSyntax.Update`, `FunctionDeclarationStatementSyntax.Update`, `LocalDeclarationNameSyntax.Update` and `LocalFunctionDeclarationStatementSyntax.Update` were changed to accept the type bindings.
+
 ## v0.2.9-beta.2
 ### Added
 - Added `ConstantFoldingOptions` with the option to enable number extraction from strings.
@@ -243,7 +277,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- Fixed missing space after assignment operator;
 	- Fixed spaces being inserted inside parenthesis;
 	- Fixed spacing inside table constructors;
-	- Fixed spacing after `ìf`, `elseif`, `until` and `while`;
+	- Fixed spacing after `Ã¬f`, `elseif`, `until` and `while`;
 	- Fixed two line breaks being inserted after certain statements;
 	- Fixed line breaks being inserted before semicolons;
 	- Fixed line breaks being inserted twice between statements.
