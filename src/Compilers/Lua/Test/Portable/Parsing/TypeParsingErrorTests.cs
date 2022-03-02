@@ -267,7 +267,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 N(SyntaxKind.OpenParenthesisToken);
                 N(SyntaxKind.CloseParenthesisToken);
 
-                N(SyntaxKind.SlimArrowToken);
+                N(SyntaxKind.MinusGreaterThanToken);
 
                 N(SyntaxKind.NilType);
                 {

@@ -360,7 +360,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>-&gt;</c> token.
         /// </summary>
         [Token(Text = "->")]
-        SlimArrowToken = 55,
+        MinusGreaterThanToken = 55,
 
         // Big gap 53-500 (insert new fixed-text tokens here)
 

@@ -147,7 +147,7 @@ namespace Loretta.CodeAnalysis.Lua
                 return true;
             if (kindA is SyntaxKind.TildeToken && kindB is SyntaxKind.EqualsToken or SyntaxKind.EqualsEqualsToken)
                 return true;
-            if (kindA is SyntaxKind.MinusToken && kindB is SyntaxKind.SlimArrowToken or SyntaxKind.GreaterThanToken or SyntaxKind.GreaterThanEqualsToken)
+            if (kindA is SyntaxKind.MinusToken && kindB is SyntaxKind.MinusGreaterThanToken or SyntaxKind.GreaterThanToken or SyntaxKind.GreaterThanEqualsToken)
                 return true;
 
             return false;

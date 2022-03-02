@@ -347,12 +347,12 @@
                 goto pack;
 
             if (typeParameterList is not null
-                || CurrentToken.Kind == SyntaxKind.SlimArrowToken
+                || CurrentToken.Kind == SyntaxKind.MinusGreaterThanToken
                 // If there's not an arrow, then we need to error if there's more than
                 // one type in the list and we aren't allowed to accept packs
                 || (typesList.Count != 1 && typePackType == TypePackType.None))
             {
-                var slimArrow = EatToken(SyntaxKind.SlimArrowToken);
+                var slimArrow = EatToken(SyntaxKind.MinusGreaterThanToken);
                 var returnType = ParseReturnType();
 
                 return SyntaxFactory.FunctionType(

@@ -77,7 +77,7 @@ Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.CloseParenthesisToken.get -> 
 Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.OpenParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.Parameters.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!>
 Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.ReturnType.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
-Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.SlimArrowToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.MinusGreaterThanToken.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.TypeParameterList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax?
 Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> parameters, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken, Loretta.CodeAnalysis.SyntaxToken slimArrowToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! returnType) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.WithCloseParenthesisToken(Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
@@ -285,12 +285,12 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.FalseType = 2102 -> Loretta.CodeAnalysis.Lua
 Loretta.CodeAnalysis.Lua.SyntaxKind.FunctionType = 2099 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.GenericTypePack = 2110 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.IntersectionType = 2106 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.MinusGreaterThanToken = 55 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.NilableType = 2105 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.NilType = 2103 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ParenthesizedType = 2104 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.QuestionToken = 54 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SimpleTypeName = 2094 -> Loretta.CodeAnalysis.Lua.SyntaxKind
-Loretta.CodeAnalysis.Lua.SyntaxKind.SlimArrowToken = 55 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.StringType = 2100 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TableType = 2098 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TableTypeIndexer = 2093 -> Loretta.CodeAnalysis.Lua.SyntaxKind
