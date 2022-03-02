@@ -239,12 +239,6 @@
                 lessThanToken,
                 types,
                 greaterThanToken);
-            if (!Options.SyntaxOptions.AcceptTypedLua)
-            {
-                typeArgumentList = AddError(
-                    typeArgumentList,
-                    ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
-            }
             return typeArgumentList;
         }
 
