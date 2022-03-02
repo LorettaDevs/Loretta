@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - [Breaking] `GenericForStatementSyntax.Identifiers`, `GenericForStatementSyntax.Update`, `GenericForStatementSyntax.WithIdentifiers`, `GenericForStatementSyntax.AddIdentifiers`, `NumericForStatementSyntax.Identifier`, `NumericForStatementSyntax.Update` and `NumericForStatementSyntax.WithIdentifier` were changed to the `TypedIdentifierNameSyntax`.
 - [Breaking] `LuaSyntaxOptions`'s constructor and `With` were changed to accept a bool for the AcceptTypedLua.
-- `AnonymousFunctionExpressionSyntax.Update`, `FunctionDeclarationStatementSyntax.Update`, `LocalDeclarationNameSyntax.Update` and `LocalFunctionDeclarationStatementSyntax.Update` were changed to accept the type bindings.
+- [Breaking] `AnonymousFunctionExpressionSyntax.Update`, `FunctionDeclarationStatementSyntax.Update`, `LocalDeclarationNameSyntax.Update` and `LocalFunctionDeclarationStatementSyntax.Update` were changed to accept the type bindings.
 
 ## v0.2.9-beta.2
 ### Added
