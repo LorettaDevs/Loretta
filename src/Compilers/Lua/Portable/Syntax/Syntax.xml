@@ -2008,13 +2008,13 @@
             </PropertyComment>
             <Kind Name="CloseParenthesisToken" />
         </Field>
-        <Field Name="SlimArrowToken" Type="SyntaxToken">
+        <Field Name="MinusGreaterThanToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     Gets the <c>-&gt;</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="SlimArrowToken" />
+            <Kind Name="MinusGreaterThanToken" />
         </Field>
         <Field Name="ReturnType" Type="TypeSyntax">
             <PropertyComment>

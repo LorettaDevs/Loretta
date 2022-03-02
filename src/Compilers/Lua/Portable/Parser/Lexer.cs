@@ -325,7 +325,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     if ((ch = TextWindow.PeekChar()) == '>')
                     {
                         TextWindow.AdvanceChar();
-                        info.Kind = SyntaxKind.SlimArrowToken;
+                        info.Kind = SyntaxKind.MinusGreaterThanToken;
                     }
                     else if (ch == '=')
                     {

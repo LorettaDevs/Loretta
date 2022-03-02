@@ -383,7 +383,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                     N(SyntaxKind.IdentifierToken, "T");
                 }
                 N(SyntaxKind.CloseParenthesisToken);
-                N(SyntaxKind.SlimArrowToken);
+                N(SyntaxKind.MinusGreaterThanToken);
                 N(SyntaxKind.SimpleTypeName);
                 {
                     N(SyntaxKind.IdentifierToken, "T");
@@ -415,7 +415,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 }
                 N(SyntaxKind.CloseParenthesisToken);
 
-                N(SyntaxKind.SlimArrowToken);
+                N(SyntaxKind.MinusGreaterThanToken);
 
                 N(SyntaxKind.TypePack);
                 {
@@ -519,7 +519,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 }
                 N(SyntaxKind.CloseParenthesisToken);
 
-                N(SyntaxKind.SlimArrowToken);
+                N(SyntaxKind.MinusGreaterThanToken);
 
                 N(SyntaxKind.SimpleTypeName);
                 {
