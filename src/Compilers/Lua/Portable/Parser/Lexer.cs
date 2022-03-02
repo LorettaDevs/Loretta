@@ -248,6 +248,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
                     break;
 
+                case '?':
+                    TextWindow.AdvanceChar();
+                    info.Kind = SyntaxKind.QuestionToken;
+                    break;
+
                 #endregion Punctuation
 
                 case '(':
@@ -317,7 +322,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case '-':
                     TextWindow.AdvanceChar();
-                    if (TextWindow.PeekChar() == '=')
+                    if ((ch = TextWindow.PeekChar()) == '>')
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Kind = SyntaxKind.MinusGreaterThanToken;
+                    }
+                    else if (ch == '=')
                     {
                         TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.MinusEqualsToken;
@@ -421,17 +431,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case '>':
                     TextWindow.AdvanceChar();
-                    if ((ch = TextWindow.PeekChar()) == '=')
+                    if (TextWindow.PeekChar() == '=')
                     {
                         TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.GreaterThanEqualsToken;
-                    }
-                    else if (ch == '>')
-                    {
-                        TextWindow.AdvanceChar();
-                        if (!_options.SyntaxOptions.AcceptBitwiseOperators)
-                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
-                        info.Kind = SyntaxKind.GreaterThanGreaterThanToken;
                     }
                     else
                     {

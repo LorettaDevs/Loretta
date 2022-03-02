@@ -42,7 +42,7 @@ namespace Loretta.CodeAnalysis.Lua.Experimental.Minifying
         {
             var newName = _renameTable.GetNewVariableName(node);
             return newName != null && node.Name != newName
-                ? node.Update(SyntaxFactory.Identifier(newName))
+                ? node.WithIdentifier(SyntaxFactory.Identifier(newName))
                 : node;
         }
 

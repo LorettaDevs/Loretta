@@ -188,6 +188,7 @@ namespace Loretta.CodeAnalysis.Lua
                     if (node.Identifier.IsMissing || string.IsNullOrWhiteSpace(node.Identifier.Name))
                         return;
                     var variable = scope.CreateVariable(VariableKind.Iteration, node.Identifier.Name, node);
+                    _variables.Add(node.Identifier.IdentifierName, variable);
                     _variables.Add(node.Identifier, variable);
                     Visit(node.Body);
                 }
@@ -204,11 +205,13 @@ namespace Loretta.CodeAnalysis.Lua
                 var scope = CreateBlockScope(node);
                 try
                 {
-                    foreach (var identifierName in node.Identifiers)
+                    foreach (var typedIdentifierName in node.Identifiers)
                     {
+                        var identifierName = typedIdentifierName.IdentifierName;
                         if (identifierName.IsMissing || string.IsNullOrWhiteSpace(identifierName.Name))
                             continue;
                         var variable = scope.CreateVariable(VariableKind.Iteration, identifierName.Name, node);
+                        _variables.Add(typedIdentifierName, variable);
                         _variables.Add(identifierName, variable);
                     }
                     Visit(node.Body);

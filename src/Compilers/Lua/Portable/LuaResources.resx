@@ -208,14 +208,38 @@
   <data name="ERR_LuajitIdentifierRulesNotSupportedInVersion" xml:space="preserve">
     <value>Identifiers containing characters with value above 0x7F are not supported in this lua version</value>
   </data>
+  <data name="ERR_MixingNilableAndIntersectionNotAllowed" xml:space="preserve">
+    <value>Using nilable types directly in intersections is not allowed</value>
+  </data>
+  <data name="ERR_MixingNilableAndIntersectionNotAllowed_Description" xml:space="preserve">
+    <value>Using nilable types directly in intersections is not allowed. The nilable types must be in parenthesis to be used in intersections</value>
+  </data>
+  <data name="ERR_MixingNilableAndIntersectionNotAllowed_Title" xml:space="preserve">
+    <value>Using nilable types directly in intersections is not allowed</value>
+  </data>
+  <data name="ERR_MixingUnionsAndIntersectionsNotAllowed" xml:space="preserve">
+    <value>Mixing union and intersection types is not allowed</value>
+  </data>
+  <data name="ERR_MixingUnionsAndIntersectionsNotAllowed_Description" xml:space="preserve">
+    <value>Mixing union and intersection types is not allowed. The unions must be inside parenthesis to be used in intersections</value>
+  </data>
+  <data name="ERR_MixingUnionsAndIntersectionsNotAllowed_Title" xml:space="preserve">
+    <value>Mixing union and intersection types is not allowed</value>
+  </data>
   <data name="ERR_NonFunctionCallBeingUsedAsStatement" xml:space="preserve">
     <value>Function calls are the only expressions that can be used as statements</value>
+  </data>
+  <data name="ERR_NormalTypeParametersComeBeforePacks" xml:space="preserve">
+    <value>Normal type parameters must come before pack type parameters</value>
   </data>
   <data name="ERR_NumericLiteralTooLarge" xml:space="preserve">
     <value>Numeric literal is too large</value>
   </data>
   <data name="ERR_OctalNumericLiteralNotSupportedInVersion" xml:space="preserve">
     <value>Octal numeric literals are not supported in this lua version</value>
+  </data>
+  <data name="ERR_OnlyOneTableTypeIndexerIsAllowed" xml:space="preserve">
+    <value>Only one indexer is allowed per table type</value>
   </data>
   <data name="ERR_RbraceExpected" xml:space="preserve">
     <value>} expected</value>
@@ -229,6 +253,9 @@
   <data name="ERR_SyntaxError" xml:space="preserve">
     <value>Syntax error, '{0}' expected</value>
     <comment>{0} is the expected value</comment>
+  </data>
+  <data name="ERR_TypedLuaNotSupportedInLuaVersion" xml:space="preserve">
+    <value>Typed lua is not supported in this lua version</value>
   </data>
   <data name="ERR_UnderscoreInNumericLiteralNotSupportedInVersion" xml:space="preserve">
     <value>Underscores in numeric literals are not supported in this lua version</value>

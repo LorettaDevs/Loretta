@@ -76,6 +76,19 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
         protected virtual LuaSyntaxNode ParseNode(string text, LuaParseOptions? options) =>
             ParseTree(text, options).GetCompilationUnitRoot();
 
+        internal void UsingType(string text, params DiagnosticDescription[] expectedErrors) =>
+            UsingType(text, options: null, expectedErrors);
+
+        internal void UsingType(string text, LuaParseOptions? options, params DiagnosticDescription[] expectedErrors)
+        {
+            var node = SyntaxFactory.ParseType(text, options: options);
+            // we validate the text roundtrips
+            Assert.Equal(text, node.ToFullString());
+            var actualErrors = node.GetDiagnostics();
+            actualErrors.Verify(expectedErrors);
+            UsingNode(node);
+        }
+
         internal void UsingStatement(string text, params DiagnosticDescription[] expectedErrors) => UsingStatement(text, options: null, expectedErrors);
 
         internal void UsingStatement(string text, LuaParseOptions? options, params DiagnosticDescription[] expectedErrors)

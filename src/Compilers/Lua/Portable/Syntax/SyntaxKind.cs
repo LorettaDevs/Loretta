@@ -351,6 +351,16 @@ namespace Loretta.CodeAnalysis.Lua
         [Token(Text = "~")]
         [UnaryOperator(precedence: 12, BitwiseNotExpression), BinaryOperator(precedence: 5, ExclusiveOrExpression)]
         TildeToken = 53,
+        /// <summary>
+        /// Represents the <c>?</c> token.
+        /// </summary>
+        [Token(Text = "?")]
+        QuestionToken = 54,
+        /// <summary>
+        /// Represents the <c>-&gt;</c> token.
+        /// </summary>
+        [Token(Text = "->")]
+        MinusGreaterThanToken = 55,
 
         // Big gap 53-500 (insert new fixed-text tokens here)
 
@@ -479,8 +489,23 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.LiteralToken)]
         [Property(SyntaxKindProperty.LiteralExpression, FalseLiteralExpression)]
         FalseKeyword = 522,
+        /// <summary>
+        /// Represents the <see langword="type"/> keyword.
+        /// </summary>
+        [Keyword("type")]
+        TypeKeyword = 523,
+        /// <summary>
+        /// Represents the <see langword="export"/> keyword.
+        /// </summary>
+        [Keyword("export")]
+        ExportKeyword = 524,
+        /// <summary>
+        /// Represents the <see langword="typeof"/> keyword.
+        /// </summary>
+        [Keyword("typeof")]
+        TypeofKeyword = 525,
 
-        // Big gap 522-1000 (insert new keywords here)
+        // Big gap 526-1000 (insert new keywords here)
 
         // Tokens with Text
         [Token]
@@ -525,6 +550,7 @@ namespace Loretta.CodeAnalysis.Lua
         EqualsValuesClause = 2083,
         VariableAttribute = 2084,
         LocalDeclarationName = 2085,
+        TypedIdentifierName = 2118,
 
         // Primary Expressions
         [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
@@ -617,6 +643,9 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
         [Property(SyntaxKindProperty.OperatorTokenKind, TildeToken)]
         ExclusiveOrExpression = 2079,
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, ColonColonToken)]
+        TypeCastExpression = 2086,
 
         // Expressions
         ParenthesizedExpression = 2040,
@@ -678,8 +707,44 @@ namespace Loretta.CodeAnalysis.Lua
         ExpressionStatement = 2070,
         StatementList = 2072,
         EmptyStatement = 2073,
+        TypeDeclarationStatement = 2087,
 
-        // Big gap 2086-3001 (insert new nodes here)
+        // Types
+        //     Supporting type kinds
+        EqualsType = 2088,
+        TypeParameter = 2089,
+        TypeParameterList = 2090,
+        TypeArgumentList = 2091,
+        TableTypeProperty = 2092,
+        TableTypeIndexer = 2093,
+        //     Named type
+        SimpleTypeName = 2094,
+        CompositeTypeName = 2095,
+        //     Typeof type
+        TypeofType = 2096,
+        //     Table-based types
+        ArrayType = 2097,
+        TableType = 2098,
+        //     Function types
+        FunctionType = 2099,
+        //     Literal-based types
+        StringType = 2100,
+        TrueType = 2101,
+        FalseType = 2102,
+        NilType = 2103,
+        //     Composite types (based on other types)
+        ParenthesizedType = 2104,
+        NilableType = 2105,
+        IntersectionType = 2106,
+        UnionType = 2107,
+        //     Type packs
+        TypePack = 2108,
+        VariadicTypePack = 2109,
+        GenericTypePack = 2110,
+        //     Type binding
+        TypeBinding = 2111,
+
+        // Big gap 2112-3000 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,

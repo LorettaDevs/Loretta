@@ -207,7 +207,15 @@ namespace Loretta.Generators.SyntaxXml
                 // property accessors
                 foreach (var field in nodeFields)
                 {
-                    WriteComment(field.PropertyComment, "");
+                    try
+                    {
+                        WriteComment(field.PropertyComment, "");
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new InvalidOperationException($"Property {field.Name} in node {node.Name} has an invalid comment.", ex);
+                    }
+
                     if (IsNodeList(field.Type))
                     {
                         WriteLine($"public {OverrideOrNewModifier(field)}Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type} {field.Name} => new Loretta.CodeAnalysis.Syntax.InternalSyntax.{field.Type}(this.{CamelCase(field.Name)});");

@@ -5,7 +5,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
     using System.Threading;
     using Loretta.CodeAnalysis.Syntax.InternalSyntax;
 
-    internal sealed class LanguageParser : SyntaxParser
+    internal sealed partial class LanguageParser : SyntaxParser
     {
         private readonly SyntaxListPool _pool = new();
         private int _recursionDepth;
@@ -120,10 +120,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             return ParseLocalVariableDeclarationStatement();
 
                     case SyntaxKind.ForKeyword:
-                        if (PeekToken(2).Kind == SyntaxKind.EqualsToken)
-                            return ParseNumericForStatement();
+                        var forKeyword = EatToken(SyntaxKind.ForKeyword);
+
+                        var identifier = ParseIdentifierName();
+                        var typeBinding = TryParseTypeBinding();
+
+                        var typedIdentifier = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
+
+                        if (CurrentToken.Kind == SyntaxKind.EqualsToken)
+                            return ParseNumericForStatement(forKeyword, typedIdentifier);
                         else
-                            return ParseGenericForStatement();
+                            return ParseGenericForStatement(forKeyword, typedIdentifier);
 
                     case SyntaxKind.IfKeyword:
                         return ParseIfStatement();
@@ -157,6 +164,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                     case SyntaxKind.SemicolonToken when Options.SyntaxOptions.AcceptEmptyStatements:
                         return SyntaxFactory.EmptyStatement(EatToken(SyntaxKind.SemicolonToken));
+
+                    case SyntaxKind.IdentifierToken
+                        when CurrentToken.ContextualKind is SyntaxKind.ExportKeyword
+                                                         or SyntaxKind.TypeKeyword:
+                        return ParseTypeDeclarationStatement();
 
                     default:
                     {
@@ -208,21 +220,56 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
+        private StatementSyntax ParseTypeDeclarationStatement()
+        {
+            SyntaxToken? exportKeyword = null;
+            if (CurrentToken.ContextualKind is SyntaxKind.ExportKeyword)
+            {
+                exportKeyword = EatContextualToken(SyntaxKind.ExportKeyword);
+            }
+
+            var typeKeyword = EatContextualToken(SyntaxKind.TypeKeyword);
+            var typeName = EatToken(SyntaxKind.IdentifierToken);
+            var typeParameterList = TryParseTypeParameterList(true);
+            var equalsToken = EatToken(SyntaxKind.EqualsToken);
+            var type = ParseType();
+            var optionalSemiColonToken = TryMatchSemicolon();
+
+            var typeDeclarationStatement = SyntaxFactory.TypeDeclarationStatement(
+                exportKeyword,
+                typeKeyword,
+                typeName,
+                typeParameterList,
+                equalsToken,
+                type,
+                optionalSemiColonToken);
+            if (!Options.SyntaxOptions.AcceptTypedLua)
+            {
+                typeDeclarationStatement = AddError(
+                    typeDeclarationStatement,
+                    ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
+            }
+            return typeDeclarationStatement;
+        }
+
         private LocalDeclarationNameSyntax ParseLocalDeclarationName()
         {
             var name = ParseIdentifierName();
-
             VariableAttributeSyntax? attribute = null;
             if (CurrentToken.Kind is SyntaxKind.LessThanToken)
             {
                 var lessThanToken = EatToken(SyntaxKind.LessThanToken);
-                var identifierName = EatToken(SyntaxKind.IdentifierToken);
+                var identifier = EatToken(SyntaxKind.IdentifierToken);
                 var greaterThanToken = EatToken(SyntaxKind.GreaterThanToken);
 
-                attribute = SyntaxFactory.VariableAttribute(lessThanToken, identifierName, greaterThanToken);
+                attribute = SyntaxFactory.VariableAttribute(
+                    lessThanToken,
+                    identifier,
+                    greaterThanToken);
             }
+            TypeBindingSyntax? typeBinding = TryParseTypeBinding();
 
-            return SyntaxFactory.LocalDeclarationName(name, attribute);
+            return SyntaxFactory.LocalDeclarationName(name, attribute, typeBinding);
         }
 
         private LocalVariableDeclarationStatementSyntax ParseLocalVariableDeclarationStatement()
@@ -283,7 +330,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var localKeyword = EatToken(SyntaxKind.LocalKeyword);
             var functionKeyword = EatToken(SyntaxKind.FunctionKeyword);
             var identifier = ParseIdentifierName();
+            var typeParameterList = TryParseTypeParameterList(false);
             var parameters = ParseParameterList();
+            var typeBinding = TryParseReturnTypeBinding();
             var body = ParseStatementList(SyntaxKind.EndKeyword);
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
             var semicolonToken = TryMatchSemicolon();
@@ -292,16 +341,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 localKeyword,
                 functionKeyword,
                 identifier,
+                typeParameterList,
                 parameters,
+                typeBinding,
                 body,
                 endKeyword,
                 semicolonToken);
         }
 
-        private NumericForStatementSyntax ParseNumericForStatement()
+        private NumericForStatementSyntax ParseNumericForStatement(SyntaxToken forKeyword, TypedIdentifierNameSyntax forLoopVariable)
         {
-            var forKeyword = EatToken(SyntaxKind.ForKeyword);
-            var identifier = ParseIdentifierName();
             var equalsToken = EatToken(SyntaxKind.EqualsToken);
             var initialValue = ParseExpression();
             var finalValueCommaToken = EatToken(SyntaxKind.CommaToken);
@@ -319,7 +368,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var semicolonToken = TryMatchSemicolon();
             return SyntaxFactory.NumericForStatement(
                 forKeyword,
-                identifier,
+                forLoopVariable,
                 equalsToken,
                 initialValue,
                 finalValueCommaToken,
@@ -332,22 +381,26 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 semicolonToken);
         }
 
-        private GenericForStatementSyntax ParseGenericForStatement()
+        private GenericForStatementSyntax ParseGenericForStatement(SyntaxToken forKeyword, TypedIdentifierNameSyntax variable)
         {
-            var forKeyword = EatToken(SyntaxKind.ForKeyword);
 
             var identifiersAndSeparatorsBuilder =
-                _pool.AllocateSeparated<IdentifierNameSyntax>();
+                _pool.AllocateSeparated<TypedIdentifierNameSyntax>();
 
-            var identifier = ParseIdentifierName();
-            identifiersAndSeparatorsBuilder.Add(identifier);
+            IdentifierNameSyntax? identifier = null;
+            TypeBindingSyntax? typeBinding = null;
+
+            identifiersAndSeparatorsBuilder.Add(variable);
+
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
             {
                 var separator = EatToken(SyntaxKind.CommaToken);
                 identifiersAndSeparatorsBuilder.AddSeparator(separator);
 
                 identifier = ParseIdentifierName();
-                identifiersAndSeparatorsBuilder.Add(identifier);
+                typeBinding = TryParseTypeBinding();
+                variable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
+                identifiersAndSeparatorsBuilder.Add(variable);
             }
 
             var inKeyword = EatToken(SyntaxKind.InKeyword);
@@ -519,14 +572,19 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             var functionKeyword = EatToken(SyntaxKind.FunctionKeyword);
             var name = ParseFunctionName();
+            var typeParameterList = TryParseTypeParameterList(false);
             var parameters = ParseParameterList();
+            var typeBinding = TryParseReturnTypeBinding();
             var body = ParseStatementList(SyntaxKind.EndKeyword);
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
             var semicolonToken = TryMatchSemicolon();
+
             return SyntaxFactory.FunctionDeclarationStatement(
                 functionKeyword,
                 name,
+                typeParameterList,
                 parameters,
+                typeBinding,
                 body,
                 endKeyword,
                 semicolonToken);
@@ -652,15 +710,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
 
         internal ExpressionSyntax ParseExpression() =>
-            ParseBinaryExpression(0, SyntaxKind.BadToken, false);
+            ParseBinaryExpression(0);
 
-        internal ExpressionSyntax ParseBinaryExpression(int parentPrecedence, SyntaxKind parentOperator, bool isParentUnary)
+        internal ExpressionSyntax ParseBinaryExpression(int parentPrecedence)
         {
             try
             {
                 _recursionDepth++;
                 StackGuard.EnsureSufficientExecutionStack(_recursionDepth);
-                return ParseBinaryExpressionCore(parentPrecedence, parentOperator, isParentUnary);
+                return ParseBinaryExpressionCore(parentPrecedence);
             }
             finally
             {
@@ -668,7 +726,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
-        private ExpressionSyntax ParseBinaryExpressionCore(int parentPrecedence, SyntaxKind parentOperator, bool isParentUnary)
+        private ExpressionSyntax ParseBinaryExpressionCore(int parentPrecedence)
         {
             ExpressionSyntax left;
 
@@ -677,7 +735,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 var operatorToken = EatToken();
                 var kind = SyntaxFacts.GetUnaryExpression(operatorToken.Kind).Value;
-                var operand = ParseBinaryExpression(unaryOperatorPrecedence, operatorToken.Kind, true);
+                var operand = ParseBinaryExpression(
+                    unaryOperatorPrecedence);
                 left = new UnaryExpressionSyntax(kind, operatorToken, operand);
             }
             else
@@ -688,17 +747,80 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var pos = -1;
             while (IsMakingProgress(ref pos))
             {
-                var operatorKind = CurrentToken.Kind;
-                var precedence = SyntaxFacts.GetBinaryOperatorPrecedence(operatorKind);
-                var comparePrecedence = !isParentUnary && parentOperator == operatorKind && SyntaxFacts.IsRightAssociative(operatorKind)
-                    ? precedence + 1
-                    : precedence;
-                if (precedence <= 0 || comparePrecedence <= parentPrecedence)
-                    break;
+                var tk = CurrentToken.Kind;
+                SyntaxKind operatorKind;
 
-                var operatorToken = EatToken();
+                if (tk == SyntaxKind.GreaterThanToken
+                    && PeekToken(1).Kind == SyntaxKind.GreaterThanToken
+                    && NoTriviaBetween(CurrentToken, PeekToken(1)))
+                {
+                    operatorKind = SyntaxKind.GreaterThanGreaterThanToken;
+                }
+                else if (SyntaxFacts.IsBinaryOperatorToken(tk))
+                {
+                    operatorKind = tk;
+                }
+                else
+                {
+                    break;
+                }
+
+                var newPrecedence = SyntaxFacts.GetBinaryOperatorPrecedence(operatorKind);
+                // If we get an invalid precedence, then quit.
+                if (newPrecedence <= 0)
+                {
+                    break;
+                }
+                // Otherwise, if we have a lower precedence then quit as well.
+                // Results in a + b * c being parsed as:
+                //     +
+                //    / \
+                //   a  *
+                //     / \
+                //    b   c
+                //
+                // But a * b + c being parsed as:
+                //     +
+                //    / \
+                //   *   c
+                //  / \
+                // a   b
+                if (newPrecedence < parentPrecedence)
+                {
+                    break;
+                }
+                // Also quit if precedence is the same and the operator is not right associative.
+                // Results in a + b + c being parsed as:
+                //     +
+                //    / \
+                //   +   c
+                //  / \
+                // a   b
+                //
+                // But a ^ b ^ c being parsed as:
+                //     ^
+                //    / \
+                //   a  ^
+                //     / \
+                //    b   c
+
+                if (newPrecedence == parentPrecedence && !SyntaxFacts.IsRightAssociative(operatorKind))
+                {
+                    break;
+                }
+
+                var operatorToken = EatToken(tk);
+                if (operatorKind == SyntaxKind.GreaterThanGreaterThanToken)
+                {
+                    var trailingToken = EatToken(SyntaxKind.GreaterThanToken);
+                    operatorToken = SyntaxFactory.Token(
+                        operatorToken.GetLeadingTrivia(),
+                        SyntaxKind.GreaterThanGreaterThanToken,
+                        trailingToken.GetTrailingTrivia());
+                }
+
                 var kind = SyntaxFacts.GetBinaryExpression(operatorToken.Kind).Value;
-                var right = ParseBinaryExpression(precedence, operatorKind, false);
+                var right = ParseBinaryExpression(newPrecedence);
                 left = new BinaryExpressionSyntax(kind, left, operatorToken, right);
             }
 
@@ -707,7 +829,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private ExpressionSyntax ParsePrimaryExpression()
         {
-            return CurrentToken.Kind switch
+            ExpressionSyntax expression = CurrentToken.Kind switch
             {
                 SyntaxKind.NilKeyword
                 or SyntaxKind.TrueKeyword
@@ -721,6 +843,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 SyntaxKind.IfKeyword => ParseIfExpression(),
                 _ => ParsePrefixOrVariableExpression(),
             };
+
+            if (CurrentToken.Kind is SyntaxKind.ColonColonToken
+                && PeekToken(2).Kind is not SyntaxKind.ColonColonToken)
+            {
+                var colonColonToken = EatToken(SyntaxKind.ColonColonToken);
+                var type = ParseType();
+                expression = SyntaxFactory.TypeCastExpression(
+                    expression,
+                    colonColonToken,
+                    type);
+                if (!Options.SyntaxOptions.AcceptTypedLua)
+                    expression = AddError(expression, ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
+            }
+            return expression;
         }
 
         private PrefixExpressionSyntax ParsePrefixOrVariableExpression()
@@ -779,13 +915,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private AnonymousFunctionExpressionSyntax ParseAnonymousFunctionExpression()
         {
             var functionKeywordToken = EatToken(SyntaxKind.FunctionKeyword);
+            var typeParameterList = TryParseTypeParameterList(false);
             var parameterList = ParseParameterList();
+            var typeBinding = TryParseReturnTypeBinding();
             var body = ParseStatementList(SyntaxKind.EndKeyword);
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
 
             return SyntaxFactory.AnonymousFunctionExpression(
                 functionKeywordToken,
+                typeParameterList,
                 parameterList,
+                typeBinding,
                 body,
                 endKeyword);
         }
@@ -904,13 +1044,36 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 if (CurrentToken.Kind == SyntaxKind.DotDotDotToken)
                 {
                     var varArgToken = EatToken(SyntaxKind.DotDotDotToken);
-                    var varArgparameter = SyntaxFactory.VarArgParameter(varArgToken);
+                    TypeBindingSyntax? optionalTypeBinding;
+                    if (CurrentToken.Kind is SyntaxKind.ColonToken
+                        && PeekToken(1).Kind is SyntaxKind.IdentifierToken
+                        && PeekToken(2).Kind is SyntaxKind.DotDotDotToken)
+                    {
+                        var colonToken = EatToken(SyntaxKind.ColonToken);
+                        var genericTypePackIdentifier = EatToken(SyntaxKind.IdentifierToken);
+                        var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+
+                        optionalTypeBinding = SyntaxFactory.TypeBinding(
+                            colonToken,
+                            SyntaxFactory.GenericTypePack(
+                                genericTypePackIdentifier,
+                                dotDotDotToken));
+                    }
+                    else
+                    {
+                        optionalTypeBinding = TryParseTypeBinding();
+                    }
+
+                    var varArgparameter = SyntaxFactory.VarArgParameter(
+                        varArgToken,
+                        optionalTypeBinding);
                     parametersAndSeparatorsBuilder.Add(varArgparameter);
                     break;
                 }
 
                 var identifier = EatToken(SyntaxKind.IdentifierToken);
-                var parameter = SyntaxFactory.NamedParameter(identifier);
+                var typeBinding = TryParseTypeBinding();
+                var parameter = SyntaxFactory.NamedParameter(identifier, typeBinding);
                 parametersAndSeparatorsBuilder.Add(parameter);
 
                 if (CurrentToken.Kind == SyntaxKind.CommaToken)
@@ -1070,6 +1233,23 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 ifExpression = AddError(ifExpression, ErrorCode.ERR_IfExpressionsNotSupportedInLuaVersion);
             return ifExpression;
         }
+
+        #region Type Parsing Stubs
+
+        private partial TypeBindingSyntax? TryParseTypeBinding();
+
+        private partial TypeBindingSyntax? TryParseReturnTypeBinding();
+
+        internal partial TypeSyntax ParseType();
+
+        private partial TypeSyntax ParseReturnType();
+
+        private partial TypeParameterListSyntax? TryParseTypeParameterList(bool acceptDefaults);
+
+        #endregion Type Parsing Stubs
+
+        private static bool NoTriviaBetween(SyntaxToken left, SyntaxToken right) =>
+            left.GetTrailingTriviaWidth() == 0 && right.GetLeadingTriviaWidth() == 0;
 
         /// <summary>
         /// Creates a missing <see cref="IdentifierNameSyntax"/>.

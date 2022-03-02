@@ -32,7 +32,10 @@ namespace Loretta.CodeAnalysis.Lua
         public static bool IsReservedKeyword(SyntaxKind actual, LuaSyntaxOptions syntaxOptions) =>
             actual switch
             {
-                SyntaxKind.ContinueKeyword => syntaxOptions.ContinueType == ContinueType.Keyword,
+                SyntaxKind.ContinueKeyword when syntaxOptions.ContinueType == ContinueType.Keyword => true,
+                SyntaxKind.TypeKeyword => false,
+                SyntaxKind.ExportKeyword => false,
+                SyntaxKind.TypeofKeyword => false,
                 _ => IsKeyword(actual)
             };
 
@@ -45,9 +48,21 @@ namespace Loretta.CodeAnalysis.Lua
         public static bool IsContextualKeyword(SyntaxKind kind, LuaSyntaxOptions syntaxOptions) =>
             kind switch
             {
-                SyntaxKind.ContinueKeyword => syntaxOptions.ContinueType == ContinueType.ContextualKeyword,
+                SyntaxKind.ContinueKeyword when syntaxOptions.ContinueType == ContinueType.ContextualKeyword => true,
+                SyntaxKind.TypeKeyword => true,
+                SyntaxKind.ExportKeyword => true,
+                SyntaxKind.TypeofKeyword => true,
                 _ => false
             };
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        internal static bool IsManufacturedToken(SyntaxKind kind, LuaSyntaxOptions options) =>
+            IsContextualKeyword(kind, options) || kind == SyntaxKind.GreaterThanGreaterThanToken;
 
         /// <summary>
         /// Whether two tokens/trivia require a separator between them.
@@ -131,6 +146,8 @@ namespace Loretta.CodeAnalysis.Lua
             if (kindA is SyntaxKind.HashToken && kindB is SyntaxKind.BangToken or SyntaxKind.BangEqualsToken)
                 return true;
             if (kindA is SyntaxKind.TildeToken && kindB is SyntaxKind.EqualsToken or SyntaxKind.EqualsEqualsToken)
+                return true;
+            if (kindA is SyntaxKind.MinusToken && kindB is SyntaxKind.MinusGreaterThanToken or SyntaxKind.GreaterThanToken or SyntaxKind.GreaterThanEqualsToken)
                 return true;
 
             return false;

@@ -286,26 +286,26 @@ local num4 = 0xf_f
         [Trait("Category", "Lexer/Diagnostics")]
         public void Lexer_EmitsDiagnosticWhen_BadCharactersAreFound()
         {
-            const string source = @"$\?";
+            const string source = @"@$\";
             ParseAndValidate(source, null,
                 // (1,1): error LUA1012: Invalid statement
-                // $\?
-                Diagnostic(ErrorCode.ERR_InvalidStatement, "$").WithLocation(1, 1),
-                // (1,1): error LUA0014: Bad character input: '$'
-                // $\?
-                Diagnostic(ErrorCode.ERR_BadCharacter, "$").WithArguments("$").WithLocation(1, 1),
+                // @$\
+                Diagnostic(ErrorCode.ERR_InvalidStatement, "@").WithLocation(1, 1),
+                // (1,1): error LUA0014: Bad character input: '@'
+                // @$\
+                Diagnostic(ErrorCode.ERR_BadCharacter, "@").WithArguments("@").WithLocation(1, 1),
                 // (1,2): error LUA1012: Invalid statement
-                // $\?
-                Diagnostic(ErrorCode.ERR_InvalidStatement, @"\").WithLocation(1, 2),
-                // (1,2): error LUA0014: Bad character input: '\'
-                // $\?
-                Diagnostic(ErrorCode.ERR_BadCharacter, @"\").WithArguments("\\").WithLocation(1, 2),
+                // @$\
+                Diagnostic(ErrorCode.ERR_InvalidStatement, "$").WithLocation(1, 2),
+                // (1,2): error LUA0014: Bad character input: '$'
+                // @$\
+                Diagnostic(ErrorCode.ERR_BadCharacter, "$").WithArguments("$").WithLocation(1, 2),
                 // (1,3): error LUA1012: Invalid statement
-                // $\?
+                // @$\
                 Diagnostic(ErrorCode.ERR_InvalidStatement, "").WithLocation(1, 3),
-                // (1,3): error LUA0014: Bad character input: '?'
-                // $\?
-                Diagnostic(ErrorCode.ERR_BadCharacter, "?").WithArguments("?").WithLocation(1, 3));
+                // (1,3): error LUA0014: Bad character input: '\'
+                // @$\
+                Diagnostic(ErrorCode.ERR_BadCharacter, @"\").WithArguments("\\").WithLocation(1, 3));
         }
 
         [Fact]
