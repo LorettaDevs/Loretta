@@ -665,7 +665,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 N(SyntaxKind.LocalKeyword);
                 N(SyntaxKind.LocalDeclarationName);
                 {
-                    N(SyntaxKind.IdentifierName); 
+                    N(SyntaxKind.IdentifierName);
                     {
                         N(SyntaxKind.IdentifierToken, "Var");
                     }
@@ -675,7 +675,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                     N(SyntaxKind.ColonToken);
                     N(SyntaxKind.SimpleTypeName);
                     {
-                      N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
 
@@ -699,7 +699,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
             N(SyntaxKind.NumericForStatement);
             {
                 N(SyntaxKind.ForKeyword);
-                N(SyntaxKind.TypedIdentifierName); 
+                N(SyntaxKind.TypedIdentifierName);
                 {
                     N(SyntaxKind.IdentifierName);
                     {
@@ -710,7 +710,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                         N(SyntaxKind.ColonToken);
                         N(SyntaxKind.SimpleTypeName);
                         {
-                          N(SyntaxKind.IdentifierToken, "T");
+                            N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
@@ -725,7 +725,8 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                     N(SyntaxKind.NumericLiteralToken, "5");
                 }
                 N(SyntaxKind.DoKeyword);
-                M(SyntaxKind.StatementList); { }
+                M(SyntaxKind.StatementList);
+                { }
                 N(SyntaxKind.EndKeyword);
             }
             EOF();
@@ -768,7 +769,8 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                     }
                 }
                 N(SyntaxKind.DoKeyword);
-                M(SyntaxKind.StatementList); { }
+                M(SyntaxKind.StatementList);
+                { }
                 N(SyntaxKind.EndKeyword);
             }
             EOF();
@@ -836,7 +838,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 N(SyntaxKind.FunctionKeyword);
                 N(SyntaxKind.SimpleFunctionName);
                 {
-                  N(SyntaxKind.IdentifierToken, "a");
+                    N(SyntaxKind.IdentifierToken, "a");
                 }
                 N(SyntaxKind.ParameterList);
                 {
@@ -1024,28 +1026,280 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
         [Fact]
         public void Parser_ParsesNamedFunctionReturnType()
         {
+            UsingStatement("function a() : T end");
+
+            N(SyntaxKind.FunctionDeclarationStatement);
+            {
+                N(SyntaxKind.FunctionKeyword);
+                N(SyntaxKind.SimpleFunctionName);
+                {
+                    N(SyntaxKind.IdentifierToken, "a");
+                }
+                N(SyntaxKind.ParameterList);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+                N(SyntaxKind.TypeBinding);
+                {
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                M(SyntaxKind.StatementList);
+                N(SyntaxKind.EndKeyword);
+            }
             EOF();
         }
 
         [Fact]
         public void Parser_ParsesAnonymousFunctionReturnType()
         {
+            UsingStatement("local a = function() : T end");
+
+            N(SyntaxKind.LocalVariableDeclarationStatement);
+            {
+                N(SyntaxKind.LocalKeyword);
+                N(SyntaxKind.LocalDeclarationName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "a");
+                    }
+                }
+                N(SyntaxKind.EqualsValuesClause);
+                {
+                    N(SyntaxKind.EqualsToken);
+                    N(SyntaxKind.AnonymousFunctionExpression);
+                    {
+                        N(SyntaxKind.FunctionKeyword);
+                        N(SyntaxKind.ParameterList);
+                        {
+                            N(SyntaxKind.OpenParenthesisToken);
+                            N(SyntaxKind.CloseParenthesisToken);
+                        }
+                        N(SyntaxKind.TypeBinding);
+                        {
+                            N(SyntaxKind.ColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                        M(SyntaxKind.StatementList);
+                        N(SyntaxKind.EndKeyword);
+                    }
+                }
+            }
             EOF();
         }
-
 
         [Fact]
         public void Parser_ParsesTypeDeclarationStatement()
         {
+            UsingStatement("type a = T");
+
+            N(SyntaxKind.TypeDeclarationStatement);
+            {
+                N(SyntaxKind.TypeKeyword);
+                N(SyntaxKind.IdentifierToken, "a");
+                N(SyntaxKind.EqualsToken);
+                N(SyntaxKind.SimpleTypeName);
+                {
+                    N(SyntaxKind.IdentifierToken, "T");
+                }
+            }
             EOF();
         }
 
         [Fact]
         public void Parser_ParsesExportedTypeDeclarationStatement()
         {
+            UsingStatement("export type a = T");
+
+            N(SyntaxKind.TypeDeclarationStatement);
+            {
+                N(SyntaxKind.ExportKeyword);
+                N(SyntaxKind.TypeKeyword);
+                N(SyntaxKind.IdentifierToken, "a");
+                N(SyntaxKind.EqualsToken);
+                N(SyntaxKind.SimpleTypeName);
+                {
+                    N(SyntaxKind.IdentifierToken, "T");
+                }
+            }
             EOF();
         }
 
-    }
+        [Fact]
+        public void Parser_ParsesTypeCastExpression()
+        {
+            UsingStatement("local a = b :: T");
 
+            N(SyntaxKind.LocalVariableDeclarationStatement);
+            {
+                N(SyntaxKind.LocalKeyword);
+                N(SyntaxKind.LocalDeclarationName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "a");
+                    }
+                }
+                N(SyntaxKind.EqualsValuesClause);
+                {
+                    N(SyntaxKind.EqualsToken);
+                    N(SyntaxKind.TypeCastExpression);
+                    {
+                        N(SyntaxKind.IdentifierName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "b");
+                        }
+                        N(SyntaxKind.ColonColonToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesTypeDeclaratioStatementWithAdding()
+        {
+            UsingStatement("local a = b :: T + b :: T");
+
+            N(SyntaxKind.LocalVariableDeclarationStatement);
+            {
+                N(SyntaxKind.LocalKeyword);
+                N(SyntaxKind.LocalDeclarationName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "a");
+                    }
+                }
+                N(SyntaxKind.EqualsValuesClause);
+                {
+                    N(SyntaxKind.EqualsToken);
+                    N(SyntaxKind.AddExpression);
+                    {
+                        N(SyntaxKind.TypeCastExpression);
+                        {
+                            N(SyntaxKind.IdentifierName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "b");
+                            }
+                            N(SyntaxKind.ColonColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                        N(SyntaxKind.PlusToken);
+                        N(SyntaxKind.TypeCastExpression);
+                        {
+                            N(SyntaxKind.IdentifierName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "b");
+                            }
+                            N(SyntaxKind.ColonColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                    }
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesTypeDeclaratioStatementWithUnary()
+        {
+            UsingStatement("local a = -b :: T");
+
+            N(SyntaxKind.LocalVariableDeclarationStatement);
+            {
+                N(SyntaxKind.LocalKeyword);
+                N(SyntaxKind.LocalDeclarationName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "a");
+                    }
+                }
+                N(SyntaxKind.EqualsValuesClause);
+                {
+                    N(SyntaxKind.EqualsToken);
+                    N(SyntaxKind.UnaryMinusExpression);
+                    {
+                        N(SyntaxKind.MinusToken);
+                        N(SyntaxKind.TypeCastExpression);
+                        {
+                            N(SyntaxKind.IdentifierName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "b");
+                            }
+                            N(SyntaxKind.ColonColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                    }
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParseTypeDeclarationStatementWithPow()
+        {
+            ;
+            UsingStatement("local a = b ^ b :: T");
+
+            N(SyntaxKind.LocalVariableDeclarationStatement);
+            {
+                N(SyntaxKind.LocalKeyword);
+                N(SyntaxKind.LocalDeclarationName);
+                {
+                    N(SyntaxKind.IdentifierName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "a");
+                    }
+                }
+                N(SyntaxKind.EqualsValuesClause);
+                {
+                    N(SyntaxKind.EqualsToken);
+                    N(SyntaxKind.ExponentiateExpression);
+                    {
+                        N(SyntaxKind.IdentifierName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "b");
+                        }
+                        N(SyntaxKind.HatToken);
+                        N(SyntaxKind.TypeCastExpression);
+                        {
+                            N(SyntaxKind.IdentifierName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "b");
+                            }
+                            N(SyntaxKind.ColonColonToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                    }
+                }
+            }
+            EOF();
+        }
+    }
 }
