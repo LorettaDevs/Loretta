@@ -1,6 +1,8 @@
 # Loretta
 A C# (G)Lua lexer, parser, code analysis, transformation and code generation toolkit.
 
+[![Discord](https://img.shields.io/discord/946128539583914074?logo=discord&style=for-the-badge)](https://discord.gg/ExZxSxe7xQ)
+
 ![Repo Stats](https://repobeats.axiom.co/api/embed/089a9f7dae190ea8dd0fc0750abbebceea3e86dd.svg "Repobeats analytics image")
 
 This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax of Lua](https://www.lua.org/manual/5.4/manual.html#9) with a few extensions:
