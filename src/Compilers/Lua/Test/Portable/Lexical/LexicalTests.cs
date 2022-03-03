@@ -131,7 +131,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                                  .Where(k => SyntaxFacts.IsToken(k) || SyntaxFacts.IsTrivia(k));
 
             var testedTokenKinds = LuaSyntaxOptions.AllPresets.SelectMany(LexicalTestData.GetTokens)
-                                                              .Concat(LexicalTestData.GetTrivia())
+                                                              .Concat(LuaSyntaxOptions.AllPresets.SelectMany(LexicalTestData.GetTrivia))
                                                               .Select(t => t.Kind);
 
             var untestedTokenKinds = new SortedSet<SyntaxKind>(tokenKinds);
@@ -245,7 +245,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 #else
             from options in LuaSyntaxOptions.AllPresets
 #endif
-            from trivia in LexicalTestData.GetTrivia()
+            from trivia in LexicalTestData.GetTrivia(options)
             select new object[] { options, trivia };
 
         public static IEnumerable<object[]> GetTokenPairsData() =>

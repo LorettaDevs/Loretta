@@ -353,15 +353,24 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case '/':
                     TextWindow.AdvanceChar();
-                    if (TextWindow.PeekChar() == '=')
+
+                    switch (TextWindow.PeekChar())
                     {
-                        TextWindow.AdvanceChar();
-                        info.Kind = SyntaxKind.SlashEqualsToken;
-                    }
-                    else
-                    {
-                        info.Kind = SyntaxKind.SlashToken;
-                    }
+                        case '=':
+                            TextWindow.AdvanceChar();
+                            info.Kind = SyntaxKind.SlashEqualsToken;
+                            break;
+
+                        case '/' when _options.SyntaxOptions.AcceptFloorDivision:
+                            TextWindow.AdvanceChar();
+                            info.Kind = SyntaxKind.SlashSlashToken;
+                            break;
+
+                        default:
+                            info.Kind = SyntaxKind.SlashToken;
+                            break;
+                    };
+
                     break;
 
                 case '^':
@@ -720,13 +729,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         }
                         break;
 
-                    case '/':
+                    case '/' when _options.SyntaxOptions.AcceptCCommentSyntax:
                         if ((ch = TextWindow.PeekChar(1)) == '/')
                         {
                             ScanToEndOfLine();
-
-                            if (!_options.SyntaxOptions.AcceptCCommentSyntax)
-                                AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
 
                             var text = TextWindow.GetText(false);
                             AddTrivia(SyntaxFactory.Comment(text), builder);
@@ -737,8 +743,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             ScanMultiLineCComment(out var isTerminated);
                             if (!isTerminated)
                                 AddError(ErrorCode.ERR_UnfinishedLongComment);
-                            if (!_options.SyntaxOptions.AcceptCCommentSyntax)
-                                AddError(ErrorCode.ERR_CCommentsNotSupportedInVersion);
 
                             var text = TextWindow.GetText(false);
                             AddTrivia(SyntaxFactory.Comment(text), builder);

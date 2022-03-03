@@ -361,6 +361,12 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         [Token(Text = "->")]
         MinusGreaterThanToken = 55,
+        /// <summary>
+        /// Represents the <c>//</c> token.
+        /// </summary>
+        [Token(Text = "//")]
+        [BinaryOperator(precedence: 11, FloorDivideExpression)]
+        SlashSlashToken = 56,
 
         // Big gap 53-500 (insert new fixed-text tokens here)
 
@@ -646,6 +652,9 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
         [Property(SyntaxKindProperty.OperatorTokenKind, ColonColonToken)]
         TypeCastExpression = 2086,
+        [ExtraCategories(SyntaxKindCategory.BinaryExpression)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, SlashSlashToken)]
+        FloorDivideExpression = 2112,
 
         // Expressions
         ParenthesizedExpression = 2040,

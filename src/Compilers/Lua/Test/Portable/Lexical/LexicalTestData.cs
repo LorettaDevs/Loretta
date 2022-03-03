@@ -34,6 +34,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                                   where !SyntaxFacts.IsManufacturedToken(kind, options)
                                   let text = SyntaxFacts.GetText(kind)
                                   where !string.IsNullOrEmpty(text)
+                                    && (text != "//" || options.AcceptFloorDivision)
                                   select new ShortToken(kind, text))
             {
                 yield return token;
@@ -203,43 +204,29 @@ fourth line \xFF.";
             }
         }
 
-        public static IEnumerable<ShortToken> GetTrivia()
+        public static IEnumerable<ShortToken> GetTrivia(LuaSyntaxOptions options)
         {
-            return GetSeparators().Concat(new[]
-            {
-                new ShortToken(SyntaxKind.SingleLineCommentTrivia, "-- hi"),
-                new ShortToken(SyntaxKind.SingleLineCommentTrivia, "// hi"),
-                new ShortToken(SyntaxKind.ShebangTrivia, "#!/bin/bash"),
-            });
+            foreach (var trivia in GetSeparators(options))
+                yield return trivia;
+            yield return new ShortToken(SyntaxKind.SingleLineCommentTrivia, "-- hi");
+            if (options.AcceptCCommentSyntax)
+                yield return new ShortToken(SyntaxKind.SingleLineCommentTrivia, "// hi");
+            yield return new ShortToken(SyntaxKind.ShebangTrivia, "#!/bin/bash");
         }
 
-        public static IEnumerable<ShortToken> GetSeparators()
+        public static IEnumerable<ShortToken> GetSeparators(LuaSyntaxOptions options)
         {
-            return new[]
+            foreach (var ws in new[] { " ", "  ", "\t" })
+                yield return new ShortToken(SyntaxKind.WhitespaceTrivia, ws);
+            foreach (var eol in new[] { "\r", "\n", "\r\n" })
+                yield return new ShortToken(SyntaxKind.EndOfLineTrivia, eol);
+            if (options.AcceptCCommentSyntax)
             {
-                new ShortToken(SyntaxKind.WhitespaceTrivia, " "),
-                new ShortToken(SyntaxKind.WhitespaceTrivia, "  "),
-                new ShortToken(SyntaxKind.WhitespaceTrivia, "\t"),
-                new ShortToken(SyntaxKind.EndOfLineTrivia, "\r"),
-                new ShortToken(SyntaxKind.EndOfLineTrivia, "\n"),
-                new ShortToken(SyntaxKind.EndOfLineTrivia, "\r\n"),
-                new ShortToken(SyntaxKind.MultiLineCommentTrivia, "/**/"),
-                new ShortToken(SyntaxKind.MultiLineCommentTrivia, @"/*
-aaa
-*/"),
-                new ShortToken(SyntaxKind.MultiLineCommentTrivia, "--[[]]"),
-                new ShortToken(SyntaxKind.MultiLineCommentTrivia, @"--[[
-aaa
-]]"),
-                new ShortToken(SyntaxKind.MultiLineCommentTrivia, "--[=[]=]"),
-                new ShortToken(SyntaxKind.MultiLineCommentTrivia, @"--[=[
-aaa
-]=]"),
-                new ShortToken(SyntaxKind.MultiLineCommentTrivia, "--[====[]====]"),
-                new ShortToken(SyntaxKind.MultiLineCommentTrivia, @"--[====[
-aaa
-]====]"),
-            };
+                foreach (var comment in new[] { "/**/", "/*\naaa\n*/" })
+                    yield return new ShortToken(SyntaxKind.MultiLineCommentTrivia, comment);
+            }
+            foreach (var comment in new[] { "--[[]]", "--[[\naaa\n]]", "--[=[]=]", "--[=[\naaa\n]=]", "--[====[]====]", "--[====[\naaa\n]====]" })
+                yield return new ShortToken(SyntaxKind.MultiLineCommentTrivia, comment);
         }
 
         public static IEnumerable<(ShortToken tokenA, ShortToken tokenB)> GetTokenPairs(LuaSyntaxOptions options) =>
@@ -253,7 +240,7 @@ aaa
             from tokenA in GetTokens(options)
             from tokB in GetTokens(options)
             where !SyntaxFacts.RequiresSeparator(tokenA.Kind, tokenA.Text, tokB.Kind, tokB.Text)
-            from sep in GetSeparators()
+            from sep in GetSeparators(options)
             where !SyntaxFacts.RequiresSeparator(tokenA.Kind, tokenA.Text, sep.Kind, sep.Text) && !SyntaxFacts.RequiresSeparator(sep.Kind, sep.Text, tokB.Kind, tokB.Text)
             let separator = sep.WithSpan(new TextSpan(tokenA.Span.End, sep.Span.Length))
             let tokenB = tokB.WithSpan(new TextSpan(separator.Span.End, tokB.Span.Length))
