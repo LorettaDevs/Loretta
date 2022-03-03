@@ -365,7 +365,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// Represents the <c>//</c> token.
         /// </summary>
         [Token(Text = "//")]
-        [BinaryOperator(precedence: 1, FloorDivideExpression)]
+        [BinaryOperator(precedence: 11, FloorDivideExpression)]
         SlashSlashToken = 56,
 
         // Big gap 53-500 (insert new fixed-text tokens here)
