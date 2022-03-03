@@ -1,60 +1,8 @@
 ### Added
-- The following were added as a part of implementing typed-luau:
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TableBasedTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax`;
-	- `Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax`;
-	- `LuaSyntaxOptions.AcceptTypedLua`;
+- Added `LuaSyntaxOptions.Luau`.
 
 ### Changed
-- [Breaking] The following were changed as a result of implementing typed lua syntax:
-	- `LuaSyntaxOptions`'s constructor and `With` were changed to accept a bool for `AcceptTypedLua`;
-	- The following were changed to accept a `TypeBindingSyntax`:
-		- `AnonymousFunctionExpressionSyntax.Update`;
-		- `FunctionDeclarationStatementSyntax.Update`;
-		- `LocalDeclarationNameSyntax.Update`;
-		- `LocalFunctionDeclarationStatementSyntax.Update`;
-		- `NamedParameterSyntax.Update`;
-		- `VarArgParameterSyntax.Update`;
-		- `SyntaxFactory.AnonymousFunctionExpression`;
-		- `SyntaxFactory.FunctionDeclarationStatement`;
-		- `SyntaxFactory.LocalDeclarationName`;
-		- `SyntaxFactory.LocalFunctionDeclarationStatement`;
-		- `SyntaxFactory.VarArgParameter`.
-	- The following were changed to accept a `TypeParameterListSyntax`:
-		- `AnonymousFunctionExpressionSyntax.Update`;
-		- `FunctionDeclarationStatementSyntax.Update`;
-		- `LocalFunctionDeclarationStatementSyntax.Update`;
-		- `SyntaxFactory.AnonymousFunctionExpression`;
-		- `SyntaxFactory.FunctionDeclarationStatement`;
-		- `SyntaxFactory.LocalFunctionDeclarationStatement`.
-	- The following were changed to accept (or be) a `TypedIdentifierNameSyntax`:
-		- `GenericForStatementSyntax.AddIdentifiers`;
-		- `GenericForStatementSyntax.Identifiers`;
-		- `GenericForStatementSyntax.Update`;
-		- `GenericForStatementSyntax.WithIdentifiers`;
-		- `NumericForStatementSyntax.Identifier`;
-		- `NumericForStatementSyntax.Update`;
-		- `NumericForStatementSyntax.WithIdentifier`;
-		- `SyntaxFactory.GenericForStatement`;
-		- `SyntaxFactory.NumericForStatement`;
+- Changed `LuaSyntaxOptions.ToString` to return `"Luau"` for the luau preset.
+
+### Fixed
+- Fixed a bug with incremental parsing where a `System.InvalidCastException` was thrown from `Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax.Blender.Reader.CanReuse`.

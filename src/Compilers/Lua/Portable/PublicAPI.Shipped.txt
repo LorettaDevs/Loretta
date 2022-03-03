@@ -1677,6 +1677,7 @@ static readonly Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.Lua53 -> Loretta.CodeA
 static readonly Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.Lua54 -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
 static readonly Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.LuaJIT20 -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
 static readonly Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.LuaJIT21 -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
+static readonly Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.Luau -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
 static readonly Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.Roblox -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitIntoStructuredTrivia.get -> bool
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitList(Loretta.CodeAnalysis.SyntaxTokenList list) -> Loretta.CodeAnalysis.SyntaxTokenList
