@@ -648,6 +648,7 @@
         <Kind Name="NotEqualsExpression" />
         <Kind Name="RightShiftExpression" />
         <Kind Name="SubtractExpression" />
+        <Kind Name="FloorDivideExpression" />
         <Field Name="Left" Type="ExpressionSyntax">
             <PropertyComment>
                 <summary>The expression on the left side of the operator.</summary>
@@ -680,6 +681,7 @@
             <Kind Name="StarToken" />
             <Kind Name="TildeEqualsToken" />
             <Kind Name="TildeToken" />
+            <Kind Name="SlashSlashToken" />
         </Field>
         <Field Name="Right" Type="ExpressionSyntax">
             <PropertyComment>

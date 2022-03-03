@@ -353,15 +353,26 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case '/':
                     TextWindow.AdvanceChar();
-                    if (TextWindow.PeekChar() == '=')
+
+                    switch(TextWindow.PeekChar())
                     {
-                        TextWindow.AdvanceChar();
-                        info.Kind = SyntaxKind.SlashEqualsToken;
-                    }
-                    else
-                    {
-                        info.Kind = SyntaxKind.SlashToken;
-                    }
+                        case '=':
+                            TextWindow.AdvanceChar();
+                            info.Kind = SyntaxKind.SlashEqualsToken;
+                            break;
+                        case '/':
+                            if (_options.SyntaxOptions.AcceptFloorDivision)
+                            {
+                                TextWindow.AdvanceChar();
+                                info.Kind = SyntaxKind.SlashSlashToken;
+                            }
+
+                            break;
+                        default:
+                            info.Kind = SyntaxKind.SlashToken;
+                            break;
+                    };
+
                     break;
 
                 case '^':
