@@ -117,7 +117,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The Luau preset.
         /// </summary>
-        public static readonly LuaSyntaxOptions Roblox = new(
+        public static readonly LuaSyntaxOptions Luau = new(
             acceptBinaryNumbers: true,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: true,
@@ -146,6 +146,12 @@ namespace Loretta.CodeAnalysis.Lua
             // Luau parses hex as a long and then converts it to a double
             hexIntegerFormat: IntegerFormats.Double,
             acceptTypedLua: true);
+
+        /// <summary>
+        /// The Luau preset.
+        /// </summary>
+        [Obsolete("Please use the Luau preset instead.")]
+        public static readonly LuaSyntaxOptions Roblox = Luau;
 
         /// <summary>
         /// The FiveM preset.
@@ -183,8 +189,7 @@ namespace Loretta.CodeAnalysis.Lua
             octalIntegerFormat: IntegerFormats.NotSupported,
             decimalIntegerFormat: IntegerFormats.NotSupported,
             hexIntegerFormat: IntegerFormats.NotSupported,
-            acceptTypedLua: true
-        );
+            acceptTypedLua: true);
 
         /// <summary>
         /// Same as <see cref="All"/> but with integer settings set
@@ -208,7 +213,7 @@ namespace Loretta.CodeAnalysis.Lua
             LuaJIT20,
             LuaJIT21,
             GMod,
-            Roblox,
+            Luau,
             FiveM,
             All,
             AllWithIntegers,
@@ -428,7 +433,6 @@ namespace Loretta.CodeAnalysis.Lua
         /// Whether to accept typed lua syntax or not
         /// </summary>
         public bool AcceptTypedLua { get; }
-
 
         /// <summary>
         /// Creates a new lua options changing the provided fields.
@@ -682,9 +686,9 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 return "GLua";
             }
-            else if (this == Roblox)
+            else if (this == Luau)
             {
-                return "Roblox";
+                return "Luau";
             }
             else if (this == FiveM)
             {
