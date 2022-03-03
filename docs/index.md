@@ -16,6 +16,7 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
 4. Luau syntax (partial):
     - Roblox compound assignment: `+=`, `-=`, `*=`, `/=`, `^=`, `%=`, `..=`;
     - If expressions: `if a then b else c` and `if a then b elseif c then d else e`;
+    - Typed lua syntax.
 5. FiveM's hash string syntax (only parsing, manual node creation currently not possible);
 6. Continue support. The following options are available:
     - No continue at all;
