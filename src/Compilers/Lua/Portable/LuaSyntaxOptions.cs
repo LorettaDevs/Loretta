@@ -281,6 +281,11 @@ namespace Loretta.CodeAnalysis.Lua
             bool acceptTypedLua,
             bool acceptFloorDivision)
         {
+            if (acceptFloorDivision && acceptCCommentSyntax)
+            {
+                throw new ArgumentException("AcceptFloorDivision and AcceptCCommentSyntax cannot be enabled simultaneously.");
+            }
+
             AcceptBinaryNumbers = acceptBinaryNumbers;
             AcceptCCommentSyntax = acceptCCommentSyntax;
             AcceptCompoundAssignment = acceptCompoundAssignment;
