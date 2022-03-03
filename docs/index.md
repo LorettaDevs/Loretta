@@ -13,8 +13,8 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
     - C style single line comment: `// ...`;
     - C style multi line comment: `/* */`;
 3. Characters accepted as part of identifiers by LuaJIT (emojis, non-rendering characters, [or basically any byte above `127`/`0x7F`](https://github.com/LuaJIT/LuaJIT/blob/e9af1abec542e6f9851ff2368e7f196b6382a44c/src/lj_char.c#L10-L13));
-4. Luau syntax (partial):
-    - Roblox compound assignment: `+=`, `-=`, `*=`, `/=`, `^=`, `%=`, `..=`;
+4. Luau (Roblox Lua) syntax (partial):
+    - Compound assignment: `+=`, `-=`, `*=`, `/=`, `^=`, `%=`, `..=`;
     - If expressions: `if a then b else c` and `if a then b elseif c then d else e`;
     - Typed lua syntax.
 5. FiveM's hash string syntax (only parsing, manual node creation currently not possible);
@@ -23,4 +23,4 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
     - Roblox's `continue` which is a contextual keyword;
     - Garry's Mod's `continue` which is a full fledged keyword.
 
-TL;DR: This supports Lua 5.1, Lua 5.2, Lua 5.3, Lua 5.4, LuaJIT 2.0, LuaJIT 2.1, FiveM, GLua and (partially) Luau/Roblox.
+TL;DR: This supports Lua 5.1, Lua 5.2, Lua 5.3, Lua 5.4, LuaJIT 2.0, LuaJIT 2.1, FiveM, GLua and (partially) Luau (Roblox Lua).
