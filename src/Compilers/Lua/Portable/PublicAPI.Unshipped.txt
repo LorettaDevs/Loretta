@@ -1,1 +1,2 @@
 ﻿#nullable enable
+static readonly Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.Luau -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
