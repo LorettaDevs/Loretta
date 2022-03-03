@@ -2,6 +2,9 @@
 A C# (G)Lua lexer, parser, code analysis, transformation and code generation toolkit.
 
 [![Discord](https://img.shields.io/discord/946128539583914074?logo=discord&style=for-the-badge)](https://discord.gg/ExZxSxe7xQ)
+[![Loretta.CodeAnalysis.Lua](https://img.shields.io/nuget/v/Loretta.CodeAnalysis.Lua?label=Stable&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua)
+[![Loretta.CodeAnalysis.Lua](https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua?label=Preview&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua/latest)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/GGG-KILLER/Loretta/Build%20and%20Test?logo=github&style=for-the-badge)](https://github.com/GGG-KILLER/Loretta/actions/workflows/build-and-test.yml)
 
 ![Repo Stats](https://repobeats.axiom.co/api/embed/089a9f7dae190ea8dd0fc0750abbebceea3e86dd.svg "Repobeats analytics image")
 
