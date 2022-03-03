@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `LuaSyntaxOptions.Luau`.
 
 ### Changed
-- Marked `LuaSyntaxOptions.Roblox` preset as obsolete in favor of `LuaSyntaxOptions.Luau`.
 - Changed `LuaSyntaxOptions.ToString` to return `"Luau"` for the luau preset.
 
 ## v0.2.9-beta.3

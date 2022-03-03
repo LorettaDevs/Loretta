@@ -150,7 +150,6 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The Luau preset.
         /// </summary>
-        [Obsolete("Please use the Luau preset instead.")]
         public static readonly LuaSyntaxOptions Roblox = Luau;
 
         /// <summary>
