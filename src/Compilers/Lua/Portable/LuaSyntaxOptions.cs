@@ -119,7 +119,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The Luau preset.
         /// </summary>
-        public static readonly LuaSyntaxOptions Roblox = new(
+        public static readonly LuaSyntaxOptions Luau = new(
             acceptBinaryNumbers: true,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: true,
@@ -149,6 +149,11 @@ namespace Loretta.CodeAnalysis.Lua
             hexIntegerFormat: IntegerFormats.Double,
             acceptTypedLua: true,
             acceptFloorDivision: false);
+
+        /// <summary>
+        /// The Luau preset.
+        /// </summary>
+        public static readonly LuaSyntaxOptions Roblox = Luau;
 
         /// <summary>
         /// The FiveM preset.
@@ -190,6 +195,7 @@ namespace Loretta.CodeAnalysis.Lua
             acceptFloorDivision: true
         );
 
+
         /// <summary>
         /// Same as <see cref="All"/> but with integer settings set
         /// to <see cref="IntegerFormats.Int64"/>.
@@ -212,7 +218,7 @@ namespace Loretta.CodeAnalysis.Lua
             LuaJIT20,
             LuaJIT21,
             GMod,
-            Roblox,
+            Luau,
             FiveM,
             All,
             AllWithIntegers,
@@ -440,7 +446,6 @@ namespace Loretta.CodeAnalysis.Lua
         /// Whether to accept floor division or not
         /// </summary>
         public bool AcceptFloorDivision { get; }
-
 
         /// <summary>
         /// Creates a new lua options changing the provided fields.
@@ -703,9 +708,9 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 return "GLua";
             }
-            else if (this == Roblox)
+            else if (this == Luau)
             {
-                return "Roblox";
+                return "Luau";
             }
             else if (this == FiveM)
             {

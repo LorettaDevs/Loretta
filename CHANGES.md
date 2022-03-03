@@ -6,8 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## v0.2.9
+## v0.2.9-beta.4
 ### Added
+- Added `LuaSyntaxOptions.Luau`.
+
+### Changed
+- Changed `LuaSyntaxOptions.ToString` to return `"Luau"` for the luau preset.
+
+### Fixed
+- Fixed a bug with incremental parsing where a `System.InvalidCastException` was thrown from `Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax.Blender.Reader.CanReuse`.
+
+## v0.2.9-beta.3
+### Added
+- Typed Lua Support.
 - The following were added as a part of implementing typed-luau:
 	- `Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax`;
 	- `Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax`;
@@ -33,12 +44,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax`;
 	- `Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax`;
 	- `Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax`;
-	- `LuaSyntaxOptions.AcceptTypedLua`;
+	- `LuaSyntaxOptions.AcceptTypedLua`.
 
 ### Changed
-- [Breaking] `GenericForStatementSyntax.Identifiers`, `GenericForStatementSyntax.Update`, `GenericForStatementSyntax.WithIdentifiers`, `GenericForStatementSyntax.AddIdentifiers`, `NumericForStatementSyntax.Identifier`, `NumericForStatementSyntax.Update` and `NumericForStatementSyntax.WithIdentifier` were changed to the `TypedIdentifierNameSyntax`.
-- [Breaking] `LuaSyntaxOptions`'s constructor and `With` were changed to accept a bool for the AcceptTypedLua.
-- [Breaking] `AnonymousFunctionExpressionSyntax.Update`, `FunctionDeclarationStatementSyntax.Update`, `LocalDeclarationNameSyntax.Update` and `LocalFunctionDeclarationStatementSyntax.Update` were changed to accept the type bindings.
+- [Breaking] The following were changed as a result of implementing typed lua syntax:
+	- `LuaSyntaxOptions`'s constructor and `With` were changed to accept a bool for `AcceptTypedLua`;
+	- The following were changed to accept a `TypeBindingSyntax`:
+		- `AnonymousFunctionExpressionSyntax.Update`;
+		- `FunctionDeclarationStatementSyntax.Update`;
+		- `LocalDeclarationNameSyntax.Update`;
+		- `LocalFunctionDeclarationStatementSyntax.Update`;
+		- `NamedParameterSyntax.Update`;
+		- `VarArgParameterSyntax.Update`;
+		- `SyntaxFactory.AnonymousFunctionExpression`;
+		- `SyntaxFactory.FunctionDeclarationStatement`;
+		- `SyntaxFactory.LocalDeclarationName`;
+		- `SyntaxFactory.LocalFunctionDeclarationStatement`;
+		- `SyntaxFactory.VarArgParameter`.
+	- The following were changed to accept a `TypeParameterListSyntax`:
+		- `AnonymousFunctionExpressionSyntax.Update`;
+		- `FunctionDeclarationStatementSyntax.Update`;
+		- `LocalFunctionDeclarationStatementSyntax.Update`;
+		- `SyntaxFactory.AnonymousFunctionExpression`;
+		- `SyntaxFactory.FunctionDeclarationStatement`;
+		- `SyntaxFactory.LocalFunctionDeclarationStatement`.
+	- The following were changed to accept (or be) a `TypedIdentifierNameSyntax`:
+		- `GenericForStatementSyntax.AddIdentifiers`;
+		- `GenericForStatementSyntax.Identifiers`;
+		- `GenericForStatementSyntax.Update`;
+		- `GenericForStatementSyntax.WithIdentifiers`;
+		- `NumericForStatementSyntax.Identifier`;
+		- `NumericForStatementSyntax.Update`;
+		- `NumericForStatementSyntax.WithIdentifier`;
+		- `SyntaxFactory.GenericForStatement`;
+		- `SyntaxFactory.NumericForStatement`.
 
 ## v0.2.9-beta.2
 ### Added

@@ -218,7 +218,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 // don't reuse nodes or tokens with skipped text or diagnostics attached to them
                 if (nodeOrToken.ContainsDiagnostics ||
-                    (nodeOrToken.IsToken && ((SyntaxTrivia) nodeOrToken.AsToken().Node).ContainsSkippedText && nodeOrToken.Parent.ContainsDiagnostics))
+                    (nodeOrToken.IsToken && ((LuaSyntaxNode) nodeOrToken.AsToken().Node).ContainsSkippedText && nodeOrToken.Parent.ContainsDiagnostics))
                 {
                     return false;
                 }
