@@ -192,8 +192,7 @@ namespace Loretta.CodeAnalysis.Lua
             decimalIntegerFormat: IntegerFormats.NotSupported,
             hexIntegerFormat: IntegerFormats.NotSupported,
             acceptTypedLua: true,
-            acceptFloorDivision: true
-        );
+            acceptFloorDivision: false);
 
 
         /// <summary>
