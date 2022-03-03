@@ -513,3 +513,4 @@ virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeParameter(Lo
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitUnionType(Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitVariadicTypePack(Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax! node) -> TResult?
+static readonly Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.Luau -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
