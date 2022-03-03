@@ -13,7 +13,8 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
         {
             var untestedKinds = new[]
             {
-                SyntaxKind.TypeCastExpression
+                SyntaxKind.TypeCastExpression,
+                SyntaxKind.FloorDivideExpression,
             };
             return from leftKind in SyntaxFacts.GetBinaryExpressionKinds()
                                                .Except(untestedKinds)

@@ -234,21 +234,6 @@ local num4 = 0xf_f
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        public void Lexer_EmitsDiagnosticWhen_CCommentIsFound_And_LuaSyntaxOptionsAcceptCCommentsIsFalse()
-        {
-            const string source = @"// hi
-/* hi */";
-            ParseAndValidate(source, LuaSyntaxOptions.All.With(acceptCCommentSyntax: false),
-                // (1,1): error LUA0012: C comments are not supported in this lua version
-                // // hi
-                Diagnostic(ErrorCode.ERR_CCommentsNotSupportedInVersion, "// hi").WithLocation(1, 1),
-                // (2,1): error LUA0012: C comments are not supported in this lua version
-                // /* hi */
-                Diagnostic(ErrorCode.ERR_CCommentsNotSupportedInVersion, "/* hi */").WithLocation(2, 1));
-        }
-
-        [Fact]
-        [Trait("Category", "Lexer/Diagnostics")]
         public void Lexer_EmitsDiagnosticWhen_IdentifiersWithCharactersAbove0x7FAreFound_And_LuaSyntaxOptionsUseLuajitIdentifierRulesIsFalse()
         {
             const string srcText = "local 🅱 = 1\r\n"
