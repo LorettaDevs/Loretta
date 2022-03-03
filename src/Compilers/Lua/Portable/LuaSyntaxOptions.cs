@@ -201,10 +201,12 @@ namespace Loretta.CodeAnalysis.Lua
         /// to <see cref="IntegerFormats.Int64"/>.
         /// </summary>
         public static readonly LuaSyntaxOptions AllWithIntegers = All.With(
+            acceptCCommentSyntax: false,
             binaryIntegerFormat: IntegerFormats.Int64,
             octalIntegerFormat: IntegerFormats.Int64,
             decimalIntegerFormat: IntegerFormats.Int64,
-            hexIntegerFormat: IntegerFormats.Int64);
+            hexIntegerFormat: IntegerFormats.Int64,
+            acceptFloorDivision: true);
 
         /// <summary>
         /// All presets that are preconfigured in <see cref="LuaSyntaxOptions"/>.
