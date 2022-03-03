@@ -41,5 +41,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body_path: LA
+          body_path: LATESTCHANGES.md
           prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
