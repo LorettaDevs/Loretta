@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## v0.2.9-beta.3
 ### Added
 - Typed Lua Support.
 - The following were added as a part of implementing typed-luau:
@@ -32,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax`;
 	- `Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax`;
 	- `Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax`;
-	- `LuaSyntaxOptions.AcceptTypedLua`;
+	- `LuaSyntaxOptions.AcceptTypedLua`.
 
 ### Changed
 - [Breaking] The following were changed as a result of implementing typed lua syntax:
@@ -65,7 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 		- `NumericForStatementSyntax.Update`;
 		- `NumericForStatementSyntax.WithIdentifier`;
 		- `SyntaxFactory.GenericForStatement`;
-		- `SyntaxFactory.NumericForStatement`;
+		- `SyntaxFactory.NumericForStatement`.
 
 ## v0.2.9-beta.2
 ### Added

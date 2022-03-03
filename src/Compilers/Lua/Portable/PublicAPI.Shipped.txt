@@ -6,6 +6,7 @@ abstract Loretta.CodeAnalysis.Lua.LuaSyntaxTree.Options.get -> Loretta.CodeAnaly
 abstract Loretta.CodeAnalysis.Lua.LuaSyntaxTree.TryGetRoot(out Loretta.CodeAnalysis.Lua.LuaSyntaxNode? root) -> bool
 abstract Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax.Name.get -> Loretta.CodeAnalysis.SyntaxToken
 abstract Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+abstract Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax.TypeArgumentList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax?
 Loretta.CodeAnalysis.Lua.ContinueType
 Loretta.CodeAnalysis.Lua.ContinueType.ContextualKeyword = 2 -> Loretta.CodeAnalysis.Lua.ContinueType
 Loretta.CodeAnalysis.Lua.ContinueType.Keyword = 1 -> Loretta.CodeAnalysis.Lua.ContinueType
@@ -85,6 +86,7 @@ Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptInvalidEscapes.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptLocalVariableAttributes.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptOctalNumbers.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptShebang.get -> bool
+Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptTypedLua.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptUnderscoreInNumberLiterals.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptUnicodeEscape.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptWhitespaceEscape.get -> bool
@@ -93,10 +95,10 @@ Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.ContinueType.get -> Loretta.CodeAnalys
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.DecimalIntegerFormat.get -> Loretta.CodeAnalysis.Lua.IntegerFormats
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.Equals(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions? other) -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.HexIntegerFormat.get -> Loretta.CodeAnalysis.Lua.IntegerFormats
-Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.LuaSyntaxOptions(bool acceptBinaryNumbers, bool acceptCCommentSyntax, bool acceptCompoundAssignment, bool acceptEmptyStatements, bool acceptCBooleanOperators, bool acceptGoto, bool acceptHexEscapesInStrings, bool acceptHexFloatLiterals, bool acceptOctalNumbers, bool acceptShebang, bool acceptUnderscoreInNumberLiterals, bool useLuaJitIdentifierRules, bool acceptBitwiseOperators, bool acceptWhitespaceEscape, bool acceptUnicodeEscape, Loretta.CodeAnalysis.Lua.ContinueType continueType, bool acceptIfExpression, bool acceptHashStrings, bool acceptInvalidEscapes, bool acceptLocalVariableAttributes, Loretta.CodeAnalysis.Lua.IntegerFormats binaryIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats octalIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats decimalIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats hexIntegerFormat) -> void
+Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.LuaSyntaxOptions(bool acceptBinaryNumbers, bool acceptCCommentSyntax, bool acceptCompoundAssignment, bool acceptEmptyStatements, bool acceptCBooleanOperators, bool acceptGoto, bool acceptHexEscapesInStrings, bool acceptHexFloatLiterals, bool acceptOctalNumbers, bool acceptShebang, bool acceptUnderscoreInNumberLiterals, bool useLuaJitIdentifierRules, bool acceptBitwiseOperators, bool acceptWhitespaceEscape, bool acceptUnicodeEscape, Loretta.CodeAnalysis.Lua.ContinueType continueType, bool acceptIfExpression, bool acceptHashStrings, bool acceptInvalidEscapes, bool acceptLocalVariableAttributes, Loretta.CodeAnalysis.Lua.IntegerFormats binaryIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats octalIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats decimalIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats hexIntegerFormat, bool acceptTypedLua) -> void
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.OctalIntegerFormat.get -> Loretta.CodeAnalysis.Lua.IntegerFormats
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.UseLuaJitIdentifierRules.get -> bool
-Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Tsu.Option<bool> acceptBinaryNumbers = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCCommentSyntax = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCompoundAssignment = default(Tsu.Option<bool>), Tsu.Option<bool> acceptEmptyStatements = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCBooleanOperators = default(Tsu.Option<bool>), Tsu.Option<bool> acceptGoto = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHexEscapesInStrings = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHexFloatLiterals = default(Tsu.Option<bool>), Tsu.Option<bool> acceptOctalNumbers = default(Tsu.Option<bool>), Tsu.Option<bool> acceptShebang = default(Tsu.Option<bool>), Tsu.Option<bool> acceptUnderscoreInNumberLiterals = default(Tsu.Option<bool>), Tsu.Option<bool> useLuaJitIdentifierRules = default(Tsu.Option<bool>), Tsu.Option<bool> acceptBitwiseOperators = default(Tsu.Option<bool>), Tsu.Option<bool> acceptWhitespaceEscape = default(Tsu.Option<bool>), Tsu.Option<bool> acceptUnicodeEscape = default(Tsu.Option<bool>), Tsu.Option<Loretta.CodeAnalysis.Lua.ContinueType> continueType = default(Tsu.Option<Loretta.CodeAnalysis.Lua.ContinueType>), Tsu.Option<bool> acceptIfExpression = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHashStrings = default(Tsu.Option<bool>), Tsu.Option<bool> acceptInvalidEscapes = default(Tsu.Option<bool>), Tsu.Option<bool> acceptLocalVariableAttributes = default(Tsu.Option<bool>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> binaryIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> octalIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> decimalIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> hexIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>)) -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
+Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Tsu.Option<bool> acceptBinaryNumbers = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCCommentSyntax = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCompoundAssignment = default(Tsu.Option<bool>), Tsu.Option<bool> acceptEmptyStatements = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCBooleanOperators = default(Tsu.Option<bool>), Tsu.Option<bool> acceptGoto = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHexEscapesInStrings = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHexFloatLiterals = default(Tsu.Option<bool>), Tsu.Option<bool> acceptOctalNumbers = default(Tsu.Option<bool>), Tsu.Option<bool> acceptShebang = default(Tsu.Option<bool>), Tsu.Option<bool> acceptUnderscoreInNumberLiterals = default(Tsu.Option<bool>), Tsu.Option<bool> useLuaJitIdentifierRules = default(Tsu.Option<bool>), Tsu.Option<bool> acceptBitwiseOperators = default(Tsu.Option<bool>), Tsu.Option<bool> acceptWhitespaceEscape = default(Tsu.Option<bool>), Tsu.Option<bool> acceptUnicodeEscape = default(Tsu.Option<bool>), Tsu.Option<Loretta.CodeAnalysis.Lua.ContinueType> continueType = default(Tsu.Option<Loretta.CodeAnalysis.Lua.ContinueType>), Tsu.Option<bool> acceptIfExpression = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHashStrings = default(Tsu.Option<bool>), Tsu.Option<bool> acceptInvalidEscapes = default(Tsu.Option<bool>), Tsu.Option<bool> acceptLocalVariableAttributes = default(Tsu.Option<bool>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> binaryIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> octalIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> decimalIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> hexIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<bool> acceptTypedLua = default(Tsu.Option<bool>)) -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
 Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter
 Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.LuaSyntaxRewriter(bool visitIntoStructuredTrivia = false) -> void
 Loretta.CodeAnalysis.Lua.LuaSyntaxTree
@@ -130,15 +132,28 @@ Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.AddBodyStatements(params Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.AddParametersParameters(params Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.AddTypeParameterListNames(params Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.Body.get -> Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.EndKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.FunctionKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.Parameters.get -> Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax!
-Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.Update(Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.TypeBinding.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.TypeParameterList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.Update(Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.WithBody(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.WithEndKeyword(Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.WithFunctionKeyword(Loretta.CodeAnalysis.SyntaxToken functionKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.WithParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.WithTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.CloseBraceToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.OpenBraceToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.Type.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.Update(Loretta.CodeAnalysis.SyntaxToken openBraceToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type, Loretta.CodeAnalysis.SyntaxToken closeBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.WithCloseBraceToken(Loretta.CodeAnalysis.SyntaxToken closeBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.WithOpenBraceToken(Loretta.CodeAnalysis.SyntaxToken openBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.WithType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax.AddEqualsValuesValues(params Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax.AddVariables(params Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax!
@@ -168,6 +183,16 @@ Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.Statements.get -> Loretta.
 Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! statements, Loretta.CodeAnalysis.SyntaxToken endOfFileToken) -> Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.WithEndOfFileToken(Loretta.CodeAnalysis.SyntaxToken endOfFileToken) -> Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.WithStatements(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! statements) -> Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.AddTypeArgumentListArguments(params Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.Base.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.DotToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.IdentifierToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax! base, Loretta.CodeAnalysis.SyntaxToken dotToken, Loretta.CodeAnalysis.SyntaxToken identifierToken, Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax? typeArgumentList) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.WithBase(Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax! base) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.WithDotToken(Loretta.CodeAnalysis.SyntaxToken dotToken) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.WithIdentifierToken(Loretta.CodeAnalysis.SyntaxToken identifierToken) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.WithTypeArgumentList(Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax? typeArgumentList) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax.AssignmentOperatorToken.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax.Expression.get -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!
@@ -233,6 +258,12 @@ Loretta.CodeAnalysis.Lua.Syntax.ElseIfExpressionClauseSyntax.WithValue(Loretta.C
 Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.EqualsToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.Type.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.Update(Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.WithEqualsToken(Loretta.CodeAnalysis.SyntaxToken equalsToken) -> Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.WithType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax
 Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax.AddValues(params Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax.EqualsToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -277,40 +308,67 @@ Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.WithExpression(Lore
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.AddBodyStatements(params Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.AddParametersParameters(params Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.AddTypeParameterListNames(params Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.Body.get -> Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.EndKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.FunctionKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.Name.get -> Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.Parameters.get -> Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax!
-Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.TypeBinding.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.TypeParameterList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.WithBody(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.WithEndKeyword(Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.WithFunctionKeyword(Loretta.CodeAnalysis.SyntaxToken functionKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.WithName(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! name) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.WithParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.WithTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax
 Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax.WithName(Loretta.CodeAnalysis.SyntaxToken name) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.AddParameters(params Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.AddTypeParameterListNames(params Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.CloseParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.MinusGreaterThanToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.OpenParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.Parameters.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!>
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.ReturnType.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.TypeParameterList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> parameters, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken, Loretta.CodeAnalysis.SyntaxToken minusGreaterThanToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! returnType) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.WithCloseParenthesisToken(Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.WithMinusGreaterThanToken(Loretta.CodeAnalysis.SyntaxToken minusGreaterThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.WithOpenParenthesisToken(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.WithParameters(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> parameters) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.WithReturnType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! returnType) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.WithTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.AddBodyStatements(params Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.AddExpressions(params Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
-Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.AddIdentifiers(params Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.AddIdentifiers(params Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.Body.get -> Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.DoKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.EndKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.Expressions.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!>
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.ForKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
-Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.Identifiers.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!>
+Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.Identifiers.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!>
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.InKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
-Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken forKeyword, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!> identifiers, Loretta.CodeAnalysis.SyntaxToken inKeyword, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken forKeyword, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!> identifiers, Loretta.CodeAnalysis.SyntaxToken inKeyword, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithBody(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithDoKeyword(Loretta.CodeAnalysis.SyntaxToken doKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithEndKeyword(Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithExpressions(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithForKeyword(Loretta.CodeAnalysis.SyntaxToken forKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
-Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithIdentifiers(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!> identifiers) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithIdentifiers(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!> identifiers) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithInKeyword(Loretta.CodeAnalysis.SyntaxToken inKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax
+Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.DotDotDotToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.Identifier.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.Update(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.SyntaxToken dotDotDotToken) -> Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.WithDotDotDotToken(Loretta.CodeAnalysis.SyntaxToken dotDotDotToken) -> Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.WithIdentifier(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.Identifier.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.LeftDelimiterToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -376,28 +434,45 @@ Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.WithEndKeyword(Loretta.CodeAna
 Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.WithIfKeyword(Loretta.CodeAnalysis.SyntaxToken ifKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.WithThenKeyword(Loretta.CodeAnalysis.SyntaxToken thenKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.AmpersandToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Left.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Right.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.SyntaxToken ampersandToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.WithAmpersandToken(Loretta.CodeAnalysis.SyntaxToken ampersandToken) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.WithLeft(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.WithRight(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax
 Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax.Token.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax.Update(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax.WithToken(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax.Token.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax.Update(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax.WithToken(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax
 Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.Attribute.get -> Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax?
 Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.AttributeName.get -> string?
 Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.IdentifierName.get -> Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.Name.get -> string!
-Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName, Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax? attribute) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.TypeBinding.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName, Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax? attribute, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.WithAttribute(Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax? attribute) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.WithIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.AddBodyStatements(params Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.AddParametersParameters(params Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.AddTypeParameterListNames(params Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.Body.get -> Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.EndKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.FunctionKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.LocalKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.Name.get -> Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.Parameters.get -> Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax!
-Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken localKeyword, Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.TypeBinding.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.TypeParameterList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken localKeyword, Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithBody(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithEndKeyword(Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithFunctionKeyword(Loretta.CodeAnalysis.SyntaxToken functionKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
@@ -405,6 +480,8 @@ Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithLoca
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! name) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.WithTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax.AddNames(params Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax.EqualsValues.get -> Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax?
@@ -450,8 +527,16 @@ Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax.WithName(Loretta.CodeAn
 Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax
 Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.Identifier.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.Name.get -> string!
-Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.Update(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.TypeBinding.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.Update(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.WithIdentifier(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.QuestionToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.Type.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type, Loretta.CodeAnalysis.SyntaxToken questionToken) -> Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.WithQuestionToken(Loretta.CodeAnalysis.SyntaxToken questionToken) -> Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.WithType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.AddBodyStatements(params Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.Body.get -> Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax!
@@ -461,11 +546,11 @@ Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.EqualsToken.get -> Lor
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.FinalValue.get -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.FinalValueCommaToken.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.ForKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
-Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.Identifier.get -> Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.Identifier.get -> Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.InitialValue.get -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.StepValue.get -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax?
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.StepValueCommaToken.get -> Loretta.CodeAnalysis.SyntaxToken
-Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken forKeyword, Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifier, Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.SyntaxToken finalValueCommaToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue, Loretta.CodeAnalysis.SyntaxToken stepValueCommaToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax? stepValue, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken forKeyword, Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! identifier, Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.SyntaxToken finalValueCommaToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue, Loretta.CodeAnalysis.SyntaxToken stepValueCommaToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax? stepValue, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithBody(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithDoKeyword(Loretta.CodeAnalysis.SyntaxToken doKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithEndKeyword(Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
@@ -473,7 +558,7 @@ Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithEqualsToken(Lorett
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithFinalValue(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithFinalValueCommaToken(Loretta.CodeAnalysis.SyntaxToken finalValueCommaToken) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithForKeyword(Loretta.CodeAnalysis.SyntaxToken forKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
-Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithIdentifier(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifier) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithIdentifier(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! identifier) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithInitialValue(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.WithStepValue(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax? stepValue) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
@@ -496,6 +581,14 @@ Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.Update(Loretta.Cod
 Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.WithCloseParenthesisToken(Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.WithExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.WithOpenParenthesisToken(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.CloseParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.OpenParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.Type.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.Update(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.WithCloseParenthesisToken(Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.WithOpenParenthesisToken(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.WithType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax
 Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax.AddBodyStatements(params Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax!
@@ -520,6 +613,12 @@ Loretta.CodeAnalysis.Lua.Syntax.ReturnStatementSyntax.WithSemicolonToken(Loretta
 Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax
 Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax.Update(Loretta.CodeAnalysis.SyntaxToken name) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax.WithName(Loretta.CodeAnalysis.SyntaxToken name) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax
+Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.AddTypeArgumentListArguments(params Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.IdentifierToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.Update(Loretta.CodeAnalysis.SyntaxToken identifierToken, Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax? typeArgumentList) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.WithIdentifierToken(Loretta.CodeAnalysis.SyntaxToken identifierToken) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.WithTypeArgumentList(Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax? typeArgumentList) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax
 Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax.AddTokens(params Loretta.CodeAnalysis.SyntaxToken[]! items) -> Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax.Tokens.get -> Loretta.CodeAnalysis.SyntaxTokenList
@@ -537,6 +636,7 @@ Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax.Expression.get -> L
 Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax.WithExpression(Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.StructuredTriviaSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TableBasedTypeSyntax
 Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax
 Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax.AddFields(params Loretta.CodeAnalysis.Lua.Syntax.TableFieldSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax.CloseBraceToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -552,12 +652,136 @@ Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax.TableCons
 Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax! tableConstructor) -> Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax.WithTableConstructor(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax! tableConstructor) -> Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.TableFieldSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.CloseBracketToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.ColonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.IndexType.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.OpenBracketToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.Update(Loretta.CodeAnalysis.SyntaxToken openBracketToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! indexType, Loretta.CodeAnalysis.SyntaxToken closeBracketToken, Loretta.CodeAnalysis.SyntaxToken colonToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.ValueType.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.WithCloseBracketToken(Loretta.CodeAnalysis.SyntaxToken closeBracketToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.WithColonToken(Loretta.CodeAnalysis.SyntaxToken colonToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.WithIndexType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! indexType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.WithOpenBracketToken(Loretta.CodeAnalysis.SyntaxToken openBracketToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.WithValueType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax
+Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.ColonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.Identifier.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.Update(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.SyntaxToken colonToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.ValueType.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.WithColonToken(Loretta.CodeAnalysis.SyntaxToken colonToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.WithIdentifier(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.WithValueType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.AddElements(params Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.CloseBraceToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.Elements.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax!>
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.OpenBraceToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.Update(Loretta.CodeAnalysis.SyntaxToken openBraceToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax!> elements, Loretta.CodeAnalysis.SyntaxToken closeBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.WithCloseBraceToken(Loretta.CodeAnalysis.SyntaxToken closeBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.WithElements(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax!> elements) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.WithOpenBraceToken(Loretta.CodeAnalysis.SyntaxToken openBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.AddArguments(params Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.Arguments.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!>
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.GreaterThanToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.LessThanToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.Update(Loretta.CodeAnalysis.SyntaxToken lessThanToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> arguments, Loretta.CodeAnalysis.SyntaxToken greaterThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.WithArguments(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> arguments) -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.WithGreaterThanToken(Loretta.CodeAnalysis.SyntaxToken greaterThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.WithLessThanToken(Loretta.CodeAnalysis.SyntaxToken lessThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.ColonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.Type.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.Update(Loretta.CodeAnalysis.SyntaxToken colonToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.WithColonToken(Loretta.CodeAnalysis.SyntaxToken colonToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.WithType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.ColonColonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.Expression.get -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.Type.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression, Loretta.CodeAnalysis.SyntaxToken colonColonToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.WithColonColonToken(Loretta.CodeAnalysis.SyntaxToken colonColonToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.WithExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.WithType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.AddTypeParameterListNames(params Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.EqualsToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.ExportKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.Name.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.Type.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.TypeKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.TypeParameterList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken exportKeyword, Loretta.CodeAnalysis.SyntaxToken typeKeyword, Loretta.CodeAnalysis.SyntaxToken name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.WithEqualsToken(Loretta.CodeAnalysis.SyntaxToken equalsToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.WithExportKeyword(Loretta.CodeAnalysis.SyntaxToken exportKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.WithName(Loretta.CodeAnalysis.SyntaxToken name) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.WithType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.WithTypeKeyword(Loretta.CodeAnalysis.SyntaxToken typeKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.WithTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.IdentifierName.get -> Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.Name.get -> string!
+Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.TypeBinding.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.WithIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName) -> Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax.AddTypeArgumentListArguments(params Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax.WithTypeArgumentList(Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax? typeArgumentList) -> Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.CloseParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.Expression.get -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.OpenParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.TypeofKeyword.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.Update(Loretta.CodeAnalysis.SyntaxToken typeofKeyword, Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.WithCloseParenthesisToken(Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.WithExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.WithOpenParenthesisToken(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.WithTypeofKeyword(Loretta.CodeAnalysis.SyntaxToken typeofKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.AddTypes(params Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.CloseParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.OpenParenthesisToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.Types.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!>
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.Update(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> types, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.WithCloseParenthesisToken(Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.WithOpenParenthesisToken(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.WithTypes(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> types) -> Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.AddNames(params Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.GreaterThanToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.LessThanToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.Names.get -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!>
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.Update(Loretta.CodeAnalysis.SyntaxToken lessThanToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!> names, Loretta.CodeAnalysis.SyntaxToken greaterThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.WithGreaterThanToken(Loretta.CodeAnalysis.SyntaxToken greaterThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.WithLessThanToken(Loretta.CodeAnalysis.SyntaxToken lessThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.WithNames(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!> names) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.DotDotDotToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.EqualsType.get -> Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.Identifier.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.Update(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.SyntaxToken dotDotDotToken, Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax? equalsType) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.WithDotDotDotToken(Loretta.CodeAnalysis.SyntaxToken dotDotDotToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.WithEqualsType(Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax? equalsType) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.WithIdentifier(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax
 Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax
 Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.Operand.get -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.OperatorToken.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.Update(Loretta.CodeAnalysis.SyntaxToken operatorToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! operand) -> Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.WithOperand(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! operand) -> Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.WithOperatorToken(Loretta.CodeAnalysis.SyntaxToken operatorToken) -> Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Left.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.PipeToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Right.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.SyntaxToken pipeToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.WithLeft(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.WithPipeToken(Loretta.CodeAnalysis.SyntaxToken pipeToken) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.WithRight(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax
 Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! value) -> Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax.Value.get -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!
@@ -567,8 +791,10 @@ Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax.Update(Loretta.CodeAnalys
 Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax.VarArgToken.get -> Loretta.CodeAnalysis.SyntaxToken
 Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax.WithVarArgToken(Loretta.CodeAnalysis.SyntaxToken varArgToken) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax
-Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.Update(Loretta.CodeAnalysis.SyntaxToken varArgToken) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.TypeBinding.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.Update(Loretta.CodeAnalysis.SyntaxToken varArgToken, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.VarArgToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.WithVarArgToken(Loretta.CodeAnalysis.SyntaxToken varArgToken) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax
 Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.GreaterThanToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -580,6 +806,12 @@ Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.WithGreaterThanToken(Lor
 Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.WithIdentifier(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.WithLessThanToken(Loretta.CodeAnalysis.SyntaxToken lessThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.VariableExpressionSyntax
+Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax
+Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.DotDotDotToken.get -> Loretta.CodeAnalysis.SyntaxToken
+Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.Type.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.Update(Loretta.CodeAnalysis.SyntaxToken dotDotDotToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.WithDotDotDotToken(Loretta.CodeAnalysis.SyntaxToken dotDotDotToken) -> Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.WithType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax
 Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.AddBodyStatements(params Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax![]! items) -> Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax!
 Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.Body.get -> Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax!
@@ -604,6 +836,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.AmpersandAmpersandToken = 49 -> Loretta.Code
 Loretta.CodeAnalysis.Lua.SyntaxKind.AmpersandToken = 48 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.AndKeyword = 517 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.AnonymousFunctionExpression = 2012 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.ArrayType = 2097 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.AssignmentStatement = 2045 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.BadToken = 1000 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.BangEqualsToken = 41 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -620,6 +853,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.ColonColonToken = 52 -> Loretta.CodeAnalysis
 Loretta.CodeAnalysis.Lua.SyntaxKind.ColonToken = 18 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.CommaToken = 19 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.CompilationUnit = 3001 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.CompositeTypeName = 2095 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ConcatAssignmentStatement = 2051 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ConcatExpression = 2029 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ContinueKeyword = 516 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -645,20 +879,25 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.EndOfLineTrivia = 6 -> Loretta.CodeAnalysis.
 Loretta.CodeAnalysis.Lua.SyntaxKind.EqualsEqualsToken = 38 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.EqualsExpression = 2030 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.EqualsToken = 37 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.EqualsType = 2088 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.EqualsValuesClause = 2083 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ExclusiveOrExpression = 2079 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ExponentiateAssignmentStatement = 2052 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ExponentiateExpression = 2038 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.ExportKeyword = 524 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ExpressionKeyedTableField = 2004 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ExpressionListFunctionArgument = 2011 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ExpressionStatement = 2070 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FalseKeyword = 522 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FalseLiteralExpression = 2017 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.FalseType = 2102 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ForKeyword = 509 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FunctionCallExpression = 2041 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FunctionDeclarationStatement = 2067 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FunctionKeyword = 511 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.FunctionType = 2099 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.GenericForStatement = 2054 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.GenericTypePack = 2110 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.GotoKeyword = 515 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.GotoLabelStatement = 2069 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.GotoStatement = 2060 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -679,6 +918,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.IfExpression = 2080 -> Loretta.CodeAnalysis.
 Loretta.CodeAnalysis.Lua.SyntaxKind.IfKeyword = 505 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.IfStatement = 2057 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.InKeyword = 510 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.IntersectionType = 2106 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.LeftShiftExpression = 2078 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.LengthExpression = 2023 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.LessThanEqualsToken = 43 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -699,6 +939,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.MemberFunctionName = 2007 -> Loretta.CodeAna
 Loretta.CodeAnalysis.Lua.SyntaxKind.MethodCallExpression = 2044 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.MethodFunctionName = 2008 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.MinusEqualsToken = 24 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.MinusGreaterThanToken = 55 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.MinusToken = 23 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ModuloAssignmentStatement = 2050 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ModuloExpression = 2028 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -706,8 +947,10 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.MultiLineCommentTrivia = 4 -> Loretta.CodeAn
 Loretta.CodeAnalysis.Lua.SyntaxKind.MultiplyAssignmentStatement = 2048 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.MultiplyExpression = 2026 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.NamedParameter = 2000 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.NilableType = 2105 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.NilKeyword = 520 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.NilLiteralExpression = 2018 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.NilType = 2103 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.None = 0 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.NotEqualsExpression = 2031 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.NotKeyword = 519 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -720,12 +963,14 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.OpenParenthesisToken = 11 -> Loretta.CodeAna
 Loretta.CodeAnalysis.Lua.SyntaxKind.OrKeyword = 518 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ParameterList = 2002 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ParenthesizedExpression = 2040 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.ParenthesizedType = 2104 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.PercentEqualsToken = 32 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.PercentToken = 31 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.PipePipeToken = 51 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.PipeToken = 50 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.PlusEqualsToken = 22 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.PlusToken = 21 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.QuestionToken = 54 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.RepeatKeyword = 503 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.RepeatUntilStatement = 2056 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ReturnKeyword = 513 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -734,6 +979,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.RightShiftExpression = 2077 -> Loretta.CodeA
 Loretta.CodeAnalysis.Lua.SyntaxKind.SemicolonToken = 17 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ShebangTrivia = 2 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SimpleFunctionName = 2006 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.SimpleTypeName = 2094 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SingleLineCommentTrivia = 3 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SkippedTokensTrivia = 7 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SlashEqualsToken = 28 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -745,21 +991,39 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.StatementList = 2072 -> Loretta.CodeAnalysis
 Loretta.CodeAnalysis.Lua.SyntaxKind.StringFunctionArgument = 2009 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.StringLiteralExpression = 2015 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.StringLiteralToken = 1002 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.StringType = 2100 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SubtractAssignmentStatement = 2047 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SubtractExpression = 2025 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TableConstructorExpression = 2013 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TableConstructorFunctionArgument = 2010 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TableType = 2098 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TableTypeIndexer = 2093 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TableTypeProperty = 2092 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ThenKeyword = 506 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TildeEqualsToken = 39 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TildeToken = 53 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TrueKeyword = 521 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.TrueLiteralExpression = 2016 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TrueType = 2101 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeArgumentList = 2091 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeBinding = 2111 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeCastExpression = 2086 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeDeclarationStatement = 2087 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypedIdentifierName = 2118 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeKeyword = 523 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeofKeyword = 525 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeofType = 2096 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypePack = 2108 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeParameter = 2089 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.TypeParameterList = 2090 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.UnaryMinusExpression = 2021 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.UnionType = 2107 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.UnkeyedTableField = 2005 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.UntilKeyword = 504 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.VarArgExpression = 2019 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.VarArgParameter = 2001 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.VariableAttribute = 2084 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.VariadicTypePack = 2109 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.WhileKeyword = 502 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.WhileStatement = 2055 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.WhitespaceTrivia = 5 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -783,10 +1047,12 @@ override Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.GetHashCode() -> int
 override Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.ToString() -> string!
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.Visit(Loretta.CodeAnalysis.SyntaxNode? node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitAnonymousFunctionExpression(Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitArrayType(Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitAssignmentStatement(Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitBinaryExpression(Loretta.CodeAnalysis.Lua.Syntax.BinaryExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitBreakStatement(Loretta.CodeAnalysis.Lua.Syntax.BreakStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitCompilationUnit(Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitCompositeTypeName(Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitCompoundAssignmentStatement(Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitContinueStatement(Loretta.CodeAnalysis.Lua.Syntax.ContinueStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitDoStatement(Loretta.CodeAnalysis.Lua.Syntax.DoStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
@@ -795,20 +1061,25 @@ override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitElseClause(Loretta.Code
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitElseIfClause(Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitElseIfExpressionClause(Loretta.CodeAnalysis.Lua.Syntax.ElseIfExpressionClauseSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitEmptyStatement(Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitEqualsType(Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitEqualsValuesClause(Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitExpressionKeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.ExpressionKeyedTableFieldSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitExpressionListFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.ExpressionListFunctionArgumentSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitExpressionStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitFunctionCallExpression(Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitFunctionType(Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitGenericForStatement(Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitGenericTypePack(Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitGotoLabelStatement(Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitGotoStatement(Loretta.CodeAnalysis.Lua.Syntax.GotoStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitIdentifierKeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.IdentifierKeyedTableFieldSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitIfExpression(Loretta.CodeAnalysis.Lua.Syntax.IfExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitIfStatement(Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitIntersectionType(Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitLiteralExpression(Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitLiteralType(Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitLocalDeclarationName(Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitLocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitLocalVariableDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
@@ -817,22 +1088,39 @@ override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitMemberFunctionName(Lore
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitMethodCallExpression(Loretta.CodeAnalysis.Lua.Syntax.MethodCallExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitMethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitNamedParameter(Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitNilableType(Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitNumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitParameterList(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitParenthesizedExpression(Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitParenthesizedType(Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitRepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitReturnStatement(Loretta.CodeAnalysis.Lua.Syntax.ReturnStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitSimpleFunctionName(Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitSimpleTypeName(Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitSkippedTokensTrivia(Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitStatementList(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitStringFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTableConstructorExpression(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTableConstructorFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTableType(Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTableTypeIndexer(Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTableTypeProperty(Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeArgumentList(Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeCastExpression(Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypedIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeofType(Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypePack(Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeParameter(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitUnaryExpression(Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitUnionType(Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitUnkeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitVarArgExpression(Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitVarArgParameter(Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitVariableAttribute(Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
+override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitVariadicTypePack(Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitWhileStatement(Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax! node) -> Loretta.CodeAnalysis.SyntaxNode?
 override Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChangedSpans(Loretta.CodeAnalysis.SyntaxTree! oldTree) -> System.Collections.Generic.IList<Loretta.CodeAnalysis.Text.TextSpan>!
 override Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChanges(Loretta.CodeAnalysis.SyntaxTree! oldTree) -> System.Collections.Generic.IList<Loretta.CodeAnalysis.Text.TextChange>!
@@ -853,6 +1141,8 @@ override Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.DefaultVisit(Loretta.CodeAnaly
 override Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.Visit(Loretta.CodeAnalysis.SyntaxNode? node) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -863,6 +1153,9 @@ override Loretta.CodeAnalysis.Lua.Syntax.BreakStatementSyntax.Accept<TResult>(Lo
 override Loretta.CodeAnalysis.Lua.Syntax.BreakStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
 override Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.TypeArgumentList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax?
 override Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -883,6 +1176,8 @@ override Loretta.CodeAnalysis.Lua.Syntax.ElseIfExpressionClauseSyntax.Accept<TRe
 override Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+override Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.ExpressionKeyedTableFieldSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
@@ -897,9 +1192,13 @@ override Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.Accept<TRe
 override Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+override Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+override Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -915,8 +1214,12 @@ override Loretta.CodeAnalysis.Lua.Syntax.IfExpressionSyntax.Accept<TResult>(Lore
 override Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+override Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
@@ -937,6 +1240,8 @@ override Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax.Accept<TResult
 override Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax.Name.get -> Loretta.CodeAnalysis.SyntaxToken
 override Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -944,6 +1249,8 @@ override Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax.Accept(Loretta.Code
 override Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -953,6 +1260,9 @@ override Loretta.CodeAnalysis.Lua.Syntax.ReturnStatementSyntax.SemicolonToken.ge
 override Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax.Name.get -> Loretta.CodeAnalysis.SyntaxToken
+override Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.TypeArgumentList.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax?
 override Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
@@ -964,8 +1274,35 @@ override Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax.Accept
 override Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
+override Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
@@ -974,6 +1311,8 @@ override Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.Accept(Loretta.Co
 override Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
+override Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
+override Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor! visitor) -> void
 override Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>! visitor) -> TResult?
 override Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.SemicolonToken.get -> Loretta.CodeAnalysis.SyntaxToken
@@ -1010,8 +1349,8 @@ static Loretta.CodeAnalysis.Lua.SyntaxExtensions.NormalizeWhitespace(this Lorett
 static Loretta.CodeAnalysis.Lua.SyntaxExtensions.NormalizeWhitespace(this Loretta.CodeAnalysis.SyntaxTriviaList list, string! indentation, bool elasticTrivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
 static Loretta.CodeAnalysis.Lua.SyntaxExtensions.ToSyntaxTriviaList(this System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! sequence) -> Loretta.CodeAnalysis.SyntaxTriviaList
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression() -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression(Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression(Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword) -> Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AreEquivalent(Loretta.CodeAnalysis.SyntaxNode? oldNode, Loretta.CodeAnalysis.SyntaxNode? newNode, bool topLevel) -> bool
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AreEquivalent(Loretta.CodeAnalysis.SyntaxNode? oldNode, Loretta.CodeAnalysis.SyntaxNode? newNode, System.Func<Loretta.CodeAnalysis.Lua.SyntaxKind, bool>? ignoreChildNode = null) -> bool
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AreEquivalent(Loretta.CodeAnalysis.SyntaxToken oldToken, Loretta.CodeAnalysis.SyntaxToken newToken) -> bool
@@ -1021,6 +1360,8 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.AreEquivalent<TNode>(Loretta.CodeA
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AreEquivalent<TNode>(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> oldList, Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> newList, System.Func<Loretta.CodeAnalysis.Lua.SyntaxKind, bool>? ignoreChildNode = null) -> bool
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AreEquivalent<TNode>(Loretta.CodeAnalysis.SyntaxList<TNode!> oldList, Loretta.CodeAnalysis.SyntaxList<TNode!> newList, bool topLevel) -> bool
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AreEquivalent<TNode>(Loretta.CodeAnalysis.SyntaxList<TNode!> oldList, Loretta.CodeAnalysis.SyntaxList<TNode!> newList, System.Func<Loretta.CodeAnalysis.Lua.SyntaxKind, bool>? ignoreChildNode = null) -> bool
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.ArrayType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.ArrayType(Loretta.CodeAnalysis.SyntaxToken openBraceToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type, Loretta.CodeAnalysis.SyntaxToken closeBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AssignmentStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax!> variables, Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax! equalsValues, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AssignmentStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax!> variables, Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax! equalsValues) -> Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.AssignmentStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax!> variables, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> values) -> Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax!
@@ -1033,6 +1374,10 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.CarriageReturnLineFeed.get -> Lore
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Comment(string! text) -> Loretta.CodeAnalysis.SyntaxTrivia
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.CompilationUnit(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! statements, Loretta.CodeAnalysis.SyntaxToken endOfFileToken) -> Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.CompilationUnit(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax? statements = null) -> Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.CompositeTypeName(Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax! base, Loretta.CodeAnalysis.SyntaxToken dotToken, Loretta.CodeAnalysis.SyntaxToken identifierToken, Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax? typeArgumentList) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.CompositeTypeName(Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax! base, Loretta.CodeAnalysis.SyntaxToken identifierToken, Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax? typeArgumentList) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.CompositeTypeName(Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax! base, Loretta.CodeAnalysis.SyntaxToken identifierToken) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.CompositeTypeName(Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax! base, string! identifierToken) -> Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.CompoundAssignmentStatement(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax! variable, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.CompoundAssignmentStatement(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax! variable, Loretta.CodeAnalysis.SyntaxToken assignmentOperatorToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ContinueStatement() -> Loretta.CodeAnalysis.Lua.Syntax.ContinueStatementSyntax!
@@ -1059,6 +1404,8 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.ElseIfExpressionClause(Loretta.Cod
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.EmptyStatement() -> Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.EmptyStatement(Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.EndOfLine(string! text) -> Loretta.CodeAnalysis.SyntaxTrivia
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.EqualsType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.EqualsType(Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.EqualsValuesClause(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> values) -> Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.EqualsValuesClause(Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> values) -> Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ExpressionKeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! key, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! value) -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionKeyedTableFieldSyntax!
@@ -1068,12 +1415,18 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.ExpressionListFunctionArgument(Lor
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ExpressionStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ExpressionStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionCallExpression(Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax! expression, Loretta.CodeAnalysis.Lua.Syntax.FunctionArgumentSyntax! argument) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! name) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!> identifiers, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!> identifiers, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SyntaxToken forKeyword, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax!> identifiers, Loretta.CodeAnalysis.SyntaxToken inKeyword, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionType(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! returnType) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionType(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> parameters, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken, Loretta.CodeAnalysis.SyntaxToken minusGreaterThanToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! returnType) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! returnType) -> Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!> identifiers, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!> identifiers, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SyntaxToken forKeyword, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!> identifiers, Loretta.CodeAnalysis.SyntaxToken inKeyword, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> expressions, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericTypePack(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.SyntaxToken dotDotDotToken) -> Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericTypePack(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericTypePack(string! identifier) -> Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.GotoLabelStatement(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.GotoLabelStatement(Loretta.CodeAnalysis.SyntaxToken leftDelimiterToken, Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.SyntaxToken rightDelimiterToken, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.GotoLabelStatement(string! identifier) -> Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax!
@@ -1097,6 +1450,8 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.IfExpression(Loretta.CodeAnalysis.
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.IfStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax!> elseIfClauses, Loretta.CodeAnalysis.Lua.Syntax.ElseClauseSyntax? elseClause) -> Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.IfStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition) -> Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.IfStatement(Loretta.CodeAnalysis.SyntaxToken ifKeyword, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition, Loretta.CodeAnalysis.SyntaxToken thenKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax!> elseIfClauses, Loretta.CodeAnalysis.Lua.Syntax.ElseClauseSyntax? elseClause, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.IntersectionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.IntersectionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.SyntaxToken ampersandToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LineFeed.get -> Loretta.CodeAnalysis.SyntaxTrivia
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.List<TNode>() -> Loretta.CodeAnalysis.SyntaxList<TNode!>
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.List<TNode>(System.Collections.Generic.IEnumerable<TNode!>! nodes) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
@@ -1111,12 +1466,14 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, string! valu
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralExpression(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralExpression(Loretta.CodeAnalysis.Lua.SyntaxKind kind) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalDeclarationName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName, Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax? attribute) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralType(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralType(Loretta.CodeAnalysis.Lua.SyntaxKind kind) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalDeclarationName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName, Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax? attribute, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalDeclarationName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalDeclarationName(string! identifierName) -> Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! name) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken localKeyword, Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken localKeyword, Loretta.CodeAnalysis.SyntaxToken functionKeyword, Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! parameters, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(string! name) -> Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalVariableDeclarationStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!> names, Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax? equalsValues) -> Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalVariableDeclarationStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax!> names, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!> values) -> Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax!
@@ -1135,18 +1492,23 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.MethodFunctionName(Loretta.CodeAna
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.MethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax! baseName, Loretta.CodeAnalysis.SyntaxToken name) -> Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.MissingToken(Loretta.CodeAnalysis.Lua.SyntaxKind kind) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.MissingToken(Loretta.CodeAnalysis.SyntaxTriviaList leading, Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.NamedParameter(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.NamedParameter(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.NamedParameter(string! identifier) -> Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.NilableType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type, Loretta.CodeAnalysis.SyntaxToken questionToken) -> Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.NilableType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.NodeOrTokenList() -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.NodeOrTokenList(params Loretta.CodeAnalysis.SyntaxNodeOrToken[]! nodesAndTokens) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.NodeOrTokenList(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxNodeOrToken>! nodesAndTokens) -> Loretta.CodeAnalysis.SyntaxNodeOrTokenList
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifier, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax? stepValue, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifier, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.SyntaxToken forKeyword, Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifier, Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.SyntaxToken finalValueCommaToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue, Loretta.CodeAnalysis.SyntaxToken stepValueCommaToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax? stepValue, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(string! identifier, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! identifier, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax? stepValue, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! identifier, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.SyntaxToken forKeyword, Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! identifier, Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.SyntaxToken finalValueCommaToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue, Loretta.CodeAnalysis.SyntaxToken stepValueCommaToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax? stepValue, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParameterList(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax!> parameters = default(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax!>)) -> Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParameterList(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax!> parameters, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParenthesizedExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParenthesizedExpression(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParenthesizedType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParenthesizedType(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseCompilationUnit(Loretta.CodeAnalysis.Text.SourceText! text, Loretta.CodeAnalysis.Lua.LuaParseOptions? options = null) -> Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseCompilationUnit(string! text, int offset = 0, Loretta.CodeAnalysis.Lua.LuaParseOptions? options = null) -> Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseExpression(Loretta.CodeAnalysis.Text.SourceText! text, Loretta.CodeAnalysis.Lua.LuaParseOptions? options = null, bool consumeFullText = true) -> Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax!
@@ -1163,6 +1525,8 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseTokens(Loretta.CodeAnalysis.T
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseTokens(string! text, int offset = 0, int initialTokenPosition = 0, Loretta.CodeAnalysis.Lua.LuaParseOptions? options = null) -> System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseTrailingTrivia(Loretta.CodeAnalysis.Text.SourceText! text, Loretta.CodeAnalysis.Lua.LuaParseOptions? options) -> Loretta.CodeAnalysis.SyntaxTriviaList
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseTrailingTrivia(string! text, Loretta.CodeAnalysis.Lua.LuaParseOptions? options, int offset = 0) -> Loretta.CodeAnalysis.SyntaxTriviaList
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseType(Loretta.CodeAnalysis.Text.SourceText! text, Loretta.CodeAnalysis.Lua.LuaParseOptions? options = null, bool consumeFullText = true) -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseType(string! text, int offset = 0, Loretta.CodeAnalysis.Lua.LuaParseOptions? options = null, bool consumeFullText = true) -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.RepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition) -> Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.RepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition) -> Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.RepeatUntilStatement(Loretta.CodeAnalysis.SyntaxToken repeatKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken untilKeyword, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax!
@@ -1174,6 +1538,9 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.SeparatedList<TNode>(System.Collec
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.SeparatedList<TNode>(System.Collections.Generic.IEnumerable<TNode!>! nodes, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxToken>! separators) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.SeparatedList<TNode>(System.Collections.Generic.IEnumerable<TNode!>? nodes) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.SimpleFunctionName(Loretta.CodeAnalysis.SyntaxToken name) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.SimpleTypeName(Loretta.CodeAnalysis.SyntaxToken identifierToken, Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax? typeArgumentList) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.SimpleTypeName(Loretta.CodeAnalysis.SyntaxToken identifierToken) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.SimpleTypeName(string! identifierToken) -> Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.SingletonList<TNode>(TNode! node) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.SingletonSeparatedList<TNode>(TNode! node) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.SkippedTokensTrivia() -> Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax!
@@ -1190,6 +1557,13 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.Tab.get -> Loretta.CodeAnalysis.Sy
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableConstructorExpression(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableFieldSyntax!> fields = default(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableFieldSyntax!>)) -> Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableConstructorExpression(Loretta.CodeAnalysis.SyntaxToken openBraceToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableFieldSyntax!> fields, Loretta.CodeAnalysis.SyntaxToken closeBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableConstructorFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax! tableConstructor) -> Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableType(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax!> elements = default(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax!>)) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableType(Loretta.CodeAnalysis.SyntaxToken openBraceToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax!> elements, Loretta.CodeAnalysis.SyntaxToken closeBraceToken) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableTypeIndexer(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! indexType, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableTypeIndexer(Loretta.CodeAnalysis.SyntaxToken openBracketToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! indexType, Loretta.CodeAnalysis.SyntaxToken closeBracketToken, Loretta.CodeAnalysis.SyntaxToken colonToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableTypeProperty(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableTypeProperty(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.SyntaxToken colonToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TableTypeProperty(string! identifier, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! valueType) -> Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Token(Loretta.CodeAnalysis.Lua.SyntaxKind kind) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Token(Loretta.CodeAnalysis.SyntaxTriviaList leading, Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Token(Loretta.CodeAnalysis.SyntaxTriviaList leading, Loretta.CodeAnalysis.Lua.SyntaxKind kind, string! text, string! valueText, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
@@ -1202,15 +1576,42 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.TriviaList() -> Loretta.CodeAnalys
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.TriviaList(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.TriviaList(params Loretta.CodeAnalysis.SyntaxTrivia[]! trivias) -> Loretta.CodeAnalysis.SyntaxTriviaList
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.TriviaList(System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxTrivia>! trivias) -> Loretta.CodeAnalysis.SyntaxTriviaList
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeArgumentList(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> arguments = default(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!>)) -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeArgumentList(Loretta.CodeAnalysis.SyntaxToken lessThanToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> arguments, Loretta.CodeAnalysis.SyntaxToken greaterThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeBinding(Loretta.CodeAnalysis.SyntaxToken colonToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeCastExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeCastExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression, Loretta.CodeAnalysis.SyntaxToken colonColonToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken exportKeyword, Loretta.CodeAnalysis.SyntaxToken typeKeyword, Loretta.CodeAnalysis.SyntaxToken name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.SyntaxToken equalsToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken name, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax? typeParameterList, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken name, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeDeclarationStatement(string! name, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypedIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypedIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! identifierName) -> Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypedIdentifierName(string! identifierName) -> Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeofType(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression) -> Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeofType(Loretta.CodeAnalysis.SyntaxToken typeofKeyword, Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! expression, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypePack(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> types = default(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!>)) -> Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypePack(Loretta.CodeAnalysis.SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!> types, Loretta.CodeAnalysis.SyntaxToken closeParenthesisToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeParameter(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax? equalsType) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeParameter(Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.SyntaxToken dotDotDotToken, Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax? equalsType) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeParameter(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeParameter(string! identifier) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeParameterList(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!> names = default(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!>)) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeParameterList(Loretta.CodeAnalysis.SyntaxToken lessThanToken, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax!> names, Loretta.CodeAnalysis.SyntaxToken greaterThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.UnaryExpression(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.SyntaxToken operatorToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! operand) -> Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.UnionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.UnionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.SyntaxToken pipeToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.UnkeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! value) -> Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.VarArgExpression() -> Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.VarArgExpression(Loretta.CodeAnalysis.SyntaxToken varArgToken) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.VarArgParameter() -> Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.VarArgParameter(Loretta.CodeAnalysis.SyntaxToken varArgToken) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.VarArgParameter(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding = null) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.VarArgParameter(Loretta.CodeAnalysis.SyntaxToken varArgToken, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax? typeBinding) -> Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.VariableAttribute(Loretta.CodeAnalysis.SyntaxToken identifier) -> Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.VariableAttribute(Loretta.CodeAnalysis.SyntaxToken lessThanToken, Loretta.CodeAnalysis.SyntaxToken identifier, Loretta.CodeAnalysis.SyntaxToken greaterThanToken) -> Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.VariableAttribute(string! identifier) -> Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.VariadicTypePack(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.VariadicTypePack(Loretta.CodeAnalysis.SyntaxToken dotDotDotToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! type) -> Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.WhileStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body) -> Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.WhileStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition) -> Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.WhileStatement(Loretta.CodeAnalysis.SyntaxToken whileKeyword, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition, Loretta.CodeAnalysis.SyntaxToken doKeyword, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! body, Loretta.CodeAnalysis.SyntaxToken endKeyword, Loretta.CodeAnalysis.SyntaxToken semicolonToken) -> Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax!
@@ -1291,10 +1692,12 @@ virtual Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetRootAsync(System.Threading.Can
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.DefaultVisit(Loretta.CodeAnalysis.SyntaxNode! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.Visit(Loretta.CodeAnalysis.SyntaxNode? node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitAnonymousFunctionExpression(Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitArrayType(Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitAssignmentStatement(Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitBinaryExpression(Loretta.CodeAnalysis.Lua.Syntax.BinaryExpressionSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitBreakStatement(Loretta.CodeAnalysis.Lua.Syntax.BreakStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitCompilationUnit(Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitCompositeTypeName(Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitCompoundAssignmentStatement(Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitContinueStatement(Loretta.CodeAnalysis.Lua.Syntax.ContinueStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitDoStatement(Loretta.CodeAnalysis.Lua.Syntax.DoStatementSyntax! node) -> void
@@ -1303,20 +1706,25 @@ virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitElseClause(Loretta.CodeAn
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitElseIfClause(Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitElseIfExpressionClause(Loretta.CodeAnalysis.Lua.Syntax.ElseIfExpressionClauseSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitEmptyStatement(Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitEqualsType(Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitEqualsValuesClause(Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitExpressionKeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.ExpressionKeyedTableFieldSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitExpressionListFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.ExpressionListFunctionArgumentSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitExpressionStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitFunctionCallExpression(Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitFunctionType(Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitGenericForStatement(Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitGenericTypePack(Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitGotoLabelStatement(Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitGotoStatement(Loretta.CodeAnalysis.Lua.Syntax.GotoStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitIdentifierKeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.IdentifierKeyedTableFieldSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitIfExpression(Loretta.CodeAnalysis.Lua.Syntax.IfExpressionSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitIfStatement(Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitIntersectionType(Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitLiteralExpression(Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitLiteralType(Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitLocalDeclarationName(Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitLocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitLocalVariableDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax! node) -> void
@@ -1325,30 +1733,49 @@ virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitMemberFunctionName(Lorett
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitMethodCallExpression(Loretta.CodeAnalysis.Lua.Syntax.MethodCallExpressionSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitMethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitNamedParameter(Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitNilableType(Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitNumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitParameterList(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitParenthesizedExpression(Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitParenthesizedType(Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitRepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitReturnStatement(Loretta.CodeAnalysis.Lua.Syntax.ReturnStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitSimpleFunctionName(Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitSimpleTypeName(Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitSkippedTokensTrivia(Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitStatementList(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitStringFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTableConstructorExpression(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTableConstructorFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTableType(Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTableTypeIndexer(Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTableTypeProperty(Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeArgumentList(Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeCastExpression(Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypedIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeofType(Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypePack(Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeParameter(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitUnaryExpression(Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitUnionType(Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitUnkeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitVarArgExpression(Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitVarArgParameter(Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitVariableAttribute(Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax! node) -> void
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitVariadicTypePack(Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitWhileStatement(Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax! node) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.DefaultVisit(Loretta.CodeAnalysis.SyntaxNode! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.Visit(Loretta.CodeAnalysis.SyntaxNode? node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitAnonymousFunctionExpression(Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitArrayType(Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitAssignmentStatement(Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitBinaryExpression(Loretta.CodeAnalysis.Lua.Syntax.BinaryExpressionSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitBreakStatement(Loretta.CodeAnalysis.Lua.Syntax.BreakStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitCompilationUnit(Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitCompositeTypeName(Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitCompoundAssignmentStatement(Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitContinueStatement(Loretta.CodeAnalysis.Lua.Syntax.ContinueStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitDoStatement(Loretta.CodeAnalysis.Lua.Syntax.DoStatementSyntax! node) -> TResult?
@@ -1357,20 +1784,25 @@ virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitElseClause(Loret
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitElseIfClause(Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitElseIfExpressionClause(Loretta.CodeAnalysis.Lua.Syntax.ElseIfExpressionClauseSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitEmptyStatement(Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitEqualsType(Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitEqualsValuesClause(Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitExpressionKeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.ExpressionKeyedTableFieldSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitExpressionListFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.ExpressionListFunctionArgumentSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitExpressionStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitFunctionCallExpression(Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitFunctionType(Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitGenericForStatement(Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitGenericTypePack(Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitGotoLabelStatement(Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitGotoStatement(Loretta.CodeAnalysis.Lua.Syntax.GotoStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitIdentifierKeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.IdentifierKeyedTableFieldSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitIfExpression(Loretta.CodeAnalysis.Lua.Syntax.IfExpressionSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitIfStatement(Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitIntersectionType(Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitLiteralExpression(Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitLiteralType(Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitLocalDeclarationName(Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitLocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitLocalVariableDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax! node) -> TResult?
@@ -1379,22 +1811,39 @@ virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitMemberFunctionNa
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitMethodCallExpression(Loretta.CodeAnalysis.Lua.Syntax.MethodCallExpressionSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitMethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitNamedParameter(Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitNilableType(Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitNumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitParameterList(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitParenthesizedExpression(Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitParenthesizedType(Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitRepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitReturnStatement(Loretta.CodeAnalysis.Lua.Syntax.ReturnStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitSimpleFunctionName(Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitSimpleTypeName(Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitSkippedTokensTrivia(Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitStatementList(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitStringFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTableConstructorExpression(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTableConstructorFunctionArgument(Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTableType(Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTableTypeIndexer(Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTableTypeProperty(Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeArgumentList(Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeCastExpression(Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypedIdentifierName(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeofType(Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypePack(Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeParameter(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeParameterList(Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitUnaryExpression(Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitUnionType(Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitUnkeyedTableField(Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitVarArgExpression(Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitVarArgParameter(Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitVariableAttribute(Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax! node) -> TResult?
+virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitVariadicTypePack(Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitWhileStatement(Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax! node) -> TResult?
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitLeadingTrivia(Loretta.CodeAnalysis.SyntaxToken token) -> void
 virtual Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitToken(Loretta.CodeAnalysis.SyntaxToken token) -> void
