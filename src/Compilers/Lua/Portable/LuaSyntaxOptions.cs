@@ -196,7 +196,7 @@ namespace Loretta.CodeAnalysis.Lua
             hexIntegerFormat: IntegerFormats.NotSupported,
             acceptTypedLua: true,
             acceptFloorDivision: false,
-            acceptLuaJITNumberSuffixes: false);
+            acceptLuaJITNumberSuffixes: true);
 
 
         /// <summary>
