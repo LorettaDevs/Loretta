@@ -201,14 +201,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else if (isUnsignedLong)
             {
+                if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                    AddError(ErrorCode.ERR_NumericLiteralTooLarge);
+
                 info.ValueKind = ValueKind.ULong;
-                info.ULongValue = ulong.Parse(_builder.ToString()); 
+                info.ULongValue = result; 
                 info.Text = _builder.ToString();
             }
             else if (isSignedLong)
             {
+                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                    AddError(ErrorCode.ERR_NumericLiteralTooLarge);
+
                 info.ValueKind = ValueKind.Long;
-                info.LongValue = long.Parse(_builder.ToString()); 
+                info.LongValue = result; 
                 info.Text = _builder.ToString();
             }
             else
