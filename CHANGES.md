@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v0.2.9-beta.5
+### Added
+- Added `LuaSyntaxOptions.AcceptLuaJITNumberSuffixes`
+- Added `SyntaxFactory.Literal(ulong value)`
+- Added `SyntaxFactory.Literal(string text, ulong value)`
+- Added support for `ULL` and `LL` suffixes from LuaJIT
+
+### Changed
+- Changed `LuaSyntaxOptions.ToString` to return `AcceptLuaJITNumberSuffixes`
+
 ## v0.2.9-beta.4
 ### Added
 - Added `LuaSyntaxOptions.Luau`.
