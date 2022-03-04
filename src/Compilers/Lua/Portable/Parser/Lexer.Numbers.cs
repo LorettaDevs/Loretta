@@ -228,7 +228,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 AddError(ErrorCode.ERR_NumberSuffixNotSupportedInVersion);
             if (isUnsignedLong)
             {
-                if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var result))
+                if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.ULong;
@@ -236,7 +236,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else if (isSignedLong)
             {
-                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var result))
+                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.Long;
