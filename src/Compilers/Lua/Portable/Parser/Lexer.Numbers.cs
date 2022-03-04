@@ -183,21 +183,30 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 ConsumeDecimalDigits(_builder);
             }
 
-            var (isUnsignedLong, isSignedLong) = (false, false); 
+            var (isUnsignedLong, isSignedLong) = (false, false);
 
-            if (TextWindow.AdvanceIfMatches("ULL")) 
+            if (TextWindow.AdvanceIfMatches("ULL"))
             {
-                isUnsignedLong = true;
-            } 
+                if (isFloat)
+                {
+                    AddError(ErrorCode.ERR_LuajitSuffixInFloat);
+                }
+                else
+                {
+                    isUnsignedLong = true;
+                }
+            }
             else if (TextWindow.AdvanceIfMatches("LL"))
             {
-                isSignedLong = true;
+                if (isFloat)
+                {
+                    AddError(ErrorCode.ERR_LuajitSuffixInFloat);
+                }
+                else
+                {
+                    isSignedLong = true;
+                }
             }
-
-            if (isFloat && (isUnsignedLong || isSignedLong)) {
-                AddError(ErrorCode.ERR_LuajitSuffixInFloat);
-            }
-
 
             info.Text = TextWindow.GetText(intern: true);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
@@ -280,11 +289,25 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             if (TextWindow.AdvanceIfMatches("ULL"))
             {
-                isUnsignedLong = true;
+                if (isHexFloat)
+                {
+                    AddError(ErrorCode.ERR_LuajitSuffixInFloat);
+                }
+                else
+                {
+                    isUnsignedLong = true;
+                }
             }
             else if (TextWindow.AdvanceIfMatches("LL"))
             {
-                isSignedLong = true;
+                if (isHexFloat)
+                {
+                    AddError(ErrorCode.ERR_LuajitSuffixInFloat);
+                }
+                else
+                {
+                    isSignedLong = true;
+                }
             }
 
             info.Text = TextWindow.GetText(intern: true);
@@ -293,15 +316,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             if (isUnsignedLong)
             {
-                if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.ULong;
                 info.DoubleValue = result;
-            } 
+            }
             else if (isSignedLong)
             {
-                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.Long;
