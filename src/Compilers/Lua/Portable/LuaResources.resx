@@ -232,6 +232,9 @@
   <data name="ERR_NormalTypeParametersComeBeforePacks" xml:space="preserve">
     <value>Normal type parameters must come before pack type parameters</value>
   </data>
+  <data name="ERR_NumberSuffixNotSupportedInVersion" xml:space="preserve">
+    <value>LuaJIT number suffixes are not supported in this lua version</value>
+  </data>
   <data name="ERR_NumericLiteralTooLarge" xml:space="preserve">
     <value>Numeric literal is too large</value>
   </data>

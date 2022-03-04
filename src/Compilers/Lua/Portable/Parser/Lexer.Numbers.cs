@@ -172,15 +172,44 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 ConsumeDecimalDigits(_builder);
             }
 
+            var (isUnsignedLong, isSignedLong) = (false, false); 
+            if (!isFloat)
+            {
+                if (TextWindow.AdvanceIfMatches("ULL")) 
+                {
+                    isUnsignedLong = true;
+                    _builder.Append("ULL");
+                } 
+                else if (TextWindow.AdvanceIfMatches("LL"))
+                {
+                    isSignedLong = true;
+                    _builder.Append("ULL");
+                }
+            }
+
             info.Text = TextWindow.GetText(intern: true);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+            if (!Options.SyntaxOptions.AcceptLuaJITNumberSuffixes && (isUnsignedLong || isSignedLong))
+                AddError(ErrorCode.ERR_NumberSuffixNotSupportedInVersion);
             if (isFloat || _options.SyntaxOptions.DecimalIntegerFormat == IntegerFormats.NotSupported)
             {
                 if (!RealParser.TryParseDouble(TextWindow.Intern(_builder), out var result))
                     AddError(ErrorCode.ERR_DoubleOverflow);
                 info.ValueKind = ValueKind.Double;
                 info.DoubleValue = result;
+            }
+            else if (isUnsignedLong)
+            {
+                info.ValueKind = ValueKind.ULong;
+                info.ULongValue = ulong.Parse(_builder.ToString()); 
+                info.Text = _builder.ToString();
+            }
+            else if (isSignedLong)
+            {
+                info.ValueKind = ValueKind.Long;
+                info.LongValue = long.Parse(_builder.ToString()); 
+                info.Text = _builder.ToString();
             }
             else
             {

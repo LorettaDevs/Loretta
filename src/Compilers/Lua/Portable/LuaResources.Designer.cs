@@ -394,6 +394,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LuaJIT number suffixes are not supported in this lua version.
+        /// </summary>
+        internal static string ERR_NumberSuffixNotSupportedInVersion {
+            get {
+                return ResourceManager.GetString("ERR_NumberSuffixNotSupportedInVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Numeric literal is too large.
         /// </summary>
         internal static string ERR_NumericLiteralTooLarge {

@@ -14,7 +14,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             String,
             Double,
             UInt,
-            Long
+            Long,
+            ULong
         }
 
         private struct TokenInfo
@@ -28,6 +29,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal double DoubleValue;
             internal uint UIntValue;
             internal long LongValue;
+            internal ulong ULongValue;
         }
 
         private readonly LuaParseOptions _options;
