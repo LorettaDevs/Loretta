@@ -193,20 +193,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
             if (!Options.SyntaxOptions.AcceptLuaJITNumberSuffixes && (isUnsignedLong || isSignedLong))
                 AddError(ErrorCode.ERR_NumberSuffixNotSupportedInVersion);
-            if (isFloat || _options.SyntaxOptions.DecimalIntegerFormat == IntegerFormats.NotSupported)
-            {
-                if (!RealParser.TryParseDouble(TextWindow.Intern(_builder), out var result))
-                    AddError(ErrorCode.ERR_DoubleOverflow);
-                info.ValueKind = ValueKind.Double;
-                info.DoubleValue = result;
-            }
-            else if (isUnsignedLong)
+            if (isUnsignedLong)
             {
                 if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.ULong;
-                info.ULongValue = result; 
+                info.ULongValue = result;
             }
             else if (isSignedLong)
             {
@@ -214,7 +207,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.Long;
-                info.LongValue = result; 
+                info.LongValue = result;
+            }
+            else if (isFloat || _options.SyntaxOptions.DecimalIntegerFormat == IntegerFormats.NotSupported)
+            {
+                if (!RealParser.TryParseDouble(TextWindow.Intern(_builder), out var result))
+                    AddError(ErrorCode.ERR_DoubleOverflow);
+                info.ValueKind = ValueKind.Double;
+                info.DoubleValue = result;
             }
             else
             {
