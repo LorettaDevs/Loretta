@@ -35,7 +35,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         private void ParseBinaryNumber(ref TokenInfo info)
         {
-            var num = 0L;
+            var num = 0UL;
             var digits = 0;
             var hasUnderscores = false;
             var hasOverflown = false;
@@ -49,25 +49,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     continue;
                 }
                 // Next shift will overflow if 63rd bit is set
-                if ((num & 0x4000000000000000) != 0)
+                if ((num & 0x8000_0000_0000_0000) != 0)
                     hasOverflown = true;
-                num = (num << 1) | CharUtils.DecimalValue(digit);
+                num = (num << 1) | (ulong) CharUtils.DecimalValue(digit);
                 digits++;
-            }
-
-            if (!_options.SyntaxOptions.AcceptBinaryNumbers)
-                AddError(ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion);
-            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
-                AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
-            if (digits < 1)
-            {
-                num = 0; // Safe default
-                AddError(ErrorCode.ERR_InvalidNumber);
-            }
-            if (hasOverflown)
-            {
-                num = 0; // Safe default
-                AddError(ErrorCode.ERR_NumericLiteralTooLarge);
             }
 
             var (isUnsignedLong, isSignedLong) = (false, false);
@@ -81,22 +66,50 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 isSignedLong = true;
             }
 
-            info.Text = TextWindow.GetText(intern: true);
-            switch (_options.SyntaxOptions.BinaryIntegerFormat)
+            if (!_options.SyntaxOptions.AcceptBinaryNumbers)
+                AddError(ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion);
+            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
+                AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+            if (digits < 1)
             {
-                case IntegerFormats.NotSupported:
-                case IntegerFormats.Double:
-                    info.ValueKind = ValueKind.Double;
-                    info.DoubleValue = num;
-                    break;
+                num = 0; // Safe default
+                AddError(ErrorCode.ERR_InvalidNumber);
+            }
+            if (hasOverflown || (num > long.MaxValue && !isUnsignedLong))
+            {
+                num = 0; // Safe default
+                AddError(ErrorCode.ERR_NumericLiteralTooLarge);
+            }
 
-                case IntegerFormats.Int64:
-                    info.ValueKind = ValueKind.Long;
-                    info.LongValue = num;
-                    break;
+            info.Text = TextWindow.GetText(intern: true);
+            if (isUnsignedLong)
+            {
+                info.ValueKind = ValueKind.ULong;
+                info.ULongValue = num;
+            }
+            else if (isSignedLong)
+            {
+                info.ValueKind = ValueKind.Long;
+                info.LongValue = unchecked((long) num);
+            }
+            else
+            {
+                switch (_options.SyntaxOptions.BinaryIntegerFormat)
+                {
+                    case IntegerFormats.NotSupported:
+                    case IntegerFormats.Double:
+                        info.ValueKind = ValueKind.Double;
+                        info.DoubleValue = num;
+                        break;
 
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(_options.SyntaxOptions.BinaryIntegerFormat);
+                    case IntegerFormats.Int64:
+                        info.ValueKind = ValueKind.Long;
+                        info.LongValue = unchecked((long) num);
+                        break;
+
+                    default:
+                        throw ExceptionUtilities.UnexpectedValue(_options.SyntaxOptions.BinaryIntegerFormat);
+                }
             }
         }
 
@@ -116,7 +129,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     continue;
                 }
                 // If any of these bits are set, we'll overflow
-                if ((num & 0x7000000000000000) != 0)
+                if ((num & 0x7000_0000_0000_0000) != 0)
                     hasOverflown = true;
                 num = (num << 3) | CharUtils.DecimalValue(digit);
                 digits++;
