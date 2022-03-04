@@ -134,6 +134,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     {
                         ValueKind.Double => SyntaxFactory.Literal(leadingNode, info.Text, info.DoubleValue, trailingNode),
                         ValueKind.Long => SyntaxFactory.Literal(leadingNode, info.Text, info.LongValue, trailingNode),
+                        ValueKind.ULong => SyntaxFactory.Literal(leadingNode, info.Text, info.ULongValue, trailingNode),
                         _ => throw ExceptionUtilities.UnexpectedValue(info.ValueKind),
                     };
                     break;
