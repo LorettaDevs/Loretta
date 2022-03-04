@@ -198,7 +198,6 @@ namespace Loretta.CodeAnalysis.Lua
             acceptFloorDivision: false,
             acceptLuaJITNumberSuffixes: true);
 
-
         /// <summary>
         /// Same as <see cref="All"/> but with integer settings set
         /// to <see cref="IntegerFormats.Int64"/>.
@@ -577,7 +576,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         /// <param name="acceptLuaJITNumberSuffixes">
         /// <inheritdoc cref="AcceptLuaJITNumberSuffixes" path="/summary" /> If None uses the value
-        /// of <see cref="acceptLuaJITNumberSuffixes"/>.
+        /// of <see cref="AcceptLuaJITNumberSuffixes"/>.
         /// </param>
         /// <returns></returns>
         public LuaSyntaxOptions With(
