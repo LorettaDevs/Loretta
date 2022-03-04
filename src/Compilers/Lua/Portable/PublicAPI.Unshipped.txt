@@ -8,3 +8,5 @@ Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Tsu.Option<bool> acceptBinaryNumb
 Loretta.CodeAnalysis.Lua.SyntaxKind.FloorDivideExpression = 2112 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SlashSlashToken = 56 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, ulong value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, ulong value) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(ulong value) -> Loretta.CodeAnalysis.SyntaxToken

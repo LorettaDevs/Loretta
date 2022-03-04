@@ -258,6 +258,21 @@ namespace Loretta.CodeAnalysis.Lua
             new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
 
         /// <summary>
+        /// Creates a token with kind NumericLiteralToken from an 8-byte integer value.
+        /// </summary>
+        /// <param name="value">The 8-byte unsigned integer value to be represented by the returned token.</param>
+        public static SyntaxToken Literal(ulong value) =>
+            Literal(ObjectDisplay.FormatLiteral(value, ObjectDisplayOptions.None), value);
+
+        /// <summary>
+        /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte signed integer value.
+        /// </summary>
+        /// <param name="text">The raw text of the literal.</param>
+        /// <param name="value">The 8-byte unsigned integer value to be represented by the returned token.</param>
+        public static SyntaxToken Literal(string text, ulong value) =>
+            new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
+
+        /// <summary>
         /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte signed integer value.
         /// </summary>
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
