@@ -70,6 +70,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 AddError(ErrorCode.ERR_NumericLiteralTooLarge);
             }
 
+            var (isUnsignedLong, isSignedLong) = (false, false);
+
+            if (TextWindow.AdvanceIfMatches("ULL"))
+            {
+                isUnsignedLong = true;
+            }
+            else if (TextWindow.AdvanceIfMatches("LL"))
+            {
+                isSignedLong = true;
+            }
+
             info.Text = TextWindow.GetText(intern: true);
             switch (_options.SyntaxOptions.BinaryIntegerFormat)
             {
@@ -195,7 +206,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 AddError(ErrorCode.ERR_NumberSuffixNotSupportedInVersion);
             if (isUnsignedLong)
             {
-                if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.ULong;
@@ -203,7 +214,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else if (isSignedLong)
             {
-                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var result))
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.Long;
@@ -265,11 +276,38 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 ConsumeDecimalDigits(_builder);
             }
 
+            var (isUnsignedLong, isSignedLong) = (false, false);
+
+            if (TextWindow.AdvanceIfMatches("ULL"))
+            {
+                isUnsignedLong = true;
+            }
+            else if (TextWindow.AdvanceIfMatches("LL"))
+            {
+                isSignedLong = true;
+            }
+
             info.Text = TextWindow.GetText(intern: true);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
 
-            if (isHexFloat || _options.SyntaxOptions.HexIntegerFormat == IntegerFormats.NotSupported)
+            if (isUnsignedLong)
+            {
+                if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                    AddError(ErrorCode.ERR_NumericLiteralTooLarge);
+
+                info.ValueKind = ValueKind.ULong;
+                info.DoubleValue = result;
+            } 
+            else if (isSignedLong)
+            {
+                if (!long.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
+                    AddError(ErrorCode.ERR_NumericLiteralTooLarge);
+
+                info.ValueKind = ValueKind.Long;
+                info.DoubleValue = result;
+            }
+            else if (isHexFloat || _options.SyntaxOptions.HexIntegerFormat == IntegerFormats.NotSupported)
             {
                 if (!_options.SyntaxOptions.AcceptHexFloatLiterals)
                     AddError(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion);

@@ -284,7 +284,14 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
 
         public static string FormatLiteral(ulong value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)
         {
-            return value.ToString("D", GetFormatCulture(cultureInfo)) + "ULL";
+            if (options.IncludesOption(ObjectDisplayOptions.UseHexadecimalNumbers))
+            {
+                return value.ToString("X", GetFormatCulture(cultureInfo)) + "ULL";
+            }
+            else
+            {
+                return value.ToString("D", GetFormatCulture(cultureInfo)) + "ULL";
+            }
         }
 
 
