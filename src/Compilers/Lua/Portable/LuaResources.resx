@@ -208,6 +208,9 @@
   <data name="ERR_LuajitIdentifierRulesNotSupportedInVersion" xml:space="preserve">
     <value>Identifiers containing characters with value above 0x7F are not supported in this lua version</value>
   </data>
+  <data name="ERR_LuajitSuffixInFloat" xml:space="preserve">
+    <value>LuaJIT suffixes cannot be used in floating point numbers</value>
+  </data>
   <data name="ERR_MixingNilableAndIntersectionNotAllowed" xml:space="preserve">
     <value>Using nilable types directly in intersections is not allowed</value>
   </data>

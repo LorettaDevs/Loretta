@@ -427,6 +427,47 @@ local str4 = 'hello\xFFthere'
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsWhen_LuaJITSuffixIsMalformed()
+        {
+            const string source = "local a = 2000e5LL";
+            var options = LuaSyntaxOptions.All;
+            ParseAndValidate(source, options,
+                // (1,11): error LUA0031: LuaJIT suffixes cannot be used in floating point numbers
+                // local a = 2000e5LL
+                Diagnostic(ErrorCode.ERR_LuajitSuffixInFloat, "2000e5LL").WithLocation(1, 11));
+        }
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsWhen_LuaJITSuffix_AND_LuaSyntaxOptionsAcceptLuaJITNumberSuffixesIsFalse()
+        {
+            const string source = "local a = 2000ULL";
+            var options = LuaSyntaxOptions.All.With(acceptLuaJITNumberSuffixes: false);
+            ParseAndValidate(source, options,
+                // (1,11): error LUA0030: LuaJIT number suffixes are not supported in this lua version
+                // local a = 2000ULL
+                Diagnostic(ErrorCode.ERR_NumberSuffixNotSupportedInVersion, "2000ULL").WithLocation(1, 11));
+        }
+
+        /*
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsWhen_LuaJITSuffixIsMalformed()
+        {
+            const string source = "local a = 2000e5LL";
+            var options = LuaSyntaxOptions.All;
+            ParseAndValidate(source, options,
+                // (1,11): error LUA0031: LuaJIT suffixes cannot be used in floating point numbers
+                // local a = 2000e5LL
+                Diagnostic(ErrorCode.ERR_LuajitSuffixInFloat, "2000e5LL").WithLocation(1, 11)
+                // (2,11): error LUA0029: What do I put here
+                // What do I put here
+                Diagnostic(ErrorCode.ERR_NumberSuffixNotSupportedInVersion, "").WithLocation(2, 11));
+        }  
+        */
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
         public void Lexer_EmitsNoDiagnosticsWhen_AnInvalidEscapeIsFound()
         {
             const string source = @"local a = '\A\B\C\D\E'";

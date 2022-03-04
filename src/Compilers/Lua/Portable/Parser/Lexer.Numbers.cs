@@ -173,19 +173,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
 
             var (isUnsignedLong, isSignedLong) = (false, false); 
-            if (!isFloat)
+
+            if (TextWindow.AdvanceIfMatches("ULL")) 
             {
-                if (TextWindow.AdvanceIfMatches("ULL")) 
-                {
-                    isUnsignedLong = true;
-                    _builder.Append("ULL");
-                } 
-                else if (TextWindow.AdvanceIfMatches("LL"))
-                {
-                    isSignedLong = true;
-                    _builder.Append("ULL");
-                }
+                isUnsignedLong = true;
+            } 
+            else if (TextWindow.AdvanceIfMatches("LL"))
+            {
+                isSignedLong = true;
             }
+
+            if (isFloat && (isUnsignedLong || isSignedLong)) {
+                AddError(ErrorCode.ERR_LuajitSuffixInFloat);
+            }
+
 
             info.Text = TextWindow.GetText(intern: true);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)

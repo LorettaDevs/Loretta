@@ -322,6 +322,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LuaJIT suffixes cannot be used in floating point numbers.
+        /// </summary>
+        internal static string ERR_LuajitSuffixInFloat {
+            get {
+                return ResourceManager.GetString("ERR_LuajitSuffixInFloat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Using nilable types directly in intersections is not allowed.
         /// </summary>
         internal static string ERR_MixingNilableAndIntersectionNotAllowed {

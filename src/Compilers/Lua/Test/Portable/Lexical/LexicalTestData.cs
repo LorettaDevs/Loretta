@@ -100,6 +100,23 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                     Some<object?>(value));
             }
 
+            // LuaJIT
+            foreach (var text in new[]
+            {
+                "10ULL", "20ULL", "200005ULL"
+            })
+            {
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, ulong.Parse(text[..^3]));
+            }
+
+            foreach (var text in new[]
+{
+                "10LL", "20LL", "200005LL"
+            })
+            {
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[..^2]));
+            }
+
             // Hexadecimal
             foreach (var text in new[]
             {
