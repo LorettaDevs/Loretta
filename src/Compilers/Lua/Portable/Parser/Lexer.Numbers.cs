@@ -206,7 +206,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 info.ValueKind = ValueKind.ULong;
                 info.ULongValue = result; 
-                info.Text = _builder.ToString();
             }
             else if (isSignedLong)
             {
@@ -215,7 +214,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 info.ValueKind = ValueKind.Long;
                 info.LongValue = result; 
-                info.Text = _builder.ToString();
             }
             else
             {
