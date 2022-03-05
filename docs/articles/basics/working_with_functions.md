@@ -22,3 +22,9 @@ Complexity Level: Medium
 ## NamedParameter
 
 ## VarArgParameter
+
+# Calls
+
+## FunctionCallExpression
+
+## MethodCallExpression
