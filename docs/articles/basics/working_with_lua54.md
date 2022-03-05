@@ -2,6 +2,8 @@
 
 ## VariableAttribute
 
+## LuaSyntaxOptions.Lua54
+
 ## Check Previous Versions
 
 <Link>
