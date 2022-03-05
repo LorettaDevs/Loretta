@@ -1,5 +1,7 @@
 # Working with Types
 
+# Types
+
 ## TypeBinding
 
 ## NilableType
