@@ -333,7 +333,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.ULong;
-                info.DoubleValue = result;
+                info.ULongValue = result;
             }
             else if (isSignedLong)
             {
@@ -341,7 +341,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     AddError(ErrorCode.ERR_NumericLiteralTooLarge);
 
                 info.ValueKind = ValueKind.Long;
-                info.DoubleValue = result;
+                info.LongValue = result;
             }
             else if (isHexFloat || _options.SyntaxOptions.HexIntegerFormat == IntegerFormats.NotSupported)
             {
