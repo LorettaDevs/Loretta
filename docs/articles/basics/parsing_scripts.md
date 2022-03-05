@@ -14,5 +14,20 @@ LuaSyntaxNode SyntaxFactory.ParseExpression(string expression)
 LuaSyntaxNode SyntaxFactory.ParseStatement(string statement)
 ```
 
+## Using a rewriter
+[`LuaSyntaxRewriter`](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter*)s are an abstract class that allow you to modify nodes in the script. 
+
+Below is a snippet demonstrating a [`LuaSyntaxRewriter`](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter*) replacing every true to false in the script.
+```cs
+internal class ChangeBooleans : LuaSyntaxRewriter 
+{
+        public override SyntaxNode? VisitLiteralExpression(LiteralExpressionSyntax node)
+        {
+            return node.Kind() == SyntaxKind.TrueLiteralExpression ? SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression) : base.VisitLiteralExpression(node);
+        }
+}
+```
+
+
 
 
