@@ -55,3 +55,5 @@ LuaSyntaxNode SyntaxFactory.AssignmentStatement(SeparatedList<PrefixExpressionSy
 LuaSyntaxNode SyntaxFactory.BinaryExpression(SyntaxFacts.GetBinaryExpression(Keyword).Value, Left, Token(Keyword), Right)
 ```
 
+## Using SyntaxLists
+The [`SyntaxList`](xref:Loretta.CodeAnalysis.SyntaxList*) and [`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) and their singleton counterparts ([`SingletonList`](xref:Loretta.CodeAnalysis.SingletonList*) and [`SingletonSeparatedList`](xref:Loretta.CodeAnalysis.SingletonSeparatedList*))
