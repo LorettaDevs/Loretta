@@ -56,4 +56,4 @@ LuaSyntaxNode SyntaxFactory.BinaryExpression(SyntaxFacts.GetBinaryExpression(Key
 ```
 
 ## Using SyntaxLists
-The [`SyntaxList`](xref:Loretta.CodeAnalysis.SyntaxList*) and [`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) and their singleton counterparts ([`SingletonList`](xref:Loretta.CodeAnalysis.SingletonList*) and [`SingletonSeparatedList`](xref:Loretta.CodeAnalysis.SingletonSeparatedList*))
+The [`SyntaxList`](xref:Loretta.CodeAnalysis.SyntaxList*) and [`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) and their singleton counterparts ([`SingletonList`](xref:Loretta.CodeAnalysis.SingletonList*) and [`SingletonSeparatedList`](xref:Loretta.CodeAnalysis.SingletonSeparatedList*)) have several uses in Loretta such as in tables, parameter lists, typed-luau, argument lists and assignments.
