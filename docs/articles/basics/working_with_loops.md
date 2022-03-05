@@ -8,4 +8,4 @@
 
 ## GenericForStatement
 
-## TypedIdentifierNameSyntax
+## TypedIdentifierName
