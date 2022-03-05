@@ -60,4 +60,4 @@ The [`SyntaxList`](xref:Loretta.CodeAnalysis.SyntaxList*) and [`SeparatedSyntaxL
 
 When [`SyntaxList`](xref:Loretta.CodeAnalysis.SyntaxList*) and [`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) only have a single element you should use their singleton counterparts. You can create them in the [`SyntaxFactory`](xref:Loretta.CodeAnalysis.Lua.SyntaxFactory*) although you can use ``new`` but it is discouraged due to it being extremely inefficent.
 
-[`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) have an ``AddSeparator`` method which add in the token that separates the values, if ``AddSeparator`` is not used it will default to a comma token.
+[`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) has an ``AddSeparator`` method which add in the token that separates the values, if ``AddSeparator`` is not used it will default to a comma token.
