@@ -49,3 +49,9 @@ internal class FixCompoundOperators : LuaSyntaxWalker
 ## Using the syntax factory
 The [`SyntaxFactory`](xref:Loretta.CodeAnalysis.Lua.SyntaxFactory*) is the API for creating nodes in Loretta, all nodes are created exclusively through the [`SyntaxFactory`](xref:Loretta.CodeAnalysis.Lua.SyntaxFactory*)
 
+```cs
+LuaSyntaxNode SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression)
+LuaSyntaxNode SyntaxFactory.AssignmentStatement(SeparatedList<PrefixExpressionSyntax>, SeparatedList<ExpressionSyntax>)
+LuaSyntaxNode SyntaxFactory.BinaryExpression(SyntaxFacts.GetBinaryExpression(Keyword).Value, Left, Token(Keyword), Right)
+```
+
