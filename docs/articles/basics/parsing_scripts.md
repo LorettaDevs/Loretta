@@ -21,10 +21,10 @@ Below is a snippet demonstrating a [`LuaSyntaxRewriter`](xref:Loretta.CodeAnalys
 ```cs
 internal class ChangeBooleans : LuaSyntaxRewriter 
 {
-        public override SyntaxNode? VisitLiteralExpression(LiteralExpressionSyntax node)
-        {
-            return node.Kind() == SyntaxKind.TrueLiteralExpression ? SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression) : base.VisitLiteralExpression(node);
-        }
+  public override SyntaxNode? VisitLiteralExpression(LiteralExpressionSyntax node)
+  {
+    return node.Kind() == SyntaxKind.TrueLiteralExpression ? SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression) : base.VisitLiteralExpression(node);
+  }
 }
 ```
 
