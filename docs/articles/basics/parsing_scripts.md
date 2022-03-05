@@ -53,9 +53,7 @@ internal class FixCompoundOperators : LuaSyntaxWalker
 
 ### Walking a LuaSyntaxTree
 ```cs
-    foreach (var node in syntaxTree.ChildNodes()) {
-        walker.Visit(node)
-    }
+    walker.Visit(syntaxTree.GetRoot())
 ```
 
 ## Using the syntax factory
