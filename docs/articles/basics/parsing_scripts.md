@@ -68,14 +68,14 @@ SyntaxFactory.SeparatedList<TNode>(IEnumerable<TNode>, IEnumerable<SyntaxToken>)
 ## Using syntax facts
 The [`SyntaxFacts`](xref:Loretta.CodeAnalysis.Lua.SyntaxFacts*) provide helper functions for Loretta allowing you to shorten code and get information about nodes.
 
-Some examples of the helper functions
+Some examples of the helper functions.
 ```cs
 SyntaxKind SyntaxFacts.GetUnaryExpression(SyntaxKind)
 SyntaxKind SyntaxFacts.GetCompoundAssignmentOperator(SyntaxKind)
 SyntaxKind SyntaxFacts.GetBinaryExpression(SyntaxKind)
 string SyntaxFacts.GetText(SyntaxKind)
 ```
-The below snippet converts compound assignments to binary expressions
+The below snippet converts compound assignments to binary expressions.
 ```cs
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Lua;
