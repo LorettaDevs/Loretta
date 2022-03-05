@@ -99,8 +99,8 @@ namespace Obfuscator.SyntaxBuilder.SourceModification
             var right = BinaryExpression(expressionKind, variable, 
                 Token(operatorKind), expression);
             return AssignmentStatement(
-                SeparatedList(new[] { variable }),
-                SeparatedList<ExpressionSyntax>(new[] { right }));
+                SingletonSeparatedList(new[] { variable }),
+                SingletonSeparatedList<ExpressionSyntax>(new[] { right }));
         }
     }
 }
