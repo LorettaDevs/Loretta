@@ -57,3 +57,7 @@ LuaSyntaxNode SyntaxFactory.BinaryExpression(SyntaxFacts.GetBinaryExpression(Key
 
 ## Using SyntaxLists
 The [`SyntaxList`](xref:Loretta.CodeAnalysis.SyntaxList*) and [`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) and their singleton counterparts ([`SingletonList`](xref:Loretta.CodeAnalysis.SingletonList*) and [`SingletonSeparatedList`](xref:Loretta.CodeAnalysis.SingletonSeparatedList*)) have several uses in Loretta such as in tables, parameter lists, typed-luau, argument lists and assignments.
+
+When [`SyntaxList`](xref:Loretta.CodeAnalysis.SyntaxList*) and [`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) only have a single element you should use their singleton counterparts. You can create them in the [`SyntaxFactory`](xref:Loretta.CodeAnalysis.Lua.SyntaxFactory*) although you can use ``new`` but it is discouraged due to it being extremely inefficent.
+
+[`SeparatedSyntaxList`](xref:Loretta.CodeAnalysis.SeparatedSyntaxList*) have an ``AddSeparator`` method which add in the token that separates the values, if ``AddSeparator`` is not used it will default to a comma token.
