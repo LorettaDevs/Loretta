@@ -102,7 +102,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
             // LuaJIT
 
-            // Hex
+            // Normal
             foreach (var text in new[]
             {
                 "10ULL", "20ULL", "200005ULL"
@@ -119,30 +119,21 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[..^2]));
             }
 
-            // Binary
+            // Binary & Hexadecimal
             foreach (var text in new[]
             {
-                "0x1LL", "0x9999999LL"
+                "0b0001LL", "0b000111LL"//"0x1LL", "0x9999999LL"//, 
             })
             {
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^2]));
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Convert.ToInt64(text[2..^2], 2));
             }
 
             foreach (var text in new[]
             {
-                "0x1ULL", "0x9999999ULL"
+                "0x11000013d077020LL"
             })
             {
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^3]));
-            }
-
-            // Hexadecimal
-            foreach (var text in new[]
-            {
-                "0b0001LL", "0b000111LL"
-            })
-            {
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^2]));
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^2], NumberStyles.HexNumber));
             }
 
             foreach (var text in new[]
@@ -150,7 +141,15 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 "0b0001ULL", "0b000111ULL"
             })
             {
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^3]));
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Convert.ToUInt64(text[2..^3], 2));
+            }
+
+            foreach (var text in new[]
+            {
+                "0x11000013d077020ULL"
+            })
+            {
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^3], NumberStyles.HexNumber));
             }
 
 
