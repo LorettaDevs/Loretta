@@ -274,13 +274,33 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
         {
             if (options.IncludesOption(ObjectDisplayOptions.UseHexadecimalNumbers))
             {
-                return value.ToString("D", GetFormatCulture(cultureInfo));
+                return "0x" + value.ToString("X", GetFormatCulture(cultureInfo));
             }
             else
             {
-                return value.ToString("X", GetFormatCulture(cultureInfo));
+                return value.ToString("D", GetFormatCulture(cultureInfo));
             }
         }
+
+        /// <summary>
+        /// Returns a Lua number literal with the given value and the <c>ULL</c> suffix.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="options"></param>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
+        public static string FormatLiteral(ulong value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)
+        {
+            if (options.IncludesOption(ObjectDisplayOptions.UseHexadecimalNumbers))
+            {
+                return $"0x{value.ToString("X", GetFormatCulture(cultureInfo))}ULL";
+            }
+            else
+            {
+                return value.ToString("D", GetFormatCulture(cultureInfo)) + "ULL";
+            }
+        }
+
 
         private static CultureInfo GetFormatCulture(CultureInfo? cultureInfo) => cultureInfo ?? CultureInfo.InvariantCulture;
     }

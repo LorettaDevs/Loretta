@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- Added `LuaSyntaxOptions.AcceptLuaJITNumberSuffixes`.
+- Added `SyntaxFactory.Literal(ulong value)`.
+- Added `SyntaxFactory.Literal(string text, ulong value)`.
+- Added support for `ULL` and `LL` suffixes from LuaJIT.
+
+### Fixed
+- Fixed `ObjectDisplay.FormatLiteral(long value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)` returning numbers in hex for longs.
+
+### Changed
+- Changed `LuaSyntaxOptions.ToString` to return `AcceptLuaJITNumberSuffixes`
 
 ## v0.2.9-beta.4
 ### Added

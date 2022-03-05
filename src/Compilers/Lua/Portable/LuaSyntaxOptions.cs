@@ -40,7 +40,8 @@ namespace Loretta.CodeAnalysis.Lua
             decimalIntegerFormat: IntegerFormats.NotSupported,
             hexIntegerFormat: IntegerFormats.NotSupported,
             acceptTypedLua: false,
-            acceptFloorDivision: false
+            acceptFloorDivision: false,
+            acceptLuaJITNumberSuffixes: false
         );
 
         /// <summary>
@@ -98,7 +99,8 @@ namespace Loretta.CodeAnalysis.Lua
             decimalIntegerFormat: IntegerFormats.NotSupported,
             hexIntegerFormat: IntegerFormats.NotSupported,
             acceptTypedLua: false,
-            acceptFloorDivision: false
+            acceptFloorDivision: false,
+            acceptLuaJITNumberSuffixes: true
         );
 
         /// <summary>
@@ -148,7 +150,8 @@ namespace Loretta.CodeAnalysis.Lua
             // Luau parses hex as a long and then converts it to a double
             hexIntegerFormat: IntegerFormats.Double,
             acceptTypedLua: true,
-            acceptFloorDivision: false);
+            acceptFloorDivision: false,
+            acceptLuaJITNumberSuffixes: false);
 
         /// <summary>
         /// The Luau preset.
@@ -192,8 +195,8 @@ namespace Loretta.CodeAnalysis.Lua
             decimalIntegerFormat: IntegerFormats.NotSupported,
             hexIntegerFormat: IntegerFormats.NotSupported,
             acceptTypedLua: true,
-            acceptFloorDivision: false);
-
+            acceptFloorDivision: false,
+            acceptLuaJITNumberSuffixes: true);
 
         /// <summary>
         /// Same as <see cref="All"/> but with integer settings set
@@ -254,6 +257,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="hexIntegerFormat"><inheritdoc cref="HexIntegerFormat" path="/summary" /></param>
         /// <param name="acceptTypedLua"><inheritdoc cref="AcceptTypedLua" path="/summary" /></param>
         /// <param name="acceptFloorDivision"><inheritdoc cref="AcceptFloorDivision" path="/summary" /></param>
+        /// <param name="acceptLuaJITNumberSuffixes"><inheritdoc cref="AcceptLuaJITNumberSuffixes" path="/summary" /></param>
         public LuaSyntaxOptions(
             bool acceptBinaryNumbers,
             bool acceptCCommentSyntax,
@@ -280,7 +284,8 @@ namespace Loretta.CodeAnalysis.Lua
             IntegerFormats decimalIntegerFormat,
             IntegerFormats hexIntegerFormat,
             bool acceptTypedLua,
-            bool acceptFloorDivision)
+            bool acceptFloorDivision,
+            bool acceptLuaJITNumberSuffixes)
         {
             if (acceptFloorDivision && acceptCCommentSyntax)
             {
@@ -313,6 +318,7 @@ namespace Loretta.CodeAnalysis.Lua
             HexIntegerFormat = hexIntegerFormat;
             AcceptTypedLua = acceptTypedLua;
             AcceptFloorDivision = acceptFloorDivision;
+            AcceptLuaJITNumberSuffixes = acceptLuaJITNumberSuffixes;
         }
 
         /// <summary>
@@ -454,6 +460,11 @@ namespace Loretta.CodeAnalysis.Lua
         public bool AcceptFloorDivision { get; }
 
         /// <summary>
+        /// Whether to accept LuaJIT number suffixes or not
+        /// </summary>
+        public bool AcceptLuaJITNumberSuffixes { get; }
+
+        /// <summary>
         /// Creates a new lua options changing the provided fields.
         /// </summary>
         /// <param name="acceptBinaryNumbers">
@@ -563,6 +574,11 @@ namespace Loretta.CodeAnalysis.Lua
         /// of <see cref="AcceptFloorDivision"/>.
         /// </param>
         /// <returns></returns>
+        /// <param name="acceptLuaJITNumberSuffixes">
+        /// <inheritdoc cref="AcceptLuaJITNumberSuffixes" path="/summary" /> If None uses the value
+        /// of <see cref="AcceptLuaJITNumberSuffixes"/>.
+        /// </param>
+        /// <returns></returns>
         public LuaSyntaxOptions With(
             Option<bool> acceptBinaryNumbers = default,
             Option<bool> acceptCCommentSyntax = default,
@@ -589,7 +605,8 @@ namespace Loretta.CodeAnalysis.Lua
             Option<IntegerFormats> decimalIntegerFormat = default,
             Option<IntegerFormats> hexIntegerFormat = default,
             Option<bool> acceptTypedLua = default,
-            Option<bool> acceptFloorDivision = default) =>
+            Option<bool> acceptFloorDivision = default,
+            Option<bool> acceptLuaJITNumberSuffixes = default) =>
             new(
                 acceptBinaryNumbers.UnwrapOr(AcceptBinaryNumbers),
                 acceptCCommentSyntax.UnwrapOr(AcceptCCommentSyntax),
@@ -616,7 +633,8 @@ namespace Loretta.CodeAnalysis.Lua
                 decimalIntegerFormat.UnwrapOr(DecimalIntegerFormat),
                 hexIntegerFormat.UnwrapOr(HexIntegerFormat),
                 acceptTypedLua.UnwrapOr(AcceptTypedLua),
-                acceptFloorDivision.UnwrapOr(AcceptFloorDivision)
+                acceptFloorDivision.UnwrapOr(AcceptFloorDivision),
+                acceptLuaJITNumberSuffixes.UnwrapOr(AcceptLuaJITNumberSuffixes)
                 );
 
         /// <inheritdoc/>
@@ -650,7 +668,8 @@ namespace Loretta.CodeAnalysis.Lua
                 && DecimalIntegerFormat == other.DecimalIntegerFormat
                 && HexIntegerFormat == other.HexIntegerFormat
                 && AcceptTypedLua == other.AcceptTypedLua
-                && AcceptFloorDivision == other.AcceptFloorDivision);
+                && AcceptFloorDivision == other.AcceptFloorDivision
+                && AcceptLuaJITNumberSuffixes == other.AcceptLuaJITNumberSuffixes);
 
         /// <inheritdoc/>
         public override int GetHashCode()
@@ -680,6 +699,7 @@ namespace Loretta.CodeAnalysis.Lua
             hash.Add(HexIntegerFormat);
             hash.Add(AcceptTypedLua);
             hash.Add(AcceptFloorDivision);
+            hash.Add(AcceptLuaJITNumberSuffixes);
             return hash.ToHashCode();
         }
 
@@ -732,7 +752,7 @@ namespace Loretta.CodeAnalysis.Lua
             }
             else
             {
-                return $"{{ AcceptBinaryNumbers = {AcceptBinaryNumbers}, AcceptCCommentSyntax = {AcceptCCommentSyntax}, AcceptCompoundAssignment = {AcceptCompoundAssignment}, AcceptEmptyStatements = {AcceptEmptyStatements}, AcceptCBooleanOperators = {AcceptCBooleanOperators}, AcceptGoto = {AcceptGoto}, AcceptHexEscapesInStrings = {AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {AcceptHexFloatLiterals}, AcceptOctalNumbers = {AcceptOctalNumbers}, AcceptShebang = {AcceptShebang}, AcceptUnderscoreInNumberLiterals = {AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {UseLuaJitIdentifierRules}, AcceptBitwiseOperators = {AcceptBitwiseOperators}, AcceptWhitespaceEscape = {AcceptWhitespaceEscape}, ContinueType = {ContinueType}, AcceptIfExpressions = {AcceptIfExpressions}, AcceptHashStrings = {AcceptHashStrings}, AcceptLocalVariableAttributes = {AcceptLocalVariableAttributes}, BinaryIntegerFormat = {BinaryIntegerFormat}, OctalIntegerFormat = {OctalIntegerFormat}, DecimalIntegerFormat = {DecimalIntegerFormat}, HexIntegerFormat = {HexIntegerFormat}, AcceptTypedLua = {AcceptTypedLua} , AcceptFloorDivision = {AcceptFloorDivision} }}";
+                return $"{{ AcceptBinaryNumbers = {AcceptBinaryNumbers}, AcceptCCommentSyntax = {AcceptCCommentSyntax}, AcceptCompoundAssignment = {AcceptCompoundAssignment}, AcceptEmptyStatements = {AcceptEmptyStatements}, AcceptCBooleanOperators = {AcceptCBooleanOperators}, AcceptGoto = {AcceptGoto}, AcceptHexEscapesInStrings = {AcceptHexEscapesInStrings}, AcceptHexFloatLiterals = {AcceptHexFloatLiterals}, AcceptOctalNumbers = {AcceptOctalNumbers}, AcceptShebang = {AcceptShebang}, AcceptUnderscoreInNumberLiterals = {AcceptUnderscoreInNumberLiterals}, UseLuaJitIdentifierRules = {UseLuaJitIdentifierRules}, AcceptBitwiseOperators = {AcceptBitwiseOperators}, AcceptWhitespaceEscape = {AcceptWhitespaceEscape}, ContinueType = {ContinueType}, AcceptIfExpressions = {AcceptIfExpressions}, AcceptHashStrings = {AcceptHashStrings}, AcceptLocalVariableAttributes = {AcceptLocalVariableAttributes}, BinaryIntegerFormat = {BinaryIntegerFormat}, OctalIntegerFormat = {OctalIntegerFormat}, DecimalIntegerFormat = {DecimalIntegerFormat}, HexIntegerFormat = {HexIntegerFormat}, AcceptTypedLua = {AcceptTypedLua}, AcceptFloorDivision = {AcceptFloorDivision}, AcceptLuaJITNumberSuffixes = {AcceptLuaJITNumberSuffixes } }}";
             }
         }
 

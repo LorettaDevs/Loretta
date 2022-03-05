@@ -208,6 +208,9 @@
   <data name="ERR_LuajitIdentifierRulesNotSupportedInVersion" xml:space="preserve">
     <value>Identifiers containing characters with value above 0x7F are not supported in this lua version</value>
   </data>
+  <data name="ERR_LuajitSuffixInFloat" xml:space="preserve">
+    <value>LuaJIT suffixes cannot be used in floating point numbers</value>
+  </data>
   <data name="ERR_MixingNilableAndIntersectionNotAllowed" xml:space="preserve">
     <value>Using nilable types directly in intersections is not allowed</value>
   </data>
@@ -231,6 +234,9 @@
   </data>
   <data name="ERR_NormalTypeParametersComeBeforePacks" xml:space="preserve">
     <value>Normal type parameters must come before pack type parameters</value>
+  </data>
+  <data name="ERR_NumberSuffixNotSupportedInVersion" xml:space="preserve">
+    <value>LuaJIT number suffixes are not supported in this lua version</value>
   </data>
   <data name="ERR_NumericLiteralTooLarge" xml:space="preserve">
     <value>Numeric literal is too large</value>

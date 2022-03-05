@@ -14,7 +14,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             String,
             Double,
             UInt,
-            Long
+            Long,
+            ULong
         }
 
         private struct TokenInfo
@@ -28,6 +29,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal double DoubleValue;
             internal uint UIntValue;
             internal long LongValue;
+            internal ulong ULongValue;
         }
 
         private readonly LuaParseOptions _options;
@@ -126,12 +128,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case SyntaxKind.NumericLiteralToken:
                     LorettaDebug.AssertNotNull(info.Text);
-                    LorettaDebug.Assert(info.ValueKind is ValueKind.Double or ValueKind.Long);
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.Double or ValueKind.Long or ValueKind.ULong);
 
                     token = info.ValueKind switch
                     {
                         ValueKind.Double => SyntaxFactory.Literal(leadingNode, info.Text, info.DoubleValue, trailingNode),
                         ValueKind.Long => SyntaxFactory.Literal(leadingNode, info.Text, info.LongValue, trailingNode),
+                        ValueKind.ULong => SyntaxFactory.Literal(leadingNode, info.Text, info.ULongValue, trailingNode),
                         _ => throw ExceptionUtilities.UnexpectedValue(info.ValueKind),
                     };
                     break;

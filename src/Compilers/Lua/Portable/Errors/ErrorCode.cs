@@ -35,6 +35,8 @@
         ERR_HexDigitExpected = 27,
         ERR_UnicodeEscapesNotSupportedLuaInVersion = 28,
         ERR_HashStringsNotSupportedInVersion = 29,
+        ERR_NumberSuffixNotSupportedInVersion = 30,
+        ERR_LuajitSuffixInFloat = 31,
 
         // Parser Errors
         ERR_IdentifierExpectedKW = 1000,
