@@ -1,3 +1,3 @@
-# Working with Lua 5.2
+# Working with Luau
 
 ## LuaSyntaxOptions.Luau / LuaSyntaxOptions.Roblox
