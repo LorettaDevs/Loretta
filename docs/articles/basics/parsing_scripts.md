@@ -91,14 +91,14 @@ internal class FixCompoundOperators : LuaSyntaxRewriter
     var variable = (PrefixExpressionSyntax) Visit(node.Variable);
     var expression = (ExpressionSyntax) Visit(node.Expression);
 
-            
+    // .Value would throw an exception if the Option was None but in this case since we're sure it'll always have a value it's ok to do so
     var operatorKind = GetCompoundAssignmentOperator(node.AssignmentOperatorToken.Kind()).Value;
     var expressionKind = GetBinaryExpression(operatorKind).Value;
     var right = BinaryExpression(expressionKind, variable, Token(operatorKind), expression);
     
     return AssignmentStatement(
-              SingletonSeparatedList(new[] { variable }),
-              SingletonSeparatedList<ExpressionSyntax>(new[] { right }));
+              SingletonSeparatedList(variable),
+              SingletonSeparatedList<ExpressionSyntax>(right));
   }
 }
 ```
