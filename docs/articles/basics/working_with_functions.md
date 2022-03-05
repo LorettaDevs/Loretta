@@ -11,14 +11,14 @@ Complexity Level: Medium
 
 # Arguments
 
-## StringFunctionArgumentSyntax
+## StringFunctionArgument
 
-## TableConstructorFunctionArgumentSyntax
+## TableConstructorFunctionArgument
 
-## ExpressionListFunctionArgumentSyntax
+## ExpressionListFunctionArgument
 
 # Parameters
 
-## NamedParameterSyntax
+## NamedParameter
 
-## VarArgParameterSyntax
+## VarArgParameter
