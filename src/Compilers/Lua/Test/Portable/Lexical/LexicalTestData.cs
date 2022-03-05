@@ -103,7 +103,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             // LuaJIT
             foreach (var text in new[]
             {
-                "10ULL", "20ULL", "200005ULL", "18446744073709551615ULL"
+                "10ULL", "20ULL", "200005ULL", "18446744073709551615ULL", "0x11111111ULL", "0b100000001ULL"
             })
             {
                 yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, ulong.Parse(text[..^3]));
@@ -111,7 +111,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
             foreach (var text in new[]
             {
-                "10LL", "20LL", "200005LL"
+                "10LL", "20LL", "200005LL", "0x1LL", "0x9999999LL", "0b101LL", "0b0000000001LL"
             })
             {
                 yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[..^2]));
