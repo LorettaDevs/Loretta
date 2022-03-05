@@ -101,21 +101,58 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             }
 
             // LuaJIT
+
+            // Hex
             foreach (var text in new[]
             {
-                "10ULL", "20ULL", "200005ULL", "18446744073709551615ULL", "0x11111111ULL", "0b100000001ULL"
+                "10ULL", "20ULL", "200005ULL"
             })
             {
                 yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, ulong.Parse(text[..^3]));
             }
 
             foreach (var text in new[]
-            {
-                "10LL", "20LL", "200005LL", "0x1LL", "0x9999999LL", "0b101LL", "0b0000000001LL"
+{
+                "10LL", "20LL", "200005LL"
             })
             {
                 yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[..^2]));
             }
+
+            // Binary
+            foreach (var text in new[]
+            {
+                "0x1LL", "0x9999999LL"
+            })
+            {
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^2]));
+            }
+
+            foreach (var text in new[]
+            {
+                "0x1ULL", "0x9999999ULL"
+            })
+            {
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^3]));
+            }
+
+            // Hexadecimal
+            foreach (var text in new[]
+            {
+                "0b0001LL", "0b000111LL"
+            })
+            {
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^2]));
+            }
+
+            foreach (var text in new[]
+            {
+                "0b0001ULL", "0b000111ULL"
+            })
+            {
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[2..^3]));
+            }
+
 
             // Hexadecimal
             foreach (var text in new[]
