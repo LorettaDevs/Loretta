@@ -70,9 +70,9 @@ The [`SyntaxFacts`](xref:Loretta.CodeAnalysis.Lua.SyntaxFacts*) provide helper f
 
 Some examples of the helper functions.
 ```cs
-SyntaxKind SyntaxFacts.GetUnaryExpression(SyntaxKind)
-SyntaxKind SyntaxFacts.GetCompoundAssignmentOperator(SyntaxKind)
-SyntaxKind SyntaxFacts.GetBinaryExpression(SyntaxKind)
+Option<SyntaxKind> SyntaxFacts.GetUnaryExpression(SyntaxKind)
+Option<SyntaxKind> SyntaxFacts.GetCompoundAssignmentOperator(SyntaxKind)
+Option<SyntaxKind> SyntaxFacts.GetBinaryExpression(SyntaxKind)
 string SyntaxFacts.GetText(SyntaxKind)
 ```
 The below snippet converts compound assignments to binary expressions.
@@ -84,24 +84,21 @@ using Loretta.CodeAnalysis.Lua.Syntax;
 using static Loretta.CodeAnalysis.Lua.SyntaxFactory;
 using static Loretta.CodeAnalysis.Lua.SyntaxFacts;
 
-namespace Obfuscator.SyntaxBuilder.SourceModification
+internal class FixCompoundOperators : LuaSyntaxRewriter
 {
-    internal class FixCompoundOperators : LuaSyntaxRewriter
-    {
-        public override SyntaxNode VisitCompoundAssignmentStatement(CompoundAssignmentStatementSyntax node)
-        {
-            var variable = (PrefixExpressionSyntax) Visit(node.Variable);
-            var expression = (ExpressionSyntax) Visit(node.Expression);
+  public override SyntaxNode VisitCompoundAssignmentStatement(CompoundAssignmentStatementSyntax node)
+  {
+    var variable = (PrefixExpressionSyntax) Visit(node.Variable);
+    var expression = (ExpressionSyntax) Visit(node.Expression);
 
             
-            var operatorKind = GetCompoundAssignmentOperator(node.AssignmentOperatorToken.Kind()).Value;
-            var expressionKind = GetBinaryExpression(operatorKind).Value;
-            var right = BinaryExpression(expressionKind, variable, 
-                Token(operatorKind), expression);
-            return AssignmentStatement(
-                SingletonSeparatedList(new[] { variable }),
-                SingletonSeparatedList<ExpressionSyntax>(new[] { right }));
-        }
-    }
+    var operatorKind = GetCompoundAssignmentOperator(node.AssignmentOperatorToken.Kind()).Value;
+    var expressionKind = GetBinaryExpression(operatorKind).Value;
+    var right = BinaryExpression(expressionKind, variable, Token(operatorKind), expression);
+    
+    return AssignmentStatement(
+              SingletonSeparatedList(new[] { variable }),
+              SingletonSeparatedList<ExpressionSyntax>(new[] { right }));
+  }
 }
 ```
