@@ -1,6 +1,4 @@
-# Working with Other Expressions
+# Working with Binary Expressions
 Complexity Level: Medium
 
 ## Binary Expressions
-
-## Unary Expressions
