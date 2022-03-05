@@ -77,6 +77,7 @@ Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptCBooleanOperators.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptCCommentSyntax.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptCompoundAssignment.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptEmptyStatements.get -> bool
+Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptFloorDivision.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptGoto.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptHashStrings.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptHexEscapesInStrings.get -> bool
@@ -84,6 +85,7 @@ Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptHexFloatLiterals.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptIfExpressions.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptInvalidEscapes.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptLocalVariableAttributes.get -> bool
+Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptLuaJITNumberSuffixes.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptOctalNumbers.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptShebang.get -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AcceptTypedLua.get -> bool
@@ -95,10 +97,10 @@ Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.ContinueType.get -> Loretta.CodeAnalys
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.DecimalIntegerFormat.get -> Loretta.CodeAnalysis.Lua.IntegerFormats
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.Equals(Loretta.CodeAnalysis.Lua.LuaSyntaxOptions? other) -> bool
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.HexIntegerFormat.get -> Loretta.CodeAnalysis.Lua.IntegerFormats
-Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.LuaSyntaxOptions(bool acceptBinaryNumbers, bool acceptCCommentSyntax, bool acceptCompoundAssignment, bool acceptEmptyStatements, bool acceptCBooleanOperators, bool acceptGoto, bool acceptHexEscapesInStrings, bool acceptHexFloatLiterals, bool acceptOctalNumbers, bool acceptShebang, bool acceptUnderscoreInNumberLiterals, bool useLuaJitIdentifierRules, bool acceptBitwiseOperators, bool acceptWhitespaceEscape, bool acceptUnicodeEscape, Loretta.CodeAnalysis.Lua.ContinueType continueType, bool acceptIfExpression, bool acceptHashStrings, bool acceptInvalidEscapes, bool acceptLocalVariableAttributes, Loretta.CodeAnalysis.Lua.IntegerFormats binaryIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats octalIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats decimalIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats hexIntegerFormat, bool acceptTypedLua) -> void
+Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.LuaSyntaxOptions(bool acceptBinaryNumbers, bool acceptCCommentSyntax, bool acceptCompoundAssignment, bool acceptEmptyStatements, bool acceptCBooleanOperators, bool acceptGoto, bool acceptHexEscapesInStrings, bool acceptHexFloatLiterals, bool acceptOctalNumbers, bool acceptShebang, bool acceptUnderscoreInNumberLiterals, bool useLuaJitIdentifierRules, bool acceptBitwiseOperators, bool acceptWhitespaceEscape, bool acceptUnicodeEscape, Loretta.CodeAnalysis.Lua.ContinueType continueType, bool acceptIfExpression, bool acceptHashStrings, bool acceptInvalidEscapes, bool acceptLocalVariableAttributes, Loretta.CodeAnalysis.Lua.IntegerFormats binaryIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats octalIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats decimalIntegerFormat, Loretta.CodeAnalysis.Lua.IntegerFormats hexIntegerFormat, bool acceptTypedLua, bool acceptFloorDivision, bool acceptLuaJITNumberSuffixes) -> void
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.OctalIntegerFormat.get -> Loretta.CodeAnalysis.Lua.IntegerFormats
 Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.UseLuaJitIdentifierRules.get -> bool
-Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Tsu.Option<bool> acceptBinaryNumbers = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCCommentSyntax = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCompoundAssignment = default(Tsu.Option<bool>), Tsu.Option<bool> acceptEmptyStatements = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCBooleanOperators = default(Tsu.Option<bool>), Tsu.Option<bool> acceptGoto = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHexEscapesInStrings = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHexFloatLiterals = default(Tsu.Option<bool>), Tsu.Option<bool> acceptOctalNumbers = default(Tsu.Option<bool>), Tsu.Option<bool> acceptShebang = default(Tsu.Option<bool>), Tsu.Option<bool> acceptUnderscoreInNumberLiterals = default(Tsu.Option<bool>), Tsu.Option<bool> useLuaJitIdentifierRules = default(Tsu.Option<bool>), Tsu.Option<bool> acceptBitwiseOperators = default(Tsu.Option<bool>), Tsu.Option<bool> acceptWhitespaceEscape = default(Tsu.Option<bool>), Tsu.Option<bool> acceptUnicodeEscape = default(Tsu.Option<bool>), Tsu.Option<Loretta.CodeAnalysis.Lua.ContinueType> continueType = default(Tsu.Option<Loretta.CodeAnalysis.Lua.ContinueType>), Tsu.Option<bool> acceptIfExpression = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHashStrings = default(Tsu.Option<bool>), Tsu.Option<bool> acceptInvalidEscapes = default(Tsu.Option<bool>), Tsu.Option<bool> acceptLocalVariableAttributes = default(Tsu.Option<bool>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> binaryIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> octalIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> decimalIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> hexIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<bool> acceptTypedLua = default(Tsu.Option<bool>)) -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
+Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Tsu.Option<bool> acceptBinaryNumbers = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCCommentSyntax = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCompoundAssignment = default(Tsu.Option<bool>), Tsu.Option<bool> acceptEmptyStatements = default(Tsu.Option<bool>), Tsu.Option<bool> acceptCBooleanOperators = default(Tsu.Option<bool>), Tsu.Option<bool> acceptGoto = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHexEscapesInStrings = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHexFloatLiterals = default(Tsu.Option<bool>), Tsu.Option<bool> acceptOctalNumbers = default(Tsu.Option<bool>), Tsu.Option<bool> acceptShebang = default(Tsu.Option<bool>), Tsu.Option<bool> acceptUnderscoreInNumberLiterals = default(Tsu.Option<bool>), Tsu.Option<bool> useLuaJitIdentifierRules = default(Tsu.Option<bool>), Tsu.Option<bool> acceptBitwiseOperators = default(Tsu.Option<bool>), Tsu.Option<bool> acceptWhitespaceEscape = default(Tsu.Option<bool>), Tsu.Option<bool> acceptUnicodeEscape = default(Tsu.Option<bool>), Tsu.Option<Loretta.CodeAnalysis.Lua.ContinueType> continueType = default(Tsu.Option<Loretta.CodeAnalysis.Lua.ContinueType>), Tsu.Option<bool> acceptIfExpression = default(Tsu.Option<bool>), Tsu.Option<bool> acceptHashStrings = default(Tsu.Option<bool>), Tsu.Option<bool> acceptInvalidEscapes = default(Tsu.Option<bool>), Tsu.Option<bool> acceptLocalVariableAttributes = default(Tsu.Option<bool>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> binaryIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> octalIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> decimalIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats> hexIntegerFormat = default(Tsu.Option<Loretta.CodeAnalysis.Lua.IntegerFormats>), Tsu.Option<bool> acceptTypedLua = default(Tsu.Option<bool>), Tsu.Option<bool> acceptFloorDivision = default(Tsu.Option<bool>), Tsu.Option<bool> acceptLuaJITNumberSuffixes = default(Tsu.Option<bool>)) -> Loretta.CodeAnalysis.Lua.LuaSyntaxOptions!
 Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter
 Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.LuaSyntaxRewriter(bool visitIntoStructuredTrivia = false) -> void
 Loretta.CodeAnalysis.Lua.LuaSyntaxTree
@@ -891,6 +893,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.ExpressionStatement = 2070 -> Loretta.CodeAn
 Loretta.CodeAnalysis.Lua.SyntaxKind.FalseKeyword = 522 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FalseLiteralExpression = 2017 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FalseType = 2102 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.FloorDivideExpression = 2112 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.ForKeyword = 509 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FunctionCallExpression = 2041 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.FunctionDeclarationStatement = 2067 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -983,6 +986,7 @@ Loretta.CodeAnalysis.Lua.SyntaxKind.SimpleTypeName = 2094 -> Loretta.CodeAnalysi
 Loretta.CodeAnalysis.Lua.SyntaxKind.SingleLineCommentTrivia = 3 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SkippedTokensTrivia = 7 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SlashEqualsToken = 28 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.SlashSlashToken = 56 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SlashToken = 27 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.StarEqualsToken = 26 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.StartEqualsToken = 26 -> Loretta.CodeAnalysis.Lua.SyntaxKind
@@ -1340,6 +1344,7 @@ static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(bool v
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(double value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(long value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(string! value, Loretta.CodeAnalysis.ObjectDisplayOptions options) -> string!
+static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(ulong value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatPrimitive(object? obj, Loretta.CodeAnalysis.ObjectDisplayOptions options) -> string?
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NilLiteral.get -> string!
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NullLiteral.get -> string!
@@ -1460,10 +1465,13 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(long value) -> Loretta.Cod
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, double value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, long value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, string! value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, ulong value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, double value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, long value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, string! value) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, ulong value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! value) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(ulong value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralExpression(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralExpression(Loretta.CodeAnalysis.Lua.SyntaxKind kind) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralType(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax!

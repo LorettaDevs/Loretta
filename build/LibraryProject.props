@@ -1,57 +1,57 @@
 ﻿<Project>
-  
-  <Import Project="$(MSBuildThisFileDirectory)BaseProject.props" />
 
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">netcoreapp3.1</TargetFrameworks>
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
+    <Import Project="$(MSBuildThisFileDirectory)BaseProject.props" />
 
-  <!-- Allow packing -->
-  <PropertyGroup>
-    <IsPackable>true</IsPackable>
-    <IsPublishable>true</IsPublishable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+        <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">netcoreapp3.1</TargetFrameworks>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
 
-  <!-- Implicit Usings -->
-  <ItemGroup>
-    <Using Include="Loretta.Utilities" />
-  </ItemGroup>
+    <!-- Allow packing -->
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <IsPublishable>true</IsPublishable>
+    </PropertyGroup>
 
-  <!-- Package props -->
-  <PropertyGroup>
-    <Authors>GGG KILLER</Authors>
-    <Copyright>GGG KILLER © 2021</Copyright>
-    <Version>0.2.9-beta.4</Version>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Implicit Usings -->
+    <ItemGroup>
+        <Using Include="Loretta.Utilities" />
+    </ItemGroup>
 
-    <RepositoryUrl>https://github.com/GGG-KILLER/Loretta</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
+    <!-- Package props -->
+    <PropertyGroup>
+        <Authors>GGG KILLER</Authors>
+        <Copyright>GGG KILLER © 2021</Copyright>
+        <Version>0.2.9-beta.5</Version>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-    <PackageTags>parser;lexer;parsing;lexing;tokenizer;tokenizing</PackageTags>
-    <PackageProjectUrl>https://github.com/GGG-KILLER/Loretta</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <RepositoryUrl>https://github.com/GGG-KILLER/Loretta</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
 
-    <!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <!-- Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
+        <PackageTags>parser;lexer;parsing;lexing;tokenizer;tokenizing</PackageTags>
+        <PackageProjectUrl>https://github.com/GGG-KILLER/Loretta</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+        <!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <!-- Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
 </Project>
