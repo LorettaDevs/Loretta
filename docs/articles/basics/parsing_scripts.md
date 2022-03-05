@@ -66,3 +66,35 @@ SyntaxFactory.SeparatedList<TNode>(IEnumerable<TNode>, IEnumerable<SyntaxToken>)
 ```
 
 ## Using syntax facts
+The [`SyntaxFacts`](xref:Loretta.CodeAnalysis.Lua.SyntaxFacts*) provide helper functions for Loretta allowing you to shorten code and get information about nodes.
+
+The below snippet converts compound assignments to binary expressions
+```cs
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+using static Loretta.CodeAnalysis.Lua.SyntaxFactory;
+using static Loretta.CodeAnalysis.Lua.SyntaxFacts;
+
+namespace Obfuscator.SyntaxBuilder.SourceModification
+{
+    internal class FixCompoundOperators : LuaSyntaxRewriter
+    {
+        public override SyntaxNode VisitCompoundAssignmentStatement(CompoundAssignmentStatementSyntax node)
+        {
+            var variable = (PrefixExpressionSyntax) Visit(node.Variable);
+            var expression = (ExpressionSyntax) Visit(node.Expression);
+
+            
+            var operatorKind = GetCompoundAssignmentOperator(node.AssignmentOperatorToken.Kind()).Value;
+            var expressionKind = GetBinaryExpression(operatorKind).Value;
+            var right = BinaryExpression(expressionKind, variable, 
+                Token(operatorKind), expression);
+            return AssignmentStatement(
+                SeparatedList(new[] { variable }),
+                SeparatedList<ExpressionSyntax>(new[] { right }));
+        }
+    }
+}
+```
