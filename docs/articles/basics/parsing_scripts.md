@@ -28,6 +28,11 @@ internal class ChangeBooleans : LuaSyntaxRewriter
 }
 ```
 
+### Rewriting a LuaSyntaxTree
+```cs
+    return syntaxTree.WithRootAndOptions(rewriter.Visit(syntaxTree.GetRoot()), syntaxTree.Options));
+```
+
 ## Using a walker
 [`LuaSyntaxWalker`](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxWalker*)s are an abstract class that are similar to rewriters but cannot modify nodes. 
 
@@ -44,6 +49,13 @@ internal class FixCompoundOperators : LuaSyntaxWalker
     }
   }
 }
+```
+
+### Walking a LuaSyntaxTree
+```cs
+    foreach (var node in syntaxTree.ChildNodes()) {
+        walker.Visit(node)
+    }
 ```
 
 ## Using the syntax factory
