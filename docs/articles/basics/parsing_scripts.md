@@ -28,6 +28,21 @@ internal class ChangeBooleans : LuaSyntaxRewriter
 }
 ```
 
+## Using a walker
+[`LuaSyntaxWalker`](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxWalker*)s are an abstract class that are similar to rewriters but cannot modify nodes. 
 
-
+Below is a snippet demonstrating a [`LuaSyntaxWalker`](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxWalker*) storing every number literal in the script
+```cs
+internal class FixCompoundOperators : LuaSyntaxWalker
+{
+  public List<LuaSyntaxNode> NumericalLiteralExpressions = new();
+  public override void VisitLiteralExpression(LiteralExpressionSyntax node)
+  {
+    if (node.Kind() == SyntaxKind.NumericalLiteralExpression)
+    {
+      NumericalLiteralExpressions.Add(node);
+    }
+  }
+}
+```
 
