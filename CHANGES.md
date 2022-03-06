@@ -5,6 +5,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Fixed
+- [Breaking] We've reviewed the existing `LuaSyntaxOptions` presets and the following were fixed:
+	- Changed the Lua 5.1 preset to accept shebangs;
+	- Changed the Lua 5.1 preset to not accept `if` expressions;
+	- Changed the Lua 5.2 preset to accept shebangs;
+	- Changed the Lua 5.2 preset to not accept `if` expressions;
+	- Changed the Lua 5.3 preset to accept shebangs;
+	- Changed the Lua 5.3 preset to not accept `if` expressions;
+	- Changed the Lua 5.3 preset to accept floor division;
+	- Changed the Lua 5.4 preset to accept shebangs;
+	- Changed the Lua 5.4 preset to not accept `if` expressions;
+	- Changed the Lua 5.4 preset to accept floor division;
+	- Changed the LuaJIT 2.0 preset to not accept empty statements;
+	- Changed the LuaJIT 2.0 preset to accept shebangs;
+	- Changed the LuaJIT 2.1 preset to not accept empty statements;
+	- Changed the LuaJIT 2.1 preset to accept shebangs;
+	- Changed the FiveM preset to accept shebangs;
+	- Changed the FiveM preset to not accept `if` expressions;
+	- Changed the FiveM preset to accept floor division;
+	- Changed the Luau preset to not accept hex float literals;
+	- Changed the Luau preset to accept shebangs;
+	- Changed the Luau preset to not accept bitwise operators.
 
 ## v0.2.9-beta.5
 ### Added

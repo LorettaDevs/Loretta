@@ -24,14 +24,14 @@ namespace Loretta.CodeAnalysis.Lua
             acceptHexEscapesInStrings: false,
             acceptHexFloatLiterals: false,
             acceptOctalNumbers: false,
-            acceptShebang: false,
+            acceptShebang: true,
             acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: false,
             acceptBitwiseOperators: false,
             acceptWhitespaceEscape: false,
             acceptUnicodeEscape: false,
             continueType: ContinueType.None,
-            acceptIfExpression: true,
+            acceptIfExpression: false,
             acceptHashStrings: false,
             acceptInvalidEscapes: true,
             acceptLocalVariableAttributes: false,
@@ -41,8 +41,7 @@ namespace Loretta.CodeAnalysis.Lua
             hexIntegerFormat: IntegerFormats.NotSupported,
             acceptTypedLua: false,
             acceptFloorDivision: false,
-            acceptLuaJITNumberSuffixes: false
-        );
+            acceptLuaJITNumberSuffixes: false);
 
         /// <summary>
         /// The Lua 5.2 preset.
@@ -62,7 +61,8 @@ namespace Loretta.CodeAnalysis.Lua
             acceptBitwiseOperators: true,
             acceptUnicodeEscape: true,
             decimalIntegerFormat: IntegerFormats.Int64,
-            hexIntegerFormat: IntegerFormats.Int64);
+            hexIntegerFormat: IntegerFormats.Int64,
+            acceptFloorDivision: true);
 
         /// <summary>
         /// The Lua 5.4 preset.
@@ -77,13 +77,13 @@ namespace Loretta.CodeAnalysis.Lua
             acceptBinaryNumbers: false,
             acceptCCommentSyntax: false,
             acceptCompoundAssignment: false,
-            acceptEmptyStatements: true,
+            acceptEmptyStatements: false,
             acceptCBooleanOperators: false,
             acceptGoto: true,
             acceptHexEscapesInStrings: true,
             acceptHexFloatLiterals: true,
             acceptOctalNumbers: false,
-            acceptShebang: false,
+            acceptShebang: true,
             acceptUnderscoreInNumberLiterals: false,
             useLuaJitIdentifierRules: true,
             acceptBitwiseOperators: false,
@@ -100,8 +100,7 @@ namespace Loretta.CodeAnalysis.Lua
             hexIntegerFormat: IntegerFormats.NotSupported,
             acceptTypedLua: false,
             acceptFloorDivision: false,
-            acceptLuaJITNumberSuffixes: true
-        );
+            acceptLuaJITNumberSuffixes: true);
 
         /// <summary>
         /// The LuaJIT 2.1-beta3 preset.
@@ -129,12 +128,12 @@ namespace Loretta.CodeAnalysis.Lua
             acceptCBooleanOperators: false,
             acceptGoto: false,
             acceptHexEscapesInStrings: true,
-            acceptHexFloatLiterals: true,
+            acceptHexFloatLiterals: false,
             acceptOctalNumbers: false,
-            acceptShebang: false,
+            acceptShebang: true,
             acceptUnderscoreInNumberLiterals: true,
             useLuaJitIdentifierRules: false,
-            acceptBitwiseOperators: true,
+            acceptBitwiseOperators: false,
             acceptWhitespaceEscape: true,
             acceptUnicodeEscape: true,
             continueType: ContinueType.ContextualKeyword,
@@ -200,7 +199,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         /// <summary>
         /// Same as <see cref="All"/> but with integer settings set
-        /// to <see cref="IntegerFormats.Int64"/>.
+        /// to <see cref="IntegerFormats.Int64"/>,
+        /// <see cref="AcceptFloorDivision"/> set to <see langword="true"/>
+        /// and <see cref="AcceptCCommentSyntax"/> set to <see langword="false"/>.
         /// </summary>
         public static readonly LuaSyntaxOptions AllWithIntegers = All.With(
             acceptCCommentSyntax: false,
