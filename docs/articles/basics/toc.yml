@@ -1,4 +1,4 @@
-- name: The Basics
-  href: index.md
 - name: First Lines of Code
   href: parsing_scripts.md
+- name: Working with Syntax Nodes
+  href: working_with_syntax_nodes.md

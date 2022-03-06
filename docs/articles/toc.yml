@@ -2,6 +2,7 @@
   href: intro.md
 - name: The Basics
   href: basics/toc.yml
+  topicHref: basics/index.md
 - name: Syntax Options
   href: syntaxoptions.md
 - name: Experimental Features
