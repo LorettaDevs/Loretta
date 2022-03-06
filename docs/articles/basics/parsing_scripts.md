@@ -1,5 +1,4 @@
 # Parsing Scripts
-Complexity Level: Low
 
 ## First Lines of Code
 Head to your *Program.cs* tab and import the following directive.
