@@ -1,5 +1,4 @@
 # Working with Literals
-Complexity Level: Low
 
 All ``LiteralExpressionSyntax
 

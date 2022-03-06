@@ -1,5 +1,4 @@
 # Working with Functions
-Complexity Level: Medium
 
 # Functions
 

@@ -1,5 +1,4 @@
 # Working with Keywords
-Complexity Level: Low
 
 ## If
 
