@@ -75,7 +75,9 @@ For LuaJIT (no interpreter) this has no performance difference but for LuaJIT in
 Now that introductions are out of the way, let's get started!
 
 ## 1. Creating a console project
-Let's create a new console project by running `dotnet new console` in an empty directory:
+Since our program will be invoked from the command line, we'll need to create a console project.
+
+First let's create a new console project by running `dotnet new console` in an empty directory:
 ```console
 ❯ dotnet new console
 The template "Console App" was created successfully.
@@ -99,7 +101,6 @@ info : PackageReference for package 'Loretta.CodeAnalysis.Lua' version '0.2.8' a
 info : Writing assets file to disk. Path: B:\tutorials\localizer\obj\project.assets.json
 log  : Restored B:\tutorials\localizer\localizer.csproj (in 67 ms).
 ```
-
 
 ## 2. Implementing file loading
 Now it is time for us to make our program load lua files and parse them. We'll start by loading the files into a
@@ -182,7 +183,9 @@ The presets that are currently available are the following:
 - [LuaSyntaxOptions.FiveM](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.FiveM): The preset for FiveM's flavor of Lua 5.3
 - [LuaSyntaxOptions.GMod](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.GMod): The preset for Garry's Mod's flavor of LuaJIT 2.0
 
-And then we have the following 2 that are meant to accept the largest amount of syntax possible:
+And then we have the following 2 that are meant to accept the largest amount of syntax possible.
+These presets exist mostly for cases when the file's lua version is not known and as such we try to accept the largest
+amount of syntax without erroring (and as such are **not recommented for general usage**):
 - [LuaSyntaxOptions.All](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.All): The preset for accepting the most Lua without integers
 - [LuaSyntaxOptions.AllWithIntegers](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AllWithIntegers): The preset for accepting the most Lua with integers
 
@@ -199,10 +202,43 @@ Here we do 2 things: we define a @Loretta.CodeAnalysis.Lua.LuaParseOptions using
 [LuaSyntaxTree.ParseText](xref:Loretta.CodeAnalysis.Lua.LuaSyntaxTree.ParseText*) with the text we loaded earlier as well
 as the parse options and the file name through (`args[0]`).
 
+Now, we need to check that the parsed code contains no errors. We'll do that by using
+[SyntaxTree.GetDiagnostics](xref:Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics*) and checking that the list of diagnostics
+has no errors:
+
+```cs
+var hasErrors = false;
+foreach (var diagnostic in syntaxTree.GetDiagnostics())
+{
+    Console.WriteLine(diagnostic.ToString());
+    hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
+}
+if (hasErrors)
+{
+    Console.WriteLine("File has errors! Exiting...");
+    return 2;
+}
+```
+
+In Loretta (as in Roslyn), errors, warnings and infos are called [diagnostics](xref:Loretta.CodeAnalysis.Diagnostic).
+A diagnostic contains important information about an error such as:
+- [Diagnostic.Id](xref:Loretta.CodeAnalysis.Diagnostic.Id): The diagnostic's ID (example: `LUA0001` is the diagnostic ID
+  for an invalid string escape);
+- [Diagnostic.Location](xref:Loretta.CodeAnalysis.Diagnostic.Location): The location the diagnostic was reported at. This
+  is important for being able to point to the user where an error or warning is in their text editor or to output it to the
+  command line.
+- [Diagnostic.Severity](xref:Loretta.CodeAnalysis.Diagnostic.Severity): The diagnostic's severity (whether it's an error,
+  warning, info or suggestion). The value is a member of the @Loretta.CodeAnalysis.DiagnosticSeverity enum.
+- [Diagnostic.Descriptor](xref:Loretta.CodeAnalysis.Diagnostic.Descriptor): This is the instance of the diagnostic's definition
+  which we call a @Loretta.CodeAnalysis.DiagnosticDescriptor.
+
+For diagnostics, you can think of the @Loretta.CodeAnalysis.DiagnosticDescriptor as a class' definition and the
+@Loretta.CodeAnalysis.Diagnostic as the class' instance.
 
 ### Our code up to this point
 ```cs
 // See https://aka.ms/new-console-template for more information
+using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Text;
 using Loretta.CodeAnalysis.Lua;
 
@@ -223,5 +259,17 @@ using (var stream = File.OpenRead(args[0]))
 
 var parseOptions = new LuaParseOptions(LuaSyntaxOptions.All);
 var syntaxTree = LuaSyntaxTree.ParseText(text, parseOptions, args[0]);
+
+var hasErrors = false;
+foreach (var diagnostic in syntaxTree.GetDiagnostics())
+{
+    Console.WriteLine(diagnostic.ToString());
+    hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
+}
+if (hasErrors)
+{
+    Console.WriteLine("File has errors! Exiting...");
+    return 2;
+}
 return 0;
 ```
