@@ -208,7 +208,7 @@ has no errors:
 
 ```cs
 var hasErrors = false;
-foreach (var diagnostic in syntaxTree.GetDiagnostics())
+foreach (var diagnostic in syntaxTree.GetDiagnostics().OrderByDescending(diag => diag.Severity))
 {
     Console.WriteLine(diagnostic.ToString());
     hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
@@ -222,8 +222,8 @@ if (hasErrors)
 
 In Loretta (as in Roslyn), errors, warnings and infos are called [diagnostics](xref:Loretta.CodeAnalysis.Diagnostic).
 A diagnostic contains important information about an error such as:
-- [Diagnostic.Id](xref:Loretta.CodeAnalysis.Diagnostic.Id): The diagnostic's ID (example: `LUA0001` is the diagnostic ID
-  for an invalid string escape);
+- [Diagnostic.Id](xref:Loretta.CodeAnalysis.Diagnostic.Id): The diagnostic's ID.
+  As an example, `LUA0001` is the diagnostic ID for an invalid string escape.
 - [Diagnostic.Location](xref:Loretta.CodeAnalysis.Diagnostic.Location): The location the diagnostic was reported at. This
   is important for being able to point to the user where an error or warning is in their text editor or to output it to the
   command line.
@@ -261,7 +261,7 @@ var parseOptions = new LuaParseOptions(LuaSyntaxOptions.All);
 var syntaxTree = LuaSyntaxTree.ParseText(text, parseOptions, args[0]);
 
 var hasErrors = false;
-foreach (var diagnostic in syntaxTree.GetDiagnostics())
+foreach (var diagnostic in syntaxTree.GetDiagnostics().OrderByDescending(diag => diag.Severity))
 {
     Console.WriteLine(diagnostic.ToString());
     hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
