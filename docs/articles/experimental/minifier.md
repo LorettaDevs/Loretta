@@ -18,7 +18,7 @@ using Loretta.CodeAnalysis.Lua.Experimental.Minifying;
 The minifier has a few customization points (which are all optional):
 1. Naming strategies: naming strategies are what's used to convert slots (look in the "How it Works" section to learn about slots) into variable names;
 
-   There are a few builtin naming strategies in [`NamingStrategies`](xref:Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies) with the default one being [`Alphabetical`](xref:Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabetical(System.Int32,System.Collections.Generic.IEnumerable{Loretta.CodeAnalysis.Lua.IScope})).
+   There are a few builtin naming strategies in [`NamingStrategies`](xref:Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies) with the default one being [`Alphabetical`](xref:Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabetical*).
 2. Slot allocators: slot allocators are for advanced usage so it is not recommended you write one unless if you know what you're doing.
 
    There are two builtin slot allocators (with the default being the [`SortedSlotAllocator`](xref:Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator)):
