@@ -186,7 +186,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             foreach (var text in new[]
             {
                 "0x11i",
-                "0x11000013d077020i"
+                "0x1020i"
             })
             {
                 yield return new ShortToken(
@@ -198,7 +198,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             foreach (var text in new[]
 {
                 "0b0001i",
-                "0b1111111111111111111111111111111111111111111111111111111111111111i"
+                "0b111111i"
             })
             {
                 yield return new ShortToken(
