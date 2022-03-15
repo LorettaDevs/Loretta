@@ -358,6 +358,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             info.Text = TextWindow.GetText(intern: true);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+            if (!Options.SyntaxOptions.AcceptLuaJITNumberSuffixes && (isUnsignedLong || isSignedLong || isComplex))
+                AddError(ErrorCode.ERR_NumberSuffixNotSupportedInVersion);
 
             if (isUnsignedLong)
             {
