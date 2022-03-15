@@ -379,8 +379,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else if (isComplex)
             {
-                if (!RealParser.TryParseDouble(TextWindow.Intern(_builder), out var result))
+                var result = 0d;
+                try
+                {
+                    result = HexFloat.DoubleFromHexString(TextWindow.Intern(_builder));
+                }
+                catch (OverflowException)
+                {
                     AddError(ErrorCode.ERR_DoubleOverflow);
+                }
 
                 info.ValueKind = ValueKind.Complex;
                 info.ComplexValue = new Complex(0, result);
