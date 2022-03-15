@@ -1,4 +1,6 @@
-﻿namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
+﻿using System.Numerics;
+
+namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal static partial class SyntaxFactory
     {
@@ -122,6 +124,8 @@
             SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
 
         internal static SyntaxToken Literal(GreenNode? leading, string text, ulong value, GreenNode? trailing) =>
+            SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
+        internal static SyntaxToken Literal(GreenNode? leading, string text, Complex value, GreenNode? trailing) =>
             SyntaxToken.WithValue(SyntaxKind.NumericLiteralToken, leading, text, value, trailing);
 
         internal static SyntaxToken Literal(GreenNode? leading, string text, double value, GreenNode? trailing) =>

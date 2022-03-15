@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Numerics;
 using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Syntax;
@@ -79,7 +80,7 @@ namespace Loretta.CodeAnalysis.Lua
         public static SyntaxTrivia ElasticMarker { get; } = InternalSyntax.SyntaxFactory.ElasticZeroSpace;
 
         /// <summary>
-        /// or s a trivia with kind EndOfLineTrivia containing the specified text. 
+        /// Creates a trivia with kind EndOfLineTrivia containing the specified text. 
         /// </summary>
         /// <param name="text">The text of the end of line. Any text can be specified here, however only carriage return and
         /// line feed characters are recognized by the parser as end of line.</param>
@@ -298,6 +299,14 @@ namespace Loretta.CodeAnalysis.Lua
             new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
 
         /// <summary>
+        /// Creates a token with kind NumericLiteralToken from the text and corresponding complex value.
+        /// </summary>
+        /// <param name="text">The raw text of the literal.</param>
+        /// <param name="value">The complex value to be represented by the returned token.</param>
+        public static SyntaxToken Literal(string text, Complex value) =>
+            new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
+
+        /// <summary>
         /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte floating point value.
         /// </summary>
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
@@ -305,6 +314,16 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="value">The 8-byte unsigned integer value to be represented by the returned token.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
         public static SyntaxToken Literal(SyntaxTriviaList leading, string text, ulong value, SyntaxTriviaList trailing) =>
+            new(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
+
+        /// <summary>
+        /// Creates a token with kind NumericLiteralToken from the text and corresponding complex value.
+        /// </summary>
+        /// <param name="leading">A list of trivia immediately preceding the token.</param>
+        /// <param name="text">The raw text of the literal.</param>
+        /// <param name="value">The complex value to be represented by the returned token.</param>
+        /// <param name="trailing">A list of trivia immediately following the token.</param>
+        public static SyntaxToken Literal(SyntaxTriviaList leading, string text, Complex value, SyntaxTriviaList trailing) =>
             new(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
 
         /// <summary>

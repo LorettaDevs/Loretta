@@ -182,7 +182,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                     ulong.Parse(text[2..^3], NumberStyles.HexNumber));
             }
 
-
             // Hexadecimal
             foreach (var text in new[]
             {

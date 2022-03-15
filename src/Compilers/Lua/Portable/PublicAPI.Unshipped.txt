@@ -1,1 +1,3 @@
 ﻿#nullable enable
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, System.Numerics.Complex value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, System.Numerics.Complex value) -> Loretta.CodeAnalysis.SyntaxToken
