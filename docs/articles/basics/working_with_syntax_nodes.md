@@ -25,3 +25,11 @@ The [`anonymous function expression`](xref:Loretta.CodeAnalysis.Lua.Syntax.Anony
 
 ## Arguments
 [`StringFunctionArguments`](xref:Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgument) have an `Expression` field for the string. [`TableConstructorFunctionArguments`](xref:Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgument) have a `TableConstructor` field for the table. [`ExpressionListFunctionArguments`](xref:Loretta.CodeAnalysis.Lua.Syntax.ExpressionListFunctionArgument)have an `Expressions` field for a list of arguments.
+
+## Assignments
+
+## Binary Expressions
+
+## Compound Assignments
+
+## Types
