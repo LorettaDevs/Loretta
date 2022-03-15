@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Numerics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Loretta.CodeAnalysis.Lua.Utilities;
@@ -298,6 +299,25 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             else
             {
                 return value.ToString("D", GetFormatCulture(cultureInfo)) + "ULL";
+            }
+        }
+
+        /// <summary>
+        /// Returns a Lua number literal with the given value and the <c>i</c> suffix.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="options"></param>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
+        public static string FormatLiteral(Complex value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)
+        {
+            if (options.IncludesOption(ObjectDisplayOptions.UseHexadecimalNumbers))
+            {
+                return $"0x{value.ToString("X", GetFormatCulture(cultureInfo))}i";
+            }
+            else
+            {
+                return value.ToString("D", GetFormatCulture(cultureInfo)) + "i";
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
+using System.Numerics;
 using Loretta.CodeAnalysis.Lua.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
@@ -55,7 +56,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 digits++;
             }
 
-            var (isUnsignedLong, isSignedLong) = (false, false);
+            var (isUnsignedLong, isSignedLong, isComplex) = (false, false, false);
 
             if (TextWindow.AdvanceIfMatches("ULL"))
             {
@@ -65,11 +66,18 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 isSignedLong = true;
             }
+            else if (TextWindow.AdvanceIfMatches("i"))
+            {
+                isComplex = true;
+            }
 
             if (!_options.SyntaxOptions.AcceptBinaryNumbers)
                 AddError(ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+            if (!Options.SyntaxOptions.AcceptLuaJITNumberSuffixes && (isUnsignedLong || isSignedLong || isComplex))
+                AddError(ErrorCode.ERR_NumberSuffixNotSupportedInVersion);
+
             if (digits < 1)
             {
                 num = 0; // Safe default
@@ -91,6 +99,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 info.ValueKind = ValueKind.Long;
                 info.LongValue = unchecked((long) num);
+            }
+            else if (isComplex)
+            {
+                info.ValueKind = ValueKind.Complex;
+                info.ComplexValue = new Complex(0, num);
             }
             else
             {
@@ -139,6 +152,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 AddError(ErrorCode.ERR_OctalNumericLiteralNotSupportedInVersion);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+
             if (digits < 1)
             {
                 num = 0; // Safe default
@@ -196,7 +210,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 ConsumeDecimalDigits(_builder);
             }
 
-            var (isUnsignedLong, isSignedLong) = (false, false);
+            var (isUnsignedLong, isSignedLong, isComplex) = (false, false, false);
 
             if (TextWindow.AdvanceIfMatches("ULL"))
             {
@@ -220,12 +234,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     isSignedLong = true;
                 }
             }
+            else if (TextWindow.AdvanceIfMatches("i"))
+            {
+                isComplex = true;
+            }
 
             info.Text = TextWindow.GetText(intern: true);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
-            if (!Options.SyntaxOptions.AcceptLuaJITNumberSuffixes && (isUnsignedLong || isSignedLong))
+            if (!Options.SyntaxOptions.AcceptLuaJITNumberSuffixes && (isUnsignedLong || isSignedLong || isComplex))
                 AddError(ErrorCode.ERR_NumberSuffixNotSupportedInVersion);
+
             if (isUnsignedLong)
             {
                 if (!ulong.TryParse(TextWindow.Intern(_builder), NumberStyles.None, CultureInfo.InvariantCulture, out var result))
@@ -242,10 +261,19 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 info.ValueKind = ValueKind.Long;
                 info.LongValue = result;
             }
+            else if (isComplex)
+            {
+                if (!RealParser.TryParseDouble(TextWindow.Intern(_builder), out var result))
+                    AddError(ErrorCode.ERR_DoubleOverflow);
+
+                info.ValueKind = ValueKind.Complex;
+                info.ComplexValue = new Complex(0, result);
+            }
             else if (isFloat || _options.SyntaxOptions.DecimalIntegerFormat == IntegerFormats.NotSupported)
             {
                 if (!RealParser.TryParseDouble(TextWindow.Intern(_builder), out var result))
                     AddError(ErrorCode.ERR_DoubleOverflow);
+
                 info.ValueKind = ValueKind.Double;
                 info.DoubleValue = result;
             }
@@ -298,7 +326,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 ConsumeDecimalDigits(_builder);
             }
 
-            var (isUnsignedLong, isSignedLong) = (false, false);
+            var (isUnsignedLong, isSignedLong, isComplex) = (false, false, false);
 
             if (TextWindow.AdvanceIfMatches("ULL"))
             {
@@ -322,10 +350,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     isSignedLong = true;
                 }
             }
+            else if (TextWindow.AdvanceIfMatches("i"))
+            {
+                isComplex = true;
+            }
 
             info.Text = TextWindow.GetText(intern: true);
             if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && info.Text.IndexOf('_') >= 0)
                 AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+            if (!Options.SyntaxOptions.AcceptLuaJITNumberSuffixes && (isUnsignedLong || isSignedLong || isComplex))
+                AddError(ErrorCode.ERR_NumberSuffixNotSupportedInVersion);
 
             if (isUnsignedLong)
             {
@@ -342,6 +376,21 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 info.ValueKind = ValueKind.Long;
                 info.LongValue = result;
+            }
+            else if (isComplex)
+            {
+                var result = 0d;
+                try
+                {
+                    result = HexFloat.DoubleFromHexString(TextWindow.Intern(_builder));
+                }
+                catch (OverflowException)
+                {
+                    AddError(ErrorCode.ERR_DoubleOverflow);
+                }
+
+                info.ValueKind = ValueKind.Complex;
+                info.ComplexValue = new Complex(0, result);
             }
             else if (isHexFloat || _options.SyntaxOptions.HexIntegerFormat == IntegerFormats.NotSupported)
             {

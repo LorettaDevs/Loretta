@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Text;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
@@ -15,7 +16,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             Double,
             UInt,
             Long,
-            ULong
+            ULong,
+            Complex
         }
 
         private struct TokenInfo
@@ -30,6 +32,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             internal uint UIntValue;
             internal long LongValue;
             internal ulong ULongValue;
+            internal Complex ComplexValue;
         }
 
         private readonly LuaParseOptions _options;
@@ -135,6 +138,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         ValueKind.Double => SyntaxFactory.Literal(leadingNode, info.Text, info.DoubleValue, trailingNode),
                         ValueKind.Long => SyntaxFactory.Literal(leadingNode, info.Text, info.LongValue, trailingNode),
                         ValueKind.ULong => SyntaxFactory.Literal(leadingNode, info.Text, info.ULongValue, trailingNode),
+                        ValueKind.Complex => SyntaxFactory.Literal(leadingNode, info.Text, info.ComplexValue, trailingNode),
                         _ => throw ExceptionUtilities.UnexpectedValue(info.ValueKind),
                     };
                     break;

@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Numerics;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Text;
 using static Tsu.Option;
@@ -182,6 +183,41 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                     ulong.Parse(text[2..^3], NumberStyles.HexNumber));
             }
 
+            foreach (var text in new[]
+            {
+                "0x11i",
+                "0x1020i"
+            })
+            {
+                yield return new ShortToken(
+                    SyntaxKind.NumericLiteralToken,
+                    text,
+                    new Complex(0, ParseDouble(text[..^1], 16)));
+            }
+
+            foreach (var text in new[]
+{
+                "0b0001i",
+                "0b111111i"
+            })
+            {
+                yield return new ShortToken(
+                    SyntaxKind.NumericLiteralToken,
+                    text,
+                    new Complex(0, ParseDouble(text[..^1], 2)));
+            }
+
+            foreach (var text in new[]
+            {
+                "100i",
+                "999999999999999i"
+            })
+            {
+                yield return new ShortToken(
+                    SyntaxKind.NumericLiteralToken,
+                    text,
+                    new Complex(0, ParseDouble(text[..^1], 10)));
+            }
 
             // Hexadecimal
             foreach (var text in new[]
