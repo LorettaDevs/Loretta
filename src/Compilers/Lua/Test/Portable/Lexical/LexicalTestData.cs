@@ -192,7 +192,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 yield return new ShortToken(
                     SyntaxKind.NumericLiteralToken,
                     text,
-                    new Complex(0, ParseDouble(text[2..^1], 16)));
+                    new Complex(0, ParseDouble(text[..^1], 16)));
             }
 
             foreach (var text in new[]
@@ -204,7 +204,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 yield return new ShortToken(
                     SyntaxKind.NumericLiteralToken,
                     text,
-                    new Complex(0, ParseDouble(text[2..^1], 2)));
+                    new Complex(0, ParseDouble(text[..^1], 2)));
             }
 
             foreach (var text in new[]
