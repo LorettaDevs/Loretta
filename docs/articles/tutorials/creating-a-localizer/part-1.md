@@ -140,7 +140,7 @@ which can then be used for error reporting.
 changes between two versions of a file with [SourceText.GetTextChanges](xref:Loretta.CodeAnalysis.Text.SourceText.GetTextChanges*)
 or simply applying a set of changes to a file with [SourceText.WithChanges](xref:Loretta.CodeAnalysis.Text.SourceText.WithChanges*)
 
-### Our code up to this point
+#### Our code up to this point
 ```cs
 // See https://aka.ms/new-console-template for more information
 using Loretta.CodeAnalysis.Text;
@@ -235,7 +235,7 @@ A diagnostic contains important information about an error such as:
 For diagnostics, you can think of the @Loretta.CodeAnalysis.DiagnosticDescriptor as a class' definition and the
 @Loretta.CodeAnalysis.Diagnostic as the class' instance.
 
-### Our code up to this point
+#### Our code up to this point
 ```cs
 // See https://aka.ms/new-console-template for more information
 using Loretta.CodeAnalysis;
@@ -273,3 +273,155 @@ if (hasErrors)
 }
 return 0;
 ```
+
+## 4. Collecting function calls
+Now that we have the parsed tree from the file and have confirmed it does not have any errors, it is time for us
+to start extracting the function calls from the tree so that we can create local variables for them.
+
+To that we'll use one of the fundamental building blocks of working with trees in Loretta:
+the @Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.
+The walker allows us to go through every node of the tree recursively and only act upon the nodes we're interested
+in, which in our case is the @Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.
+
+Since we'll be implementing a new class for the walker we'll create a new file called `FunctionCallCollector.cs`
+which will start out with 3 `using`s for namespaces which we'll need as well as our namespace:
+```cs
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+namespace Localizer;
+```
+
+Then we need to actually create our class and make it inherit from @Loretta.CodeAnalysis.Lua.LuaSyntaxWalker as well
+as add a proper constructor for it passing [SyntaxWalkerDepth.Node](xref:Loretta.CodeAnalysis.SyntaxWalkerDepth.Node)
+to the @Loretta.CodeAnalysis.Lua.LuaSyntaxWalker constructor as we are not interested in anything below nodes for this
+walker:
+```cs
+internal class FunctionCallCollector : LuaSyntaxWalker
+{
+    private FunctionCallCollector() : base(SyntaxWalkerDepth.Node)
+    {
+    }
+}
+```
+
+The constructor is private because we'll be exposing the functionality of this class as a public static method and it being
+a @Loretta.CodeAnalysis.Lua.LuaSyntaxWalker will be an internal implementation detail of the class.
+
+But you might've noticed we're missing something. That's right! We're missing a list so we can store the function calls we'll
+be collecting!
+
+For that we'll be using an `ImmutableArray<FunctionCallExpressionSyntax>.Builder` so that later we can return an
+`ImmutableArray<FunctionCallExpressionSyntax>`:
+```cs
+internal class FunctionCallCollector : LuaSyntaxWalker
+{
+    private readonly ImmutableArray<FunctionCallExpressionSyntax>.Builder _functionCalls;
+
+    private FunctionCallCollector() : base(SyntaxWalkerDepth.Node)
+    {
+        _functionCalls = ImmutableArray.CreateBuilder<FunctionCallExpressionSyntax>();
+    }
+}
+```
+
+Now, we have to actually add the function calls to the list. We'll do that by overriding the
+@Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitFunctionCallExpression method so that we can do something whenever it finds a
+function call.
+It's also important to keep in mind we'll have to call the `base` method otherwise other function calls that might be contained inside the
+one we're visiting will not be visited.
+```cs
+    public override void VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+    {
+        _functionCalls.Add(node);
+        base.VisitFunctionCallExpression(node);
+    }
+```
+
+And lastly, let's add our public static method at the top of our class so that we can actually use this walker:
+```cs
+    public static ImmutableArray<FunctionCallExpressionSyntax> Collect(SyntaxNode node)
+    {
+        var collector = new FunctionCallCollector();
+        collector.Visit(node);
+        return collector._functionCalls.ToImmutable();
+    }
+```
+
+Now that we have our function call collector done, it's time for us to actually use it back in `Program.cs`:
+
+#### Our code so far
+##### [Program.cs](#tab/programcs-4)
+```cs
+// See https://aka.ms/new-console-template for more information
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Text;
+using Loretta.CodeAnalysis.Lua;
+
+if (args.Length < 1)
+{
+    Console.WriteLine("No file path provided!");
+    return 1;
+}
+if (!File.Exists(args[0]))
+{
+    Console.WriteLine("The specified file does not exist!");
+    return 1;
+}
+
+SourceText text;
+using (var stream = File.OpenRead(args[0]))
+    text = SourceText.From(stream);
+
+var parseOptions = new LuaParseOptions(LuaSyntaxOptions.All);
+var syntaxTree = LuaSyntaxTree.ParseText(text, parseOptions, args[0]);
+
+var hasErrors = false;
+foreach (var diagnostic in syntaxTree.GetDiagnostics().OrderByDescending(diag => diag.Severity))
+{
+    Console.WriteLine(diagnostic.ToString());
+    hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
+}
+if (hasErrors)
+{
+    Console.WriteLine("File has errors! Exiting...");
+    return 2;
+}
+return 0;
+```
+
+##### [FunctionCallCollector.cs](#tab/functioncallcollectorcs-4)
+```cs
+using System.Collections.Immutable;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+namespace Localizer;
+
+internal class FunctionCallCollector : LuaSyntaxWalker
+{
+    public static ImmutableArray<FunctionCallExpressionSyntax> Collect(SyntaxNode node)
+    {
+        var collector = new FunctionCallCollector();
+        collector.Visit(node);
+        return collector._functionCalls.ToImmutable();
+    }
+
+    private readonly ImmutableArray<FunctionCallExpressionSyntax>.Builder _functionCalls;
+
+    private FunctionCallCollector() : base(SyntaxWalkerDepth.Node)
+    {
+        _functionCalls = ImmutableArray.CreateBuilder<FunctionCallExpressionSyntax>();
+    }
+
+    public override void VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+    {
+        _functionCalls.Add(node);
+        base.VisitFunctionCallExpression(node);
+    }
+}
+```
+
+***
