@@ -251,6 +251,21 @@ namespace Loretta.CodeAnalysis.Lua
             Literal(ObjectDisplay.FormatLiteral(value, ObjectDisplayOptions.None), value);
 
         /// <summary>
+        /// Creates a token with kind NumericLiteralToken from a complex value.
+        /// </summary>
+        /// <param name="value">The complex value to be represented by the returned token.</param>
+        public static SyntaxToken Literal(Complex value)
+        {
+            if (value.Real != 0)
+            {
+                throw new ArgumentException("The value cannot have a real counterpart.", nameof(value));
+            }
+
+            return Literal(ObjectDisplay.FormatLiteral(value, ObjectDisplayOptions.None), value); 
+        }
+
+
+        /// <summary>
         /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte signed integer value.
         /// </summary>
         /// <param name="text">The raw text of the literal.</param>
@@ -303,8 +318,16 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="text">The raw text of the literal.</param>
         /// <param name="value">The complex value to be represented by the returned token.</param>
-        public static SyntaxToken Literal(string text, Complex value) =>
-            new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
+        public static SyntaxToken Literal(string text, Complex value) 
+        {
+            if (value.Real != 0)
+            {
+                throw new ArgumentException("The value cannot have a real counterpart.", nameof(value));
+            }
+
+            return new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
+        }
+            
 
         /// <summary>
         /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte floating point value.
@@ -323,8 +346,15 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">The raw text of the literal.</param>
         /// <param name="value">The complex value to be represented by the returned token.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public static SyntaxToken Literal(SyntaxTriviaList leading, string text, Complex value, SyntaxTriviaList trailing) =>
-            new(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
+        public static SyntaxToken Literal(SyntaxTriviaList leading, string text, Complex value, SyntaxTriviaList trailing)
+        {
+            if (value.Real != 0)
+            {
+                throw new ArgumentException("The value cannot have a real counterpart.", nameof(value));
+            }
+
+            return new(InternalSyntax.SyntaxFactory.Literal(leading.Node, text, value, trailing.Node));
+        }
 
         /// <summary>
         /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte floating point value.
