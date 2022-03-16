@@ -13,7 +13,7 @@ namespace Loretta.InternalBenchmarks
     [MemoryDiagnoser]
     public class ParseTimeBenchmark
     {
-        private static readonly LuaParseOptions _parseOptions = new(LuaSyntaxOptions.All);
+        private static readonly LuaParseOptions s_parseOptions = new(LuaSyntaxOptions.All);
 
         [ParamsSource(nameof(Files))]
         public TestFile File { get; set; }
@@ -30,6 +30,6 @@ namespace Loretta.InternalBenchmarks
 
         [Benchmark]
         public SyntaxTree Parse() =>
-            LuaSyntaxTree.ParseText(File.Text, _parseOptions, File.Name);
+            LuaSyntaxTree.ParseText(File.Text, s_parseOptions, File.Name);
     }
 }

@@ -13,7 +13,7 @@ namespace Loretta.InternalBenchmarks
     [MemoryDiagnoser]
     public class LexTimeBenchmark
     {
-        private static readonly LuaParseOptions _parseOptions = new(LuaSyntaxOptions.All);
+        private static readonly LuaParseOptions s_parseOptions = new(LuaSyntaxOptions.All);
 
         [ParamsSource(nameof(Files))]
         public TestFile File { get; set; }
@@ -30,6 +30,6 @@ namespace Loretta.InternalBenchmarks
 
         [Benchmark]
         public ImmutableArray<SyntaxToken> Lex() =>
-            SyntaxFactory.ParseTokens(File.Text, options: _parseOptions).ToImmutableArray();
+            SyntaxFactory.ParseTokens(File.Text, options: s_parseOptions).ToImmutableArray();
     }
 }

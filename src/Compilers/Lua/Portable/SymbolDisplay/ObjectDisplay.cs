@@ -318,11 +318,8 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
         /// <param name="options"></param>
         /// <param name="cultureInfo"></param>
         /// <returns></returns>
-        public static string FormatLiteral(Complex value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)
-        {
-            return FormatLiteral(value.Imaginary, options, cultureInfo) + "i";
-        }
-
+        public static string FormatLiteral(Complex value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null) =>
+            FormatLiteral(value.Imaginary, options, cultureInfo) + "i";
 
         private static CultureInfo GetFormatCulture(CultureInfo? cultureInfo) => cultureInfo ?? CultureInfo.InvariantCulture;
     }
