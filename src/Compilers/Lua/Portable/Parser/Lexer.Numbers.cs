@@ -58,15 +58,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             var (isUnsignedLong, isSignedLong, isComplex) = (false, false, false);
 
-            if (TextWindow.AdvanceIfMatches("ull"))
+            if (TextWindow.AdvanceIfMatches("ull", true))
             {
                 isUnsignedLong = true;
             }
-            else if (TextWindow.AdvanceIfMatches("ll"))
+            else if (TextWindow.AdvanceIfMatches("ll", true))
             {
                 isSignedLong = true;
             }
-            else if (TextWindow.AdvanceIfMatches("i"))
+            else if (TextWindow.AdvanceIfMatches("i", true))
             {
                 isComplex = true;
             }
@@ -212,7 +212,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             var (isUnsignedLong, isSignedLong, isComplex) = (false, false, false);
 
-            if (TextWindow.AdvanceIfMatches("ull"))
+            if (TextWindow.AdvanceIfMatches("ull", true))
             {
                 if (isFloat)
                 {
@@ -223,7 +223,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     isUnsignedLong = true;
                 }
             }
-            else if (TextWindow.AdvanceIfMatches("ll"))
+            else if (TextWindow.AdvanceIfMatches("ll", true))
             {
                 if (isFloat)
                 {
@@ -234,7 +234,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     isSignedLong = true;
                 }
             }
-            else if (TextWindow.AdvanceIfMatches("i"))
+            else if (TextWindow.AdvanceIfMatches("i", true))
             {
                 isComplex = true;
             }
@@ -328,7 +328,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             var (isUnsignedLong, isSignedLong, isComplex) = (false, false, false);
 
-            if (TextWindow.AdvanceIfMatches("ull"))
+            if (TextWindow.AdvanceIfMatches("ull", true))
             {
                 if (isHexFloat)
                 {
@@ -339,7 +339,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     isUnsignedLong = true;
                 }
             }
-            else if (TextWindow.AdvanceIfMatches("ll"))
+            else if (TextWindow.AdvanceIfMatches("ll", true))
             {
                 if (isHexFloat)
                 {
@@ -350,7 +350,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     isSignedLong = true;
                 }
             }
-            else if (TextWindow.AdvanceIfMatches("i"))
+            else if (TextWindow.AdvanceIfMatches("i", true))
             {
                 isComplex = true;
             }
