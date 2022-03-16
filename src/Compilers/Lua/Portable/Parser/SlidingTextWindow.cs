@@ -303,13 +303,22 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// If the next characters in the window match the given string,
         /// then advance past those characters.  Otherwise, do nothing.
         /// </summary>
-        public bool AdvanceIfMatches(string desired)
+        public bool AdvanceIfMatches(string desired, bool isCaseInsensitive = false)
         {
             var length = desired.Length;
 
             for (var i = 0; i < length; i++)
             {
-                if (PeekChar(i) != desired[i])
+                var character = PeekChar(i);
+
+                if (isCaseInsensitive)
+                {
+                    if (CharUtils.AsciiLowerCase(character) != desired[i])
+                    {
+                        return false;
+                    }
+                }
+                else if (character  != desired[i])
                 {
                     return false;
                 }
