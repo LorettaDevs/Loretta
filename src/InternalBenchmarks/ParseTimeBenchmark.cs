@@ -24,6 +24,7 @@ namespace Loretta.InternalBenchmarks
             {
                 yield return TestFile.Load("samples/benchies/anim.lua");
                 yield return TestFile.Load("samples/benchies/rustic.lua");
+                yield return TestFile.Load("samples/benchies/rustic-24mb.lua");
             }
         }
 

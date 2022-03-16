@@ -15,7 +15,7 @@ namespace Loretta.InternalBenchmarks
             SourceText text;
             using (var stream = File.OpenRead(path))
                 text = SourceText.From(stream);
-            return new TestFile(path, text);
+            return new TestFile(Path.GetFileName(path), text);
         }
 
         public string Name { get; }
