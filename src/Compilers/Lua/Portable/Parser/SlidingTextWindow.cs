@@ -316,14 +316,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 if (isCaseInsensitive)
                 {
-                    var characterString = character.ToString().ToLower();
-
-                    if (characterString != desired[i].ToString())
+                    if (char.ToLowerInvariant(character) != desired[i])
                     {
                         return true;
                     }
                 }
-                else if (character != desired[i])
+                else if (character  != desired[i])
                 {
                     return false;
                 }
