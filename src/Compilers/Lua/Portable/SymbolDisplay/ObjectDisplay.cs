@@ -49,6 +49,15 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             if (type == typeof(double))
                 return FormatLiteral((double) obj, options);
 
+            if (type == typeof(long))
+                return FormatLiteral((long) obj, options);
+
+            if (type == typeof(ulong))
+                return FormatLiteral((ulong) obj, options);
+
+            if (type == typeof(Complex))
+                return FormatLiteral((Complex) obj, options);
+
             return null;
         }
 
@@ -309,18 +318,8 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
         /// <param name="options"></param>
         /// <param name="cultureInfo"></param>
         /// <returns></returns>
-        public static string FormatLiteral(Complex value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)
-        {
-            if (options.IncludesOption(ObjectDisplayOptions.UseHexadecimalNumbers))
-            {
-                return $"0x{value.ToString("X", GetFormatCulture(cultureInfo))}i";
-            }
-            else
-            {
-                return value.ToString("D", GetFormatCulture(cultureInfo)) + "i";
-            }
-        }
-
+        public static string FormatLiteral(Complex value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null) =>
+            FormatLiteral(value.Imaginary, options, cultureInfo) + "i";
 
         private static CultureInfo GetFormatCulture(CultureInfo? cultureInfo) => cultureInfo ?? CultureInfo.InvariantCulture;
     }

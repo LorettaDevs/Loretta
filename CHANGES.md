@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- We've added support for LuaJIT imaginary numbers which also resulted in the following being added:
+	- `SyntaxFactory.Literal(Complex value)`;
+	- `SyntaxFactory.Literal(string text, Complex value)`;
+	- `SyntaxFactory.Literal(SyntaxTriviaList leading, string text, Complex value, SyntaxTriviaList trailing)`;
+	- `ObjectDisplay.FormatLiteral(Complex value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)`.
+
 ### Fixed
 - [Breaking] We've reviewed the existing `LuaSyntaxOptions` presets and the following were fixed:
 	- Changed the Lua 5.1 preset to accept shebangs;
@@ -27,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- Changed the Luau preset to not accept hex float literals;
 	- Changed the Luau preset to accept shebangs;
 	- Changed the Luau preset to not accept bitwise operators.
+- Fixed `ObjectDisplay.FormatPrimitive(object? obj, ObjectDisplayOptions options)` returning `null` for `long`s and `ulong`s.
 
 ## v0.2.9-beta.5
 ### Added
