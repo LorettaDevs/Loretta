@@ -305,9 +305,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// </summary>
         public bool AdvanceIfMatches(string desired, bool isCaseInsensitive = false)
         {
-            if (isCaseInsensitive)
-                desired = desired.ToLowerInvariant();
-
             var length = desired.Length;
 
             for (var i = 0; i < length; i++)
@@ -316,7 +313,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 if (isCaseInsensitive)
                 {
-                    if (char.ToLowerInvariant(character) != desired[i])
+                    if (CharUtils.AsciiLowerCase(character) != desired[i])
                     {
                         return true;
                     }
