@@ -315,7 +315,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 {
                     if (CharUtils.AsciiLowerCase(character) != desired[i])
                     {
-                        return true;
+                        return false;
                     }
                 }
                 else if (character  != desired[i])
