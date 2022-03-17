@@ -109,7 +109,11 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 "10ULL",
                 "20ULL",
                 "200005ULL",
-                "18446744073709551615ULL"
+                "18446744073709551615ULL",
+                "10uLL",
+                "20uLL",
+                "200005uLL",
+                "18446744073709551615uLL"
             })
             {
                 yield return new ShortToken(
@@ -123,7 +127,11 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 "10LL",
                 "20LL",
                 "200005LL",
-                "9223372036854775807LL"
+                "9223372036854775807LL",
+                "10lL",
+                "20lL",
+                "200005lL",
+                "9223372036854775807lL"
             })
             {
                 yield return new ShortToken(
@@ -137,7 +145,10 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             {
                 "0b0001LL",
                 "0b000111LL",
-                "0b0111111111111111111111111111111111111111111111111111111111111111LL"
+                "0b0111111111111111111111111111111111111111111111111111111111111111LL",
+                "0b0001lL",
+                "0b000111lL",
+                "0b0111111111111111111111111111111111111111111111111111111111111111lL"
             })
             {
                 yield return new ShortToken(
@@ -149,7 +160,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             foreach (var text in new[]
             {
                 "0x11000013d077020LL",
-                "0x7FFFFFFFFFFFFFFFLL"
+                "0x7FFFFFFFFFFFFFFFLL",
+                "0x11000013d077020lL",
+                "0x7FFFFFFFFFFFFFFFlL"
             })
             {
                 yield return new ShortToken(
@@ -162,7 +175,10 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             {
                 "0b0001ULL",
                 "0b000111ULL",
-                "0b1111111111111111111111111111111111111111111111111111111111111111ULL"
+                "0b1111111111111111111111111111111111111111111111111111111111111111ULL",
+                "0b0001uLl",
+                "0b000111uLl",
+                "0b1111111111111111111111111111111111111111111111111111111111111111uLl"
             })
             {
                 yield return new ShortToken(
@@ -174,7 +190,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             foreach (var text in new[]
             {
                 "0x11000013d077020ULL",
-                "0xFFFFFFFFFFFFFFFFULL"
+                "0xFFFFFFFFFFFFFFFFULL",
+                "0x11000013d077020uLl",
+                "0xFFFFFFFFFFFFFFFFuLl"
             })
             {
                 yield return new ShortToken(
@@ -186,7 +204,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             foreach (var text in new[]
             {
                 "0x11i",
-                "0x1020i"
+                "0x1020i",
+                "0x11I",
+                "0x1020I"
             })
             {
                 yield return new ShortToken(
@@ -210,7 +230,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             foreach (var text in new[]
             {
                 "100i",
-                "999999999999999i"
+                "999999999999999i",
+                "100I",
+                "999999999999999I"
             })
             {
                 yield return new ShortToken(
