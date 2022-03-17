@@ -1261,7 +1261,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
         [Fact]
         public void Parser_ParseTypeDeclarationStatementWithPow()
         {
-            ;
             UsingStatement("local a = b ^ b :: T");
 
             N(SyntaxKind.LocalVariableDeclarationStatement);
@@ -1296,6 +1295,61 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                                 N(SyntaxKind.IdentifierToken, "T");
                             }
                         }
+                    }
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParseEmptyTypePack()
+        {
+            UsingStatement("function a(): () end");
+
+            N(SyntaxKind.FunctionDeclarationStatement);
+            {
+                N(SyntaxKind.FunctionKeyword);
+                N(SyntaxKind.SimpleFunctionName);
+                {
+                    N(SyntaxKind.IdentifierToken, "a");
+                }
+                N(SyntaxKind.ParameterList);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+                N(SyntaxKind.TypeBinding);
+                {
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.TypePack);
+                    {
+                        N(SyntaxKind.OpenParenthesisToken);
+                        N(SyntaxKind.CloseParenthesisToken);
+                    }
+                }
+                M(SyntaxKind.StatementList);
+                N(SyntaxKind.EndKeyword);
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParseEmptyTypeArgument()
+        {
+            UsingStatement("type T = T<>");
+
+            N(SyntaxKind.TypeDeclarationStatement);
+            {
+                N(SyntaxKind.TypeKeyword);
+                N(SyntaxKind.IdentifierToken, "T");
+                N(SyntaxKind.EqualsToken);
+                N(SyntaxKind.SimpleTypeName);
+                {
+                    N(SyntaxKind.IdentifierToken, "T");
+                    N(SyntaxKind.TypeArgumentList);
+                    {
+                        N(SyntaxKind.LessThanToken);
+                        N(SyntaxKind.GreaterThanToken);
                     }
                 }
             }
