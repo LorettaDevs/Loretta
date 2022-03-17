@@ -220,18 +220,15 @@
             var lessThanToken = EatTokenWithPrejudice(SyntaxKind.LessThanToken);
             var typesBuilder = _pool.AllocateSeparated<TypeSyntax>();
 
-            if (PeekToken(1).Kind == SyntaxKind.LessThanToken)
+            while (CurrentToken.Kind is not (SyntaxKind.GreaterThanToken or SyntaxKind.EndOfFileToken))
             {
                 var type = ParseTypeArgument();
                 typesBuilder.Add(type);
-
-                while (CurrentToken.Kind is SyntaxKind.CommaToken)
+                
+                if (PeekToken(1).Kind is SyntaxKind.CommaToken)
                 {
                     var separator = EatToken(SyntaxKind.CommaToken);
                     typesBuilder.AddSeparator(separator);
-
-                    type = ParseTypeArgument();
-                    typesBuilder.Add(type);
                 }
             }
 
