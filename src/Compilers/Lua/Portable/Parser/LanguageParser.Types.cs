@@ -225,10 +225,14 @@
                 var type = ParseTypeArgument();
                 typesBuilder.Add(type);
                 
-                if (PeekToken(1).Kind is SyntaxKind.CommaToken)
+                if (CurrentToken.Kind is SyntaxKind.CommaToken)
                 {
                     var separator = EatToken(SyntaxKind.CommaToken);
                     typesBuilder.AddSeparator(separator);
+                }
+                else
+                {
+                    break;
                 }
             }
 
