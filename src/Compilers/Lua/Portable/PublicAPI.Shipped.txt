@@ -1344,6 +1344,7 @@ static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(bool v
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(double value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(long value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(string! value, Loretta.CodeAnalysis.ObjectDisplayOptions options) -> string!
+static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Numerics.Complex value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(ulong value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatPrimitive(object? obj, Loretta.CodeAnalysis.ObjectDisplayOptions options) -> string?
 static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NilLiteral.get -> string!
@@ -1465,12 +1466,15 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(long value) -> Loretta.Cod
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, double value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, long value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, string! value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, System.Numerics.Complex value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, ulong value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, double value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, long value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, string! value) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, System.Numerics.Complex value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, ulong value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! value) -> Loretta.CodeAnalysis.SyntaxToken
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(System.Numerics.Complex value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(ulong value) -> Loretta.CodeAnalysis.SyntaxToken
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralExpression(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax!
 static Loretta.CodeAnalysis.Lua.SyntaxFactory.LiteralExpression(Loretta.CodeAnalysis.Lua.SyntaxKind kind) -> Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax!

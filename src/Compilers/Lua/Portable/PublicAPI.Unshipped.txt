@@ -1,5 +1,1 @@
 ﻿#nullable enable
-static Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Numerics.Complex value, Loretta.CodeAnalysis.ObjectDisplayOptions options, System.Globalization.CultureInfo? cultureInfo = null) -> string!
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(Loretta.CodeAnalysis.SyntaxTriviaList leading, string! text, System.Numerics.Complex value, Loretta.CodeAnalysis.SyntaxTriviaList trailing) -> Loretta.CodeAnalysis.SyntaxToken
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(string! text, System.Numerics.Complex value) -> Loretta.CodeAnalysis.SyntaxToken
-static Loretta.CodeAnalysis.Lua.SyntaxFactory.Literal(System.Numerics.Complex value) -> Loretta.CodeAnalysis.SyntaxToken
