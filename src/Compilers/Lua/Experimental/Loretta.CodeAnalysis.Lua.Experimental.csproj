@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)../../../../build/LibraryProject.props" />
+    <Import Project="$(MSBuildThisFileDirectory)../../../../build/LibraryProject.props" />
 
-  <!-- Package data -->
-  <PropertyGroup>
-    <PackageId>Loretta.CodeAnalysis.Lua.Experimental</PackageId>
-    <Description>Experimental code that might become part of Loretta.CodeAnalysis.Lua.</Description>
-  </PropertyGroup>
+    <!-- Package data -->
+    <PropertyGroup>
+        <PackageId>Loretta.CodeAnalysis.Lua.Experimental</PackageId>
+        <Description>Experimental code that might become part of Loretta.CodeAnalysis.Lua.</Description>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Portable\Loretta.CodeAnalysis.Lua.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Portable\Loretta.CodeAnalysis.Lua.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    </ItemGroup>
 
 </Project>

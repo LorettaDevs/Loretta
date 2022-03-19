@@ -1,65 +1,65 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)../../../../build/LibraryProject.props" />
+    <Import Project="$(MSBuildThisFileDirectory)../../../../build/LibraryProject.props" />
 
-  <!-- Package data -->
-  <PropertyGroup>
-    <PackageId>Loretta.CodeAnalysis.Lua</PackageId>
-    <Description>A GLua/Lua lexer, parser, code analysis, transformation and generation library.</Description>
-  </PropertyGroup>
+    <!-- Package data -->
+    <PropertyGroup>
+        <PackageId>Loretta.CodeAnalysis.Lua</PackageId>
+        <Description>A GLua/Lua lexer, parser, code analysis, transformation and generation library.</Description>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- Enable output of generated files back into our Generated directory -->
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
-  </PropertyGroup>
+    <PropertyGroup>
+        <!-- Enable output of generated files back into our Generated directory -->
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.UnitTests" />
-    <InternalsVisibleTo Include="Loretta.CLI" />
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.StatisticsCollector" />
-    <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Experimental" />
-  </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.UnitTests" />
+        <InternalsVisibleTo Include="Loretta.CLI" />
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.StatisticsCollector" />
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Experimental" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
-    <PackageReference Include="Tsu" Version="2.1.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="System.Collections.Immutable" Version="5.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+        <PackageReference Include="Tsu" Version="2.1.1" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Tools\Loretta.Generators.ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxKindGenerator\Loretta.Generators.SyntaxKindGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxXml\Loretta.Generators.SyntaxXml.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="LuaResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LuaResources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxKindGenerator\Loretta.Generators.SyntaxKindGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxXml\Loretta.Generators.SyntaxXml.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="LuaResources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>LuaResources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="LuaResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LuaResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="LuaResources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>LuaResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
 
 
-  <ItemGroup Condition="'$(DocGen)' != 'true'">
-    <Folder Include="Generated\" />
+    <ItemGroup Condition="'$(DocGen)' != 'true'">
+        <Folder Include="Generated\" />
 
-    <AdditionalFiles Include="Syntax\Syntax.xml" />
-    <None Include="Syntax\Syntax.xsd" />
+        <AdditionalFiles Include="Syntax\Syntax.xml" />
+        <None Include="Syntax\Syntax.xsd" />
 
-    <!-- Don't include the output from a previous source generator execution into future runs; the */** trick here ensures that there's
+        <!-- Don't include the output from a previous source generator execution into future runs; the */** trick here ensures that there's
          at least one subdirectory, which is our key that it's coming from a source generator as opposed to something that is coming from
          some other tool. -->
-    <Compile Remove="$(CompilerGeneratedFilesOutputPath)/*/**/*.cs" />
-  </ItemGroup>
+        <Compile Remove="$(CompilerGeneratedFilesOutputPath)/*/**/*.cs" />
+    </ItemGroup>
 
 </Project>

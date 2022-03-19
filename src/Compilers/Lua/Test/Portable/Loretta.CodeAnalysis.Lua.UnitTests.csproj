@@ -1,45 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)../../../../../build/BaseProject.props" />
+    <Import Project="$(MSBuildThisFileDirectory)../../../../../build/BaseProject.props" />
 
-  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net472</TargetFrameworks>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+        <TargetFrameworks>net472</TargetFrameworks>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFrameworks>$(TargetFrameworks);net5.0;net6.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net5.0</TargetFrameworks>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net6.0;netcoreapp3.1;$(TargetFrameworks)</TargetFrameworks>
+        <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net6.0</TargetFrameworks>
+    </PropertyGroup>
 
-  <!-- Implicit Usings -->
-  <ItemGroup>
-    <Using Include="Loretta.Utilities" />
-  </ItemGroup>
+    <!-- Implicit Usings -->
+    <ItemGroup>
+        <Using Include="Loretta.Utilities" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-    <PackageReference Include="Tsu" Version="2.1.1" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="3.1.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.2.0-2.22114.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+        <PackageReference Include="Tsu" Version="2.1.1" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector" Version="3.1.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.2.0-2.22114.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
-    <ProjectReference Include="..\..\..\Core\Test\Utilities\Loretta.CodeAnalysis.Test.Utilities.csproj" />
-    <ProjectReference Include="..\..\..\Lua\Portable\Loretta.CodeAnalysis.Lua.csproj" />
-    <ProjectReference Include="..\..\Experimental\Loretta.CodeAnalysis.Lua.Experimental.csproj" />
-    <ProjectReference Include="..\Utilities\Loretta.CodeAnalysis.Lua.Test.Utilities.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
+        <ProjectReference Include="..\..\..\Core\Test\Utilities\Loretta.CodeAnalysis.Test.Utilities.csproj" />
+        <ProjectReference Include="..\..\..\Lua\Portable\Loretta.CodeAnalysis.Lua.csproj" />
+        <ProjectReference Include="..\..\Experimental\Loretta.CodeAnalysis.Lua.Experimental.csproj" />
+        <ProjectReference Include="..\Utilities\Loretta.CodeAnalysis.Lua.Test.Utilities.csproj" />
+    </ItemGroup>
 
 </Project>
