@@ -1,0 +1,9 @@
+.navbar > .container {
+  padding-left: 5px;
+}
+
+.navbar-brand {
+  width: 50px;
+  padding: 3px;
+  margin-right: 10px;
+}
