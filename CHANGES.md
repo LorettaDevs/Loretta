@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- Changed the Luau preset to accept shebangs;
 	- Changed the Luau preset to not accept bitwise operators.
 - Fixed `ObjectDisplay.FormatPrimitive(object? obj, ObjectDisplayOptions options)` returning `null` for `long`s and `ulong`s.
+- Fixed LuaJIT suffixes not being handled in a case-insensitive manner.
+- Fixed empty type argument lists not being accepted.
 
 ## v0.2.9-beta.5
 ### Added
