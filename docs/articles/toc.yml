@@ -5,8 +5,6 @@
   topicHref: basics/index.md
 - name: Syntax Options
   href: syntaxoptions.md
-- name: Tutorials
-  href: tutorials/toc.yml
 - name: Experimental Features
   href: experimental/toc.yml
   topicHref: experimental/index.md

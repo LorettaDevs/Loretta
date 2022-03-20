@@ -44,6 +44,8 @@
         "files": [
           "articles/**.md",
           "articles/**/toc.yml",
+          "tutorials/**.md",
+          "tutorials/**/toc.yml",
           "toc.yml",
           "*.md"
         ]
