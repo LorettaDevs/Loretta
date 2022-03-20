@@ -44,6 +44,8 @@
         "files": [
           "articles/**.md",
           "articles/**/toc.yml",
+          "tutorials/**.md",
+          "tutorials/**/toc.yml",
           "toc.yml",
           "*.md"
         ]
@@ -72,7 +74,8 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "templates/darkfx/darkfx"
+      "templates/darkfx/darkfx",
+      "templates/overrides"
     ],
     "postProcessors": [
       "ExtractSearchIndex"
@@ -81,8 +84,7 @@
       "_enableSearch": "true",
       "_appTitle": "Loretta",
       "_appFooter": "Copyright GGG KILLER",
-      "_disableBreadcrumb": true,
-      "_enableNewTab": true
+      "_appLogoPath": "images/logo.svg"
     },
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
