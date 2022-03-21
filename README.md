@@ -1,5 +1,5 @@
 # Loretta
-A C# (G)Lua lexer, parser, code analysis, transformation and code generation toolkit. For getting started, see the [Tutorial](https://ggg-killer.github.io/Loretta/tutorials/creating-a-localizer/part-1.html).
+A C# (G)Lua lexer, parser, code analysis, transformation and code generation toolkit. For getting started, see the [tutorial](https://ggg-killer.github.io/Loretta/tutorials/creating-a-localizer/part-1.html).
 
 [![Discord](https://img.shields.io/discord/946128539583914074?logo=discord&style=for-the-badge)](https://discord.gg/ExZxSxe7xQ)
 [![Loretta.CodeAnalysis.Lua](https://img.shields.io/nuget/v/Loretta.CodeAnalysis.Lua?label=Stable&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua)
@@ -18,7 +18,7 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
     - C style single line comment: `// ...`;
     - C style multi line comment: `/* */`;
 3. Characters accepted as part of identifiers by LuaJIT (emojis, non-rendering characters, [or basically any byte above `127`/`0x7F`](https://github.com/LuaJIT/LuaJIT/blob/e9af1abec542e6f9851ff2368e7f196b6382a44c/src/lj_char.c#L10-L13));
-4. Luau (Roblox Lua) syntax (partial):
+4. Luau (Roblox Lua) syntax:
     - Compound assignment: `+=`, `-=`, `*=`, `/=`, `^=`, `%=`, `..=`;
     - If expressions: `if a then b else c` and `if a then b elseif c then d else e`;
     - Typed lua syntax.
@@ -28,7 +28,7 @@ This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax 
     - Luau's `continue` which is a contextual keyword;
     - Garry's Mod's `continue` which is a full fledged keyword.
 
-TL;DR: This supports Lua 5.1, Lua 5.2, Lua 5.3, Lua 5.4, LuaJIT 2.0, LuaJIT 2.1, FiveM, GLua and (partially) Luau (Roblox Lua).
+TL;DR: This supports Lua 5.1, Lua 5.2, Lua 5.3, Lua 5.4, LuaJIT 2.0, LuaJIT 2.1, FiveM, GLua and Luau (Roblox Lua).
 
 ## Installing Loretta v0.2
 We have two NuGet packages:
@@ -40,7 +40,7 @@ We have two NuGet packages:
 
 ## Using Loretta v0.2
 
-The best source for getting started is the [Tutorial](https://ggg-killer.github.io/Loretta/tutorials/creating-a-localizer/part-1.html).
+The best source for getting started is the [tutorial](https://ggg-killer.github.io/Loretta/tutorials/creating-a-localizer/part-1.html).
 
 ### Parsing text
 1. (Optional) Pick a [`LuaSyntaxOptions` preset](src/Compilers/Lua/Portable/LuaSyntaxOptions.cs#L12-L104) and then create a `LuaParseOptions` from it. If no preset is picked, `LuaSyntaxOptions.All` is used by default;
