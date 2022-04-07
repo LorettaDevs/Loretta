@@ -7,36 +7,8 @@ using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
-    public class LexicalTests
+    public sealed class LexicalTests : LexicalTestsBase
     {
-        private static IEnumerable<SyntaxToken> Lex(string text, LuaSyntaxOptions? options = null) =>
-            SyntaxFactory.ParseTokens(text, options: new LuaParseOptions(options ?? LuaSyntaxOptions.All));
-
-        private static SyntaxToken LexToken(string text, LuaSyntaxOptions? options = null)
-        {
-            var result = default(SyntaxToken);
-            foreach (var token in Lex(text, options))
-            {
-                if (result.Kind() == SyntaxKind.None)
-                {
-                    result = token;
-                }
-                else if (token.Kind() == SyntaxKind.EndOfFileToken)
-                {
-                    continue;
-                }
-                else
-                {
-                    Assert.True(false, "More than one token was lexed: " + token);
-                }
-            }
-            if (result.Kind() == SyntaxKind.None)
-            {
-                Assert.True(false, "No tokens were lexed");
-            }
-            return result;
-        }
-
         [Theory]
         [Trait("Category", "Lexer/Diagnostics")]
         [InlineData("0b00000000000000000000000000000000000000000000000000000000000000001")]

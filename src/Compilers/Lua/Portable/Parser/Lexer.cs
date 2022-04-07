@@ -903,6 +903,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 {
                     TextWindow.AdvanceChar();
 
+                    // Skips the leading new line if we have any.
+                    _ = ScanEndOfLine();
+
                     var contentStart = TextWindow.Position;
                     int contentEnd;
                     while (true)
