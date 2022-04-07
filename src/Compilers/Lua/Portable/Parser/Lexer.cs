@@ -131,7 +131,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case SyntaxKind.NumericLiteralToken:
                     LorettaDebug.AssertNotNull(info.Text);
-                    LorettaDebug.Assert(info.ValueKind is ValueKind.Double or ValueKind.Long or ValueKind.ULong);
+                    LorettaDebug.Assert(info.ValueKind is ValueKind.Double or ValueKind.Long or ValueKind.ULong or ValueKind.Complex);
 
                     token = info.ValueKind switch
                     {
