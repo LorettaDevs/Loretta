@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Minifier | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Minifier | Loretta ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="minifier">Minifier</h1>
+
+<p>Confidence Level: Low</p>
+<p>Why is this experimental? Almost no testing and no support.</p>
+<h2 id="how-to-use">How to use</h2>
+<p>To use the minifier, just add the following using to the top of your file:</p>
+<pre><code class="lang-cs">using Loretta.CodeAnalysis.Lua.Experimental;
+</code></pre>
+<p>and then use one of the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.html#Loretta_CodeAnalysis_Lua_Experimental_LuaExtensions_Minify_"><code>Minify</code></a> extension methods to minify that tree.</p>
+<p>If you'd like to use a different naming strategy or slot allocator, you'll need the following using as well:</p>
+<pre><code class="lang-cs">using Loretta.CodeAnalysis.Lua.Experimental.Minifying;
+</code></pre>
+<p>The minifier has a few customization points (which are all optional):</p>
+<ol>
+<li><p>Naming strategies: naming strategies are what's used to convert slots (look in the &quot;How it Works&quot; section to learn about slots) into variable names;</p>
+<p>There are a few builtin naming strategies in <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.html"><code>NamingStrategies</code></a> with the default one being <a href="xref:Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.Alphabetical(System.Int32,System.Collections.Generic.IEnumerable%7BLoretta.CodeAnalysis.Lua.IScope%7D)"><code>Alphabetical</code></a>.</p>
+</li>
+<li><p>Slot allocators: slot allocators are for advanced usage so it is not recommended you write one unless if you know what you're doing.</p>
+<p>There are two builtin slot allocators (with the default being the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.html"><code>SortedSlotAllocator</code></a>):</p>
+<ul>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator.html"><code>SequentialSlotAllocator</code></a>: This is the simplest possible slot allocator that does not reuse slots even
+after they are released.
+By using this, every single renamed variable will have a unique name and names will not be reused.</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.html"><code>SortedSlotAllocator</code></a>: This is a slot allocator that will pick the first unused slot it has.
+By using this, variable names will be reused aggressively resulting in better compression but less readable code.</li>
+</ul>
+</li>
+</ol>
+<h3 id="examples">Examples</h3>
+<p>The following <code>Program.cs</code> file is a simple console program that will minify the code in a file passed as an argument:</p>
+<pre><code class="lang-cs">using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+using Loretta.CodeAnalysis.Lua.Experimental;
+using Loretta.CodeAnalysis.Lua.Experimental.Minifying;
+
+var path = args[1];
+
+// Read the file into a SourceText
+SourceText sourceText;
+using (var stream = File.OpenRead(path))
+    sourceText = SourceText.From(stream, Encoding.UTF8);
+
+// Parse the text into a tree
+var syntaxTree = LuaSyntaxTree.ParseText(sourceText, options: new LuaParseOptions(LuaSyntaxOptions.All), path: path);
+
+// Minify the tree.
+syntaxTree = syntaxTree.Minify();
+// Examples of alternative calls:
+// // Numeric variable names (_0, _1, _2, etc.):
+// syntaxTree = syntaxTree.Minify(NamingStrategies.Numerical);
+// // No variable name reuse:
+// syntaxTree = syntaxTree.Minify(NamingStrategies.Alphabetical, new SequentialSlotAllocator());
+
+// Write the tree back to the file
+using (var writer = File.OpenText(Path.ChangeExtension(path, &quot;.min.lua&quot;)))
+    syntaxTree.GetRoot().WriteTo(writer);
+</code></pre>
+<h2 id="how-does-it-work">How Does it Work?</h2>
+<p>Currently the minifier does 2 things: variable renaming and trivia removal.</p>
+<h3 id="renaming">Renaming</h3>
+<p>The renamer goes through the script and does the following choices:</p>
+<ul>
+<li>When it finds a new variable, it:
+<ul>
+<li>Allocates a slot for it with the provided <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.html"><code>ISlotAllocator</code></a>;</li>
+<li>Renames the variable with the name converted using the provided naming strategy.</li>
+</ul>
+</li>
+<li>When it finds an existing variable, it:
+<ul>
+<li>Renames the variable with the name converted using the provided naming strategy;</li>
+<li>Checks if this is the last use of the variable and then releases the slot if it is.</li>
+</ul>
+</li>
+</ul>
+<p>When naming a variable, the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy.html"><code>NamingStrategy</code></a> will generate a name that will not conflict with other names in the file.</p>
+<h3 id="trivia-removal">Trivia Removal</h3>
+<p>The trivial removal step removes all trivia (comments and whitespace) and only inserts a space where it would be necessary.</p>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="namingstrategy"><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy.html"><code>NamingStrategy</code></a></h3>
+<p>A naming strategy is provided two things:</p>
+<ul>
+<li>The slot to convert to a name;</li>
+<li>The scopes the name will be added to.</li>
+</ul>
+<p>The naming slot must:</p>
+<ul>
+<li>be deterministc (given the same slot and scope set it must generate the same variable name);</li>
+<li>not generate names that conflict with others in the provided scopes (or its parent scopes);</li>
+<li>generate valid identifier names.</li>
+</ul>
+<p>Since none of these are validated by the minifier, you should have your own test suite for it.</p>
+<h3 id="islotallocator"><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.html"><code>ISlotAllocator</code></a></h3>
+<p>A slot allocator has one main job: allocating slots (numbers) for variables.</p>
+<p>The minifier will request a slot from the allocator which will then be reserved for use until it is released.
+The slot allocator must not return a slot that is already allocated.</p>
+<p>The minifier does not validate if the allocator returns an already allocated slot so this must be checked with
+your own test suite.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/master/docs/articles/experimental/minifier.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              Copyright GGG KILLER
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

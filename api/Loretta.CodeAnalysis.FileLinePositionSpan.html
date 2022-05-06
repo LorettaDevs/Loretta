@@ -1,0 +1,744 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct FileLinePositionSpan
+   | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct FileLinePositionSpan
+   | Loretta ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan">
+  
+  
+  <h1 id="Loretta_CodeAnalysis_FileLinePositionSpan" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan" class="text-break">Struct FileLinePositionSpan
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a span of text in a source code file in terms of file name, line number, and offset within line.
+However, the file is actually whatever was passed in when asked to parse; there may not really be a file.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IEquatable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.html">Loretta.CodeAnalysis</a></h6>
+  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.dll</h6>
+  <h5 id="Loretta_CodeAnalysis_FileLinePositionSpan_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct FileLinePositionSpan</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan__ctor_System_String_Loretta_CodeAnalysis_Text_LinePosition_Loretta_CodeAnalysis_Text_LinePosition_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.%23ctor(System.String%2CLoretta.CodeAnalysis.Text.LinePosition%2CLoretta.CodeAnalysis.Text.LinePosition)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L58">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan__ctor_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.#ctor*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan__ctor_System_String_Loretta_CodeAnalysis_Text_LinePosition_Loretta_CodeAnalysis_Text_LinePosition_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.#ctor(System.String,Loretta.CodeAnalysis.Text.LinePosition,Loretta.CodeAnalysis.Text.LinePosition)">FileLinePositionSpan(String, LinePosition, LinePosition)</h4>
+  <div class="markdown level1 summary"><p>Initializes the <a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileLinePositionSpan(string path, LinePosition start, LinePosition end)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The file identifier - typically a relative or absolute path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.LinePosition.html">LinePosition</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The start line position.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.LinePosition.html">LinePosition</a></td>
+        <td><span class="parametername">end</span></td>
+        <td><p>The end line position.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan__ctor_System_String_Loretta_CodeAnalysis_Text_LinePositionSpan_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.%23ctor(System.String%2CLoretta.CodeAnalysis.Text.LinePositionSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L69">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan__ctor_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.#ctor*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan__ctor_System_String_Loretta_CodeAnalysis_Text_LinePositionSpan_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.#ctor(System.String,Loretta.CodeAnalysis.Text.LinePositionSpan)">FileLinePositionSpan(String, LinePositionSpan)</h4>
+  <div class="markdown level1 summary"><p>Initializes the <a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileLinePositionSpan(string path, LinePositionSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The file identifier - typically a relative or absolute path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.LinePositionSpan.html">LinePositionSpan</a></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>The span.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_EndLinePosition.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.EndLinePosition%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L44">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_EndLinePosition_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.EndLinePosition*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_EndLinePosition" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.EndLinePosition">EndLinePosition</h4>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="Loretta.CodeAnalysis.Text.LinePosition.html">LinePosition</a> of the end of the span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly LinePosition EndLinePosition { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.LinePosition.html">LinePosition</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_HasMappedPath.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.HasMappedPath%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L32">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_HasMappedPath_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.HasMappedPath*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_HasMappedPath" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.HasMappedPath">HasMappedPath</h4>
+  <div class="markdown level1 summary"><p>True if the <a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html#Loretta_CodeAnalysis_FileLinePositionSpan_Path">Path</a> is a mapped path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool HasMappedPath { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_FileLinePositionSpan_HasMappedPath_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A mapped path is a path specified in source via <code>#line</code> (C#) or <code>#ExternalSource</code> (VB) directives.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_IsValid.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.IsValid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L86">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_IsValid_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.IsValid*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_IsValid" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.IsValid">IsValid</h4>
+  <div class="markdown level1 summary"><p>Returns true if the span represents a valid location.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsValid { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_Path.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.Path%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L24">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_Path_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.Path*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_Path" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.Path">Path</h4>
+  <div class="markdown level1 summary"><p>Path, or null if the span represents an invalid value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string Path { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_FileLinePositionSpan_Path_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Path may be <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.empty">Empty</a> if not available.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_Span.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.Span%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L49">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_Span_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.Span*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_Span" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.Span">Span</h4>
+  <div class="markdown level1 summary"><p>Gets the span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly LinePositionSpan Span { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.LinePositionSpan.html">LinePositionSpan</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_StartLinePosition.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.StartLinePosition%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L38">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_StartLinePosition_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.StartLinePosition*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_StartLinePosition" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.StartLinePosition">StartLinePosition</h4>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="Loretta.CodeAnalysis.Text.LinePosition.html">LinePosition</a> of the start of the span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly LinePosition StartLinePosition { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.LinePosition.html">LinePosition</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_Equals_Loretta_CodeAnalysis_FileLinePositionSpan_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.Equals(Loretta.CodeAnalysis.FileLinePositionSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L96">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_Equals_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.Equals*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_Equals_Loretta_CodeAnalysis_FileLinePositionSpan_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.Equals(Loretta.CodeAnalysis.FileLinePositionSpan)">Equals(FileLinePositionSpan)</h4>
+  <div class="markdown level1 summary"><p>Determines if two FileLinePositionSpan objects are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(FileLinePositionSpan other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_FileLinePositionSpan_Equals_Loretta_CodeAnalysis_FileLinePositionSpan__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The path is treated as an opaque string, i.e. a case-sensitive comparison is used.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L106">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_Equals_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.Equals*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_Equals_System_Object_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Determines if two FileLinePositionSpan objects are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#system-valuetype-equals(system-object)">ValueType.Equals(Object)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_GetHashCode.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L115">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_GetHashCode_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.GetHashCode*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_GetHashCode" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Serves as a hash function for FileLinePositionSpan.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The hash code.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#system-valuetype-gethashcode">ValueType.GetHashCode()</a></div>
+  <h5 id="Loretta_CodeAnalysis_FileLinePositionSpan_GetHashCode_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The path is treated as an opaque string, i.e. a case-sensitive hash is calculated.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_ToString.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L122">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_ToString_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.ToString*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_ToString" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a> that represents FileLinePositionSpan.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The string representation of FileLinePositionSpan.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#system-valuetype-tostring">ValueType.ToString()</a></div>
+  <h5 id="Loretta_CodeAnalysis_FileLinePositionSpan_ToString_examples">Examples</h5>
+  <p>Path: (0,0)-(5,6)</p>
+
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_op_Equality_Loretta_CodeAnalysis_FileLinePositionSpan_Loretta_CodeAnalysis_FileLinePositionSpan_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.op_Equality(Loretta.CodeAnalysis.FileLinePositionSpan%2CLoretta.CodeAnalysis.FileLinePositionSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L130">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_op_Equality_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.op_Equality*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_op_Equality_Loretta_CodeAnalysis_FileLinePositionSpan_Loretta_CodeAnalysis_FileLinePositionSpan_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.op_Equality(Loretta.CodeAnalysis.FileLinePositionSpan,Loretta.CodeAnalysis.FileLinePositionSpan)">Equality(FileLinePositionSpan, FileLinePositionSpan)</h4>
+  <div class="markdown level1 summary"><p>Checks whether two spans are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(FileLinePositionSpan left, FileLinePositionSpan right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a></td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a></td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan_op_Inequality_Loretta_CodeAnalysis_FileLinePositionSpan_Loretta_CodeAnalysis_FileLinePositionSpan_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan.op_Inequality(Loretta.CodeAnalysis.FileLinePositionSpan%2CLoretta.CodeAnalysis.FileLinePositionSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L138">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_FileLinePositionSpan_op_Inequality_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.op_Inequality*"></a>
+  <h4 id="Loretta_CodeAnalysis_FileLinePositionSpan_op_Inequality_Loretta_CodeAnalysis_FileLinePositionSpan_Loretta_CodeAnalysis_FileLinePositionSpan_" data-uid="Loretta.CodeAnalysis.FileLinePositionSpan.op_Inequality(Loretta.CodeAnalysis.FileLinePositionSpan,Loretta.CodeAnalysis.FileLinePositionSpan)">Inequality(FileLinePositionSpan, FileLinePositionSpan)</h4>
+  <div class="markdown level1 summary"><p>Checks whether two spans are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(FileLinePositionSpan left, FileLinePositionSpan right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a></td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a></td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IEquatable&lt;&gt;</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_FileLinePositionSpan.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.FileLinePositionSpan%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Diagnostic/FileLinePositionSpan.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              Copyright GGG KILLER
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

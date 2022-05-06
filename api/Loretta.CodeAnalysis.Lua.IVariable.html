@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IVariable
+   | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IVariable
+   | Loretta ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Loretta.CodeAnalysis.Lua.IVariable">
+  
+  
+  <h1 id="Loretta_CodeAnalysis_Lua_IVariable" data-uid="Loretta.CodeAnalysis.Lua.IVariable" class="text-break">Interface IVariable
+  </h1>
+  <div class="markdown level0 summary"><p>The base interface for variables</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.Lua.html">Loretta.CodeAnalysis.Lua</a></h6>
+  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.Lua.dll</h6>
+  <h5 id="Loretta_CodeAnalysis_Lua_IVariable_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IVariable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_CapturingScopes.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.CapturingScopes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L42">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_CapturingScopes_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.CapturingScopes*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_CapturingScopes" data-uid="Loretta.CodeAnalysis.Lua.IVariable.CapturingScopes">CapturingScopes</h4>
+  <div class="markdown level1 summary"><p>All scopes that capture this variable as an upvalue.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;IScope&gt; CapturingScopes { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Lua.IScope.html">IScope</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_ContainingScope.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.ContainingScope%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L19">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_ContainingScope_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.ContainingScope*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_ContainingScope" data-uid="Loretta.CodeAnalysis.Lua.IVariable.ContainingScope">ContainingScope</h4>
+  <div class="markdown level1 summary"><p>The containing scope.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IScope ContainingScope { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.IScope.html">IScope</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_Declaration.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.Declaration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L32">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_Declaration_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.Declaration*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_Declaration" data-uid="Loretta.CodeAnalysis.Lua.IVariable.Declaration">Declaration</h4>
+  <div class="markdown level1 summary"><p>The node where this variable is declared.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SyntaxNode Declaration { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_Lua_IVariable_Declaration_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><span class="xref">null</span> if it is a global or implicit variable.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_Kind.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.Kind%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L14">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_Kind_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.Kind*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_Kind" data-uid="Loretta.CodeAnalysis.Lua.IVariable.Kind">Kind</h4>
+  <div class="markdown level1 summary"><p>The kind of this variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">VariableKind Kind { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.VariableKind.html">VariableKind</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_Name.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L24">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_Name_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.Name*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_Name" data-uid="Loretta.CodeAnalysis.Lua.IVariable.Name">Name</h4>
+  <div class="markdown level1 summary"><p>The variable's name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_ReadLocations.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.ReadLocations%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L47">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_ReadLocations_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.ReadLocations*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_ReadLocations" data-uid="Loretta.CodeAnalysis.Lua.IVariable.ReadLocations">ReadLocations</h4>
+  <div class="markdown level1 summary"><p>All locations this variable is read from.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;SyntaxNode&gt; ReadLocations { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_ReferencingScopes.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.ReferencingScopes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L37">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_ReferencingScopes_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.ReferencingScopes*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_ReferencingScopes" data-uid="Loretta.CodeAnalysis.Lua.IVariable.ReferencingScopes">ReferencingScopes</h4>
+  <div class="markdown level1 summary"><p>The scopes that reference this variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;IScope&gt; ReferencingScopes { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Lua.IScope.html">IScope</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_WriteLocations.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.WriteLocations%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L52">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_WriteLocations_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.WriteLocations*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_WriteLocations" data-uid="Loretta.CodeAnalysis.Lua.IVariable.WriteLocations">WriteLocations</h4>
+  <div class="markdown level1 summary"><p>All locations this variable is written to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;SyntaxNode&gt; WriteLocations { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable_CanBeAccessedIn_Loretta_CodeAnalysis_Lua_IScope_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable.CanBeAccessedIn(Loretta.CodeAnalysis.Lua.IScope)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L60">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_IVariable_CanBeAccessedIn_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.CanBeAccessedIn*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_IVariable_CanBeAccessedIn_Loretta_CodeAnalysis_Lua_IScope_" data-uid="Loretta.CodeAnalysis.Lua.IVariable.CanBeAccessedIn(Loretta.CodeAnalysis.Lua.IScope)">CanBeAccessedIn(IScope)</h4>
+  <div class="markdown level1 summary"><p>Returns whether this variable can be accessed in the
+provided scope.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CanBeAccessedIn(IScope scope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.IScope.html">IScope</a></td>
+        <td><span class="parametername">scope</span></td>
+        <td><p>The scope to check access in.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_IVariable.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.IVariable%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Lua/Portable/Scoping/IVariable.cs/#L8" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              Copyright GGG KILLER
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

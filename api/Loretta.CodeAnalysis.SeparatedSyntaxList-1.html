@@ -1,0 +1,1828 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct SeparatedSyntaxList&lt;TNode&gt;
+   | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct SeparatedSyntaxList&lt;TNode&gt;
+   | Loretta ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1">
+  
+  
+  <h1 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1" class="text-break">Struct SeparatedSyntaxList&lt;TNode&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a list of nodes separated by one token.
+May have a trailing node.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IEquatable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;&gt;</div>
+    <div><span class="xref">IReadOnlyList</span>&lt;TNode&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.html">Loretta.CodeAnalysis</a></h6>
+  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.dll</h6>
+  <h5 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct SeparatedSyntaxList&lt;TNode&gt;
+    where TNode : SyntaxNode</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Count.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Count%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L63">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Count_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Count*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Count" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Count">Count</h4>
+  <div class="markdown level1 summary"><p>The amount of nodes contained in this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_FullSpan.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.FullSpan%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L135">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_FullSpan_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.FullSpan*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_FullSpan" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.FullSpan">FullSpan</h4>
+  <div class="markdown level1 summary"><p>The absolute span of the list elements in characters, including the leading and trailing trivia of the first and last elements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TextSpan FullSpan { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L76">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Item_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Item*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Item_System_Int32_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Item(System.Int32)">Item[Int32]</h4>
+  <div class="markdown level1 summary"><p>Obtains a node from this list at the provided index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TNode this[int index] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_SeparatorCount.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.SeparatorCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L68">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_SeparatorCount_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.SeparatorCount*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_SeparatorCount" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.SeparatorCount">SeparatorCount</h4>
+  <div class="markdown level1 summary"><p>The amount of separators contained in this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int SeparatorCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Span.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Span%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L140">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Span_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Span*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Span" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Span">Span</h4>
+  <div class="markdown level1 summary"><p>The absolute span of the list elements in characters, not including the leading and trailing trivia of the first and last elements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TextSpan Span { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Add__0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Add(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L358">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Add_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Add*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Add__0_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Add(`0)">Add(TNode)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with the specified node added to the end.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; Add(TNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>The node to add.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_AddRange_System_Collections_IEnumerable__0__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.AddRange(System.Collections.IEnumerable%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L364">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_AddRange_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.AddRange*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_AddRange_System_Collections_IEnumerable__0__" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.AddRange(System.Collections.IEnumerable{`0})">AddRange(IEnumerable&lt;TNode&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with the specified nodes added to the end.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; AddRange(IEnumerable&lt;TNode&gt; nodes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerable</span>&lt;TNode&gt;</td>
+        <td><span class="parametername">nodes</span></td>
+        <td><p>The nodes to add.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Any.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Any%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L300">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Any_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Any*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Any" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Any">Any()</h4>
+  <div class="markdown level1 summary"><p>Returns whether this list contains any elements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool Any()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Contains__0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Contains(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L209">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Contains_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Contains*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Contains__0_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Contains(`0)">Contains(TNode)</h4>
+  <div class="markdown level1 summary"><p>Returns whether this list contains the provided node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool Contains(TNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">node</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Equals_Loretta_CodeAnalysis_SeparatedSyntaxList__0__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Equals(Loretta.CodeAnalysis.SeparatedSyntaxList%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L345">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Equals_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Equals*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Equals_Loretta_CodeAnalysis_SeparatedSyntaxList__0__" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Equals(Loretta.CodeAnalysis.SeparatedSyntaxList{`0})">Equals(SeparatedSyntaxList&lt;TNode&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool Equals(SeparatedSyntaxList&lt;TNode&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L348">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Equals_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Equals*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Equals_System_Object_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override readonly bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#system-valuetype-equals(system-object)">ValueType.Equals(Object)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_First.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.First%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L166">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_First_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.First*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_First" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.First">First()</h4>
+  <div class="markdown level1 summary"><p>Returns the first node in this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TNode First()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_FirstOrDefault.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.FirstOrDefault%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L173">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_FirstOrDefault_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.FirstOrDefault*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_FirstOrDefault" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.FirstOrDefault">FirstOrDefault()</h4>
+  <div class="markdown level1 summary"><p>Returns the first node in this list if any, otherwise returns
+the default value for the type of node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TNode FirstOrDefault()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetEnumerator.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L570">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetEnumerator_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetEnumerator*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetEnumerator" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Returns the enumerator for this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt;.Enumerator GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.Enumerator.html">SeparatedSyntaxList.Enumerator</a>&lt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetHashCode.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L352">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetHashCode_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetHashCode*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetHashCode" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override readonly int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#system-valuetype-gethashcode">ValueType.GetHashCode()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetSeparator_System_Int32_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.GetSeparator(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L108">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetSeparator_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetSeparator*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetSeparator_System_Int32_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetSeparator(System.Int32)">GetSeparator(Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the separator at the given index in this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SyntaxToken GetSeparator(int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetSeparators.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.GetSeparators%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L129">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetSeparators_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetSeparators*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetSeparators" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetSeparators">GetSeparators()</h4>
+  <div class="markdown level1 summary"><p>Returns the sequence of just the separator tokens.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly IEnumerable&lt;SyntaxToken&gt; GetSeparators()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetWithSeparators.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.GetWithSeparators%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L324">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetWithSeparators_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetWithSeparators*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_GetWithSeparators" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.GetWithSeparators">GetWithSeparators()</h4>
+  <div class="markdown level1 summary"><p>Returns the entire list including the separators.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SyntaxNodeOrTokenList GetWithSeparators()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxNodeOrTokenList.html">SyntaxNodeOrTokenList</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_IndexOf__0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.IndexOf(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L216">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_IndexOf_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.IndexOf*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_IndexOf__0_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.IndexOf(`0)">IndexOf(TNode)</h4>
+  <div class="markdown level1 summary"><p>Returns the index of the provided node in this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int IndexOf(TNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">node</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>-1 if the node was not found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_IndexOf_Func__0_System_Boolean__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.IndexOf(Func%7B%600%2CSystem.Boolean%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L234">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_IndexOf_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.IndexOf*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_IndexOf_Func__0_System_Boolean__" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.IndexOf(Func{`0,System.Boolean})">IndexOf(Func&lt;TNode, Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the index of the first node that passes the provided predicate in this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int IndexOf(Func&lt;TNode, bool&gt; predicate)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TNode, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">predicate</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>-1 if not found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Insert_System_Int32__0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Insert(System.Int32%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L372">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Insert_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Insert*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Insert_System_Int32__0_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Insert(System.Int32,`0)">Insert(Int32, TNode)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with the specified node inserted at the index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; Insert(int index, TNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index to insert at.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>The node to insert.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_InsertRange_System_Int32_System_Collections_IEnumerable__0__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.InsertRange(System.Int32%2CSystem.Collections.IEnumerable%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L380">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_InsertRange_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.InsertRange*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_InsertRange_System_Int32_System_Collections_IEnumerable__0__" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.InsertRange(System.Int32,System.Collections.IEnumerable{`0})">InsertRange(Int32, IEnumerable&lt;TNode&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with the specified nodes inserted at the index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; InsertRange(int index, IEnumerable&lt;TNode&gt; nodes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index to insert at.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerable</span>&lt;TNode&gt;</td>
+        <td><span class="parametername">nodes</span></td>
+        <td><p>The nodes to insert.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Last.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Last%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L187">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Last_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Last*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Last" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Last">Last()</h4>
+  <div class="markdown level1 summary"><p>Returns the last element in this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TNode Last()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastIndexOf__0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.LastIndexOf(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L265">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastIndexOf_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.LastIndexOf*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastIndexOf__0_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.LastIndexOf(`0)">LastIndexOf(TNode)</h4>
+  <div class="markdown level1 summary"><p>Returns the index of the last node that is equal to the provided one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int LastIndexOf(TNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">node</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>-1 if not found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastIndexOf_Func__0_System_Boolean__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.LastIndexOf(Func%7B%600%2CSystem.Boolean%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L283">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastIndexOf_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.LastIndexOf*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastIndexOf_Func__0_System_Boolean__" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.LastIndexOf(Func{`0,System.Boolean})">LastIndexOf(Func&lt;TNode, Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the index of the last node that passes the provided predicate in this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int LastIndexOf(Func&lt;TNode, bool&gt; predicate)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TNode, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">predicate</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>-1 if not found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastOrDefault.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.LastOrDefault%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L194">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastOrDefault_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.LastOrDefault*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_LastOrDefault" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.LastOrDefault">LastOrDefault()</h4>
+  <div class="markdown level1 summary"><p>Returns the last element in this list if any, otherwise returns
+the default value for the node type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TNode LastOrDefault()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Remove__0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Remove(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L461">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Remove_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Remove*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Remove__0_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Remove(`0)">Remove(TNode)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with specified element removed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; Remove(TNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>The element to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_RemoveAt_System_Int32_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.RemoveAt(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L447">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_RemoveAt_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.RemoveAt*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_RemoveAt_System_Int32_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.RemoveAt(System.Int32)">RemoveAt(Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with the element at the specified index removed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; RemoveAt(int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index of the element to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_Replace__0__0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.Replace(%600%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L491">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Replace_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Replace*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_Replace__0__0_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.Replace(`0,`0)">Replace(TNode, TNode)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with the specified element replaced by the new node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; Replace(TNode nodeInList, TNode newNode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">nodeInList</span></td>
+        <td><p>The element to replace.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">newNode</span></td>
+        <td><p>The new node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_ReplaceRange__0_System_Collections_IEnumerable__0__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.ReplaceRange(%600%2CSystem.Collections.IEnumerable%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L507">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_ReplaceRange_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.ReplaceRange*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_ReplaceRange__0_System_Collections_IEnumerable__0__" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.ReplaceRange(`0,System.Collections.IEnumerable{`0})">ReplaceRange(TNode, IEnumerable&lt;TNode&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with the specified element replaced by the new nodes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; ReplaceRange(TNode nodeInList, IEnumerable&lt;TNode&gt; newNodes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TNode</span></td>
+        <td><span class="parametername">nodeInList</span></td>
+        <td><p>The element to replace.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerable</span>&lt;TNode&gt;</td>
+        <td><span class="parametername">newNodes</span></td>
+        <td><p>The new nodes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_ReplaceSeparator_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.ReplaceSeparator(Loretta.CodeAnalysis.SyntaxToken%2CLoretta.CodeAnalysis.SyntaxToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L537">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_ReplaceSeparator_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.ReplaceSeparator*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_ReplaceSeparator_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.ReplaceSeparator(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)">ReplaceSeparator(SyntaxToken, SyntaxToken)</h4>
+  <div class="markdown level1 summary"><p>Creates a new list with the specified separator token replaced with the new separator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SeparatedSyntaxList&lt;TNode&gt; ReplaceSeparator(SyntaxToken separatorToken, SyntaxToken newSeparator)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a></td>
+        <td><span class="parametername">separatorToken</span></td>
+        <td><p>The separator token to be replaced.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a></td>
+        <td><span class="parametername">newSeparator</span></td>
+        <td><p>The new separator token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_ToFullString.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.ToFullString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L160">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_ToFullString_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.ToFullString*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_ToFullString" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.ToFullString">ToFullString()</h4>
+  <div class="markdown level1 summary"><p>Returns the full string representation of the nodes in this list including separators,
+the first node's leading trivia, and the last node or token's trailing trivia.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string ToFullString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The full string representation of the nodes in this list including separators including separators,
+the first node's leading trivia, and the last node or token's trailing trivia.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_ToString.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L150">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_ToString_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.ToString*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_ToString" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns the string representation of the nodes in this list including separators but not including
+the first node's leading trivia and the last node or token's trailing trivia.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override readonly string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The string representation of the nodes in this list including separators but not including
+the first node's leading trivia and the last node or token's trailing trivia.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#system-valuetype-tostring">ValueType.ToString()</a></div>
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Equality_Loretta_CodeAnalysis_SeparatedSyntaxList__0__Loretta_CodeAnalysis_SeparatedSyntaxList__0__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.op_Equality(Loretta.CodeAnalysis.SeparatedSyntaxList%7B%600%7D%2CLoretta.CodeAnalysis.SeparatedSyntaxList%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L332">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Equality_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.op_Equality*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Equality_Loretta_CodeAnalysis_SeparatedSyntaxList__0__Loretta_CodeAnalysis_SeparatedSyntaxList__0__" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.op_Equality(Loretta.CodeAnalysis.SeparatedSyntaxList{`0},Loretta.CodeAnalysis.SeparatedSyntaxList{`0})">Equality(SeparatedSyntaxList&lt;TNode&gt;, SeparatedSyntaxList&lt;TNode&gt;)</h4>
+  <div class="markdown level1 summary"><p>Checks whether a list is equal to another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(SeparatedSyntaxList&lt;TNode&gt; left, SeparatedSyntaxList&lt;TNode&gt; right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Implicit_Loretta_CodeAnalysis_SeparatedSyntaxList__0___Loretta_CodeAnalysis_SeparatedSyntaxList_Loretta_CodeAnalysis_SyntaxNode_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.op_Implicit(Loretta.CodeAnalysis.SeparatedSyntaxList%7B%600%7D)~Loretta.CodeAnalysis.SeparatedSyntaxList%7BLoretta.CodeAnalysis.SyntaxNode%7D%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L596">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Implicit_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.op_Implicit*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Implicit_Loretta_CodeAnalysis_SeparatedSyntaxList__0___Loretta_CodeAnalysis_SeparatedSyntaxList_Loretta_CodeAnalysis_SyntaxNode_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.op_Implicit(Loretta.CodeAnalysis.SeparatedSyntaxList{`0})~Loretta.CodeAnalysis.SeparatedSyntaxList{Loretta.CodeAnalysis.SyntaxNode}">Implicit(SeparatedSyntaxList&lt;TNode&gt; to SeparatedSyntaxList&lt;SyntaxNode&gt;)</h4>
+  <div class="markdown level1 summary"><p>Converts a typed node list into an opaquely typed node list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator SeparatedSyntaxList&lt;SyntaxNode&gt;(SeparatedSyntaxList&lt;TNode&gt; nodes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td><span class="parametername">nodes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;<a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Implicit_Loretta_CodeAnalysis_SeparatedSyntaxList_Loretta_CodeAnalysis_SyntaxNode___Loretta_CodeAnalysis_SeparatedSyntaxList__0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.op_Implicit(Loretta.CodeAnalysis.SeparatedSyntaxList%7BLoretta.CodeAnalysis.SyntaxNode%7D)~Loretta.CodeAnalysis.SeparatedSyntaxList%7B%600%7D%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L603">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Implicit_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.op_Implicit*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Implicit_Loretta_CodeAnalysis_SeparatedSyntaxList_Loretta_CodeAnalysis_SyntaxNode___Loretta_CodeAnalysis_SeparatedSyntaxList__0_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.op_Implicit(Loretta.CodeAnalysis.SeparatedSyntaxList{Loretta.CodeAnalysis.SyntaxNode})~Loretta.CodeAnalysis.SeparatedSyntaxList{`0}">Implicit(SeparatedSyntaxList&lt;SyntaxNode&gt; to SeparatedSyntaxList&lt;TNode&gt;)</h4>
+  <div class="markdown level1 summary"><p>Converts a list of opaquely typed nodes into a list of typed nodes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator SeparatedSyntaxList&lt;TNode&gt;(SeparatedSyntaxList&lt;SyntaxNode&gt; nodes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;<a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a>&gt;</td>
+        <td><span class="parametername">nodes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Inequality_Loretta_CodeAnalysis_SeparatedSyntaxList__0__Loretta_CodeAnalysis_SeparatedSyntaxList__0__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.op_Inequality(Loretta.CodeAnalysis.SeparatedSyntaxList%7B%600%7D%2CLoretta.CodeAnalysis.SeparatedSyntaxList%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L341">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Inequality_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.op_Inequality*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_op_Inequality_Loretta_CodeAnalysis_SeparatedSyntaxList__0__Loretta_CodeAnalysis_SeparatedSyntaxList__0__" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.op_Inequality(Loretta.CodeAnalysis.SeparatedSyntaxList{`0},Loretta.CodeAnalysis.SeparatedSyntaxList{`0})">Inequality(SeparatedSyntaxList&lt;TNode&gt;, SeparatedSyntaxList&lt;TNode&gt;)</h4>
+  <div class="markdown level1 summary"><p>Checks whether two lists are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(SeparatedSyntaxList&lt;TNode&gt; left, SeparatedSyntaxList&lt;TNode&gt; right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList</a>&lt;TNode&gt;</td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1_System_Collections_IEnumerable_GetEnumerator.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601.System%23Collections%23IEnumerable%23GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.cs/#L582">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_System_Collections_IEnumerable_GetEnumerator_" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="Loretta_CodeAnalysis_SeparatedSyntaxList_1_System_Collections_IEnumerable_GetEnumerator" data-uid="Loretta.CodeAnalysis.SeparatedSyntaxList`1.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">readonly IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IEquatable&lt;&gt;</span>
+  </div>
+  <div>
+      <span class="xref">IReadOnlyList&lt;&gt;</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Loretta.CodeAnalysis.LuaExtensions.html#Loretta_CodeAnalysis_LuaExtensions_IndexOf__1_Loretta_CodeAnalysis_SeparatedSyntaxList___0__Loretta_CodeAnalysis_Lua_SyntaxKind_">LuaExtensions.IndexOf&lt;TNode&gt;(SeparatedSyntaxList&lt;TNode&gt;, SyntaxKind)</a>
+  </div>
+  <div>
+      <a class="xref" href="Loretta.CodeAnalysis.LuaExtensions.html#Loretta_CodeAnalysis_LuaExtensions_Any__1_Loretta_CodeAnalysis_SeparatedSyntaxList___0__Loretta_CodeAnalysis_Lua_SyntaxKind_">LuaExtensions.Any&lt;TNode&gt;(SeparatedSyntaxList&lt;TNode&gt;, SyntaxKind)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/new/master/apiSpec/new?filename=Loretta_CodeAnalysis_SeparatedSyntaxList_1.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SeparatedSyntaxList%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/master/src/Compilers/Core/Portable/Syntax/SeparatedSyntaxList.Enumerator.cs/#L9" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              Copyright GGG KILLER
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

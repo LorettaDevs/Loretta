@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Getting started with Loretta | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Getting started with Loretta | Loretta ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="articles/intro.md">
+<h1 id="getting-started-with-loretta">Getting started with Loretta</h1>
+
+<h2 id="installing-loretta-v02">Installing Loretta v0.2</h2>
+<p>We have two NuGet packages:</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Stable</th>
+<th>Latest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><a href="https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua"><img src="https://img.shields.io/nuget/v/Loretta.CodeAnalysis.Lua?style=for-the-badge" alt="Loretta.CodeAnalysis.Lua"></a></td>
+<td><a href="https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua/latest"><img src="https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua?style=for-the-badge" alt="Loretta.CodeAnalysis.Lua"></a></td>
+</tr>
+<tr>
+<td>Experimental</td>
+<td><a href="https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua.Experimental"><img src="https://img.shields.io/nuget/v/Loretta.CodeAnalysis.Lua.Experimental?style=for-the-badge" alt="Loretta.CodeAnalysis.Lua.Experimental"></a></td>
+<td><a href="https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua.Experimental/latest"><img src="https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua.Experimental?style=for-the-badge" alt="Loretta.CodeAnalysis.Lua.Experimental"></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="using-loretta-v02">Using Loretta v0.2</h2>
+<h3 id="parsing-text">Parsing text</h3>
+<ol>
+<li>(Optional) Pick a <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html"><code>LuaSyntaxOptions</code> preset</a> and then create a <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.LuaParseOptions.html"><code>LuaParseOptions</code></a> from it. If no preset is picked, <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_All"><code>LuaSyntaxOptions.All</code></a> is used by default;</li>
+<li>(Optional) Create a <a class="xref" href="../api/Loretta.CodeAnalysis.Text.SourceText.html"><code>SourceText</code></a> from your code (using one of the <a class="xref" href="../api/Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_From_"><code>SourceText.From</code></a> overloads);</li>
+<li>Call <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html#Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_"><code>LuaSyntaxTree.ParseText</code></a> with your <a class="xref" href="../api/Loretta.CodeAnalysis.Text.SourceText.html"><code>SourceText</code></a>/<code>string</code>, (optional) <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.LuaParseOptions.html"><code>LuaParseOptions</code></a>, (optional) <code>path</code> and (optional) <code>CancellationToken</code>;</li>
+<li>Do whatever you want with the returned <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html"><code>LuaSyntaxTree</code></a>.</li>
+</ol>
+<h4 id="formatting-code">Formatting Code</h4>
+<p>The <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.SyntaxExtensions.html#Loretta_CodeAnalysis_Lua_SyntaxExtensions_NormalizeWhitespace_"><code>NormalizeWhitespace</code></a> method replaces all whitespace and and end of line trivia by normalized (standard code style) ones.</p>
+<h3 id="accessing-scope-information">Accessing scope information</h3>
+<p>If you'd like to get scoping and variable information, create a new <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Script.html"><code>Script</code></a> from your <a class="xref" href="../api/Loretta.CodeAnalysis.SyntaxTree.html"><code>SyntaxTree</code></a>s and then do one of the following:</p>
+<ul>
+<li>Access <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Script.html#Loretta_CodeAnalysis_Lua_Script_RootScope"><code>Script.RootScope</code></a> to get the global scope;</li>
+<li>Call <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Script.html#Loretta_CodeAnalysis_Lua_Script_GetScope_Loretta_CodeAnalysis_SyntaxNode_"><code>Script.GetScope(SyntaxNode)</code></a> or <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Script.html#Loretta_CodeAnalysis_Lua_Script_FindScope_Loretta_CodeAnalysis_SyntaxNode_Loretta_CodeAnalysis_Lua_ScopeKind_"><code>Script.FindScope(SyntaxNode, ScopeKind)</code></a> to get an <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IScope.html"><code>IScope</code></a>;</li>
+<li>Call <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Script.html#Loretta_CodeAnalysis_Lua_Script_GetVariable_Loretta_CodeAnalysis_SyntaxNode_"><code>Script.GetVariable(SyntaxNode)</code></a> to get an <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html"><code>IVariable</code></a>;</li>
+<li>Call <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Script.html#Loretta_CodeAnalysis_Lua_Script_GetLabel_Loretta_CodeAnalysis_SyntaxNode_"><code>Script.GetLabel(SyntaxNode)</code></a> on a <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.GotoStatementSyntax.html"><code>GotoStatementSyntax</code></a> or a <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.html"><code>GotoLabelStatementSyntax</code></a> to get an <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IGotoLabel.html"><code>IGotoLabel</code></a>;</li>
+</ul>
+<h4 id="using-variables">Using Variables</h4>
+<p>There are 4 kinds of variables:</p>
+<ul>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.VariableKind.html#Loretta_CodeAnalysis_Lua_VariableKind_Local"><code>VariableKind.Local</code></a> a variable declared in one of the following nodes:
+<ul>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax.html"><code>LocalVariableDeclarationStatementSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.html"><code>LocalFunctionDeclarationStatementSyntax</code></a>.</li>
+</ul>
+</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.VariableKind.html#Loretta_CodeAnalysis_Lua_VariableKind_Global"><code>VariableKind.Global</code></a> a variable used without a previous declaration;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.VariableKind.html#Loretta_CodeAnalysis_Lua_VariableKind_Parameter"><code>VariableKind.Parameter</code></a> a function <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax.html">parameter</a>.</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.VariableKind.html#Loretta_CodeAnalysis_Lua_VariableKind_Iteration"><code>VariableKind.Iteration</code></a> a variable that is an iteration variable from a <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.html"><code>NumericForStatementSyntax</code></a> or <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.html"><code>GenericForStatementSyntax</code></a>;</li>
+</ul>
+<p>The interface for variables is <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html"><code>IVariable</code></a> which exposes the following information:</p>
+<ul>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html#Loretta_CodeAnalysis_Lua_IVariable_Kind"><code>IVariable.Kind</code></a>- The <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.VariableKind.html"><code>VariableKind</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html#Loretta_CodeAnalysis_Lua_IVariable_ContainingScope"><code>IVariable.ContainingScope</code></a> - The containing scope;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html#Loretta_CodeAnalysis_Lua_IVariable_Name"><code>IVariable.Name</code></a> - The variable name (might be <code>...</code> for varargs);</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html#Loretta_CodeAnalysis_Lua_IVariable_Declaration"><code>IVariable.Declaration</code></a> - The place where the variable was declared (<code>null</code> for the implcit <code>arg</code> and <code>...</code> variables available in all files and global variables);</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html#Loretta_CodeAnalysis_Lua_IVariable_ReferencingScopes"><code>IVariable.ReferencingScopes</code></a> - The scopes that have statements that <strong>directly</strong> reference this variable;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html#Loretta_CodeAnalysis_Lua_IVariable_CapturingScopes"><code>IVariable.CapturingScopes</code></a> - Scopes that capture this variable as an upvalue;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html#Loretta_CodeAnalysis_Lua_IVariable_ReadLocations"><code>IVariable.ReadLocations</code></a> - Nodes that read from this variable;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IVariable.html#Loretta_CodeAnalysis_Lua_IVariable_WriteLocations"><code>IVariable.WriteLocations</code></a> - Nodes that write to this variable;</li>
+</ul>
+<h4 id="using-scopes">Using Scopes</h4>
+<p>There are 4 kinds of scopes:</p>
+<ul>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.ScopeKind.html#Loretta_CodeAnalysis_Lua_ScopeKind_Global"><code>ScopeKind.Global</code></a> - There is only one of these, the <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Script.html#Loretta_CodeAnalysis_Lua_Script_RootScope"><code>Script.RootScope</code></a>. It implements <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IScope.html"><code>IScope</code></a> and only contains globals;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.ScopeKind.html#Loretta_CodeAnalysis_Lua_ScopeKind_File"><code>ScopeKind.File</code></a> - These implement <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IFileScope.html"><code>IFileScope</code></a> and are the scope for <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.html"><code>CompilationUnitSyntax</code>es</a> which are a file's root node;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.ScopeKind.html#Loretta_CodeAnalysis_Lua_ScopeKind_Function"><code>ScopeKind.Function</code></a> - These implement <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IFunctionScope.html"><code>IFunctionScope</code></a> and are generated for these nodes:
+<ul>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.html"><code>AnonymousFunctionExpressionSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.html"><code>LocalFunctionDeclarationStatementSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.html"><code>FunctionDeclarationStatementSyntax</code></a>.</li>
+</ul>
+</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.ScopeKind.html#Loretta_CodeAnalysis_Lua_ScopeKind_Block"><code>ScopeKind.Block</code></a> - These implement only <a class="xref" href="../api/Loretta.CodeAnalysis.Lua.IScope.html"><code>IScope</code></a> and are generated for normal blocks from these nodes:
+<ul>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.html"><code>NumericForStatementSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.html"><code>GenericForStatementSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.html"><code>WhileStatementSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax.html"><code>RepeatUntilStatementSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.html"><code>IfStatementSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax.html"><code>ElseIfClauseSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.ElseClauseSyntax.html"><code>ElseClauseSyntax</code></a>;</li>
+<li><a class="xref" href="../api/Loretta.CodeAnalysis.Lua.Syntax.DoStatementSyntax.html"><code>DoStatementSyntax</code></a>.</li>
+</ul>
+</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/master/docs/articles/intro.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              Copyright GGG KILLER
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
