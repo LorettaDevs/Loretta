@@ -1,0 +1,1227 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Creating a Localizer - Part 1 | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Creating a Localizer - Part 1 | Loretta ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../../images/logo_32x32.png">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/logo.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="creating-a-localizer---part-1">Creating a Localizer - Part 1</h1>
+
+<p>Hello, welcome! In this tutorial we'll build a function localizer from scratch using Loretta.</p>
+<p>Our objective is to transform the following:</p>
+<pre><code class="lang-lua">local zero, nine, comma = string.byte('09,', 1, 3)
+-- Parses a comma separated list of numbers into numbers
+local function parser(input)
+    return function()
+        local len = #input
+        local numstart = nil
+
+        for idx = 1, len do
+            -- Read the char as a byte since it's more efficient
+            -- than a plain tostring
+            local ch = string.byte(input, idx)
+
+            -- If we have a decimal char, then do nothing other
+            -- than set the start position if it's not set
+            if ch &gt;= zero and ch &lt;= nine then
+                if numstart == nil then
+                    numstart = idx
+                end
+            elseif ch == comma then
+                -- Otherwise, if we have a start set, return the parsed
+                -- number and set the starting position back to nil
+                if numstart ~= nil then
+                    return tostring(string.sub(input, numstart, idx))
+                    numstart = nil
+                end
+            else
+                error(string.format(&quot;Invalid character '%c' found in input.&quot;, string.char(ch)))
+            end
+        end
+    end
+end
+</code></pre>
+<p>Into the following script:</p>
+<pre><code class="lang-lua">local string_byte, tostring, string_sub, error, string_format, string_char = string.byte, tostring, string.sub, error, string.format, string.char
+local zero, nine, comma = string_byte('09,', 1, 3)
+-- Parses a comma separated list of numbers into numbers
+local function parser(input)
+    return function()
+        local len = #input
+        local numstart = nil
+
+        for idx = 1, len do
+            -- Read the char as a byte since it's more efficient
+            -- than a plain string.sub
+            local ch = string_byte(input, idx)
+
+            -- If we have a decimal char, then do nothing other
+            -- than set the start position if it's not set
+            if ch &gt;= zero and ch &lt;= nine then
+                if numstart == nil then
+                    numstart = idx
+                end
+            elseif ch == comma then
+                -- Otherwise, if we have a start set, return the parsed
+                -- number and set the starting position back to nil
+                if numstart ~= nil then
+                    return tostring(string_sub(input, numstart, idx))
+                    numstart = nil
+                end
+            else
+                error(string_format(&quot;Invalid character '%c' found in input.&quot;, string_char(ch)))
+            end
+        end
+    end
+end
+</code></pre>
+<p>For LuaJIT (no interpreter) this has no performance difference but for LuaJIT in interpreter mode and PUC Lua it does so there's some benefit to doing it.</p>
+<p>Now that introductions are out of the way, let's get started!</p>
+<h2 id="1-creating-a-console-project">1. Creating a console project</h2>
+<p>Since our program will be invoked from the command line, we'll need to create a console project.</p>
+<p>First let's create a new console project by running <code>dotnet new console</code> in an empty directory:</p>
+<pre><code class="lang-console">❯ dotnet new console
+The template &quot;Console App&quot; was created successfully.
+
+Processing post-creation actions...
+Running 'dotnet restore' on B:\tutorials\localizer\localizer.csproj...
+  Determining projects to restore...
+  Restored B:\tutorials\localizer\localizer.csproj (in 65 ms).
+Restore succeeded.
+</code></pre>
+<p>And now let's add a reference to the Loretta nuget package with <code>dotnet add package Loretta.CodeAnalysis.Lua</code>:</p>
+<pre><code class="lang-console">❯ dotnet add package Loretta.CodeAnalysis.Lua
+  Determining projects to restore...
+info : Adding PackageReference for package 'Loretta.CodeAnalysis.Lua' into project 'B:\tutorials\localizer\localizer.csproj'.
+info :   CACHE https://api.nuget.org/v3/registration5-gz-semver2/loretta.codeanalysis.lua/index.json
+info : Restoring packages for B:\tutorials\localizer\localizer.csproj...
+info : Package 'Loretta.CodeAnalysis.Lua' is compatible with all the specified frameworks in project 'B:\tutorials\localizer\localizer.csproj'.
+info : PackageReference for package 'Loretta.CodeAnalysis.Lua' version '0.2.8' added to file 'B:\tutorials\localizer\localizer.csproj'.
+info : Writing assets file to disk. Path: B:\tutorials\localizer\obj\project.assets.json
+log  : Restored B:\tutorials\localizer\localizer.csproj (in 67 ms).
+</code></pre>
+<p>And then save the initial code that was presented in the introduction (the one without all the <code>local</code>s at the top) in a file named <code>sample.lua</code>.</p>
+<h2 id="2-implementing-file-loading">2. Implementing file loading</h2>
+<p>Now it is time for us to make our program load lua files and parse them. We'll start by loading the files into a
+<a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> first by using <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_From_">SourceText.From</a>.
+Also note that since we're using <a href="https://aka.ms/new-console-template">new templates</a>.</p>
+<p>First we'll add the using for <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.html">Loretta.CodeAnalysis.Text</a> so that we can access
+<a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> and then we add validation for the provided file path:</p>
+<pre><code class="lang-cs">if (args.Length &lt; 1)
+{
+    Console.WriteLine(&quot;No file path provided!&quot;);
+    return 1;
+}
+if (!File.Exists(args[0]))
+{
+    Console.WriteLine(&quot;The specified file does not exist!&quot;);
+    return 1;
+}
+</code></pre>
+<p>Then we actually load the file into a <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a>:</p>
+<pre><code class="lang-cs">SourceText text;
+using (var stream = File.OpenRead(args[0]))
+    text = SourceText.From(stream);
+</code></pre>
+<p>The responsibility <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> has is to store the code in memory in a format that won't
+make it end up in the LOH (Large Object Heap) as well as allowing us to obtain specific characters from it and/or
+substrings of the code as well as splitting the code into multiple <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.TextLine.html">TextLines</a>.</p>
+<p>We can also use the SourceText to map a <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a> to a <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.LinePositionSpan.html">LinePositionSpan</a>
+which can then be used for error reporting.</p>
+<p><a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> is also important for obtaining the checksum of a file as well as calculating the
+changes between two versions of a file with <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_GetTextChanges_">SourceText.GetTextChanges</a>
+or simply applying a set of changes to a file with <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_WithChanges_">SourceText.WithChanges</a></p>
+<h4 id="our-code-up-to-this-point">Our code up to this point</h4>
+<pre><code class="lang-cs">// See https://aka.ms/new-console-template for more information
+using Loretta.CodeAnalysis.Text;
+
+if (args.Length &lt; 1)
+{
+    Console.WriteLine(&quot;No file path provided!&quot;);
+    return 1;
+}
+if (!File.Exists(args[0]))
+{
+    Console.WriteLine(&quot;The specified file does not exist!&quot;);
+    return 1;
+}
+
+SourceText text;
+using (var stream = File.OpenRead(args[0]))
+    text = SourceText.From(stream);
+return 0;
+</code></pre>
+<h2 id="3-parsing-code-into-a-tree">3. Parsing code into a tree</h2>
+<p>Now it is time for us to parse the file we just loaded into a tree so we can manipulate it.</p>
+<p>First we'll need to add another using for <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.html">Loretta.CodeAnalysis.Lua</a> so we can access <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html">LuaSyntaxTree</a>
+so we can call its <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html#Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_">ParseText</a> method. Then we'll need to pick a preset for the files
+we'll be loading.</p>
+<p>The &quot;preset&quot; we'll be choosing is a set of options in the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html">LuaSyntaxOptions</a> class which defines which
+errors the parser will be generating as well as which constructs the parser will accept or not (such as integers, C comments
+and C boolean operators for Garry's Mod Lua, Typed Lua for Luau/Roblox Lua and others).</p>
+<p>The presets that are currently available are the following:</p>
+<ul>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_Lua51">LuaSyntaxOptions.Lua51</a>: The preset for Lua 5.1</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_Lua52">LuaSyntaxOptions.Lua52</a>: The preset for Lua 5.2</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_Lua53">LuaSyntaxOptions.Lua53</a>: The preset for Lua 5.3</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_Lua54">LuaSyntaxOptions.Lua54</a>: The preset for Lua 5.4</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_LuaJIT20">LuaSyntaxOptions.LuaJIT20</a>: The preset for LuaJIT 2.0</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_LuaJIT21">LuaSyntaxOptions.LuaJIT21</a>: The preset for LuaJIT 2.1</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_FiveM">LuaSyntaxOptions.FiveM</a>: The preset for FiveM's flavor of Lua 5.3</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_GMod">LuaSyntaxOptions.GMod</a>: The preset for Garry's Mod's flavor of LuaJIT 2.0</li>
+</ul>
+<p>And then we have the following 2 that are meant to accept the largest amount of syntax possible.
+These presets exist mostly for cases when the file's lua version is not known and as such we try to accept the largest
+amount of syntax without erroring (and as such are <strong>not recommented for general usage</strong>):</p>
+<ul>
+<li><p><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_All">LuaSyntaxOptions.All</a>: The preset for accepting the most Lua without integers</p>
+</li>
+<li><p><a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_AllWithIntegers">LuaSyntaxOptions.AllWithIntegers</a>: The preset for accepting the most Lua with integers</p>
+<p>The side effect of accepting integers is that this preset will not accept C comment syntax.</p>
+</li>
+</ul>
+<p>In this snippet the Lua51 preset will be used but you should choose the one that applies best to your use case.</p>
+<pre><code class="lang-cs">var parseOptions = new LuaParseOptions(LuaSyntaxOptions.Lua51);
+var syntaxTree = LuaSyntaxTree.ParseText(text, parseOptions, args[0]);
+</code></pre>
+<p>Here we do 2 things: we define a <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaParseOptions.html">LuaParseOptions</a> using the
+<a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_Lua51">LuaSyntaxOptions.Lua51</a> preset and then call
+<a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html#Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_">LuaSyntaxTree.ParseText</a> with the text we loaded earlier as well
+as the parse options and the file name through (<code>args[0]</code>).</p>
+<p>Now, we need to check that the parsed code contains no errors. We'll do that by using
+<a class="xref" href="../../api/Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_">SyntaxTree.GetDiagnostics</a> and checking that the list of diagnostics
+has no errors:</p>
+<pre><code class="lang-cs">var hasErrors = false;
+foreach (var diagnostic in syntaxTree.GetDiagnostics().OrderByDescending(diag =&gt; diag.Severity))
+{
+    Console.WriteLine(diagnostic.ToString());
+    hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
+}
+if (hasErrors)
+{
+    Console.WriteLine(&quot;File has errors! Exiting...&quot;);
+    return 2;
+}
+</code></pre>
+<p>In Loretta (as in Roslyn), errors, warnings and infos are called <a class="xref" href="../../api/Loretta.CodeAnalysis.Diagnostic.html">diagnostics</a>.
+A diagnostic contains important information about an error such as:</p>
+<ul>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Id">Diagnostic.Id</a>: The diagnostic's ID.
+As an example, <code>LUA0001</code> is the diagnostic ID for an invalid string escape.</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Location">Diagnostic.Location</a>: The location the diagnostic was reported at. This
+is important for being able to point to the user where an error or warning is in their text editor or to output it to the
+command line.</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Severity">Diagnostic.Severity</a>: The diagnostic's severity (whether it's an error,
+warning, info or suggestion). The value is a member of the <a class="xref" href="../../api/Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a> enum.</li>
+<li><a class="xref" href="../../api/Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Descriptor">Diagnostic.Descriptor</a>: This is the instance of the diagnostic's definition
+which we call a <a class="xref" href="../../api/Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a>.</li>
+</ul>
+<p>For diagnostics, you can think of the <a class="xref" href="../../api/Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a> as a class' definition and the
+<a class="xref" href="../../api/Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> as the class' instance.</p>
+<h4 id="our-code-up-to-this-point-1">Our code up to this point</h4>
+<pre><code class="lang-cs">// See https://aka.ms/new-console-template for more information
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Text;
+using Loretta.CodeAnalysis.Lua;
+
+if (args.Length &lt; 1)
+{
+    Console.WriteLine(&quot;No file path provided!&quot;);
+    return 1;
+}
+if (!File.Exists(args[0]))
+{
+    Console.WriteLine(&quot;The specified file does not exist!&quot;);
+    return 1;
+}
+
+SourceText text;
+using (var stream = File.OpenRead(args[0]))
+    text = SourceText.From(stream);
+
+var parseOptions = new LuaParseOptions(LuaSyntaxOptions.All);
+var syntaxTree = LuaSyntaxTree.ParseText(text, parseOptions, args[0]);
+
+var hasErrors = false;
+foreach (var diagnostic in syntaxTree.GetDiagnostics().OrderByDescending(diag =&gt; diag.Severity))
+{
+    Console.WriteLine(diagnostic.ToString());
+    hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
+}
+if (hasErrors)
+{
+    Console.WriteLine(&quot;File has errors! Exiting...&quot;);
+    return 2;
+}
+return 0;
+</code></pre>
+<h2 id="4-collecting-function-calls">4. Collecting function calls</h2>
+<p>Now that we have the parsed tree from the file and have confirmed it does not have any errors, it is time for us
+to start extracting the function calls from the tree so that we can create local variables for them.</p>
+<p>For that we'll use one of the fundamental building blocks of working with trees in Loretta:
+<a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.html">LuaSyntaxWalker</a>.
+The walker allows us to go through every node of the tree recursively and only act upon the nodes we're interested
+in, which in our case is the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.html">FunctionCallExpressionSyntax</a>.</p>
+<p>Since we'll be implementing a new class for the walker we'll create a new file called <code>FunctionCallCollector.cs</code>
+which will start out with 3 <code>using</code>s for namespaces which we'll need as well as our namespace:</p>
+<pre><code class="lang-cs">using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+namespace Localizer;
+</code></pre>
+<p>Then we need to actually create our class and make it inherit from <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.html">LuaSyntaxWalker</a> as well
+as add a proper constructor for it passing <a class="xref" href="../../api/Loretta.CodeAnalysis.SyntaxWalkerDepth.html#Loretta_CodeAnalysis_SyntaxWalkerDepth_Node">SyntaxWalkerDepth.Node</a>
+to the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.html">LuaSyntaxWalker</a> constructor as we are not interested in anything below nodes for this
+walker:</p>
+<pre><code class="lang-cs">internal class FunctionCallCollector : LuaSyntaxWalker
+{
+    private FunctionCallCollector() : base(SyntaxWalkerDepth.Node)
+    {
+    }
+}
+</code></pre>
+<p>The constructor is private because we'll be exposing the functionality of this class as a public static method and it being
+a <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.html">LuaSyntaxWalker</a> will be an internal implementation detail of the class.</p>
+<p>But you might've noticed we're missing something. That's right! We're missing a list so we can store the function calls we'll
+be collecting!</p>
+<p>For that we'll be using an <code>ImmutableArray&lt;FunctionCallExpressionSyntax&gt;.Builder</code> so that later we can return an
+<code>ImmutableArray&lt;FunctionCallExpressionSyntax&gt;</code>:</p>
+<pre><code class="lang-cs">internal class FunctionCallCollector : LuaSyntaxWalker
+{
+    private readonly ImmutableArray&lt;FunctionCallExpressionSyntax&gt;.Builder _functionCalls;
+
+    private FunctionCallCollector() : base(SyntaxWalkerDepth.Node)
+    {
+        _functionCalls = ImmutableArray.CreateBuilder&lt;FunctionCallExpressionSyntax&gt;();
+    }
+}
+</code></pre>
+<p>Now, we have to actually add the function calls to the list. We'll do that by overriding the
+@Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitFunctionCallExpression method so that we can do something whenever it finds a
+function call.
+It's also important to keep in mind we'll have to call the <code>base</code> method otherwise other function calls that might be contained inside the
+one we're visiting will not be visited.</p>
+<pre><code class="lang-cs">    public override void VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+    {
+        _functionCalls.Add(node);
+        base.VisitFunctionCallExpression(node);
+    }
+</code></pre>
+<p>And lastly, let's add our public static method at the top of our class so that we can actually use this walker:</p>
+<pre><code class="lang-cs">    public static ImmutableArray&lt;FunctionCallExpressionSyntax&gt; Collect(SyntaxNode node)
+    {
+        var collector = new FunctionCallCollector();
+        collector.Visit(node);
+        return collector._functionCalls.ToImmutable();
+    }
+</code></pre>
+<p>Now that we have our function call collector done, it's time for us to actually use it back in <code>Program.cs</code>:</p>
+<h4 id="our-code-so-far">Our code so far</h4>
+<div class="tabGroup" id="tabgroup_bHGHmlrG6S">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S_programcs-1" role="tab" aria-controls="tabpanel_bHGHmlrG6S_programcs-1" data-tab="programcs-1" tabindex="0" aria-selected="true">Program.cs</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S_functioncallcollectorcs-1" role="tab" aria-controls="tabpanel_bHGHmlrG6S_functioncallcollectorcs-1" data-tab="functioncallcollectorcs-1" tabindex="-1">FunctionCallCollector.cs</a>
+</li>
+</ul>
+<section id="tabpanel_bHGHmlrG6S_programcs-1" role="tabpanel" data-tab="programcs-1">
+
+<pre><code class="lang-cs">// See https://aka.ms/new-console-template for more information
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Text;
+using Loretta.CodeAnalysis.Lua;
+
+if (args.Length &lt; 1)
+{
+    Console.WriteLine(&quot;No file path provided!&quot;);
+    return 1;
+}
+if (!File.Exists(args[0]))
+{
+    Console.WriteLine(&quot;The specified file does not exist!&quot;);
+    return 1;
+}
+
+SourceText text;
+using (var stream = File.OpenRead(args[0]))
+    text = SourceText.From(stream);
+
+var parseOptions = new LuaParseOptions(LuaSyntaxOptions.All);
+var syntaxTree = LuaSyntaxTree.ParseText(text, parseOptions, args[0]);
+
+var hasErrors = false;
+foreach (var diagnostic in syntaxTree.GetDiagnostics().OrderByDescending(diag =&gt; diag.Severity))
+{
+    Console.WriteLine(diagnostic.ToString());
+    hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
+}
+if (hasErrors)
+{
+    Console.WriteLine(&quot;File has errors! Exiting...&quot;);
+    return 2;
+}
+return 0;
+</code></pre>
+</section>
+<section id="tabpanel_bHGHmlrG6S_functioncallcollectorcs-1" role="tabpanel" data-tab="functioncallcollectorcs-1" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-cs">using System.Collections.Immutable;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+namespace Localizer;
+
+internal class FunctionCallCollector : LuaSyntaxWalker
+{
+    public static ImmutableArray&lt;FunctionCallExpressionSyntax&gt; Collect(SyntaxNode node)
+    {
+        var collector = new FunctionCallCollector();
+        collector.Visit(node);
+        return collector._functionCalls.ToImmutable();
+    }
+
+    private readonly ImmutableArray&lt;FunctionCallExpressionSyntax&gt;.Builder _functionCalls;
+
+    private FunctionCallCollector() : base(SyntaxWalkerDepth.Node)
+    {
+        _functionCalls = ImmutableArray.CreateBuilder&lt;FunctionCallExpressionSyntax&gt;();
+    }
+
+    public override void VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+    {
+        _functionCalls.Add(node);
+        base.VisitFunctionCallExpression(node);
+    }
+}
+</code></pre>
+</section>
+</div>
+<h2 id="5-function-call-processing">5. Function call processing</h2>
+<p>Now that we have all the function calls in the script, we need to deduplicate them and group them up so we can map
+each function call to a local variable.</p>
+<p>First we need to filter the list of function calls to the ones that we can process.
+For simplicity's sake, we'll only be accepting function calls on identifiers and members of identifiers (e.g.: <code>print</code>
+or <code>math.ceil</code>).</p>
+<p>For that, we'll be implementing a method to check a function call's <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_FunctionCallExpressionSyntax_Expression">Expression</a>
+to see if it is an <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax.html">IdentifierNameSyntax</a> or a <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.MemberAccessExpressionSyntax.html">MemberAccessExpressionSyntax</a>
+whose base <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.MemberAccessExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_MemberAccessExpressionSyntax_Expression">Expression</a> is a <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax.html">IdentifierNameSyntax</a>.</p>
+<p>We can check if a node is of a certain type by using the <a class="xref" href="../../api/Loretta.CodeAnalysis.LuaExtensions.html#Loretta_CodeAnalysis_LuaExtensions_IsKind_Loretta_CodeAnalysis_SyntaxNode_Loretta_CodeAnalysis_Lua_SyntaxKind_">IsKind(SyntaxNode, SyntaxKind)</a>
+method:</p>
+<pre><code class="lang-cs">/// &lt;summary&gt;
+/// Returns whether the provided node can be turned into a local.
+/// &lt;/summary&gt;
+/// &lt;remarks&gt;
+/// A node can be turned into a local if it is a &lt;see cref=&quot;IdentifierNameSyntax&quot; /&gt;
+/// or a &lt;see cref=&quot;MemberAccessExpressionSyntax&quot; /&gt; with its base passing this function.
+///
+/// This means that &lt;c&gt;a&lt;/c&gt; passes, &lt;c&gt;a.b&lt;/c&gt; passes and &lt;c&gt;a.b.c&lt;/c&gt; passes but
+/// &lt;c&gt;(1 + 1).a&lt;/c&gt; does not nor does &lt;c&gt;(1 + 1).a.b.c&lt;/c&gt;.
+/// &lt;/remarks&gt;
+static bool canTurnIntoLocal(SyntaxNode node)
+{
+    if (node.IsKind(SyntaxKind.IdentifierName))
+        return true;
+    else if (node.IsKind(SyntaxKind.MemberAccessExpression))
+        return canTurnIntoLocal(((MemberAccessExpressionSyntax) node).Expression);
+    else
+        return false;
+}
+</code></pre>
+<p>Then afterwards, we'll make a function that will convert a node into its local name:</p>
+<pre><code class="lang-cs">/// &lt;summary&gt;
+/// Turns a name that we can turn into a local and makes it into a local variable name.
+/// &lt;/summary&gt;
+static IdentifierNameSyntax getLocalName(SyntaxNode node)
+{
+    Debug.Assert(canTurnIntoLocal(node), &quot;Node cannot be turned into local!&quot;);
+
+    // We use a stack because we'll be reading this in reverse order.
+    var nameParts = new Stack&lt;string&gt;();
+
+    while (node.IsKind(SyntaxKind.MemberAccessExpression))
+    {
+        var memberExpr = (MemberAccessExpressionSyntax) node;
+        nameParts.Push(memberExpr.MemberName.Text);
+        node = memberExpr.Expression;
+    }
+
+    nameParts.Push(((IdentifierNameSyntax) node).Name);
+
+    return SyntaxFactory.IdentifierName(string.Join(&quot;_&quot;, nameParts));
+}
+</code></pre>
+<p>And then finally, we'll use a bit of LINQ to glue everything together:</p>
+<pre><code class="lang-cs">var groups = FunctionCallCollector.Collect(syntaxTree.GetRoot())
+                                  .Where(call =&gt; canTurnIntoLocal(call.Expression))
+                                  .GroupBy(call =&gt; getLocalName(call.Expression));
+</code></pre>
+<p>Then finally, we can print out the results of the array so we can see something in the console
+for the first time!</p>
+<pre><code class="lang-cs">foreach (var group in groups)
+{
+    Console.WriteLine($&quot;{group.Key}:&quot;);
+    foreach (var call in group)
+    {
+        Console.WriteLine($&quot;    {call}&quot;);
+    }
+}
+</code></pre>
+<p>Which results in the following output:</p>
+<pre><code class="lang-console">❯ dotnet run -- .\sample.lua
+string_byte:
+    string.byte('09,', 1, 3)
+    string.byte(input, idx)
+tostring:
+    tostring(string.sub(input, numstart, idx))
+string_sub:
+    string.sub(input, numstart, idx)
+error:
+    error(string.format(&quot;Invalid character '%c' found in input.&quot;, string.char(ch)))
+string_format:
+    string.format(&quot;Invalid character '%c' found in input.&quot;, string.char(ch))
+string_char:
+    string.char(ch)
+</code></pre>
+<h4 id="our-code-so-far-1">Our code so far</h4>
+<div class="tabGroup" id="tabgroup_bHGHmlrG6S-1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-1_programcs-2" role="tab" aria-controls="tabpanel_bHGHmlrG6S-1_programcs-2" data-tab="programcs-2" tabindex="0" aria-selected="true">Program.cs</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-1_functioncallcollectorcs-2" role="tab" aria-controls="tabpanel_bHGHmlrG6S-1_functioncallcollectorcs-2" data-tab="functioncallcollectorcs-2" tabindex="-1">FunctionCallCollector.cs</a>
+</li>
+</ul>
+<section id="tabpanel_bHGHmlrG6S-1_programcs-2" role="tabpanel" data-tab="programcs-2">
+
+<pre><code class="lang-cs">// See https://aka.ms/new-console-template for more information
+using Localizer;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+using Loretta.CodeAnalysis.Text;
+using System.Diagnostics;
+
+if (args.Length &lt; 1)
+{
+    Console.WriteLine(&quot;No file path provided!&quot;);
+    return 1;
+}
+if (!File.Exists(args[0]))
+{
+    Console.WriteLine(&quot;The specified file does not exist!&quot;);
+    return 1;
+}
+
+SourceText text;
+using (var stream = File.OpenRead(args[0]))
+    text = SourceText.From(stream);
+
+var parseOptions = new LuaParseOptions(LuaSyntaxOptions.All);
+var syntaxTree = LuaSyntaxTree.ParseText(text, parseOptions, args[0]);
+
+var hasErrors = false;
+foreach (var diagnostic in syntaxTree.GetDiagnostics().OrderByDescending(diag =&gt; diag.Severity))
+{
+    Console.WriteLine(diagnostic.ToString());
+    hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
+}
+if (hasErrors)
+{
+    Console.WriteLine(&quot;File has errors! Exiting...&quot;);
+    return 2;
+}
+
+var groups = FunctionCallCollector.Collect(syntaxTree.GetRoot())
+                                  .Where(call =&gt; canTurnIntoLocal(call.Expression))
+                                  .GroupBy(call =&gt; getLocalName(call.Expression));
+
+foreach (var group in groups)
+{
+    Console.WriteLine(group.Key + &quot;:&quot;);
+    foreach (var call in group)
+    {
+        Console.WriteLine($&quot;    {call}&quot;);
+    }
+}
+
+return 0;
+
+/// &lt;summary&gt;
+/// Returns whether the provided node can be turned into a local.
+/// &lt;/summary&gt;
+/// &lt;remarks&gt;
+/// A node can be turned into a local if it is a &lt;see cref=&quot;IdentifierNameSyntax&quot; /&gt;
+/// or a &lt;see cref=&quot;MemberAccessExpressionSyntax&quot; /&gt; with its base passing this function.
+///
+/// This means that &lt;c&gt;a&lt;/c&gt; passes, &lt;c&gt;a.b&lt;/c&gt; passes and &lt;c&gt;a.b.c&lt;/c&gt; passes but
+/// &lt;c&gt;(1 + 1).a&lt;/c&gt; does not nor does &lt;c&gt;(1 + 1).a.b.c&lt;/c&gt;.
+/// &lt;/remarks&gt;
+static bool canTurnIntoLocal(SyntaxNode node)
+{
+    if (node.IsKind(SyntaxKind.IdentifierName))
+        return true;
+    else if (node.IsKind(SyntaxKind.MemberAccessExpression))
+        return canTurnIntoLocal(((MemberAccessExpressionSyntax) node).Expression);
+    else
+        return false;
+}
+
+/// &lt;summary&gt;
+/// Turns a name that we can turn into a local and makes it into a local variable name.
+/// &lt;/summary&gt;
+static string getLocalName(SyntaxNode node)
+{
+    Debug.Assert(canTurnIntoLocal(node), &quot;Node cannot be turned into local!&quot;);
+
+    // We use a stack because we'll be reading this in reverse order.
+    var nameParts = new Stack&lt;string&gt;();
+
+    while (node.IsKind(SyntaxKind.MemberAccessExpression))
+    {
+        var memberExpr = (MemberAccessExpressionSyntax) node;
+        nameParts.Push(memberExpr.MemberName.Text);
+        node = memberExpr.Expression;
+    }
+
+    nameParts.Push(((IdentifierNameSyntax) node).Name);
+
+    return string.Join(&quot;_&quot;, nameParts);
+}
+</code></pre>
+</section>
+<section id="tabpanel_bHGHmlrG6S-1_functioncallcollectorcs-2" role="tabpanel" data-tab="functioncallcollectorcs-2" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-cs">using System.Collections.Immutable;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+namespace Localizer;
+
+internal class FunctionCallCollector : LuaSyntaxWalker
+{
+    public static ImmutableArray&lt;FunctionCallExpressionSyntax&gt; Collect(SyntaxNode node)
+    {
+        var collector = new FunctionCallCollector();
+        collector.Visit(node);
+        return collector._functionCalls.ToImmutable();
+    }
+
+    private readonly ImmutableArray&lt;FunctionCallExpressionSyntax&gt;.Builder _functionCalls;
+
+    private FunctionCallCollector() : base(SyntaxWalkerDepth.Node)
+    {
+        _functionCalls = ImmutableArray.CreateBuilder&lt;FunctionCallExpressionSyntax&gt;();
+    }
+
+    public override void VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+    {
+        _functionCalls.Add(node);
+        base.VisitFunctionCallExpression(node);
+    }
+}
+</code></pre>
+</section>
+</div>
+<h2 id="6-rewriting-the-input-file">6. Rewriting the input file</h2>
+<p>For this last step, we'll rewrite the input file to add the <code>local</code> declaration at the top of the file as
+well as rewriting all function calls to their local counterparts.</p>
+<p>For this we'll be using another fundamental building block of working with Loretta trees: <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html">LuaSyntaxRewriter</a>.
+The rewriter allows you to replace certain nodes in the tree without having to modify all parents yourself
+as well as making your life easier since you can handle only the nodes you're interested in.</p>
+<p>Another important component of this will be the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html">SyntaxFactory</a> which is the static
+class that's used to create everything related to nodes including the nodes themselves but also the
+<a class="xref" href="../../api/Loretta.CodeAnalysis.SyntaxList-1.html">SyntaxList&lt;TNode&gt;</a> and the <a class="xref" href="../../api/Loretta.CodeAnalysis.SeparatedSyntaxList-1.html">SeparatedSyntaxList&lt;TNode&gt;</a>.</p>
+<p>With the LuaSyntaxRewriter and SyntaxFactory introduction out of the way, let's get started on writing the
+code with the following <code>using</code>s as well as the namespace in a file named <code>Rewriter.cs</code>:</p>
+<pre><code class="lang-cs">using System.Collections.Immutable;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+namespace Localizer;
+</code></pre>
+<p>Then we'll create our rewriter which will inherit from <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html">LuaSyntaxRewriter</a> and
+have 2 private fields:</p>
+<ol>
+<li>A field to store the groups we generated when mapping the function calls to their local name counterparts;</li>
+<li>And another field to store the mapping of the strings to the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax.html">IdentifierNameSyntax</a>.</li>
+</ol>
+<p>It'll have a private constructor as well as a public static method to provide a contained method that
+enforces correct usage of our rewriter:</p>
+<pre><code class="lang-cs">class Rewriter : LuaSyntaxRewriter
+{
+    public static SyntaxNode Rewrite(
+        IEnumerable&lt;IGrouping&lt;string, FunctionCallExpressionSyntax&gt;&gt; functionCalls,
+        SyntaxNode node)
+    {
+        var rewriter = new Rewriter(functionCalls);
+        return rewriter.Visit(node);
+    }
+
+    private readonly IEnumerable&lt;IGrouping&lt;string, FunctionCallExpressionSyntax&gt;&gt; _functionCalls;
+    private readonly ImmutableDictionary&lt;string, IdentifierNameSyntax&gt; _localNames;
+
+    private Rewriter(IEnumerable&lt;IGrouping&lt;string, FunctionCallExpressionSyntax&gt;&gt; functionCalls)
+    {
+        _functionCalls = functionCalls;
+        // Create deduplicated identifier name nodes since they can be safely reused.
+        _localNames = functionCalls.ToImmutableDictionary(g =&gt; g.Key, g =&gt; SyntaxFactory.IdentifierName(g.Key));
+    }
+}
+</code></pre>
+<p>Then for the first step of our rewriter, we'll override <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitCompilationUnit_Loretta_CodeAnalysis_Lua_Syntax_CompilationUnitSyntax_">VisitCompilationUnit(CompilationUnitSyntax)</a>
+so that we can add the local variable declaration at the top of it.
+The <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.html">CompilationUnitSyntax</a> represents a parsed file and contains only the
+list of statements at the root of the file as well as the EOF token.</p>
+<p>But first we'll make it visit every statement in the compilation unit and update the compilation unit with
+the results of it:</p>
+<pre><code class="lang-cs">    public override SyntaxNode? VisitCompilationUnit(CompilationUnitSyntax node)
+    {
+        var statements = VisitList(node.Statements.Statements);
+
+        var statementList = node.Statements.WithStatements(statements);
+        return node.WithStatements(statementList);
+    }
+</code></pre>
+<p>Now we need to create the <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax.html">LocalVariableDeclarationStatementSyntax</a> node:</p>
+<pre><code class="lang-cs">    public override SyntaxNode? VisitCompilationUnit(CompilationUnitSyntax node)
+    {
+        var statements = VisitList(node.Statements.Statements);
+
+        // Create the list of names as well the values
+        var names = _functionCalls.Select(g =&gt; SyntaxFactory.LocalDeclarationName(_localNames[g.Key]));
+        var values = _functionCalls.Select(g =&gt; g.First().Expression);
+
+        // And then we create the local variable declaration node:
+        var localDeclaration = SyntaxFactory.LocalVariableDeclarationStatement(
+            SyntaxFactory.SeparatedList(names),
+            SyntaxFactory.SeparatedList&lt;ExpressionSyntax&gt;(values));
+
+        // Then we normalize the whitespace in the node so it doesn't look ugly:
+        localDeclaration = localDeclaration.NormalizeWhitespace();
+        // And we need to add a line break to the last value so that it doesn't show up
+        // in the same line as the next statement in the file.
+        localDeclaration = localDeclaration.WithTrailingTrivia(
+            localDeclaration.GetTrailingTrivia().Add(SyntaxFactory.EndOfLine(Environment.NewLine)));
+
+        // And finally we insert it at the start of the list.
+        // Note that we're reassigning the statements list to the result of the call
+        // since lists are immutable and any operations on them will return the modified
+        // list.
+        statements = statements.Insert(0, localDeclaration);
+
+        var statementList = node.Statements.WithStatements(statements);
+        return node.WithStatements(statementList);
+    }
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A lot is being done in the code above so take a while to read it through carefully.</p>
+</div>
+<h4 id="introduction-to-trivia">Introduction to Trivia</h4>
+<p>In the code above, we used <a class="xref" href="../../api/Loretta.CodeAnalysis.SyntaxNodeExtensions.html#Loretta_CodeAnalysis_SyntaxNodeExtensions_WithTrailingTrivia__1___0_Loretta_CodeAnalysis_SyntaxTriviaList_">WithTrailingTrivia&lt;TSyntax&gt;(TSyntax, SyntaxTriviaList)</a> as well as
+<a class="xref" href="../../api/Loretta.CodeAnalysis.SyntaxNodeOrToken.html#Loretta_CodeAnalysis_SyntaxNodeOrToken_GetTrailingTrivia">GetTrailingTrivia()</a> to manipulate the trivia of the
+local variable declaration node we created. But what is trivia?</p>
+<p>In Loretta (as in Roslyn), we call extraneous syntax that doesn't necessarily impact parsing
+such as whitespaces, line breaks, comments and shebangs (the <code>#!/bin/bash</code> you see at the
+start of some linux scripts) trivia and they are stored as part of the token preceding or
+following them:</p>
+<ul>
+<li>Leading trivia is all trivia located since the first line break after the previous token.</li>
+<li>Trailing trivia is all trivia after a token up to (and including) the first line break.</li>
+</ul>
+<hr>
+<p>Now we can go back to <code>Program.cs</code> to replace the loop where we print the groups with the
+following:</p>
+<pre><code class="lang-cs">var root = Rewriter.Rewrite(groups, syntaxTree.GetRoot());
+root.WriteTo(Console.Out);
+</code></pre>
+<p>Which prints out the rewritten node to the console, resulting in the following output:</p>
+<pre><code class="lang-lua">local string_byte, tostring, string_sub, error, string_format, string_char = string.byte, tostring, string.sub, error, string.format, string.char
+local zero, nine, comma = string.byte('09,', 1, 3)
+-- Parses a comma separated list of numbers into numbers
+local function parser(input)
+    return function()
+        local len = #input
+        local numstart = nil
+
+        for idx = 1, len do
+            -- Read the char as a byte since it's more efficient
+            -- than a plain tostring
+            local ch = string.byte(input, idx)
+
+            -- If we have a decimal char, then do nothing other
+            -- than set the start position if it's not set
+            if ch &gt;= zero and ch &lt;= nine then
+                if numstart == nil then
+                    numstart = idx
+                end
+            elseif ch == comma then
+                -- Otherwise, if we have a start set, return the parsed
+                -- number and set the starting position back to nil
+                if numstart ~= nil then
+                    return tostring(string.sub(input, numstart, idx))
+                    numstart = nil
+                end
+            else
+                error(string.format(&quot;Invalid character '%c' found in input.&quot;, string.char(ch)))
+            end
+        end
+    end
+end
+</code></pre>
+<p>Lastly, we now need to rewrite the function calls to use the locals instead of the globals by
+overriding <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitFunctionCallExpression_Loretta_CodeAnalysis_Lua_Syntax_FunctionCallExpressionSyntax_">VisitFunctionCallExpression(FunctionCallExpressionSyntax)</a>:</p>
+<pre><code class="lang-cs">    public override SyntaxNode? VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+    {
+        foreach (var group in _functionCalls)
+        {
+            // Skip to the next group if the current one doesn't have the node
+            if (!group.Contains(node))
+                continue;
+
+            // Get the IdentifierNameSyntax we created earlier.
+            var nameNode = _localNames[group.Key];
+
+            // Import the trivia from old expression
+            nameNode = nameNode.WithTriviaFrom(node.Expression);
+
+            // Update the function argument(s)
+            var argument = (FunctionArgumentSyntax) Visit(node.Argument)!;
+
+            // And finally, we return the function call with the
+            // updated expression.
+            return node.Update(nameNode, argument);
+        }
+        return base.VisitFunctionCallExpression(node);
+    }
+</code></pre>
+<p>And now when we run the program again, we get the following output in the console:</p>
+<pre><code class="lang-lua">local string_byte, tostring, string_sub, error, string_format, string_char = string.byte, tostring, string.sub, error, string.format, string.char
+local zero, nine, comma = string_byte('09,', 1, 3)
+-- Parses a comma separated list of numbers into numbers
+local function parser(input)
+    return function()
+        local len = #input
+        local numstart = nil
+
+        for idx = 1, len do
+            -- Read the char as a byte since it's more efficient
+            -- than a plain tostring
+            local ch = string_byte(input, idx)
+
+            -- If we have a decimal char, then do nothing other
+            -- than set the start position if it's not set
+            if ch &gt;= zero and ch &lt;= nine then
+                if numstart == nil then
+                    numstart = idx
+                end
+            elseif ch == comma then
+                -- Otherwise, if we have a start set, return the parsed
+                -- number and set the starting position back to nil
+                if numstart ~= nil then
+                    return tostring(string_sub(input, numstart, idx))
+                    numstart = nil
+                end
+            else
+                error(string_format(&quot;Invalid character '%c' found in input.&quot;, string_char(ch)))
+            end
+        end
+    end
+end
+</code></pre>
+<h4 id="final-code">Final code</h4>
+<div class="tabGroup" id="tabgroup_bHGHmlrG6S-2">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-2_programcs-3" role="tab" aria-controls="tabpanel_bHGHmlrG6S-2_programcs-3" data-tab="programcs-3" tabindex="0" aria-selected="true">Program.cs</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-2_functioncallcollectorcs-3" role="tab" aria-controls="tabpanel_bHGHmlrG6S-2_functioncallcollectorcs-3" data-tab="functioncallcollectorcs-3" tabindex="-1">FunctionCallCollector.cs</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-2_rewritercs-3" role="tab" aria-controls="tabpanel_bHGHmlrG6S-2_rewritercs-3" data-tab="rewritercs-3" tabindex="-1">Rewriter.cs</a>
+</li>
+</ul>
+<section id="tabpanel_bHGHmlrG6S-2_programcs-3" role="tabpanel" data-tab="programcs-3">
+
+<pre><code class="lang-cs">// See https://aka.ms/new-console-template for more information
+using Localizer;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+using Loretta.CodeAnalysis.Text;
+using System.Diagnostics;
+
+if (args.Length &lt; 1)
+{
+    Console.WriteLine(&quot;No file path provided!&quot;);
+    return 1;
+}
+if (!File.Exists(args[0]))
+{
+    Console.WriteLine(&quot;The specified file does not exist!&quot;);
+    return 1;
+}
+
+SourceText text;
+using (var stream = File.OpenRead(args[0]))
+    text = SourceText.From(stream);
+
+var parseOptions = new LuaParseOptions(LuaSyntaxOptions.All);
+var syntaxTree = LuaSyntaxTree.ParseText(text, parseOptions, args[0]);
+
+var hasErrors = false;
+foreach (var diagnostic in syntaxTree.GetDiagnostics().OrderByDescending(diag =&gt; diag.Severity))
+{
+    Console.WriteLine(diagnostic.ToString());
+    hasErrors |= diagnostic.Severity == DiagnosticSeverity.Error;
+}
+if (hasErrors)
+{
+    Console.WriteLine(&quot;File has errors! Exiting...&quot;);
+    return 2;
+}
+
+var groups = FunctionCallCollector.Collect(syntaxTree.GetRoot())
+                                  .Where(call =&gt; canTurnIntoLocal(call.Expression))
+                                  .GroupBy(call =&gt; getLocalName(call.Expression));
+
+foreach (var group in groups)
+{
+    Console.WriteLine(group.Key + &quot;:&quot;);
+    foreach (var call in group)
+    {
+        Console.WriteLine($&quot;    {call}&quot;);
+    }
+}
+
+return 0;
+
+/// &lt;summary&gt;
+/// Returns whether the provided node can be turned into a local.
+/// &lt;/summary&gt;
+/// &lt;remarks&gt;
+/// A node can be turned into a local if it is a &lt;see cref=&quot;IdentifierNameSyntax&quot; /&gt;
+/// or a &lt;see cref=&quot;MemberAccessExpressionSyntax&quot; /&gt; with its base passing this function.
+///
+/// This means that &lt;c&gt;a&lt;/c&gt; passes, &lt;c&gt;a.b&lt;/c&gt; passes and &lt;c&gt;a.b.c&lt;/c&gt; passes but
+/// &lt;c&gt;(1 + 1).a&lt;/c&gt; does not nor does &lt;c&gt;(1 + 1).a.b.c&lt;/c&gt;.
+/// &lt;/remarks&gt;
+static bool canTurnIntoLocal(SyntaxNode node)
+{
+    if (node.IsKind(SyntaxKind.IdentifierName))
+        return true;
+    else if (node.IsKind(SyntaxKind.MemberAccessExpression))
+        return canTurnIntoLocal(((MemberAccessExpressionSyntax) node).Expression);
+    else
+        return false;
+}
+
+/// &lt;summary&gt;
+/// Turns a name that we can turn into a local and makes it into a local variable name.
+/// &lt;/summary&gt;
+static string getLocalName(SyntaxNode node)
+{
+    Debug.Assert(canTurnIntoLocal(node), &quot;Node cannot be turned into local!&quot;);
+
+    // We use a stack because we'll be reading this in reverse order.
+    var nameParts = new Stack&lt;string&gt;();
+
+    while (node.IsKind(SyntaxKind.MemberAccessExpression))
+    {
+        var memberExpr = (MemberAccessExpressionSyntax) node;
+        nameParts.Push(memberExpr.MemberName.Text);
+        node = memberExpr.Expression;
+    }
+
+    nameParts.Push(((IdentifierNameSyntax) node).Name);
+
+    return string.Join(&quot;_&quot;, nameParts);
+}
+</code></pre>
+</section>
+<section id="tabpanel_bHGHmlrG6S-2_functioncallcollectorcs-3" role="tabpanel" data-tab="functioncallcollectorcs-3" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-cs">using System.Collections.Immutable;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+namespace Localizer;
+
+internal class FunctionCallCollector : LuaSyntaxWalker
+{
+    public static ImmutableArray&lt;FunctionCallExpressionSyntax&gt; Collect(SyntaxNode node)
+    {
+        var collector = new FunctionCallCollector();
+        collector.Visit(node);
+        return collector._functionCalls.ToImmutable();
+    }
+
+    private readonly ImmutableArray&lt;FunctionCallExpressionSyntax&gt;.Builder _functionCalls;
+
+    private FunctionCallCollector() : base(SyntaxWalkerDepth.Node)
+    {
+        _functionCalls = ImmutableArray.CreateBuilder&lt;FunctionCallExpressionSyntax&gt;();
+    }
+
+    public override void VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+    {
+        _functionCalls.Add(node);
+        base.VisitFunctionCallExpression(node);
+    }
+}
+</code></pre>
+</section>
+<section id="tabpanel_bHGHmlrG6S-2_rewritercs-3" role="tabpanel" data-tab="rewritercs-3" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-cs">using System.Collections.Immutable;
+using Loretta.CodeAnalysis;
+using Loretta.CodeAnalysis.Lua;
+using Loretta.CodeAnalysis.Lua.Syntax;
+
+namespace Localizer;
+
+class Rewriter : LuaSyntaxRewriter
+{
+    public static SyntaxNode Rewrite(
+        IEnumerable&lt;IGrouping&lt;string, FunctionCallExpressionSyntax&gt;&gt; functionCalls,
+        SyntaxNode node)
+    {
+        var rewriter = new Rewriter(functionCalls);
+        return rewriter.Visit(node);
+    }
+
+    private readonly IEnumerable&lt;IGrouping&lt;string, FunctionCallExpressionSyntax&gt;&gt; _functionCalls;
+    private readonly ImmutableDictionary&lt;string, IdentifierNameSyntax&gt; _localNames;
+
+    private Rewriter(IEnumerable&lt;IGrouping&lt;string, FunctionCallExpressionSyntax&gt;&gt; functionCalls)
+    {
+        _functionCalls = functionCalls;
+        // Create deduplicated identifier name nodes since they can be safely reused.
+        _localNames = functionCalls.ToImmutableDictionary(g =&gt; g.Key, g =&gt; SyntaxFactory.IdentifierName(g.Key));
+    }
+
+    public override SyntaxNode? VisitCompilationUnit(CompilationUnitSyntax node)
+    {
+        var statements = VisitList(node.Statements.Statements);
+
+        // Create the list of names as well the values
+        var names = _functionCalls.Select(g =&gt; SyntaxFactory.LocalDeclarationName(_localNames[g.Key]));
+        var values = _functionCalls.Select(g =&gt; g.First().Expression);
+
+        // And then we create the local variable declaration node:
+        var localDeclaration = SyntaxFactory.LocalVariableDeclarationStatement(
+            SyntaxFactory.SeparatedList(names),
+            SyntaxFactory.SeparatedList&lt;ExpressionSyntax&gt;(values));
+
+        // Then we normalize the whitespace in the node so it doesn't look ugly:
+        localDeclaration = localDeclaration.NormalizeWhitespace();
+        // And we need to add a line break to the last value so that it doesn't show up
+        // in the same line as the next statement in the file.
+        localDeclaration = localDeclaration.WithTrailingTrivia(
+            localDeclaration.GetTrailingTrivia().Add(SyntaxFactory.EndOfLine(Environment.NewLine)));
+
+        // And finally we insert it at the start of the list.
+        // Note that we're reassigning the statements list to the result of the call
+        // since lists are immutable and any operations on them will return the modified
+        // list.
+        statements = statements.Insert(0, localDeclaration);
+
+        var statementList = node.Statements.WithStatements(statements);
+        return node.WithStatements(statementList);
+    }
+
+    public override SyntaxNode? VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+    {
+        foreach (var group in _functionCalls)
+        {
+            // Skip to the next group if the current one doesn't have the node
+            if (!group.Contains(node))
+                continue;
+
+            // Get the IdentifierNameSyntax we created earlier.
+            var nameNode = _localNames[group.Key];
+
+            // Import the trivia from old expression
+            nameNode = nameNode.WithTriviaFrom(node.Expression);
+
+            // Update the function argument(s)
+            var argument = (FunctionArgumentSyntax) Visit(node.Argument)!;
+
+            // And finally, we return the function call with the
+            // updated expression.
+            return node.Update(nameNode, argument);
+        }
+        return base.VisitFunctionCallExpression(node);
+    }
+}
+</code></pre>
+</section>
+</div>
+<h2 id="7-whats-next">7. What's next?</h2>
+<p>So we've built a localizer! But it is not perfect.</p>
+<p>In part 2 we'll handle checking whether or not the variable the function is being called
+(or the variable that contains the field being called) is a global so that we don't create any
+locals for the following case:</p>
+<pre><code class="lang-lua">local function something(func)
+    return func(42)
+end
+
+local t = {
+    sq = function(x)
+        return x * x
+    end
+}
+
+local k = something(function(x)
+    return t.sq(x)
+end)
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/main/docs/tutorials/creating-a-localizer/part-1.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              <p>Copyright (c) LorettaDevs</p><p>Generated by <strong>DocFX</strong></p>
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
