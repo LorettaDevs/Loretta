@@ -18,7 +18,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.AnnotationExtensions.html",
-          "hash": "c/Df3AcCkt781zAzW8ddO4UDB7TTkqdyjdQbGnNXPmg="
+          "hash": "1LLr79uw/MVTTyj5WWsfn6R77GCYKsKenn/UjVzve6c="
         }
       },
       "is_incremental": false,
@@ -30,7 +30,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Enumerator.html",
-          "hash": "RaoHrWq4Vexa5tqzhAQHpGt2njEVU0grV4ROIM81VGM="
+          "hash": "WuhEfXgW+GsQre+Dc13cAGYMqGSRN3zkKqCvIW2HMNQ="
         }
       },
       "is_incremental": false,
@@ -42,7 +42,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator.html",
-          "hash": "Dc/a/GkeBTLnXLFgBtGtEpA0NWBWA8HcPh/J13c20X4="
+          "hash": "yzP1e2ABKkG0YwPhhhlMYAHvQ7fhZ+ivw84916E9oM4="
         }
       },
       "is_incremental": false,
@@ -54,7 +54,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Reversed.html",
-          "hash": "6PutMO6PgYrBoLI0zf0VOKF9FsZIzVs2oIVfPcjdRfo="
+          "hash": "ntnkW+0csNKz+l0p8gpCdqVOMWr/TkV0E+AUgePxJnc="
         }
       },
       "is_incremental": false,
@@ -66,7 +66,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.html",
-          "hash": "TWHGutvJyH/QQEE+/Gu+RcRnB7O9eMrEYNTJfunAK0g="
+          "hash": "b8jqp352N6fLQbBgsvSC07bpr3UT+NWSaEcGJ6xVoMA="
         }
       },
       "is_incremental": false,
@@ -78,7 +78,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Diagnostic.html",
-          "hash": "CAoKWEF3ft7e7yE2wUU5H1ifEPlmMByR3+lOIFtGbRE="
+          "hash": "7YwkflfI/GksrIPLwjvM33vyCoAHH93gzbjHJGTciMM="
         }
       },
       "is_incremental": false,
@@ -90,7 +90,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.DiagnosticDescriptor.html",
-          "hash": "KQmsDX/cXO75r/pcPknS/ps0SSFmkeqk+J3EFbBexFU="
+          "hash": "VGIzeChSspq9SjGtOUc2nCMF74f7wwcQMewFyAikNfc="
         }
       },
       "is_incremental": false,
@@ -102,7 +102,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.DiagnosticFormatter.html",
-          "hash": "wo6Iqe9nMi349wBYNhHst2px0JwBT6a1VDkKxQLgZbQ="
+          "hash": "t27zGhTXp2LvdcrNIvNxLouZXIJC6wj71Qb1Ykkm+9s="
         }
       },
       "is_incremental": false,
@@ -114,7 +114,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.DiagnosticSeverity.html",
-          "hash": "Nufg/FzawpgZPPEv2BhpxqHpyByCSQjtVqaCZMVET9E="
+          "hash": "pe8K70XpDZaEU0cZRrFpo628eO8r4/NYYC5W/T2IXWM="
         }
       },
       "is_incremental": false,
@@ -126,7 +126,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.DocumentationMode.html",
-          "hash": "owWre4KMCwoIx5NRIF1/2lTohMf0IJOIzIuXAG+JoIk="
+          "hash": "H1SBxH14QQQPxZ9ugYWvj6ruRfuiEc9e/qY0sTHj88A="
         }
       },
       "is_incremental": false,
@@ -138,7 +138,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.FileLinePositionSpan.html",
-          "hash": "8UK6tIsS/g0aNIoi1WjKyH+VzpGXasZDdEihpdpLNQc="
+          "hash": "M5Il5EkEpWV/MxdrqrYe1FcxKbEYZ0yEvUCBvVp3vco="
         }
       },
       "is_incremental": false,
@@ -150,7 +150,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.ICompilationUnitSyntax.html",
-          "hash": "9RLZ+82XzhMF3Nk4E9fK5alxX43gaOC6UqAfENHNW1M="
+          "hash": "kvifwe4gk+OsAUa3A06a9mq/3gC7vg2lYzoZMWj0gos="
         }
       },
       "is_incremental": false,
@@ -162,7 +162,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.IStructuredTriviaSyntax.html",
-          "hash": "JzWoWFmLogekG7AAdpgaABza9UWq3OZ9hxTZcCz9Wlo="
+          "hash": "vxq/k8IrYeUTcuP/2HjqfG3N+OtbNbMrvHdMuCM45Fc="
         }
       },
       "is_incremental": false,
@@ -174,7 +174,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.LanguageNames.html",
-          "hash": "wKWvq5GzbhEPXJa2jPcaatQeY4n7qWMXfHBDGxLTI5o="
+          "hash": "9cRR46HUU9mLfQf0JNsTTsnAdGiZHJPr0deWIwavE/c="
         }
       },
       "is_incremental": false,
@@ -186,7 +186,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.LocalizableResourceString.html",
-          "hash": "Ek5xmbEOXbuyuVLYyjGN2hZYv6cMHy2COuM+ua96O4M="
+          "hash": "M8NpAk7QKw/oOR+6iGHoe7ywEjAg5yc3KzKcPtS7JhA="
         }
       },
       "is_incremental": false,
@@ -198,7 +198,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.LocalizableString.html",
-          "hash": "Z7+a9J6CiJ0B8PeQujA9lOkUxF0yJ014N8s6uw+RsJM="
+          "hash": "Zd9/LGl9WPgdsR1Yvh8yPk0dkX07idDDBSzu+kLqgJ0="
         }
       },
       "is_incremental": false,
@@ -210,7 +210,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Location.html",
-          "hash": "dZIhAs6mSkKFqcvlDy4xqbFSoF2cg3I7Hw9SLX/+a5E="
+          "hash": "BI+nP/MaATeIR8DEOeRAdJCRNjuG2HEIInsJ4OB4fGI="
         }
       },
       "is_incremental": false,
@@ -222,7 +222,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.LocationKind.html",
-          "hash": "G/W3H/UTxrE1xiN16eXFI8Qnr0eRVS/xtGqZPiDP/TQ="
+          "hash": "jhbSx6LvA9mf/hYUDxDlv0Y1jhQR8OhiecSjPt5mv90="
         }
       },
       "is_incremental": false,
@@ -234,7 +234,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.ContinueType.html",
-          "hash": "VHq9OE6C5yy01Cq6hKCO4dUaraSmPQZVilovCnGIxPg="
+          "hash": "/OSMrDki6NXZBvA/OJzUNf2+apS/YnDq5R0WfnNvd1Y="
         }
       },
       "is_incremental": false,
@@ -246,7 +246,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.html",
-          "hash": "EGTsd9kyiK7hQdNQU7bcxk3/2/8aJ8m0mIOlDsoyk3M="
+          "hash": "WXQvwOWmd7PS/WES9YcSpQMoIgrPHhislESP9DNuIe0="
         }
       },
       "is_incremental": false,
@@ -258,7 +258,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.html",
-          "hash": "7NfB+Xf+XAUPC+vQzc6rdQ8J3ebl6dR0+NXuci10Fjs="
+          "hash": "LawxzgFA528TeIZEGrq7vnEmzNamqBXrJRLQHNd5IFM="
         }
       },
       "is_incremental": false,
@@ -270,7 +270,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.html",
-          "hash": "pHxvTkSXmqqNe+fZE00563dQuEio2e66RBXBeaW0BcA="
+          "hash": "V3Elf0gi/WnzYQ6YRWBjkEkga2yAx5E+Vd1TZVOnmNg="
         }
       },
       "is_incremental": false,
@@ -282,7 +282,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.html",
-          "hash": "yMyniDWqJdhptVMGHfmJQGeeRGChzVZbInU33bz4I18="
+          "hash": "dmh4JfCL40/vkagBUO20Jc2Jf/x4+HGe7qB+OQ0+wlM="
         }
       },
       "is_incremental": false,
@@ -294,7 +294,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.html",
-          "hash": "W1z/mRAFwX5sVXjJClBwEvnmVtHhy5uQO+enFX54azc="
+          "hash": "ybRUN3iLITEUP+ictgLypbXXekPGT1jfOVP/0hBxU4Y="
         }
       },
       "is_incremental": false,
@@ -306,7 +306,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy.html",
-          "hash": "dQjLPOy2TCrp41AAbBhcAmj/vHJPt1fOAyJSknGWKGQ="
+          "hash": "n0syI/f62Z9d3fsganEzBMya7D1S+jjSeIGDcgkv/sQ="
         }
       },
       "is_incremental": false,
@@ -318,7 +318,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator.html",
-          "hash": "Oix1hahZWqBYtvIydmkPCoTBWHP3SSL/L7A/9qct1/g="
+          "hash": "YhXA/MYRXSmYCqsBh0602b85XG10i7fGKsCcu3BtZNU="
         }
       },
       "is_incremental": false,
@@ -330,7 +330,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.html",
-          "hash": "ACx5+gJTpuFyoEWKfN3FWiKTLBlbtAC7gHoZ7WKbOi8="
+          "hash": "w+I4q8Cahy70syEevyd+QsJl6Z/hiQla5ZAw5fs+aZE="
         }
       },
       "is_incremental": false,
@@ -342,7 +342,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.html",
-          "hash": "ccG4CjW0Vq5NrVN59n05fttAMdhR+rXKqJeJjm5Gmms="
+          "hash": "ngBu1ZzzRwN6fkoXwuzG/42XXBZpFYp9qH0Mn+Od6sM="
         }
       },
       "is_incremental": false,
@@ -354,7 +354,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.html",
-          "hash": "p6tswZgaWLxQqvZdOGxW1Paa+9bSOya2rTPbK2kUrnc="
+          "hash": "9nSvKsK5UBsa0Be7W6FJY2BTGD8su66Jbgh19o+GAeg="
         }
       },
       "is_incremental": false,
@@ -366,7 +366,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.html",
-          "hash": "w0oxiBChZh0NGuDgZ+RZ2knEXA+7sRH7X0C9a5xd2tE="
+          "hash": "YKN+8ODNf01rtye5Ff6los08B98Oy3Sxfpl6U6GjkbQ="
         }
       },
       "is_incremental": false,
@@ -378,7 +378,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.IFileScope.html",
-          "hash": "YZ/q59IyaHT0cZbTDjpKD9NSpMGOe83cwNn9JUuimjg="
+          "hash": "c1SndPa2hoTl/yYMpO4G/WX/wWszCgR0Bmem3OgQVzM="
         }
       },
       "is_incremental": false,
@@ -390,7 +390,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.IFunctionScope.html",
-          "hash": "gu6Ui2bCV/d8lXOuIhxDqcIJ7jy2QIbC0PU+Kc45ep0="
+          "hash": "RFXUSnPiDnkRk/gFPZdW9BsrEoeST+m9urweDiczEqg="
         }
       },
       "is_incremental": false,
@@ -402,7 +402,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.IGotoLabel.html",
-          "hash": "grXUE6Lnd8haBEBW3MkNzQYCDhsEKH2quCOMxlK4uv8="
+          "hash": "q0OeCOpCt37PxBQ9KaAyv7Dj8U9NXKC+NJGZ7wADEL8="
         }
       },
       "is_incremental": false,
@@ -414,7 +414,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.IScope.html",
-          "hash": "uRQNQ5TA+4J14jx8JZy5q22tZwKdui9bQoXPvzp3nqQ="
+          "hash": "OB0/HcRUuhRmUHYDv/rRRh1hebWx0cDXVtb1Ec2vDD0="
         }
       },
       "is_incremental": false,
@@ -426,7 +426,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.IVariable.html",
-          "hash": "9xyuRkmtezH9mGI0twd3CWSVTE7sRIhnvq93zFV/wx0="
+          "hash": "uRgWyX3F/DPCWwuq9UOgiBkIHeLCGqdM796cnbGpddo="
         }
       },
       "is_incremental": false,
@@ -438,7 +438,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.IdentifierNameNotSupportedError.html",
-          "hash": "pEgUKH7dFI8WC3Y1Yofi9lh/7Zr3KgNWjemM6NXJ1Xk="
+          "hash": "jmJqDU7X2LjeSoWsaovgEjunMdL/Nw8tGsC60L8QQmU="
         }
       },
       "is_incremental": false,
@@ -450,7 +450,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.IntegerFormats.html",
-          "hash": "QZE4WxNgh3+KVWHLT8qI94AwBY9JNGdvTJbz234j4Ho="
+          "hash": "uFo+EOzCG+BWgrYpwQqsKGpJgr3IqyEwrUWzHL03kMo="
         }
       },
       "is_incremental": false,
@@ -462,7 +462,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaDiagnosticFormatter.html",
-          "hash": "p7it/PSQu9pqRDMmZ4foDyvL6IK8o6NzYfpIHfi7xtY="
+          "hash": "SLuaX8Ph1oWGAdrAU+HvCju+q8CLLCkt41nmwTLgwl8="
         }
       },
       "is_incremental": false,
@@ -474,7 +474,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaExtensions.html",
-          "hash": "GsFAzHnDdZFcmUWbN6QZ6TFXU/00c0/Mu//9mtoWQ60="
+          "hash": "t51DNbpMo6xTAw+EAX754JNdZQssLAMQek5Bfx5nJm8="
         }
       },
       "is_incremental": false,
@@ -486,7 +486,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaParseOptions.html",
-          "hash": "FCnG9v//adq6sRkjuFguTCuEdcqYXMYGy5+mGjdYxEk="
+          "hash": "fCSfGlkLOd6u3AW9kJxtZDBnmYO7Ya5kT8XVF1JB6Z0="
         }
       },
       "is_incremental": false,
@@ -498,7 +498,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html",
-          "hash": "qorsY6H6tTIU/vougHb4Elh46jx2p0rD0JNeBTuJ+mc="
+          "hash": "lYirb0m5Iuv0Iq6eZO8lIlOGJBTok8mZW7dnzarO7Q0="
         }
       },
       "is_incremental": false,
@@ -510,7 +510,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html",
-          "hash": "Tf2nRfRzjrFg/NR4psVd4OWEylkY8jSZlk+aw6gAK/0="
+          "hash": "bElaILYApLZVe3sFqPwikhud2jcef3LVaaIxQkDxlHw="
         }
       },
       "is_incremental": false,
@@ -522,7 +522,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html",
-          "hash": "QvHrzFtgL0hJ63YX82HiHGl8YrPhjzCIuPhC2lNDosw="
+          "hash": "RRXGy7UDiE3Gk+8N7xcaaHGXThcwV1v4MGWX3LrSIWQ="
         }
       },
       "is_incremental": false,
@@ -534,7 +534,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html",
-          "hash": "AWlEb8ar2ORcaTwB03MNpsnD5Qe/0LdfVlyD+62yh4w="
+          "hash": "ZA9G6/PqtJbKYqnOUifVEsEiZQe1DVQuIvyPnlu+8YY="
         }
       },
       "is_incremental": false,
@@ -546,7 +546,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html",
-          "hash": "sQVheEW0fKTdXWZO/PruPZ0RBXWHOSVTPOqry709au0="
+          "hash": "36TgVjrvjQCe7yTGHmVFwoG1zQE/2jrMqIaDDBpWsY8="
         }
       },
       "is_incremental": false,
@@ -558,7 +558,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html",
-          "hash": "sWWV7Q1u052fR1VqJi7HhgoNGcwJ27fgpBfbTrSzyzk="
+          "hash": "0dqjj61cnkV23RL6zXwCeoVC6xYA3QdPy+filqxjbk4="
         }
       },
       "is_incremental": false,
@@ -570,7 +570,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.html",
-          "hash": "Rt+5HPXQGxn2sT6OYKwKrmJdi6CAvkfw2eyvtT8w0V0="
+          "hash": "MTMiKyiRKd9QZa2syDTf5Uwt2AssNupXz01KHnEQMBU="
         }
       },
       "is_incremental": false,
@@ -582,7 +582,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.RenameError.html",
-          "hash": "aSGuEjjHVjEAlayrUbFdcHelwvo+E4NJzvtjq3M/w0Q="
+          "hash": "g0DWu6mqUmlfHkLKPvMiWt4rrf3YXgH+J/h8cSUbMBQ="
         }
       },
       "is_incremental": false,
@@ -594,7 +594,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.ScopeKind.html",
-          "hash": "oasTPBxMqTiLXuswP/7oUd9J9y5w0MVuVcbLPEZ/GaE="
+          "hash": "l5SCbW5oXxZb0MUP/4gEaQX1e7NSEaGMT8nv2jEHwNw="
         }
       },
       "is_incremental": false,
@@ -606,7 +606,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Script.html",
-          "hash": "H4RdJDXkwHq8b/IED6Nhmtt6a92OTh1oqluLHwtRwSM="
+          "hash": "3hBM6suv2tQTscjuelJ+AXxlRInitxGPa0LKXOqtGDU="
         }
       },
       "is_incremental": false,
@@ -618,7 +618,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.html",
-          "hash": "RA9gs61gtuQjEZPJ9ef2NqyVADN+LH+Cc5my0KKfKvM="
+          "hash": "DINnYvtyVjZUds3P/KcTlhT+e6tEo1gnAO/LsY8PuxE="
         }
       },
       "is_incremental": false,
@@ -630,7 +630,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.SymbolDisplay.html",
-          "hash": "Q3g3vpVtIih87QogB4W8e17uXMs1hf3AikIOksldPWw="
+          "hash": "CQQ8gov0HWRtCSRAFEJsxLzQ3ZQ21KEB27TzhMese5I="
         }
       },
       "is_incremental": false,
@@ -642,7 +642,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.html",
-          "hash": "cyDUHvIbWbrlYfaUQ2g4tDYqUOMmptxRRkMcplKtQFE="
+          "hash": "rcwBY+pvIHoedhlCbLt5HqnBL7u8gdd+E8Ctj7he9PU="
         }
       },
       "is_incremental": false,
@@ -654,7 +654,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.html",
-          "hash": "VncH9i/Ehd35NbYntiqC33p28itpxmiT7onvQREu4W8="
+          "hash": "mgDv/erjwZVJRyffIFGeupKJ31v8p+TW91FN1ENI8eU="
         }
       },
       "is_incremental": false,
@@ -666,7 +666,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax.html",
-          "hash": "zbFK3ef8dc/hT1uNNK0JFPH1AgSRQ42sAd6HuMTtPGc="
+          "hash": "02fzKtUoN9V+eSMZnfgrEKb3N3vCRInX2Ra3C06fQqM="
         }
       },
       "is_incremental": false,
@@ -678,7 +678,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.BinaryExpressionSyntax.html",
-          "hash": "5VqHqDoBegXYEps5yD0iARGIyRDujwImCmQ25l9nVII="
+          "hash": "6FbS24g+c/e0D3iYMaSXLGivUwrgrQsrp1w8h4QcDAI="
         }
       },
       "is_incremental": false,
@@ -690,7 +690,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.BreakStatementSyntax.html",
-          "hash": "PN97aTihTxrAvAl8ur+4jmaku6NqiSf9/eCURZvtDkI="
+          "hash": "xrRiG4n6pyoCi8Q9+q/zFgpYUNnnnxPMNNXv6jr1yv8="
         }
       },
       "is_incremental": false,
@@ -702,7 +702,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.html",
-          "hash": "0AxFtWzn9Xt6zL1GA+fGUqVwVV8Uj37Mcw20j3bxqhA="
+          "hash": "JmJYaR5ILmbjz/JAjJHzrIdMV2+l6bwD0uBYjcX5qbU="
         }
       },
       "is_incremental": false,
@@ -714,7 +714,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.html",
-          "hash": "9UvpaC6xWZ3ACrY9WIMbtmpc9xmGM+kS3AELjirXZl4="
+          "hash": "ORGCFdk+lAc5Cl3Tkuc2zfgBqtSjJJLPgdbmuxZRKMA="
         }
       },
       "is_incremental": false,
@@ -726,7 +726,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax.html",
-          "hash": "Z6xhxnl1yMS4I0L2X9YQHiEIEptfveWFCEjGBRp86kw="
+          "hash": "qKVQ/8hiRvLipdlHdsMFeGks5OThFJ2aLhAq6ayHbPE="
         }
       },
       "is_incremental": false,
@@ -738,7 +738,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ContinueStatementSyntax.html",
-          "hash": "0uohw+tcFhS+lwympYhE32stziQbLFqEMVCSvoRS2/E="
+          "hash": "SUEFTqhfr//PBZLcuQVKcngk133sH+0UyCFFuXlHQL4="
         }
       },
       "is_incremental": false,
@@ -750,7 +750,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.DoStatementSyntax.html",
-          "hash": "P/uK7uU63euL/3DgK6XpYAY1BrPHvLJGIOVo8V+SM8k="
+          "hash": "HqM5tpEbYfcAUnIq9v21Ih9eQkvpHS90rkVOl0EjLYU="
         }
       },
       "is_incremental": false,
@@ -762,7 +762,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElementAccessExpressionSyntax.html",
-          "hash": "6ADBbdJchXqLYzgK+h3P4AHXIpzl9vj9ErbiAYOfBqw="
+          "hash": "2eaN+LL9S84pRhVhSKjWD373AQ2whCViQNO2d4uCAak="
         }
       },
       "is_incremental": false,
@@ -774,7 +774,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseClauseSyntax.html",
-          "hash": "TC34KZU4wQhUmUszC2cUAfx+jNwfNKByAwfSiBye4Lw="
+          "hash": "+P67WmPB/o/FQRvoZZd+XnfkpnH89mglN4NMbpeA/Hg="
         }
       },
       "is_incremental": false,
@@ -786,7 +786,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax.html",
-          "hash": "Dr/fSbfbhcSPcbEqwgrB8DCRev4qv3wYBg8rxIE+hpE="
+          "hash": "HuzCEI4TlzCETVDOGyV8oQuzK57AAR9zHqLzEPbjco8="
         }
       },
       "is_incremental": false,
@@ -798,7 +798,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseIfExpressionClauseSyntax.html",
-          "hash": "MLb4sVLbbb5UZfUl0OyRZ3npwN6yWtgCv6jI+44T6c4="
+          "hash": "MNEnqjxI90QJmtzMlk1LfJfU6keKVXPPd53Gzo1Lcz4="
         }
       },
       "is_incremental": false,
@@ -810,7 +810,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax.html",
-          "hash": "QC9ozdIq802hR58vLJPfJmeGxsiknGO8qFpSGgsN07Q="
+          "hash": "PNZvm7Ms4IzLgAlfbqmhvn9doV8DBkZV3cTcdhGRI9Y="
         }
       },
       "is_incremental": false,
@@ -822,7 +822,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.html",
-          "hash": "DsaQ0weyOSA88J9uoDS/+cAtEXlJiXUPBKvjC5Oyp6M="
+          "hash": "k2t0RF13iSmNFn+UIUIkxmtexUKXiQKp2FzU62gM1/s="
         }
       },
       "is_incremental": false,
@@ -834,7 +834,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax.html",
-          "hash": "c50XK4R0JYaMuA9eyspX6tLu/qhtlIeI4aPwVpx7iHU="
+          "hash": "msKwS5zymHsotGbDHmfZbYje+7yc2FnXakrK+8/T8Ow="
         }
       },
       "is_incremental": false,
@@ -846,7 +846,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionKeyedTableFieldSyntax.html",
-          "hash": "bXCwIeoWHVa7nbh/rmDOy3VaGbKE1DkYMGK81/+Cl2U="
+          "hash": "7e43PGF6WwSS423wiXQsYdFqnyFokkuMDYx984inGwA="
         }
       },
       "is_incremental": false,
@@ -858,7 +858,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionListFunctionArgumentSyntax.html",
-          "hash": "li+LA7JJftLuvuP6vOEtTS7vHSSIh689fCVK+Bo9nZo="
+          "hash": "KTw2NFRbjQKDJkLYvtlzLxwBZWMAFT0M5zwjsa9BHeI="
         }
       },
       "is_incremental": false,
@@ -870,7 +870,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionStatementSyntax.html",
-          "hash": "fg/ZFsPFeRRWreNmwRYqU7wgyY/lHGx9chCLwzSI7sU="
+          "hash": "4jMXOaVkksSf9g8wFpg2B15gFVPpqpdq986pEqtij9o="
         }
       },
       "is_incremental": false,
@@ -882,7 +882,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax.html",
-          "hash": "dw7rPdmJPhaI8B8fLmsZKufI0Cf2AaJCueh0ZJ31xXg="
+          "hash": "2EqPPKc0wgWI75XaqBpSAtvwzqtITFSXCPYvo8DrsqA="
         }
       },
       "is_incremental": false,
@@ -894,7 +894,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionArgumentSyntax.html",
-          "hash": "slNIOtFPIii9TUGbwH40J2TPtQ5+CkErXUy4blyVpKc="
+          "hash": "1/yv9PN2/Z4NuC2dxPDYqE6zny5XWSk0FDaGR6lC9/4="
         }
       },
       "is_incremental": false,
@@ -906,7 +906,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.html",
-          "hash": "SmeCFMnc1VVF4MQ5PqvQi/11MH29xPU4lHs0NxYOKiw="
+          "hash": "P3QWzH3VyIrW/aVK8DF6hXf6WQFPDlacxSk3LQ4gPZg="
         }
       },
       "is_incremental": false,
@@ -918,7 +918,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.html",
-          "hash": "ff0i0QOx3rogAAYT47LPeeFNP8/ADhgE0d0Qg/pIBDY="
+          "hash": "Vr95dvdzEb9I1BjtFgGA/i8FwX5cbbi/F3unzzQJJ84="
         }
       },
       "is_incremental": false,
@@ -930,7 +930,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax.html",
-          "hash": "cVP0ch5OKn7rtHZb6jSYakc0iWVw/GH2w7GhwwEV63E="
+          "hash": "psoUyze+pjKAeVlbYkwMq1AxXjGgr7Ys9QUD8hNQHAY="
         }
       },
       "is_incremental": false,
@@ -942,7 +942,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.html",
-          "hash": "tH3RTzEwtOLoFTpa/D4MFZSL9QwsViIoXREQnnq7p10="
+          "hash": "AfUGx17rHI8XDD+VjX/p5InwS9972KduJvc6aWhQ2cU="
         }
       },
       "is_incremental": false,
@@ -954,7 +954,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.html",
-          "hash": "fzapCzMG16dA0Afanj3YUbt5Dz1VTTEvXbrfrqX3Xm4="
+          "hash": "hv6pO7TJluVTvov6cJtYaIhJJb6aQ5RM8kJu05IAy0Q="
         }
       },
       "is_incremental": false,
@@ -966,7 +966,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.html",
-          "hash": "o+RpHTCW0l/o/4jDmDJfR/3RWGgfD+XGmLk2WrXNPRg="
+          "hash": "gOapcogExE2BLyUZQ21WKzlbe0QGcDCdYwfsfiKNXOM="
         }
       },
       "is_incremental": false,
@@ -978,7 +978,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.html",
-          "hash": "UfGL7eaFz5+VrWoZtcOBucJXHLpXb3hE+DwM9R9DF/I="
+          "hash": "ytfBNBVwb8uEtUBtzJgj4PAuYO+M+9LvIEc/NlDafZc="
         }
       },
       "is_incremental": false,
@@ -990,7 +990,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GotoStatementSyntax.html",
-          "hash": "sMbvEcDbwsEtFDrMNZEaRCE91oidP22dLkJ1tEGhUbk="
+          "hash": "Q/0fTq5ixLxk92UKlAoJvkMEJtoPSKmE/XCzSTcVy4g="
         }
       },
       "is_incremental": false,
@@ -1002,7 +1002,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierKeyedTableFieldSyntax.html",
-          "hash": "omXKQP4E3tQ/Z+b5IDPHp4QREj3xbmYp4Z6+4VqMt38="
+          "hash": "fDjZ1BvodButyZES0joD8NeuUfJr+KBEUnycJjwYkLQ="
         }
       },
       "is_incremental": false,
@@ -1014,7 +1014,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax.html",
-          "hash": "CY91v6aC4VEMxW6w3G15H7a4NQB20rXatg+F2io8rh0="
+          "hash": "T/mvAgTYSPV9DktlRoP0XEISWKjLm1alo+P+RS5GI20="
         }
       },
       "is_incremental": false,
@@ -1026,7 +1026,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IfExpressionSyntax.html",
-          "hash": "C3LGLzknzK3UZzua1AVDITRWQMorVLVEfxCDq170Zms="
+          "hash": "cOw0tKmISb/vJDtqFFY/NKUfk+Kuqz0y+XeF+e8zQPs="
         }
       },
       "is_incremental": false,
@@ -1038,7 +1038,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.html",
-          "hash": "qgnrZMtD865ttryNlhgQi2icA213KjRGWW7s4JXmDrc="
+          "hash": "ffRqxKX43U3Fu6wg9i6XmXFjsKbzvOSlKAZCrWGKpFc="
         }
       },
       "is_incremental": false,
@@ -1050,7 +1050,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.html",
-          "hash": "DmUF13IkTcrveAC7r4dHmlk4OCiz0Wk+k9AaQcsHzzw="
+          "hash": "Uvbt2Segl77gzrvQk1pltizL7zQq1rWedPet0XXQRFE="
         }
       },
       "is_incremental": false,
@@ -1062,7 +1062,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax.html",
-          "hash": "y6MJdJUObEMrR9hRd5FNDdCMMRNNNQopiCEePoMiEeI="
+          "hash": "CTJLmwDR4lkEhL9K56ANa7yVEw9/XrXXQtbov60mt1g="
         }
       },
       "is_incremental": false,
@@ -1074,7 +1074,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax.html",
-          "hash": "izdZBNC5sfZBiJjn5RM2YmW0uOgTxgcZIYC5tE3bBQg="
+          "hash": "II/HAeUg14mdc+QWN8mvd1RhN+HA1kifvdiOVVxSsiI="
         }
       },
       "is_incremental": false,
@@ -1086,7 +1086,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.html",
-          "hash": "ojGT7HVdwy0sP9PMXKaR79T6r8sOMoXTT4DJoI/GYYQ="
+          "hash": "JzFKmovXQ+2mvAaD1sy28kSliHOy0O/PqLIolU6Mogk="
         }
       },
       "is_incremental": false,
@@ -1098,7 +1098,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.html",
-          "hash": "S63qvtyB+MdIXnNQ9s0xBwRdICYM9VejF6dFz0zvu+o="
+          "hash": "XzIReKNGT8a1tKUM/2zQsR11T1YAK8jPvAgjfyUrCNM="
         }
       },
       "is_incremental": false,
@@ -1110,7 +1110,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax.html",
-          "hash": "zdNSCaZmfvtK7CzroBHw0KyOZGXdVYgbJjBxfWf5yxI="
+          "hash": "6pFZejdW5ENlf1NnW7AtBdhqDkY0ihEhEILB/XVN/wk="
         }
       },
       "is_incremental": false,
@@ -1122,7 +1122,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MemberAccessExpressionSyntax.html",
-          "hash": "vaHAa/C9/wnXthFzfuOgCqpk0yExcKFBO4vM2GfIgT4="
+          "hash": "gwArOpqpkfnI6Sy4lyHhxM5tebiKfD+cQ6fec2Ho3Co="
         }
       },
       "is_incremental": false,
@@ -1134,7 +1134,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MemberFunctionNameSyntax.html",
-          "hash": "I/+m6cZTCQ/37b32a+OxSihWEt1YySMUNI/MbbOBp4M="
+          "hash": "Af7/22qBE6hbNi9Nb2eUErxhu7fUud8TbvgRbNgQ0kw="
         }
       },
       "is_incremental": false,
@@ -1146,7 +1146,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MethodCallExpressionSyntax.html",
-          "hash": "zoxbkyybdFoOxayHUFq1Bq+jTwraGGvw781CM87WZ4k="
+          "hash": "wvRHRNY1qOzqpARKwCqlL0xLPKHHm0WfBAjD5c07fSY="
         }
       },
       "is_incremental": false,
@@ -1158,7 +1158,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax.html",
-          "hash": "T2TiIrIPJ2yBpULPcTie5RShEAOgGzPbl8lApATIkBE="
+          "hash": "O/SK6gR3E0owHBg/Ajyt5npxrZVBd6CYFc9fY/i7FtY="
         }
       },
       "is_incremental": false,
@@ -1170,7 +1170,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.html",
-          "hash": "nGtSXSTb92SDO23mYb9rGuPa7lwp+8P3ISx/uvp6rc0="
+          "hash": "Mb5ZXdntaKEiRa/+5E6PR95ShANkunyKyJuYNp6snic="
         }
       },
       "is_incremental": false,
@@ -1182,7 +1182,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.html",
-          "hash": "TlMBwzUjeWCa0FjDmTzZMETiLseucBDoGGRehmhmmes="
+          "hash": "WixDsHLiK2vp3OHxryoPmN69j4tLj2Z0d6owiO0Y1TM="
         }
       },
       "is_incremental": false,
@@ -1194,7 +1194,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.html",
-          "hash": "6fXI56CzXTWZqK3sgGpJmospOYJVANL1E67LabBla8Q="
+          "hash": "kN2ztXLJRTqGO4IEQjbVBF/1e+fdGkTSFNj4n148X2M="
         }
       },
       "is_incremental": false,
@@ -1206,7 +1206,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax.html",
-          "hash": "wIsu86EkJEjLzAwcWEWfjO6q0KcWHM6+9oTXV1m8vjs="
+          "hash": "KxVL76q4VcvJZhvJdpgUp+gLqFh8LOaGBQ2lccLhqws="
         }
       },
       "is_incremental": false,
@@ -1218,7 +1218,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax.html",
-          "hash": "9gNWlKYscu/86pY/zykv49rbZdeMIRZRR+Q46WCeTQ8="
+          "hash": "jOPv/oYUrVWOu+8cU8coXN1Jf5iWw+guR5oQRRGVfbQ="
         }
       },
       "is_incremental": false,
@@ -1230,7 +1230,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.html",
-          "hash": "Djq12wp0BkjEdGQ1YYkh9FfqXNjv1bwyUbBqAzinlNc="
+          "hash": "IfHCo4Hg1+V5kS0ybTFaO7ibcHqZHuUdrL26uUSW/fc="
         }
       },
       "is_incremental": false,
@@ -1242,7 +1242,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.html",
-          "hash": "1VqBUFIbAk4fTaWGIwWbTGm3RcHWJ2Pf9eJeg71S7I8="
+          "hash": "6iLRLYKZNxuFFdXlbOOe1B6kmAqF2KBSYUvgzRVv3Rw="
         }
       },
       "is_incremental": false,
@@ -1254,7 +1254,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax.html",
-          "hash": "BtWlHVrcXTzdGSVyQlmicSFEzQcAL/yL+p6QGcGo6a0="
+          "hash": "qQ+mwMSs/OdfUyZSSt+GBb65IAjBcmlX/E3HLlfGegk="
         }
       },
       "is_incremental": false,
@@ -1266,7 +1266,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax.html",
-          "hash": "0mZQpgYvb3FsOIvMWo/PCTGBPtmLCJOrICUH4Dt03nE="
+          "hash": "GSyfouoM45UAzHT0mtYgcjc+d4CknxniYKYbmNOQaKU="
         }
       },
       "is_incremental": false,
@@ -1278,7 +1278,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ReturnStatementSyntax.html",
-          "hash": "pp9jOxk4+8o+jEmX+pY77/xiKP3lZHvnE2U5aJUbBcI="
+          "hash": "iNtZH4xDHLhQ9Ah8oyrZivWRP2jdT29vkaZG1IDARoc="
         }
       },
       "is_incremental": false,
@@ -1290,7 +1290,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax.html",
-          "hash": "jN4N5ISEx9BFeFS032w0nbVRsvFirF5i45Il4zPcEAc="
+          "hash": "d62cCoy1cYdpvWDtGIy7ybWxJsQ1PNzReDeIJ2Yifw4="
         }
       },
       "is_incremental": false,
@@ -1302,7 +1302,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.html",
-          "hash": "wcwXBcSrllG/LjR9h9MjMc/brptMf6jylONnIVD2YI4="
+          "hash": "WL9GeZOjx9tcAC0fU6IWTjwvADaJoz6ka2oL2LWK+IU="
         }
       },
       "is_incremental": false,
@@ -1314,7 +1314,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax.html",
-          "hash": "Bj0259AAgkdFud9s+4t1rTtCNZ4QrnDQo49ua7Y+Otw="
+          "hash": "dg5cMpf+Q2DYZ7IXOn8nOCx/WIw3DXnbxU5ctKYfigo="
         }
       },
       "is_incremental": false,
@@ -1326,7 +1326,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax.html",
-          "hash": "je/EDEqFEyCayyZhVWvjcSCCyQgRtopEQq0hmTZlTH0="
+          "hash": "hLbktVuNbtDapPb31xDkezgM4VHKoD1jCb07LbxoPUg="
         }
       },
       "is_incremental": false,
@@ -1338,7 +1338,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax.html",
-          "hash": "8zUBv0n40CYSWM0opO4bIiXvR4uDnahvWoMlCqef08A="
+          "hash": "Da1O0bYXI/PBBV1tZer/gZiHqCegk8QX8SxJqZj5Dn0="
         }
       },
       "is_incremental": false,
@@ -1350,7 +1350,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax.html",
-          "hash": "iWVyOgCDxplbIhHV47lWH2twsP7oVx0Lm0F3Vk+nIeo="
+          "hash": "GY5zGOz42FsHh+mkhrV/c0lEzklFiCmJOAi9Ivdl044="
         }
       },
       "is_incremental": false,
@@ -1362,7 +1362,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StructuredTriviaSyntax.html",
-          "hash": "Htnp2V/qnr8QKB8woGNRxi5nJBm6pZXktIN7tAYXA1w="
+          "hash": "uhgLMKTl0XnEoxES8E3Y+TViSLJgPTaKl7XObfFCWGo="
         }
       },
       "is_incremental": false,
@@ -1374,7 +1374,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableBasedTypeSyntax.html",
-          "hash": "3Ky2aRlK0hxjzu+Jgf0M2/9rbzdkVq5IJitrQx6zS0U="
+          "hash": "OpICqHEWte0tLh/G71HQQ5xj+FSgrU9hN4vAN4GhWaw="
         }
       },
       "is_incremental": false,
@@ -1386,7 +1386,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax.html",
-          "hash": "Jt1HSgWmLhXCE5f8SBwXv8M50XhNW/jRLCb6Qn+Q6JY="
+          "hash": "gTPUNjAAJsKIOtAJE/95ilOLxzI6m1dRrFPFNJXep1E="
         }
       },
       "is_incremental": false,
@@ -1398,7 +1398,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax.html",
-          "hash": "5UYHPkobXp57SFrIa/FDSuSaEOVH2o8mp8DeUS9niic="
+          "hash": "bDMxxDiG3s27C5rkj0m3Qbru6X031tcCdNCYdCRjqqk="
         }
       },
       "is_incremental": false,
@@ -1410,7 +1410,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableFieldSyntax.html",
-          "hash": "QZxTpiLkJ6dzuVG5pG9eA0btHDwXVXiUB0HKXOeCWS4="
+          "hash": "+cd464oFEdf3TfJ+Rzb89N7AAnLjUd5Y3rOFCJ6mlrk="
         }
       },
       "is_incremental": false,
@@ -1422,7 +1422,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax.html",
-          "hash": "b8Ry5aQyAPoP5H8di80HOz/oLsDXSlK9xAxj3cWrTQc="
+          "hash": "EN9KdHvWSj51n+l5prFxfjb2PfkATyrknPov9X4Wp2Y="
         }
       },
       "is_incremental": false,
@@ -1434,7 +1434,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.html",
-          "hash": "V07YEAiHr4L8NeUb+CUaPZXpKfSFXmUQXjB7XjDdJfE="
+          "hash": "pb1AMDiGjS+O5qCfoWk/JVv2EFjJafHifJwTPPVAaD4="
         }
       },
       "is_incremental": false,
@@ -1446,7 +1446,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.html",
-          "hash": "WSgJFGpbsIfksFO87nZPmWh9LdskPot1Xk9LDXvHftQ="
+          "hash": "B6fFQKGLO+MkNeVPHIe5aW9mOgo9KK1fJLk2SU7EukY="
         }
       },
       "is_incremental": false,
@@ -1458,7 +1458,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.html",
-          "hash": "eisvRgI5ADjyt5VCu8/bRZkQOWw6aRT9pWw3PEO6k5I="
+          "hash": "vizh/Ytr+19HCB9xNy/z/B9DFz9nOHDiNyBOhGn8oVY="
         }
       },
       "is_incremental": false,
@@ -1470,7 +1470,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.html",
-          "hash": "ce33OEah3EdtA2lFV91TfVbTFuueA9WcyR7xY/Y1tKc="
+          "hash": "tGcMamFPSPVwvFza9g3GORfNsqwax5SPgHO111yR6eA="
         }
       },
       "is_incremental": false,
@@ -1482,7 +1482,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.html",
-          "hash": "l9Yg0NYPpyd/+Rbh06QQZZwzs6qTXUD3+citb3EW04E="
+          "hash": "okRSFYkbE2z2TKsixowGQdII6I1frXoK5BAxydKlRpU="
         }
       },
       "is_incremental": false,
@@ -1494,7 +1494,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.html",
-          "hash": "B5rCoiaK5AndmxpYkt9qR1eOhhx9WGkGq8S3eeHl780="
+          "hash": "RVuBzxXxq8iv0bolI+ykCpjhy7k3GksgMKJbnYUugj4="
         }
       },
       "is_incremental": false,
@@ -1506,7 +1506,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.html",
-          "hash": "YZAjTTnBwOP3xa9PaWlzgTU/q0kPv0iZyjyf/Fk5j7E="
+          "hash": "/fe09xckYUEqhU7a9owU6jWp9TIbIWzXzM34sdFFwbM="
         }
       },
       "is_incremental": false,
@@ -1518,7 +1518,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax.html",
-          "hash": "wFkWWIN8kp6snS7IUfusTZdCu/DksbHa5OdvggC1T94="
+          "hash": "R750a7wErSMtLTdtIJu42/Uk+/E3Sr7mtzh/HWR/ByA="
         }
       },
       "is_incremental": false,
@@ -1530,7 +1530,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.html",
-          "hash": "u778VPtNpAdC/qAML24xrWJ+5tBEKpNtpLzFrKQMxEE="
+          "hash": "kBP0nJLyDt1KEXnaET71QTOBQ/Xc0UicnZ/itOWyjuY="
         }
       },
       "is_incremental": false,
@@ -1542,7 +1542,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.html",
-          "hash": "Ftk2XaWM2YVMY2w/tsZqLV0fiJZOUqJb9KG8MpBLhjc="
+          "hash": "HtDSm60S9Wm8AiJ7rCEUzPRlrXejB0o0WlAhhmcaAvI="
         }
       },
       "is_incremental": false,
@@ -1554,7 +1554,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.html",
-          "hash": "0uxHbxMsuWoEb5PBgtGeLGiuvu12A5Rt6N0pcEUw+q0="
+          "hash": "ezFNDjs1juxjGd6AYavqDBwXKWKiv4FpFiERoSNFlMk="
         }
       },
       "is_incremental": false,
@@ -1566,7 +1566,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax.html",
-          "hash": "nRn6IDh6FVFGHoHRu+aDJYhpiyxP/zX/1NILbv6ptj8="
+          "hash": "S9XtumKR2fc+O9VB/uWJL8WGAKAFDqiAYfhN726hbIo="
         }
       },
       "is_incremental": false,
@@ -1578,7 +1578,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.html",
-          "hash": "48vqf9pgRVmwEGsHORo/2d6R1nNiY/a/YA7pN4CQiXc="
+          "hash": "7GRTAptc9upkszOdndw6ZRiUE9uhfMIAlkdo4gWMZ9Q="
         }
       },
       "is_incremental": false,
@@ -1590,7 +1590,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.html",
-          "hash": "VXnx9mNp0CgIKxF+DLeMFTFL7ie0+rouJuNm9G+GokU="
+          "hash": "a6eAw/+6JEibC8w1zD4kqRpdRdFw4cGQhDZQlsx6JdI="
         }
       },
       "is_incremental": false,
@@ -1602,7 +1602,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.html",
-          "hash": "Sr83TgMtZaPgKJqRh3+6W513v4txiPwInOS5nFVV4Pg="
+          "hash": "z0rqUv90ZYdktMi9ZxDRYaN54+R8tkuWdxk5ga03MEA="
         }
       },
       "is_incremental": false,
@@ -1614,7 +1614,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.html",
-          "hash": "MbqAhYAdQn92XGut3kv8ZE9pmFe5Xfuuq6VGl82gpec="
+          "hash": "TthOhVa/yI6vGHgtpMCNqBHApI3aXZKNspIlrMPbUuI="
         }
       },
       "is_incremental": false,
@@ -1626,7 +1626,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax.html",
-          "hash": "aV+tPk5a1s3vyvJ+zyXBFXotprRMJEg/3Wp+FNOH9kc="
+          "hash": "G3zlqyM3UMidMDaUNabUCi6S8aO6xfNMrFmhkIrMBWQ="
         }
       },
       "is_incremental": false,
@@ -1638,7 +1638,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax.html",
-          "hash": "mvNNFurlCH2+RneDgTImYSAbLsr8vNdvJgATv7O+pHM="
+          "hash": "0KfbGEoCAr0tpMySAyVvYx4OlWehyqLZmhnCZC8LvLI="
         }
       },
       "is_incremental": false,
@@ -1650,7 +1650,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.html",
-          "hash": "ZDdsCJYWpz39yyC+FeUtkPy4cYAt/uUbWsOiYm0Q+X0="
+          "hash": "NWPOQoKLjr0LiIW6oCokc4Iu4WT0VykenBZj4/J8iHk="
         }
       },
       "is_incremental": false,
@@ -1662,7 +1662,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.html",
-          "hash": "sypV0uk2Zuykaf24V9PcEtdjyaOWM4PAy2pIuWbBzOo="
+          "hash": "vUVTmZXaQgrud7Okbxt4gbBOb7pfqOtHfpLGA45q6EE="
         }
       },
       "is_incremental": false,
@@ -1674,7 +1674,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariableExpressionSyntax.html",
-          "hash": "Bd/ZcRvgaJnxgFQb6gUAtCvjnJgaYnSGkSHCIZiYJiM="
+          "hash": "AxVjlb9tXB360kTEiVw5YzRG+1VbxqZ5QsVW61xzThY="
         }
       },
       "is_incremental": false,
@@ -1686,7 +1686,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.html",
-          "hash": "tx0WXC+nFsJE9/Gb5HPM2EYV4l6be4c0EbyY9vy3djc="
+          "hash": "f1+gxwg8/dTQvqKsl4e3b/jUPpMi3/PIbisVo7zjpU0="
         }
       },
       "is_incremental": false,
@@ -1698,7 +1698,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.html",
-          "hash": "WGdlwGyb/sw2OqlbUswpGgMD1CG4iEChLAFR+mX6hNs="
+          "hash": "eyoSeEZxaaRWacpkHmb7aJJUX1jQ1K6U+jnZ77MSU0Q="
         }
       },
       "is_incremental": false,
@@ -1710,7 +1710,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.html",
-          "hash": "b1KaFeaKHlcm4/iWWa12rVmBiQl156ln5ibGncZTx/w="
+          "hash": "xSalOc2m+qMvjUmisZecwP3dsts8MflmqJ5gO4u7veY="
         }
       },
       "is_incremental": false,
@@ -1722,7 +1722,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxExtensions.html",
-          "hash": "NWekjnhU3aK8ho1UQUHY/hPPMe5+O0GP+CgoZer9cGQ="
+          "hash": "yKrvvU/2hKwhsb3Y8etI7RgvWZYembnrVEePhuV+xWc="
         }
       },
       "is_incremental": false,
@@ -1734,7 +1734,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html",
-          "hash": "/MdjM/HV2kiXuTQAcJXFq2QGoNKVAy1Gg1UOPfVpqik="
+          "hash": "SVeZRaIbifvQsZAXiP9tVeyOdNrUZSDVcxw2altAxe8="
         }
       },
       "is_incremental": false,
@@ -1746,7 +1746,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxFacts.html",
-          "hash": "0cUID1XoN/KAQLV6o6Q5syTsIFy1qQAYgydezzCdrck="
+          "hash": "K4FhIDGVwhxZ0nnyFikZOEPTEv9DKp8+XSanj5LqiQQ="
         }
       },
       "is_incremental": false,
@@ -1758,7 +1758,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxKind.html",
-          "hash": "9TvsrJ6MVD/1vuFR1EqvsNHRsdxleS+WdNsxaMYxBt8="
+          "hash": "fxfBrS/F3ZCyqg5W1Cb+B6DqpvGSzVI+XQgQcwVGn5w="
         }
       },
       "is_incremental": false,
@@ -1770,7 +1770,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.VariableConflictError.html",
-          "hash": "PyfHhLwXe3ejwyep+I5mXh6dW8s0W20wGriec7x1lgg="
+          "hash": "1Cnc8jTEzYUYPdqGNYlx7EaWMZc9swDSE5q6skijk80="
         }
       },
       "is_incremental": false,
@@ -1782,7 +1782,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.VariableKind.html",
-          "hash": "BKAJ0CfMb0VOrSYLVGSkBXkLnU5XDvCw7EncpG/rZn8="
+          "hash": "3SnTGFRs2y32j32ZQhFxwZAuciQh3sYJZnqAOWzzCMc="
         }
       },
       "is_incremental": false,
@@ -1794,7 +1794,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Lua.html",
-          "hash": "pTJ1jAkC71N4EScbq5quSMQR83RsMpNhkAPPlGDmjbE="
+          "hash": "xCklGpw5porUHQ+54ml+cjFn/jQp+wP1eVzgyR985l4="
         }
       },
       "is_incremental": false,
@@ -1806,7 +1806,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.LuaExtensions.html",
-          "hash": "ggIJTKj0V73vB6r16Yy53oC9Yx6v3KvTx2W3pjQVWXY="
+          "hash": "mp0qEUti3qpGrSNmDpn9qQu4ocqKvklu4Wi2UcODttg="
         }
       },
       "is_incremental": false,
@@ -1818,7 +1818,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.ObjectDisplayOptions.html",
-          "hash": "jr3xTvxrHnTgnTPRcy3t2Y3C0PBr5kSNaaZKVGirhgQ="
+          "hash": "+Qyz6DjSmBOCBuzm2IIWv0mDJytl5k36ENPoggVmIaM="
         }
       },
       "is_incremental": false,
@@ -1830,7 +1830,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.ParseOptions.html",
-          "hash": "MaV2HETBJm4ru20nSSvNzivBq9lebKSnZ8EB+23L5ds="
+          "hash": "W12RUy/XYBy3w7YA+vkjK4QECD43DcOV4xjlHbtrpKg="
         }
       },
       "is_incremental": false,
@@ -1842,7 +1842,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SeparatedSyntaxList-1.Enumerator.html",
-          "hash": "JoGRHeR/V/kvuMa6JUzUA+5mcUkNIYlBxqMsmO0NDyI="
+          "hash": "aoUmWOjbzY92cViqvdvifhiHxm1lI1c3vjjbTJFpf9Y="
         }
       },
       "is_incremental": false,
@@ -1854,7 +1854,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SeparatedSyntaxList-1.html",
-          "hash": "UJE8UUqsQ2Tq9q7cUrHf4LCgVRCicCL1njFIoiC5gwI="
+          "hash": "dsdobgv77FF7ukOjJd775WirOPrJ4T/w4s+7ugzSzDY="
         }
       },
       "is_incremental": false,
@@ -1866,7 +1866,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxAnnotation.html",
-          "hash": "B1olwzm1jVH2R3v2CElwPDE598YCMV6+RMgDa+x4GPk="
+          "hash": "8X4QdQ6oJVAjGVCFGikJhNcodUSVqkBZ/4B1tSWn9YU="
         }
       },
       "is_incremental": false,
@@ -1878,7 +1878,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxList-1.Enumerator.html",
-          "hash": "PY/ggPl3dfVR0DFVwqQVqbC0a/NYoGOiKgyqn3PrIqs="
+          "hash": "BifBOQWVak4yURw+nNaD5rX7V/LYILpZ6BsWO9Gw/o0="
         }
       },
       "is_incremental": false,
@@ -1890,7 +1890,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxList-1.html",
-          "hash": "PQjogezwBk2XLfOBXFvCo7DzIatsPKnWPIuQwllBbxQ="
+          "hash": "yPTvSTBRK9ZXzbAaXHcqWfwjnuLRZyIONAJe88b6Ei0="
         }
       },
       "is_incremental": false,
@@ -1902,7 +1902,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxNode.html",
-          "hash": "YHZpsTesHCbonkoe30VvD1gtG4F1gQF1JktvvNwTVVA="
+          "hash": "w4Q9GQZkuUAXg+zRT8Epmh2QqPLiUtqGj/PYLzqlng0="
         }
       },
       "is_incremental": false,
@@ -1914,7 +1914,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeExtensions.html",
-          "hash": "W2Kmv9J+RDRF836gc6mvYu079uZeiqqa3qTbIAIFTyo="
+          "hash": "gGT/bor1cpgqx3UlZj3b0fnIvc186zWP3Qe/uBiml8I="
         }
       },
       "is_incremental": false,
@@ -1926,7 +1926,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrToken.html",
-          "hash": "YsVIfKEbA57Zsc+1dPmdep1ac3K67btlP1W9/bxnPqs="
+          "hash": "4xBTVQ6WkK5lfIuLYE3VhbsrmnW+LGSCHqunGJT2Aco="
         }
       },
       "is_incremental": false,
@@ -1938,7 +1938,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.html",
-          "hash": "K3/EijKPWeIVBeXhcmtMcM9yQOzq3l36UWEVNXdS6s4="
+          "hash": "2ukv3bCyF26+YNIlqdIFny5w7Whk4PzhF4BCLcxG3PM="
         }
       },
       "is_incremental": false,
@@ -1950,7 +1950,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrTokenList.html",
-          "hash": "yF7d8kyj8LP4qWd7oODMkCCXqW5jRRL+MqU88XSECXc="
+          "hash": "0dlYQEWhFhigkk6MU/93gs1USE3xOL8h7uhOV2yPOGA="
         }
       },
       "is_incremental": false,
@@ -1962,7 +1962,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxReference.html",
-          "hash": "f3YJbuCEIMHJgUHUOxst/tGlPGJBiRyWNX72108sDcM="
+          "hash": "WA/dW6fuKiCi51P3hyPaUEDYmVvlvKvWcRZ+CilYO3E="
         }
       },
       "is_incremental": false,
@@ -1974,7 +1974,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxRemoveOptions.html",
-          "hash": "Evrm7F+X5G2gNEn2MAgFoxqYrQ8P6ztwzh9kZ+w6ZBQ="
+          "hash": "mifeBj4v/QVEPyAO7XlKcrtnFXqbLbJLmIs6LEuSKyU="
         }
       },
       "is_incremental": false,
@@ -1986,7 +1986,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxToken.html",
-          "hash": "b7J5G2OqBFsONh6+30TdmKQ8GaWogB+E0D5lQAMq9Gw="
+          "hash": "FJdsPqv3WROHlez81CRx3Ecwl3dEoGUujgbO2IQ67X4="
         }
       },
       "is_incremental": false,
@@ -1998,7 +1998,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.html",
-          "hash": "SvqGl7hoe/Pmi65PHLQJu54RKEBJ84aJC8qhYBjWVP8="
+          "hash": "Qsc+r3kxniDmdHuaWLf9sH3mQrBuTLKoKlOCEFG32ok="
         }
       },
       "is_incremental": false,
@@ -2010,7 +2010,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.html",
-          "hash": "kKnb2HR+DR8jvgGEdkpYm14v73Xpkb1CRjnkoTtCU/A="
+          "hash": "4gRFCtmjg3u/9/PbAIWlJ6PvaZgINsi0cK8Wa5odgZ4="
         }
       },
       "is_incremental": false,
@@ -2022,7 +2022,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Reversed.html",
-          "hash": "BifioEFSvqMxjY6hMQYoyZA+XIDnJJLpoAT3QnlJS50="
+          "hash": "1/TmL+v3KXCLnIPQY0uT62EFxsNfiWYq1IBXEnnw11g="
         }
       },
       "is_incremental": false,
@@ -2034,7 +2034,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.html",
-          "hash": "LDzSC2u/m6kfEfm3jI5A+bgwxwpQ67l32Y/CqnxMGHA="
+          "hash": "hOgL/8A+yttvWGqzBAenzH+EpFsmbQ4ceMhxcpYhseM="
         }
       },
       "is_incremental": false,
@@ -2046,7 +2046,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTree.html",
-          "hash": "Ju0mxM1efmepTkqpQk5wY6YTGSlQjXv2oHNb0cpVdHU="
+          "hash": "zFEowKBdHleIfFLOK7nsaCccMIquOM3feMeIADRaHKI="
         }
       },
       "is_incremental": false,
@@ -2058,7 +2058,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTrivia.html",
-          "hash": "K1qiH+O1cvi5NoSBKmANItZcsseQjZbhowbOYRSIsqs="
+          "hash": "Ask9WMj7IVcgQ2AmBidRr1xjPkjLCKHjZB/nHVbVM3I="
         }
       },
       "is_incremental": false,
@@ -2070,7 +2070,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Enumerator.html",
-          "hash": "tuGAENqeIVVvjp9K4FL9D2YLJn1fgytTh4WvSC1V0qw="
+          "hash": "Mqc6Pi/48RfHyB+WKNa720X627TWB4pQk90X+BvcYqA="
         }
       },
       "is_incremental": false,
@@ -2082,7 +2082,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Enumerator.html",
-          "hash": "fGKuBWwcvqm8b7mr5nxzcmsq94qv467lFPxkTfXs9FM="
+          "hash": "3c2YWwIHkQecconMuR6ahtauDSYLa/U0dFG82vvvQMk="
         }
       },
       "is_incremental": false,
@@ -2094,7 +2094,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.html",
-          "hash": "C16Jkrdvbhm8BCnZqhZFe243cIlfV7aiMMrss9oJ+mU="
+          "hash": "qSE1S4yetD9Oxc+J+vI85CqCn6z7Jy6GuaCGnPJ0V2g="
         }
       },
       "is_incremental": false,
@@ -2106,7 +2106,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.html",
-          "hash": "GoMSkLsMyfVHsTGMV5A09KERsE3uvdjqlVVLjUjjtuo="
+          "hash": "kr05Tfcx8a4BddplGz+Kq4fCo+gLgqwfDXQJa0ezgPU="
         }
       },
       "is_incremental": false,
@@ -2118,7 +2118,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxWalker.html",
-          "hash": "IPM2iAYeAe0dP4al/b9zikJMhbOREqRfHEJZb5tdIvA="
+          "hash": "ErgFeUwD9jwkRChOc8k5AfOfE1xu5JemMluyNWQgdcc="
         }
       },
       "is_incremental": false,
@@ -2130,7 +2130,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.SyntaxWalkerDepth.html",
-          "hash": "CMB1LVPUGSSX7OQL7p3ZXOzmBTh92pB95uic9N+pPnA="
+          "hash": "iSFP/Rv4FIbaS2uk5jfHqCP7MvCZOI5tIGt3GD9p82E="
         }
       },
       "is_incremental": false,
@@ -2142,7 +2142,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.LinePosition.html",
-          "hash": "qZy0Bi3Fkj8z4OTNtPw+xiqtIPEY+Q/X4Zd3sYvFwVU="
+          "hash": "MwSDznbj140rCqSGIAN6RFO9sKtBdih5PIaLDR4ZxXk="
         }
       },
       "is_incremental": false,
@@ -2154,7 +2154,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.LinePositionSpan.html",
-          "hash": "5q6yni+uMoXsnbPwRTB0ReNIr5Ruwsp5FyseGsPieKo="
+          "hash": "3H8h8yXALd6CW/pPSe/Rc5BYXprERHyFyfkyMb8wO4I="
         }
       },
       "is_incremental": false,
@@ -2166,7 +2166,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.SourceHashAlgorithm.html",
-          "hash": "ciqg9KbYoei+yH4SGJKpeAMoXi7vcZRhNCsHRbNNbBU="
+          "hash": "ZVhPWeWX+qKFOSXPRJN4rOc1BNNj5XU6BtcOCLGilJM="
         }
       },
       "is_incremental": false,
@@ -2178,7 +2178,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.SourceText.html",
-          "hash": "KkjDoyNywuR0rrE2U5GPfgoy5iFS4XwIJ+ByKNk1hDk="
+          "hash": "vVusEPHW0jYMD1+u95JqFtsundFCNrecrAyK+rw4rUM="
         }
       },
       "is_incremental": false,
@@ -2190,7 +2190,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.SourceTextContainer.html",
-          "hash": "P3M3YOWEl2Zd4CzPiIDTEXaB4Lvzyw+Ilgkz5EwX97c="
+          "hash": "Ui7M90FoAX6ipLHGmKKzCfgsHsJv4B4xYTeQFDuDXSM="
         }
       },
       "is_incremental": false,
@@ -2202,7 +2202,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.TextChange.html",
-          "hash": "Q5qtNyfop7H78UdeoKIe6KSEbsO/952INiqSoTFK3Po="
+          "hash": "4ewiN8G0okHiUF2lPqJLhemb+nJ1WOQeVVvw70ECgmM="
         }
       },
       "is_incremental": false,
@@ -2214,7 +2214,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.TextChangeEventArgs.html",
-          "hash": "6k+4HlmTXmBRVN7Ntb+cfrygS1P6xNbFIwTRurjIb/M="
+          "hash": "cuuf2GS5f+qyeLXxgki5xYPsdvrcfbTJhrYX2WnvbYc="
         }
       },
       "is_incremental": false,
@@ -2226,7 +2226,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.TextChangeRange.html",
-          "hash": "V1dxB8LQA/vXA8eN0o3zRGLy2iaINaKkSeVh3NKYXO0="
+          "hash": "38/w9Orv+vlyF/uCdJLWrX3olxg0ViSSjzy+lQ421Eo="
         }
       },
       "is_incremental": false,
@@ -2238,7 +2238,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.TextLine.html",
-          "hash": "neJSDtHxv59f8GF//4H/Zd/rWlewz/NV27giQYR5mgc="
+          "hash": "I9IeglTv2K5B/hKG55SxteBz1dcjt3jOhcEDLWR/LIg="
         }
       },
       "is_incremental": false,
@@ -2250,7 +2250,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.html",
-          "hash": "erHza4/5qhxZl/ZhFv/wYaBmeug+WF5XQVVzzkFFA70="
+          "hash": "dgJOqrwcaue7ktdxz8fbZRb35P2qeUlpP/VF3wCOubQ="
         }
       },
       "is_incremental": false,
@@ -2262,7 +2262,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.TextLineCollection.html",
-          "hash": "FbEvp/0CdwnjCoJxLWZK5boeHBRCdiszYzm6ZD44v8o="
+          "hash": "SmGQql8tyHBfou2g9LdcD/u+HuInTbdOFRepzRyQSIQ="
         }
       },
       "is_incremental": false,
@@ -2274,7 +2274,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.TextSpan.html",
-          "hash": "11LchjwJ5Z3sKgn98+S67d/w0NFB026dpQMIxZkMOCo="
+          "hash": "/KD2A8uZ60q2khdHPh0YIqG4P3MOOUWdJaRyN7c3Ibw="
         }
       },
       "is_incremental": false,
@@ -2286,7 +2286,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.Text.html",
-          "hash": "v1ga61+nG0RvHutBgH0SmOACIirp3FzwBAD9KEKJPlw="
+          "hash": "kLlDyTamgGCSLI2zwsekurBWDzxb4MVOrt9Bem6KO1c="
         }
       },
       "is_incremental": false,
@@ -2298,7 +2298,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.WellKnownDiagnosticTags.html",
-          "hash": "g75MabFA8ztzqPorEXBGjz+o+OCxsJNwdHhyFnM4Yos="
+          "hash": "Q1lb3YkKEn0y03vCT2FONM5WaFBzRU87YVMjk1LrEw4="
         }
       },
       "is_incremental": false,
@@ -2310,7 +2310,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Loretta.CodeAnalysis.html",
-          "hash": "icZI/tiax1Ibta+EtWn+3x/9l9pH3CQtZfbebW5x8n8="
+          "hash": "V2RjaVmlsQuaWyzWzqr5+RHz75hCc4TpGdXs7V+/w9I="
         }
       },
       "is_incremental": false,
@@ -2322,7 +2322,7 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "qY0b6IFc3bW2fzFasmfKFTJ3ZlIZShr4aIhHo7VU1sU="
+          "hash": "NfL54et2J0iAk21V1cCQ1yO1+aq+OVl1+/0wQ7lTjZc="
         }
       },
       "is_incremental": false,
@@ -2346,7 +2346,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/experimental/constant-folder.html",
-          "hash": "CpiZpnHN8FZNPI8R0682UoYMO4neGF6+tZpbreV3H0s="
+          "hash": "dLZI1ayRODsJzZkc2xDzmYk14RDDvVvJGGwN7lxMynU="
         }
       },
       "is_incremental": false,
@@ -2358,7 +2358,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/experimental/index.html",
-          "hash": "AsuYjtKgMeDCyges89qkmCVjyoddUuy3kdSFPGvChk0="
+          "hash": "2IhcJ5QgvFKKRBsYsEkhmbZsiJygF8W6DhHSkfakfks="
         }
       },
       "is_incremental": false,
@@ -2370,7 +2370,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/experimental/minifier.html",
-          "hash": "bcCK/KZ6wiggqc40hErt6488p9FcrJJXiOifzoHHE0M="
+          "hash": "mLIPgZUtDnQFtQdTMtb4F1GbHCe+cLg+oKSYQ35Kda8="
         }
       },
       "is_incremental": false,
@@ -2382,7 +2382,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/intro.html",
-          "hash": "38Kza8WAoFXyKKrMY9dy/KA1hEs97Bk7TJDA9QzVkIc="
+          "hash": "HCzUXOGwOg2q+uBNU5BKPikOMz644faLyMI8rVyQW0I="
         }
       },
       "is_incremental": false,
@@ -2428,7 +2428,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "nHg7mfEJI+wgU/FrtCY0ByhP9poDJl4iHCPFahDSrJw="
+          "hash": "Wj9FXSqqBNFnD7QIHzWQI2xGrJZnZ9rZic1JxLajWrE="
         }
       },
       "is_incremental": false,
@@ -2452,7 +2452,7 @@
       "output": {
         ".html": {
           "relative_path": "tutorials/creating-a-localizer/part-1.html",
-          "hash": "5OigQwKT7Ngh4uYxG03RU8RtIn5StZj7LpTgtU330M4="
+          "hash": "LHGlybvKbgJEeq5e/mDR5srsZSHvIMy5E4Z/WY5CLS0="
         }
       },
       "is_incremental": false,
