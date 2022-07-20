@@ -48,7 +48,7 @@ jobs:
 
       - name: Copy static assets
         run: |
-          Get-ChildItem -Recurse -Name ./docs/static/ | ForEach-Item {
+          Get-ChildItem -Recurse -Name ./docs/static/ | ForEach-Object {
             Move-Item -Path "./docs/static/$_" "./docs/_site/$_";
           }
         shell: pwsh
