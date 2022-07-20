@@ -51,6 +51,7 @@ jobs:
           Get-ChildItem -Recurse -Name ./docs/static/ | ForEach-Item {
             Move-Item -Path "./docs/static/$_" "./docs/_site/$_";
           }
+        shell: pwsh
 
       - name: Publish
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
