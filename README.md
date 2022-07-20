@@ -1,5 +1,5 @@
 # Loretta
-A C# (G)Lua lexer, parser, code analysis, transformation and code generation toolkit. For getting started, see the [tutorial](https://lorettadevs.github.io/Loretta/tutorials/creating-a-localizer/part-1.html).
+A C# (G)Lua lexer, parser, code analysis, transformation and code generation toolkit. For getting started, see the [tutorial](https://loretta-oss.dev/tutorials/creating-a-localizer/part-1.html).
 
 [![Discord](https://img.shields.io/discord/946128539583914074?logo=discord&style=for-the-badge)](https://discord.gg/ExZxSxe7xQ)
 [![Loretta.CodeAnalysis.Lua](https://img.shields.io/nuget/v/Loretta.CodeAnalysis.Lua?label=Stable&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua)
@@ -40,7 +40,7 @@ We have two NuGet packages:
 
 ## Using Loretta v0.2
 
-The best source for getting started is the [tutorial](https://lorettadevs.github.io/Loretta/tutorials/creating-a-localizer/part-1.html).
+The best source for getting started is the [tutorial](https://loretta-oss.dev/tutorials/creating-a-localizer/part-1.html).
 
 ### Parsing text
 1. (Optional) Pick a [`LuaSyntaxOptions` preset](src/Compilers/Lua/Portable/LuaSyntaxOptions.cs#L12-L104) and then create a `LuaParseOptions` from it. If no preset is picked, `LuaSyntaxOptions.All` is used by default;
