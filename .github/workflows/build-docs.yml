@@ -46,6 +46,12 @@ jobs:
         run: docfx docfx.json
         continue-on-error: false
 
+      - name: Copy static assets
+        run: |
+          Get-ChildItem -Recurse -Name ./docs/static/ | ForEach-Item {
+            Move-Item -Path "./docs/static/$_" "./docs/_site/$_";
+          }
+
       - name: Publish
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: peaceiris/actions-gh-pages@v3
