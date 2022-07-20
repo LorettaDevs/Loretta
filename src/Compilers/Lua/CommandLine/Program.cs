@@ -56,7 +56,7 @@ namespace Loretta.CLI
                 }
                 catch (Exception ex) when (!Debugger.IsAttached)
                 {
-                    s_logger.LogError("Unexpected exception: {1}\n{2}", ex.Message, ex.StackTrace!);
+                    s_logger.LogError("Unexpected exception: {0}\n{1}", ex.Message, ex.StackTrace!);
                 }
             }
         }
@@ -561,7 +561,7 @@ namespace Loretta.CLI
                 lsopOption,
                 new Argument<string>("path", "The path of the file to lex."),
                 new Option<bool>(
-                    new[] { "-p", "--print-tokens" },
+                    new[] { "--print-tokens" },
                     () => false,
                     "Whether to print the lexed tokens.")
             };
