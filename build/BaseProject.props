@@ -25,11 +25,8 @@
         <Using Include="System.Collections.Immutable" />
     </ItemGroup>
 
+    <!-- Packages -->
     <ItemGroup>
-        <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.2.0-2.22114.1">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
     </ItemGroup>
 
 </Project>
