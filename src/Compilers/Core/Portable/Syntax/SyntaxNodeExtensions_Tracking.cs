@@ -15,15 +15,17 @@ namespace Loretta.CodeAnalysis
 
         /// <summary>
         /// Creates a new tree of nodes with the specified nodes being tracked.
-        /// 
+        ///
         /// Use GetCurrentNode on the subtree resulting from this operation, or any transformation of it,
         /// to get the current node corresponding to the original tracked node.
         /// </summary>
         /// <param name="root">The root of the subtree containing the nodes to be tracked.</param>
         /// <param name="nodes">One or more nodes that are descendants of the root node.</param>
-        public static TRoot TrackNodes<TRoot>(this TRoot root, IEnumerable<SyntaxNode> nodes!!)
+        public static TRoot TrackNodes<TRoot>(this TRoot root, IEnumerable<SyntaxNode> nodes)
             where TRoot : SyntaxNode
         {
+            if (root is null) throw new ArgumentNullException(nameof(root));
+            if (nodes is null) throw new ArgumentNullException(nameof(nodes));
 
             // create an id for each node
             foreach (var node in nodes)
@@ -41,7 +43,7 @@ namespace Loretta.CodeAnalysis
 
         /// <summary>
         /// Creates a new tree of nodes with the specified nodes being tracked.
-        /// 
+        ///
         /// Use GetCurrentNode on the subtree resulting from this operation, or any transformation of it,
         /// to get the current node corresponding to the original tracked node.
         /// </summary>
@@ -57,9 +59,13 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="root">The root of the subtree containing the current node corresponding to the original tracked node.</param>
         /// <param name="node">The node instance originally tracked.</param>
-        public static IEnumerable<TNode> GetCurrentNodes<TNode>(this SyntaxNode root, TNode node!!)
-            where TNode : SyntaxNode =>
-            GetCurrentNodeFromTrueRoots(GetRoot(root), node).OfType<TNode>();
+        public static IEnumerable<TNode> GetCurrentNodes<TNode>(this SyntaxNode root, TNode node)
+            where TNode : SyntaxNode
+        {
+            if (root is null) throw new ArgumentNullException(nameof(root));
+            if (node is null) throw new ArgumentNullException(nameof(node));
+            return GetCurrentNodeFromTrueRoots(GetRoot(root), node).OfType<TNode>();
+        }
 
         /// <summary>
         /// Gets the node within the subtree corresponding to the original tracked node.
@@ -77,9 +83,11 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="root">The root of the subtree containing the current nodes corresponding to the original tracked nodes.</param>
         /// <param name="nodes">One or more node instances originally tracked.</param>
-        public static IEnumerable<TNode> GetCurrentNodes<TNode>(this SyntaxNode root, IEnumerable<TNode> nodes!!)
+        public static IEnumerable<TNode> GetCurrentNodes<TNode>(this SyntaxNode root, IEnumerable<TNode> nodes)
             where TNode : SyntaxNode
         {
+            if (root is null) throw new ArgumentNullException(nameof(root));
+            if (nodes is null) throw new ArgumentNullException(nameof(nodes));
             var trueRoot = GetRoot(root);
 
             foreach (var node in nodes)

@@ -140,17 +140,17 @@ namespace Loretta.CodeAnalysis
         public TextSpan Span => _list.Span;
 
         /// <summary>
-        /// Returns the string representation of the nodes in this list including separators but not including 
+        /// Returns the string representation of the nodes in this list including separators but not including
         /// the first node's leading trivia and the last node or token's trailing trivia.
         /// </summary>
         /// <returns>
-        /// The string representation of the nodes in this list including separators but not including 
+        /// The string representation of the nodes in this list including separators but not including
         /// the first node's leading trivia and the last node or token's trailing trivia.
         /// </returns>
         public override string ToString() => _list.ToString();
 
         /// <summary>
-        /// Returns the full string representation of the nodes in this list including separators, 
+        /// Returns the full string representation of the nodes in this list including separators,
         /// the first node's leading trivia, and the last node or token's trailing trivia.
         /// </summary>
         /// <returns>
@@ -369,21 +369,25 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="node">The node to insert.</param>
-        public SeparatedSyntaxList<TNode> Insert(int index, TNode node!!) =>
-            InsertRange(index, new[] { node });
+        public SeparatedSyntaxList<TNode> Insert(int index, TNode node)
+        {
+            if (node is null) throw new ArgumentNullException(nameof(node));
+            return InsertRange(index, new[] { node });
+        }
 
         /// <summary>
         /// Creates a new list with the specified nodes inserted at the index.
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="nodes">The nodes to insert.</param>
-        public SeparatedSyntaxList<TNode> InsertRange(int index, IEnumerable<TNode> nodes!!)
+        public SeparatedSyntaxList<TNode> InsertRange(int index, IEnumerable<TNode> nodes)
         {
             if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
+            if (nodes is null) throw new ArgumentNullException(nameof(nodes));
             var nodesWithSeps = GetWithSeparators();
             int insertionIndex = index < Count ? nodesWithSeps.IndexOf(this[index]) : nodesWithSeps.Count;
 
@@ -488,8 +492,10 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="nodeInList">The element to replace.</param>
         /// <param name="newNode">The new node.</param>
-        public SeparatedSyntaxList<TNode> Replace(TNode nodeInList, TNode newNode!!)
+        public SeparatedSyntaxList<TNode> Replace(TNode nodeInList, TNode newNode)
         {
+            if (nodeInList is null) throw new ArgumentNullException(nameof(nodeInList));
+            if (newNode is null) throw new ArgumentNullException(nameof(newNode));
             var index = IndexOf(nodeInList);
             if (index >= 0 && index < Count)
             {
@@ -504,8 +510,10 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="nodeInList">The element to replace.</param>
         /// <param name="newNodes">The new nodes.</param>
-        public SeparatedSyntaxList<TNode> ReplaceRange(TNode nodeInList, IEnumerable<TNode> newNodes!!)
+        public SeparatedSyntaxList<TNode> ReplaceRange(TNode nodeInList, IEnumerable<TNode> newNodes)
         {
+            if (nodeInList is null) throw new ArgumentNullException(nameof(nodeInList));
+            if (newNodes is null) throw new ArgumentNullException(nameof(newNodes));
             var index = IndexOf(nodeInList);
             if (index >= 0 && index < Count)
             {

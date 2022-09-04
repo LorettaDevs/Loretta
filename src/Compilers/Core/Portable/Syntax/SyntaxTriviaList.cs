@@ -165,7 +165,7 @@ namespace Loretta.CodeAnalysis
         /// Returns the first trivia in the list.
         /// </summary>
         /// <returns>The first trivia in the list.</returns>
-        /// <exception cref="InvalidOperationException">The list is empty.</exception>        
+        /// <exception cref="InvalidOperationException">The list is empty.</exception>
         public SyntaxTrivia First()
         {
             if (Any())
@@ -180,7 +180,7 @@ namespace Loretta.CodeAnalysis
         /// Returns the last trivia in the list.
         /// </summary>
         /// <returns>The last trivia in the list.</returns>
-        /// <exception cref="InvalidOperationException">The list is empty.</exception>        
+        /// <exception cref="InvalidOperationException">The list is empty.</exception>
         public SyntaxTrivia Last()
         {
             if (Any())
@@ -294,8 +294,9 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index in the list to insert the trivia at.</param>
         /// <param name="trivia">The trivia to insert.</param>
-        public SyntaxTriviaList InsertRange(int index, IEnumerable<SyntaxTrivia> trivia!!)
+        public SyntaxTriviaList InsertRange(int index, IEnumerable<SyntaxTrivia> trivia)
         {
+            if (trivia is null) throw new ArgumentNullException(nameof(trivia));
             var thisCount = Count;
             if (index < 0 || index > thisCount)
             {

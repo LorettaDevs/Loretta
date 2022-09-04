@@ -80,7 +80,7 @@ namespace Loretta.CodeAnalysis.Lua
         public static SyntaxTrivia ElasticMarker { get; } = InternalSyntax.SyntaxFactory.ElasticZeroSpace;
 
         /// <summary>
-        /// Creates a trivia with kind EndOfLineTrivia containing the specified text. 
+        /// Creates a trivia with kind EndOfLineTrivia containing the specified text.
         /// </summary>
         /// <param name="text">The text of the end of line. Any text can be specified here, however only carriage return and
         /// line feed characters are recognized by the parser as end of line.</param>
@@ -134,8 +134,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">
         /// The actual text of this token.
         /// </param>
-        public static SyntaxTrivia SyntaxTrivia(SyntaxKind kind, string text!!)
+        public static SyntaxTrivia SyntaxTrivia(SyntaxKind kind, string text)
         {
+            if (text is null) throw new ArgumentNullException(nameof(text));
             return kind switch
             {
                 SyntaxKind.ShebangTrivia
@@ -238,7 +239,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="text">The raw text of the identifier name, including any escapes or leading '@'
         /// character.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        /// 
+        ///
         /// <returns></returns>
         public static SyntaxToken Identifier(SyntaxTriviaList leading, SyntaxKind contextualKind, string text, SyntaxTriviaList trailing) =>
             new(InternalSyntax.SyntaxFactory.Identifier(contextualKind, leading.Node, text, trailing.Node));
@@ -261,9 +262,8 @@ namespace Loretta.CodeAnalysis.Lua
                 throw new ArgumentException("The value cannot have a real counterpart.", nameof(value));
             }
 
-            return Literal(ObjectDisplay.FormatLiteral(value, ObjectDisplayOptions.None), value); 
+            return Literal(ObjectDisplay.FormatLiteral(value, ObjectDisplayOptions.None), value);
         }
-
 
         /// <summary>
         /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte signed integer value.
@@ -318,7 +318,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="text">The raw text of the literal.</param>
         /// <param name="value">The complex value to be represented by the returned token.</param>
-        public static SyntaxToken Literal(string text, Complex value) 
+        public static SyntaxToken Literal(string text, Complex value)
         {
             if (value.Real != 0)
             {
@@ -327,7 +327,6 @@ namespace Loretta.CodeAnalysis.Lua
 
             return new(InternalSyntax.SyntaxFactory.Literal(ElasticMarker.UnderlyingNode, text, value, ElasticMarker.UnderlyingNode));
         }
-            
 
         /// <summary>
         /// Creates a token with kind NumericLiteralToken from the text and corresponding 8-byte floating point value.
@@ -397,8 +396,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="stringValue">The actual value of the string without any escapes.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="stringValue"/> is null.</exception>
-        public static SyntaxToken HashLiteral(string stringValue!!)
+        public static SyntaxToken HashLiteral(string stringValue)
         {
+            if (stringValue is null) throw new ArgumentNullException(nameof(stringValue));
             var raw = ObjectDisplay.FormatLiteral(stringValue, ObjectDisplayOptions.EscapeNonPrintableCharacters | ObjectDisplayOptions.EscapeWithUtf8);
             raw = '`' + raw + '`';
             var hash = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
@@ -956,10 +956,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="oldTree">The original tree.</param>
         /// <param name="newTree">The new tree.</param>
-        /// <param name="topLevel"> 
+        /// <param name="topLevel">
         /// If true then the trees are equivalent if the contained nodes and tokens declaring
         /// metadata visible symbolic information are equivalent, ignoring any differences of nodes inside method bodies
-        /// or initializer expressions, otherwise all nodes and tokens must be equivalent. 
+        /// or initializer expressions, otherwise all nodes and tokens must be equivalent.
         /// </param>
         public static bool AreEquivalent(SyntaxTree? oldTree, SyntaxTree? newTree, bool topLevel)
         {
@@ -981,10 +981,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="oldNode">The old node.</param>
         /// <param name="newNode">The new node.</param>
-        /// <param name="topLevel"> 
+        /// <param name="topLevel">
         /// If true then the nodes are equivalent if the contained nodes and tokens declaring
         /// metadata visible symbolic information are equivalent, ignoring any differences of nodes inside method bodies
-        /// or initializer expressions, otherwise all nodes and tokens must be equivalent. 
+        /// or initializer expressions, otherwise all nodes and tokens must be equivalent.
         /// </param>
         public static bool AreEquivalent(SyntaxNode? oldNode, SyntaxNode? newNode, bool topLevel) =>
             SyntaxEquivalence.AreEquivalent(oldNode, newNode, ignoreChildNode: null, topLevel: topLevel);
@@ -995,7 +995,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="oldNode">The old node.</param>
         /// <param name="newNode">The new node.</param>
         /// <param name="ignoreChildNode">
-        /// If specified called for every child syntax node (not token) that is visited during the comparison. 
+        /// If specified called for every child syntax node (not token) that is visited during the comparison.
         /// If it returns true the child is recursively visited, otherwise the child and its subtree is disregarded.
         /// </param>
         public static bool AreEquivalent(SyntaxNode? oldNode, SyntaxNode? newNode, Func<SyntaxKind, bool>? ignoreChildNode = null) =>
@@ -1022,10 +1022,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="oldList">The old list.</param>
         /// <param name="newList">The new list.</param>
-        /// <param name="topLevel"> 
+        /// <param name="topLevel">
         /// If true then the nodes are equivalent if the contained nodes and tokens declaring
         /// metadata visible symbolic information are equivalent, ignoring any differences of nodes inside method bodies
-        /// or initializer expressions, otherwise all nodes and tokens must be equivalent. 
+        /// or initializer expressions, otherwise all nodes and tokens must be equivalent.
         /// </param>
         public static bool AreEquivalent<TNode>(SyntaxList<TNode> oldList, SyntaxList<TNode> newList, bool topLevel)
             where TNode : LuaSyntaxNode =>
@@ -1037,7 +1037,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="oldList">The old list.</param>
         /// <param name="newList">The new list.</param>
         /// <param name="ignoreChildNode">
-        /// If specified called for every child syntax node (not token) that is visited during the comparison. 
+        /// If specified called for every child syntax node (not token) that is visited during the comparison.
         /// If it returns true the child is recursively visited, otherwise the child and its subtree is disregarded.
         /// </param>
         public static bool AreEquivalent<TNode>(SyntaxList<TNode> oldList, SyntaxList<TNode> newList, Func<SyntaxKind, bool>? ignoreChildNode = null)
@@ -1049,10 +1049,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         /// <param name="oldList">The old list.</param>
         /// <param name="newList">The new list.</param>
-        /// <param name="topLevel"> 
+        /// <param name="topLevel">
         /// If true then the nodes are equivalent if the contained nodes and tokens declaring
         /// metadata visible symbolic information are equivalent, ignoring any differences of nodes inside method bodies
-        /// or initializer expressions, otherwise all nodes and tokens must be equivalent. 
+        /// or initializer expressions, otherwise all nodes and tokens must be equivalent.
         /// </param>
         public static bool AreEquivalent<TNode>(SeparatedSyntaxList<TNode> oldList, SeparatedSyntaxList<TNode> newList, bool topLevel)
             where TNode : SyntaxNode =>
@@ -1064,7 +1064,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="oldList">The old list.</param>
         /// <param name="newList">The new list.</param>
         /// <param name="ignoreChildNode">
-        /// If specified called for every child syntax node (not token) that is visited during the comparison. 
+        /// If specified called for every child syntax node (not token) that is visited during the comparison.
         /// If it returns true the child is recursively visited, otherwise the child and its subtree is disregarded.
         /// </param>
         public static bool AreEquivalent<TNode>(SeparatedSyntaxList<TNode> oldList, SeparatedSyntaxList<TNode> newList, Func<SyntaxKind, bool>? ignoreChildNode = null)

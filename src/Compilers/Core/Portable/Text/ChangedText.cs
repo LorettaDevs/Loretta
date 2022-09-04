@@ -69,7 +69,7 @@ namespace Loretta.CodeAnalysis.Text
                 Clean();
             }
 
-            // clean up 
+            // clean up
             private void Clean()
             {
                 // look for last info in the chain that still has reference to old text
@@ -117,7 +117,7 @@ namespace Loretta.CodeAnalysis.Text
         public override SourceText WithChanges(IEnumerable<TextChange> changes)
         {
             // compute changes against newText to avoid capturing strong references to this ChangedText instance.
-            // _newText will only ever be one of CompositeText, SubText, StringText or LargeText, so calling WithChanges on it 
+            // _newText will only ever be one of CompositeText, SubText, StringText or LargeText, so calling WithChanges on it
             // will either produce a ChangeText instance or the original instance in case of a empty change.
             if (_newText.WithChanges(changes) is ChangedText changed)
             {
@@ -130,8 +130,9 @@ namespace Loretta.CodeAnalysis.Text
             }
         }
 
-        public override IReadOnlyList<TextChangeRange> GetChangeRanges(SourceText oldText!!)
+        public override IReadOnlyList<TextChangeRange> GetChangeRanges(SourceText oldText)
         {
+            if (oldText is null) throw new ArgumentNullException(nameof(oldText));
             if (this == oldText)
             {
                 return TextChangeRange.NoChanges;
@@ -263,8 +264,8 @@ namespace Loretta.CodeAnalysis.Text
 
                     endsWithCR = oldText[change.Span.Start - 1] == '\r';
 
-                    // in case change is inserted between CR+LF we treat CR as line break alone, 
-                    // but this line break might be retracted and replaced with new one in case LF is inserted  
+                    // in case change is inserted between CR+LF we treat CR as line break alone,
+                    // but this line break might be retracted and replaced with new one in case LF is inserted
                     if (endsWithCR && change.Span.Start < oldText.Length && oldText[change.Span.Start] == '\n')
                     {
                         lineStarts.Add(change.Span.Start + delta);

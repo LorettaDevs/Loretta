@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis
             private readonly bool _isSuppressed;
 
             private SimpleDiagnostic(
-                DiagnosticDescriptor descriptor!!,
+                DiagnosticDescriptor descriptor,
                 DiagnosticSeverity severity,
                 int warningLevel,
                 Location location,
@@ -35,7 +35,7 @@ namespace Loretta.CodeAnalysis
                     throw new ArgumentException($"{nameof(warningLevel)} ({warningLevel}) and {nameof(severity)} ({severity}) are not compatible.", nameof(warningLevel));
                 }
 
-                _descriptor = descriptor;
+                _descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
                 _severity = severity;
                 _warningLevel = warningLevel;
                 _location = location ?? Location.None;
@@ -161,8 +161,9 @@ namespace Loretta.CodeAnalysis
                     Hash.Combine(_location, (int) _severity))));
             }
 
-            internal override Diagnostic WithLocation(Location location!!)
+            internal override Diagnostic WithLocation(Location location)
             {
+                if (location is null) throw new ArgumentNullException(nameof(location));
                 if (location != _location)
                 {
                     return new SimpleDiagnostic(_descriptor, _severity, _warningLevel, location, _additionalLocations, _messageArgs, _properties, _isSuppressed);

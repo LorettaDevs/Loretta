@@ -57,8 +57,9 @@ namespace Loretta.CodeAnalysis
         {
         }
 
-        private static SyntaxNode? CreateNode(IEnumerable<SyntaxNodeOrToken> nodesAndTokens!!)
+        private static SyntaxNode? CreateNode(IEnumerable<SyntaxNodeOrToken> nodesAndTokens)
         {
+            if (nodesAndTokens is null) throw new ArgumentNullException(nameof(nodesAndTokens));
             var builder = new SyntaxNodeOrTokenListBuilder(8);
             builder.Add(nodesAndTokens);
             return builder.ToList().Node;
@@ -79,7 +80,7 @@ namespace Loretta.CodeAnalysis
         public int Count => _node == null ? 0 : _node.Green.IsList ? _node.SlotCount : 1;
 
         /// <summary>
-        /// Gets the <see cref="SyntaxNodeOrToken"/> at the specified index. 
+        /// Gets the <see cref="SyntaxNodeOrToken"/> at the specified index.
         /// </summary>
         /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>
         public SyntaxNodeOrToken this[int index]
@@ -125,11 +126,11 @@ namespace Loretta.CodeAnalysis
         public TextSpan Span => _node?.Span ?? default;
 
         /// <summary>
-        /// Returns the string representation of the nodes and tokens in this list, not including the first node or token's leading trivia 
+        /// Returns the string representation of the nodes and tokens in this list, not including the first node or token's leading trivia
         /// and the last node or token's trailing trivia.
         /// </summary>
         /// <returns>
-        /// The string representation of the nodes and tokens in this list, not including the first node or token's leading trivia 
+        /// The string representation of the nodes and tokens in this list, not including the first node or token's leading trivia
         /// and the last node or token's trailing trivia.
         /// </returns>
         public override string ToString()
@@ -140,11 +141,11 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <summary>
-        /// Returns the full string representation of the nodes and tokens in this list including the first node or token's leading trivia 
+        /// Returns the full string representation of the nodes and tokens in this list including the first node or token's leading trivia
         /// and the last node or token's trailing trivia.
         /// </summary>
         /// <returns>
-        /// The full string representation of the nodes and tokens in this list including the first node or token's leading trivia 
+        /// The full string representation of the nodes and tokens in this list including the first node or token's leading trivia
         /// and the last node or token's trailing trivia.
         /// </returns>
         public string ToFullString()
@@ -260,13 +261,14 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="nodesAndTokens">The nodes or tokens to insert.</param>
-        public SyntaxNodeOrTokenList InsertRange(int index, IEnumerable<SyntaxNodeOrToken> nodesAndTokens!!)
+        public SyntaxNodeOrTokenList InsertRange(int index, IEnumerable<SyntaxNodeOrToken> nodesAndTokens)
         {
             if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
+            if (nodesAndTokens is null) throw new ArgumentNullException(nameof(nodesAndTokens));
             if (nodesAndTokens.IsEmpty())
             {
                 return this;
@@ -444,7 +446,7 @@ namespace Loretta.CodeAnalysis
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         public override int GetHashCode() => _node?.GetHashCode() ?? 0;
 

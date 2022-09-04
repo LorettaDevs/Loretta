@@ -26,8 +26,9 @@ namespace Loretta.CodeAnalysis.Text
         /// <param name="span">The span of the line.</param>
         /// <returns>An instance of <see cref="TextLine"/>.</returns>
         /// <exception cref="ArgumentOutOfRangeException">The span does not represent a text line.</exception>
-        public static TextLine FromSpan(SourceText text!!, TextSpan span)
+        public static TextLine FromSpan(SourceText text, TextSpan span)
         {
+            if (text is null) throw new ArgumentNullException(nameof(text));
             if (span.Start > text.Length || span.Start < 0 || span.End > text.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(span));

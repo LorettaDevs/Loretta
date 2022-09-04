@@ -156,8 +156,9 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
         /// <remarks>
         /// Optionally escapes non-printable characters.
         /// </remarks>
-        public static string FormatLiteral(string value!!, ObjectDisplayOptions options)
+        public static string FormatLiteral(string value, ObjectDisplayOptions options)
         {
+            if (value is null) throw new ArgumentNullException(nameof(value));
             const char shortStringQuote = '"';
             var pooledBuilder = PooledStringBuilder.GetInstance();
             var builder = pooledBuilder.Builder;

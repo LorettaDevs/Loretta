@@ -195,7 +195,7 @@ namespace Loretta.CodeAnalysis
             return structure is not null;
         }
 
-        /// <summary> 
+        /// <summary>
         /// Returns the string representation of this trivia. If this trivia is structured trivia then the returned string
         /// will not include any leading or trailing trivia present on the StructuredTriviaSyntax node of this trivia.
         /// </summary>
@@ -204,7 +204,7 @@ namespace Loretta.CodeAnalysis
         public override string ToString() =>
             UnderlyingNode != null ? UnderlyingNode.ToString() : string.Empty;
 
-        /// <summary> 
+        /// <summary>
         /// Returns the full string representation of this trivia. If this trivia is structured trivia then the returned string will
         /// include any leading or trailing trivia present on the StructuredTriviaSyntax node of this trivia.
         /// </summary>
@@ -248,7 +248,7 @@ namespace Loretta.CodeAnalysis
         public override int GetHashCode() =>
             Hash.Combine(Token.GetHashCode(), Hash.Combine(UnderlyingNode, Hash.Combine(Position, Index)));
 
-        #region Annotations 
+        #region Annotations
         /// <summary>
         /// Creates a new SyntaxTrivia with the specified annotations.
         /// </summary>
@@ -257,8 +257,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new SyntaxTrivia with the specified annotations.
         /// </summary>
-        public SyntaxTrivia WithAdditionalAnnotations(IEnumerable<SyntaxAnnotation> annotations!!)
+        public SyntaxTrivia WithAdditionalAnnotations(IEnumerable<SyntaxAnnotation> annotations)
         {
+            if (annotations is null) throw new ArgumentNullException(nameof(annotations));
             if (UnderlyingNode != null)
             {
                 return new SyntaxTrivia(
@@ -279,8 +280,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new SyntaxTrivia without the specified annotations.
         /// </summary>
-        public SyntaxTrivia WithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations!!)
+        public SyntaxTrivia WithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations)
         {
+            if (annotations is null) throw new ArgumentNullException(nameof(annotations));
             if (UnderlyingNode != null)
             {
                 return new SyntaxTrivia(
@@ -295,8 +297,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new SyntaxTrivia without annotations of the specified kind.
         /// </summary>
-        public SyntaxTrivia WithoutAnnotations(string annotationKind!!)
+        public SyntaxTrivia WithoutAnnotations(string annotationKind)
         {
+            if (annotationKind is null) throw new ArgumentNullException(nameof(annotationKind));
             if (HasAnnotations(annotationKind))
             {
                 return WithoutAnnotations(GetAnnotations(annotationKind));

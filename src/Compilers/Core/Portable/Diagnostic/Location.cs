@@ -46,9 +46,9 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <returns>
         /// <see cref="FileLinePositionSpan"/> that contains path, line and column information.
-        /// 
+        ///
         /// Returns an invalid span (see <see cref="FileLinePositionSpan.IsValid"/>) if the information is not available.
-        /// 
+        ///
         /// The values are not affected by line mapping directives (#line in C# or #ExternalSource in VB).
         /// </returns>
         public virtual FileLinePositionSpan GetLineSpan() => default;
@@ -118,20 +118,26 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <summary>
-        /// A location of kind LocationKind.None. 
+        /// A location of kind LocationKind.None.
         /// </summary>
         public static Location None => NoLocation.Singleton;
 
         /// <summary>
         /// Creates an instance of a <see cref="Location"/> for a span in a <see cref="SyntaxTree"/>.
         /// </summary>
-        public static Location Create(SyntaxTree syntaxTree!!, TextSpan textSpan) =>
-            new SourceLocation(syntaxTree, textSpan);
+        public static Location Create(SyntaxTree syntaxTree, TextSpan textSpan)
+        {
+            if (syntaxTree is null) throw new ArgumentNullException(nameof(syntaxTree));
+            return new SourceLocation(syntaxTree, textSpan);
+        }
 
         /// <summary>
         /// Creates an instance of a <see cref="Location"/> for a span in a file.
         /// </summary>
-        public static Location Create(string filePath!!, TextSpan textSpan, LinePositionSpan lineSpan) =>
-            new ExternalFileLocation(filePath, textSpan, lineSpan);
+        public static Location Create(string filePath, TextSpan textSpan, LinePositionSpan lineSpan)
+        {
+            if (filePath is null) throw new ArgumentNullException(nameof(filePath));
+            return new ExternalFileLocation(filePath, textSpan, lineSpan);
+        }
     }
 }

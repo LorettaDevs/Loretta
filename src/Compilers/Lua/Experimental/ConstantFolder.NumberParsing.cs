@@ -18,9 +18,10 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             RegexFlags);
 
         private static bool TryParseNumberInString(
-            string value!!,
+            string value,
             [NotNullWhen(true)] out dynamic? parsedValue)
         {
+            if (value is null) throw new ArgumentNullException(nameof(value));
             long i64;
             double f64;
 

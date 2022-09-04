@@ -5,15 +5,15 @@
         public class State
         {
             public State(
-                IScope rootScope!!,
-                IImmutableDictionary<SyntaxNode, IVariable> variables!!,
-                IImmutableDictionary<SyntaxNode, IScope> scopes!!,
-                IImmutableDictionary<SyntaxNode, IGotoLabel> labels!!)
+                IScope rootScope,
+                IImmutableDictionary<SyntaxNode, IVariable> variables,
+                IImmutableDictionary<SyntaxNode, IScope> scopes,
+                IImmutableDictionary<SyntaxNode, IGotoLabel> labels)
             {
-                RootScope = rootScope;
-                Variables = variables;
-                Scopes = scopes;
-                Labels = labels;
+                RootScope = rootScope ?? throw new ArgumentNullException(nameof(rootScope));
+                Variables = variables ?? throw new ArgumentNullException(nameof(variables));
+                Scopes = scopes ?? throw new ArgumentNullException(nameof(scopes));
+                Labels = labels ?? throw new ArgumentNullException(nameof(labels));
             }
 
             public IScope RootScope { get; }

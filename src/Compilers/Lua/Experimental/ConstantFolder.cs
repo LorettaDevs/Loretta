@@ -9,9 +9,9 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
     {
         private readonly ConstantFoldingOptions _options;
 
-        public ConstantFolder(ConstantFoldingOptions options!!)
+        public ConstantFolder(ConstantFoldingOptions options)
         {
-            _options = options;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public override SyntaxNode? VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)

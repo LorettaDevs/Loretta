@@ -94,8 +94,11 @@ namespace Loretta.CodeAnalysis.Lua.Utilities
             }
         }
 
-        public static double DoubleFromHexString(string str!!) =>
-            DoubleFromHexString(str.AsSpan());
+        public static double DoubleFromHexString(string str)
+        {
+            if (str is null) throw new ArgumentNullException(nameof(str));
+            return DoubleFromHexString(str.AsSpan());
+        }
 
         public static double DoubleFromHexString(ReadOnlySpan<char> str)
         {
