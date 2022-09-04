@@ -6,6 +6,7 @@
         <TargetFrameworks>net6.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
         <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net6.0</TargetFrameworks>
         <OutputType>Library</OutputType>
+        <NeutralLanguage>en-US</NeutralLanguage>
     </PropertyGroup>
 
     <!-- Allow packing -->

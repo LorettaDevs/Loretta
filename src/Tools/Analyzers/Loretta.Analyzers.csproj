@@ -4,6 +4,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <NeutralLanguage>en-US</NeutralLanguage>
 
         <!-- Avoid ID conflicts with the package project. -->
         <PackageId>*$(MSBuildProjectFile)*</PackageId>
