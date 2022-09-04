@@ -393,10 +393,7 @@ namespace Loretta.Utilities
                             yield break;
                         }
 
-                        if (line == null)
-                        {
-                            line = new T[width];
-                        }
+                        line ??= new T[width];
 
                         line[i] = e.Current;
                     }

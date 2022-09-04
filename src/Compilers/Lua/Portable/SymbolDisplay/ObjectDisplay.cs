@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using System.Numerics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Numerics;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.PooledObjects;
 

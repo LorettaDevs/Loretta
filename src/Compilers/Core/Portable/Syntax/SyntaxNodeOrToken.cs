@@ -847,10 +847,7 @@ namespace Loretta.CodeAnalysis
                 if (trivia.GetStructure() is TDirective directive &&
                     filter?.Invoke(directive) != false)
                 {
-                    if (directives == null)
-                    {
-                        directives = new List<TDirective>();
-                    }
+                    directives ??= new List<TDirective>();
 
                     directives.Add(directive);
                 }

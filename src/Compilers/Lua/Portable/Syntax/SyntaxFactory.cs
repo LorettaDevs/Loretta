@@ -1,5 +1,5 @@
-﻿using System.Text;
-using System.Numerics;
+﻿using System.Numerics;
+using System.Text;
 using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Syntax;

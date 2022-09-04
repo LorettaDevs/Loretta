@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Text;
 using System.Numerics;
+using System.Text;
 using Loretta.CodeAnalysis.Lua.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
