@@ -40,7 +40,7 @@ jobs:
           dotnet-version: |
             3.1.x
             6.0.x
-            7.0.X
+            7.0.x
           include-prerelease: True
         env:
           DOTNET_INSTALL_DIR: ${{ matrix.installDir }}
