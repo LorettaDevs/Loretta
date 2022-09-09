@@ -31,6 +31,7 @@ namespace Loretta.CodeAnalysis.Lua
 
         private int _recursionDepth;
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         [return: NotNullIfNotNull("node")]
         public override SyntaxNode? Visit(SyntaxNode? node)
@@ -311,5 +312,6 @@ namespace Loretta.CodeAnalysis.Lua
 
         public virtual SyntaxTrivia VisitListElement(SyntaxTrivia element) => VisitTrivia(element);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore IDE0079 // Remove unnecessary suppression
     }
 }

@@ -95,7 +95,9 @@ namespace Loretta.UnusedStuffFinder
             }
         }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [System.Diagnostics.CodeAnalysis.SuppressMessage("MicrosoftCodeAnalysisCorrectness", "RS1024:Compare symbols correctly", Justification = "<Pending>")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         public static async Task<ImmutableArray<ISymbol>> FindReferencingSymbolsAsync(
             Solution solution,
             ISymbol symbol,

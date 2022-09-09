@@ -16,9 +16,7 @@ namespace Loretta.UnusedStuffFinder
 
     internal class SymbolMap : IEnumerable<SymbolEx>
     {
-#pragma warning disable RS1024 // Compare symbols correctly
         private readonly ConcurrentDictionary<ISymbol, SymbolEx> _symbolMap = new(SymbolEqualityComparer.Default);
-#pragma warning restore RS1024 // Compare symbols correctly
 
         public SymbolEx Get(ISymbol symbol) =>
             _symbolMap.GetOrAdd(symbol, symbol => new SymbolEx(symbol));
