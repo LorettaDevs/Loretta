@@ -5,6 +5,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.CodeAnalysis;
@@ -12,8 +13,8 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace Loretta.Generators.SyntaxXml
 {
-    [Generator]
-    public sealed class SyntaxXmlSourceGenerator : AdditionalTextCachingSourceGenerator
+    [Generator(LanguageNames.CSharp)]
+    public sealed class SyntaxXmlSourceGenerator : IIncrementalGenerator
     {
         private static readonly DiagnosticDescriptor s_missingSyntaxXml = new(
             "LSSG1001",
@@ -46,105 +47,84 @@ namespace Loretta.Generators.SyntaxXml
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
-        protected override bool TryGetRelevantInput(
-            in GeneratorExecutionContext context,
-            [NotNullWhen(true)] out AdditionalText? input,
-            [NotNullWhen(true)] out SourceText? inputText)
+        public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            input = context.AdditionalFiles.SingleOrDefault(a => Path.GetFileName(a.Path) == "Syntax.xml");
-            if (input == null)
-            {
-                context.ReportDiagnostic(Diagnostic.Create(s_missingSyntaxXml, location: null));
-                inputText = null;
-                return false;
-            }
+            var inputProvider = context.AdditionalTextsProvider.Where(text => Path.GetFileName(text.Path) == "Syntax.xml")
+                .Collect()
+                .Select((arr, _) => arr.SingleOrDefault());
 
-            inputText = input.GetText();
-            if (inputText == null)
-            {
-                context.ReportDiagnostic(Diagnostic.Create(s_unableToReadSyntaxXml, location: null));
-                return false;
-            }
+            var inputTextProvider = inputProvider.Select((input, token) => input?.GetText(token));
 
-            return true;
-        }
-
-        protected override bool TryGenerateSources(
-            AdditionalText input,
-            SourceText inputText,
-            out ImmutableArray<(string hintName, SourceText sourceText)> sources,
-            out ImmutableArray<Diagnostic> diagnostics,
-            [NotNullWhen(true)] out string? relativePath,
-            CancellationToken cancellationToken)
-        {
-            try
+            context.RegisterSourceOutput(inputProvider.Combine(inputTextProvider), (context, inputs) =>
             {
-                Tree tree;
-                var reader = XmlReader.Create(new SourceTextReader(inputText), new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit });
+                var (input, inputText) = inputs;
+                if (input is null)
+                {
+                    context.ReportDiagnostic(Diagnostic.Create(s_missingSyntaxXml, location: null));
+                    return;
+                }
+                else if (inputText is null)
+                {
+                    context.ReportDiagnostic(Diagnostic.Create(s_unableToReadSyntaxXml, location: null));
+                    return;
+                }
 
                 try
                 {
-                    var serializer = new XmlSerializer(typeof(Tree));
-                    tree = (Tree) serializer.Deserialize(reader);
-                }
-                catch (InvalidOperationException ex) when (ex.InnerException is XmlException xmlException)
-                {
-                    var line = inputText.Lines[xmlException.LineNumber - 1]; // LineNumber is one-based.
-                    var offset = xmlException.LinePosition - 1; // LinePosition is one-based
-                    var position = line.Start + offset;
-                    var span = new TextSpan(position, 0);
-                    var lineSpan = inputText.Lines.GetLinePositionSpan(span);
+                    Tree tree;
+                    var reader = XmlReader.Create(new SourceTextReader(inputText), new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit });
 
-                    sources = default;
-                    diagnostics = ImmutableArray.Create(
-                        Diagnostic.Create(
-                            s_syntaxXmlError,
-                            location: Location.Create(input.Path, span, lineSpan),
-                            xmlException.Message));
-                    relativePath = null;
-
-                    return false;
-                }
-
-                TreeFlattening.FlattenChildren(tree);
-
-                var sourcesBuilder = ImmutableArray.CreateBuilder<(string hintName, SourceText sourceText)>();
-                addResult(writer => SourceWriter.WriteMain(writer, tree, cancellationToken), "Syntax.xml.Main.g.cs");
-                addResult(writer => SourceWriter.WriteInternal(writer, tree, cancellationToken), "Syntax.xml.Internal.g.cs");
-                addResult(writer => SourceWriter.WriteSyntax(writer, tree, cancellationToken), "Syntax.xml.Syntax.g.cs");
-
-                sources = sourcesBuilder.ToImmutable();
-                diagnostics = ImmutableArray<Diagnostic>.Empty;
-                relativePath = Path.GetDirectoryName(input.Path);
-                return true;
-
-                void addResult(Action<TextWriter> writeFunction, string hintName)
-                {
-                    // Write out the contents to a StringBuilder to avoid creating a single large string
-                    // in memory
-                    var stringBuilder = new StringBuilder();
-                    using (var textWriter = new StringWriter(stringBuilder))
+                    try
                     {
-                        writeFunction(textWriter);
+                        var serializer = new XmlSerializer(typeof(Tree));
+                        tree = (Tree) serializer.Deserialize(reader);
+                    }
+                    catch (InvalidOperationException ex) when (ex.InnerException is XmlException xmlException)
+                    {
+                        var line = inputText.Lines[xmlException.LineNumber - 1]; // LineNumber is one-based.
+                        var offset = xmlException.LinePosition - 1; // LinePosition is one-based
+                        var position = line.Start + offset;
+                        var span = new TextSpan(position, 0);
+                        var lineSpan = inputText.Lines.GetLinePositionSpan(span);
+
+                        context.ReportDiagnostic(Diagnostic.Create(
+                                s_syntaxXmlError,
+                                location: Location.Create(input.Path, span, lineSpan),
+                                xmlException.Message));
+                        return;
                     }
 
-                    // And create a SourceText from the StringBuilder, once again avoiding allocating a single massive string
-                    var sourceText = SourceText.From(new StringBuilderReader(stringBuilder), stringBuilder.Length, encoding: Encoding.UTF8);
-                    sourcesBuilder.Add((hintName, sourceText));
+                    TreeFlattening.FlattenChildren(tree);
+
+                    addResult(writer => SourceWriter.WriteMain(writer, tree, context.CancellationToken), "Syntax.xml.Main.g.cs");
+                    addResult(writer => SourceWriter.WriteInternal(writer, tree, context.CancellationToken), "Syntax.xml.Internal.g.cs");
+                    addResult(writer => SourceWriter.WriteSyntax(writer, tree, context.CancellationToken), "Syntax.xml.Syntax.g.cs");
+
+                    void addResult(Action<TextWriter> writeFunction, string hintName)
+                    {
+                        // Write out the contents to a StringBuilder to avoid creating a single large string
+                        // in memory
+                        var stringBuilder = new StringBuilder();
+                        using (var textWriter = new StringWriter(stringBuilder))
+                        {
+                            writeFunction(textWriter);
+                        }
+
+                        // And create a SourceText from the StringBuilder, once again avoiding allocating a single massive string
+                        var sourceText = SourceText.From(new StringBuilderReader(stringBuilder), stringBuilder.Length, encoding: Encoding.UTF8);
+                        context.AddSource(hintName, sourceText);
+                    }
                 }
-            }
-            catch (Exception ex) when (ex is not OperationCanceledException)
-            {
-                var path = Path.Combine(Path.GetDirectoryName(input.Path), "SyntaxXmlException.log");
-                try { File.AppendAllText(path, "\r\n" + new string('-', 40) + "\r\n" + ex.ToString()); } catch { }
-                sources = default;
-                diagnostics = ImmutableArray.Create(Diagnostic.Create(
-                    s_syntaxXmlException,
-                    null,
-                    ex.ToString()));
-                relativePath = null;
-                return false;
-            }
+                catch (Exception ex) when (ex is not OperationCanceledException)
+                {
+                    var path = Path.Combine(Path.GetDirectoryName(input.Path), "SyntaxXmlException.log");
+                    try { File.AppendAllText(path, "\r\n" + new string('-', 40) + "\r\n" + ex.ToString()); } catch { }
+                    context.ReportDiagnostic(Diagnostic.Create(
+                        s_syntaxXmlException,
+                        null,
+                        ex.ToString()));
+                }
+            });
         }
     }
 }
