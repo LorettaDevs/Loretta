@@ -128,8 +128,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
             }
             EOF();
 
-            Assert.Same(firstIdent.Green, secondIdent.Green);
-            Assert.Same(firstIdentToken.Node, secondIdentToken.Node);
+            Assert.True(firstIdent.IsEquivalentTo(secondIdent));
         }
     }
 }
