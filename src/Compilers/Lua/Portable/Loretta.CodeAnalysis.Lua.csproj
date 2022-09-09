@@ -30,7 +30,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Tools\Loretta.Generators.ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxKindGenerator\Loretta.Generators.SyntaxKindGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
         <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxXml\Loretta.Generators.SyntaxXml.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
         <ProjectReference Include="..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
     </ItemGroup>

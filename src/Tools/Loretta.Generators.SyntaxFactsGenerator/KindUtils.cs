@@ -1,119 +1,43 @@
 ﻿using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Loretta.Generators.SyntaxKindGenerator
+namespace Loretta.Generators.SyntaxFactsGenerator
 {
     internal static class KindUtils
     {
-        private readonly struct CachedKindList
+        public static KindList? ExtractKindList(SourceProductionContext context, WantedSymbols symbols)
         {
-            public CachedKindList(KindList? list, ImmutableArray<byte> checksum)
-            {
-                List = list;
-                Checksum = checksum;
-            }
-
-            public KindList? List { get; }
-            public ImmutableArray<byte> Checksum { get; }
-        }
-
-        private static CachedKindList s_cachedList = new();
-
-        public static KindList? GetKindInfos(
-            GeneratorExecutionContext context,
-            CSharpCompilation compilation)
-        {
-            var syntaxKindType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.SyntaxKind");
-
-            if (syntaxKindType is null)
+            if (symbols.SyntaxKindType is null)
                 return null;
 
-            var syntaxKindChecksum =
-                syntaxKindType.DeclaringSyntaxReferences.Single()
-                                                        .GetSyntax()
-                                                        .GetText()
-                                                        .GetChecksum();
+            var fields = symbols.SyntaxKindType.GetMembers()
+                                               .OfType<IFieldSymbol>()
+                                               .ToImmutableArray();
 
-            if (s_cachedList.Checksum.IsDefault || !syntaxKindChecksum.SequenceEqual(s_cachedList.Checksum))
-            {
-                var list = GetKindInfosCore(context, compilation);
-                s_cachedList = new CachedKindList(list, syntaxKindChecksum);
-            }
-
-            return s_cachedList.List;
+            return new KindList(ExtractKindInfo(context, symbols, fields));
         }
 
-        private static KindList? GetKindInfosCore(
-            GeneratorExecutionContext context,
-            CSharpCompilation compilation)
+        private static ImmutableArray<KindInfo> ExtractKindInfo(
+            SourceProductionContext context,
+            WantedSymbols symbols,
+            ImmutableArray<IFieldSymbol> fields)
         {
-            var options = (CSharpParseOptions) compilation.SyntaxTrees[0].Options;
-            compilation = compilation.AddSyntaxTrees(
-                CSharpSyntaxTree.ParseText(SyntaxKindAttributesText, options));
-
-            var syntaxKindType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.SyntaxKind");
-
-            if (syntaxKindType is null)
-                return null;
-
-            var fields = syntaxKindType.GetMembers()
-                                   .OfType<IFieldSymbol>()
-                                   .ToImmutableArray();
-
-            return new KindList(MapToKindInfo(context, compilation, fields));
-        }
-
-        private static ImmutableArray<KindInfo> MapToKindInfo(
-            GeneratorExecutionContext context,
-            CSharpCompilation compilation,
-            IEnumerable<IFieldSymbol> fields)
-        {
-            var extraCategoriesAttributeType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.ExtraCategoriesAttribute");
-            var triviaAttributeType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.TriviaAttribute");
-            var tokenAttributeType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.TokenAttribute");
-            var keywordAttributeType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.KeywordAttribute");
-            var unaryOperatorAttributeType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.UnaryOperatorAttribute");
-            var binaryOperatorAttributeType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.BinaryOperatorAttribute");
-            var propertyAttributeType =
-                compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.PropertyAttribute");
-
-            if (triviaAttributeType is null
-                 || tokenAttributeType is null
-                 || keywordAttributeType is null
-                 || unaryOperatorAttributeType is null
-                 || binaryOperatorAttributeType is null
-                 || extraCategoriesAttributeType is null
-                 || propertyAttributeType is null)
+            var infos = ImmutableArray.CreateBuilder<KindInfo>(fields.Length);
+            foreach (var field in fields)
             {
-                return ImmutableArray<KindInfo>.Empty;
-            }
-
-            var fieldsArray = fields.ToImmutableArray();
-            var infos = ImmutableArray.CreateBuilder<KindInfo>(fieldsArray.Length);
-            foreach (var field in fieldsArray)
-            {
-                var isTrivia = IsTrivia(triviaAttributeType, field);
+                var isTrivia = IsTrivia(symbols.TriviaAttributeType, field);
                 var tokenInfo =
-                    GetTokenInfo(tokenAttributeType, keywordAttributeType, field);
+                    GetTokenInfo(symbols.TokenAttributeType, symbols.KeywordAttributeType, field);
                 var unaryOperatorInfo =
-                    GetOperatorInfo(unaryOperatorAttributeType, field);
+                    GetOperatorInfo(symbols.UnaryOperatorAttributeType, field);
                 var binaryOperatorInfo =
-                    GetOperatorInfo(binaryOperatorAttributeType, field);
+                    GetOperatorInfo(symbols.BinaryOperatorAttributeType, field);
                 var extraCategories =
-                    GetExtraCategories(extraCategoriesAttributeType, field, context);
+                    GetExtraCategories(symbols.ExtraCategoriesAttributeType, field, context);
                 var properties =
-                    GetProperties(propertyAttributeType, field, context);
+                    GetProperties(symbols.PropertyAttributeType, field, context);
 
                 var hasErrors = false;
                 var location = field.Locations.Single();
@@ -193,7 +117,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
         private static ImmutableArray<string> GetExtraCategories(
             INamedTypeSymbol extraCategoriesAttributeType,
             IFieldSymbol field,
-            GeneratorExecutionContext context)
+            SourceProductionContext context)
         {
             var attr = Utilities.GetAttribute(field, extraCategoriesAttributeType);
             if (attr is null)
@@ -220,7 +144,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             return categories;
         }
 
-        private static ImmutableDictionary<string, TypedConstant> GetProperties(INamedTypeSymbol propertyAttributeType, IFieldSymbol field, GeneratorExecutionContext context)
+        private static ImmutableDictionary<string, TypedConstant> GetProperties(INamedTypeSymbol propertyAttributeType, IFieldSymbol field, SourceProductionContext context)
         {
             var attributes = Utilities.GetAttributes(field, propertyAttributeType);
             if (attributes.IsEmpty)

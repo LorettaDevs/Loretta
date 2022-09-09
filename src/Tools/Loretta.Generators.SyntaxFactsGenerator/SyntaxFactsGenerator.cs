@@ -1,12 +1,44 @@
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Loretta.Generators.SyntaxKindGenerator
+namespace Loretta.Generators.SyntaxFactsGenerator
 {
-    public sealed partial class SyntaxKindRelatedTypesGenerator
+    [Generator]
+    public sealed partial class SyntaxFactsGenerator : IIncrementalGenerator
     {
-        private static void GenerateSyntaxFacts(GeneratorExecutionContext context, KindList kinds)
+        public void Initialize(IncrementalGeneratorInitializationContext context)
+        {
+            context.RegisterPostInitializationOutput(context =>
+                context.AddSource("SyntaxKindAttributes.g.cs", KindUtils.SyntaxKindAttributesText));
+
+            var symbolsProvider = context.CompilationProvider.Select((compilation, token) =>
+                new WantedSymbols(
+                    syntaxKindType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.SyntaxKind"),
+                    extraCategoriesAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.ExtraCategoriesAttribute")!,
+                    triviaAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.TriviaAttribute")!,
+                    tokenAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.TokenAttribute")!,
+                    keywordAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.KeywordAttribute")!,
+                    unaryOperatorAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.UnaryOperatorAttribute")!,
+                    binaryOperatorAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.BinaryOperatorAttribute")!,
+                    propertyAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.PropertyAttribute")!));
+
+            context.RegisterSourceOutput(symbolsProvider, (context, symbols) =>
+            {
+                var kinds = KindUtils.ExtractKindList(context, symbols);
+                if (kinds is null)
+                    throw new Exception("KindList is null");
+                if (kinds.Count < 1)
+                {
+                    context.ReportDiagnostic(Diagnostic.Create(Diagnostics.NoSyntaxKindWithAttributesFound, symbols.SyntaxKindType!.Locations.Single()));
+                    return;
+                }
+
+                GenerateSyntaxFacts(context, kinds);
+            });
+        }
+
+        private static void GenerateSyntaxFacts(SourceProductionContext context, KindList kinds)
         {
             SourceText sourceText;
             using (var writer = new SourceWriter())
@@ -75,7 +107,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
 
                         string type;
                         if (possibleTypes.Length > 1)
-                            type = context.Compilation.GetSpecialType(SpecialType.System_Object) + "?";
+                            type = "object?";
                         else
                             type = possibleTypes.Single()!.ToString();
 
