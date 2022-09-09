@@ -9,9 +9,7 @@
     <Import_RootNamespace>Loretta.Generators.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)AdditionalTextCachingSourceGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CurlyIndenter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GeneratorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Indenter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IsExternalInit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SourceTextReader.cs" />
