@@ -100,7 +100,7 @@ namespace Loretta.CodeAnalysis
 
         public abstract string Language { get; }
 
-        #region Kind 
+        #region Kind
         public int RawKind => _kind;
 
         public bool IsList => RawKind == ListKind;
@@ -116,7 +116,7 @@ namespace Loretta.CodeAnalysis
 
         #endregion
 
-        #region Slots 
+        #region Slots
         public int SlotCount
         {
             get
@@ -230,7 +230,7 @@ namespace Loretta.CodeAnalysis
 
         #endregion
 
-        #region Flags 
+        #region Flags
         [Flags]
         internal enum NodeFlags : byte
         {
@@ -305,7 +305,7 @@ namespace Loretta.CodeAnalysis
         public bool HasTrailingTrivia => GetTrailingTriviaWidth() != 0;
         #endregion
 
-        #region Serialization 
+        #region Serialization
         // use high-bit on Kind to identify serialization of extra info
         private const ushort ExtendedSerializationInfoMask = unchecked((ushort) (1u << 15));
 
@@ -359,7 +359,7 @@ namespace Loretta.CodeAnalysis
 
         #endregion
 
-        #region Annotations 
+        #region Annotations
         public bool HasAnnotations(string annotationKind)
         {
             var annotations = GetAnnotations();
@@ -445,8 +445,9 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds!!)
+        public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds)
         {
+            if (annotationKinds is null) throw new ArgumentNullException(nameof(annotationKinds));
             var annotations = GetAnnotations();
 
             if (annotations == s_noAnnotations)
@@ -530,7 +531,7 @@ namespace Loretta.CodeAnalysis
             var stack = ArrayBuilder<(GreenNode node, bool leading, bool trailing)>.GetInstance();
             stack.Push((this, leading, trailing));
 
-            // Separated out stack processing logic so that it does not unintentionally refer to 
+            // Separated out stack processing logic so that it does not unintentionally refer to
             // "this", "leading" or "trailing".
             processStack(writer, stack);
             stack.Free();
@@ -616,7 +617,7 @@ namespace Loretta.CodeAnalysis
 
         #endregion
 
-        #region Tokens 
+        #region Tokens
 
         public virtual int RawContextualKind => RawKind;
         public virtual object? GetValue() => null;
@@ -696,7 +697,7 @@ namespace Loretta.CodeAnalysis
         }
         #endregion
 
-        #region Equivalence 
+        #region Equivalence
         public virtual bool IsEquivalentTo([NotNullWhen(true)] GreenNode? other)
         {
             if (this == other)
@@ -762,7 +763,7 @@ namespace Loretta.CodeAnalysis
 
         public abstract SyntaxNode? GetStructure(SyntaxTrivia parentTrivia);
 
-        #region Factories 
+        #region Factories
 
         public abstract SyntaxToken CreateSeparator<TNode>(SyntaxNode element) where TNode : SyntaxNode;
         public abstract bool IsTriviaWithEndOfLine(); // trivia node has end of line

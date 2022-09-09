@@ -16,9 +16,9 @@ namespace Loretta.CodeAnalysis.Collections.Internal
     {
         private readonly IDictionary<K, V> _dict;
 
-        public IDictionaryDebugView(IDictionary<K, V> dictionary!!)
+        public IDictionaryDebugView(IDictionary<K, V> dictionary)
         {
-            _dict = dictionary;
+            _dict = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
@@ -37,9 +37,9 @@ namespace Loretta.CodeAnalysis.Collections.Internal
     {
         private readonly ICollection<TKey> _collection;
 
-        public DictionaryKeyCollectionDebugView(ICollection<TKey> collection!!)
+        public DictionaryKeyCollectionDebugView(ICollection<TKey> collection)
         {
-            _collection = collection;
+            _collection = collection ?? throw new ArgumentNullException(nameof(collection));
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
@@ -58,9 +58,9 @@ namespace Loretta.CodeAnalysis.Collections.Internal
     {
         private readonly ICollection<TValue> _collection;
 
-        public DictionaryValueCollectionDebugView(ICollection<TValue> collection!!)
+        public DictionaryValueCollectionDebugView(ICollection<TValue> collection)
         {
-            _collection = collection;
+            _collection = collection ?? throw new ArgumentNullException(nameof(collection));
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]

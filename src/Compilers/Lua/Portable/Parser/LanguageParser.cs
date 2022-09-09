@@ -386,10 +386,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             var identifiersAndSeparatorsBuilder =
                 _pool.AllocateSeparated<TypedIdentifierNameSyntax>();
-
-            IdentifierNameSyntax? identifier = null;
-            TypeBindingSyntax? typeBinding = null;
-
             identifiersAndSeparatorsBuilder.Add(variable);
 
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
@@ -397,8 +393,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var separator = EatToken(SyntaxKind.CommaToken);
                 identifiersAndSeparatorsBuilder.AddSeparator(separator);
 
-                identifier = ParseIdentifierName();
-                typeBinding = TryParseTypeBinding();
+                var identifier = ParseIdentifierName();
+                var typeBinding = TryParseTypeBinding();
                 variable = SyntaxFactory.TypedIdentifierName(identifier, typeBinding);
                 identifiersAndSeparatorsBuilder.Add(variable);
             }

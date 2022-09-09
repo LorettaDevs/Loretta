@@ -41,20 +41,17 @@ namespace Loretta.CodeAnalysis.Test.Utilities
         private IEnumerable<string> _argumentsAsStrings;
         private IEnumerable<string> GetArgumentsAsStrings()
         {
-            if (_argumentsAsStrings == null)
+            // We'll use IFormattable here, because it is more explicit than just calling .ToString()
+            // (and is closer to what the compiler actually does when displaying error messages)
+            _argumentsAsStrings ??= _arguments.Select(o =>
             {
-                // We'll use IFormattable here, because it is more explicit than just calling .ToString()
-                // (and is closer to what the compiler actually does when displaying error messages)
-                _argumentsAsStrings = _arguments.Select(o =>
+                if (o is DiagnosticInfo embedded)
                 {
-                    if (o is DiagnosticInfo embedded)
-                    {
-                        return embedded.GetMessage(EnsureEnglishUICulture.PreferredOrNull);
-                    }
+                    return embedded.GetMessage(EnsureEnglishUICulture.PreferredOrNull);
+                }
 
-                    return string.Format(EnsureEnglishUICulture.PreferredOrNull, "{0}", o);
-                });
-            }
+                return string.Format(EnsureEnglishUICulture.PreferredOrNull, "{0}", o);
+            });
             return _argumentsAsStrings;
         }
 

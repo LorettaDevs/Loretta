@@ -77,7 +77,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
 #endif
 
-
         internal SyntaxToken LookupToken(
             char[] textBuffer,
             int keyStart,

@@ -10,6 +10,7 @@
     /// </typeparam>
     public abstract partial class LuaSyntaxVisitor<TResult>
     {
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public virtual TResult? Visit(SyntaxNode? node)
         {
@@ -24,6 +25,7 @@
 
         public virtual TResult? DefaultVisit(SyntaxNode node) => default;
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore IDE0079 // Remove unnecessary suppression
     }
 
     /// <summary>
@@ -32,6 +34,7 @@
     /// </summary>
     public abstract partial class LuaSyntaxVisitor
     {
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public virtual void Visit(SyntaxNode? node)
         {
@@ -45,5 +48,6 @@
         {
         }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore IDE0079 // Remove unnecessary suppression
     }
 }

@@ -64,8 +64,11 @@ namespace Loretta.CodeAnalysis.Text
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="checksumAlgorithm"/> is not supported.</exception>
-        public static SourceText From(string text!!, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1) =>
-            new StringText(text, encoding, checksumAlgorithm: checksumAlgorithm);
+        public static SourceText From(string text, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
+        {
+            if (text is null) throw new ArgumentNullException(nameof(text));
+            return new StringText(text, encoding, checksumAlgorithm: checksumAlgorithm);
+        }
 
         /// <summary>
         /// Constructs a <see cref="SourceText"/> from text in a string.
@@ -84,11 +87,12 @@ namespace Loretta.CodeAnalysis.Text
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="checksumAlgorithm"/> is not supported.</exception>
         public static SourceText From(
-            TextReader reader!!,
+            TextReader reader,
             int length,
             Encoding? encoding = null,
             SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
         {
+            if (reader is null) throw new ArgumentNullException(nameof(reader));
 
             // If the resulting string would end up on the large object heap, then use LargeEncodedText.
             if (length >= LargeObjectHeapLimitInChars)
@@ -113,7 +117,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </param>
         /// <param name="throwIfBinaryDetected">If the decoded text contains at least two consecutive NUL
         /// characters, then an <see cref="InvalidDataException"/> is thrown.</param>
-        /// 
+        ///
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is null.</exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="stream"/> doesn't support reading or seeking.
@@ -124,11 +128,12 @@ namespace Loretta.CodeAnalysis.Text
         /// <exception cref="IOException">An I/O error occurs.</exception>
         /// <remarks>Reads from the beginning of the stream. Leaves the stream open.</remarks>
         public static SourceText From(
-            Stream stream!!,
+            Stream stream,
             Encoding? encoding = null,
             SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1,
             bool throwIfBinaryDetected = false)
         {
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
             if (!stream.CanRead)
             {
                 throw new ArgumentException(CodeAnalysisResources.StreamMustSupportReadAndSeek, nameof(stream));
@@ -180,12 +185,13 @@ namespace Loretta.CodeAnalysis.Text
         /// <exception cref="DecoderFallbackException">If the given encoding is set to use a throwing decoder as a fallback</exception>
         /// <exception cref="InvalidDataException">Two consecutive NUL characters were detected in the decoded text and <paramref name="throwIfBinaryDetected"/> was true.</exception>
         public static SourceText From(
-            byte[] buffer!!,
+            byte[] buffer,
             int length,
             Encoding? encoding = null,
             SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1,
             bool throwIfBinaryDetected = false)
         {
+            if (buffer is null) throw new ArgumentNullException(nameof(buffer));
             if (length < 0 || length > buffer.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(length));
@@ -328,7 +334,7 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         /// <param name="position">The position to get the character from.</param>
         /// <returns>The character.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">When position is negative or 
+        /// <exception cref="ArgumentOutOfRangeException">When position is negative or
         /// greater than <see cref="Length"/>.</exception>
         public abstract char this[int position] { get; }
 
@@ -508,8 +514,9 @@ namespace Loretta.CodeAnalysis.Text
         /// <summary>
         /// Constructs a new SourceText from this text with the specified changes.
         /// </summary>
-        public virtual SourceText WithChanges(IEnumerable<TextChange> changes!!)
+        public virtual SourceText WithChanges(IEnumerable<TextChange> changes)
         {
+            if (changes is null) throw new ArgumentNullException(nameof(changes));
             if (!changes.Any())
             {
                 return this;
@@ -623,8 +630,9 @@ namespace Loretta.CodeAnalysis.Text
         /// between this text an older version. This may be multiple detailed changes
         /// or a single change encompassing the entire text.
         /// </summary>
-        public virtual IReadOnlyList<TextChangeRange> GetChangeRanges(SourceText oldText!!)
+        public virtual IReadOnlyList<TextChangeRange> GetChangeRanges(SourceText oldText)
         {
+            if (oldText is null) throw new ArgumentNullException(nameof(oldText));
             if (oldText == this)
             {
                 return TextChangeRange.NoChanges;
@@ -637,7 +645,7 @@ namespace Loretta.CodeAnalysis.Text
 
         /// <summary>
         /// Gets the set of <see cref="TextChange"/> that describe how the text changed
-        /// between this text and an older version. This may be multiple detailed changes 
+        /// between this text and an older version. This may be multiple detailed changes
         /// or a single change encompassing the entire text.
         /// </summary>
         public virtual IReadOnlyList<TextChange> GetTextChanges(SourceText oldText)
@@ -745,7 +753,7 @@ namespace Loretta.CodeAnalysis.Text
 
                 int lineNumber;
 
-                // it is common to ask about position on the same line 
+                // it is common to ask about position on the same line
                 // as before or on the next couple lines
                 var lastLineNumber = _lastLineNumber;
                 if (position >= _lineStarts[lastLineNumber])

@@ -31,10 +31,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            if (node == null)
-            {
-                node = root;
-            }
+            node ??= root;
 
             var span = node.FullSpan;
             var textSpanOpt = span.Intersection(fullSpan);

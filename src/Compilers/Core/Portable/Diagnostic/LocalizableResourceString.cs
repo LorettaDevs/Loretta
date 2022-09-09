@@ -40,12 +40,12 @@ namespace Loretta.CodeAnalysis
         /// <param name="resourceManager"><see cref="ResourceManager"/> for the calling assembly.</param>
         /// <param name="resourceSource">Type handling assembly's resource management. Typically, this is the static class generated for the resources file from which resources are accessed.</param>
         /// <param name="formatArguments">Optional arguments for formatting the localizable resource string.</param>
-        public LocalizableResourceString(string nameOfLocalizableResource!!, ResourceManager resourceManager!!, Type resourceSource!!, params string[] formatArguments!!)
+        public LocalizableResourceString(string nameOfLocalizableResource, ResourceManager resourceManager, Type resourceSource, params string[] formatArguments)
         {
-            _resourceManager = resourceManager;
-            _nameOfLocalizableResource = nameOfLocalizableResource;
-            _resourceSource = resourceSource;
-            _formatArguments = formatArguments;
+            _resourceManager = resourceManager ?? throw new ArgumentNullException(nameof(resourceManager));
+            _nameOfLocalizableResource = nameOfLocalizableResource ?? throw new ArgumentNullException(nameof(nameOfLocalizableResource));
+            _resourceSource = resourceSource ?? throw new ArgumentNullException(nameof(resourceSource));
+            _formatArguments = formatArguments ?? throw new ArgumentNullException(nameof(formatArguments));
         }
 
         private LocalizableResourceString(ObjectReader reader)

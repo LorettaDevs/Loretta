@@ -167,21 +167,21 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <summary>
-        /// Returns the string representation of the tokens in this list, not including 
+        /// Returns the string representation of the tokens in this list, not including
         /// the first token's leading trivia and the last token's trailing trivia.
         /// </summary>
         /// <returns>
-        /// The string representation of the tokens in this list, not including 
+        /// The string representation of the tokens in this list, not including
         /// the first token's leading trivia and the last token's trailing trivia.
         /// </returns>
         public override string ToString() => Node != null ? Node.ToString() : string.Empty;
 
         /// <summary>
-        /// Returns the full string representation of the tokens in this list including 
+        /// Returns the full string representation of the tokens in this list including
         /// the first token's leading trivia and the last token's trailing trivia.
         /// </summary>
         /// <returns>
-        /// The full string representation of the tokens in this list including 
+        /// The full string representation of the tokens in this list including
         /// the first token's leading trivia and the last token's trailing trivia.
         /// </returns>
         public string ToFullString() => Node != null ? Node.ToFullString() : string.Empty;
@@ -190,7 +190,7 @@ namespace Loretta.CodeAnalysis
         /// Returns the first token in the list.
         /// </summary>
         /// <returns>The first token in the list.</returns>
-        /// <exception cref="InvalidOperationException">The list is empty.</exception>        
+        /// <exception cref="InvalidOperationException">The list is empty.</exception>
         public SyntaxToken First()
         {
             if (Any())
@@ -205,7 +205,7 @@ namespace Loretta.CodeAnalysis
         /// Returns the last token in the list.
         /// </summary>
         /// <returns> The last token in the list.</returns>
-        /// <exception cref="InvalidOperationException">The list is empty.</exception>        
+        /// <exception cref="InvalidOperationException">The list is empty.</exception>
         public SyntaxToken Last()
         {
             if (Any())
@@ -320,13 +320,14 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index to insert the new tokens.</param>
         /// <param name="tokens">The tokens to insert.</param>
-        public SyntaxTokenList InsertRange(int index, IEnumerable<SyntaxToken> tokens!!)
+        public SyntaxTokenList InsertRange(int index, IEnumerable<SyntaxToken> tokens)
         {
             if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
+            if (tokens is null) throw new ArgumentNullException(nameof(tokens));
             var items = tokens.ToList();
             if (items.Count == 0)
             {

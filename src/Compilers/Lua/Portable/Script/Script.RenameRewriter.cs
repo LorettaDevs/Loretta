@@ -10,11 +10,11 @@ namespace Loretta.CodeAnalysis.Lua
             private readonly IVariable _variable;
             private readonly string _newName;
 
-            public RenameRewriter(Script script!!, IVariable variable!!, string newName)
+            public RenameRewriter(Script script, IVariable variable, string newName)
             {
                 if (string.IsNullOrEmpty(newName)) throw new ArgumentException($"'{nameof(newName)}' cannot be null or empty.", nameof(newName));
-                _script = script;
-                _variable = variable;
+                _script = script ?? throw new ArgumentNullException(nameof(script));
+                _variable = variable ?? throw new ArgumentNullException(nameof(variable));
                 _newName = newName;
             }
 

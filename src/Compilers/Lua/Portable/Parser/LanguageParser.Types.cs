@@ -224,7 +224,7 @@
             {
                 var type = ParseTypeArgument();
                 typesBuilder.Add(type);
-                
+
                 if (CurrentToken.Kind is SyntaxKind.CommaToken)
                 {
                     var separator = EatToken(SyntaxKind.CommaToken);

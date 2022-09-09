@@ -1,11 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace Loretta.Generators.SyntaxKindGenerator
+namespace Loretta.Generators.SyntaxFactsGenerator
 {
     internal readonly struct KindInfo
     {
         public KindInfo(
-            IFieldSymbol field!!,
+            IFieldSymbol field,
             bool isTrivia,
             TokenInfo? tokenInfo,
             OperatorInfo? unaryOperatorInfo,
@@ -13,7 +13,7 @@ namespace Loretta.Generators.SyntaxKindGenerator
             ImmutableArray<string> extraCategories,
             ImmutableDictionary<string, TypedConstant> properties)
         {
-            Field = field;
+            Field = field ?? throw new ArgumentNullException(nameof(field));
             IsTrivia = isTrivia;
             TokenInfo = tokenInfo;
             UnaryOperatorInfo = unaryOperatorInfo;
@@ -29,5 +29,35 @@ namespace Loretta.Generators.SyntaxKindGenerator
         public OperatorInfo? BinaryOperatorInfo { get; }
         public ImmutableArray<string> ExtraCategories { get; }
         public ImmutableDictionary<string, TypedConstant> Properties { get; }
+    }
+
+    internal readonly struct TokenInfo
+    {
+        public TokenInfo(string? text, bool isKeyword)
+        {
+            Text = text;
+            IsKeyword = isKeyword;
+        }
+
+        public string? Text { get; }
+        public bool IsKeyword { get; }
+
+        public override string ToString() =>
+            $"{{ Text = \"{Text}\", IsKeyword = {IsKeyword} }}";
+    }
+
+    internal readonly struct OperatorInfo
+    {
+        public OperatorInfo(int precedence, TypedConstant expression)
+        {
+            Precedence = precedence;
+            Expression = expression;
+        }
+
+        public int Precedence { get; }
+        public TypedConstant Expression { get; }
+
+        public override string ToString() =>
+            $"{{ Precedence = {Precedence}, Expression = {Expression} }}";
     }
 }

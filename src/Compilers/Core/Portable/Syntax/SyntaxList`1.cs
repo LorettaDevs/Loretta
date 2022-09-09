@@ -137,21 +137,21 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <summary>
-        /// Returns the string representation of the nodes in this list, not including 
+        /// Returns the string representation of the nodes in this list, not including
         /// the first node's leading trivia and the last node's trailing trivia.
         /// </summary>
         /// <returns>
-        /// The string representation of the nodes in this list, not including 
+        /// The string representation of the nodes in this list, not including
         /// the first node's leading trivia and the last node's trailing trivia.
         /// </returns>
         public override string ToString() => _node != null ? _node.ToString() : string.Empty;
 
         /// <summary>
-        /// Returns the full string representation of the nodes in this list including 
+        /// Returns the full string representation of the nodes in this list including
         /// the first node's leading trivia and the last node's trailing trivia.
         /// </summary>
         /// <returns>
-        /// The full string representation of the nodes in this list including 
+        /// The full string representation of the nodes in this list including
         /// the first node's leading trivia and the last node's trailing trivia.
         /// </returns>
         public string ToFullString() => _node != null ? _node.ToFullString() : string.Empty;
@@ -174,21 +174,25 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="node">The node to insert.</param>
-        public SyntaxList<TNode> Insert(int index, TNode node!!) =>
-            InsertRange(index, new[] { node });
+        public SyntaxList<TNode> Insert(int index, TNode node)
+        {
+            if (node is null) throw new ArgumentNullException(nameof(node));
+            return InsertRange(index, new[] { node });
+        }
 
         /// <summary>
         /// Creates a new list with the specified nodes inserted at the index.
         /// </summary>
         /// <param name="index">The index to insert at.</param>
         /// <param name="nodes">The nodes to insert.</param>
-        public SyntaxList<TNode> InsertRange(int index, IEnumerable<TNode> nodes!!)
+        public SyntaxList<TNode> InsertRange(int index, IEnumerable<TNode> nodes)
         {
             if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
+            if (nodes is null) throw new ArgumentNullException(nameof(nodes));
             var list = this.ToList();
             list.InsertRange(index, nodes);
 
@@ -236,8 +240,10 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <param name="nodeInList">The element to replace.</param>
         /// <param name="newNodes">The new nodes.</param>
-        public SyntaxList<TNode> ReplaceRange(TNode nodeInList!!, IEnumerable<TNode> newNodes!!)
+        public SyntaxList<TNode> ReplaceRange(TNode nodeInList, IEnumerable<TNode> newNodes)
         {
+            if (nodeInList is null) throw new ArgumentNullException(nameof(nodeInList));
+            if (newNodes is null) throw new ArgumentNullException(nameof(newNodes));
             var index = IndexOf(nodeInList);
             if (index >= 0 && index < Count)
             {

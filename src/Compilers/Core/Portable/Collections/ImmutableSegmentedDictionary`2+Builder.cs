@@ -101,8 +101,9 @@ namespace Loretta.CodeAnalysis.Collections
             public void Add(KeyValuePair<TKey, TValue> item)
                 => Add(item.Key, item.Value);
 
-            public void AddRange(IEnumerable<KeyValuePair<TKey, TValue>> items!!)
+            public void AddRange(IEnumerable<KeyValuePair<TKey, TValue>> items)
             {
+                if (items is null) throw new ArgumentNullException(nameof(items));
                 foreach (var pair in items)
                     Add(pair.Key, pair.Value);
             }
@@ -167,8 +168,9 @@ namespace Loretta.CodeAnalysis.Collections
                 return true;
             }
 
-            public void RemoveRange(IEnumerable<TKey> keys!!)
+            public void RemoveRange(IEnumerable<TKey> keys)
             {
+                if (keys is null) throw new ArgumentNullException(nameof(keys));
                 foreach (var key in keys)
                 {
                     Remove(key);

@@ -97,11 +97,11 @@ namespace Loretta.CodeAnalysis.Text
         /// Validates the arguments passed to <see cref="CopyTo"/> against the published contract.
         /// </summary>
         /// <returns>True if should bother to proceed with copying.</returns>
-        private bool CheckCopyToArguments(int sourceIndex, char[] destination!!, int destinationIndex, int count)
+        private bool CheckCopyToArguments(int sourceIndex, char[] destination, int destinationIndex, int count)
         {
             if (sourceIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(sourceIndex));
-
+            if (destination is null) throw new ArgumentNullException(nameof(destination));
             if (destinationIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(destinationIndex));
 
@@ -212,7 +212,7 @@ namespace Loretta.CodeAnalysis.Text
         }
 
         /// <summary>
-        /// Determines the segment count that would result if the segments of size less than or equal to 
+        /// Determines the segment count that would result if the segments of size less than or equal to
         /// the specified segment size were to be combined.
         /// </summary>
         private static int GetSegmentCountIfCombined(ArrayBuilder<SourceText> segments, int segmentSize)

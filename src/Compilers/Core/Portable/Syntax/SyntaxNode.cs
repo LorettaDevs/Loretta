@@ -140,7 +140,7 @@ namespace Loretta.CodeAnalysis
             return result;
         }
 
-        // special case of above function where slot = 0, does not need GetChildPosition 
+        // special case of above function where slot = 0, does not need GetChildPosition
         internal SyntaxNode? GetRedAtZero(ref SyntaxNode? field)
         {
             var result = field;
@@ -176,7 +176,7 @@ namespace Loretta.CodeAnalysis
             return result;
         }
 
-        // special case of above function where slot = 0, does not need GetChildPosition 
+        // special case of above function where slot = 0, does not need GetChildPosition
         /// <summary>internal</summary>
         protected T? GetRedAtZero<T>(ref T? field) where T : SyntaxNode
         {
@@ -197,7 +197,7 @@ namespace Loretta.CodeAnalysis
 
         /// <summary>
         /// This works the same as GetRed, but intended to be used in lists
-        /// The only difference is that the public parent of the node is not the list, 
+        /// The only difference is that the public parent of the node is not the list,
         /// but the list's parent. (element's grand parent).
         /// </summary>
         internal SyntaxNode? GetRedElement(ref SyntaxNode? element, int slot)
@@ -389,7 +389,7 @@ namespace Loretta.CodeAnalysis
         public bool ContainsDirectives => Green.ContainsDirectives;
 
         /// <summary>
-        /// Determines whether this node or any of its descendant nodes, tokens or trivia have any diagnostics on them. 
+        /// Determines whether this node or any of its descendant nodes, tokens or trivia have any diagnostics on them.
         /// </summary>
         public bool ContainsDiagnostics => Green.ContainsDiagnostics;
 
@@ -577,7 +577,7 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <summary>
-        /// Gets node at given node index. 
+        /// Gets node at given node index.
         /// This WILL force node creation if node has not yet been created.
         /// Can still return null for invalid slot numbers
         /// </summary>
@@ -615,7 +615,7 @@ namespace Loretta.CodeAnalysis
         }
 
         /// <summary>
-        /// Gets a list of ancestor nodes (including this node) 
+        /// Gets a list of ancestor nodes (including this node)
         /// </summary>
         public IEnumerable<SyntaxNode> AncestorsAndSelf(bool ascendOutOfTrivia = true)
         {
@@ -786,7 +786,7 @@ namespace Loretta.CodeAnalysis
 
         #region Token Lookup
         /// <summary>
-        /// Finds a descendant token of this node whose span includes the supplied position. 
+        /// Finds a descendant token of this node whose span includes the supplied position.
         /// </summary>
         /// <param name="position">The character position of the token relative to the beginning of the file.</param>
         /// <param name="findInsideTrivia">
@@ -988,12 +988,12 @@ namespace Loretta.CodeAnalysis
         public bool HasAnnotation([NotNullWhen(true)] SyntaxAnnotation? annotation) => Green.HasAnnotation(annotation);
 
         /// <summary>
-        /// Gets all the annotations with the specified annotation kind. 
+        /// Gets all the annotations with the specified annotation kind.
         /// </summary>
         public IEnumerable<SyntaxAnnotation> GetAnnotations(string annotationKind) => Green.GetAnnotations(annotationKind);
 
         /// <summary>
-        /// Gets all the annotations with the specified annotation kinds. 
+        /// Gets all the annotations with the specified annotation kinds.
         /// </summary>
         public IEnumerable<SyntaxAnnotation> GetAnnotations(IEnumerable<string> annotationKinds) => Green.GetAnnotations(annotationKinds);
 
@@ -1121,7 +1121,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="topLevel"> If true then the nodes are equivalent if the contained nodes and
         /// tokens declaring metadata visible symbolic information are equivalent, ignoring any
         /// differences of nodes inside method bodies or initializer expressions, otherwise all
-        /// nodes and tokens must be equivalent. 
+        /// nodes and tokens must be equivalent.
         /// </param>
         public bool IsEquivalentTo(SyntaxNode node, bool topLevel = false) =>
             IsEquivalentToCore(node, topLevel);
@@ -1130,8 +1130,9 @@ namespace Loretta.CodeAnalysis
         /// Serializes the node to the given <paramref name="stream"/>.
         /// Leaves the <paramref name="stream"/> open for further writes.
         /// </summary>
-        public virtual void SerializeTo(Stream stream!!, CancellationToken cancellationToken = default)
+        public virtual void SerializeTo(Stream stream, CancellationToken cancellationToken = default)
         {
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
             if (!stream.CanWrite)
             {
                 throw new InvalidOperationException(CodeAnalysisResources.TheStreamCannotBeWrittenTo);
@@ -1156,7 +1157,7 @@ namespace Loretta.CodeAnalysis
         protected abstract SyntaxTree SyntaxTreeCore { get; }
 
         /// <summary>
-        /// Finds a descendant token of this node whose span includes the supplied position. 
+        /// Finds a descendant token of this node whose span includes the supplied position.
         /// </summary>
         /// <param name="position">The character position of the token relative to the beginning of the file.</param>
         /// <param name="findInsideTrivia">
@@ -1228,11 +1229,11 @@ namespace Loretta.CodeAnalysis
             FindTokenCore(position, findInsideTrivia);
 
         /// <summary>
-        /// Finds a descendant token of this node whose span includes the supplied position. 
+        /// Finds a descendant token of this node whose span includes the supplied position.
         /// </summary>
         /// <param name="position">The character position of the token relative to the beginning of the file.</param>
         /// <param name="stepInto">
-        /// Applied on every structured trivia. Return false if the tokens included in the trivia should be skipped. 
+        /// Applied on every structured trivia. Return false if the tokens included in the trivia should be skipped.
         /// Pass null to skip all structured trivia.
         /// </param>
         protected virtual SyntaxToken FindTokenCore(int position, Func<SyntaxTrivia, bool> stepInto)
@@ -1335,16 +1336,16 @@ namespace Loretta.CodeAnalysis
         /// <param name="topLevel"> If true then the nodes are equivalent if the contained nodes and
         /// tokens declaring metadata visible symbolic information are equivalent, ignoring any
         /// differences of nodes inside method bodies or initializer expressions, otherwise all
-        /// nodes and tokens must be equivalent. 
+        /// nodes and tokens must be equivalent.
         /// </param>
         protected abstract bool IsEquivalentToCore(SyntaxNode node, bool topLevel = false);
 
         #endregion
 
         /// <summary>
-        /// Whether or not this parent node wants its child SyntaxList node to be 
+        /// Whether or not this parent node wants its child SyntaxList node to be
         /// converted to a Weak-SyntaxList when creating the red-node equivalent.
-        /// For example, in C# the statements of a Block-Node that is parented by a 
+        /// For example, in C# the statements of a Block-Node that is parented by a
         /// MethodDeclaration will be held weakly.
         /// </summary>
         internal virtual bool ShouldCreateWeakList() => false;

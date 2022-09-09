@@ -10,7 +10,7 @@ namespace Loretta.CodeAnalysis.Text
     /// </summary>
     internal sealed class SubText : SourceText
     {
-        public SubText(SourceText text!!, TextSpan span)
+        public SubText(SourceText text, TextSpan span)
             : base(checksumAlgorithm: text.ChecksumAlgorithm)
         {
             if (span.Start < 0
@@ -21,7 +21,7 @@ namespace Loretta.CodeAnalysis.Text
                 throw new ArgumentOutOfRangeException(nameof(span));
             }
 
-            UnderlyingText = text;
+            UnderlyingText = text ?? throw new ArgumentNullException(nameof(text));
             UnderlyingSpan = span;
         }
 

@@ -18,11 +18,15 @@ namespace Loretta.CodeAnalysis.Lua.Experimental
             RegexFlags);
 
         private static bool TryParseNumberInString(
-            string value!!,
+            string value,
             [NotNullWhen(true)] out dynamic? parsedValue)
         {
+            if (value is null) throw new ArgumentNullException(nameof(value));
+
+#pragma warning disable IDE0018 // These are used more than one time.
             long i64;
             double f64;
+#pragma warning restore IDE0018
 
             value = StringUtils.Trim(value);
             if (s_decIntegerRegex.IsMatch(value)

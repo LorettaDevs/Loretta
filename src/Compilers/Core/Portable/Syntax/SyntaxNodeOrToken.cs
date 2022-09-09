@@ -24,14 +24,14 @@ namespace Loretta.CodeAnalysis
         // In a case where we are wrapping a token, this is the token's parent.
         private readonly SyntaxNode? _nodeOrParent;
 
-        // Green node for the token. 
+        // Green node for the token.
         private readonly GreenNode? _token;
 
         // Used in both node and token cases.
         // When we have a node, _position == _nodeOrParent.Position.
         private readonly int _position;
 
-        // Index of the token among parent's children. 
+        // Index of the token among parent's children.
         // This field only makes sense if this is a token.
         // For regular nodes it is set to -1 to distinguish from default(SyntaxToken)
         private readonly int _tokenIndex;
@@ -439,7 +439,7 @@ namespace Loretta.CodeAnalysis
 
         /// <summary>
         /// Determines whether the underlying node or token or any of its descendant nodes, tokens or trivia have any
-        /// diagnostics on them. 
+        /// diagnostics on them.
         /// </summary>
         public bool ContainsDiagnostics
         {
@@ -461,7 +461,7 @@ namespace Loretta.CodeAnalysis
 
         /// <summary>
         /// Gets a list of all the diagnostics in either the sub tree that has this node as its root or
-        /// associated with this token and its related trivia. 
+        /// associated with this token and its related trivia.
         /// This method does not filter diagnostics based on #pragmas and compiler options
         /// like nowarn, warnaserror etc.
         /// </summary>
@@ -501,7 +501,7 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-        #region Annotations 
+        #region Annotations
         /// <summary>
         /// Determines whether this node or token (or any sub node, token or trivia) as annotations.
         /// </summary>
@@ -622,8 +622,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new node or token identical to this one with the specified annotations.
         /// </summary>
-        public SyntaxNodeOrToken WithAdditionalAnnotations(IEnumerable<SyntaxAnnotation> annotations!!)
+        public SyntaxNodeOrToken WithAdditionalAnnotations(IEnumerable<SyntaxAnnotation> annotations)
         {
+            if (annotations is null) throw new ArgumentNullException(nameof(annotations));
             if (_token != null)
             {
                 return AsToken().WithAdditionalAnnotations(annotations);
@@ -646,8 +647,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new node or token identical to this one without the specified annotations.
         /// </summary>
-        public SyntaxNodeOrToken WithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations!!)
+        public SyntaxNodeOrToken WithoutAnnotations(IEnumerable<SyntaxAnnotation> annotations)
         {
+            if (annotations is null) throw new ArgumentNullException(nameof(annotations));
             if (_token != null)
             {
                 return AsToken().WithoutAnnotations(annotations);
@@ -664,8 +666,9 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Creates a new node or token identical to this one without annotations of the specified kind.
         /// </summary>
-        public SyntaxNodeOrToken WithoutAnnotations(string annotationKind!!)
+        public SyntaxNodeOrToken WithoutAnnotations(string annotationKind)
         {
+            if (annotationKind is null) throw new ArgumentNullException(nameof(annotationKind));
             if (HasAnnotations(annotationKind))
             {
                 return WithoutAnnotations(GetAnnotations(annotationKind));
@@ -844,10 +847,7 @@ namespace Loretta.CodeAnalysis
                 if (trivia.GetStructure() is TDirective directive &&
                     filter?.Invoke(directive) != false)
                 {
-                    if (directives == null)
-                    {
-                        directives = new List<TDirective>();
-                    }
+                    directives ??= new List<TDirective>();
 
                     directives.Add(directive);
                 }
@@ -963,7 +963,7 @@ namespace Loretta.CodeAnalysis
         {
             if (Parent != null)
             {
-                // walk reverse in parent's child list until we find ourself 
+                // walk reverse in parent's child list until we find ourself
                 // and then return the next child
                 var returnNext = false;
                 foreach (var child in Parent.ChildNodesAndTokens().Reverse())

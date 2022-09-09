@@ -13,8 +13,10 @@ namespace Loretta.Utilities
 {
     internal static partial class EnumerableExtensions
     {
-        public static IEnumerable<T> Do<T>(this IEnumerable<T> source!!, Action<T> action!!)
+        public static IEnumerable<T> Do<T>(this IEnumerable<T> source, Action<T> action)
         {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            if (action is null) throw new ArgumentNullException(nameof(action));
 
             // perf optimization. try to not use enumerator if possible
             if (source is IList<T> list)
@@ -35,11 +37,17 @@ namespace Loretta.Utilities
             return source;
         }
 
-        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> source!!) =>
-            new(source.ToList());
+        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> source)
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            return new(source.ToList());
+        }
 
-        public static IEnumerable<T> Concat<T>(this IEnumerable<T> source!!, T value) =>
-            source.ConcatWorker(value);
+        public static IEnumerable<T> Concat<T>(this IEnumerable<T> source, T value)
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            return source.ConcatWorker(value);
+        }
 
         private static IEnumerable<T> ConcatWorker<T>(this IEnumerable<T> source, T value)
         {
@@ -51,36 +59,64 @@ namespace Loretta.Utilities
             yield return value;
         }
 
-        public static bool SetEquals<T>(this IEnumerable<T> source1!!, IEnumerable<T> source2!!, IEqualityComparer<T>? comparer) =>
-            source1.ToSet(comparer).SetEquals(source2);
+        public static bool SetEquals<T>(this IEnumerable<T> source1, IEnumerable<T> source2, IEqualityComparer<T>? comparer)
+        {
+            if (source1 is null) throw new ArgumentNullException(nameof(source1));
+            if (source2 is null) throw new ArgumentNullException(nameof(source2));
+            return source1.ToSet(comparer).SetEquals(source2);
+        }
 
-        public static bool SetEquals<T>(this IEnumerable<T> source1!!, IEnumerable<T> source2!!) =>
-            source1.ToSet().SetEquals(source2);
+        public static bool SetEquals<T>(this IEnumerable<T> source1, IEnumerable<T> source2)
+        {
+            if (source1 is null) throw new ArgumentNullException(nameof(source1));
+            if (source2 is null) throw new ArgumentNullException(nameof(source2));
+            return source1.ToSet().SetEquals(source2);
+        }
 
-        public static ISet<T> ToSet<T>(this IEnumerable<T> source!!, IEqualityComparer<T>? comparer) =>
-            new HashSet<T>(source, comparer);
+        public static ISet<T> ToSet<T>(this IEnumerable<T> source, IEqualityComparer<T>? comparer)
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            return new HashSet<T>(source, comparer);
+        }
 
-        public static ISet<T> ToSet<T>(this IEnumerable<T> source!!) =>
-            source as ISet<T> ?? new HashSet<T>(source);
+        public static ISet<T> ToSet<T>(this IEnumerable<T> source)
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            return source as ISet<T> ?? new HashSet<T>(source);
+        }
 
         public static IReadOnlyCollection<T> ToCollection<T>(this IEnumerable<T> sequence)
             => (sequence is IReadOnlyCollection<T> collection) ? collection : sequence.ToList();
 
-        public static T? FirstOrNull<T>(this IEnumerable<T> source!!)
-            where T : struct =>
-            source.Cast<T?>().FirstOrDefault();
+        public static T? FirstOrNull<T>(this IEnumerable<T> source)
+            where T : struct
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            return source.Cast<T?>().FirstOrDefault();
+        }
 
-        public static T? FirstOrNull<T>(this IEnumerable<T> source!!, Func<T, bool> predicate)
-            where T : struct =>
-            source.Cast<T?>().FirstOrDefault(v => predicate(v!.Value));
+        public static T? FirstOrNull<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+            where T : struct
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+            return source.Cast<T?>().FirstOrDefault(v => predicate(v!.Value));
+        }
 
-        public static T? LastOrNull<T>(this IEnumerable<T> source!!)
-            where T : struct =>
-            source.Cast<T?>().LastOrDefault();
+        public static T? LastOrNull<T>(this IEnumerable<T> source)
+            where T : struct
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            return source.Cast<T?>().LastOrDefault();
+        }
 
-        public static T? SingleOrNull<T>(this IEnumerable<T> source!!, Func<T, bool> predicate)
-            where T : struct =>
-            source.Cast<T?>().SingleOrDefault(v => predicate(v!.Value));
+        public static T? SingleOrNull<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+            where T : struct
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+            return source.Cast<T?>().SingleOrDefault(v => predicate(v!.Value));
+        }
 
         public static bool IsSingle<T>(this IEnumerable<T> list)
         {
@@ -163,8 +199,9 @@ namespace Loretta.Utilities
             return builder.ToImmutableAndFree();
         }
 
-        public static bool All(this IEnumerable<bool> source!!)
+        public static bool All(this IEnumerable<bool> source)
         {
+            if (source is null) throw new ArgumentNullException(nameof(source));
             foreach (var b in source)
             {
                 if (!b)
@@ -224,8 +261,11 @@ namespace Loretta.Utilities
             return -1;
         }
 
-        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> sequence!!) =>
-            sequence.SelectMany(s => s);
+        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> sequence)
+        {
+            if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+            return sequence.SelectMany(s => s);
+        }
 
         public static IOrderedEnumerable<T> OrderBy<T>(this IEnumerable<T> source, IComparer<T>? comparer) =>
             source.OrderBy(Functions<T>.Identity, comparer);
@@ -353,10 +393,7 @@ namespace Loretta.Utilities
                             yield break;
                         }
 
-                        if (line == null)
-                        {
-                            line = new T[width];
-                        }
+                        line ??= new T[width];
 
                         line[i] = e.Current;
                     }

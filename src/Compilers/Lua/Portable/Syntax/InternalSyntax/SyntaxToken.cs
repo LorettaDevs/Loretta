@@ -276,10 +276,7 @@
             if (leading)
             {
                 var trivia = GetLeadingTrivia();
-                if (trivia != null)
-                {
-                    trivia.WriteTo(writer, true, true);
-                }
+                trivia?.WriteTo(writer, true, true);
             }
 
             writer.Write(Text);
@@ -287,10 +284,7 @@
             if (trailing)
             {
                 var trivia = GetTrailingTrivia();
-                if (trivia != null)
-                {
-                    trivia.WriteTo(writer, true, true);
-                }
+                trivia?.WriteTo(writer, true, true);
             }
         }
 

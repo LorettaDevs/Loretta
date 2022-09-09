@@ -15,9 +15,9 @@ namespace Loretta.CodeAnalysis.Collections.Internal
     {
         private readonly ICollection<T> _collection;
 
-        public ICollectionDebugView(ICollection<T> collection!!)
+        public ICollectionDebugView(ICollection<T> collection)
         {
-            _collection = collection;
+            _collection = collection ?? throw new ArgumentNullException(nameof(collection));
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]

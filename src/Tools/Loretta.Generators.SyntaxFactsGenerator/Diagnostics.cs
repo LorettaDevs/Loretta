@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace Loretta.Generators.SyntaxKindGenerator
+namespace Loretta.Generators.SyntaxFactsGenerator
 {
     internal static class Diagnostics
     {

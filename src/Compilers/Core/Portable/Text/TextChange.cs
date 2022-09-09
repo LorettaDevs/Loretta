@@ -14,7 +14,7 @@ namespace Loretta.CodeAnalysis.Text
     public readonly struct TextChange : IEquatable<TextChange>
     {
         /// <summary>
-        /// The original span of the changed text. 
+        /// The original span of the changed text.
         /// </summary>
         [DataMember(Order = 0)]
         public TextSpan Span { get; }
@@ -30,11 +30,11 @@ namespace Loretta.CodeAnalysis.Text
         /// </summary>
         /// <param name="span">The original span of the changed text.</param>
         /// <param name="newText">The new text.</param>
-        public TextChange(TextSpan span, string newText!!)
+        public TextChange(TextSpan span, string newText)
             : this()
         {
             Span = span;
-            NewText = newText;
+            NewText = newText ?? throw new ArgumentNullException(nameof(newText));
         }
 
         /// <summary>

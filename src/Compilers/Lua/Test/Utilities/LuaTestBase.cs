@@ -23,10 +23,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             LuaParseOptions options = null,
             Encoding encoding = null)
         {
-            if (options is null)
-            {
-                options = LuaParseOptions.Default;
-            }
+            options ??= LuaParseOptions.Default;
 
             var stringText = SourceText.From(text, encoding ?? Encoding.UTF8);
             return CheckSerializable(SyntaxFactory.ParseSyntaxTree(stringText, options, filename));
@@ -107,8 +104,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
 
         protected static List<SyntaxNode> GetSyntaxNodeList(SyntaxNode node, List<SyntaxNode> synList)
         {
-            if (synList == null)
-                synList = new List<SyntaxNode>();
+            synList ??= new List<SyntaxNode>();
 
             synList.Add(node);
 

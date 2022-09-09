@@ -318,7 +318,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         return false;
                     }
                 }
-                else if (character  != desired[i])
+                else if (character != desired[i])
                 {
                     return false;
                 }

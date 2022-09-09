@@ -138,8 +138,10 @@ namespace Loretta.CodeAnalysis.Lua
         /// an Err(IEnumerable&lt;RenameError&gt;) if there were errors
         /// while renaming the variable.
         /// </returns>
-        public Result<Script, IEnumerable<RenameError>> RenameVariable(IVariable variable, string newName!!)
+        public Result<Script, IEnumerable<RenameError>> RenameVariable(IVariable variable, string newName)
         {
+            if (variable is null) throw new ArgumentNullException(nameof(variable));
+            if (newName is null) throw new ArgumentNullException(nameof(newName));
             var errors = new HashSet<RenameError>();
             var trees = new HashSet<SyntaxTree>();
             foreach (var location in variable.ReadLocations)

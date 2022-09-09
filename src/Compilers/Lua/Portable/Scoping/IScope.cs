@@ -161,8 +161,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         IEnumerable<IScope> IScope.ContainedScopes => ContainedScopes;
 
-        public IVariable? FindVariable(string name!!, ScopeKind kind = ScopeKind.Global)
+        public IVariable? FindVariable(string name, ScopeKind kind = ScopeKind.Global)
         {
+            if (name is null) throw new ArgumentNullException(nameof(name));
             if (!StringUtils.IsIdentifier(name)) throw new ArgumentException($"'{nameof(name)}' must be a valid identifier.");
             foreach (var variable in DeclaredVariables)
             {

@@ -138,12 +138,6 @@ namespace Loretta.CodeAnalysis.Text
             }
         }
 
-        private void EnsureBuffer()
-        {
-            if (_buffer == null)
-            {
-                _buffer = new char[_bufferSize];
-            }
-        }
+        private void EnsureBuffer() => _buffer ??= new char[_bufferSize];
     }
 }

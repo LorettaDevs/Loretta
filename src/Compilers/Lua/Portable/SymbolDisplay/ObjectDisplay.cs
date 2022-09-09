@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using System.Numerics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Numerics;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.PooledObjects;
 
@@ -156,8 +156,9 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
         /// <remarks>
         /// Optionally escapes non-printable characters.
         /// </remarks>
-        public static string FormatLiteral(string value!!, ObjectDisplayOptions options)
+        public static string FormatLiteral(string value, ObjectDisplayOptions options)
         {
+            if (value is null) throw new ArgumentNullException(nameof(value));
             const char shortStringQuote = '"';
             var pooledBuilder = PooledStringBuilder.GetInstance();
             var builder = pooledBuilder.Builder;

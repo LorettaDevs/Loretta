@@ -62,10 +62,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
             if (error != null)
             {
-                if (_errors == null)
-                {
-                    _errors = new List<SyntaxDiagnosticInfo>(8);
-                }
+                _errors ??= new List<SyntaxDiagnosticInfo>(8);
 
                 _errors.Add(error);
             }
