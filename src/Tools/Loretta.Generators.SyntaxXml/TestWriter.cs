@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable disable
@@ -249,13 +249,14 @@ namespace Loretta.Generators.SyntaxXml
                     }
                     else if (field.Type == "SyntaxToken")
                     {
+                        var kind = ChooseValidKind(field, node);
                         if (!isGreen)
                         {
-                            WriteLine($"Assert.Equal(SyntaxKind.{ChooseValidKind(field)}, node.{field.Name}.Kind());");
+                            WriteLine($"Assert.Equal(SyntaxKind.{kind}, node.{field.Name}.Kind());");
                         }
                         else
                         {
-                            WriteLine($"Assert.Equal(SyntaxKind.{ChooseValidKind(field)}, node.{field.Name}.Kind);");
+                            WriteLine($"Assert.Equal(SyntaxKind.{kind}, node.{field.Name}.Kind);");
                         }
                     }
                     else
@@ -376,6 +377,10 @@ namespace Loretta.Generators.SyntaxXml
         }
 
         //guess a reasonable kind if there are no constraints
-        private static string ChooseValidKind(Field field) => field.Kinds.Any() ? field.Kinds[0].Name : "IdentifierToken";
+        private string? ChooseValidKind(Field field, Node nd)
+        {
+            var fieldKinds = GetKindsOfFieldOrNearestParent(nd, field);
+            return fieldKinds?.Any() == true ? fieldKinds[0].Name : "IdentifierToken";
+        }
     }
 }

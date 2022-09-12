@@ -39,6 +39,7 @@
         <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.UnitTests" />
         <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.StatisticsCollector" />
         <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Experimental" />
+        <InternalsVisibleTo Include="Loretta.Generators.SyntaxXml" />
     </ItemGroup>
 
     <ItemGroup>

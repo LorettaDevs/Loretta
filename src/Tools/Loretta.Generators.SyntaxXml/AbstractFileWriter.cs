@@ -219,8 +219,6 @@ namespace Loretta.Generators.SyntaxXml
         protected static bool IsNew(Field f)
             => f.New;
 
-        protected static bool HasErrors(Node n) => n.Errors == null || string.Compare(n.Errors, "true", true) == 0;
-
         protected static string CamelCase(string name)
         {
             if (char.IsUpper(name[0]))
@@ -329,6 +327,22 @@ namespace Loretta.Generators.SyntaxXml
                 or "unsafe" => true,
                 _ => false,
             };
+        }
+
+        protected List<Kind> GetKindsOfFieldOrNearestParent(TreeType nd, Field field)
+        {
+            while ((field.Kinds is null || field.Kinds.Count == 0) && IsOverride(field))
+            {
+                nd = GetTreeType(nd.Base);
+                field = (nd switch
+                {
+                    Node node => node.Fields,
+                    AbstractNode abstractNode => abstractNode.Fields,
+                    _ => throw new InvalidOperationException("Unexpected node type.")
+                }).Single(f => f.Name == field.Name);
+            }
+
+            return field.Kinds.Distinct().ToList();
         }
 
         #endregion Node helpers
