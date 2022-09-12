@@ -9,6 +9,8 @@ namespace Loretta.Generators
     {
         private static int s_id = -1;
 
+        public static void ResetId() => s_id = -1;
+
         public int Id { get; } = Interlocked.Increment(ref s_id);
         public List<OptimizedSwitchClause> Clauses { get; } = new();
         public Action<SourceWriter>? DefaultBodyWriter { get; set; }

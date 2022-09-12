@@ -25,6 +25,8 @@ namespace Loretta.Generators.SyntaxFactsGenerator
 
             context.RegisterSourceOutput(symbolsProvider, (context, symbols) =>
             {
+                OptimizedSwitch.ResetId();
+
                 var kinds = KindUtils.ExtractKindList(context, symbols);
                 if (kinds is null)
                     throw new Exception("KindList is null");
@@ -97,7 +99,8 @@ namespace Loretta.Generators.SyntaxFactsGenerator
 
                     var properties =
                         kinds.SelectMany(kind => kind.Properties.Select(kv => (kind, key: kv.Key, value: kv.Value)))
-                             .GroupBy(t => t.key, t => (t.kind, t.value));
+                             .GroupBy(t => t.key, t => (t.kind, t.value))
+                             .OrderBy(g => g.Key, StringComparer.OrdinalIgnoreCase);
                     foreach (var propertyGroup in properties)
                     {
                         var possibleTypes = propertyGroup.Select(t => t.value.Type)
