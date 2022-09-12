@@ -27,7 +27,5 @@ namespace Loretta.Generators.SyntaxXml
         [XmlElement(ElementName = "Choice", Type = typeof(Choice))]
         [XmlElement(ElementName = "Sequence", Type = typeof(Sequence))]
         public List<TreeTypeChild> Children = new();
-
-        public abstract T Accept<T>(TreeVisitor<T> visitor);
     }
 }

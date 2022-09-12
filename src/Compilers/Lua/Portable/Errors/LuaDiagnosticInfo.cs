@@ -2,6 +2,11 @@
 {
     internal sealed class LuaDiagnosticInfo : DiagnosticInfo
     {
+        internal LuaDiagnosticInfo(ErrorCode code)
+            : this(code, Array.Empty<object>())
+        {
+        }
+
         internal LuaDiagnosticInfo(ErrorCode errorCode, object[] arguments)
             : base(Lua.MessageProvider.Instance, (int) errorCode, arguments)
         {

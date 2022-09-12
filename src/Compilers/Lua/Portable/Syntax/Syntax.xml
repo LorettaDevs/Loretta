@@ -1883,6 +1883,76 @@
         </Field>
     </Node>
 
+    <AbstractNode Name="TypeNameSyntax" Base="TypeSyntax">
+        <TypeComment>
+            <summary>This node represents a type's name.</summary>
+        </TypeComment>
+        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true">
+            <PropertyComment>
+                <summary>The type argument list for this generic type.</summary>
+            </PropertyComment>
+        </Field>
+    </AbstractNode>
+
+    <Node Name="SimpleTypeNameSyntax" Base="TypeNameSyntax">
+        <TypeComment>
+            <summary>This node reperesents a simple name (T).</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="SimpleTypeNameSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="SimpleTypeName" />
+        <Field Name="IdentifierToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>Gets the name of the type.</summary>
+            </PropertyComment>
+            <Kind Name="IdentifierToken" />
+        </Field>
+        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true" Override="true">
+            <PropertyComment>
+                <summary>The type argument list for this generic type.</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+
+    <Node Name="CompositeTypeNameSyntax" Base="TypeNameSyntax">
+        <TypeComment>
+            <summary>This node represents a composite name (.T)</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new <see cref="CompositeTypeNameSyntax" /> node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="CompositeTypeName" />
+        <Field Name="Base" Type="TypeNameSyntax">
+            <PropertyComment>
+                <summary>Gets the name of the type.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="DotToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>
+                    Gets the . token.
+                </summary>
+            </PropertyComment>
+            <Kind Name="DotToken" />
+        </Field>
+        <Field Name="IdentifierToken" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>Gets the name of the type.</summary>
+            </PropertyComment>
+            <Kind Name="IdentifierToken" />
+        </Field>
+        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true" Override="true">
+            <PropertyComment>
+                <summary>The type argument list for this generic type.</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+
     <Node Name="NilableTypeSyntax" Base="TypeSyntax">
         <TypeComment>
             <summary>This node represents a nilable type.</summary>
@@ -2381,76 +2451,6 @@
                 </summary>
             </PropertyComment>
             <Kind Name="GreaterThanToken" />
-        </Field>
-    </Node>
-
-    <AbstractNode Name="TypeNameSyntax" Base="TypeSyntax">
-        <TypeComment>
-            <summary>This node represents a type's name.</summary>
-        </TypeComment>
-        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true">
-            <PropertyComment>
-                <summary>The type argument list for this generic type.</summary>
-            </PropertyComment>
-        </Field>
-    </AbstractNode>
-
-    <Node Name="SimpleTypeNameSyntax" Base="TypeNameSyntax">
-        <TypeComment>
-            <summary>This node reperesents a simple name (T).</summary>
-        </TypeComment>
-        <FactoryComment>
-            <summary>
-                Creates a new <see cref="SimpleTypeNameSyntax" /> node.
-            </summary>
-        </FactoryComment>
-        <Kind Name="SimpleTypeName" />
-        <Field Name="IdentifierToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>Gets the name of the type.</summary>
-            </PropertyComment>
-            <Kind Name="IdentifierToken" />
-        </Field>
-        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true" Override="true">
-            <PropertyComment>
-                <summary>The type argument list for this generic type.</summary>
-            </PropertyComment>
-        </Field>
-    </Node>
-
-    <Node Name="CompositeTypeNameSyntax" Base="TypeNameSyntax">
-        <TypeComment>
-            <summary>This node represents a composite name (.T)</summary>
-        </TypeComment>
-        <FactoryComment>
-            <summary>
-                Creates a new <see cref="CompositeTypeNameSyntax" /> node.
-            </summary>
-        </FactoryComment>
-        <Kind Name="CompositeTypeName" />
-        <Field Name="Base" Type="TypeNameSyntax">
-            <PropertyComment>
-                <summary>Gets the name of the type.</summary>
-            </PropertyComment>
-        </Field>
-        <Field Name="DotToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>
-                    Gets the . token.
-                </summary>
-            </PropertyComment>
-            <Kind Name="DotToken" />
-        </Field>
-        <Field Name="IdentifierToken" Type="SyntaxToken">
-            <PropertyComment>
-                <summary>Gets the name of the type.</summary>
-            </PropertyComment>
-            <Kind Name="IdentifierToken" />
-        </Field>
-        <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true" Override="true">
-            <PropertyComment>
-                <summary>The type argument list for this generic type.</summary>
-            </PropertyComment>
         </Field>
     </Node>
 

@@ -1,6 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+// We only build the Source Generator in the netstandard target
+#if NETSTANDARD
+
 #nullable enable
 
 using System.Diagnostics.CodeAnalysis;
@@ -14,7 +17,7 @@ using Microsoft.CodeAnalysis.Text;
 namespace Loretta.Generators.SyntaxXml
 {
     [Generator(LanguageNames.CSharp)]
-    public sealed class SyntaxXmlSourceGenerator : IIncrementalGenerator
+    public sealed class SourceGenerator : IIncrementalGenerator
     {
         private static readonly DiagnosticDescriptor s_missingSyntaxXml = new(
             "LSSG1001",
@@ -128,3 +131,5 @@ namespace Loretta.Generators.SyntaxXml
         }
     }
 }
+
+#endif

@@ -6,6 +6,5 @@ namespace Loretta.Generators.SyntaxXml
 {
     public class PredefinedNode : TreeType
     {
-        public override T Accept<T>(TreeVisitor<T> visitor) => visitor.VisitPredefinedNode(this);
     }
 }

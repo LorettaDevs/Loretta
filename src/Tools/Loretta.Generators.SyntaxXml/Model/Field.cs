@@ -8,7 +8,6 @@ namespace Loretta.Generators.SyntaxXml
 {
     public abstract class TreeTypeChild
     {
-        public abstract T Accept<T>(TreeVisitor<T> visitor);
     }
 
     public class Choice : TreeTypeChild
@@ -21,8 +20,6 @@ namespace Loretta.Generators.SyntaxXml
 
         [XmlAttribute]
         public bool Optional;
-
-        public override T Accept<T>(TreeVisitor<T> visitor) => visitor.VisitChoice(this);
     }
 
     public class Sequence : TreeTypeChild
@@ -35,8 +32,6 @@ namespace Loretta.Generators.SyntaxXml
 
         [XmlAttribute]
         public bool Optional;
-
-        public override T Accept<T>(TreeVisitor<T> visitor) => visitor.VisitSequence(this);
     }
 
     public class Field : TreeTypeChild
@@ -69,21 +64,5 @@ namespace Loretta.Generators.SyntaxXml
         public Comment PropertyComment;
 
         public bool IsToken => Type == "SyntaxToken";
-
-        public Field WithOptionality(bool isOptional) =>
-            Optional == isOptional ? this : new Field
-            {
-                AllowTrailingSeparator = AllowTrailingSeparator,
-                Kinds = Kinds,
-                MinCount = MinCount,
-                Name = Name,
-                New = New,
-                Optional = isOptional,
-                Override = Override,
-                PropertyComment = PropertyComment,
-                Type = Type
-            };
-
-        public override T Accept<T>(TreeVisitor<T> visitor) => visitor.VisitField(this);
     }
 }

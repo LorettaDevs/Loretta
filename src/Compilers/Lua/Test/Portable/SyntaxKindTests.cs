@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Loretta.CodeAnalysis.Lua.UnitTests.Syntax
+namespace Loretta.CodeAnalysis.Lua.UnitTests
 {
     public class SyntaxKindTests
     {

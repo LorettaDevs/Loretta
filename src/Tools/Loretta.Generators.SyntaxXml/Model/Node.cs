@@ -18,9 +18,5 @@ namespace Loretta.Generators.SyntaxXml
         public List<Kind> Kinds = new();
 
         public readonly List<Field> Fields = new();
-
-        public bool HasErrors => StringComparer.Ordinal.Equals(Errors, "true");
-
-        public override T Accept<T>(TreeVisitor<T> visitor) => visitor.VisitNode(this);
     }
 }

@@ -31,7 +31,14 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Tools\Loretta.Generators.ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
         <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxXml\Loretta.Generators.SyntaxXml.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxXml\Loretta.Generators.SyntaxXml.csproj">
+            <OutputItemType>Analyzer</OutputItemType>
+            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+            <!-- The generator project currently builds as both a console app and a source generator,
+                 depending upon which TFM is built. No matter what the this project builds as,
+                 we want to grab the generator.-->
+            <SetTargetFramework>TargetFramework=netstandard2.0</SetTargetFramework>
+        </ProjectReference>
         <ProjectReference Include="..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
     </ItemGroup>
     <ItemGroup>

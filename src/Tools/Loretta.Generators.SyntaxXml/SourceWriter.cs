@@ -608,9 +608,10 @@ namespace Loretta.Generators.SyntaxXml
             {
                 WriteLine("switch (kind)");
                 OpenBlock();
-                foreach (var kind in nd.Kinds)
+                var kinds = nd.Kinds.Distinct().ToList();
+                foreach (var kind in kinds)
                 {
-                    WriteLine($"case SyntaxKind.{kind.Name}:{(kind == nd.Kinds.Last() ? " break;" : "")}");
+                    WriteLine($"case SyntaxKind.{kind.Name}:{(kind == kinds.Last() ? " break;" : "")}");
                 }
                 WriteLine("default: throw new ArgumentException(\"Invalid kind provided.\", nameof(kind));");
                 CloseBlock();
@@ -646,7 +647,7 @@ namespace Loretta.Generators.SyntaxXml
                     {
                         WriteLine($"switch ({pname}.Kind)");
                         OpenBlock();
-                        var kinds = field.Kinds.ToList();
+                        var kinds = field.Kinds.Distinct().ToList();
 
                         //we need to check for Kind=None as well as node == null because that's what the red factory will pass
                         if (IsOptional(field))
@@ -1526,9 +1527,10 @@ namespace Loretta.Generators.SyntaxXml
 
                 if (field.Type == "SyntaxToken")
                 {
-                    if (field.Kinds != null && field.Kinds.Count > 0)
+                    var fieldKinds = GetKindsOfFieldOrNearestParent(nd, field);
+                    if (fieldKinds != null && fieldKinds.Count > 0)
                     {
-                        var kinds = field.Kinds.ToList();
+                        var kinds = fieldKinds.ToList();
                         if (IsOptional(field))
                         {
                             kinds.Add(new Kind { Name = "None" });
@@ -1536,7 +1538,7 @@ namespace Loretta.Generators.SyntaxXml
 
                         if (kinds.Count == 1)
                         {
-                            WriteLine($"if ({pname}.Kind() != SyntaxKind.{kinds[0].Name}) throw new ArgumentException($\"Invalid kind provided. Expected {field.Kinds[0].Name} but got {{{pname}.Kind()}}.\", nameof({pname}));");
+                            WriteLine($"if ({pname}.Kind() != SyntaxKind.{kinds[0].Name}) throw new ArgumentException($\"Invalid kind provided. Expected {fieldKinds[0].Name} but got {{{pname}.Kind()}}.\", nameof({pname}));");
                         }
                         else
                         {
