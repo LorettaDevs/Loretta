@@ -57,6 +57,14 @@ namespace Loretta.Generators.SyntaxXml
         [XmlAttribute]
         public bool AllowTrailingSeparator;
 
+        /// <summary>
+        /// Basically tells whether this should always be required
+        /// in the red factory even if it is a node that can be
+        /// auto-constructed or a list that has no MinCount.
+        /// </summary>
+        [XmlAttribute]
+        public bool FactoryRequired;
+
         [XmlElement(ElementName = "Kind", Type = typeof(Kind))]
         public List<Kind> Kinds = new();
 
