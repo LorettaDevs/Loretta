@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
@@ -316,6 +316,9 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
             Span<char> startBuffer = stackalloc char[bufferSize], endBuffer = stackalloc char[bufferSize];
             var idx = 1;
 
+            (startBuffer[0], startBuffer[1]) = ('[', '[');
+            (endBuffer[0], endBuffer[1]) = (']', ']');
+
             while (value.Contains(startBuffer[..(idx + 1)], StringComparison.Ordinal) || value.Contains(endBuffer[..(idx + 1)], StringComparison.Ordinal))
             {
                 if (idx >= bufferSize - 1)
@@ -329,7 +332,7 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
                 idx++;
             }
 
-            startDelimiter = startBuffer.ToString(); endDelimiter = endBuffer.ToString();
+            startDelimiter = startBuffer[..(idx + 1)].ToString(); endDelimiter = endBuffer[..(idx + 1)].ToString();
             return true;
         }
 
