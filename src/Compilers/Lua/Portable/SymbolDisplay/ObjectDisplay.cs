@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
@@ -112,39 +112,136 @@ namespace Loretta.CodeAnalysis.Lua.SymbolDisplay
                 return true;
             }
 
-            if (NeedsEscaping(CharUnicodeInfo.GetUnicodeCategory(c)))
+            if (NeedsEscaping(c))
             {
-                replaceWith = utf8Encode ? CharUtils.EncodeCharToUtf8(c) : "\\u{" + ((int) c).ToString("x4") + "}";
+                replaceWith = utf8Encode ? CharUtils.EncodeCharToUtf8(c) : "\\u{" + ((int) c).ToString("X4") + "}";
                 return true;
             }
 
             return false;
         }
 
-        private static bool NeedsEscaping(UnicodeCategory category)
+        private static bool NeedsEscaping(char ch)
         {
-            // Some characters will probably pass that shouldn't and some that should won't,
-            // but this is easier than having a huge switch with all characters that are
-            // "printable" or "readable".
-            // We list a few of the the most common characters but the others will pass
-            // through the flagset check.
-            const uint categoryFlagSet = (1U << (int) UnicodeCategory.ClosePunctuation)
-                                           | (1U << (int) UnicodeCategory.ConnectorPunctuation)
-                                           | (1U << (int) UnicodeCategory.CurrencySymbol)
-                                           | (1U << (int) UnicodeCategory.DashPunctuation)
-                                           | (1U << (int) UnicodeCategory.DecimalDigitNumber)
-                                           | (1U << (int) UnicodeCategory.FinalQuotePunctuation)
-                                           | (1U << (int) UnicodeCategory.InitialQuotePunctuation)
-                                           | (1U << (int) UnicodeCategory.LetterNumber)
-                                           | (1U << (int) UnicodeCategory.LowercaseLetter)
-                                           | (1U << (int) UnicodeCategory.MathSymbol)
-                                           | (1U << (int) UnicodeCategory.OpenPunctuation)
-                                           | (1U << (int) UnicodeCategory.OtherLetter)
-                                           | (1U << (int) UnicodeCategory.OtherNumber)
-                                           | (1U << (int) UnicodeCategory.OtherPunctuation)
-                                           | (1U << (int) UnicodeCategory.TitlecaseLetter)
-                                           | (1U << (int) UnicodeCategory.UppercaseLetter);
-            return !CharUtils.IsCategoryInSet(categoryFlagSet, category);
+            switch (ch)
+            {
+                // ASCII characters that never need escaping.
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'e':
+                case 'f':
+                case 'g':
+                case 'h':
+                case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
+                case 'o':
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
+                case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
+                case 'A':
+                case 'B':
+                case 'C':
+                case 'D':
+                case 'E':
+                case 'F':
+                case 'G':
+                case 'H':
+                case 'I':
+                case 'J':
+                case 'K':
+                case 'L':
+                case 'M':
+                case 'N':
+                case 'O':
+                case 'P':
+                case 'Q':
+                case 'R':
+                case 'S':
+                case 'T':
+                case 'U':
+                case 'V':
+                case 'W':
+                case 'X':
+                case 'Y':
+                case 'Z':
+                case '_':
+                case ' ':
+                case '`':
+                case '!':
+                case '@':
+                case '#':
+                case '%':
+                case '&':
+                case '*':
+                case '-':
+                case '=':
+                case '+':
+                case '§':
+                case '(':
+                case ')':
+                case '[':
+                case ']':
+                case '{':
+                case '}':
+                case '|':
+                case '/':
+                case ';':
+                case ':':
+                case '<':
+                case '>':
+                case ',':
+                case '.':
+                case '?':
+                    return false;
+
+                default:
+                    // Some characters will probably pass that shouldn't and some that should won't,
+                    // but this is easier than having a huge switch with all characters that are
+                    // "printable" or "readable".
+                    // We list a few of the the most common characters but the others will pass
+                    // through the flagset check.
+                    const uint categoryFlagSet = (1U << (int) UnicodeCategory.ClosePunctuation)
+                                                   | (1U << (int) UnicodeCategory.ConnectorPunctuation)
+                                                   | (1U << (int) UnicodeCategory.CurrencySymbol)
+                                                   | (1U << (int) UnicodeCategory.DashPunctuation)
+                                                   | (1U << (int) UnicodeCategory.DecimalDigitNumber)
+                                                   | (1U << (int) UnicodeCategory.FinalQuotePunctuation)
+                                                   | (1U << (int) UnicodeCategory.InitialQuotePunctuation)
+                                                   | (1U << (int) UnicodeCategory.LetterNumber)
+                                                   | (1U << (int) UnicodeCategory.LowercaseLetter)
+                                                   | (1U << (int) UnicodeCategory.MathSymbol)
+                                                   | (1U << (int) UnicodeCategory.OpenPunctuation)
+                                                   | (1U << (int) UnicodeCategory.OtherLetter)
+                                                   | (1U << (int) UnicodeCategory.OtherNumber)
+                                                   | (1U << (int) UnicodeCategory.OtherPunctuation)
+                                                   | (1U << (int) UnicodeCategory.TitlecaseLetter)
+                                                   | (1U << (int) UnicodeCategory.UppercaseLetter);
+                    return !CharUtils.IsCategoryInSet(categoryFlagSet, CharUnicodeInfo.GetUnicodeCategory(ch));
+            }
         }
 
         /// <summary>

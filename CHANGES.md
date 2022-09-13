@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Fixed
-- Fixed a bug where the leading new line was included for long strings.
-
+- Fixed a bug where the leading new line was included for long strings;
+- Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would escape the space character;
 ## v0.2.9
 ### Added
 - We've added support for LuaJIT imaginary numbers which also resulted in the following being added:
