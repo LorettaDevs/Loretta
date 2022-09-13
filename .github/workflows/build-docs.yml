@@ -54,6 +54,17 @@ jobs:
           }
         shell: pwsh
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            docs/_site
+            docs/api
+            docs/obj
+            !docs/api/.gitignore
+            !docs/api/index.md
+
       - name: Publish
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: peaceiris/actions-gh-pages@v3
