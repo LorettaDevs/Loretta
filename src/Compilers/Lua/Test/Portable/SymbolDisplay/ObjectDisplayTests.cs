@@ -1,4 +1,6 @@
+using System.Numerics;
 using Loretta.CodeAnalysis.Lua.SymbolDisplay;
+using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.Test.Utilities;
 using Xunit;
 
@@ -94,6 +96,56 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.SymbolDisplay
             var output = ObjectDisplay.FormatLiteral(input);
 
             Assert.Equal(expected, output);
+        }
+
+        [Fact]
+        public void ObjectDisplay_FormatLiteralDouble_OutputsHexadecimalFloatsWhenAskedTo()
+        {
+            const double input = 255.255;
+
+            var @decimal = ObjectDisplay.FormatLiteral(input, ObjectDisplayOptions.None);
+            var hexadecimal = ObjectDisplay.FormatLiteral(input, ObjectDisplayOptions.UseHexadecimalNumbers);
+
+            Assert.Equal("255.255", @decimal);
+            // We don't want to indirectly test HexFloat here so we just use its output.
+            Assert.Equal(HexFloat.DoubleToHexString(input), hexadecimal);
+        }
+
+        [Fact]
+        public void ObjectDisplay_FormatLiteralLong_OutputsHexadecimalIntegersWhenAskedTo()
+        {
+            const long input = 65535;
+
+            var @decimal = ObjectDisplay.FormatLiteral(input, ObjectDisplayOptions.None);
+            var hexadecimal = ObjectDisplay.FormatLiteral(input, ObjectDisplayOptions.UseHexadecimalNumbers);
+
+            Assert.Equal("65535", @decimal);
+            Assert.Equal("0xFFFF", hexadecimal);
+        }
+
+        [Fact]
+        public void ObjectDisplay_FormatLiteralULong_OutputsHexadecimalIntegersWhenAskedTo()
+        {
+            const ulong input = 65535;
+
+            var @decimal = ObjectDisplay.FormatLiteral(input, ObjectDisplayOptions.None);
+            var hexadecimal = ObjectDisplay.FormatLiteral(input, ObjectDisplayOptions.UseHexadecimalNumbers);
+
+            Assert.Equal("65535ULL", @decimal);
+            Assert.Equal("0xFFFFULL", hexadecimal);
+        }
+
+        [Fact]
+        public void ObjectDisplay_FormatLiteralComplex_OutputsHexadecimalNumbersWhenAskedTo()
+        {
+            var input = new Complex(0, 255.255);
+
+            var @decimal = ObjectDisplay.FormatLiteral(input, ObjectDisplayOptions.None);
+            var hexadecimal = ObjectDisplay.FormatLiteral(input, ObjectDisplayOptions.UseHexadecimalNumbers);
+
+            Assert.Equal("255.255i", @decimal);
+            // We don't want to indirectly test HexFloat here so we just use its output.
+            Assert.Equal(HexFloat.DoubleToHexString(input.Imaginary) + 'i', hexadecimal);
         }
     }
 }
