@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- Added the following new `SyntaxFactory` overloads:
+	- `SyntaxFactory.AnonymousFunctionExpression(ParameterListSyntax parameters, StatementListSyntax body)`;
+	- `SyntaxFactory.FunctionDeclarationStatement(FunctionNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)`;
+	- `SyntaxFactory.IfStatement(ExpressionSyntax condition, StatementListSyntax body)`;
+	- `SyntaxFactory.LocalDeclarationName(IdentifierNameSyntax identifierName, VariableAttributeSyntax? attribute)`;
+	- `SyntaxFactory.LocalDeclarationName(string name, VariableAttributeSyntax? attribute)`;
+	- `SyntaxFactory.LocalFunctionDeclarationStatement(IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)`;
+	- `SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxToken localKeyword, SyntaxToken functionKeyword, IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)`;
+	- `SyntaxFactory.NumericForStatement(IdentifierNameSyntax identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body)`;
+	- `SyntaxFactory.NumericForStatement(SyntaxToken forKeyword, IdentifierNameSyntax identifier, SyntaxToken equalsToken, ExpressionSyntax initialValue, SyntaxToken finalValueCommaToken, ExpressionSyntax finalValue, SyntaxToken stepValueCommaToken, ExpressionSyntax? stepValue, SyntaxToken doKeyword, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)`;
+	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body)`;
+	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)`.
 ### Fixed
 - Fixed a bug where the leading new line was included for long strings;
 - Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would escape the space character;
