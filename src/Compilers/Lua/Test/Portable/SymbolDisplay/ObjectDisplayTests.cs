@@ -85,5 +85,15 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.SymbolDisplay
 
             Assert.Equal("\"hello there\"", output);
         }
+
+        [Theory]
+        [InlineData(true, "true")]
+        [InlineData(false, "false")]
+        public void ObjectDisplay_FormatLiteralBool_ReturnsTheCorrectValues(bool input, string expected)
+        {
+            var output = ObjectDisplay.FormatLiteral(input);
+
+            Assert.Equal(expected, output);
+        }
     }
 }
