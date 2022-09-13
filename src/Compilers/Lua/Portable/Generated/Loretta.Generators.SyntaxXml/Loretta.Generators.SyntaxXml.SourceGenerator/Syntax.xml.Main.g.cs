@@ -1400,6 +1400,10 @@ namespace Loretta.CodeAnalysis.Lua
         public static NumericForStatementSyntax NumericForStatement(TypedIdentifierNameSyntax identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)
             => SyntaxFactory.NumericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), identifier, SyntaxFactory.Token(SyntaxKind.EqualsToken), initialValue, SyntaxFactory.Token(SyntaxKind.CommaToken), finalValue, default(SyntaxToken), default(ExpressionSyntax?), SyntaxFactory.Token(SyntaxKind.DoKeyword), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
+        /// <summary>Creates a new NumericForStatementSyntax instance.</summary>
+        public static NumericForStatementSyntax NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)
+            => SyntaxFactory.NumericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), SyntaxFactory.TypedIdentifierName(identifier), SyntaxFactory.Token(SyntaxKind.EqualsToken), initialValue, SyntaxFactory.Token(SyntaxKind.CommaToken), finalValue, default(SyntaxToken), default(ExpressionSyntax?), SyntaxFactory.Token(SyntaxKind.DoKeyword), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+
         /// <summary>
         /// Creates a new <see cref="GenericForStatementSyntax" /> node.
         /// </summary>

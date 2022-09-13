@@ -1482,7 +1482,7 @@ namespace Loretta.Generators.SyntaxXml
             var count = 0;
             foreach (var field in nd.Fields)
             {
-                if (IsOptional(field) || CanBeAutoCreated(nd, field) || IsAnyList(field.Type))
+                if (!IsRequiredFactoryField(nd, field))
                 {
                     count++;
                 }
@@ -1843,7 +1843,18 @@ namespace Loretta.Generators.SyntaxXml
             }
         }
 
-        private static bool CanAutoConvertFromString(Field field) => IsIdentifierToken(field) || IsIdentifierNameSyntax(field);
+        private bool CanAutoConvertFromString(Field field)
+        {
+            if (IsIdentifierToken(field) || IsIdentifierNameSyntax(field))
+                return true;
+
+            var nd = GetNode(field.Type);
+            if (nd is null)
+                return false;
+
+            var minimal = DetermineMinimalFactoryFields(nd)?.Distinct().ToArray();
+            return minimal?.Length == 1 && (minimal[0].Type is "string" || CanAutoConvertFromString(minimal[0]));
+        }
 
         private static bool IsIdentifierToken(Field field) => field.Type == "SyntaxToken" && field.Kinds != null && field.Kinds.Count == 1 && field.Kinds[0].Name == "IdentifierToken";
 
@@ -1861,7 +1872,7 @@ namespace Loretta.Generators.SyntaxXml
             }
             else
             {
-                throw new NotSupportedException();
+                return "SyntaxFactory." + StripPost(field.Type, "Syntax");
             }
         }
 

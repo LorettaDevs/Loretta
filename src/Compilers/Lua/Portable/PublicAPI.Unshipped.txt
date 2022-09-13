@@ -1,1 +1,2 @@
-﻿#nullable enable
+#nullable enable
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(string! identifier, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
