@@ -912,8 +912,8 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.AnonymousFunctionExpression(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), typeParameterList, parameters, typeBinding, body, SyntaxFactory.Token(SyntaxKind.EndKeyword));
 
         /// <summary>Creates a new AnonymousFunctionExpressionSyntax instance.</summary>
-        public static AnonymousFunctionExpressionSyntax AnonymousFunctionExpression()
-            => SyntaxFactory.AnonymousFunctionExpression(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), default(TypeParameterListSyntax?), SyntaxFactory.ParameterList(), default(TypeBindingSyntax?), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword));
+        public static AnonymousFunctionExpressionSyntax AnonymousFunctionExpression(ParameterListSyntax parameters, StatementListSyntax body)
+            => SyntaxFactory.AnonymousFunctionExpression(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), default(TypeParameterListSyntax?), parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword));
 
         /// <summary>
         /// Creates a new <see cref="TableConstructorExpressionSyntax" /> node.
@@ -1397,12 +1397,12 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.NumericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), identifier, SyntaxFactory.Token(SyntaxKind.EqualsToken), initialValue, SyntaxFactory.Token(SyntaxKind.CommaToken), finalValue, default(SyntaxToken), stepValue, SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>Creates a new NumericForStatementSyntax instance.</summary>
-        public static NumericForStatementSyntax NumericForStatement(TypedIdentifierNameSyntax identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)
-            => SyntaxFactory.NumericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), identifier, SyntaxFactory.Token(SyntaxKind.EqualsToken), initialValue, SyntaxFactory.Token(SyntaxKind.CommaToken), finalValue, default(SyntaxToken), default(ExpressionSyntax?), SyntaxFactory.Token(SyntaxKind.DoKeyword), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+        public static NumericForStatementSyntax NumericForStatement(TypedIdentifierNameSyntax identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, StatementListSyntax body)
+            => SyntaxFactory.NumericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), identifier, SyntaxFactory.Token(SyntaxKind.EqualsToken), initialValue, SyntaxFactory.Token(SyntaxKind.CommaToken), finalValue, default(SyntaxToken), default(ExpressionSyntax?), SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>Creates a new NumericForStatementSyntax instance.</summary>
-        public static NumericForStatementSyntax NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)
-            => SyntaxFactory.NumericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), SyntaxFactory.TypedIdentifierName(identifier), SyntaxFactory.Token(SyntaxKind.EqualsToken), initialValue, SyntaxFactory.Token(SyntaxKind.CommaToken), finalValue, default(SyntaxToken), default(ExpressionSyntax?), SyntaxFactory.Token(SyntaxKind.DoKeyword), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+        public static NumericForStatementSyntax NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, StatementListSyntax body)
+            => SyntaxFactory.NumericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), SyntaxFactory.TypedIdentifierName(identifier), SyntaxFactory.Token(SyntaxKind.EqualsToken), initialValue, SyntaxFactory.Token(SyntaxKind.CommaToken), finalValue, default(SyntaxToken), default(ExpressionSyntax?), SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
         /// Creates a new <see cref="GenericForStatementSyntax" /> node.
@@ -1429,10 +1429,6 @@ namespace Loretta.CodeAnalysis.Lua
         public static GenericForStatementSyntax GenericForStatement(SeparatedSyntaxList<TypedIdentifierNameSyntax> identifiers, SeparatedSyntaxList<ExpressionSyntax> expressions, StatementListSyntax body)
             => SyntaxFactory.GenericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), identifiers, SyntaxFactory.Token(SyntaxKind.InKeyword), expressions, SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
-        /// <summary>Creates a new GenericForStatementSyntax instance.</summary>
-        public static GenericForStatementSyntax GenericForStatement(SeparatedSyntaxList<TypedIdentifierNameSyntax> identifiers, SeparatedSyntaxList<ExpressionSyntax> expressions)
-            => SyntaxFactory.GenericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), identifiers, SyntaxFactory.Token(SyntaxKind.InKeyword), expressions, SyntaxFactory.Token(SyntaxKind.DoKeyword), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
-
         /// <summary>
         /// Creates a new <see cref="WhileStatementSyntax" /> node.
         /// </summary>
@@ -1456,10 +1452,6 @@ namespace Loretta.CodeAnalysis.Lua
         public static WhileStatementSyntax WhileStatement(ExpressionSyntax condition, StatementListSyntax body)
             => SyntaxFactory.WhileStatement(SyntaxFactory.Token(SyntaxKind.WhileKeyword), condition, SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
-        /// <summary>Creates a new WhileStatementSyntax instance.</summary>
-        public static WhileStatementSyntax WhileStatement(ExpressionSyntax condition)
-            => SyntaxFactory.WhileStatement(SyntaxFactory.Token(SyntaxKind.WhileKeyword), condition, SyntaxFactory.Token(SyntaxKind.DoKeyword), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
-
         /// <summary>
         /// Creates a new <see cref="RepeatUntilStatementSyntax" /> node.
         /// </summary>
@@ -1481,10 +1473,6 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Creates a new RepeatUntilStatementSyntax instance.</summary>
         public static RepeatUntilStatementSyntax RepeatUntilStatement(StatementListSyntax body, ExpressionSyntax condition)
             => SyntaxFactory.RepeatUntilStatement(SyntaxFactory.Token(SyntaxKind.RepeatKeyword), body, SyntaxFactory.Token(SyntaxKind.UntilKeyword), condition, default(SyntaxToken));
-
-        /// <summary>Creates a new RepeatUntilStatementSyntax instance.</summary>
-        public static RepeatUntilStatementSyntax RepeatUntilStatement(ExpressionSyntax condition)
-            => SyntaxFactory.RepeatUntilStatement(SyntaxFactory.Token(SyntaxKind.RepeatKeyword), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.UntilKeyword), condition, default(SyntaxToken));
 
         /// <summary>
         /// Creates a new <see cref="IfStatementSyntax" /> comment.
@@ -1510,8 +1498,8 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), body, elseIfClauses, elseClause, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>Creates a new IfStatementSyntax instance.</summary>
-        public static IfStatementSyntax IfStatement(ExpressionSyntax condition)
-            => SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), SyntaxFactory.StatementList(), default(SyntaxList<ElseIfClauseSyntax>), default(ElseClauseSyntax?), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+        public static IfStatementSyntax IfStatement(ExpressionSyntax condition, StatementListSyntax body)
+            => SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), body, default(SyntaxList<ElseIfClauseSyntax>), default(ElseClauseSyntax?), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
         /// Creates a new <see cref="ElseIfClauseSyntax" /> node.
@@ -1529,10 +1517,6 @@ namespace Loretta.CodeAnalysis.Lua
         public static ElseIfClauseSyntax ElseIfClause(ExpressionSyntax condition, StatementListSyntax body)
             => SyntaxFactory.ElseIfClause(SyntaxFactory.Token(SyntaxKind.ElseIfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), body);
 
-        /// <summary>Creates a new ElseIfClauseSyntax instance.</summary>
-        public static ElseIfClauseSyntax ElseIfClause(ExpressionSyntax condition)
-            => SyntaxFactory.ElseIfClause(SyntaxFactory.Token(SyntaxKind.ElseIfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), SyntaxFactory.StatementList());
-
         /// <summary>
         /// Creates a new <see cref="ElseClauseSyntax" /> comment.
         /// </summary>
@@ -1544,8 +1528,8 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>Creates a new ElseClauseSyntax instance.</summary>
-        public static ElseClauseSyntax ElseClause(StatementListSyntax? elseBody = default)
-            => SyntaxFactory.ElseClause(SyntaxFactory.Token(SyntaxKind.ElseKeyword), elseBody ?? SyntaxFactory.StatementList());
+        public static ElseClauseSyntax ElseClause(StatementListSyntax elseBody)
+            => SyntaxFactory.ElseClause(SyntaxFactory.Token(SyntaxKind.ElseKeyword), elseBody);
 
         /// <summary>
         /// Creates a new <see cref="GotoStatementSyntax" /> node.
@@ -1653,12 +1637,12 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.LocalKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, typeParameterList, parameters, typeBinding, body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>Creates a new LocalFunctionDeclarationStatementSyntax instance.</summary>
-        public static LocalFunctionDeclarationStatementSyntax LocalFunctionDeclarationStatement(IdentifierNameSyntax name)
-            => SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.LocalKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, default(TypeParameterListSyntax?), SyntaxFactory.ParameterList(), default(TypeBindingSyntax?), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+        public static LocalFunctionDeclarationStatementSyntax LocalFunctionDeclarationStatement(IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)
+            => SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.LocalKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, default(TypeParameterListSyntax?), parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>Creates a new LocalFunctionDeclarationStatementSyntax instance.</summary>
-        public static LocalFunctionDeclarationStatementSyntax LocalFunctionDeclarationStatement(string name)
-            => SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.LocalKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), SyntaxFactory.IdentifierName(name), default(TypeParameterListSyntax?), SyntaxFactory.ParameterList(), default(TypeBindingSyntax?), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+        public static LocalFunctionDeclarationStatementSyntax LocalFunctionDeclarationStatement(string name, ParameterListSyntax parameters, StatementListSyntax body)
+            => SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.LocalKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), SyntaxFactory.IdentifierName(name), default(TypeParameterListSyntax?), parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
         /// Creates a new <see cref="FunctionDeclarationStatementSyntax" /> node.
@@ -1684,8 +1668,8 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.FunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, typeParameterList, parameters, typeBinding, body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>Creates a new FunctionDeclarationStatementSyntax instance.</summary>
-        public static FunctionDeclarationStatementSyntax FunctionDeclarationStatement(FunctionNameSyntax name)
-            => SyntaxFactory.FunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, default(TypeParameterListSyntax?), SyntaxFactory.ParameterList(), default(TypeBindingSyntax?), SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+        public static FunctionDeclarationStatementSyntax FunctionDeclarationStatement(FunctionNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)
+            => SyntaxFactory.FunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, default(TypeParameterListSyntax?), parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
         /// Creates a new <see cref="DoStatementSyntax" /> node.
@@ -1705,8 +1689,8 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>Creates a new DoStatementSyntax instance.</summary>
-        public static DoStatementSyntax DoStatement(StatementListSyntax? body = default)
-            => SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), body ?? SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+        public static DoStatementSyntax DoStatement(StatementListSyntax body)
+            => SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
         /// Creates a new <see cref="GotoLabelStatementSyntax" /> node.
@@ -2199,7 +2183,7 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>Creates a new CompilationUnitSyntax instance.</summary>
-        public static CompilationUnitSyntax CompilationUnit(StatementListSyntax? statements = default)
-            => SyntaxFactory.CompilationUnit(statements ?? SyntaxFactory.StatementList(), SyntaxFactory.Token(SyntaxKind.EndOfFileToken));
+        public static CompilationUnitSyntax CompilationUnit(StatementListSyntax statements)
+            => SyntaxFactory.CompilationUnit(statements, SyntaxFactory.Token(SyntaxKind.EndOfFileToken));
     }
 }
