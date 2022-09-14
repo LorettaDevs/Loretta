@@ -18180,12 +18180,6 @@ references:
   commentId: T:Loretta.CodeAnalysis.Lua.SyntaxFactory
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory
   nameWithType: SyntaxFactory
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression
-  name: AnonymousFunctionExpression()
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_AnonymousFunctionExpression
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression()
-  nameWithType: SyntaxFactory.AnonymousFunctionExpression()
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.AnonymousFunctionExpression(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: AnonymousFunctionExpression(ParameterListSyntax, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_AnonymousFunctionExpression_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
@@ -18673,12 +18667,6 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.ElseClause
   nameWithType: SyntaxFactory.ElseClause
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.ElseIfClause(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  name: ElseIfClause(ExpressionSyntax)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_ElseIfClause_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.ElseIfClause(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.ElseIfClause(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  nameWithType: SyntaxFactory.ElseIfClause(ExpressionSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.ElseIfClause(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: ElseIfClause(ExpressionSyntax, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_ElseIfClause_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
@@ -18869,12 +18857,6 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionCallExpression
   nameWithType: SyntaxFactory.FunctionCallExpression
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax)
-  name: FunctionDeclarationStatement(FunctionNameSyntax)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_FunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_FunctionNameSyntax_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax)
-  nameWithType: SyntaxFactory.FunctionDeclarationStatement(FunctionNameSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: FunctionDeclarationStatement(FunctionNameSyntax, ParameterListSyntax, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_FunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_FunctionNameSyntax_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
@@ -18931,15 +18913,6 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.FunctionType
   nameWithType: SyntaxFactory.FunctionType
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList{Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax},Loretta.CodeAnalysis.SeparatedSyntaxList{Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax})
-  name: GenericForStatement(SeparatedSyntaxList<TypedIdentifierNameSyntax>, SeparatedSyntaxList<ExpressionSyntax>)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_GenericForStatement_Loretta_CodeAnalysis_SeparatedSyntaxList_Loretta_CodeAnalysis_Lua_Syntax_TypedIdentifierNameSyntax__Loretta_CodeAnalysis_SeparatedSyntaxList_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax__
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList{Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax},Loretta.CodeAnalysis.SeparatedSyntaxList{Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax})
-  name.vb: GenericForStatement(SeparatedSyntaxList(Of TypedIdentifierNameSyntax), SeparatedSyntaxList(Of ExpressionSyntax))
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax>, Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax>)
-  fullName.vb: Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList(Of Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax), Loretta.CodeAnalysis.SeparatedSyntaxList(Of Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax))
-  nameWithType: SyntaxFactory.GenericForStatement(SeparatedSyntaxList<TypedIdentifierNameSyntax>, SeparatedSyntaxList<ExpressionSyntax>)
-  nameWithType.vb: SyntaxFactory.GenericForStatement(SeparatedSyntaxList(Of TypedIdentifierNameSyntax), SeparatedSyntaxList(Of ExpressionSyntax))
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.GenericForStatement(Loretta.CodeAnalysis.SeparatedSyntaxList{Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax},Loretta.CodeAnalysis.SeparatedSyntaxList{Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax},Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: GenericForStatement(SeparatedSyntaxList<TypedIdentifierNameSyntax>, SeparatedSyntaxList<ExpressionSyntax>, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_GenericForStatement_Loretta_CodeAnalysis_SeparatedSyntaxList_Loretta_CodeAnalysis_Lua_Syntax_TypedIdentifierNameSyntax__Loretta_CodeAnalysis_SeparatedSyntaxList_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax__Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
@@ -19165,12 +19138,6 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.IfExpression
   nameWithType: SyntaxFactory.IfExpression
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.IfStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  name: IfStatement(ExpressionSyntax)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_IfStatement_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.IfStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.IfStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  nameWithType: SyntaxFactory.IfStatement(ExpressionSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.IfStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: IfStatement(ExpressionSyntax, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_IfStatement_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
@@ -19431,12 +19398,6 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalDeclarationName
   nameWithType: SyntaxFactory.LocalDeclarationName
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax)
-  name: LocalFunctionDeclarationStatement(IdentifierNameSyntax)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_LocalFunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_IdentifierNameSyntax_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax)
-  nameWithType: SyntaxFactory.LocalFunctionDeclarationStatement(IdentifierNameSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: LocalFunctionDeclarationStatement(IdentifierNameSyntax, ParameterListSyntax, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_LocalFunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_IdentifierNameSyntax_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
@@ -19461,12 +19422,12 @@ references:
   commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax, Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken)
   nameWithType: SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxToken, SyntaxToken, IdentifierNameSyntax, TypeParameterListSyntax, ParameterListSyntax, TypeBindingSyntax, StatementListSyntax, SyntaxToken, SyntaxToken)
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(System.String)
-  name: LocalFunctionDeclarationStatement(String)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_LocalFunctionDeclarationStatement_System_String_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(System.String)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(System.String)
-  nameWithType: SyntaxFactory.LocalFunctionDeclarationStatement(String)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  name: LocalFunctionDeclarationStatement(String, ParameterListSyntax, StatementListSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_LocalFunctionDeclarationStatement_System_String_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement(System.String, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  nameWithType: SyntaxFactory.LocalFunctionDeclarationStatement(String, ParameterListSyntax, StatementListSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.LocalFunctionDeclarationStatement*
   name: LocalFunctionDeclarationStatement
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_LocalFunctionDeclarationStatement_
@@ -19711,18 +19672,18 @@ references:
   commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   nameWithType: SyntaxFactory.NumericForStatement(IdentifierNameSyntax, ExpressionSyntax, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  name: NumericForStatement(TypedIdentifierNameSyntax, ExpressionSyntax, ExpressionSyntax)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_NumericForStatement_Loretta_CodeAnalysis_Lua_Syntax_TypedIdentifierNameSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  nameWithType: SyntaxFactory.NumericForStatement(TypedIdentifierNameSyntax, ExpressionSyntax, ExpressionSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: NumericForStatement(TypedIdentifierNameSyntax, ExpressionSyntax, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_NumericForStatement_Loretta_CodeAnalysis_Lua_Syntax_TypedIdentifierNameSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
   commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   nameWithType: SyntaxFactory.NumericForStatement(TypedIdentifierNameSyntax, ExpressionSyntax, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  name: NumericForStatement(TypedIdentifierNameSyntax, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_NumericForStatement_Loretta_CodeAnalysis_Lua_Syntax_TypedIdentifierNameSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  nameWithType: SyntaxFactory.NumericForStatement(TypedIdentifierNameSyntax, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)
   name: NumericForStatement(SyntaxToken, IdentifierNameSyntax, SyntaxToken, ExpressionSyntax, SyntaxToken, ExpressionSyntax, SyntaxToken, ExpressionSyntax, SyntaxToken, StatementListSyntax, SyntaxToken, SyntaxToken)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_NumericForStatement_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_IdentifierNameSyntax_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_
@@ -19735,18 +19696,18 @@ references:
   commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken)
   nameWithType: SyntaxFactory.NumericForStatement(SyntaxToken, TypedIdentifierNameSyntax, SyntaxToken, ExpressionSyntax, SyntaxToken, ExpressionSyntax, SyntaxToken, ExpressionSyntax, SyntaxToken, StatementListSyntax, SyntaxToken, SyntaxToken)
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  name: NumericForStatement(String, ExpressionSyntax, ExpressionSyntax)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_NumericForStatement_System_String_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  nameWithType: SyntaxFactory.NumericForStatement(String, ExpressionSyntax, ExpressionSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: NumericForStatement(String, ExpressionSyntax, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_NumericForStatement_System_String_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
   commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   nameWithType: SyntaxFactory.NumericForStatement(String, ExpressionSyntax, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  name: NumericForStatement(String, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_NumericForStatement_System_String_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(System.String, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  nameWithType: SyntaxFactory.NumericForStatement(String, ExpressionSyntax, ExpressionSyntax, StatementListSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement*
   name: NumericForStatement
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_NumericForStatement_
@@ -19988,12 +19949,6 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.ParseType
   nameWithType: SyntaxFactory.ParseType
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.RepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  name: RepeatUntilStatement(ExpressionSyntax)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_RepeatUntilStatement_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.RepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.RepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  nameWithType: SyntaxFactory.RepeatUntilStatement(ExpressionSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.RepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
   name: RepeatUntilStatement(StatementListSyntax, ExpressionSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_RepeatUntilStatement_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
@@ -20849,12 +20804,6 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.VariadicTypePack
   nameWithType: SyntaxFactory.VariadicTypePack
-- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.WhileStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  name: WhileStatement(ExpressionSyntax)
-  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_WhileStatement_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
-  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.WhileStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.WhileStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
-  nameWithType: SyntaxFactory.WhileStatement(ExpressionSyntax)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.WhileStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
   name: WhileStatement(ExpressionSyntax, StatementListSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_WhileStatement_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
