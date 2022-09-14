@@ -1451,7 +1451,8 @@ namespace Loretta.Generators.SyntaxXml
         }
 
         private bool IsRequiredFactoryField(Node node, Field field) =>
-            (!IsOptional(field) && (!IsAnyList(field.Type) || field.MinCount > 0) && !CanBeAutoCreated(node, field))
+            field.FactoryRequired
+            || (!IsOptional(field) && (!IsAnyList(field.Type) || field.MinCount > 0) && !CanBeAutoCreated(node, field))
             || IsValueField(field);
 
         private bool IsValueField(Field field) => !IsNodeOrNodeList(field.Type);

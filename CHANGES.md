@@ -6,22 +6,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Added
-- Added the following new `SyntaxFactory` overloads:
+- Added the following new `SyntaxFactory` overloads to partially restore compatibility with pre-typed-lua era:
 	- `SyntaxFactory.AnonymousFunctionExpression(ParameterListSyntax parameters, StatementListSyntax body)`;
 	- `SyntaxFactory.FunctionDeclarationStatement(FunctionNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)`;
-	- `SyntaxFactory.IfStatement(ExpressionSyntax condition, StatementListSyntax body)`;
 	- `SyntaxFactory.LocalDeclarationName(IdentifierNameSyntax identifierName, VariableAttributeSyntax? attribute)`;
 	- `SyntaxFactory.LocalDeclarationName(string name, VariableAttributeSyntax? attribute)`;
-	- `SyntaxFactory.LocalFunctionDeclarationStatement(IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)`;
 	- `SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxToken localKeyword, SyntaxToken functionKeyword, IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)`;
 	- `SyntaxFactory.NumericForStatement(IdentifierNameSyntax identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body)`;
 	- `SyntaxFactory.NumericForStatement(SyntaxToken forKeyword, IdentifierNameSyntax identifier, SyntaxToken equalsToken, ExpressionSyntax initialValue, SyntaxToken finalValueCommaToken, ExpressionSyntax finalValue, SyntaxToken stepValueCommaToken, ExpressionSyntax? stepValue, SyntaxToken doKeyword, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)`;
 	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body)`;
 	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)`.
+
+### Changed
+- **[Breaking]** The following SyntaxFactory overloads have been changed:
+	- `SyntaxFactory.NumericForStatement(TypedIdentifierNameSyntax identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)` has been changed to always require the loop's body (into `SyntaxFactory.NumericForStatement(TypedIdentifierNameSyntax identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, StatementListSyntax body)`);
+	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)` has been changed to always require the loop's body (into `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, StatementListSyntax body)`);
+	- `SyntaxFactory.IfStatement(ExpressionSyntax condition)` has been changed to always require the clause's body (into `SyntaxFactory.IfStatement(ExpressionSyntax condition, StatementListSyntax body)`);
+	- `SyntaxFactory.ElseClause(StatementListSyntax? elseBody = default)` has been changed for the body to always be required (into `SyntaxFactory.ElseClause(StatementListSyntax elseBody)`);
+	- `SyntaxFactory.LocalFunctionDeclarationStatement(IdentifierNameSyntax name)` has been changed to always require the parameter list and function's body (into `SyntaxFactory.LocalFunctionDeclarationStatement(IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)`);
+	- `SyntaxFactory.LocalFunctionDeclarationStatement(string name)` has been changed to always require the parameter list and function's body (into `LocalFunctionDeclarationStatement(string name, ParameterListSyntax parameters, StatementListSyntax body)`);
+	- `SyntaxFactory.FunctionDeclarationStatement(FunctionNameSyntax name)` has been changed to always require the parameter list and the function's body (into `SyntaxFactory.FunctionDeclarationStatement(FunctionNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)`);
+	- `SyntaxFactory.DoStatement(StatementListSyntax? body = default)` has been changed to make the body always required (into `SyntaxFactory.DoStatement(StatementListSyntax body)`);
+	- `SyntaxFactory.CompilationUnit(StatementListSyntax? statements = default)` has been changed to make the body always required (into `SyntaxFactory.CompilationUnit(StatementListSyntax statements)`).
+
+### Removed
+- **[Breaking]** The following have been removed:
+	- `SyntaxFactory.AnonymousFunctionExpression()` (as the parameter list and function's body should always be required);
+	- `SyntaxFactory.GenericForStatement(SeparatedSyntaxList<TypedIdentifierNameSyntax> identifiers, SeparatedSyntaxList<ExpressionSyntax> expressions)` (as the loop's body should always be required);
+	- `SyntaxFactory.WhileStatement(ExpressionSyntax condition)` (as the loop's body should always be required);
+	- `SyntaxFactory.RepeatUntilStatement(ExpressionSyntax condition)` (as the loop's body should always be required);
+	- `SyntaxFactory.ElseIfClause(ExpressionSyntax condition)` (as the `elseif` clause should always be required);
+
 ### Fixed
 - Fixed a bug where the leading new line was included for long strings;
 - Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would escape the space character;
 - Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would not generate correct verbatim/long strings.
+
 ## v0.2.9
 ### Added
 - We've added support for LuaJIT imaginary numbers which also resulted in the following being added:

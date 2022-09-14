@@ -1,0 +1,17 @@
+SyntaxFactory
+Changelog
+LuaJIT
+FiveM
+pre-typed-lua
+minifier
+lexing
+@TheGreatSageEqualToHeaven
+vendoring
+parameterless
+ctor
+goto
+unicode-aware
+bool
+GParse
+precedences
+erroring

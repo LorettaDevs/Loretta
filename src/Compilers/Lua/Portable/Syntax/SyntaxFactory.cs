@@ -1102,13 +1102,7 @@ namespace Loretta.CodeAnalysis.Lua
             LocalVariableDeclarationStatement(names, EqualsValuesClause(values));
 
         /// <summary>
-        /// Creates a new IfStatementSyntax instance.
-        /// </summary>
-        public static IfStatementSyntax IfStatement(ExpressionSyntax condition, StatementListSyntax body) =>
-            IfStatement(condition, body, default, null);
-
-        /// <summary>
-        /// Creates a new NumericForStatementSyntax instance.
+        /// Creates a new <see cref="NumericForStatementSyntax" /> node.
         /// </summary>
         public static NumericForStatementSyntax NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body) =>
             NumericForStatement(TypedIdentifierName(identifier), initialValue, finalValue, stepValue, body);
@@ -1133,18 +1127,6 @@ namespace Loretta.CodeAnalysis.Lua
         // ░░▀░░░▀░░▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░░▀░
 
         /// <summary>
-        /// Creates a new AnonymousFunctionExpressionSyntax instance.
-        /// </summary>
-        public static AnonymousFunctionExpressionSyntax AnonymousFunctionExpression(ParameterListSyntax parameters, StatementListSyntax body) =>
-            AnonymousFunctionExpression(null, parameters, null, body);
-
-        /// <summary>
-        /// Creates a new FunctionDeclarationStatementSyntax instance.
-        /// </summary>
-        public static FunctionDeclarationStatementSyntax FunctionDeclarationStatement(FunctionNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body) =>
-            FunctionDeclarationStatement(name, null, parameters, null, body);
-
-        /// <summary>
         /// Creates a new <see cref="LocalDeclarationNameSyntax" /> node.
         /// </summary>
         public static LocalDeclarationNameSyntax LocalDeclarationName(string name, VariableAttributeSyntax? attribute) =>
@@ -1157,25 +1139,19 @@ namespace Loretta.CodeAnalysis.Lua
             LocalDeclarationName(identifierName, attribute, null);
 
         /// <summary>
-        /// Creates a new LocalFunctionDeclarationStatementSyntax instance.
-        /// </summary>
-        public static LocalFunctionDeclarationStatementSyntax LocalFunctionDeclarationStatement(IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body) =>
-            LocalFunctionDeclarationStatement(name, null, parameters, null, body);
-
-        /// <summary>
-        /// Creates a new LocalFunctionDeclarationStatementSyntax instance.
+        /// Creates a new <see cref="LocalFunctionDeclarationStatementSyntax" /> node.
         /// </summary>
         public static LocalFunctionDeclarationStatementSyntax LocalFunctionDeclarationStatement(SyntaxToken localKeyword, SyntaxToken functionKeyword, IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken) =>
             LocalFunctionDeclarationStatement(localKeyword, functionKeyword, name, null, parameters, null, body, endKeyword, semicolonToken);
 
         /// <summary>
-        /// Creates a new NumericForStatementSyntax instance.
+        /// Creates a new <see cref="NumericForStatementSyntax" /> node.
         /// </summary>
         public static NumericForStatementSyntax NumericForStatement(IdentifierNameSyntax identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body) =>
             NumericForStatement(TypedIdentifierName(identifier), initialValue, finalValue, stepValue, body);
 
         /// <summary>
-        /// Creates a new NumericForStatementSyntax instance.
+        /// Creates a new <see cref="NumericForStatementSyntax" /> node.
         /// </summary>
         public static NumericForStatementSyntax NumericForStatement(SyntaxToken forKeyword, IdentifierNameSyntax identifier, SyntaxToken equalsToken, ExpressionSyntax initialValue, SyntaxToken finalValueCommaToken, ExpressionSyntax finalValue, SyntaxToken stepValueCommaToken, ExpressionSyntax? stepValue, SyntaxToken doKeyword, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken) =>
             NumericForStatement(forKeyword, TypedIdentifierName(identifier), equalsToken, initialValue, finalValueCommaToken, finalValue, stepValueCommaToken, stepValue, doKeyword, body, endKeyword, semicolonToken);
