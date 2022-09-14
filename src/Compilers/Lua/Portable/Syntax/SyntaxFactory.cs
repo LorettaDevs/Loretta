@@ -1102,12 +1102,6 @@ namespace Loretta.CodeAnalysis.Lua
             LocalVariableDeclarationStatement(names, EqualsValuesClause(values));
 
         /// <summary>
-        /// Creates a new IfStatementSyntax instance.
-        /// </summary>
-        public static IfStatementSyntax IfStatement(ExpressionSyntax condition, StatementListSyntax body) =>
-            IfStatement(condition, body, default, null);
-
-        /// <summary>
         /// Creates a new NumericForStatementSyntax instance.
         /// </summary>
         public static NumericForStatementSyntax NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body) =>
@@ -1133,18 +1127,6 @@ namespace Loretta.CodeAnalysis.Lua
         // ░░▀░░░▀░░▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░░▀░
 
         /// <summary>
-        /// Creates a new AnonymousFunctionExpressionSyntax instance.
-        /// </summary>
-        public static AnonymousFunctionExpressionSyntax AnonymousFunctionExpression(ParameterListSyntax parameters, StatementListSyntax body) =>
-            AnonymousFunctionExpression(null, parameters, null, body);
-
-        /// <summary>
-        /// Creates a new FunctionDeclarationStatementSyntax instance.
-        /// </summary>
-        public static FunctionDeclarationStatementSyntax FunctionDeclarationStatement(FunctionNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body) =>
-            FunctionDeclarationStatement(name, null, parameters, null, body);
-
-        /// <summary>
         /// Creates a new <see cref="LocalDeclarationNameSyntax" /> node.
         /// </summary>
         public static LocalDeclarationNameSyntax LocalDeclarationName(string name, VariableAttributeSyntax? attribute) =>
@@ -1155,12 +1137,6 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static LocalDeclarationNameSyntax LocalDeclarationName(IdentifierNameSyntax identifierName, VariableAttributeSyntax? attribute) =>
             LocalDeclarationName(identifierName, attribute, null);
-
-        /// <summary>
-        /// Creates a new LocalFunctionDeclarationStatementSyntax instance.
-        /// </summary>
-        public static LocalFunctionDeclarationStatementSyntax LocalFunctionDeclarationStatement(IdentifierNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body) =>
-            LocalFunctionDeclarationStatement(name, null, parameters, null, body);
 
         /// <summary>
         /// Creates a new LocalFunctionDeclarationStatementSyntax instance.
