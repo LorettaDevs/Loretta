@@ -1,6 +1,7 @@
 name: Build and Test
 
 on:
+  workflow_call:
   push:
     paths:
       - 'src/**'
@@ -11,7 +12,7 @@ on:
       - 'build/**'
   workflow_dispatch:
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
@@ -33,9 +34,9 @@ jobs:
             installDir: /Users/runner/.dotnet
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: |
             3.1.x
