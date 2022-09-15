@@ -1,19 +1,25 @@
-name: Release
+name: Stable Release
 
 on:
   push:
     tags:
       - 'v*'
+      - '!v*-nightly.*'
 
 jobs:
   build:
+    uses: ./.github/workflows/build-and-test.yml
+
+  release:
     name: Release
     runs-on: windows-latest
+    needs: [build]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: |
             3.1.x
@@ -22,20 +28,27 @@ jobs:
           include-prerelease: True
         env:
           DOTNET_INSTALL_DIR: C:\Program Files\dotnet
+
       - name: Install dependencies
         run: dotnet restore
+
       - name: Build
         run: dotnet build --configuration Release --no-restore
-      - name: Run Tests
-        run: dotnet test --configuration Release --no-build
+
       - name: Generate NuGet packages
         run: dotnet pack --configuration Release --output ./packages --no-restore --include-symbols -p:SymbolPackageFormat=snupkg
+
       - name: Publish packages
         run: |
           Get-ChildItem -Path ./packages/ -Filter *.nupkg -File -Name | ForEach-Object {
             dotnet nuget push ./packages/$_ --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
           }
         shell: pwsh
+
+      - name: Extract Latest Changes
+        run: ./build/Extract-LatestChanges.ps1
+        shell: pwsh
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
