@@ -6,7 +6,9 @@ using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax
 {
-    // This is based on VB's SyntaxNormalizer as it is more similar to Lua than C#
+    // This *slightly* based on VB's SyntaxNormalizer as it is more similar to Lua than C#
+    // It has been heavily modified as maintaining the token pair comparisons was too much of a pain and wasn't worth it.
+    // It makes a lot of references to the rules in ../Generated/Lua.Generated.g4
     internal class SyntaxNormalizer : LuaSyntaxRewriter
     {
         private readonly TextSpan _consideredSpan;
@@ -22,11 +24,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         private bool _afterIndentation;
 
         private readonly Dictionary<SyntaxToken, int> _lineBreaksAfterToken = new();
-        private readonly HashSet<SyntaxNode> _lastStatementsInBlocks = new();
+        private readonly HashSet<SyntaxToken> _tokensWithSpaceRequiredBefore = new();
+        private readonly HashSet<SyntaxToken> _tokensWithSpaceRequiredAfter = new();
 
         private int _indentationDepth;
 
         private ArrayBuilder<SyntaxTrivia>? _indentations;
+
+        private readonly record struct State(bool InStructuredTrivia, SyntaxToken PreviousToken, bool AfterLineBreak, bool AfterIndentation, int IndentationDepth);
 
         private SyntaxNormalizer(TextSpan consideredSpan, string indentWhitespace, string eolWhitespace, bool useElasticTrivia)
             : base(visitIntoStructuredTrivia: true)
@@ -128,7 +133,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                         indentationDepth,
                         isTrailing: false,
                         mustBeIndented: needsIndentation,
-                        mustHaveSeparator: false,
+                        mustHaveSeparator: _tokensWithSpaceRequiredBefore.Contains(token),
                         lineBreaksAfter: 0,
                         lineBreaksBefore: 0));
 
@@ -136,10 +141,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
                 _afterIndentation = false;
 
-                // we only add one of the line breaks to trivia of this token. The remaining ones will be leading trivia 
+                // we only add one of the line breaks to trivia of this token. The remaining ones will be leading trivia
                 // for the next token
                 var numLineBreaksAfter = LineBreaksBetween(token, nextToken) > 0 ? 1 : 0;
-                var needsSeparatorAfter = numLineBreaksAfter <= 0 && NeedsSeparator(token, nextToken);
+                var needsSeparatorAfter = numLineBreaksAfter <= 0 && _tokensWithSpaceRequiredAfter.Contains(token);
 
                 tk = tk.WithTrailingTrivia(
                     RewriteTrivia(
@@ -327,89 +332,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         private static bool NeedsIndentAfterLineBreak(SyntaxTrivia trivia) =>
             trivia.Kind() is SyntaxKind.SingleLineCommentTrivia;
 
-        private static bool NeedsSeparator(SyntaxToken token, SyntaxToken nextToken)
-        {
-            if (token.IsKind(SyntaxKind.EndOfFileToken))
-                return false;
-
-            if (token.Parent is null || nextToken.IsKind(SyntaxKind.None))
-                return false;
-
-            if (token.IsKind(SyntaxKind.EqualsToken) || (token.Parent is CompoundAssignmentStatementSyntax compound && compound.AssignmentOperatorToken == token))
-                return true;
-
-            if (nextToken.IsKind(SyntaxKind.SemicolonToken))
-                return false;
-
-            if (token.IsKind(SyntaxKind.OpenBraceToken) || nextToken.IsKind(SyntaxKind.CloseBraceToken))
-                return true;
-
-            if (token.IsKind(SyntaxKind.OpenParenthesisToken) || nextToken.IsKind(SyntaxKind.CloseParenthesisToken))
-                return false;
-
-            if (token.IsKind(SyntaxKind.IfKeyword) || token.IsKind(SyntaxKind.ElseIfKeyword) || token.IsKind(SyntaxKind.UntilKeyword) || token.IsKind(SyntaxKind.WhileKeyword))
-                return true;
-
-            if (nextToken.Parent.IsKind(SyntaxKind.AnonymousFunctionExpression))
-                return true;
-
-            if (nextToken.IsKind(SyntaxKind.EndOfFileToken))
-                return false;
-
-            // '- -' instead of '--'
-            if (token.IsKind(SyntaxKind.MinusToken) && nextToken.IsKind(SyntaxKind.MinusToken))
-                return true;
-
-            // '+1' instead of '+ 1'
-            // but 'not a' instead of 'nota'
-            if (token.Parent is UnaryExpressionSyntax && !SyntaxFacts.IsKeyword(token.Kind()))
-                return false;
-
-            // generally 'a + b', needs to go here to make it 'b + (a + b)' instead of 'b +(a + b)'
-            if (token.Parent is BinaryExpressionSyntax || nextToken.Parent is BinaryExpressionSyntax)
-                return true;
-
-            // '(a' instead of '( a'
-            if (token.IsKind(SyntaxKind.OpenParenthesisToken))
-                return false;
-
-            // 'a)' instead of 'a )'
-            if (nextToken.IsKind(SyntaxKind.CloseParenthesisToken))
-                return false;
-
-            // 'm(' instead of 'm ('
-            if (!token.IsKind(SyntaxKind.CommaToken) && nextToken.IsKind(SyntaxKind.OpenParenthesisToken))
-                return false;
-
-            // '(,,,)' instead of '( , , ,)' or '(a, b)' instead of '(a , b)'
-            if (nextToken.IsKind(SyntaxKind.CommaToken))
-                return false;
-
-            // 'a.b' instead of 'a . b' and 'a:b' instead of 'a : b'
-            if (nextToken.Kind() is SyntaxKind.DotToken or SyntaxKind.ColonToken
-                || token.Kind() is SyntaxKind.DotToken or SyntaxKind.ColonToken)
-            {
-                return false;
-            }
-
-            // '::a::' instead of ':: a ::'
-            if (token.IsKind(SyntaxKind.ColonColonToken) || nextToken.IsKind(SyntaxKind.ColonColonToken))
-                return false;
-
-            // `a[a]` instead of `a [ a ]`
-            if (nextToken.Kind() is SyntaxKind.OpenBracketToken or SyntaxKind.CloseBracketToken
-                || token.Kind() is SyntaxKind.OpenBracketToken)
-            {
-                return false;
-            }
-
-            // '{}' instead of '{ }'
-            if (token.IsKind(SyntaxKind.OpenBraceToken) && nextToken.IsKind(SyntaxKind.CloseBraceToken))
-                return false;
-
-            return true;
-        }
-
         private static bool EndsInLineBreak(SyntaxTrivia trivia)
         {
             if (trivia.IsKind(SyntaxKind.EndOfLineTrivia))
@@ -450,7 +372,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             return _consideredSpan.Contains(nextToken.FullSpan) ? nextToken : default;
         }
 
-        private void AddLineBreaksAfterElements<TNode>(SyntaxList<TNode> list, int lineBreaksBetweenElements, int lineBreaksAfterLastElement)
+        private void AddLineBreaksAfterElements<TNode>(SyntaxList<TNode> list, int lineBreaksBetweenElements = 1, int lineBreaksAfterLastElement = 0)
             where TNode : SyntaxNode
         {
             var lastElementIndex = list.Count - 1;
@@ -463,152 +385,681 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             }
         }
 
-        private void AddLineBreaksAfterToken(SyntaxToken node, int lineBreaksAfterToken) =>
+        private void AddLineBreaksAfterToken(SyntaxToken node, int lineBreaksAfterToken = 1)
+        {
+            // Ignore if we get provided 0.
+            if (lineBreaksAfterToken == 0)
+                return;
             _lineBreaksAfterToken[node] = lineBreaksAfterToken;
-
-        private void MarkLastStatement<TNode>(SyntaxList<TNode> list)
-            where TNode : SyntaxNode
-        {
-            if (list.Any())
-                _lastStatementsInBlocks.Add(list.Last());
         }
 
-        public override SyntaxNode? VisitParameterList(ParameterListSyntax node)
+        private void AddSpaceBeforeToken(SyntaxToken token) => _tokensWithSpaceRequiredBefore.Add(token);
+        private void AddSpaceAfterToken(SyntaxToken token) => _tokensWithSpaceRequiredAfter.Add(token);
+        private void AddSpacesAroundToken(SyntaxToken token)
         {
-            AddLineBreaksAfterToken(node.CloseParenthesisToken, 1);
-            return base.VisitParameterList(node);
+            AddSpaceBeforeToken(token);
+            AddSpaceAfterToken(token);
         }
 
+        private State GetState() =>
+            new(_isInStructuredTrivia, _previousToken, _afterLineBreak, _afterIndentation, _indentationDepth);
+        private void RestoreState(State state) =>
+            (_isInStructuredTrivia, _previousToken, _afterLineBreak, _afterIndentation, _indentationDepth) = state;
+
+        private TReturn WithTempState<TArg, TReturn>(Func<TArg, TReturn> func, TArg arg)
+        {
+            var state = GetState();
+            var ret = func(arg);
+            RestoreState(state);
+            return ret;
+        }
+
+        // statement_list
+        //   : statement*
+        //   ;
         public override SyntaxNode? VisitStatementList(StatementListSyntax node)
         {
+            var shouldNotIndentBody = node.Parent is CompilationUnitSyntax or null;
             try
             {
-                if (node.Parent is not CompilationUnitSyntax)
-                    _indentationDepth += 1;
-                AddLineBreaksAfterElements(node.Statements, 1, 1);
-                MarkLastStatement(node.Statements);
+                if (!shouldNotIndentBody)
+                    _indentationDepth++;
+                AddLineBreaksAfterElements(node.Statements);
+
                 return base.VisitStatementList(node);
             }
             finally
             {
-                if (node.Parent is not CompilationUnitSyntax)
-                    _indentationDepth -= 1;
+                if (!shouldNotIndentBody)
+                    _indentationDepth--;
             }
         }
 
+        // statement
+        //   : assignment_statement
+        //   | break_statement
+        //   | compound_assignment_statement
+        //   | continue_statement
+        //   | do_statement
+        //   | empty_statement
+        //   | expression_statement
+        //   | function_declaration_statement
+        //   | generic_for_statement
+        //   | goto_label_statement
+        //   | goto_statement
+        //   | if_statement
+        //   | local_function_declaration_statement
+        //   | local_variable_declaration_statement
+        //   | numeric_for_statement
+        //   | repeat_until_statement
+        //   | return_statement
+        //   | type_declaration_statement
+        //   | while_statement
+        //   ;
+        #region Statements
+
+        // assignment_statement
+        //   : prefix_expression (',' prefix_expression)* equals_values_clause ';'?
+        //   ;
+        public override SyntaxNode? VisitAssignmentStatement(AssignmentStatementSyntax node)
+        {
+            foreach (var assigneeSeparator in node.Variables.GetSeparators())
+                AddSpaceAfterToken(assigneeSeparator);
+
+            return base.VisitAssignmentStatement(node);
+        }
+
+        // equals_values_clause
+        //   : '=' expression (',' expression)*
+        //   ;
+        public override SyntaxNode? VisitEqualsValuesClause(EqualsValuesClauseSyntax node)
+        {
+            AddSpacesAroundToken(node.EqualsToken);
+            foreach (var valueSeparator in node.Values.GetSeparators())
+                AddSpaceAfterToken(valueSeparator);
+
+            return base.VisitEqualsValuesClause(node);
+        }
+
+        // Visiting BreakStatementSyntax isn't necessary as it has no spacing.
+
+        // compound_assignment_statement
+        //   : prefix_expression ('+=' | '-=' | syntax_token | '/=' | '%=' | '..=' | '^=') expression ';'?
+        //   ;
+        public override SyntaxNode? VisitCompoundAssignmentStatement(CompoundAssignmentStatementSyntax node)
+        {
+            AddSpacesAroundToken(node.AssignmentOperatorToken);
+
+            return base.VisitCompoundAssignmentStatement(node);
+        }
+
+        // Visiting ContinueStatementSyntax isn't necessary as it has no spacing.
+
+        // do_statement
+        //   : 'do' statement_list 'end' ';'?
+        //   ;
+        public override SyntaxNode? VisitDoStatement(DoStatementSyntax node)
+        {
+            AddLineBreaksAfterToken(node.DoKeyword, 1);
+            AddLineBreaksAfterToken(node.Body.GetLastToken(), 1);
+
+            return base.VisitDoStatement(node);
+        }
+
+        // Visiting EmptyStatementSyntax isn't necessary as it has no spacing.
+        // Visiting ExpressionStatementSyntax isn't necessary as it has no spacing.
+
+        // function_declaration_statement
+        //   : 'function' function_name type_parameter_list? parameter_list type_binding? statement_list 'end' ';'?
+        //   ;
+        public override SyntaxNode? VisitFunctionDeclarationStatement(FunctionDeclarationStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.FunctionKeyword);
+            AddLineBreaksAfterToken(node.TypeBinding is not null ? node.TypeBinding.GetLastToken() : node.Parameters.GetLastToken());
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+
+            return base.VisitFunctionDeclarationStatement(node);
+        }
+
+        // Visiting MemberFunctionNameSyntax isn't necessary as it has no spacing.
+        // Visiting MethodFunctionNameSyntax isn't necessary as it has no spacing.
+        // Visiting SimpleFunctionNameSyntax isn't necessary as it has no spacing.
+
+        // parameter_list
+        //   : '(' (parameter (',' parameter)*)? ')'
+        //   ;
+        public override SyntaxNode? VisitParameterList(ParameterListSyntax node)
+        {
+            foreach (var parameterSeparator in node.Parameters.GetSeparators())
+                AddSpaceAfterToken(parameterSeparator);
+
+            return base.VisitParameterList(node);
+        }
+
+        // type_parameter_list
+        //   : '<' (type_parameter (',' type_parameter)*)? '>'
+        //   ;
+        public override SyntaxNode? VisitTypeParameterList(TypeParameterListSyntax node)
+        {
+            foreach (var parameterSeparator in node.Names.GetSeparators())
+                AddSpaceAfterToken(parameterSeparator);
+
+            return base.VisitTypeParameterList(node);
+        }
+
+        // Visiting TypeParameterSyntax isn't necessary as it has no spacing requirements.
+
+        // equals_type
+        //   : '=' type
+        //   ;
+        public override SyntaxNode? VisitEqualsType(EqualsTypeSyntax node)
+        {
+            AddSpacesAroundToken(node.EqualsToken);
+
+            return base.VisitEqualsType(node);
+        }
+
+        // type_binding
+        //   : ':' type
+        //   ;
+        public override SyntaxNode? VisitTypeBinding(TypeBindingSyntax node)
+        {
+            AddSpaceAfterToken(node.ColonToken);
+
+            return base.VisitTypeBinding(node);
+        }
+
+        // generic_for_statement
+        //   : 'for' typed_identifier_name (',' typed_identifier_name)* 'in' expression (',' expression)* 'do' statement_list 'end' ';'?
+        //   ;
+        public override SyntaxNode? VisitGenericForStatement(GenericForStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.ForKeyword);
+            foreach (var identSeparator in node.Identifiers.GetSeparators())
+                AddSpaceAfterToken(identSeparator);
+            AddSpacesAroundToken(node.InKeyword);
+            foreach (var expressionSeparator in node.Expressions.GetSeparators())
+                AddSpaceAfterToken(expressionSeparator);
+            AddSpaceBeforeToken(node.DoKeyword);
+            AddLineBreaksAfterToken(node.DoKeyword);
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+
+            return base.VisitGenericForStatement(node);
+        }
+
+        // Visiting TypedIdentifierName is not necessary as it has no spacing.
+        // Visiting GotoLabelStatementSyntax is not necessary as it has no spacing.
+
+        // goto_statement
+        //   : 'goto' identifier_token ';'?
+        //   ;
+        public override SyntaxNode? VisitGotoStatement(GotoStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.GotoKeyword);
+
+            return base.VisitGotoStatement(node);
+        }
+
+        // if_statement
+        //   : 'if' expression 'then' statement_list else_if_clause* else_clause? 'end' ';'?
+        //   ;
         public override SyntaxNode? VisitIfStatement(IfStatementSyntax node)
         {
-            AddLineBreaksAfterToken(node.ThenKeyword, 1);
-
-            LuaSyntaxNode? prevNode = null;
-            if (node.Body.Statements.Any())
-                prevNode = node.Body.Statements.Last();
-
-            foreach (var elseifBlock in node.ElseIfClauses)
-            {
-                if (prevNode is not null)
-                    AddLineBreaksAfterToken(prevNode.GetLastToken(), 1);
-                prevNode = elseifBlock;
-            }
-
-            if (node.ElseClause is not null && prevNode is not null)
-                AddLineBreaksAfterToken(prevNode.GetLastToken(), 1);
-
-            AddLineBreaksAfterToken(node.GetLastToken(), 1);
+            AddSpaceAfterToken(node.IfKeyword);
+            AddSpaceBeforeToken(node.ThenKeyword);
+            AddLineBreaksAfterToken(node.ThenKeyword);
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
 
             return base.VisitIfStatement(node);
         }
 
+        // else_if_clause
+        //   : 'elseif' expression 'then' statement_list
+        //   ;
         public override SyntaxNode? VisitElseIfClause(ElseIfClauseSyntax node)
         {
-            AddLineBreaksAfterToken(node.ThenKeyword, 1);
+            AddSpaceAfterToken(node.ElseIfKeyword);
+            AddSpaceBeforeToken(node.ThenKeyword);
+            AddLineBreaksAfterToken(node.ThenKeyword);
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+
             return base.VisitElseIfClause(node);
         }
 
+        // else_clause
+        //   : 'else' statement_list
+        //   ;
         public override SyntaxNode? VisitElseClause(ElseClauseSyntax node)
         {
-            AddLineBreaksAfterToken(node.ElseKeyword, 1);
+            AddLineBreaksAfterToken(node.ElseKeyword);
+            AddLineBreaksAfterToken(node.ElseBody.GetLastToken());
+
             return base.VisitElseClause(node);
         }
 
-        public override SyntaxNode? VisitDoStatement(DoStatementSyntax node)
-        {
-            AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddLineBreaksAfterToken(node.GetLastToken(), 1);
-            return base.VisitDoStatement(node);
-        }
-
-        public override SyntaxNode? VisitWhileStatement(WhileStatementSyntax node)
-        {
-            AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddLineBreaksAfterToken(node.GetLastToken(), 1);
-            return base.VisitWhileStatement(node);
-        }
-
-        public override SyntaxNode? VisitRepeatUntilStatement(RepeatUntilStatementSyntax node)
-        {
-            AddLineBreaksAfterToken(node.RepeatKeyword, 1);
-            AddLineBreaksAfterToken(node.GetLastToken(), 1);
-            return base.VisitRepeatUntilStatement(node);
-        }
-
-        public override SyntaxNode? VisitNumericForStatement(NumericForStatementSyntax node)
-        {
-            AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddLineBreaksAfterToken(node.GetLastToken(), 1);
-            return base.VisitNumericForStatement(node);
-        }
-
-        public override SyntaxNode? VisitGenericForStatement(GenericForStatementSyntax node)
-        {
-            AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddLineBreaksAfterToken(node.GetLastToken(), 1);
-            return base.VisitGenericForStatement(node);
-        }
-
-        public override SyntaxNode? VisitFunctionDeclarationStatement(FunctionDeclarationStatementSyntax node)
-        {
-            AddLineBreaksAfterToken(node.Parameters.CloseParenthesisToken, 1);
-            AddLineBreaksAfterToken(node.GetLastToken(), 1);
-            return base.VisitFunctionDeclarationStatement(node);
-        }
-
+        // local_function_declaration_statement
+        //   : 'local' 'function' identifier_name type_parameter_list? parameter_list type_binding? statement_list 'end' ';'?
+        //   ;
         public override SyntaxNode? VisitLocalFunctionDeclarationStatement(LocalFunctionDeclarationStatementSyntax node)
         {
-            AddLineBreaksAfterToken(node.Parameters.CloseParenthesisToken, 1);
-            AddLineBreaksAfterToken(node.GetLastToken(), 1);
+            AddSpaceAfterToken(node.LocalKeyword);
+            AddSpaceAfterToken(node.FunctionKeyword);
+            AddLineBreaksAfterToken(node.TypeBinding is not null ? node.TypeBinding.GetLastToken() : node.Parameters.GetLastToken());
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+
             return base.VisitLocalFunctionDeclarationStatement(node);
         }
 
+        // local_variable_declaration_statement
+        //   : 'local' local_declaration_name (',' local_declaration_name)* equals_values_clause? ';'?
+        //   ;
+        public override SyntaxNode? VisitLocalVariableDeclarationStatement(LocalVariableDeclarationStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.LocalKeyword);
+            foreach (var nameSeparator in node.Names.GetSeparators())
+                AddSpaceAfterToken(nameSeparator);
+
+            return base.VisitLocalVariableDeclarationStatement(node);
+        }
+
+        // local_declaration_name
+        //   : identifier_name variable_attribute? type_binding?
+        //   ;
+        public override SyntaxNode? VisitLocalDeclarationName(LocalDeclarationNameSyntax node)
+        {
+            if (node.Attribute is not null)
+                AddSpaceAfterToken(node.IdentifierName.GetLastToken());
+
+            return base.VisitLocalDeclarationName(node);
+        }
+
+        // numeric_for_statement
+        //   : 'for' typed_identifier_name '=' expression ',' expression (',' expression) 'do' statement_list 'end' ';'?
+        //   ;
+        public override SyntaxNode? VisitNumericForStatement(NumericForStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.ForKeyword);
+            AddSpacesAroundToken(node.EqualsToken);
+            AddSpaceAfterToken(node.FinalValueCommaToken);
+            AddSpaceAfterToken(node.StepValueCommaToken);
+            AddSpaceBeforeToken(node.DoKeyword);
+            AddLineBreaksAfterToken(node.DoKeyword);
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+
+            return base.VisitNumericForStatement(node);
+        }
+
+        // repeat_until_statement
+        //   : 'repeat' statement_list 'until' expression ';'?
+        //   ;
+        public override SyntaxNode? VisitRepeatUntilStatement(RepeatUntilStatementSyntax node)
+        {
+            AddLineBreaksAfterToken(node.RepeatKeyword);
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+            AddSpaceAfterToken(node.UntilKeyword);
+
+            return base.VisitRepeatUntilStatement(node);
+        }
+
+        // return_statement
+        //   : 'return' (expression (',' expression)*)? ';'?
+        //   ;
+        public override SyntaxNode? VisitReturnStatement(ReturnStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.ReturnKeyword);
+            foreach (var expressionSeparator in node.Expressions.GetSeparators())
+                AddSpaceAfterToken(expressionSeparator);
+
+            return base.VisitReturnStatement(node);
+        }
+
+        // type_declaration_statement
+        //   : 'export'? 'type' identifier_token type_parameter_list? '=' type ';'?
+        //   ;
+        public override SyntaxNode? VisitTypeDeclarationStatement(TypeDeclarationStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.ExportKeyword);
+            AddSpaceAfterToken(node.TypeKeyword);
+            AddSpacesAroundToken(node.EqualsToken);
+
+            return base.VisitTypeDeclarationStatement(node);
+        }
+
+        // while_statement
+        //   : 'while' expression 'do' statement_list 'end' ';'?
+        //   ;
+        public override SyntaxNode? VisitWhileStatement(WhileStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.WhileKeyword);
+            AddSpaceBeforeToken(node.DoKeyword);
+            AddLineBreaksAfterToken(node.DoKeyword);
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+
+            return base.VisitWhileStatement(node);
+        }
+
+        #endregion Statements
+
+        // type
+        //   : function_type
+        //   | generic_type_pack
+        //   | intersection_type
+        //   | literal_type
+        //   | nilable_type
+        //   | parenthesized_type
+        //   | table_based_type
+        //   | type_name
+        //   | type_pack
+        //   | typeof_type
+        //   | union_type
+        //   | variadic_type_pack
+        //   ;
+        #region Types
+
+        // function_type
+        //   : type_parameter_list? '(' (type (',' type)*)? ')' '->' type
+        //   ;
+        public override SyntaxNode? VisitFunctionType(FunctionTypeSyntax node)
+        {
+            foreach (var parameterSeparator in node.Parameters.GetSeparators())
+                AddSpaceAfterToken(parameterSeparator);
+            AddSpacesAroundToken(node.MinusGreaterThanToken);
+
+            return base.VisitFunctionType(node);
+        }
+
+        // Visiting GenericTypePackSyntax is not necessary as it has no spacing.
+
+        // intersection_type
+        //   : type '&' type
+        //   ;
+        public override SyntaxNode? VisitIntersectionType(IntersectionTypeSyntax node)
+        {
+            AddSpacesAroundToken(node.AmpersandToken);
+
+            return base.VisitIntersectionType(node);
+        }
+
+        // Visiting LiteralTypeSyntax is not necessary as it has no spacing.
+        // Visiting NilableTypeSyntax is not necessary as it has no spacing.
+        // Visiting ParenthesizedTypeSyntax is not necessary as it has no spacing.
+
+        // array_type
+        //   : '{' type '}'
+        //   ;
+        public override SyntaxNode? VisitArrayType(ArrayTypeSyntax node)
+        {
+            AddSpaceAfterToken(node.OpenBraceToken);
+            AddSpaceBeforeToken(node.CloseBraceToken);
+
+            return base.VisitArrayType(node);
+        }
+
+        // table_type
+        //   : '{' (table_type_element (',' table_type_element)*)? '}'
+        //   ;
+        public override SyntaxNode? VisitTableType(TableTypeSyntax node)
+        {
+            if (node.Elements.Any())
+            {
+                AddSpaceAfterToken(node.OpenBraceToken);
+                foreach (var elementSeparator in node.Elements.GetSeparators())
+                    AddSpaceAfterToken(elementSeparator);
+                AddSpaceBeforeToken(node.CloseBraceToken);
+            }
+
+            return base.VisitTableType(node);
+        }
+
+        // table_type_indexer
+        //   : '[' type ']' ':' type
+        //   ;
+        public override SyntaxNode? VisitTableTypeIndexer(TableTypeIndexerSyntax node)
+        {
+            AddSpaceAfterToken(node.ColonToken);
+
+            return base.VisitTableTypeIndexer(node);
+        }
+
+        // table_type_property
+        //   : identifier_token ':' type
+        //   ;
+        public override SyntaxNode? VisitTableTypeProperty(TableTypePropertySyntax node)
+        {
+            AddSpaceAfterToken(node.ColonToken);
+
+            return base.VisitTableTypeProperty(node);
+        }
+
+        // Visiting CompositeTypeNameSyntax is not necessary as it has no spacing.
+        // Visiting SimpleTypeNameSyntax is not necessary as it has no spacing.
+
+        // type_argument_list
+        //   : '<' (type (',' type)*)? '>'
+        //   ;
+        public override SyntaxNode? VisitTypeArgumentList(TypeArgumentListSyntax node)
+        {
+            foreach (var argumentSeparator in node.Arguments.GetSeparators())
+                AddSpaceAfterToken(argumentSeparator);
+
+            return base.VisitTypeArgumentList(node);
+        }
+
+        // type_pack
+        //   : '(' (type (',' type)*)? ')'
+        //   ;
+        public override SyntaxNode? VisitTypePack(TypePackSyntax node)
+        {
+            foreach (var typeSeparator in node.Types.GetSeparators())
+                AddSpaceAfterToken(typeSeparator);
+
+            return base.VisitTypePack(node);
+        }
+
+        // Visiting TypeofTypeSyntax is not necessary as it has no spacing.
+
+        // union_type
+        //   : type '|' type
+        //   ;
+        public override SyntaxNode? VisitUnionType(UnionTypeSyntax node)
+        {
+            AddSpacesAroundToken(node.PipeToken);
+
+            return base.VisitUnionType(node);
+        }
+
+        // Visiting VariadicTypePackSyntax is not necessary as it has no spacing.
+
+        #endregion Types
+
+        // expression
+        //   : anonymous_function_expression
+        //   | binary_expression
+        //   | if_expression
+        //   | literal_expression
+        //   | prefix_expression
+        //   | table_constructor_expression
+        //   | type_cast_expression
+        //   | unary_expression
+        //   | var_arg_expression
+        //   ;
+        #region Expressions
+
+        // anonymous_function_expression
+        //   : 'function' type_parameter_list? parameter_list type_binding? statement_list 'end'
+        //   ;
         public override SyntaxNode? VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax node)
         {
-            AddLineBreaksAfterToken(node.Parameters.CloseParenthesisToken, 1);
+            AddLineBreaksAfterToken(node.TypeBinding is not null ? node.TypeBinding.GetLastToken() : node.Parameters.GetLastToken());
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+
             return base.VisitAnonymousFunctionExpression(node);
         }
 
+        // binary_expression
+        //   : expression ('&&' | '&' | 'and' | '!=' | '..' | '==' | '>=' | '>>' | '>' | '^' | '<=' | '<<' | '<' | '-' | 'or' | '%' | '||' | '|' | '+' | '/' | '*' | '~=' | '~' | '//') expression
+        //   ;
+        public override SyntaxNode? VisitBinaryExpression(BinaryExpressionSyntax node)
+        {
+            AddSpacesAroundToken(node.OperatorToken);
+
+            return base.VisitBinaryExpression(node);
+        }
+
+        // if_expression
+        //   : 'if' expression 'then' expression else_if_expression_clause* 'else' expression
+        //   ;
+        public override SyntaxNode? VisitIfExpression(IfExpressionSyntax node)
+        {
+            AddSpaceAfterToken(node.IfKeyword);
+            AddSpacesAroundToken(node.ThenKeyword);
+            // We add spaces around because we aren't sure if there's an elseif clause or not
+            // so we just preemptively add spaces and don't add them in the elseif visitor.
+            AddSpacesAroundToken(node.ElseKeyword);
+
+            return base.VisitIfExpression(node);
+        }
+
+        // else_if_expression_clause
+        //   : 'elseif' expression 'then' expression
+        //   ;
+        public override SyntaxNode? VisitElseIfExpressionClause(ElseIfExpressionClauseSyntax node)
+        {
+            // We add around because this will always have an expression before it
+            AddSpacesAroundToken(node.ElseIfKeyword);
+            AddSpacesAroundToken(node.ThenKeyword);
+            // No spaces after because the first line of this method and VisitIfExpression handle the space afterwards.
+
+            return base.VisitElseIfExpressionClause(node);
+        }
+
+        // Visiting LiteralExpressionSyntax is not necessary as it has no spacing.
+
+        // function_call_expression
+        //   : prefix_expression function_argument
+        //   ;
+        public override SyntaxNode? VisitFunctionCallExpression(FunctionCallExpressionSyntax node)
+        {
+            if (node.Argument is not ExpressionListFunctionArgumentSyntax)
+                AddSpaceAfterToken(node.Expression.GetLastToken());
+
+            return base.VisitFunctionCallExpression(node);
+        }
+
+        // method_call_expression
+        //   : prefix_expression ':' identifier_token function_argument
+        //   ;
+        public override SyntaxNode? VisitMethodCallExpression(MethodCallExpressionSyntax node)
+        {
+            if (node.Argument is not ExpressionListFunctionArgumentSyntax)
+                AddSpaceAfterToken(node.Identifier);
+
+            return base.VisitMethodCallExpression(node);
+        }
+
+        // Visiting ParenthesizedExpressionSyntax is not necessary as it has no spacing.
+        // Visiting ElementAccessExpressionSyntax is not necessary as it has no spacing.
+        // Visiting MemberAccessExpressionSyntax is not necessary as it has no spacing.
+        // Visiting IdentifierNameSyntax is not necessary as it has no spacing.
+
+        // table_constructor_expression
+        //   : '{' (table_field (',' table_field)* ','?)? '}'
+        //   ;
         public override SyntaxNode? VisitTableConstructorExpression(TableConstructorExpressionSyntax node)
         {
-            if ((node.Fields.Count == 1 && IsMultiLineNode(node.Fields.First()))
-                || node.Fields.Count > 1)
-            {
-                AddLineBreaksAfterToken(node.OpenBraceToken, 1);
-                foreach (var sep in node.Fields.GetSeparators())
-                    AddLineBreaksAfterToken(sep, 1);
-                if (node.Fields.Count != node.Fields.SeparatorCount)
-                    AddLineBreaksAfterToken(node.Fields.Last().GetLastToken(), 1);
+            // First visit is only used to define whether or not it'll be a multi-line table.
+            var multiLineTable = WithTempState(VisitList, node.Fields).Any(IsMultiLineNode);
 
-                var openBraceToken = VisitToken(node.OpenBraceToken);
-                _indentationDepth++;
-                var fields = VisitList(node.Fields);
-                _indentationDepth--;
-                var closeBraceToken = VisitToken(node.CloseBraceToken);
-                return node.Update(openBraceToken, fields, closeBraceToken);
+            if (multiLineTable)
+            {
+                foreach (var fieldSeparator in node.Fields.GetSeparators())
+                    AddLineBreaksAfterToken(fieldSeparator);
             }
             else
             {
-                return base.VisitTableConstructorExpression(node);
+                foreach (var fieldSeparator in node.Fields.GetSeparators())
+                    AddSpaceAfterToken(fieldSeparator);
             }
+
+            if (node.Fields.Any())
+            {
+                if (multiLineTable)
+                {
+                    AddLineBreaksAfterToken(node.OpenBraceToken);
+                    // Only need to do something if there's no trailing separator
+                    if (node.Fields.SeparatorCount < node.Fields.Count)
+                        AddLineBreaksAfterToken(node.Fields.Last().GetLastToken());
+                }
+                else
+                {
+                    AddSpaceAfterToken(node.OpenBraceToken);
+                    // Only need to do something if there's no trailing separator
+                    if (node.Fields.SeparatorCount < node.Fields.Count)
+                        AddSpaceBeforeToken(node.CloseBraceToken);
+                }
+            }
+
+            var openBraceToken = VisitToken(node.OpenBraceToken);
+            if (multiLineTable)
+                _indentationDepth++;
+            var fields = VisitList(node.Fields);
+            if (multiLineTable)
+                _indentationDepth--;
+            var closeBraceToken = VisitToken(node.CloseBraceToken);
+
+            return node.Update(openBraceToken, fields, closeBraceToken);
         }
+
+        // expression_keyed_table_field
+        //   : '[' expression ']' '=' expression
+        //   ;
+        public override SyntaxNode? VisitExpressionKeyedTableField(ExpressionKeyedTableFieldSyntax node)
+        {
+            AddSpacesAroundToken(node.EqualsToken);
+
+            return base.VisitExpressionKeyedTableField(node);
+        }
+
+        // identifier_keyed_table_field
+        //   : identifier_token '=' expression
+        //   ;
+        public override SyntaxNode? VisitIdentifierKeyedTableField(IdentifierKeyedTableFieldSyntax node)
+        {
+            AddSpacesAroundToken(node.EqualsToken);
+
+            return base.VisitIdentifierKeyedTableField(node);
+        }
+
+        // Visiting UnkeyedTableFieldSyntax is not necessary as it has no spacing.
+
+        // type_cast_expression
+        //   : expression '::' type
+        //   ;
+        public override SyntaxNode? VisitTypeCastExpression(TypeCastExpressionSyntax node)
+        {
+            AddSpacesAroundToken(node.ColonColonToken);
+
+            return base.VisitTypeCastExpression(node);
+        }
+
+        // unary_expression
+        //   : '!' expression
+        //   | '#' expression
+        //   | '-' expression
+        //   | 'not' expression
+        //   | '~' expression
+        //   ;
+        public override SyntaxNode? VisitUnaryExpression(UnaryExpressionSyntax node)
+        {
+            if (SyntaxFacts.IsKeyword(node.OperatorToken.Kind()))
+                AddSpaceAfterToken(node.OperatorToken);
+
+            return base.VisitUnaryExpression(node);
+        }
+
+        // Visiting VarArgExpressionSyntax is not necessary as it has no spacing.
+
+        #endregion Expressions
 
         private static bool IsMultiLineNode(SyntaxNode node) =>
             node.DescendantTrivia().Any(trivia => trivia.IsKind(SyntaxKind.EndOfLineTrivia));
