@@ -835,7 +835,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 or SyntaxKind.HashStringLiteralToken => ParseLiteralExpression(),
                 SyntaxKind.DotDotDotToken => ParseVarArgExpression(),
                 SyntaxKind.OpenBraceToken => ParseTableConstructorExpression(),
-                SyntaxKind.FunctionKeyword when PeekToken(1).Kind == SyntaxKind.OpenParenthesisToken => ParseAnonymousFunctionExpression(),
+                SyntaxKind.FunctionKeyword when PeekToken(1).Kind is SyntaxKind.OpenParenthesisToken
+                                                                  or SyntaxKind.LessThanToken => ParseAnonymousFunctionExpression(),
                 SyntaxKind.IfKeyword => ParseIfExpression(),
                 _ => ParsePrefixOrVariableExpression(),
             };

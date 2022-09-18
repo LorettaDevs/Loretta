@@ -349,12 +349,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 // (3,14): error LUA1016: Typed lua is not supported in this lua version
                 // local x: T = 1 :: T
                 Diagnostic(ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion, "1 :: T").WithLocation(3, 14),
-                // (4,11): error LUA1011: Invalid expression part 'function'
-                // local x = function<T>(p: T, ...: T): T end
-                Diagnostic(ErrorCode.ERR_InvalidExpressionPart, "function").WithArguments("function").WithLocation(4, 11),
-                // (4,19): error LUA1001: Identifier expected
-                // local x = function<T>(p: T, ...: T): T end
-                Diagnostic(ErrorCode.ERR_IdentifierExpected, "<").WithLocation(4, 19),
                 // (4,19): error LUA1016: Typed lua is not supported in this lua version
                 // local x = function<T>(p: T, ...: T): T end
                 Diagnostic(ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion, "<T>").WithLocation(4, 19),

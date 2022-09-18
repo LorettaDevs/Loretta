@@ -37,7 +37,18 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             options ??= LuaParseOptions.Default;
 
             var stringText = SourceText.From(text, encoding ?? Encoding.UTF8);
-            return (ExpressionSyntax) CheckSerializable(SyntaxFactory.ParseExpression(stringText, options));
+            return CheckSerializable(SyntaxFactory.ParseExpression(stringText, options));
+        }
+
+        public static TypeSyntax ParseType(
+            string text,
+            LuaParseOptions options = null,
+            Encoding encoding = null)
+        {
+            options ??= new LuaParseOptions(LuaSyntaxOptions.Luau);
+
+            var stringText = SourceText.From(text, encoding ?? Encoding.UTF8);
+            return CheckSerializable(SyntaxFactory.ParseType(stringText, options));
         }
 
         private static SyntaxTree CheckSerializable(SyntaxTree tree)
@@ -46,12 +57,14 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             return tree;
         }
 
-        private static SyntaxNode CheckSerializable(SyntaxNode node)
+        private static T CheckSerializable<T>(T node)
+            where T : SyntaxNode
         {
-            var stream = new MemoryStream();
+            using var stream = new MemoryStream();
             node.SerializeTo(stream);
             stream.Position = 0;
-            _ = LuaSyntaxNode.DeserializeFrom(stream);
+            var deserializedNode = LuaSyntaxNode.DeserializeFrom(stream);
+            Assert.Equal(node.ToFullString(), deserializedNode.ToFullString());
             return node;
         }
 
@@ -91,6 +104,16 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             LuaParseOptions options = null)
         {
             var node = ParseExpression(text, options: options ?? LuaParseOptions.Default);
+            // we validate the text roundtrips
+            Assert.Equal(text, node.ToFullString());
+            return node;
+        }
+
+        public static TypeSyntax ParseTypeWithRoundTripCheck(
+            string text,
+            LuaParseOptions options = null)
+        {
+            var node = ParseType(text, options: options ?? new LuaParseOptions(LuaSyntaxOptions.Luau));
             // we validate the text roundtrips
             Assert.Equal(text, node.ToFullString());
             return node;
@@ -192,6 +215,17 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             var parsedNode = ParseExpressionWithRoundTripCheck(
                 text,
                 new(options ?? LuaSyntaxOptions.All));
+            parsedNode.GetDiagnostics().Verify();
+            return parsedNode;
+        }
+
+        public static TypeSyntax ParseAndValidateType(
+            string text,
+            LuaSyntaxOptions? options = null)
+        {
+            var parsedNode = ParseTypeWithRoundTripCheck(
+                text,
+                new(options ?? LuaSyntaxOptions.Luau));
             parsedNode.GetDiagnostics().Verify();
             return parsedNode;
         }
