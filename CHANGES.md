@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `SyntaxFactory.NumericForStatement(SyntaxToken forKeyword, IdentifierNameSyntax identifier, SyntaxToken equalsToken, ExpressionSyntax initialValue, SyntaxToken finalValueCommaToken, ExpressionSyntax finalValue, SyntaxToken stepValueCommaToken, ExpressionSyntax? stepValue, SyntaxToken doKeyword, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)`;
 	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body)`;
 	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)`.
+- Added support for typed Lua in `.NormalizeWhitespace`;
+- Added support for local variable attributes in `.NormalizeWhitespace`.
 
 ### Changed
 - **[Breaking]** The following SyntaxFactory overloads have been changed:
@@ -28,6 +30,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `SyntaxFactory.FunctionDeclarationStatement(FunctionNameSyntax name)` has been changed to always require the parameter list and the function's body (into `SyntaxFactory.FunctionDeclarationStatement(FunctionNameSyntax name, ParameterListSyntax parameters, StatementListSyntax body)`);
 	- `SyntaxFactory.DoStatement(StatementListSyntax? body = default)` has been changed to make the body always required (into `SyntaxFactory.DoStatement(StatementListSyntax body)`);
 	- `SyntaxFactory.CompilationUnit(StatementListSyntax? statements = default)` has been changed to make the body always required (into `SyntaxFactory.CompilationUnit(StatementListSyntax statements)`).
+- Changed the existing handling of certain constructs in `.NormalizeWhitespace`:
+	- Tables are now kept in a single line unless one of its fields spans more than one line;
+	- Spaces are not added to a table if it has no elements;
+	- No unnecessary line breaks are added after statements anymore.
 
 ### Removed
 - **[Breaking]** The following have been removed:
@@ -40,7 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed a bug where the leading new line was included for long strings;
 - Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would escape the space character;
-- Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would not generate correct verbatim/long strings.
+- Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would not generate correct verbatim/long strings;
+- Fixed parsing of anonymous functions that had type parameters.
 
 ## v0.2.9
 ### Added
