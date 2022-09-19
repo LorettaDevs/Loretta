@@ -44,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `SyntaxFactory.WhileStatement(ExpressionSyntax condition)` (as the loop's body should always be required);
 	- `SyntaxFactory.RepeatUntilStatement(ExpressionSyntax condition)` (as the loop's body should always be required);
 	- `SyntaxFactory.ElseIfClause(ExpressionSyntax condition)` (as the `elseif` clause should always be required);
+- **[Breaking]** The `SyntaxKind.StartEqualsToken` has been removed as it has been obsolete for a while.
 
 ### Fixed
 - Fixed a bug where the leading new line was included for long strings;

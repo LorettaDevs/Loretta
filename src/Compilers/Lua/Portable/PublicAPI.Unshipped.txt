@@ -29,3 +29,4 @@ static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(string! identi
 *REMOVED*static Loretta.CodeAnalysis.Lua.SyntaxFactory.NumericForStatement(Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax! identifier, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! initialValue, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! finalValue) -> Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax!
 *REMOVED*static Loretta.CodeAnalysis.Lua.SyntaxFactory.RepeatUntilStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition) -> Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax!
 *REMOVED*static Loretta.CodeAnalysis.Lua.SyntaxFactory.WhileStatement(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax! condition) -> Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax!
+*REMOVED*Loretta.CodeAnalysis.Lua.SyntaxKind.StartEqualsToken = 26 -> Loretta.CodeAnalysis.Lua.SyntaxKind

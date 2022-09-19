@@ -759,10 +759,5 @@ namespace Loretta.CodeAnalysis.Lua
 
         // Other types of nodes
         CompilationUnit = 3001,
-
-        // BACKWARDS COMPAT:
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use StarEqualsToken (without a 't' before Equals) instead", true)]
-        StartEqualsToken = StarEqualsToken,
     }
 }
