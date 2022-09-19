@@ -299,6 +299,7 @@
             <PropertyComment>
                 <summary>The method name.</summary>
             </PropertyComment>
+            <Kind Name="IdentifierToken" />
         </Field>
     </Node>
 
@@ -523,6 +524,7 @@
             <PropertyComment>
                 <summary>The identifier.</summary>
             </PropertyComment>
+            <Kind Name="IdentifierToken" />
         </Field>
     </Node>
 
@@ -1135,7 +1137,6 @@
             <PropertyComment>
                 <summary>The loop variable.</summary>
             </PropertyComment>
-            <Kind Name="ForLoopVariable" />
         </Field>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>

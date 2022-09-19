@@ -863,6 +863,10 @@ namespace Loretta.CodeAnalysis.Lua
         public static MethodFunctionNameSyntax MethodFunctionName(FunctionNameSyntax baseName, SyntaxToken name)
             => SyntaxFactory.MethodFunctionName(baseName, SyntaxFactory.Token(SyntaxKind.ColonToken), name);
 
+        /// <summary>Creates a new MethodFunctionNameSyntax instance.</summary>
+        public static MethodFunctionNameSyntax MethodFunctionName(FunctionNameSyntax baseName, string name)
+            => SyntaxFactory.MethodFunctionName(baseName, SyntaxFactory.Token(SyntaxKind.ColonToken), SyntaxFactory.Identifier(name));
+
         /// <summary>
         /// Creates a new <see cref="StringFunctionArgumentSyntax" /> node.
         /// </summary>
@@ -991,6 +995,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static IdentifierNameSyntax IdentifierName(SyntaxToken identifier)
         {
+            if (identifier.Kind() != SyntaxKind.IdentifierToken) throw new ArgumentException($"Invalid kind provided. Expected IdentifierToken but got {identifier.Kind()}.", nameof(identifier));
             return (IdentifierNameSyntax)Syntax.InternalSyntax.SyntaxFactory.IdentifierName((Syntax.InternalSyntax.SyntaxToken)identifier.Node!).CreateRed();
         }
 
