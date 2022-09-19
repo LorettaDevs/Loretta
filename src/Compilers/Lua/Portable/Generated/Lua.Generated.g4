@@ -114,7 +114,7 @@ element_access_expression
   ;
 
 identifier_name
-  : syntax_token
+  : identifier_token
   ;
 
 member_access_expression
@@ -130,7 +130,7 @@ break_statement
   ;
 
 compound_assignment_statement
-  : prefix_expression ('+=' | '-=' | syntax_token | '/=' | '%=' | '..=' | '^=') expression ';'?
+  : prefix_expression ('+=' | '-=' | '*=' | '/=' | '%=' | '..=' | '^=') expression ';'?
   ;
 
 continue_statement
@@ -164,7 +164,7 @@ member_function_name
   ;
 
 method_function_name
-  : function_name ':' syntax_token
+  : function_name ':' identifier_token
   ;
 
 simple_function_name

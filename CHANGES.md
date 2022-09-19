@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue, ExpressionSyntax? stepValue, StatementListSyntax body)`;
 	- `SyntaxFactory.NumericForStatement(string identifier, ExpressionSyntax initialValue, ExpressionSyntax finalValue)`.
 - Added support for typed Lua in `.NormalizeWhitespace`;
-- Added support for local variable attributes in `.NormalizeWhitespace`.
+- Added support for local variable attributes in `.NormalizeWhitespace`;
+- Added the new `SyntaxFactory.MethodFunctionName(FunctionNameSyntax baseName, string name)` overload.
 
 ### Changed
 - **[Breaking]** The following SyntaxFactory overloads have been changed:
@@ -34,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- Tables are now kept in a single line unless one of its fields spans more than one line;
 	- Spaces are not added to a table if it has no elements;
 	- No unnecessary line breaks are added after statements anymore.
+- **[Breaking]** `SyntaxFactory.IdentifierName` will now throw an exception if the provided token is not an identifier.
 
 ### Removed
 - **[Breaking]** The following have been removed:
@@ -42,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `SyntaxFactory.WhileStatement(ExpressionSyntax condition)` (as the loop's body should always be required);
 	- `SyntaxFactory.RepeatUntilStatement(ExpressionSyntax condition)` (as the loop's body should always be required);
 	- `SyntaxFactory.ElseIfClause(ExpressionSyntax condition)` (as the `elseif` clause should always be required);
+- **[Breaking]** The `SyntaxKind.StartEqualsToken` has been removed as it has been obsolete for a while.
 
 ### Fixed
 - Fixed a bug where the leading new line was included for long strings;

@@ -147,10 +147,7 @@ namespace Loretta.Generators.SyntaxXml.Grammar
                tokenName.StartsWith("Omitted") ? new Production("/* epsilon */") : RuleReference(tokenName);
 
         private static SyntaxKind GetSyntaxKind(string name)
-            => GetMembers<SyntaxKind>().Where(k => k.ToString() == name).SingleOrDefault();
-
-        private static IEnumerable<TEnum> GetMembers<TEnum>() where TEnum : struct, Enum
-            => (IEnumerable<TEnum>) Enum.GetValues(typeof(TEnum));
+            => Enum.TryParse<SyntaxKind>(name, out var kind) ? kind : SyntaxKind.None;
 
         private static Production RuleReference(string name)
             => new(

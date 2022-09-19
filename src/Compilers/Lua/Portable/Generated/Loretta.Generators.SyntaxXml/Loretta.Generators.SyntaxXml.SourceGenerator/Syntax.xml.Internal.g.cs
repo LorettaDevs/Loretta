@@ -9590,6 +9590,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             if (colonToken == null) throw new ArgumentNullException(nameof(colonToken));
             if (colonToken.Kind != SyntaxKind.ColonToken) throw new ArgumentException($"Invalid kind provided. Expected ColonToken but got {colonToken.Kind}.", nameof(colonToken));
             if (name == null) throw new ArgumentNullException(nameof(name));
+            if (name.Kind != SyntaxKind.IdentifierToken) throw new ArgumentException($"Invalid kind provided. Expected IdentifierToken but got {name.Kind}.", nameof(name));
 #endif
 
             int hash;
@@ -9764,6 +9765,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         {
 #if DEBUG
             if (identifier == null) throw new ArgumentNullException(nameof(identifier));
+            if (identifier.Kind != SyntaxKind.IdentifierToken) throw new ArgumentException($"Invalid kind provided. Expected IdentifierToken but got {identifier.Kind}.", nameof(identifier));
 #endif
 
             int hash;
