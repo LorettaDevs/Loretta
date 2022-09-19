@@ -19565,6 +19565,12 @@ references:
   commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.MethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.MethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken)
   nameWithType: SyntaxFactory.MethodFunctionName(FunctionNameSyntax, SyntaxToken, SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.MethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax,System.String)
+  name: MethodFunctionName(FunctionNameSyntax, String)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_MethodFunctionName_Loretta_CodeAnalysis_Lua_Syntax_FunctionNameSyntax_System_String_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.MethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax,System.String)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.MethodFunctionName(Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax, System.String)
+  nameWithType: SyntaxFactory.MethodFunctionName(FunctionNameSyntax, String)
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.MethodFunctionName*
   name: MethodFunctionName
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_MethodFunctionName_
