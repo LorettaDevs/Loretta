@@ -814,6 +814,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         SyntaxKind.GreaterThanGreaterThanToken,
                         trailingToken.GetTrailingTrivia());
                 }
+                else if (operatorKind is SyntaxKind.PipeToken or SyntaxKind.AmpersandToken
+                         && !Options.SyntaxOptions.AcceptBitwiseOperators)
+                {
+                    operatorToken = AddError(operatorToken, ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
+                }
 
                 var kind = SyntaxFacts.GetBinaryExpression(operatorToken.Kind).Value;
                 var right = ParseBinaryExpression(newPrecedence);

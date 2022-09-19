@@ -47,7 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a bug where the leading new line was included for long strings;
 - Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would escape the space character;
 - Fixed a bug where `ObjectDisplay.FormatLiteral(string value, ObjectDisplayOptions options)` would not generate correct verbatim/long strings;
-- Fixed parsing of anonymous functions that had type parameters.
+- Fixed parsing of anonymous functions that had type parameters;
+- Fixed union and intersection types having errors for bitwise operators generated in them.
 
 ## v0.2.9
 ### Added

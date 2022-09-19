@@ -1,4 +1,5 @@
 ﻿using Loretta.CodeAnalysis.Text;
+using Loretta.Test.Utilities;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -130,5 +131,27 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 
             Assert.True(firstIdent.IsEquivalentTo(secondIdent));
         }
+
+        [Fact, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
+        public void LanguageParser_WhenParsingIntersectionTypes_DoNotGenerateBitwiseOperatorNotSupportedErrors() =>
+            ParseAndValidate("type T = A & B", LuaSyntaxOptions.Luau);
+
+        [Fact, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
+        public void LanguageParser_WhenParsingUnionTypes_DoNotGenerateBitwiseOperatorNotSupportedErrors() =>
+            ParseAndValidate("type T = A | B", LuaSyntaxOptions.Luau);
+
+        [Fact, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
+        public void LanguageParser_WhenParsingBitwiseAndExpressions_GeneratesBitwiseOperatorNotSupportedErrors() =>
+            ParseAndValidate("local x = y & z", LuaSyntaxOptions.Luau,
+                // (1,13): error LUA0021: Bitwise operators are not supported in this lua version
+                // local x = y & z
+                Diagnostic(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion, "&").WithLocation(1, 13));
+
+        [Fact, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
+        public void LanguageParser_WhenParsingBitwiseOrExpressions_GeneratesBitwiseOperatorNotSupportedErrors() =>
+            ParseAndValidate("local x = y | z", LuaSyntaxOptions.Luau,
+                // (1,13): error LUA0021: Bitwise operators are not supported in this lua version
+                // local x = y | z
+                Diagnostic(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion, "|").WithLocation(1, 13));
     }
 }

@@ -487,8 +487,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
                     else
                     {
-                        if (!_options.SyntaxOptions.AcceptBitwiseOperators)
-                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.AmpersandToken;
                     }
                     break;
@@ -502,8 +500,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
                     else
                     {
-                        if (!_options.SyntaxOptions.AcceptBitwiseOperators)
-                            AddError(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion);
                         info.Kind = SyntaxKind.PipeToken;
                     }
                     break;
