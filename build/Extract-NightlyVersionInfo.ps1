@@ -28,7 +28,8 @@ $nightlyVersionToPublish = "$unreleasedVersion-nightly.$commitsSinceLastRelease"
 
 if ($latestNightlyVersion -and $nightlyVersionToPublish -eq $latestNightlyVersion) {
     Write-Host "::notice title=No Changes::This nightly build is being skipped due to no changes having been made since the last nightly"
-    exit 1
+    Write-Output "::set-output name=HAS_NIGHTLY::no"
+    exit 0
 }
 
 # Set script outputs
@@ -40,3 +41,5 @@ Write-Output "Next Nightly Version: $nightlyVersionToPublish (no v: $($nightlyVe
 
 Write-Output "::set-output name=VERSION::$nightlyVersionToPublish"
 Write-Output "::set-output name=NO_PREFIX_VERSION::$($nightlyVersionToPublish.Substring(1))"
+Write-Output "::set-output name=HAS_NIGHTLY::yes"
+exit 0

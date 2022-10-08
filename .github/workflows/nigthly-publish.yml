@@ -17,6 +17,7 @@ jobs:
     outputs:
       full-version: ${{ steps.gen-version.outputs.VERSION }}
       no-prefix-version: ${{ steps.gen-version.outputs.NO_PREFIX_VERSION }}
+      has-nightly: ${{ steps.gen-version.outputs.HAS_NIGHTLY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,6 +34,7 @@ jobs:
         shell: pwsh
 
       - name: Tag New Nightly
+        if: steps.gen-version.outputs.HAS_NIGHTLY == 'yes'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -46,6 +48,7 @@ jobs:
     needs:
       - build
       - extract-nightly-info
+    if: needs.extract-nightly-info.outputs.has-nightly == 'yes'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
