@@ -457,5 +457,17 @@ local str4 = 'hello\xFFthere'
             var options = LuaSyntaxOptions.All.With(acceptInvalidEscapes: true);
             ParseAndValidate(source, options);
         }
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsWhen_NestingLongStrings()
+        {
+            const string source = @"
+local a = [[[[""]""]];
+";
+            var options = LuaSyntaxOptions.Lua51;
+            ParseAndValidate(source, options,
+                Diagnostic(ErrorCode.ERR_Lua51NestingInLongString, "2000ULL").WithLocation(1, 11));
+        }
     }
 }

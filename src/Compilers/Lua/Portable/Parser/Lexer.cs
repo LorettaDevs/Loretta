@@ -914,11 +914,27 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             break;
                         }
 
-                        if (ch != ']')
+                        switch (ch)
                         {
-                            // If not a possible ending, just skip over it.
-                            TextWindow.AdvanceChar();
-                            continue;
+                            case '[' when _options.SyntaxOptions.AcceptNestingOfLongStrings:
+                            {
+                                TextWindow.AdvanceChar();
+                                if ((ConsumeCharSequence('=') == initialEqualsCount) && initialEqualsCount == 0)
+                                {
+                                    AddError(ErrorCode.ERR_Lua51NestingInLongString);
+                                }
+                                continue;
+                            }
+                            case ']':
+                            {
+                                break;
+                            }
+                            default:
+                            {
+                                // If not a possible ending, just skip over it.
+                                TextWindow.AdvanceChar();
+                                continue;
+                            }
                         }
 
                         contentEnd = TextWindow.Position;
