@@ -916,11 +916,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                         switch (ch)
                         {
-                            case '[' when _options.SyntaxOptions.AcceptNestingOfLongStrings:
+                            case '[' when !_options.SyntaxOptions.AcceptNestingOfLongStrings:
                             {
                                 TextWindow.AdvanceChar();
-                                if ((ConsumeCharSequence('=') == initialEqualsCount) && initialEqualsCount == 0)
+                                if (TextWindow.PeekChar() == '[')
                                 {
+                                    TextWindow.AdvanceChar();
                                     AddError(ErrorCode.ERR_Lua51NestingInLongString);
                                 }
                                 continue;

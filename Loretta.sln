@@ -282,6 +282,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Tools\Loretta.Generators.Shared\Loretta.Generators.Shared.projitems*{09f59e77-3c4d-4c86-aee9-2323bb482698}*SharedItemsImports = 5
 		src\Tools\Loretta.Generators.Shared\Loretta.Generators.Shared.projitems*{3055db67-5514-4975-a876-64c3b8ff5b13}*SharedItemsImports = 13
-		src\Tools\Loretta.Generators.Shared\Loretta.Generators.Shared.projitems*{805968f0-edbc-4c0b-99ce-1e954dedc136}*SharedItemsImports = 5
+		src\Tools\Loretta.Generators.Shared\Loretta.Generators.Shared.projitems*{7fab6261-a9e1-4155-8b39-a40f754eaba8}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

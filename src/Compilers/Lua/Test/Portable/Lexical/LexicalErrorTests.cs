@@ -467,7 +467,10 @@ local a = [[[[""]""]];
 ";
             var options = LuaSyntaxOptions.Lua51;
             ParseAndValidate(source, options,
-                Diagnostic(ErrorCode.ERR_Lua51NestingInLongString, "2000ULL").WithLocation(1, 11));
+                // (2,11): error LUA0032: Nesting of [[...]] is deprecated
+                // local a = [[[["]"]];
+                Diagnostic(ErrorCode.ERR_Lua51NestingInLongString, "[[[[").WithLocation(2, 11)
+           );
         }
     }
 }

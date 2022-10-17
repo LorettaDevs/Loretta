@@ -205,6 +205,9 @@
   <data name="ERR_LbraceExpected" xml:space="preserve">
     <value>{ expected</value>
   </data>
+  <data name="ERR_Lua51NestingInLongString" xml:space="preserve">
+    <value>Nesting of [[...]] is deprecated</value>
+  </data>
   <data name="ERR_LuajitIdentifierRulesNotSupportedInVersion" xml:space="preserve">
     <value>Identifiers containing characters with value above 0x7F are not supported in this lua version</value>
   </data>
