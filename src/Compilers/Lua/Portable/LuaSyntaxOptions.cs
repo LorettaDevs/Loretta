@@ -475,6 +475,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         /// <summary>
         /// Whether to accept nesting of [[...]]
+        /// <para>
+        ///   AN ERROR WILL BE GENERATED FOR NESTED LONG STRINGS IF THIS IS <see langword="false"/>.
+        /// </para>
         /// </summary>
         public bool AcceptNestingOfLongStrings { get; }
 
