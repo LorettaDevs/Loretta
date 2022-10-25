@@ -1,4 +1,6 @@
-﻿#nullable enable
+#nullable enable
+~Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.GetEnumerator() -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator
+~Loretta.CodeAnalysis.SyntaxList<TNode>.GetEnumerator() -> Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator
 abstract Loretta.CodeAnalysis.Diagnostic.AdditionalLocations.get -> System.Collections.Generic.IReadOnlyList<Loretta.CodeAnalysis.Location!>!
 abstract Loretta.CodeAnalysis.Diagnostic.Descriptor.get -> Loretta.CodeAnalysis.DiagnosticDescriptor!
 abstract Loretta.CodeAnalysis.Diagnostic.Equals(Loretta.CodeAnalysis.Diagnostic? obj) -> bool
@@ -730,6 +732,8 @@ static Loretta.CodeAnalysis.AnnotationExtensions.WithoutAnnotations<TNode>(this 
 static Loretta.CodeAnalysis.AnnotationExtensions.WithoutAnnotations<TNode>(this TNode! node, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.SyntaxAnnotation!>! annotations) -> TNode!
 static Loretta.CodeAnalysis.ChildSyntaxList.operator !=(Loretta.CodeAnalysis.ChildSyntaxList list1, Loretta.CodeAnalysis.ChildSyntaxList list2) -> bool
 static Loretta.CodeAnalysis.ChildSyntaxList.operator ==(Loretta.CodeAnalysis.ChildSyntaxList list1, Loretta.CodeAnalysis.ChildSyntaxList list2) -> bool
+static Loretta.CodeAnalysis.ChildSyntaxList.Reversed.operator !=(Loretta.CodeAnalysis.ChildSyntaxList.Reversed left, Loretta.CodeAnalysis.ChildSyntaxList.Reversed right) -> bool
+static Loretta.CodeAnalysis.ChildSyntaxList.Reversed.operator ==(Loretta.CodeAnalysis.ChildSyntaxList.Reversed left, Loretta.CodeAnalysis.ChildSyntaxList.Reversed right) -> bool
 static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, Loretta.CodeAnalysis.DiagnosticSeverity effectiveSeverity, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
 static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
 static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
@@ -737,6 +741,8 @@ static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDes
 static Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor! descriptor, Loretta.CodeAnalysis.Location? location, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties, params object?[]? messageArgs) -> Loretta.CodeAnalysis.Diagnostic!
 static Loretta.CodeAnalysis.Diagnostic.Create(string! id, string! category, Loretta.CodeAnalysis.LocalizableString! message, Loretta.CodeAnalysis.DiagnosticSeverity severity, Loretta.CodeAnalysis.DiagnosticSeverity defaultSeverity, bool isEnabledByDefault, int warningLevel, bool isSuppressed, Loretta.CodeAnalysis.LocalizableString? title = null, Loretta.CodeAnalysis.LocalizableString? description = null, string? helpLink = null, Loretta.CodeAnalysis.Location? location = null, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations = null, System.Collections.Generic.IEnumerable<string!>? customTags = null, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties = null) -> Loretta.CodeAnalysis.Diagnostic!
 static Loretta.CodeAnalysis.Diagnostic.Create(string! id, string! category, Loretta.CodeAnalysis.LocalizableString! message, Loretta.CodeAnalysis.DiagnosticSeverity severity, Loretta.CodeAnalysis.DiagnosticSeverity defaultSeverity, bool isEnabledByDefault, int warningLevel, Loretta.CodeAnalysis.LocalizableString? title = null, Loretta.CodeAnalysis.LocalizableString? description = null, string? helpLink = null, Loretta.CodeAnalysis.Location? location = null, System.Collections.Generic.IEnumerable<Loretta.CodeAnalysis.Location!>? additionalLocations = null, System.Collections.Generic.IEnumerable<string!>? customTags = null, System.Collections.Immutable.ImmutableDictionary<string!, string?>? properties = null) -> Loretta.CodeAnalysis.Diagnostic!
+static Loretta.CodeAnalysis.FileLinePositionSpan.operator !=(Loretta.CodeAnalysis.FileLinePositionSpan left, Loretta.CodeAnalysis.FileLinePositionSpan right) -> bool
+static Loretta.CodeAnalysis.FileLinePositionSpan.operator ==(Loretta.CodeAnalysis.FileLinePositionSpan left, Loretta.CodeAnalysis.FileLinePositionSpan right) -> bool
 static Loretta.CodeAnalysis.LocalizableString.explicit operator string?(Loretta.CodeAnalysis.LocalizableString! localizableResource) -> string?
 static Loretta.CodeAnalysis.LocalizableString.implicit operator Loretta.CodeAnalysis.LocalizableString!(string? fixedResource) -> Loretta.CodeAnalysis.LocalizableString!
 static Loretta.CodeAnalysis.Location.Create(Loretta.CodeAnalysis.SyntaxTree! syntaxTree, Loretta.CodeAnalysis.Text.TextSpan textSpan) -> Loretta.CodeAnalysis.Location!
@@ -746,6 +752,8 @@ static Loretta.CodeAnalysis.Location.operator !=(Loretta.CodeAnalysis.Location? 
 static Loretta.CodeAnalysis.Location.operator ==(Loretta.CodeAnalysis.Location? left, Loretta.CodeAnalysis.Location? right) -> bool
 static Loretta.CodeAnalysis.ParseOptions.operator !=(Loretta.CodeAnalysis.ParseOptions? left, Loretta.CodeAnalysis.ParseOptions? right) -> bool
 static Loretta.CodeAnalysis.ParseOptions.operator ==(Loretta.CodeAnalysis.ParseOptions? left, Loretta.CodeAnalysis.ParseOptions? right) -> bool
+static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.operator !=(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>.Enumerator left, Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>.Enumerator right) -> bool
+static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.operator ==(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>.Enumerator left, Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>.Enumerator right) -> bool
 static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.implicit operator Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.SyntaxNode!>(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> nodes) -> Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.SyntaxNode!>
 static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.implicit operator Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>(Loretta.CodeAnalysis.SeparatedSyntaxList<Loretta.CodeAnalysis.SyntaxNode!> nodes) -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>
 static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.operator !=(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> left, Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!> right) -> bool
@@ -753,6 +761,8 @@ static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.operator ==(Loretta.CodeA
 static Loretta.CodeAnalysis.SyntaxAnnotation.ElasticAnnotation.get -> Loretta.CodeAnalysis.SyntaxAnnotation!
 static Loretta.CodeAnalysis.SyntaxAnnotation.operator !=(Loretta.CodeAnalysis.SyntaxAnnotation? left, Loretta.CodeAnalysis.SyntaxAnnotation? right) -> bool
 static Loretta.CodeAnalysis.SyntaxAnnotation.operator ==(Loretta.CodeAnalysis.SyntaxAnnotation? left, Loretta.CodeAnalysis.SyntaxAnnotation? right) -> bool
+static Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.operator !=(Loretta.CodeAnalysis.SyntaxList<TNode!>.Enumerator left, Loretta.CodeAnalysis.SyntaxList<TNode!>.Enumerator right) -> bool
+static Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.operator ==(Loretta.CodeAnalysis.SyntaxList<TNode!>.Enumerator left, Loretta.CodeAnalysis.SyntaxList<TNode!>.Enumerator right) -> bool
 static Loretta.CodeAnalysis.SyntaxList<TNode>.implicit operator Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.SyntaxNode!>(Loretta.CodeAnalysis.SyntaxList<TNode!> nodes) -> Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.SyntaxNode!>
 static Loretta.CodeAnalysis.SyntaxList<TNode>.implicit operator Loretta.CodeAnalysis.SyntaxList<TNode!>(Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.SyntaxNode!> nodes) -> Loretta.CodeAnalysis.SyntaxList<TNode!>
 static Loretta.CodeAnalysis.SyntaxList<TNode>.operator !=(Loretta.CodeAnalysis.SyntaxList<TNode!> left, Loretta.CodeAnalysis.SyntaxList<TNode!> right) -> bool
@@ -800,19 +810,29 @@ static Loretta.CodeAnalysis.SyntaxNodeOrToken.implicit operator Loretta.CodeAnal
 static Loretta.CodeAnalysis.SyntaxNodeOrToken.implicit operator Loretta.CodeAnalysis.SyntaxNodeOrToken(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxNodeOrToken
 static Loretta.CodeAnalysis.SyntaxNodeOrToken.operator !=(Loretta.CodeAnalysis.SyntaxNodeOrToken left, Loretta.CodeAnalysis.SyntaxNodeOrToken right) -> bool
 static Loretta.CodeAnalysis.SyntaxNodeOrToken.operator ==(Loretta.CodeAnalysis.SyntaxNodeOrToken left, Loretta.CodeAnalysis.SyntaxNodeOrToken right) -> bool
+static Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.operator !=(Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator left, Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator right) -> bool
+static Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.operator ==(Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator left, Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator right) -> bool
 static Loretta.CodeAnalysis.SyntaxNodeOrTokenList.operator !=(Loretta.CodeAnalysis.SyntaxNodeOrTokenList left, Loretta.CodeAnalysis.SyntaxNodeOrTokenList right) -> bool
 static Loretta.CodeAnalysis.SyntaxNodeOrTokenList.operator ==(Loretta.CodeAnalysis.SyntaxNodeOrTokenList left, Loretta.CodeAnalysis.SyntaxNodeOrTokenList right) -> bool
 static Loretta.CodeAnalysis.SyntaxToken.operator !=(Loretta.CodeAnalysis.SyntaxToken left, Loretta.CodeAnalysis.SyntaxToken right) -> bool
 static Loretta.CodeAnalysis.SyntaxToken.operator ==(Loretta.CodeAnalysis.SyntaxToken left, Loretta.CodeAnalysis.SyntaxToken right) -> bool
 static Loretta.CodeAnalysis.SyntaxTokenList.Create(Loretta.CodeAnalysis.SyntaxToken token) -> Loretta.CodeAnalysis.SyntaxTokenList
+static Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.operator !=(Loretta.CodeAnalysis.SyntaxTokenList.Enumerator left, Loretta.CodeAnalysis.SyntaxTokenList.Enumerator right) -> bool
+static Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.operator ==(Loretta.CodeAnalysis.SyntaxTokenList.Enumerator left, Loretta.CodeAnalysis.SyntaxTokenList.Enumerator right) -> bool
 static Loretta.CodeAnalysis.SyntaxTokenList.operator !=(Loretta.CodeAnalysis.SyntaxTokenList left, Loretta.CodeAnalysis.SyntaxTokenList right) -> bool
 static Loretta.CodeAnalysis.SyntaxTokenList.operator ==(Loretta.CodeAnalysis.SyntaxTokenList left, Loretta.CodeAnalysis.SyntaxTokenList right) -> bool
+static Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.operator !=(Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator left, Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator right) -> bool
+static Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.operator ==(Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator left, Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator right) -> bool
+static Loretta.CodeAnalysis.SyntaxTokenList.Reversed.operator !=(Loretta.CodeAnalysis.SyntaxTokenList.Reversed left, Loretta.CodeAnalysis.SyntaxTokenList.Reversed right) -> bool
+static Loretta.CodeAnalysis.SyntaxTokenList.Reversed.operator ==(Loretta.CodeAnalysis.SyntaxTokenList.Reversed left, Loretta.CodeAnalysis.SyntaxTokenList.Reversed right) -> bool
 static Loretta.CodeAnalysis.SyntaxTrivia.operator !=(Loretta.CodeAnalysis.SyntaxTrivia left, Loretta.CodeAnalysis.SyntaxTrivia right) -> bool
 static Loretta.CodeAnalysis.SyntaxTrivia.operator ==(Loretta.CodeAnalysis.SyntaxTrivia left, Loretta.CodeAnalysis.SyntaxTrivia right) -> bool
 static Loretta.CodeAnalysis.SyntaxTriviaList.Create(Loretta.CodeAnalysis.SyntaxTrivia trivia) -> Loretta.CodeAnalysis.SyntaxTriviaList
 static Loretta.CodeAnalysis.SyntaxTriviaList.Empty.get -> Loretta.CodeAnalysis.SyntaxTriviaList
 static Loretta.CodeAnalysis.SyntaxTriviaList.operator !=(Loretta.CodeAnalysis.SyntaxTriviaList left, Loretta.CodeAnalysis.SyntaxTriviaList right) -> bool
 static Loretta.CodeAnalysis.SyntaxTriviaList.operator ==(Loretta.CodeAnalysis.SyntaxTriviaList left, Loretta.CodeAnalysis.SyntaxTriviaList right) -> bool
+static Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.operator !=(Loretta.CodeAnalysis.SyntaxTriviaList.Reversed left, Loretta.CodeAnalysis.SyntaxTriviaList.Reversed right) -> bool
+static Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.operator ==(Loretta.CodeAnalysis.SyntaxTriviaList.Reversed left, Loretta.CodeAnalysis.SyntaxTriviaList.Reversed right) -> bool
 static Loretta.CodeAnalysis.Text.LinePosition.operator !=(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
 static Loretta.CodeAnalysis.Text.LinePosition.operator <(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
 static Loretta.CodeAnalysis.Text.LinePosition.operator <=(Loretta.CodeAnalysis.Text.LinePosition left, Loretta.CodeAnalysis.Text.LinePosition right) -> bool
@@ -837,6 +857,8 @@ static Loretta.CodeAnalysis.Text.TextChangeRange.operator ==(Loretta.CodeAnalysi
 static Loretta.CodeAnalysis.Text.TextLine.FromSpan(Loretta.CodeAnalysis.Text.SourceText! text, Loretta.CodeAnalysis.Text.TextSpan span) -> Loretta.CodeAnalysis.Text.TextLine
 static Loretta.CodeAnalysis.Text.TextLine.operator !=(Loretta.CodeAnalysis.Text.TextLine left, Loretta.CodeAnalysis.Text.TextLine right) -> bool
 static Loretta.CodeAnalysis.Text.TextLine.operator ==(Loretta.CodeAnalysis.Text.TextLine left, Loretta.CodeAnalysis.Text.TextLine right) -> bool
+static Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.operator !=(Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator left, Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator right) -> bool
+static Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.operator ==(Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator left, Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator right) -> bool
 static Loretta.CodeAnalysis.Text.TextSpan.FromBounds(int start, int end) -> Loretta.CodeAnalysis.Text.TextSpan
 static Loretta.CodeAnalysis.Text.TextSpan.operator !=(Loretta.CodeAnalysis.Text.TextSpan left, Loretta.CodeAnalysis.Text.TextSpan right) -> bool
 static Loretta.CodeAnalysis.Text.TextSpan.operator ==(Loretta.CodeAnalysis.Text.TextSpan left, Loretta.CodeAnalysis.Text.TextSpan right) -> bool
@@ -867,25 +889,3 @@ virtual Loretta.CodeAnalysis.Text.SourceText.WithChanges(System.Collections.Gene
 virtual Loretta.CodeAnalysis.Text.SourceText.Write(System.IO.TextWriter! writer, Loretta.CodeAnalysis.Text.TextSpan span, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> void
 virtual Loretta.CodeAnalysis.Text.TextLineCollection.GetLineFromPosition(int position) -> Loretta.CodeAnalysis.Text.TextLine
 virtual Loretta.CodeAnalysis.Text.TextLineCollection.GetLinePosition(int position) -> Loretta.CodeAnalysis.Text.LinePosition
-~Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.GetEnumerator() -> Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator
-~Loretta.CodeAnalysis.SyntaxList<TNode>.GetEnumerator() -> Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator
-static Loretta.CodeAnalysis.ChildSyntaxList.Reversed.operator !=(Loretta.CodeAnalysis.ChildSyntaxList.Reversed left, Loretta.CodeAnalysis.ChildSyntaxList.Reversed right) -> bool
-static Loretta.CodeAnalysis.ChildSyntaxList.Reversed.operator ==(Loretta.CodeAnalysis.ChildSyntaxList.Reversed left, Loretta.CodeAnalysis.ChildSyntaxList.Reversed right) -> bool
-static Loretta.CodeAnalysis.FileLinePositionSpan.operator !=(Loretta.CodeAnalysis.FileLinePositionSpan left, Loretta.CodeAnalysis.FileLinePositionSpan right) -> bool
-static Loretta.CodeAnalysis.FileLinePositionSpan.operator ==(Loretta.CodeAnalysis.FileLinePositionSpan left, Loretta.CodeAnalysis.FileLinePositionSpan right) -> bool
-static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.operator !=(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>.Enumerator left, Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SeparatedSyntaxList<TNode>.Enumerator.operator ==(Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>.Enumerator left, Loretta.CodeAnalysis.SeparatedSyntaxList<TNode!>.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.operator !=(Loretta.CodeAnalysis.SyntaxList<TNode!>.Enumerator left, Loretta.CodeAnalysis.SyntaxList<TNode!>.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxList<TNode>.Enumerator.operator ==(Loretta.CodeAnalysis.SyntaxList<TNode!>.Enumerator left, Loretta.CodeAnalysis.SyntaxList<TNode!>.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.operator !=(Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator left, Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.operator ==(Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator left, Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.operator !=(Loretta.CodeAnalysis.SyntaxTokenList.Enumerator left, Loretta.CodeAnalysis.SyntaxTokenList.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.operator ==(Loretta.CodeAnalysis.SyntaxTokenList.Enumerator left, Loretta.CodeAnalysis.SyntaxTokenList.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.operator !=(Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator left, Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.operator ==(Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator left, Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator right) -> bool
-static Loretta.CodeAnalysis.SyntaxTokenList.Reversed.operator !=(Loretta.CodeAnalysis.SyntaxTokenList.Reversed left, Loretta.CodeAnalysis.SyntaxTokenList.Reversed right) -> bool
-static Loretta.CodeAnalysis.SyntaxTokenList.Reversed.operator ==(Loretta.CodeAnalysis.SyntaxTokenList.Reversed left, Loretta.CodeAnalysis.SyntaxTokenList.Reversed right) -> bool
-static Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.operator !=(Loretta.CodeAnalysis.SyntaxTriviaList.Reversed left, Loretta.CodeAnalysis.SyntaxTriviaList.Reversed right) -> bool
-static Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.operator ==(Loretta.CodeAnalysis.SyntaxTriviaList.Reversed left, Loretta.CodeAnalysis.SyntaxTriviaList.Reversed right) -> bool
-static Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.operator !=(Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator left, Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator right) -> bool
-static Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.operator ==(Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator left, Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator right) -> bool

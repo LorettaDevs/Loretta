@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions
 Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.ConstantFoldingOptions(bool ExtractNumbersFromStrings) -> void
 Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.ExtractNumbersFromStrings.get -> bool
