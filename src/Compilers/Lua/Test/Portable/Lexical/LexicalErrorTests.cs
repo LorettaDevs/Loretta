@@ -457,5 +457,20 @@ local str4 = 'hello\xFFthere'
             var options = LuaSyntaxOptions.All.With(acceptInvalidEscapes: true);
             ParseAndValidate(source, options);
         }
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsWhen_NestingLongStrings()
+        {
+            const string source = @"
+local a = [[[[""]""]];
+";
+            var options = LuaSyntaxOptions.Lua51;
+            ParseAndValidate(source, options,
+                // (2,11): error LUA0032: Nesting of [[...]] is deprecated
+                // local a = [[[["]"]];
+                Diagnostic(ErrorCode.ERR_Lua51NestingInLongString, "[[[[").WithLocation(2, 11)
+           );
+        }
     }
 }

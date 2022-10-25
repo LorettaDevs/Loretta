@@ -313,6 +313,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nesting of [[...]] is deprecated.
+        /// </summary>
+        internal static string ERR_Lua51NestingInLongString {
+            get {
+                return ResourceManager.GetString("ERR_Lua51NestingInLongString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Identifiers containing characters with value above 0x7F are not supported in this lua version.
         /// </summary>
         internal static string ERR_LuajitIdentifierRulesNotSupportedInVersion {
