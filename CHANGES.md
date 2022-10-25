@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for typed Lua in `.NormalizeWhitespace`;
 - Added support for local variable attributes in `.NormalizeWhitespace`;
 - Added the new `SyntaxFactory.MethodFunctionName(FunctionNameSyntax baseName, string name)` overload.
+- Added support for Lua 5.1's long string nesting error.
 
 ### Changed
 - **[Breaking]** The following SyntaxFactory overloads have been changed:
@@ -36,6 +37,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- Spaces are not added to a table if it has no elements;
 	- No unnecessary line breaks are added after statements anymore.
 - **[Breaking]** `SyntaxFactory.IdentifierName` will now throw an exception if the provided token is not an identifier.
+- **[Breaking]** The following have been changed as a result of the Lua 5.1 long string nesting error:
+	- `LuaSyntaxOptions`'s constructor and `.With` method have been changed to accept the new `AcceptNestingOfLongStrings` option.
+	- An error is now generated when long strings are nested and `LuaSyntaxOptions.AcceptNestingOfLongStrings` is `false`.
 
 ### Removed
 - **[Breaking]** The following have been removed:
