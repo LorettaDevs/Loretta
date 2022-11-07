@@ -32,5 +32,15 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
 
             Assert.Equal(compilationUnitScope, printExpressionScope);
         }
+
+        [Fact]
+        [Trait("Category", "Script/FindScope")]
+        public void FindScope_AnonymousFunctionIsParsed()
+        {
+            var (tree, script) = ParseScript("local function a() end");
+            var fileScope = script.GetScope(tree.GetRoot());
+
+            Assert.Equal(1, fileScope?.ContainedScopes.Count());
+        }
     }
 }
