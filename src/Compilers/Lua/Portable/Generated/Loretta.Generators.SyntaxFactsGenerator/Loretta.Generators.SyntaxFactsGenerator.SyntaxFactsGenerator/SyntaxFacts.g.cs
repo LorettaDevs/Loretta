@@ -167,29 +167,29 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static SyntaxKind GetKeywordKind(String text)
         {
-            string? __candidate__1 = null;
-            int __destination__1 = -1;
-            var __skipCheck__1 = false;
+            string? __candidate__0 = null;
+            int __destination__0 = -1;
+            var __skipCheck__0 = false;
             switch (text.Length)
             {
                 case 2:
                     switch (text[1])
                     {
                         case 'o':
-                            __candidate__1 = "do";
-                            __destination__1 = 3;
+                            __candidate__0 = "do";
+                            __destination__0 = 3;
                             break;
                         case 'f':
-                            __candidate__1 = "if";
-                            __destination__1 = 12;
+                            __candidate__0 = "if";
+                            __destination__0 = 12;
                             break;
                         case 'n':
-                            __candidate__1 = "in";
-                            __destination__1 = 13;
+                            __candidate__0 = "in";
+                            __destination__0 = 13;
                             break;
                         case 'r':
-                            __candidate__1 = "or";
-                            __destination__1 = 17;
+                            __candidate__0 = "or";
+                            __destination__0 = 17;
                             break;
                     }
                     break;
@@ -197,24 +197,24 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(text.AsSpan(0, 2))))
                     {
                         case 0x006e0061:
-                            __candidate__1 = "and";
-                            __destination__1 = 0;
+                            __candidate__0 = "and";
+                            __destination__0 = 0;
                             break;
                         case 0x006e0065:
-                            __candidate__1 = "end";
-                            __destination__1 = 6;
+                            __candidate__0 = "end";
+                            __destination__0 = 6;
                             break;
                         case 0x006f0066:
-                            __candidate__1 = "for";
-                            __destination__1 = 9;
+                            __candidate__0 = "for";
+                            __destination__0 = 9;
                             break;
                         case 0x0069006e:
-                            __candidate__1 = "nil";
-                            __destination__1 = 15;
+                            __candidate__0 = "nil";
+                            __destination__0 = 15;
                             break;
                         case 0x006f006e:
-                            __candidate__1 = "not";
-                            __destination__1 = 16;
+                            __candidate__0 = "not";
+                            __destination__0 = 16;
                             break;
                     }
                     break;
@@ -222,24 +222,24 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (text[1])
                     {
                         case 'l':
-                            __candidate__1 = "else";
-                            __destination__1 = 5;
+                            __candidate__0 = "else";
+                            __destination__0 = 5;
                             break;
                         case 'o':
-                            __candidate__1 = "goto";
-                            __destination__1 = 11;
+                            __candidate__0 = "goto";
+                            __destination__0 = 11;
                             break;
                         case 'h':
-                            __candidate__1 = "then";
-                            __destination__1 = 20;
+                            __candidate__0 = "then";
+                            __destination__0 = 20;
                             break;
                         case 'r':
-                            __candidate__1 = "true";
-                            __destination__1 = 21;
+                            __candidate__0 = "true";
+                            __destination__0 = 21;
                             break;
                         case 'y':
-                            __candidate__1 = "type";
-                            __destination__1 = 22;
+                            __candidate__0 = "type";
+                            __destination__0 = 22;
                             break;
                     }
                     break;
@@ -247,24 +247,24 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (text[0])
                     {
                         case 'b':
-                            __candidate__1 = "break";
-                            __destination__1 = 1;
+                            __candidate__0 = "break";
+                            __destination__0 = 1;
                             break;
                         case 'f':
-                            __candidate__1 = "false";
-                            __destination__1 = 8;
+                            __candidate__0 = "false";
+                            __destination__0 = 8;
                             break;
                         case 'l':
-                            __candidate__1 = "local";
-                            __destination__1 = 14;
+                            __candidate__0 = "local";
+                            __destination__0 = 14;
                             break;
                         case 'u':
-                            __candidate__1 = "until";
-                            __destination__1 = 24;
+                            __candidate__0 = "until";
+                            __destination__0 = 24;
                             break;
                         case 'w':
-                            __candidate__1 = "while";
-                            __destination__1 = 25;
+                            __candidate__0 = "while";
+                            __destination__0 = 25;
                             break;
                     }
                     break;
@@ -272,24 +272,24 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(text.AsSpan(1, 2))))
                     {
                         case 0x0073006c:
-                            __candidate__1 = "elseif";
-                            __destination__1 = 4;
+                            __candidate__0 = "elseif";
+                            __destination__0 = 4;
                             break;
                         case 0x00700078:
-                            __candidate__1 = "export";
-                            __destination__1 = 7;
+                            __candidate__0 = "export";
+                            __destination__0 = 7;
                             break;
                         case 0x00700065:
-                            __candidate__1 = "repeat";
-                            __destination__1 = 18;
+                            __candidate__0 = "repeat";
+                            __destination__0 = 18;
                             break;
                         case 0x00740065:
-                            __candidate__1 = "return";
-                            __destination__1 = 19;
+                            __candidate__0 = "return";
+                            __destination__0 = 19;
                             break;
                         case 0x00700079:
-                            __candidate__1 = "typeof";
-                            __destination__1 = 23;
+                            __candidate__0 = "typeof";
+                            __destination__0 = 23;
                             break;
                     }
                     break;
@@ -297,19 +297,19 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (text[0])
                     {
                         case 'c':
-                            __candidate__1 = "continue";
-                            __destination__1 = 2;
+                            __candidate__0 = "continue";
+                            __destination__0 = 2;
                             break;
                         case 'f':
-                            __candidate__1 = "function";
-                            __destination__1 = 10;
+                            __candidate__0 = "function";
+                            __destination__0 = 10;
                             break;
                     }
                     break;
             }
-            if (__destination__1 != -1 && (__skipCheck__1 || string.Equals(text, __candidate__1, StringComparison.Ordinal)))
+            if (__destination__0 != -1 && (__skipCheck__0 || string.Equals(text, __candidate__0, StringComparison.Ordinal)))
             {
-                switch (__destination__1)
+                switch (__destination__0)
                 {
                     case 0:
                     {
@@ -430,29 +430,29 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static SyntaxKind GetKeywordKind(ReadOnlySpan<char> span)
         {
-            string? __candidate__1 = null;
-            int __destination__1 = -1;
-            var __skipCheck__1 = false;
+            string? __candidate__0 = null;
+            int __destination__0 = -1;
+            var __skipCheck__0 = false;
             switch (span.Length)
             {
                 case 2:
                     switch (span[1])
                     {
                         case 'o':
-                            __candidate__1 = "do";
-                            __destination__1 = 3;
+                            __candidate__0 = "do";
+                            __destination__0 = 3;
                             break;
                         case 'f':
-                            __candidate__1 = "if";
-                            __destination__1 = 12;
+                            __candidate__0 = "if";
+                            __destination__0 = 12;
                             break;
                         case 'n':
-                            __candidate__1 = "in";
-                            __destination__1 = 13;
+                            __candidate__0 = "in";
+                            __destination__0 = 13;
                             break;
                         case 'r':
-                            __candidate__1 = "or";
-                            __destination__1 = 17;
+                            __candidate__0 = "or";
+                            __destination__0 = 17;
                             break;
                     }
                     break;
@@ -460,24 +460,24 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(span.Slice(0, 2))))
                     {
                         case 0x006e0061:
-                            __candidate__1 = "and";
-                            __destination__1 = 0;
+                            __candidate__0 = "and";
+                            __destination__0 = 0;
                             break;
                         case 0x006e0065:
-                            __candidate__1 = "end";
-                            __destination__1 = 6;
+                            __candidate__0 = "end";
+                            __destination__0 = 6;
                             break;
                         case 0x006f0066:
-                            __candidate__1 = "for";
-                            __destination__1 = 9;
+                            __candidate__0 = "for";
+                            __destination__0 = 9;
                             break;
                         case 0x0069006e:
-                            __candidate__1 = "nil";
-                            __destination__1 = 15;
+                            __candidate__0 = "nil";
+                            __destination__0 = 15;
                             break;
                         case 0x006f006e:
-                            __candidate__1 = "not";
-                            __destination__1 = 16;
+                            __candidate__0 = "not";
+                            __destination__0 = 16;
                             break;
                     }
                     break;
@@ -485,24 +485,24 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (span[1])
                     {
                         case 'l':
-                            __candidate__1 = "else";
-                            __destination__1 = 5;
+                            __candidate__0 = "else";
+                            __destination__0 = 5;
                             break;
                         case 'o':
-                            __candidate__1 = "goto";
-                            __destination__1 = 11;
+                            __candidate__0 = "goto";
+                            __destination__0 = 11;
                             break;
                         case 'h':
-                            __candidate__1 = "then";
-                            __destination__1 = 20;
+                            __candidate__0 = "then";
+                            __destination__0 = 20;
                             break;
                         case 'r':
-                            __candidate__1 = "true";
-                            __destination__1 = 21;
+                            __candidate__0 = "true";
+                            __destination__0 = 21;
                             break;
                         case 'y':
-                            __candidate__1 = "type";
-                            __destination__1 = 22;
+                            __candidate__0 = "type";
+                            __destination__0 = 22;
                             break;
                     }
                     break;
@@ -510,24 +510,24 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (span[0])
                     {
                         case 'b':
-                            __candidate__1 = "break";
-                            __destination__1 = 1;
+                            __candidate__0 = "break";
+                            __destination__0 = 1;
                             break;
                         case 'f':
-                            __candidate__1 = "false";
-                            __destination__1 = 8;
+                            __candidate__0 = "false";
+                            __destination__0 = 8;
                             break;
                         case 'l':
-                            __candidate__1 = "local";
-                            __destination__1 = 14;
+                            __candidate__0 = "local";
+                            __destination__0 = 14;
                             break;
                         case 'u':
-                            __candidate__1 = "until";
-                            __destination__1 = 24;
+                            __candidate__0 = "until";
+                            __destination__0 = 24;
                             break;
                         case 'w':
-                            __candidate__1 = "while";
-                            __destination__1 = 25;
+                            __candidate__0 = "while";
+                            __destination__0 = 25;
                             break;
                     }
                     break;
@@ -535,24 +535,24 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(span.Slice(1, 2))))
                     {
                         case 0x0073006c:
-                            __candidate__1 = "elseif";
-                            __destination__1 = 4;
+                            __candidate__0 = "elseif";
+                            __destination__0 = 4;
                             break;
                         case 0x00700078:
-                            __candidate__1 = "export";
-                            __destination__1 = 7;
+                            __candidate__0 = "export";
+                            __destination__0 = 7;
                             break;
                         case 0x00700065:
-                            __candidate__1 = "repeat";
-                            __destination__1 = 18;
+                            __candidate__0 = "repeat";
+                            __destination__0 = 18;
                             break;
                         case 0x00740065:
-                            __candidate__1 = "return";
-                            __destination__1 = 19;
+                            __candidate__0 = "return";
+                            __destination__0 = 19;
                             break;
                         case 0x00700079:
-                            __candidate__1 = "typeof";
-                            __destination__1 = 23;
+                            __candidate__0 = "typeof";
+                            __destination__0 = 23;
                             break;
                     }
                     break;
@@ -560,19 +560,19 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (span[0])
                     {
                         case 'c':
-                            __candidate__1 = "continue";
-                            __destination__1 = 2;
+                            __candidate__0 = "continue";
+                            __destination__0 = 2;
                             break;
                         case 'f':
-                            __candidate__1 = "function";
-                            __destination__1 = 10;
+                            __candidate__0 = "function";
+                            __destination__0 = 10;
                             break;
                     }
                     break;
             }
-            if (__destination__1 != -1 && (__skipCheck__1 || System.MemoryExtensions.Equals(span, __candidate__1.AsSpan(), StringComparison.Ordinal)))
+            if (__destination__0 != -1 && (__skipCheck__0 || System.MemoryExtensions.Equals(span, __candidate__0.AsSpan(), StringComparison.Ordinal)))
             {
-                switch (__destination__1)
+                switch (__destination__0)
                 {
                     case 0:
                     {

@@ -31,6 +31,7 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 var scope = new FileScope(node, Scope);
                 _scopes.Add(node, scope);
+                _scopeStack.Peek().AddChildScope(scope);
                 _scopeStack.Push(scope);
                 return scope;
             }
@@ -39,6 +40,7 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 var scope = new FunctionScope(node, Scope);
                 _scopes.Add(node, scope);
+                _scopeStack.Peek().AddChildScope(scope);
                 _scopeStack.Push(scope);
                 return scope;
             }
@@ -47,6 +49,7 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 var scope = new Scope(ScopeKind.Block, node, Scope);
                 _scopes.Add(node, scope);
+                _scopeStack.Peek().AddChildScope(scope);
                 _scopeStack.Push(scope);
                 return scope;
             }
@@ -98,6 +101,7 @@ namespace Loretta.CodeAnalysis.Lua
             public override void VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax node)
             {
                 var scope = CreateFunctionScope(node);
+
                 try
                 {
                     foreach (var parameter in node.Parameters.Parameters)
