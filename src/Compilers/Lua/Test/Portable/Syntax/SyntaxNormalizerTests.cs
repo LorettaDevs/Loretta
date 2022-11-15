@@ -1228,7 +1228,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         [WorkItem(108, "https://github.com/LorettaDevs/Loretta/issues/108")]
         public void SyntaxNormalizer_CorrectlyInsertsExpressionSpaces()
         {
-            var tree = ParseAndValidate("print(1, 2)", s_luaParseOptions);
+            var tree = ParseAndValidate("print(1,2)", s_luaParseOptions);
             var root = tree.GetRoot();
 
             AssertNormalizeCore(root, "print(1, 2)");
