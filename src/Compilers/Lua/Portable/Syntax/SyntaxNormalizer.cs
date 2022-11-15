@@ -957,11 +957,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             return base.VisitMethodCallExpression(node);
         }
 
-        // function_argument
-        //  : expression_list_function_argument
-        //  | string_function_argument
-        //  | table_constructor_function_argument
-        //  ;
+        // expression_list_function_argument
+        // : '(' (expression (',' expression)*)? ')'
+        // ;
         public override SyntaxNode? VisitExpressionListFunctionArgument(ExpressionListFunctionArgumentSyntax node)
         {
             foreach (var expressionSeparator in node.Expressions.GetSeparators())
