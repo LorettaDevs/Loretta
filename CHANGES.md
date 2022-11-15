@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Fixed
 - Fixed `ContainedScopes` not being populated.
+- Fixed NormalizeWhitespace not inserting spaces between expression list arguments.
 
 ## v0.2.10
 ### Added
