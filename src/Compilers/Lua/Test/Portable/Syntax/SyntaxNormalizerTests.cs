@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Loretta.CodeAnalysis.Lua.Test.Utilities;
+using Loretta.Test.Utilities;
 using Xunit;
 using Xunit.Sdk;
 
@@ -1222,6 +1223,17 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
             AssertNormalizeCore(type, expected);
         }
+
+        [Fact]
+        [WorkItem(108, "https://github.com/LorettaDevs/Loretta/issues/108")]
+        public void SyntaxNormalizer_CorrectlyInsertsExpressionSpaces()
+        {
+            var tree = ParseAndValidate("print(1, 2)", s_luaParseOptions);
+            var root = tree.GetRoot();
+
+            AssertNormalizeCore(root, "print(1, 2)");
+        }
+
 
         #region Class Implementation Details
 

@@ -957,6 +957,19 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             return base.VisitMethodCallExpression(node);
         }
 
+        // function_argument
+        //  : expression_list_function_argument
+        //  | string_function_argument
+        //  | table_constructor_function_argument
+        //  ;
+        public override SyntaxNode? VisitExpressionListFunctionArgument(ExpressionListFunctionArgumentSyntax node)
+        {
+            foreach (var expressionSeparator in node.Expressions.GetSeparators())
+                AddSpaceAfterToken(expressionSeparator);
+
+            return base.VisitExpressionListFunctionArgument(node);
+        }
+
         // Visiting ParenthesizedExpressionSyntax is not necessary as it has no spacing.
         // Visiting ElementAccessExpressionSyntax is not necessary as it has no spacing.
         // Visiting MemberAccessExpressionSyntax is not necessary as it has no spacing.
