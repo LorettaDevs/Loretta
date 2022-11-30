@@ -579,13 +579,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
                     info.Text = TextWindow.GetText(intern: true);
 
-                    if (!_options.SyntaxOptions.AcceptHashStrings)
-                        AddError(ErrorCode.ERR_HashStringsNotSupportedInVersion);
-
                     return;
                 }
 
-                case '`'
+                case '`' when _options.SyntaxOptions.AcceptInterpolatedStrings:
+                {
+                    break;
+                }
 
                 #endregion Literals
 

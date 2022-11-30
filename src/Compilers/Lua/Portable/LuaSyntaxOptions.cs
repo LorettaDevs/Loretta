@@ -599,27 +599,22 @@ namespace Loretta.CodeAnalysis.Lua
         /// <inheritdoc cref="HexIntegerFormat" path="/summary" /> If None uses the value
         /// of <see cref="HexIntegerFormat"/>.
         /// </param>
-        /// <returns></returns>
         /// <param name="acceptTypedLua">
         /// <inheritdoc cref="AcceptTypedLua" path="/summary" /> If None uses the value
         /// of <see cref="AcceptTypedLua"/>.
         /// </param>
-        /// <returns></returns>
         /// <param name="acceptFloorDivision">
         /// <inheritdoc cref="AcceptFloorDivision" path="/summary" /> If None uses the value
         /// of <see cref="AcceptFloorDivision"/>.
         /// </param>
-        /// <returns></returns>
         /// <param name="acceptLuaJITNumberSuffixes">
         /// <inheritdoc cref="AcceptLuaJITNumberSuffixes" path="/summary" /> If None uses the value
         /// of <see cref="AcceptLuaJITNumberSuffixes"/>.
         /// </param>
-        /// <returns></returns>        
         /// <param name="acceptNestingOfLongStrings">
         /// <inheritdoc cref="AcceptNestingOfLongStrings" path="/summary" /> If None uses the value
         /// of <see cref="AcceptNestingOfLongStrings"/>.
         /// </param>
-        /// <returns></returns>
         /// <param name="acceptInterpolatedStrings">
         /// <inheritdoc cref="AcceptInterpolatedStrings" path="/summary" /> If None uses the value
         /// of <see cref="AcceptInterpolatedStrings"/>.
