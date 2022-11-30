@@ -569,7 +569,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     return;
                 }
 
-                case '`':
+                case '`' when _options.SyntaxOptions.AcceptHashStrings:
                 {
                     info.Kind = SyntaxKind.HashStringLiteralToken;
                     var stringValue = ParseShortString();
@@ -584,6 +584,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                     return;
                 }
+
+                case '`'
 
                 #endregion Literals
 
