@@ -120,6 +120,9 @@
   <data name="ERR_AmbiguousFunctionCallOrNewStatement" xml:space="preserve">
     <value>Syntax ambiguous between a function call and a new statement</value>
   </data>
+  <data name="ERR_BackTickStringNotSupportedInVersion" xml:space="preserve">
+    <value>This Lua version does not support interpolated strings nor hash strings</value>
+  </data>
   <data name="ERR_BadCharacter" xml:space="preserve">
     <value>Bad character input: '{0}'</value>
   </data>
@@ -154,9 +157,6 @@
   </data>
   <data name="ERR_ExpressionExpected" xml:space="preserve">
     <value>Expression expected</value>
-  </data>
-  <data name="ERR_HashStringsNotSupportedInVersion" xml:space="preserve">
-    <value>Hash strings are not supported in this lua version</value>
   </data>
   <data name="ERR_HexDigitExpected" xml:space="preserve">
     <value>Hexadecimal digit expected</value>

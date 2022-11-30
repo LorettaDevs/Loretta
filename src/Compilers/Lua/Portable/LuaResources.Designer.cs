@@ -70,6 +70,15 @@ namespace Loretta.CodeAnalysis.Lua {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This Lua version does not support interpolated strings nor hash strings.
+        /// </summary>
+        internal static string ERR_BackTickStringNotSupportedInVersion {
+            get {
+                return ResourceManager.GetString("ERR_BackTickStringNotSupportedInVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bad character input: &apos;{0}&apos;.
         /// </summary>
         internal static string ERR_BadCharacter {
@@ -165,15 +174,6 @@ namespace Loretta.CodeAnalysis.Lua {
         internal static string ERR_ExpressionExpected {
             get {
                 return ResourceManager.GetString("ERR_ExpressionExpected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hash strings are not supported in this lua version.
-        /// </summary>
-        internal static string ERR_HashStringsNotSupportedInVersion {
-            get {
-                return ResourceManager.GetString("ERR_HashStringsNotSupportedInVersion", resourceCulture);
             }
         }
         

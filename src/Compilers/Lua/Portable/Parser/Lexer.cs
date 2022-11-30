@@ -163,7 +163,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                     token = SyntaxFactory.Token(leadingNode, info.Kind, trailingNode);
                     break;
-
                 case SyntaxKind.None:
                     LorettaDebug.AssertNotNull(info.Text);
                     LorettaDebug.Assert(info.ValueKind is ValueKind.None);
@@ -569,22 +568,28 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     return;
                 }
 
-                case '`' when _options.SyntaxOptions.AcceptHashStrings:
+                case '`':
                 {
-                    info.Kind = SyntaxKind.HashStringLiteralToken;
-                    var stringValue = ParseShortString();
-                    // Jenkins' one-at-a-time hash doesn't do this but FiveM does.
-                    stringValue = stringValue.ToLowerInvariant();
-                    info.ValueKind = ValueKind.UInt;
-                    info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
-                    info.Text = TextWindow.GetText(intern: true);
+                    if (_options.SyntaxOptions.AcceptInterpolatedStrings)
+                    {
+
+                    } else
+                    {
+                        if (!_options.SyntaxOptions.AcceptHashStrings)
+                        {
+                            AddError(ErrorCode.ERR_BackTickStringNotSupportedInVersion);
+                        }
+
+                        info.Kind = SyntaxKind.HashStringLiteralToken;
+                        var stringValue = ParseShortString();
+                        // Jenkins' one-at-a-time hash doesn't do this but FiveM does.
+                        stringValue = stringValue.ToLowerInvariant();
+                        info.ValueKind = ValueKind.UInt;
+                        info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
+                        info.Text = TextWindow.GetText(intern: true);
+                    }
 
                     return;
-                }
-
-                case '`' when _options.SyntaxOptions.AcceptInterpolatedStrings:
-                {
-                    break;
                 }
 
                 #endregion Literals
