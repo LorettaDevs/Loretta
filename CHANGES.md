@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed `ContainedScopes` not being populated.
 - Fixed NormalizeWhitespace not inserting spaces between expression list arguments.
 
+### Removed
+- .NET Core 3.1 support has been removed as .NET Core 3.1 has officially hit EOL.
+
 ## v0.2.10
 ### Added
 - Added the following new `SyntaxFactory` overloads to partially restore compatibility with pre-typed-lua era:
