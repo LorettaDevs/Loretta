@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## v0.2.11
 ### Fixed
 - Fixed `ContainedScopes` not being populated.
 - Fixed NormalizeWhitespace not inserting spaces between expression list arguments.
@@ -153,7 +155,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- `LuaSyntaxOptions.AcceptTypedLua`.
 
 ### Changed
-- [Breaking] The following were changed as a result of implementing typed lua syntax:
+- [Breaking] The following were changed as a result of implementing typed Lua syntax:
 	- `LuaSyntaxOptions`'s constructor and `With` were changed to accept a bool for `AcceptTypedLua`;
 	- The following were changed to accept a `TypeBindingSyntax`:
 		- `AnonymousFunctionExpressionSyntax.Update`;
@@ -194,7 +196,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed `SyntaxFacts.GetConstantValue` not returning the correct value for tokens.
-- Fixed `SyntaxFacts.GetConstantValue` not returning `None` for values outside of the valid range.
+- Fixed `SyntaxFacts.GetConstantValue` not returning `None` for values outside the valid range.
 - Fixed the constant folder turning `/` into integer division when both sides are integers.
 - Fixed the constant folder storing the length as an integer token.
 - Fixed `LuaSyntaxNode.GetStructure` throwing an exception because we *do* have structured trivia.
@@ -386,7 +388,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   single-char escapes (e.g.: `"\A\B\C\D" will be read as "ABCD" silently without any errors or warnings).
 
 ### Fixed
-- `ObjectDisplay.FormatLiteral` was not emitting unicode escapes correctly.
+- `ObjectDisplay.FormatLiteral` was not emitting Unicode escapes correctly.
 
 ## v0.2.7-beta.7
 ### Added
