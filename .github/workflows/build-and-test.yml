@@ -22,24 +22,17 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            installDir: /usr/share/dotnet
           - os: windows-latest
-            installDir: C:\Program Files\dotnet
           - os: macos-latest
-            installDir: /Users/runner/.dotnet
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: |
-            3.1.x
             6.0.x
             7.0.x
-          include-prerelease: True
-        env:
-          DOTNET_INSTALL_DIR: ${{ matrix.installDir }}
       - name: Install dependencies
         run: dotnet restore
       - name: Build
