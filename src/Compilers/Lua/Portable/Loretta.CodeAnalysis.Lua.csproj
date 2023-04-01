@@ -23,8 +23,12 @@
         <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Experimental" />
     </ItemGroup>
 
-    <ItemGroup>
+    <!-- Packages that we need from .NET 6+ on .NET Standard 2.0 -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
         <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Tsu" Version="2.2.2" />
     </ItemGroup>
 
