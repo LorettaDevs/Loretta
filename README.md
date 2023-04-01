@@ -6,8 +6,6 @@ A C# (G)Lua lexer, parser, code analysis, transformation and code generation too
 [![Loretta.CodeAnalysis.Lua](https://img.shields.io/nuget/vpre/Loretta.CodeAnalysis.Lua?label=Preview&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/Loretta.CodeAnalysis.Lua/latest)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/GGG-KILLER/Loretta/build-and-test.yml?branch=main&logo=github&style=for-the-badge)](https://github.com/GGG-KILLER/Loretta/actions/workflows/build-and-test.yml)
 
-![Repo Stats](https://repobeats.axiom.co/api/embed/089a9f7dae190ea8dd0fc0750abbebceea3e86dd.svg "Repobeats analytics image")
-
 This is (another) rewrite from scratch based on Roslyn and [The Complete Syntax of Lua](https://www.lua.org/manual/5.4/manual.html#9) with a few extensions:
 1. Operators introduced in Garry's Mod Lua (glua):
     - `&&` for `and`;
