@@ -25,7 +25,7 @@
       "globalNamespaceId": "Loretta.CodeAnalysis",
       "filter": "unwanted-filter.yml",
       "properties": {
-        "TargetFramework": "netcoreapp3.1",
+        "TargetFramework": "net6.0",
         "DocGen": "true"
       },
       "disableGitFeatures": false,
