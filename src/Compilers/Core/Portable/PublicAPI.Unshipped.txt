@@ -1,1 +1,4 @@
 #nullable enable
+*REMOVED*const Loretta.CodeAnalysis.LanguageNames.CSharp = "C#" -> string!
+*REMOVED*const Loretta.CodeAnalysis.LanguageNames.FSharp = "F#" -> string!
+*REMOVED*const Loretta.CodeAnalysis.LanguageNames.VisualBasic = "Visual Basic" -> string!
