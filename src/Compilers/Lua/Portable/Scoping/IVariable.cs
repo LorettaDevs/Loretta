@@ -70,10 +70,10 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal class Variable : IVariableInternal
     {
-        private readonly ISet<IScopeInternal> _referencingScopes = new HashSet<IScopeInternal>();
-        private readonly ISet<IScopeInternal> _capturingScopes = new HashSet<IScopeInternal>();
-        private readonly IList<SyntaxNode> _readLocations = new List<SyntaxNode>();
-        private readonly IList<SyntaxNode> _writeLocations = new List<SyntaxNode>();
+        private readonly HashSet<IScopeInternal> _referencingScopes = new();
+        private readonly HashSet<IScopeInternal> _capturingScopes = new();
+        private readonly List<SyntaxNode> _readLocations = new();
+        private readonly List<SyntaxNode> _writeLocations = new();
 
         public Variable(VariableKind kind, IScopeInternal containingScope, string name, SyntaxNode? declaration)
         {
