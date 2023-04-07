@@ -43,7 +43,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping
             var fileScope = script.GetScope(tree.GetRoot());
 
             Assert.Equal(1, fileScope?.ContainedScopes.Count());
-        }        
+        }
 
         [Fact]
         [Trait("Category", "Script/FindScope")]

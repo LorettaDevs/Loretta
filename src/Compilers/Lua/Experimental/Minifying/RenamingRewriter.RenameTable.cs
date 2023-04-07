@@ -50,9 +50,7 @@
             /// </returns>
             public string? GetNewVariableName(SyntaxNode node)
             {
-                var variable = _script.GetVariable(node);
-                if (variable is null)
-                    throw ExceptionUtilities.Unreachable;
+                var variable = _script.GetVariable(node) ?? throw ExceptionUtilities.Unreachable;
                 if (!MinifyingUtils.CanRename(variable))
                     return null;
 

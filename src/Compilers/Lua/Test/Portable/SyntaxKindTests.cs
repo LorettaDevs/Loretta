@@ -7,9 +7,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         [Fact]
         public void SyntaxKindHasNoDuplicates()
         {
-            #pragma warning disable CA1825 // (Justification: Not performance critical and helps people see what it should be used for.)
+#pragma warning disable CA1825 // (Justification: Not performance critical and helps people see what it should be used for.)
             var names = Enum.GetNames(typeof(SyntaxKind)).Except(new string[] { /* insert backwards compat kinds here */ });
-            #pragma warning restore CA1825 // (Justification: Not performance critical and helps people see what it should be used for.)
+#pragma warning restore CA1825 // (Justification: Not performance critical and helps people see what it should be used for.)
             var groups = names.GroupBy(name => (SyntaxKind) Enum.Parse(typeof(SyntaxKind), name));
             foreach (var kinds in groups.Where(group => group.Count() > 1))
                 Assert.True(false, $"Found duplicates kinds: {string.Join(", ", kinds)}.");

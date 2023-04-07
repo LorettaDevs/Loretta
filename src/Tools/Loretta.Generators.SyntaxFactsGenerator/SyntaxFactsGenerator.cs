@@ -25,9 +25,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
 
             context.RegisterSourceOutput(symbolsProvider, (context, symbols) =>
             {
-                var kinds = KindUtils.ExtractKindList(context, symbols);
-                if (kinds is null)
-                    throw new Exception("KindList is null");
+                var kinds = KindUtils.ExtractKindList(context, symbols) ?? throw new Exception("KindList is null");
                 if (kinds.Count < 1)
                 {
                     context.ReportDiagnostic(Diagnostic.Create(Diagnostics.NoSyntaxKindWithAttributesFound, symbols.SyntaxKindType!.Locations.Single()));
