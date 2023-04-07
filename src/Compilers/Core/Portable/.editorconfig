@@ -1,0 +1,4 @@
+[*.cs]
+
+# CA1510: Use ArgumentNullException throw helper (Not available in .NET Standard 2.0)
+dotnet_diagnostic.CA1510.severity = none
