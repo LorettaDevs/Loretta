@@ -164,7 +164,7 @@ namespace Loretta.CodeAnalysis.Lua
                 }
             }
 
-            if (errors.Any())
+            if (errors.Count > 0)
                 return Result.Err<Script, IEnumerable<RenameError>>(errors);
 
             var visitor = new RenameRewriter(this, variable, newName);

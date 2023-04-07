@@ -24,8 +24,8 @@ namespace Loretta.CodeAnalysis
                 throw new ArgumentException("Must specify expected errors.", nameof(expected));
             }
 
-            var includeDefaultSeverity = expected.Any() && expected.All(e => e.DefaultSeverity != null);
-            var includeEffectiveSeverity = expected.Any() && expected.All(e => e.EffectiveSeverity != null);
+            var includeDefaultSeverity = expected.Length > 0 && expected.All(e => e.DefaultSeverity != null);
+            var includeEffectiveSeverity = expected.Length > 0 && expected.All(e => e.EffectiveSeverity != null);
             var unmatched = actual.Select(d => new DiagnosticDescription(d, errorCodeOnly, includeDefaultSeverity, includeEffectiveSeverity))
                                   .ToList();
 

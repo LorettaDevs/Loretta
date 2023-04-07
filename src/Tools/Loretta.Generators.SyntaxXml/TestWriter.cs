@@ -433,7 +433,7 @@ namespace Loretta.Generators.SyntaxXml
         private string? ChooseValidKind(Field field, Node nd)
         {
             var fieldKinds = GetKindsOfFieldOrNearestParent(nd, field);
-            return fieldKinds?.Any() == true ? fieldKinds[0].Name : "IdentifierToken";
+            return fieldKinds?.Count > 0 ? fieldKinds[0].Name : "IdentifierToken";
         }
     }
 }
