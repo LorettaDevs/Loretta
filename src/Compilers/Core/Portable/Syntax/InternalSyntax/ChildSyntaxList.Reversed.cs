@@ -5,7 +5,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 {
     internal partial struct ChildSyntaxList
     {
-        internal partial struct Reversed
+        internal readonly partial struct Reversed
         {
             private readonly GreenNode? _node;
 

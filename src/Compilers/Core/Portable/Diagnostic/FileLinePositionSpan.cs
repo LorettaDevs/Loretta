@@ -9,7 +9,7 @@ namespace Loretta.CodeAnalysis
     /// Represents a span of text in a source code file in terms of file name, line number, and offset within line.
     /// However, the file is actually whatever was passed in when asked to parse; there may not really be a file.
     /// </summary>
-    public struct FileLinePositionSpan : IEquatable<FileLinePositionSpan>
+    public readonly struct FileLinePositionSpan : IEquatable<FileLinePositionSpan>
     {
         private readonly string _path;
         private readonly LinePositionSpan _span;

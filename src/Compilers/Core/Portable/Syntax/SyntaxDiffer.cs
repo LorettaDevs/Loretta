@@ -176,7 +176,7 @@ namespace Loretta.CodeAnalysis
             ReplaceOldWithNew
         }
 
-        private struct DiffAction
+        private readonly struct DiffAction
         {
             public readonly DiffOp Operation;
             public readonly int Count;
@@ -215,7 +215,7 @@ namespace Loretta.CodeAnalysis
                 }
                 else
                 {
-                    // otherwise just claim one's text replaces the other.. 
+                    // otherwise just claim one's text replaces the other..
                     // NOTE: possibly we can improve this by reducing the side that may not be token?
                     return new DiffAction(DiffOp.ReplaceOldWithNew, 1);
                 }
@@ -227,7 +227,7 @@ namespace Loretta.CodeAnalysis
 
                 if (indexOfNewInOld < 0 || similarityOfOldInNew >= similarityOfNewInOld)
                 {
-                    // either there is no match for the first new-node in the old-list or the 
+                    // either there is no match for the first new-node in the old-list or the
                     // the similarity of the first old-node in the new-list is much greater
 
                     // if we find a match for the old node in the new list, that probably means nodes were inserted before it.
@@ -351,7 +351,7 @@ namespace Loretta.CodeAnalysis
                     {
                         var sim = GetSimilarity(stackNode, node);
 
-                        // Are these really the same? This may be expensive so only check this if 
+                        // Are these really the same? This may be expensive so only check this if
                         // similarity is rated equal to them being identical.
                         if (sim == node.FullSpan.Length && node.IsToken)
                         {
@@ -752,7 +752,7 @@ namespace Loretta.CodeAnalysis
                         }
                     }
 
-                    // only include adjusted change if there is still a change 
+                    // only include adjusted change if there is still a change
                     if (range.Span.Length > 0 || range.NewLength > 0)
                     {
                         textChanges.Add(new ChangeRangeWithText(range, _computeNewText ? newText.ToString() : null));

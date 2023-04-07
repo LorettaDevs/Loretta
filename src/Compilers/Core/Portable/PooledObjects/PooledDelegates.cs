@@ -311,7 +311,7 @@ namespace Loretta.CodeAnalysis.PooledObjects
         /// called multiple times is undefined.</para>
         /// </remarks>
         [NonCopyable]
-        public struct Releaser : IDisposable
+        public readonly struct Releaser : IDisposable
         {
             private readonly Poolable _pooledObject;
 
