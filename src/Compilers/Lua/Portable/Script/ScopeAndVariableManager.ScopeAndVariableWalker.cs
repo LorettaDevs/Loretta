@@ -27,7 +27,7 @@ namespace Loretta.CodeAnalysis.Lua
 
             private IScopeInternal Scope => _scopeStack.Peek();
 
-            private IFileScopeInternal CreateFileScope(SyntaxNode node)
+            private FileScope CreateFileScope(SyntaxNode node)
             {
                 var scope = new FileScope(node, Scope);
                 _scopes.Add(node, scope);
@@ -36,7 +36,7 @@ namespace Loretta.CodeAnalysis.Lua
                 return scope;
             }
 
-            private IFunctionScopeInternal CreateFunctionScope(SyntaxNode node)
+            private FunctionScope CreateFunctionScope(SyntaxNode node)
             {
                 var scope = new FunctionScope(node, Scope);
                 _scopes.Add(node, scope);
@@ -45,7 +45,7 @@ namespace Loretta.CodeAnalysis.Lua
                 return scope;
             }
 
-            private IScopeInternal CreateBlockScope(SyntaxNode node)
+            private Scope CreateBlockScope(SyntaxNode node)
             {
                 var scope = new Scope(ScopeKind.Block, node, Scope);
                 _scopes.Add(node, scope);
@@ -69,7 +69,7 @@ namespace Loretta.CodeAnalysis.Lua
             }
 
             private static IVariableInternal CreateParameter(
-                IFunctionScopeInternal scope,
+                FunctionScope scope,
                 ParameterSyntax parameter)
             {
                 var name = parameter.Kind() switch
@@ -81,7 +81,7 @@ namespace Loretta.CodeAnalysis.Lua
                 return scope.AddParameter(name, parameter);
             }
             private static IVariableInternal CreateParameter(
-                IFunctionScopeInternal scope,
+                FunctionScope scope,
                 string name) =>
                 scope.AddParameter(name, null);
 

@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Loretta.CodeAnalysis.PooledObjects;
 
@@ -178,6 +179,7 @@ namespace Loretta.CodeAnalysis.Text
             return false;
         }
 
+        [SuppressMessage("Performance", "CA1859: Use concrete types when possible for improved performance", Justification = "Ensures callers do not modify the list.")]
         private static IReadOnlyList<ImmutableArray<TextChangeRange>> GetChangesBetween(SourceText oldText, ChangedText newText)
         {
             var list = new List<ImmutableArray<TextChangeRange>>();

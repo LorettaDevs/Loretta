@@ -52,7 +52,7 @@ namespace Loretta.CodeAnalysis
         internal static IList<TextChange> GetTextChanges(SyntaxNode oldNode, SyntaxNode newNode) =>
             new SyntaxDiffer(oldNode, newNode, computeNewText: true).ComputeTextChangesFromOld();
 
-        private IList<TextChange> ComputeTextChangesFromOld()
+        private List<TextChange> ComputeTextChangesFromOld()
         {
             ComputeChangeRecords();
             var reducedChanges = ReduceChanges(_changes);
@@ -86,7 +86,7 @@ namespace Loretta.CodeAnalysis
         internal static IList<TextSpan> GetPossiblyDifferentTextSpans(SyntaxNode oldNode, SyntaxNode newNode) =>
             new SyntaxDiffer(oldNode, newNode, computeNewText: false).ComputeSpansInNew();
 
-        private IList<TextSpan> ComputeSpansInNew()
+        private List<TextSpan> ComputeSpansInNew()
         {
             ComputeChangeRecords();
             var reducedChanges = ReduceChanges(_changes);
