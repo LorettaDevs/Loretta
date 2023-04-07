@@ -1175,30 +1175,12 @@ references:
   commentId: T:Loretta.CodeAnalysis.LanguageNames
   fullName: Loretta.CodeAnalysis.LanguageNames
   nameWithType: LanguageNames
-- uid: Loretta.CodeAnalysis.LanguageNames.CSharp
-  name: CSharp
-  href: api/Loretta.CodeAnalysis.LanguageNames.html#Loretta_CodeAnalysis_LanguageNames_CSharp
-  commentId: F:Loretta.CodeAnalysis.LanguageNames.CSharp
-  fullName: Loretta.CodeAnalysis.LanguageNames.CSharp
-  nameWithType: LanguageNames.CSharp
-- uid: Loretta.CodeAnalysis.LanguageNames.FSharp
-  name: FSharp
-  href: api/Loretta.CodeAnalysis.LanguageNames.html#Loretta_CodeAnalysis_LanguageNames_FSharp
-  commentId: F:Loretta.CodeAnalysis.LanguageNames.FSharp
-  fullName: Loretta.CodeAnalysis.LanguageNames.FSharp
-  nameWithType: LanguageNames.FSharp
 - uid: Loretta.CodeAnalysis.LanguageNames.Lua
   name: Lua
   href: api/Loretta.CodeAnalysis.LanguageNames.html#Loretta_CodeAnalysis_LanguageNames_Lua
   commentId: F:Loretta.CodeAnalysis.LanguageNames.Lua
   fullName: Loretta.CodeAnalysis.LanguageNames.Lua
   nameWithType: LanguageNames.Lua
-- uid: Loretta.CodeAnalysis.LanguageNames.VisualBasic
-  name: VisualBasic
-  href: api/Loretta.CodeAnalysis.LanguageNames.html#Loretta_CodeAnalysis_LanguageNames_VisualBasic
-  commentId: F:Loretta.CodeAnalysis.LanguageNames.VisualBasic
-  fullName: Loretta.CodeAnalysis.LanguageNames.VisualBasic
-  nameWithType: LanguageNames.VisualBasic
 - uid: Loretta.CodeAnalysis.LocalizableResourceString
   name: LocalizableResourceString
   href: api/Loretta.CodeAnalysis.LocalizableResourceString.html
