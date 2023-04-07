@@ -25,8 +25,6 @@ namespace Loretta.Generators.SyntaxFactsGenerator
 
             context.RegisterSourceOutput(symbolsProvider, (context, symbols) =>
             {
-                OptimizedSwitch.ResetId();
-
                 var kinds = KindUtils.ExtractKindList(context, symbols);
                 if (kinds is null)
                     throw new Exception("KindList is null");
@@ -300,7 +298,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
 
         private static void GenerateGetKeywordKind(KindList kinds, SourceWriter writer)
         {
-            var optimized = new OptimizedSwitch();
+            using var optimized = new OptimizedSwitch();
             foreach (var keyword in kinds.Keywords.OrderBy(kind => kind.Field.Name))
             {
                 optimized.AddClause(keyword.TokenInfo!.Value.Text!, writer =>
