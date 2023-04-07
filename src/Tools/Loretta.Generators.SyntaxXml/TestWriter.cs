@@ -395,7 +395,7 @@ namespace Loretta.Generators.SyntaxXml
             WriteLine("var newNode = rewriter.Visit(oldNode);");
 
             WriteLine();
-            WriteLine("if(!oldNode.IsMissing)");
+            WriteLine("if (!oldNode.IsMissing)");
             OpenBlock();
             WriteLine("Assert.NotEqual(oldNode, newNode);");
             CloseBlock();

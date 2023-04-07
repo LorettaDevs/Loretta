@@ -205,7 +205,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
             writer.WriteLine("/// A positive number indicating the binary operator precedence or 0 if the kind is not a binary operator.");
             writer.WriteLine("/// </returns>");
             using (writer.CurlyIndenter("public static int GetUnaryOperatorPrecedence(SyntaxKind kind)"))
-            using (writer.CurlyIndenter("switch(kind)"))
+            using (writer.CurlyIndenter("switch (kind)"))
             {
                 var groups = kinds.UnaryOperators.GroupBy(kind => kind.UnaryOperatorInfo!.Value.Precedence);
 
@@ -255,7 +255,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
             writer.WriteLine("/// A positive number indicating the binary operator precedence or 0 if the kind is not a binary operator.");
             writer.WriteLine("/// </returns>");
             using (writer.CurlyIndenter("public static int GetBinaryOperatorPrecedence(SyntaxKind kind)"))
-            using (writer.CurlyIndenter("switch(kind)"))
+            using (writer.CurlyIndenter("switch (kind)"))
             {
                 var groups = kinds.BinaryOperators.GroupBy(kind => kind.BinaryOperatorInfo!.Value.Precedence);
 
@@ -401,7 +401,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
             writer.WriteLine("/// <param name=\"kind\"></param>");
             writer.WriteLine("/// <returns></returns>");
             using (writer.CurlyIndenter($"public static bool Is{typeName}(SyntaxKind kind)"))
-            using (writer.CurlyIndenter("switch(kind)"))
+            using (writer.CurlyIndenter("switch (kind)"))
             {
                 var filteredKinds = kinds.Where(filter);
                 foreach (var keyword in filteredKinds.OrderBy(kw => kw.Field.Name))
