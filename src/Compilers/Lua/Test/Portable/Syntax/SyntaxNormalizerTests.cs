@@ -1234,7 +1234,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             AssertNormalizeCore(root, "print(1, 2)");
         }
 
-
         #region Class Implementation Details
 
         private static void AssertNormalizeCore(SyntaxNode node, string expected)

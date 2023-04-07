@@ -2,3 +2,9 @@
 
 # RS2008: Enable analyzer release tracking (our generators are private so no need)
 dotnet_diagnostic.RS2008.severity = none
+
+# IDE0057: Use range operator (Not available in .NET Standard 2.0)
+dotnet_diagnostic.IDE0057.severity = none
+
+# CA1847: Use string.Contains(char) instead of string.Contains(string) with single characters (Not available in .NET Standard 2.0)
+dotnet_diagnostic.CA1847.severity = none
