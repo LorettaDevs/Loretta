@@ -9,24 +9,6 @@ namespace Loretta.CodeAnalysis
     public static class LanguageNames
     {
         /// <summary>
-        /// The common name used for the C# language.
-        /// </summary>
-        public const string CSharp = "C#";
-
-        /// <summary>
-        /// The common name used for the Visual Basic language.
-        /// </summary>
-        public const string VisualBasic = "Visual Basic";
-
-        /// <summary>
-        /// The common name used for the F# language.
-        /// </summary>
-        /// <remarks>
-        /// F# is not a supported compile target for the Roslyn compiler.
-        /// </remarks>
-        public const string FSharp = "F#";
-
-        /// <summary>
         /// The common name used for the Lua language.
         /// </summary>
         public const string Lua = "Lua";

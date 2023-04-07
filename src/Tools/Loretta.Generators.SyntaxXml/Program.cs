@@ -87,7 +87,7 @@ namespace Loretta.Generators.SyntaxXml
         {
             var reader = XmlReader.Create(inputFile, new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit });
             var serializer = new XmlSerializer(typeof(Tree));
-            return (Tree)serializer.Deserialize(reader);
+            return (Tree) serializer.Deserialize(reader);
         }
 
         private static int WriteGrammarFile(string inputFile, string outputLocation)

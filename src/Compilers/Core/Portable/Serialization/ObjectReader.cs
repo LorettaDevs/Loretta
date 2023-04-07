@@ -19,7 +19,7 @@ namespace Loretta.Utilities
     internal sealed partial class ObjectReader : IDisposable
     {
         /// <summary>
-        /// We start the version at something reasonably random.  That way an older file, with 
+        /// We start the version at something reasonably random.  That way an older file, with
         /// some random start-bytes, has little chance of matching our version.  When incrementing
         /// this version, just change VersionByte2.
         /// </summary>
@@ -37,8 +37,8 @@ namespace Loretta.Utilities
 
         /// <summary>
         /// Copy of the global binder data that maps from Types to the appropriate reading-function
-        /// for that type.  Types register functions directly with <see cref="ObjectBinder"/>, but 
-        /// that means that <see cref="ObjectBinder"/> is both static and locked.  This gives us 
+        /// for that type.  Types register functions directly with <see cref="ObjectBinder"/>, but
+        /// that means that <see cref="ObjectBinder"/> is both static and locked.  This gives us
         /// local copy we can work with without needing to worry about anyone else mutating.
         /// </summary>
         private readonly ObjectBinderSnapshot _binderSnapshot;
@@ -64,7 +64,7 @@ namespace Loretta.Utilities
             _objectReferenceMap = ReaderReferenceMap<object>.Create();
             _stringReferenceMap = ReaderReferenceMap<string>.Create();
 
-            // Capture a copy of the current static binder state.  That way we don't have to 
+            // Capture a copy of the current static binder state.  That way we don't have to
             // access any locks while we're doing our processing.
             _binderSnapshot = ObjectBinder.GetSnapshot();
 
@@ -291,7 +291,7 @@ namespace Loretta.Utilities
         /// <summary>
         /// A reference-id to object map, that can share base data efficiently.
         /// </summary>
-        private struct ReaderReferenceMap<T> : IDisposable
+        private readonly struct ReaderReferenceMap<T> : IDisposable
             where T : class
         {
             private readonly SegmentedList<T> _values;
@@ -647,10 +647,10 @@ namespace Loretta.Utilities
         private static Exception DeserializationReadIncorrectNumberOfValuesException(string typeName) =>
             throw new InvalidOperationException(string.Format(Resources.Deserialization_reader_for_0_read_incorrect_number_of_values, typeName));
 
-        private static Exception NoSerializationTypeException(string typeName) =>
-            new InvalidOperationException(string.Format(Resources.The_type_0_is_not_understood_by_the_serialization_binder, typeName));
+        private static InvalidOperationException NoSerializationTypeException(string typeName) =>
+            new(string.Format(Resources.The_type_0_is_not_understood_by_the_serialization_binder, typeName));
 
-        private static Exception NoSerializationReaderException(string typeName) =>
-            new InvalidOperationException(string.Format(Resources.Cannot_serialize_type_0, typeName));
+        private static InvalidOperationException NoSerializationReaderException(string typeName) =>
+            new(string.Format(Resources.Cannot_serialize_type_0, typeName));
     }
 }

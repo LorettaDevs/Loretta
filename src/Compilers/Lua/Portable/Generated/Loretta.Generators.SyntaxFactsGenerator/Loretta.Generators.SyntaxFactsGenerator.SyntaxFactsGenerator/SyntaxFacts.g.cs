@@ -32,7 +32,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </returns>
         public static int GetUnaryOperatorPrecedence(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.TildeToken:
                 case SyntaxKind.NotKeyword:
@@ -72,7 +72,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// </returns>
         public static int GetBinaryOperatorPrecedence(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.HatToken:
                     return 14;
@@ -915,7 +915,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsTrivia(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.EndOfLineTrivia:
                 case SyntaxKind.MultiLineCommentTrivia:
@@ -937,7 +937,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsKeyword(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.AndKeyword:
                 case SyntaxKind.BreakKeyword:
@@ -979,7 +979,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsToken(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.AmpersandAmpersandToken:
                 case SyntaxKind.AmpersandToken:
@@ -1072,7 +1072,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsOperatorToken(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.AmpersandAmpersandToken:
                 case SyntaxKind.AmpersandToken:
@@ -1114,7 +1114,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsUnaryOperatorToken(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.BangToken:
                 case SyntaxKind.HashToken:
@@ -1134,7 +1134,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsBinaryOperatorToken(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.AmpersandAmpersandToken:
                 case SyntaxKind.AmpersandToken:
@@ -1175,7 +1175,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsCompoundAssignmentOperatorToken(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.DotDotEqualsToken:
                 case SyntaxKind.HatEqualsToken:
@@ -1213,7 +1213,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsLiteralToken(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.FalseKeyword:
                 case SyntaxKind.HashStringLiteralToken:
@@ -1249,7 +1249,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsFunctionExpressionOrDeclaration(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.AnonymousFunctionExpression:
                 case SyntaxKind.FunctionDeclarationStatement:
@@ -1279,7 +1279,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsVariableExpression(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.ElementAccessExpression:
                 case SyntaxKind.IdentifierName:
@@ -1309,7 +1309,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsUnaryExpression(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.BitwiseNotExpression:
                 case SyntaxKind.LengthExpression:
@@ -1341,7 +1341,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsBinaryExpression(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.AddExpression:
                 case SyntaxKind.BitwiseAndExpression:
@@ -1409,7 +1409,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <returns></returns>
         public static bool IsCompoundAssignmentStatement(SyntaxKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case SyntaxKind.AddAssignmentStatement:
                 case SyntaxKind.ConcatAssignmentStatement:

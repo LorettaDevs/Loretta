@@ -15,7 +15,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
         public void IncrementalParsing_DoesNotBreak_WithInvalidCastException()
         {
             SyntaxNode firstIdent, secondIdent;
-            SyntaxToken firstIdentToken, secondIdentToken;
             var initial = ParseWithRoundTripCheck("""
                 local a = b
                 local b = c
@@ -33,7 +32,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                         {
                             firstIdent = N(SyntaxKind.IdentifierName).AsNode()!;
                             {
-                                firstIdentToken = N(SyntaxKind.IdentifierToken, "a").AsToken();
+                                N(SyntaxKind.IdentifierToken, "a").AsToken();
                             }
                         }
                         N(SyntaxKind.EqualsValuesClause);
@@ -85,7 +84,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                         {
                             secondIdent = N(SyntaxKind.IdentifierName).AsNode()!;
                             {
-                                secondIdentToken = N(SyntaxKind.IdentifierToken, "a").AsToken();
+                                N(SyntaxKind.IdentifierToken, "a").AsToken();
                             }
                         }
                         N(SyntaxKind.EqualsValuesClause);

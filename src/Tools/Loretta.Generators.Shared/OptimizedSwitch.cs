@@ -7,11 +7,12 @@ namespace Loretta.Generators
 
     internal class OptimizedSwitch
     {
-        private static int s_id = -1;
+        public OptimizedSwitch(int id = 0)
+        {
+            Id = id;
+        }
 
-        public static void ResetId() => s_id = -1;
-
-        public int Id { get; } = Interlocked.Increment(ref s_id);
+        public int Id { get; }
         public List<OptimizedSwitchClause> Clauses { get; } = new();
         public Action<SourceWriter>? DefaultBodyWriter { get; set; }
 

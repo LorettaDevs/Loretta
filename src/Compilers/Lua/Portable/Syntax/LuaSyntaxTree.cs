@@ -205,6 +205,7 @@ namespace Loretta.CodeAnalysis.Lua
             return WithChanges(newText, new[] { new TextChangeRange(new TextSpan(0, Length), newText.Length) });
         }
 
+        [SuppressMessage("Performance", "CA1859: Use concrete types when possible for improved performance", Justification = "It will get casted eventually regardless.")]
         private SyntaxTree WithChanges(SourceText newText, IReadOnlyList<TextChangeRange> changes)
         {
             if (newText is null) throw new ArgumentNullException(nameof(newText));

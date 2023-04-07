@@ -220,7 +220,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
-        private StatementSyntax ParseTypeDeclarationStatement()
+        private TypeDeclarationStatementSyntax ParseTypeDeclarationStatement()
         {
             SyntaxToken? exportKeyword = null;
             if (CurrentToken.ContextualKind is SyntaxKind.ExportKeyword)

@@ -9,11 +9,11 @@ namespace Loretta.Generators.SyntaxXml
     {
         private readonly TextWriter _writer;
         private readonly Tree _tree;
-        private readonly IDictionary<string, string> _parentMap;
+        private readonly Dictionary<string, string> _parentMap;
         private readonly ILookup<string, string> _childMap;
 
-        private readonly IDictionary<string, Node> _nodeMap;
-        private readonly IDictionary<string, TreeType> _typeMap;
+        private readonly Dictionary<string, Node> _nodeMap;
+        private readonly Dictionary<string, TreeType> _typeMap;
         private const int INDENT_SIZE = 4;
         private int _indentLevel;
         private bool _needIndent = true;

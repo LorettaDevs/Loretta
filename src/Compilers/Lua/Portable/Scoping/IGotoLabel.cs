@@ -32,7 +32,7 @@ namespace Loretta.CodeAnalysis.Lua
 
     internal class GotoLabel : IGotoLabelInternal
     {
-        private readonly IList<GotoStatementSyntax> _jumps = new List<GotoStatementSyntax>();
+        private readonly List<GotoStatementSyntax> _jumps = new();
 
         public GotoLabel(string name, GotoLabelStatementSyntax? label)
         {

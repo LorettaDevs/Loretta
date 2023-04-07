@@ -414,8 +414,8 @@ namespace Loretta.CodeAnalysis.Test.Utilities
         public static string GetAssertText(DiagnosticDescription[] expected, IEnumerable<Diagnostic> actual)
         {
             const int indentDepth = 4;
-            var includeDefaultSeverity = expected.Any() && expected.All(d => d.DefaultSeverity != null);
-            var includeEffectiveSeverity = expected.Any() && expected.All(d => d.EffectiveSeverity != null);
+            var includeDefaultSeverity = expected.Length > 0 && expected.All(d => d.DefaultSeverity != null);
+            var includeEffectiveSeverity = expected.Length > 0 && expected.All(d => d.EffectiveSeverity != null);
 
             if (IsSortedOrEmpty(expected))
             {

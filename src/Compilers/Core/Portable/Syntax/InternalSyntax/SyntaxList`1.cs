@@ -3,7 +3,7 @@
 
 namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 {
-    internal partial struct SyntaxList<TNode> : IEquatable<SyntaxList<TNode>>
+    internal readonly partial struct SyntaxList<TNode> : IEquatable<SyntaxList<TNode>>
         where TNode : GreenNode
     {
         private readonly GreenNode? _node;

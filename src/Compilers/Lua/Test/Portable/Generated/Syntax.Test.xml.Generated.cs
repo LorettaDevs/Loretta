@@ -1187,7 +1187,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1213,7 +1213,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1239,7 +1239,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1265,7 +1265,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1291,7 +1291,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1317,7 +1317,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1343,7 +1343,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1369,7 +1369,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1395,7 +1395,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1421,7 +1421,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1447,7 +1447,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1473,7 +1473,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1499,7 +1499,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1525,7 +1525,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1551,7 +1551,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1577,7 +1577,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1603,7 +1603,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1629,7 +1629,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1655,7 +1655,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1681,7 +1681,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1707,7 +1707,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1733,7 +1733,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1759,7 +1759,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1785,7 +1785,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1811,7 +1811,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1837,7 +1837,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1863,7 +1863,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1889,7 +1889,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1915,7 +1915,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1941,7 +1941,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1967,7 +1967,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -1993,7 +1993,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2019,7 +2019,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2045,7 +2045,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2071,7 +2071,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2097,7 +2097,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2123,7 +2123,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2149,7 +2149,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2175,7 +2175,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2201,7 +2201,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2227,7 +2227,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2253,7 +2253,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2279,7 +2279,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2305,7 +2305,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2331,7 +2331,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2357,7 +2357,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2383,7 +2383,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2409,7 +2409,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2435,7 +2435,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2461,7 +2461,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2487,7 +2487,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2513,7 +2513,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2539,7 +2539,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2565,7 +2565,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2591,7 +2591,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2617,7 +2617,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2643,7 +2643,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2669,7 +2669,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2695,7 +2695,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2721,7 +2721,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2747,7 +2747,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2773,7 +2773,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2799,7 +2799,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2825,7 +2825,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2851,7 +2851,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2877,7 +2877,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2903,7 +2903,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2929,7 +2929,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2955,7 +2955,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -2981,7 +2981,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -3007,7 +3007,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -3033,7 +3033,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -3059,7 +3059,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -3085,7 +3085,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -3111,7 +3111,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -3137,7 +3137,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4336,7 +4336,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4362,7 +4362,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4388,7 +4388,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4414,7 +4414,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4440,7 +4440,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4466,7 +4466,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4492,7 +4492,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4518,7 +4518,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4544,7 +4544,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4570,7 +4570,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4596,7 +4596,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4622,7 +4622,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4648,7 +4648,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4674,7 +4674,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4700,7 +4700,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4726,7 +4726,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4752,7 +4752,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4778,7 +4778,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4804,7 +4804,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4830,7 +4830,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4856,7 +4856,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4882,7 +4882,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4908,7 +4908,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4934,7 +4934,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4960,7 +4960,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -4986,7 +4986,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5012,7 +5012,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5038,7 +5038,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5064,7 +5064,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5090,7 +5090,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5116,7 +5116,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5142,7 +5142,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5168,7 +5168,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5194,7 +5194,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5220,7 +5220,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5246,7 +5246,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5272,7 +5272,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5298,7 +5298,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5324,7 +5324,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5350,7 +5350,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5376,7 +5376,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5402,7 +5402,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5428,7 +5428,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5454,7 +5454,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5480,7 +5480,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5506,7 +5506,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5532,7 +5532,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5558,7 +5558,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5584,7 +5584,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5610,7 +5610,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5636,7 +5636,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5662,7 +5662,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5688,7 +5688,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5714,7 +5714,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5740,7 +5740,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5766,7 +5766,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5792,7 +5792,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5818,7 +5818,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5844,7 +5844,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5870,7 +5870,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5896,7 +5896,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5922,7 +5922,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5948,7 +5948,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -5974,7 +5974,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6000,7 +6000,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6026,7 +6026,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6052,7 +6052,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6078,7 +6078,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6104,7 +6104,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6130,7 +6130,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6156,7 +6156,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6182,7 +6182,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6208,7 +6208,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6234,7 +6234,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6260,7 +6260,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }
@@ -6286,7 +6286,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var rewriter = new TokenDeleteRewriter();
             var newNode = rewriter.Visit(oldNode);
 
-            if(!oldNode.IsMissing)
+            if (!oldNode.IsMissing)
             {
                 Assert.NotEqual(oldNode, newNode);
             }

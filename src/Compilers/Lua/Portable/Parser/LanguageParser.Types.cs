@@ -463,7 +463,7 @@
             }
         }
 
-        private TypeSyntax ParseTypeofType()
+        private TypeofTypeSyntax ParseTypeofType()
         {
             var typeofKeyword = EatContextualToken(SyntaxKind.TypeofKeyword);
             var openParenthesis = EatToken(SyntaxKind.OpenParenthesisToken);

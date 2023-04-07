@@ -33,7 +33,7 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector.Mathematics
             if (sortedValues.Count < 1)
                 return;
 
-            var quartiles = Quartiles.FromSorted(sortedValues);
+            var quartiles = Quartiles.Create(sortedValues);
             Min = quartiles.Min;
             Q1 = quartiles.Q1;
             Median = quartiles.Median;
@@ -42,20 +42,20 @@ namespace Loretta.CodeAnalysis.Lua.StatisticsCollector.Mathematics
 
             Mean = sortedValues.Average();
 
-            var tukey = TukeyOutlierDetector.FromQuartiles(quartiles);
+            var tukey = TukeyOutlierDetector.Create(quartiles);
             LowerFence = tukey.LowerFence;
             UpperFence = tukey.UpperFence;
 
-            P0 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.0);
-            P25 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.25);
-            P50 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.50);
-            P67 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.67);
-            P80 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.80);
-            P85 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.85);
-            P90 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.90);
-            P95 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.95);
-            P99 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 0.99);
-            P100 = SimpleQuantileEstimator.Instance.GetQuantileFromSorted(sortedValues, 1.00);
+            P0 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.0);
+            P25 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.25);
+            P50 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.50);
+            P67 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.67);
+            P80 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.80);
+            P85 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.85);
+            P90 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.90);
+            P95 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.95);
+            P99 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 0.99);
+            P100 = SimpleQuantileEstimator.Instance.Quantile(sortedValues, 1.00);
         }
     }
 }
