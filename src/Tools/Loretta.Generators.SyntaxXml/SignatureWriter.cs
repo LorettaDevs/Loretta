@@ -56,14 +56,13 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteType(TreeType node)
         {
-            if (node is AbstractNode)
+            if (node is AbstractNode and)
             {
-                AbstractNode nd = (AbstractNode)node;
                 _writer.WriteLine("  public abstract partial class {0} : {1}", node.Name, node.Base);
                 _writer.WriteLine("  {");
-                for (int i = 0, n = nd.Fields.Count; i < n; i++)
+                for (int i = 0, n = and.Fields.Count; i < n; i++)
                 {
-                    var field = nd.Fields[i];
+                    var field = and.Fields[i];
                     if (IsNodeOrNodeList(field.Type))
                     {
                         _writer.WriteLine("    public abstract {0}{1} {2} {{ get; }}", "", field.Type, field.Name);
@@ -71,9 +70,8 @@ namespace Loretta.Generators.SyntaxXml
                 }
                 _writer.WriteLine("  }");
             }
-            else if (node is Node)
+            else if (node is Node nd)
             {
-                Node nd = (Node)node;
                 _writer.WriteLine("  public partial class {0} : {1}", node.Name, node.Base);
                 _writer.WriteLine("  {");
 
@@ -109,24 +107,16 @@ namespace Loretta.Generators.SyntaxXml
             }
         }
 
-        private bool IsSeparatedNodeList(string typeName)
-        {
-            return typeName.StartsWith("SeparatedSyntaxList<", StringComparison.Ordinal);
-        }
+        private static bool IsSeparatedNodeList(string typeName) =>
+            typeName.StartsWith("SeparatedSyntaxList<", StringComparison.Ordinal);
 
-        private bool IsNodeList(string typeName)
-        {
-            return typeName.StartsWith("SyntaxList<", StringComparison.Ordinal);
-        }
+        private static bool IsNodeList(string typeName) =>
+            typeName.StartsWith("SyntaxList<", StringComparison.Ordinal);
 
-        public bool IsNodeOrNodeList(string typeName)
-        {
-            return IsNode(typeName) || IsNodeList(typeName) || IsSeparatedNodeList(typeName);
-        }
+        public bool IsNodeOrNodeList(string typeName) =>
+            IsNode(typeName) || IsNodeList(typeName) || IsSeparatedNodeList(typeName);
 
-        private bool IsNode(string typeName)
-        {
-            return _typeMap.ContainsKey(typeName);
-        }
+        private bool IsNode(string typeName) =>
+            _typeMap.ContainsKey(typeName);
     }
 }
