@@ -1,20 +1,15 @@
-﻿using System.Collections.Concurrent;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Microsoft.CodeAnalysis.CSharp;
 
 namespace Loretta.Generators
 {
     internal readonly record struct OptimizedSwitchClause(string Key, Action<SourceWriter> BodyWriter);
 
-    internal class OptimizedSwitch : IDisposable
+    internal class OptimizedSwitch
     {
-        private static readonly ConcurrentStack<OptimizedSwitch> s_switches = new();
-        private bool _disposedValue = false;
-
-        public OptimizedSwitch()
+        public OptimizedSwitch(int id = 0)
         {
-            Id = s_switches.Count;
-            s_switches.Push(this);
+            Id = id;
         }
 
         public int Id { get; }
@@ -230,26 +225,6 @@ namespace Loretta.Generators
                     writer.Write(skipCheckName);
                     writer.WriteLine(" = true;");
                 }
-            }
-        }
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (!s_switches.TryPop(out var sw))
-                    throw new Exception("Queue got popped too many times.");
-                if (ReferenceEquals(this, sw))
-                    throw new Exception("Popped switch was not the current one.");
-                _disposedValue = true;
             }
         }
 

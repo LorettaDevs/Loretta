@@ -298,7 +298,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
 
         private static void GenerateGetKeywordKind(KindList kinds, SourceWriter writer)
         {
-            using var optimized = new OptimizedSwitch();
+            var optimized = new OptimizedSwitch();
             foreach (var keyword in kinds.Keywords.OrderBy(kind => kind.Field.Name))
             {
                 optimized.AddClause(keyword.TokenInfo!.Value.Text!, writer =>
