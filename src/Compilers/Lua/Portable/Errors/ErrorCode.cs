@@ -34,7 +34,7 @@
         ERR_EscapeTooLarge = 26,
         ERR_HexDigitExpected = 27,
         ERR_UnicodeEscapesNotSupportedLuaInVersion = 28,
-        ERR_HashStringsNotSupportedInVersion = 29,
+        ERR_BackTickStringNotSupportedInVersion = 29,
         ERR_NumberSuffixNotSupportedInVersion = 30,
         ERR_LuajitSuffixInFloat = 31,
         ERR_Lua51NestingInLongString = 32,

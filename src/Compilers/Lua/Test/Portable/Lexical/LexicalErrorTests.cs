@@ -411,18 +411,18 @@ local str4 = 'hello\xFFthere'
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-        public void Lexer_EmitsDiagnosticsWhen_HashStringsAreFound_And_LuaSyntaxOptionsAcceptHashStringsIsFalse()
+        public void Lexer_EmitsDiagnosticsWhen_BackTickStringsAreFound_And_LuaSyntaxOptionsAcceptHashStringsIsFalse_And_LuaSyntaxOptionsAcceptInterpolatedStringsIsFalse()
         {
             const string source = "local a = `hello`\r\n" +
                 "local b = `hi!`";
-            var options = LuaSyntaxOptions.All.With(acceptHashStrings: false);
+            var options = LuaSyntaxOptions.All.With(acceptInterpolatedStrings: false, acceptHashStrings: false);
             ParseAndValidate(source, options,
-                // (1,11): error LUA0029: Hash strings are not supported in this lua version
+                // (1,11): error LUA0029: This Lua version does not support interpolated strings nor hash strings
                 // local a = `hello`
-                Diagnostic(ErrorCode.ERR_HashStringsNotSupportedInVersion, "`hello`").WithLocation(1, 11),
-                // (2,11): error LUA0029: Hash strings are not supported in this lua version
+                Diagnostic(ErrorCode.ERR_BackTickStringNotSupportedInVersion, "`hello`").WithLocation(1, 11),
+                // (2,11): error LUA0029: This Lua version does not support interpolated strings nor hash strings
                 // local b = `hi!`
-                Diagnostic(ErrorCode.ERR_HashStringsNotSupportedInVersion, "`hi!`").WithLocation(2, 11));
+                Diagnostic(ErrorCode.ERR_BackTickStringNotSupportedInVersion, "`hi!`").WithLocation(2, 11));
         }
 
         [Fact]
