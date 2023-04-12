@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Numerics;
+using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Text;
 using static Tsu.Option;
@@ -285,17 +286,28 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
             #region Strings
 
-            string shortStringContentText;
-            string shortStringContentValue;
+            var shortStringContentText = "hi\\n\\r\\b\\f\\n\\v\\u{D800}\\u{10FFFF}\\xF\\xFF\\z ";
+            var shortStringContentValue = "hi\n\r\b\f\n\vu{D800}u{10FFFF}xFxFFz ";
+
+            if (options.AcceptHexEscapesInStrings)
+            {
+                shortStringContentValue = shortStringContentValue.Replace("xFxFF", "\xF\xFF");
+            } 
+
+            if (options.AcceptUnicodeEscape)
+            {
+                shortStringContentValue = shortStringContentValue.Replace("u{D800}u{10FFFF}", "\uD800\U0010FFFF");
+            }
+
+            if (options.AcceptWhitespaceEscape)
+            {
+                shortStringContentValue = shortStringContentValue.Replace("z ", "");
+            }
 
             if (options.AcceptInvalidEscapes)
             {
-                shortStringContentText = "hi\\n\\r\\b\\f\\n\\v\\u{D800}\\u{10FFFF}\\xF\\xFF";
-                shortStringContentValue = "hi\n\r\b\f\n\vu{D800}u{10FFFF}xFxFF";
-            } else
-            {
-                shortStringContentText = "hi\\n\\r\\b\\f\\n\\v\\u{D800}\\u{10FFFF}\\xF\\xFF";
-                shortStringContentValue = "hi\n\r\b\f\n\v\uD800\U0010FFFF\xF\xFF";
+                shortStringContentText += "\\l";
+                shortStringContentValue += "l";
             }
 
             // Short strings
@@ -324,14 +336,10 @@ fourth line \xFF.";
                     longStringContent);
             }
 
-            if (!options.AcceptInvalidEscapes)
-            {
-                yield return new ShortToken(
-                    SyntaxKind.HashStringLiteralToken,
-                        $"`{shortStringContentText}`",
-                        Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
-            }
-
+            yield return new ShortToken(
+                SyntaxKind.HashStringLiteralToken,
+                    $"`{shortStringContentText}`",
+                    Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
 
             #endregion Strings
 
