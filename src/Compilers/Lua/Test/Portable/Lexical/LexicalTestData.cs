@@ -299,7 +299,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 shortStringContentValue = shortStringContentValue.Replace("u{D800}u{10FFFF}", "\uD800\U0010FFFF");
             }
 
-            if (options.AcceptWhitespaceEscape)
+            if (options.AcceptWhitespaceEscape || !options.AcceptInvalidEscapes)
             {
                 shortStringContentValue = shortStringContentValue.Replace("z ", "");
             }
