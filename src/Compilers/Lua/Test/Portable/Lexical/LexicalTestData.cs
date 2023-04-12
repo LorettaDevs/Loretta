@@ -285,10 +285,18 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
             #region Strings
 
-            const string shortStringContentText = "hi\\\n\\\r\\\r\n\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\"\\0\\10"
-                + "\\255\\xF\\xFF\\z    \t\t\r\n\\t\\r\\n\\u{F}\\u{FF}\\u{FFF}\\u{D800}\\u{10FFFF}";
-            const string shortStringContentValue = "hi\n\r\r\n\a\b\f\n\r\t\v\\'\"\0\xA"
-                + "\xFF\xF\xFF\t\r\n\u000F\u00FF\u0FFF\uD800\U0010FFFF";
+            string shortStringContentText;
+            string shortStringContentValue;
+
+            if (options.AcceptInvalidEscapes)
+            {
+                shortStringContentText = "hi\\n\\r\\b\\f\\n\\v\\u{D800}\\u{10FFFF}\\xF\\xFF";
+                shortStringContentValue = "hi\n\r\b\f\n\vu{D800}u{10FFFF}xFxFF";
+            } else
+            {
+                shortStringContentText = "hi\\n\\r\\b\\f\\n\\v\\u{D800}\\u{10FFFF}\\xF\\xFF";
+                shortStringContentValue = "hi\n\r\b\f\n\v\uD800\U0010FFFF\xF\xFF";
+            }
 
             // Short strings
             foreach (var quote in new[] { '\'', '"' })
@@ -316,10 +324,14 @@ fourth line \xFF.";
                     longStringContent);
             }
 
-            yield return new ShortToken(
-                SyntaxKind.HashStringLiteralToken,
-                $"`{shortStringContentText}`",
-                Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
+            if (!options.AcceptInvalidEscapes)
+            {
+                yield return new ShortToken(
+                    SyntaxKind.HashStringLiteralToken,
+                        $"`{shortStringContentText}`",
+                        Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
+            }
+
 
             #endregion Strings
 
