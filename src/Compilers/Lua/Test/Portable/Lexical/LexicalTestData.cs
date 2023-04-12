@@ -338,8 +338,8 @@ fourth line \xFF.";
 
             yield return new ShortToken(
                 SyntaxKind.HashStringLiteralToken,
-                    $"`{shortStringContentText}`",
-                    Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
+                $"`{shortStringContentText}`",
+                Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.ToLowerInvariant().AsSpan()));
 
             #endregion Strings
 
