@@ -89,7 +89,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                                 break;
 
                             case 'z':
-                                if (_options.SyntaxOptions.AcceptInvalidEscapes && _options.SyntaxOptions.AcceptWhitespaceEscape)
+                                if (_options.SyntaxOptions.AcceptInvalidEscapes && !_options.SyntaxOptions.AcceptWhitespaceEscape)
                                     goto default;
 
                                 TextWindow.AdvanceChar();
@@ -120,7 +120,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                             case 'x':
                             {
-                                if (_options.SyntaxOptions.AcceptInvalidEscapes && _options.SyntaxOptions.AcceptHexEscapesInStrings)
+                                if (_options.SyntaxOptions.AcceptInvalidEscapes && !_options.SyntaxOptions.AcceptHexEscapesInStrings)
                                     goto default;
 
                                 TextWindow.AdvanceChar();
@@ -135,7 +135,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                             case 'u':
                             {
-                                if (_options.SyntaxOptions.AcceptInvalidEscapes && _options.SyntaxOptions.AcceptUnicodeEscape)
+                                if (_options.SyntaxOptions.AcceptInvalidEscapes && !_options.SyntaxOptions.AcceptUnicodeEscape)
                                     goto default;
                                     
                                 TextWindow.AdvanceChar();
