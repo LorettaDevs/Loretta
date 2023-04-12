@@ -39,7 +39,7 @@ Write-Output "Next Stable Release: $unreleasedVersion"
 Write-Output "Latest Nightly Release: $latestNightlyVersion"
 Write-Output "Next Nightly Version: $nightlyVersionToPublish (no v: $($nightlyVersionToPublish.Substring(1)))"
 
-Write-Output "::set-output name=VERSION::$nightlyVersionToPublish"
-Write-Output "::set-output name=NO_PREFIX_VERSION::$($nightlyVersionToPublish.Substring(1))"
-Write-Output "::set-output name=HAS_NIGHTLY::yes"
+"VERSION=$nightlyVersionToPublish" >> $env:GITHUB_OUTPUT
+"NO_PREFIX_VERSION=$($nightlyVersionToPublish.Substring(1))" >> $env:GITHUB_OUTPUT
+"HAS_NIGHTLY=yes" >> $env:GITHUB_OUTPUT
 exit 0
