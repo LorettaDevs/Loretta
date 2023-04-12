@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Numerics;
+using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Text;
 using static Tsu.Option;
@@ -285,10 +286,29 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
             #region Strings
 
-            const string shortStringContentText = "hi\\\n\\\r\\\r\n\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\"\\0\\10"
-                + "\\255\\xF\\xFF\\z    \t\t\r\n\\t\\r\\n\\u{F}\\u{FF}\\u{FFF}\\u{D800}\\u{10FFFF}";
-            const string shortStringContentValue = "hi\n\r\r\n\a\b\f\n\r\t\v\\'\"\0\xA"
-                + "\xFF\xF\xFF\t\r\n\u000F\u00FF\u0FFF\uD800\U0010FFFF";
+            var shortStringContentText = "hi\\n\\r\\b\\f\\n\\v\\u{D800}\\u{10FFFF}\\xF\\xFF\\z ";
+            var shortStringContentValue = "hi\n\r\b\f\n\vu{D800}u{10FFFF}xFxFFz ";
+
+            if (options.AcceptHexEscapesInStrings || !options.AcceptInvalidEscapes)
+            {
+                shortStringContentValue = shortStringContentValue.Replace("xFxFF", "\xF\xFF");
+            } 
+
+            if (options.AcceptUnicodeEscape || !options.AcceptInvalidEscapes)
+            {
+                shortStringContentValue = shortStringContentValue.Replace("u{D800}u{10FFFF}", "\uD800\U0010FFFF");
+            }
+
+            if (options.AcceptWhitespaceEscape || !options.AcceptInvalidEscapes)
+            {
+                shortStringContentValue = shortStringContentValue.Replace("z ", "");
+            }
+
+            if (options.AcceptInvalidEscapes)
+            {
+                shortStringContentText += "\\l";
+                shortStringContentValue += "l";
+            }
 
             // Short strings
             foreach (var quote in new[] { '\'', '"' })
@@ -319,7 +339,7 @@ fourth line \xFF.";
             yield return new ShortToken(
                 SyntaxKind.HashStringLiteralToken,
                 $"`{shortStringContentText}`",
-                Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.AsSpan()));
+                Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.ToLowerInvariant().AsSpan()));
 
             #endregion Strings
 

@@ -89,6 +89,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                                 break;
 
                             case 'z':
+                                if (_options.SyntaxOptions.AcceptInvalidEscapes && !_options.SyntaxOptions.AcceptWhitespaceEscape)
+                                    goto default;
+
                                 TextWindow.AdvanceChar();
 
                                 while (CharUtils.IsWhitespace(TextWindow.PeekChar()))
@@ -117,6 +120,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                             case 'x':
                             {
+                                if (_options.SyntaxOptions.AcceptInvalidEscapes && !_options.SyntaxOptions.AcceptHexEscapesInStrings)
+                                    goto default;
+
                                 TextWindow.AdvanceChar();
                                 var parsedCharInteger = parseHexadecimalEscapeInteger(escapeStart);
                                 if (parsedCharInteger != char.MaxValue)
@@ -129,6 +135,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                             case 'u':
                             {
+                                if (_options.SyntaxOptions.AcceptInvalidEscapes && !_options.SyntaxOptions.AcceptUnicodeEscape)
+                                    goto default;
+                                    
                                 TextWindow.AdvanceChar();
                                 var parsed = parseUnicodeEscape(escapeStart);
                                 _builder.Append(parsed);
