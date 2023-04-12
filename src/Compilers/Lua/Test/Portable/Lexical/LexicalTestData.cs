@@ -289,7 +289,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             var shortStringContentText = "hi\\n\\r\\b\\f\\n\\v\\u{D800}\\u{10FFFF}\\xF\\xFF\\z ";
             var shortStringContentValue = "hi\n\r\b\f\n\vu{D800}u{10FFFF}xFxFFz ";
 
-            if (options.AcceptHexEscapesInStrings)
+            if (options.AcceptHexEscapesInStrings || !options.AcceptInvalidEscapes)
             {
                 shortStringContentValue = shortStringContentValue.Replace("xFxFF", "\xF\xFF");
             } 
