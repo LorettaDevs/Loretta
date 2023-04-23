@@ -112,7 +112,7 @@ File.AppendAllLines(args[0], new[]
 return 0;
 
 NO_CHANGES:
-File.AppendAllLines(args[0], new[] { "HAS_NIGHTLY::no" });
+File.AppendAllLines(args[0], new[] { "HAS_NIGHTLY=no" });
 return 0;
 
 static bool IsFileSignificant(string path)
