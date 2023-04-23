@@ -28,9 +28,15 @@ jobs:
         run: ./build/Extract-LatestChanges.ps1
         shell: pwsh
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
       - name: Generate Version Number
         id: gen-version
-        run: ./build/Extract-NightlyVersionInfo.ps1
+        run: |
+          dotnet run --project src/Tools/NightlyTool --verbosity quiet -- $env:GITHUB_OUTPUT
         shell: pwsh
 
       - name: Tag New Nightly
