@@ -62,13 +62,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\publish.yml = .github\workflows\publish.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Generators.ErrorFactsGenerator", "src\Tools\Loretta.Generators.ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj", "{805968F0-EDBC-4C0B-99CE-1E954DEDC136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Generators.ErrorFactsGenerator", "src\Tools\Generators\ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj", "{805968F0-EDBC-4C0B-99CE-1E954DEDC136}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Generators.SyntaxFactsGenerator", "src\Tools\Loretta.Generators.SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj", "{09F59E77-3C4D-4C86-AEE9-2323BB482698}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Generators.SyntaxFactsGenerator", "src\Tools\Generators\SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj", "{09F59E77-3C4D-4C86-AEE9-2323BB482698}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Generators.SyntaxXml", "src\Tools\Loretta.Generators.SyntaxXml\Loretta.Generators.SyntaxXml.csproj", "{7FAB6261-A9E1-4155-8B39-A40F754EABA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Generators.SyntaxXml", "src\Tools\Generators\SyntaxXml\Loretta.Generators.SyntaxXml.csproj", "{7FAB6261-A9E1-4155-8B39-A40F754EABA8}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Loretta.Generators.Shared", "src\Tools\Loretta.Generators.Shared\Loretta.Generators.Shared.shproj", "{3055DB67-5514-4975-A876-64C3B8FF5B13}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Loretta.Generators.Shared", "src\Tools\Generators\Shared\Loretta.Generators.Shared.shproj", "{3055DB67-5514-4975-A876-64C3B8FF5B13}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.UnusedStuffFinder", "src\Tools\Loretta.UnusedStuffFinder\Loretta.UnusedStuffFinder.csproj", "{5B5C741F-9BEA-4577-AC55-DA0F460B8ADD}"
 EndProject
@@ -280,8 +280,8 @@ Global
 		SolutionGuid = {44571FC4-549C-4D10-B763-5382A430C7AC}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		src\Tools\Loretta.Generators.Shared\Loretta.Generators.Shared.projitems*{09f59e77-3c4d-4c86-aee9-2323bb482698}*SharedItemsImports = 5
-		src\Tools\Loretta.Generators.Shared\Loretta.Generators.Shared.projitems*{3055db67-5514-4975-a876-64c3b8ff5b13}*SharedItemsImports = 13
-		src\Tools\Loretta.Generators.Shared\Loretta.Generators.Shared.projitems*{7fab6261-a9e1-4155-8b39-a40f754eaba8}*SharedItemsImports = 5
+		src\Tools\Generators\Shared\Loretta.Generators.Shared.projitems*{09f59e77-3c4d-4c86-aee9-2323bb482698}*SharedItemsImports = 5
+		src\Tools\Generators\Shared\Loretta.Generators.Shared.projitems*{3055db67-5514-4975-a876-64c3b8ff5b13}*SharedItemsImports = 13
+		src\Tools\Generators\Shared\Loretta.Generators.Shared.projitems*{7fab6261-a9e1-4155-8b39-a40f754eaba8}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

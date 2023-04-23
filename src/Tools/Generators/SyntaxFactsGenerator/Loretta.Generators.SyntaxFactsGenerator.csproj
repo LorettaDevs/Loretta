@@ -1,10 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="$(MSBuildThisFileDirectory)../../../build/BaseProject.props" />
+    <Import Project="$(MSBuildThisFileDirectory)../../../../build/BaseProject.props" />
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Properties\**" />
+      <EmbeddedResource Remove="Properties\**" />
+      <None Remove="Properties\**" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.5.0" />
@@ -14,6 +20,6 @@
         </PackageReference>
     </ItemGroup>
 
-    <Import Project="..\Loretta.Generators.Shared\Loretta.Generators.Shared.projitems" Label="Shared" />
+    <Import Project="..\Shared\Loretta.Generators.Shared.projitems" Label="Shared" />
 
 </Project>

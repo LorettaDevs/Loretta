@@ -33,9 +33,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="..\..\..\Tools\Loretta.Generators.SyntaxXml\Loretta.Generators.SyntaxXml.csproj">
+        <ProjectReference Include="..\..\..\Tools\Generators\ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\..\..\Tools\Generators\SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\..\..\Tools\Generators\SyntaxXml\Loretta.Generators.SyntaxXml.csproj">
             <OutputItemType>Analyzer</OutputItemType>
             <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
             <!-- The generator project currently builds as both a console app and a source generator,
