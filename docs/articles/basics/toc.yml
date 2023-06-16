@@ -1,2 +1,4 @@
+- name: Locations
+  href: locations.md
 - name: Source Text
   href: sourcetext.md
