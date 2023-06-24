@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Source Text | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Source Text | Loretta ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../../images/logo_32x32.png">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/logo.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="source-text">Source Text</h1>
+
+<p>The <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> is probably the first piece of Loretta anyone who starts using the library has to deal with.</p>
+<p>The primary duty of a SourceText instance is to hold a given source code file's contents in memory and provide access to them.
+It also provides the following features:</p>
+<ul>
+<li>Splits the file's contents into lines;</li>
+<li>Enables a checksum/hash to be created from the contents of the text;</li>
+<li>Detecting changes between 2 SourceText instances;</li>
+<li>Replacing parts of the text;</li>
+<li>Applying patches (<a class="xref" href="../../api/Loretta.CodeAnalysis.Text.TextChange.html"><code>TextChange</code></a>s) to create a new SourceText;</li>
+<li>Writing the contents of the SourceText to an output TextWriter.</li>
+</ul>
+<h2 id="creating-a-sourcetext">Creating a SourceText</h2>
+<p>To create a SourceText instance, one of the <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_From_"><code>SourceText.From</code></a> overloads can be used.
+These will load the contents into memory and allow the source text information such as lines and length to be read.</p>
+<p>Example:</p>
+<pre><code class="lang-cs">using Loretta.CodeAnaylsis.Text;
+
+SourceText text;
+using (var stream = File.OpenRead(&quot;file.lua&quot;))
+    text = SourceText.From(stream);
+
+Console.WriteLine(text.Lines.Count); // Number of lines in the file.
+</code></pre>
+<h2 id="text-navigation">Text Navigation</h2>
+<p>After loading the source code into memory, SourceText allows you to enumerate the lines the file contains.</p>
+<p>By using the <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_Lines"><code>SourceText.Lines</code></a> property, a <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.TextLineCollection.html"><code>TextLineCollection</code></a> can be obtained which can be used to enumerate the lines that the file contains as well as find the line a position belongs to using <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.TextLineCollection.html#Loretta_CodeAnalysis_Text_TextLineCollection_GetLineFromPosition_"><code>TextLineCollection.GetLineFromPosition</code></a>.</p>
+<h2 id="checksumhashing">Checksum/Hashing</h2>
+<p>SourceText allows one to calculate the checksum/hash for a given instance by providing the proper <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceHashAlgorithm.html"><code>SourceHashAlgorithm</code></a> to the <code>SourceText.From</code> overload and then calling the <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_GetChecksum"><code>SourceText.GetChecksum</code></a> method.</p>
+<p>The method will return an <code>ImmutableArray&lt;byte&gt;</code> which contains the hashed bytes of the file's contents. This can be turned into a hexadecimal string to show the user or outputted to some place for identification and validation afterwards.</p>
+<h2 id="change-detection">Change Detection</h2>
+<p>If you wish to take advantage of incremental parsing or want to find out which parts of a file have been changed, SourceText can help with that by allowing you to find out which sections of a file have changed.</p>
+<p>To get these changes, the <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_GetTextChanges_Loretta_CodeAnalysis_Text_SourceText_"><code>SourceText.GetTextChanges(SourceText)</code></a> method can be used which will then return a list of <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.TextChange.html"><code>TextChange</code>s</a>.</p>
+<p>A <code>TextChange</code> is basically composed of two values:</p>
+<ol>
+<li><code>Span</code>: The original location the text was in, represented by a <a class="xref" href="../../api/Loretta.CodeAnalysis.Text.TextSpan.html"><code>TextSpan</code></a>;</li>
+<li><code>NewText</code>: The text that the &quot;old&quot; text has gotten replaced with.</li>
+</ol>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/docs/articles/basics/sourcetext.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              <p>Copyright (c) LorettaDevs</p><p>Generated by <strong>DocFX</strong></p>
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

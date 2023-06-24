@@ -1,0 +1,1345 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Diagnostic
+   | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Diagnostic
+   | Loretta ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../images/logo_32x32.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/logo.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Loretta.CodeAnalysis.Diagnostic">
+  
+  
+  <h1 id="Loretta_CodeAnalysis_Diagnostic" data-uid="Loretta.CodeAnalysis.Diagnostic" class="text-break">Class Diagnostic
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a diagnostic, such as a compiler error or a warning, along with the location where it occurred.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Diagnostic</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IFormattable</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.html">Loretta.CodeAnalysis</a></h6>
+  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.dll</h6>
+  <h5 id="Loretta_CodeAnalysis_Diagnostic_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class Diagnostic : IEquatable&lt;Diagnostic&gt;</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_AdditionalLocations.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.AdditionalLocations%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L330">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_AdditionalLocations_" data-uid="Loretta.CodeAnalysis.Diagnostic.AdditionalLocations*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_AdditionalLocations" data-uid="Loretta.CodeAnalysis.Diagnostic.AdditionalLocations">AdditionalLocations</h4>
+  <div class="markdown level1 summary"><p>Gets an array of additional locations related to the diagnostic.
+Typically these are the locations of other items referenced in the message.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract IReadOnlyList&lt;Location&gt; AdditionalLocations { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_DefaultSeverity.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.DefaultSeverity%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L278">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_DefaultSeverity_" data-uid="Loretta.CodeAnalysis.Diagnostic.DefaultSeverity*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_DefaultSeverity" data-uid="Loretta.CodeAnalysis.Diagnostic.DefaultSeverity">DefaultSeverity</h4>
+  <div class="markdown level1 summary"><p>Gets the default <a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a> of the diagnostic's <a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual DiagnosticSeverity DefaultSeverity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_Diagnostic_DefaultSeverity_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>To get the effective severity of the diagnostic, use <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Severity">Severity</a>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Descriptor.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Descriptor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L255">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Descriptor_" data-uid="Loretta.CodeAnalysis.Diagnostic.Descriptor*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Descriptor" data-uid="Loretta.CodeAnalysis.Diagnostic.Descriptor">Descriptor</h4>
+  <div class="markdown level1 summary"><p>Gets the diagnostic descriptor, which provides a description about a <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract DiagnosticDescriptor Descriptor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Id.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Id%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L260">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Id_" data-uid="Loretta.CodeAnalysis.Diagnostic.Id*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Id" data-uid="Loretta.CodeAnalysis.Diagnostic.Id">Id</h4>
+  <div class="markdown level1 summary"><p>Gets the diagnostic identifier. For diagnostics generated by the compiler, this will be a numeric code with a prefix such as &quot;CS1001&quot;.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract string Id { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_IsSuppressed.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.IsSuppressed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L298">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_IsSuppressed_" data-uid="Loretta.CodeAnalysis.Diagnostic.IsSuppressed*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_IsSuppressed" data-uid="Loretta.CodeAnalysis.Diagnostic.IsSuppressed">IsSuppressed</h4>
+  <div class="markdown level1 summary"><p>Returns true if the diagnostic has a source suppression, i.e. an attribute or a pragma suppression.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool IsSuppressed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_IsWarningAsError.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.IsWarningAsError%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L312">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_IsWarningAsError_" data-uid="Loretta.CodeAnalysis.Diagnostic.IsWarningAsError*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_IsWarningAsError" data-uid="Loretta.CodeAnalysis.Diagnostic.IsWarningAsError">IsWarningAsError</h4>
+  <div class="markdown level1 summary"><p>Returns true if this is a warning treated as an error; otherwise false.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsWarningAsError { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_Diagnostic_IsWarningAsError_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>True implies <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_DefaultSeverity">DefaultSeverity</a> = <a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html#Loretta_CodeAnalysis_DiagnosticSeverity_Warning">Warning</a>
+and <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Severity">Severity</a> = <a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html#Loretta_CodeAnalysis_DiagnosticSeverity_Error">Error</a>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Location.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Location%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L324">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Location_" data-uid="Loretta.CodeAnalysis.Diagnostic.Location*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Location" data-uid="Loretta.CodeAnalysis.Diagnostic.Location">Location</h4>
+  <div class="markdown level1 summary"><p>Gets the primary location of the diagnostic, or <a class="xref" href="Loretta.CodeAnalysis.Location.html#Loretta_CodeAnalysis_Location_None">None</a> if no primary location.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract Location Location { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Properties.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Properties%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L342">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Properties_" data-uid="Loretta.CodeAnalysis.Diagnostic.Properties*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Properties" data-uid="Loretta.CodeAnalysis.Diagnostic.Properties">Properties</h4>
+  <div class="markdown level1 summary"><p>Gets property bag for the diagnostic. it will return <see cref="!:ImmutableDictionary&lt;TKey, TValue>.Empty"></see>
+if there is no entry. This can be used to put diagnostic specific information you want
+to pass around. for example, to corresponding fixer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual ImmutableDictionary&lt;string, string&gt; Properties { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ImmutableDictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Severity.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Severity%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L287">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Severity_" data-uid="Loretta.CodeAnalysis.Diagnostic.Severity*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Severity" data-uid="Loretta.CodeAnalysis.Diagnostic.Severity">Severity</h4>
+  <div class="markdown level1 summary"><p>Gets the effective <a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a> of the diagnostic.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract DiagnosticSeverity Severity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_Diagnostic_Severity_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>To get the default severity of diagnostic's <a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a>, use <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_DefaultSeverity">DefaultSeverity</a>.
+To determine if this is a warning treated as an error, use <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_IsWarningAsError">IsWarningAsError</a>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_WarningLevel.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.WarningLevel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L293">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_WarningLevel_" data-uid="Loretta.CodeAnalysis.Diagnostic.WarningLevel*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_WarningLevel" data-uid="Loretta.CodeAnalysis.Diagnostic.WarningLevel">WarningLevel</h4>
+  <div class="markdown level1 summary"><p>Gets the warning level. This is 0 for diagnostics with severity <a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html#Loretta_CodeAnalysis_DiagnosticSeverity_Error">Error</a>,
+otherwise an integer greater than zero.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract int WarningLevel { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_Loretta_CodeAnalysis_DiagnosticSeverity_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Nullable_ImmutableDictionary_System_String_System_String___System_Object___.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor%2CLoretta.CodeAnalysis.Location%2CLoretta.CodeAnalysis.DiagnosticSeverity%2CSystem.Nullable%7BIEnumerable%7BLoretta.CodeAnalysis.Location%7D%7D%2CSystem.Nullable%7BImmutableDictionary%7BSystem.String%2CSystem.String%7D%7D%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L123">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Create_" data-uid="Loretta.CodeAnalysis.Diagnostic.Create*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_Loretta_CodeAnalysis_DiagnosticSeverity_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Nullable_ImmutableDictionary_System_String_System_String___System_Object___" data-uid="Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor,Loretta.CodeAnalysis.Location,Loretta.CodeAnalysis.DiagnosticSeverity,System.Nullable{IEnumerable{Loretta.CodeAnalysis.Location}},System.Nullable{ImmutableDictionary{System.String,System.String}},System.Object[])">Create(DiagnosticDescriptor, Location, DiagnosticSeverity, Nullable&lt;IEnumerable&lt;Location&gt;&gt;, Nullable&lt;ImmutableDictionary&lt;String, String&gt;&gt;, Object[])</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Diagnostic Create(DiagnosticDescriptor descriptor, Location location, DiagnosticSeverity effectiveSeverity, IEnumerable&lt;Location&gt;? additionalLocations, ImmutableDictionary&lt;string, string&gt;? properties, params object[] messageArgs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a></td>
+        <td><span class="parametername">descriptor</span></td>
+        <td><p>A <a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a> describing the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>An optional primary location of the diagnostic. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Location">Location</a> will return <a class="xref" href="Loretta.CodeAnalysis.Location.html#Loretta_CodeAnalysis_Location_None">None</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a></td>
+        <td><span class="parametername">effectiveSeverity</span></td>
+        <td><p>Effective severity of the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a>&gt;&gt;</td>
+        <td><span class="parametername">additionalLocations</span></td>
+        <td><p>An optional set of additional locations related to the diagnostic.
+Typically, these are locations of other items referenced in the message.
+If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_AdditionalLocations">AdditionalLocations</a> will return an empty list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">ImmutableDictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">properties</span></td>
+        <td><p>An optional set of name-value pairs by means of which the analyzer that creates the diagnostic
+can convey more detailed information to the fixer. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Properties">Properties</a> will return
+<see cref="!:ImmutableDictionary&lt;TKey, TValue>.Empty"></see>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">messageArgs</span></td>
+        <td><p>Arguments to the message of the diagnostic.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a></td>
+        <td><p>The <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Nullable_ImmutableDictionary_System_String_System_String___System_Object___.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor%2CLoretta.CodeAnalysis.Location%2CSystem.Nullable%7BIEnumerable%7BLoretta.CodeAnalysis.Location%7D%7D%2CSystem.Nullable%7BImmutableDictionary%7BSystem.String%2CSystem.String%7D%7D%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L98">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Create_" data-uid="Loretta.CodeAnalysis.Diagnostic.Create*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Nullable_ImmutableDictionary_System_String_System_String___System_Object___" data-uid="Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor,Loretta.CodeAnalysis.Location,System.Nullable{IEnumerable{Loretta.CodeAnalysis.Location}},System.Nullable{ImmutableDictionary{System.String,System.String}},System.Object[])">Create(DiagnosticDescriptor, Location, Nullable&lt;IEnumerable&lt;Location&gt;&gt;, Nullable&lt;ImmutableDictionary&lt;String, String&gt;&gt;, Object[])</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Diagnostic Create(DiagnosticDescriptor descriptor, Location location, IEnumerable&lt;Location&gt;? additionalLocations, ImmutableDictionary&lt;string, string&gt;? properties, params object[] messageArgs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a></td>
+        <td><span class="parametername">descriptor</span></td>
+        <td><p>A <a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a> describing the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>An optional primary location of the diagnostic. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Location">Location</a> will return <a class="xref" href="Loretta.CodeAnalysis.Location.html#Loretta_CodeAnalysis_Location_None">None</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a>&gt;&gt;</td>
+        <td><span class="parametername">additionalLocations</span></td>
+        <td><p>An optional set of additional locations related to the diagnostic.
+Typically, these are locations of other items referenced in the message.
+If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_AdditionalLocations">AdditionalLocations</a> will return an empty list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">ImmutableDictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">properties</span></td>
+        <td><p>An optional set of name-value pairs by means of which the analyzer that creates the diagnostic
+can convey more detailed information to the fixer. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Properties">Properties</a> will return
+<see cref="!:ImmutableDictionary&lt;TKey, TValue>.Empty"></see>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">messageArgs</span></td>
+        <td><p>Arguments to the message of the diagnostic.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a></td>
+        <td><p>The <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Object___.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor%2CLoretta.CodeAnalysis.Location%2CSystem.Nullable%7BIEnumerable%7BLoretta.CodeAnalysis.Location%7D%7D%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L75">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Create_" data-uid="Loretta.CodeAnalysis.Diagnostic.Create*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Object___" data-uid="Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor,Loretta.CodeAnalysis.Location,System.Nullable{IEnumerable{Loretta.CodeAnalysis.Location}},System.Object[])">Create(DiagnosticDescriptor, Location, Nullable&lt;IEnumerable&lt;Location&gt;&gt;, Object[])</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Diagnostic Create(DiagnosticDescriptor descriptor, Location location, IEnumerable&lt;Location&gt;? additionalLocations, params object[] messageArgs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a></td>
+        <td><span class="parametername">descriptor</span></td>
+        <td><p>A <a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a> describing the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>An optional primary location of the diagnostic. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Location">Location</a> will return <a class="xref" href="Loretta.CodeAnalysis.Location.html#Loretta_CodeAnalysis_Location_None">None</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a>&gt;&gt;</td>
+        <td><span class="parametername">additionalLocations</span></td>
+        <td><p>An optional set of additional locations related to the diagnostic.
+Typically, these are locations of other items referenced in the message.
+If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_AdditionalLocations">AdditionalLocations</a> will return an empty list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">messageArgs</span></td>
+        <td><p>Arguments to the message of the diagnostic.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a></td>
+        <td><p>The <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_System_Nullable_ImmutableDictionary_System_String_System_String___System_Object___.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor%2CLoretta.CodeAnalysis.Location%2CSystem.Nullable%7BImmutableDictionary%7BSystem.String%2CSystem.String%7D%7D%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L57">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Create_" data-uid="Loretta.CodeAnalysis.Diagnostic.Create*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_System_Nullable_ImmutableDictionary_System_String_System_String___System_Object___" data-uid="Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor,Loretta.CodeAnalysis.Location,System.Nullable{ImmutableDictionary{System.String,System.String}},System.Object[])">Create(DiagnosticDescriptor, Location, Nullable&lt;ImmutableDictionary&lt;String, String&gt;&gt;, Object[])</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Diagnostic Create(DiagnosticDescriptor descriptor, Location location, ImmutableDictionary&lt;string, string&gt;? properties, params object[] messageArgs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a></td>
+        <td><span class="parametername">descriptor</span></td>
+        <td><p>A <a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a> describing the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>An optional primary location of the diagnostic. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Location">Location</a> will return <a class="xref" href="Loretta.CodeAnalysis.Location.html#Loretta_CodeAnalysis_Location_None">None</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">ImmutableDictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">properties</span></td>
+        <td><p>An optional set of name-value pairs by means of which the analyzer that creates the diagnostic
+can convey more detailed information to the fixer. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Properties">Properties</a> will return
+<see cref="!:ImmutableDictionary&lt;TKey, TValue>.Empty"></see>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">messageArgs</span></td>
+        <td><p>Arguments to the message of the diagnostic.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a></td>
+        <td><p>The <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_System_Object___.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor%2CLoretta.CodeAnalysis.Location%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L40">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Create_" data-uid="Loretta.CodeAnalysis.Diagnostic.Create*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Create_Loretta_CodeAnalysis_DiagnosticDescriptor_Loretta_CodeAnalysis_Location_System_Object___" data-uid="Loretta.CodeAnalysis.Diagnostic.Create(Loretta.CodeAnalysis.DiagnosticDescriptor,Loretta.CodeAnalysis.Location,System.Object[])">Create(DiagnosticDescriptor, Location, Object[])</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Diagnostic Create(DiagnosticDescriptor descriptor, Location location, params object[] messageArgs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a></td>
+        <td><span class="parametername">descriptor</span></td>
+        <td><p>A <a class="xref" href="Loretta.CodeAnalysis.DiagnosticDescriptor.html">DiagnosticDescriptor</a> describing the diagnostic</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>An optional primary location of the diagnostic. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Location">Location</a> will return <a class="xref" href="Loretta.CodeAnalysis.Location.html#Loretta_CodeAnalysis_Location_None">None</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">messageArgs</span></td>
+        <td><p>Arguments to the message of the diagnostic</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a></td>
+        <td><p>The <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Create_System_String_System_String_Loretta_CodeAnalysis_LocalizableString_Loretta_CodeAnalysis_DiagnosticSeverity_Loretta_CodeAnalysis_DiagnosticSeverity_System_Boolean_System_Int32_Loretta_CodeAnalysis_LocalizableString_Loretta_CodeAnalysis_LocalizableString_System_String_Loretta_CodeAnalysis_Location_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Nullable_IEnumerable_System_String___System_Nullable_ImmutableDictionary_System_String_System_String___.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Create(System.String%2CSystem.String%2CLoretta.CodeAnalysis.LocalizableString%2CLoretta.CodeAnalysis.DiagnosticSeverity%2CLoretta.CodeAnalysis.DiagnosticSeverity%2CSystem.Boolean%2CSystem.Int32%2CLoretta.CodeAnalysis.LocalizableString%2CLoretta.CodeAnalysis.LocalizableString%2CSystem.String%2CLoretta.CodeAnalysis.Location%2CSystem.Nullable%7BIEnumerable%7BLoretta.CodeAnalysis.Location%7D%7D%2CSystem.Nullable%7BIEnumerable%7BSystem.String%7D%7D%2CSystem.Nullable%7BImmutableDictionary%7BSystem.String%2CSystem.String%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L172">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Create_" data-uid="Loretta.CodeAnalysis.Diagnostic.Create*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Create_System_String_System_String_Loretta_CodeAnalysis_LocalizableString_Loretta_CodeAnalysis_DiagnosticSeverity_Loretta_CodeAnalysis_DiagnosticSeverity_System_Boolean_System_Int32_Loretta_CodeAnalysis_LocalizableString_Loretta_CodeAnalysis_LocalizableString_System_String_Loretta_CodeAnalysis_Location_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Nullable_IEnumerable_System_String___System_Nullable_ImmutableDictionary_System_String_System_String___" data-uid="Loretta.CodeAnalysis.Diagnostic.Create(System.String,System.String,Loretta.CodeAnalysis.LocalizableString,Loretta.CodeAnalysis.DiagnosticSeverity,Loretta.CodeAnalysis.DiagnosticSeverity,System.Boolean,System.Int32,Loretta.CodeAnalysis.LocalizableString,Loretta.CodeAnalysis.LocalizableString,System.String,Loretta.CodeAnalysis.Location,System.Nullable{IEnumerable{Loretta.CodeAnalysis.Location}},System.Nullable{IEnumerable{System.String}},System.Nullable{ImmutableDictionary{System.String,System.String}})">Create(String, String, LocalizableString, DiagnosticSeverity, DiagnosticSeverity, Boolean, Int32, LocalizableString, LocalizableString, String, Location, Nullable&lt;IEnumerable&lt;Location&gt;&gt;, Nullable&lt;IEnumerable&lt;String&gt;&gt;, Nullable&lt;ImmutableDictionary&lt;String, String&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance which is localizable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Diagnostic Create(string id, string category, LocalizableString message, DiagnosticSeverity severity, DiagnosticSeverity defaultSeverity, bool isEnabledByDefault, int warningLevel, LocalizableString title = null, LocalizableString description = null, string helpLink = null, Location location = null, IEnumerable&lt;Location&gt;? additionalLocations = null, IEnumerable&lt;string&gt;? customTags = null, ImmutableDictionary&lt;string, string&gt;? properties = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>An identifier for the diagnostic. For diagnostics generated by the compiler, this will be a numeric code with a prefix such as &quot;CS1001&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">category</span></td>
+        <td><p>The category of the diagnostic. For diagnostics generated by the compiler, the category will be &quot;Compiler&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.LocalizableString.html">LocalizableString</a></td>
+        <td><span class="parametername">message</span></td>
+        <td><p>The diagnostic message text.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a></td>
+        <td><span class="parametername">severity</span></td>
+        <td><p>The diagnostic's effective severity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a></td>
+        <td><span class="parametername">defaultSeverity</span></td>
+        <td><p>The diagnostic's default severity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isEnabledByDefault</span></td>
+        <td><p>True if the diagnostic is enabled by default</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">warningLevel</span></td>
+        <td><p>The warning level, between 1 and 4 if severity is <a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html#Loretta_CodeAnalysis_DiagnosticSeverity_Warning">Warning</a>; otherwise 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.LocalizableString.html">LocalizableString</a></td>
+        <td><span class="parametername">title</span></td>
+        <td><p>An optional short localizable title describing the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.LocalizableString.html">LocalizableString</a></td>
+        <td><span class="parametername">description</span></td>
+        <td><p>An optional longer localizable description for the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">helpLink</span></td>
+        <td><p>An optional hyperlink that provides more detailed information regarding the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>An optional primary location of the diagnostic. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Location">Location</a> will return <a class="xref" href="Loretta.CodeAnalysis.Location.html#Loretta_CodeAnalysis_Location_None">None</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a>&gt;&gt;</td>
+        <td><span class="parametername">additionalLocations</span></td>
+        <td><p>An optional set of additional locations related to the diagnostic.
+Typically, these are locations of other items referenced in the message.
+If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_AdditionalLocations">AdditionalLocations</a> will return an empty list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">customTags</span></td>
+        <td><p>An optional set of custom tags for the diagnostic. See <a class="xref" href="Loretta.CodeAnalysis.WellKnownDiagnosticTags.html">WellKnownDiagnosticTags</a> for some well known tags.
+If null, <span class="xref">Loretta.CodeAnalysis.Diagnostic.CustomTags</span> will return an empty list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">ImmutableDictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">properties</span></td>
+        <td><p>An optional set of name-value pairs by means of which the analyzer that creates the diagnostic
+can convey more detailed information to the fixer. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Properties">Properties</a> will return
+<see cref="!:ImmutableDictionary&lt;TKey, TValue>.Empty"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a></td>
+        <td><p>The <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Create_System_String_System_String_Loretta_CodeAnalysis_LocalizableString_Loretta_CodeAnalysis_DiagnosticSeverity_Loretta_CodeAnalysis_DiagnosticSeverity_System_Boolean_System_Int32_System_Boolean_Loretta_CodeAnalysis_LocalizableString_Loretta_CodeAnalysis_LocalizableString_System_String_Loretta_CodeAnalysis_Location_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Nullable_IEnumerable_System_String___System_Nullable_ImmutableDictionary_System_String_System_String___.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Create(System.String%2CSystem.String%2CLoretta.CodeAnalysis.LocalizableString%2CLoretta.CodeAnalysis.DiagnosticSeverity%2CLoretta.CodeAnalysis.DiagnosticSeverity%2CSystem.Boolean%2CSystem.Int32%2CSystem.Boolean%2CLoretta.CodeAnalysis.LocalizableString%2CLoretta.CodeAnalysis.LocalizableString%2CSystem.String%2CLoretta.CodeAnalysis.Location%2CSystem.Nullable%7BIEnumerable%7BLoretta.CodeAnalysis.Location%7D%7D%2CSystem.Nullable%7BIEnumerable%7BSystem.String%7D%7D%2CSystem.Nullable%7BImmutableDictionary%7BSystem.String%2CSystem.String%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L222">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Create_" data-uid="Loretta.CodeAnalysis.Diagnostic.Create*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Create_System_String_System_String_Loretta_CodeAnalysis_LocalizableString_Loretta_CodeAnalysis_DiagnosticSeverity_Loretta_CodeAnalysis_DiagnosticSeverity_System_Boolean_System_Int32_System_Boolean_Loretta_CodeAnalysis_LocalizableString_Loretta_CodeAnalysis_LocalizableString_System_String_Loretta_CodeAnalysis_Location_System_Nullable_IEnumerable_Loretta_CodeAnalysis_Location___System_Nullable_IEnumerable_System_String___System_Nullable_ImmutableDictionary_System_String_System_String___" data-uid="Loretta.CodeAnalysis.Diagnostic.Create(System.String,System.String,Loretta.CodeAnalysis.LocalizableString,Loretta.CodeAnalysis.DiagnosticSeverity,Loretta.CodeAnalysis.DiagnosticSeverity,System.Boolean,System.Int32,System.Boolean,Loretta.CodeAnalysis.LocalizableString,Loretta.CodeAnalysis.LocalizableString,System.String,Loretta.CodeAnalysis.Location,System.Nullable{IEnumerable{Loretta.CodeAnalysis.Location}},System.Nullable{IEnumerable{System.String}},System.Nullable{ImmutableDictionary{System.String,System.String}})">Create(String, String, LocalizableString, DiagnosticSeverity, DiagnosticSeverity, Boolean, Int32, Boolean, LocalizableString, LocalizableString, String, Location, Nullable&lt;IEnumerable&lt;Location&gt;&gt;, Nullable&lt;IEnumerable&lt;String&gt;&gt;, Nullable&lt;ImmutableDictionary&lt;String, String&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance which is localizable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Diagnostic Create(string id, string category, LocalizableString message, DiagnosticSeverity severity, DiagnosticSeverity defaultSeverity, bool isEnabledByDefault, int warningLevel, bool isSuppressed, LocalizableString title = null, LocalizableString description = null, string helpLink = null, Location location = null, IEnumerable&lt;Location&gt;? additionalLocations = null, IEnumerable&lt;string&gt;? customTags = null, ImmutableDictionary&lt;string, string&gt;? properties = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>An identifier for the diagnostic. For diagnostics generated by the compiler, this will be a numeric code with a prefix such as &quot;CS1001&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">category</span></td>
+        <td><p>The category of the diagnostic. For diagnostics generated by the compiler, the category will be &quot;Compiler&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.LocalizableString.html">LocalizableString</a></td>
+        <td><span class="parametername">message</span></td>
+        <td><p>The diagnostic message text.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a></td>
+        <td><span class="parametername">severity</span></td>
+        <td><p>The diagnostic's effective severity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html">DiagnosticSeverity</a></td>
+        <td><span class="parametername">defaultSeverity</span></td>
+        <td><p>The diagnostic's default severity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isEnabledByDefault</span></td>
+        <td><p>True if the diagnostic is enabled by default</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">warningLevel</span></td>
+        <td><p>The warning level, between 1 and 4 if severity is <a class="xref" href="Loretta.CodeAnalysis.DiagnosticSeverity.html#Loretta_CodeAnalysis_DiagnosticSeverity_Warning">Warning</a>; otherwise 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isSuppressed</span></td>
+        <td><p>Flag indicating whether the diagnostic is suppressed by a source suppression.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.LocalizableString.html">LocalizableString</a></td>
+        <td><span class="parametername">title</span></td>
+        <td><p>An optional short localizable title describing the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.LocalizableString.html">LocalizableString</a></td>
+        <td><span class="parametername">description</span></td>
+        <td><p>An optional longer localizable description for the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">helpLink</span></td>
+        <td><p>An optional hyperlink that provides more detailed information regarding the diagnostic.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>An optional primary location of the diagnostic. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Location">Location</a> will return <a class="xref" href="Loretta.CodeAnalysis.Location.html#Loretta_CodeAnalysis_Location_None">None</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a>&gt;&gt;</td>
+        <td><span class="parametername">additionalLocations</span></td>
+        <td><p>An optional set of additional locations related to the diagnostic.
+Typically, these are locations of other items referenced in the message.
+If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_AdditionalLocations">AdditionalLocations</a> will return an empty list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">customTags</span></td>
+        <td><p>An optional set of custom tags for the diagnostic. See <a class="xref" href="Loretta.CodeAnalysis.WellKnownDiagnosticTags.html">WellKnownDiagnosticTags</a> for some well known tags.
+If null, <span class="xref">Loretta.CodeAnalysis.Diagnostic.CustomTags</span> will return an empty list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">ImmutableDictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">properties</span></td>
+        <td><p>An optional set of name-value pairs by means of which the analyzer that creates the diagnostic
+can convey more detailed information to the fixer. If null, <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html#Loretta_CodeAnalysis_Diagnostic_Properties">Properties</a> will return
+<see cref="!:ImmutableDictionary&lt;TKey, TValue>.Empty"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a></td>
+        <td><p>The <a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a> instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Equals_Loretta_CodeAnalysis_Diagnostic_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Equals(Loretta.CodeAnalysis.Diagnostic)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L357">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Equals_" data-uid="Loretta.CodeAnalysis.Diagnostic.Equals*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Equals_Loretta_CodeAnalysis_Diagnostic_" data-uid="Loretta.CodeAnalysis.Diagnostic.Equals(Loretta.CodeAnalysis.Diagnostic)">Equals(Diagnostic)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool Equals(Diagnostic obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L351">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_Equals_" data-uid="Loretta.CodeAnalysis.Diagnostic.Equals*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_Equals_System_Object_" data-uid="Loretta.CodeAnalysis.Diagnostic.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_GetHashCode.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L354">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_GetHashCode_" data-uid="Loretta.CodeAnalysis.Diagnostic.GetHashCode*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_GetHashCode" data-uid="Loretta.CodeAnalysis.Diagnostic.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_GetMessage_System_Nullable_IFormatProvider__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.GetMessage(System.Nullable%7BIFormatProvider%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L270">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_GetMessage_" data-uid="Loretta.CodeAnalysis.Diagnostic.GetMessage*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_GetMessage_System_Nullable_IFormatProvider__" data-uid="Loretta.CodeAnalysis.Diagnostic.GetMessage(System.Nullable{IFormatProvider})">GetMessage(Nullable&lt;IFormatProvider&gt;)</h4>
+  <div class="markdown level1 summary"><p>Get the culture specific text of the message.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract string GetMessage(IFormatProvider? formatProvider = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">IFormatProvider</span>&gt;</td>
+        <td><span class="parametername">formatProvider</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic_ToString.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic.cs/#L348">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Diagnostic_ToString_" data-uid="Loretta.CodeAnalysis.Diagnostic.ToString*"></a>
+  <h4 id="Loretta_CodeAnalysis_Diagnostic_ToString" data-uid="Loretta.CodeAnalysis.Diagnostic.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IFormattable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Diagnostic.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Diagnostic%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Core/Portable/Diagnostic/Diagnostic_SimpleDiagnostic.cs/#L9" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              <p>Copyright (c) LorettaDevs</p><p>Generated by <strong>DocFX</strong></p>
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

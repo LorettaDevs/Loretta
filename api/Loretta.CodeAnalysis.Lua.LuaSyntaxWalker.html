@@ -1,0 +1,696 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class LuaSyntaxWalker
+   | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class LuaSyntaxWalker
+   | Loretta ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../images/logo_32x32.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/logo.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker">
+  
+  
+  <h1 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker" class="text-break">Class LuaSyntaxWalker
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html">LuaSyntaxVisitor</a> that descends an entire <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html">LuaSyntaxNode</a> graph
+visiting each LuaSyntaxNode and its child SyntaxNodes and <a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a>s in depth-first order.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html">LuaSyntaxVisitor</a></div>
+    <div class="level2"><span class="xref">LuaSyntaxWalker</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitSkippedTokensTrivia_Loretta_CodeAnalysis_Lua_Syntax_SkippedTokensTriviaSyntax_">LuaSyntaxVisitor.VisitSkippedTokensTrivia(SkippedTokensTriviaSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitStatementList_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_">LuaSyntaxVisitor.VisitStatementList(StatementListSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitNamedParameter_Loretta_CodeAnalysis_Lua_Syntax_NamedParameterSyntax_">LuaSyntaxVisitor.VisitNamedParameter(NamedParameterSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitVarArgParameter_Loretta_CodeAnalysis_Lua_Syntax_VarArgParameterSyntax_">LuaSyntaxVisitor.VisitVarArgParameter(VarArgParameterSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitParameterList_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_">LuaSyntaxVisitor.VisitParameterList(ParameterListSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitIdentifierKeyedTableField_Loretta_CodeAnalysis_Lua_Syntax_IdentifierKeyedTableFieldSyntax_">LuaSyntaxVisitor.VisitIdentifierKeyedTableField(IdentifierKeyedTableFieldSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitExpressionKeyedTableField_Loretta_CodeAnalysis_Lua_Syntax_ExpressionKeyedTableFieldSyntax_">LuaSyntaxVisitor.VisitExpressionKeyedTableField(ExpressionKeyedTableFieldSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitUnkeyedTableField_Loretta_CodeAnalysis_Lua_Syntax_UnkeyedTableFieldSyntax_">LuaSyntaxVisitor.VisitUnkeyedTableField(UnkeyedTableFieldSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitSimpleFunctionName_Loretta_CodeAnalysis_Lua_Syntax_SimpleFunctionNameSyntax_">LuaSyntaxVisitor.VisitSimpleFunctionName(SimpleFunctionNameSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitMemberFunctionName_Loretta_CodeAnalysis_Lua_Syntax_MemberFunctionNameSyntax_">LuaSyntaxVisitor.VisitMemberFunctionName(MemberFunctionNameSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitMethodFunctionName_Loretta_CodeAnalysis_Lua_Syntax_MethodFunctionNameSyntax_">LuaSyntaxVisitor.VisitMethodFunctionName(MethodFunctionNameSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitStringFunctionArgument_Loretta_CodeAnalysis_Lua_Syntax_StringFunctionArgumentSyntax_">LuaSyntaxVisitor.VisitStringFunctionArgument(StringFunctionArgumentSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTableConstructorFunctionArgument_Loretta_CodeAnalysis_Lua_Syntax_TableConstructorFunctionArgumentSyntax_">LuaSyntaxVisitor.VisitTableConstructorFunctionArgument(TableConstructorFunctionArgumentSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitExpressionListFunctionArgument_Loretta_CodeAnalysis_Lua_Syntax_ExpressionListFunctionArgumentSyntax_">LuaSyntaxVisitor.VisitExpressionListFunctionArgument(ExpressionListFunctionArgumentSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitAnonymousFunctionExpression_Loretta_CodeAnalysis_Lua_Syntax_AnonymousFunctionExpressionSyntax_">LuaSyntaxVisitor.VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTableConstructorExpression_Loretta_CodeAnalysis_Lua_Syntax_TableConstructorExpressionSyntax_">LuaSyntaxVisitor.VisitTableConstructorExpression(TableConstructorExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitLiteralExpression_Loretta_CodeAnalysis_Lua_Syntax_LiteralExpressionSyntax_">LuaSyntaxVisitor.VisitLiteralExpression(LiteralExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitVarArgExpression_Loretta_CodeAnalysis_Lua_Syntax_VarArgExpressionSyntax_">LuaSyntaxVisitor.VisitVarArgExpression(VarArgExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitIdentifierName_Loretta_CodeAnalysis_Lua_Syntax_IdentifierNameSyntax_">LuaSyntaxVisitor.VisitIdentifierName(IdentifierNameSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitMemberAccessExpression_Loretta_CodeAnalysis_Lua_Syntax_MemberAccessExpressionSyntax_">LuaSyntaxVisitor.VisitMemberAccessExpression(MemberAccessExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitElementAccessExpression_Loretta_CodeAnalysis_Lua_Syntax_ElementAccessExpressionSyntax_">LuaSyntaxVisitor.VisitElementAccessExpression(ElementAccessExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitUnaryExpression_Loretta_CodeAnalysis_Lua_Syntax_UnaryExpressionSyntax_">LuaSyntaxVisitor.VisitUnaryExpression(UnaryExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitBinaryExpression_Loretta_CodeAnalysis_Lua_Syntax_BinaryExpressionSyntax_">LuaSyntaxVisitor.VisitBinaryExpression(BinaryExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitElseIfExpressionClause_Loretta_CodeAnalysis_Lua_Syntax_ElseIfExpressionClauseSyntax_">LuaSyntaxVisitor.VisitElseIfExpressionClause(ElseIfExpressionClauseSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitIfExpression_Loretta_CodeAnalysis_Lua_Syntax_IfExpressionSyntax_">LuaSyntaxVisitor.VisitIfExpression(IfExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitParenthesizedExpression_Loretta_CodeAnalysis_Lua_Syntax_ParenthesizedExpressionSyntax_">LuaSyntaxVisitor.VisitParenthesizedExpression(ParenthesizedExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitFunctionCallExpression_Loretta_CodeAnalysis_Lua_Syntax_FunctionCallExpressionSyntax_">LuaSyntaxVisitor.VisitFunctionCallExpression(FunctionCallExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitMethodCallExpression_Loretta_CodeAnalysis_Lua_Syntax_MethodCallExpressionSyntax_">LuaSyntaxVisitor.VisitMethodCallExpression(MethodCallExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitVariableAttribute_Loretta_CodeAnalysis_Lua_Syntax_VariableAttributeSyntax_">LuaSyntaxVisitor.VisitVariableAttribute(VariableAttributeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitLocalDeclarationName_Loretta_CodeAnalysis_Lua_Syntax_LocalDeclarationNameSyntax_">LuaSyntaxVisitor.VisitLocalDeclarationName(LocalDeclarationNameSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitEqualsValuesClause_Loretta_CodeAnalysis_Lua_Syntax_EqualsValuesClauseSyntax_">LuaSyntaxVisitor.VisitEqualsValuesClause(EqualsValuesClauseSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitAssignmentStatement_Loretta_CodeAnalysis_Lua_Syntax_AssignmentStatementSyntax_">LuaSyntaxVisitor.VisitAssignmentStatement(AssignmentStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitCompoundAssignmentStatement_Loretta_CodeAnalysis_Lua_Syntax_CompoundAssignmentStatementSyntax_">LuaSyntaxVisitor.VisitCompoundAssignmentStatement(CompoundAssignmentStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitLocalVariableDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_LocalVariableDeclarationStatementSyntax_">LuaSyntaxVisitor.VisitLocalVariableDeclarationStatement(LocalVariableDeclarationStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypedIdentifierName_Loretta_CodeAnalysis_Lua_Syntax_TypedIdentifierNameSyntax_">LuaSyntaxVisitor.VisitTypedIdentifierName(TypedIdentifierNameSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitNumericForStatement_Loretta_CodeAnalysis_Lua_Syntax_NumericForStatementSyntax_">LuaSyntaxVisitor.VisitNumericForStatement(NumericForStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitGenericForStatement_Loretta_CodeAnalysis_Lua_Syntax_GenericForStatementSyntax_">LuaSyntaxVisitor.VisitGenericForStatement(GenericForStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitWhileStatement_Loretta_CodeAnalysis_Lua_Syntax_WhileStatementSyntax_">LuaSyntaxVisitor.VisitWhileStatement(WhileStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitRepeatUntilStatement_Loretta_CodeAnalysis_Lua_Syntax_RepeatUntilStatementSyntax_">LuaSyntaxVisitor.VisitRepeatUntilStatement(RepeatUntilStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitIfStatement_Loretta_CodeAnalysis_Lua_Syntax_IfStatementSyntax_">LuaSyntaxVisitor.VisitIfStatement(IfStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitElseIfClause_Loretta_CodeAnalysis_Lua_Syntax_ElseIfClauseSyntax_">LuaSyntaxVisitor.VisitElseIfClause(ElseIfClauseSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitElseClause_Loretta_CodeAnalysis_Lua_Syntax_ElseClauseSyntax_">LuaSyntaxVisitor.VisitElseClause(ElseClauseSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitGotoStatement_Loretta_CodeAnalysis_Lua_Syntax_GotoStatementSyntax_">LuaSyntaxVisitor.VisitGotoStatement(GotoStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitBreakStatement_Loretta_CodeAnalysis_Lua_Syntax_BreakStatementSyntax_">LuaSyntaxVisitor.VisitBreakStatement(BreakStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitReturnStatement_Loretta_CodeAnalysis_Lua_Syntax_ReturnStatementSyntax_">LuaSyntaxVisitor.VisitReturnStatement(ReturnStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitContinueStatement_Loretta_CodeAnalysis_Lua_Syntax_ContinueStatementSyntax_">LuaSyntaxVisitor.VisitContinueStatement(ContinueStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitLocalFunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_LocalFunctionDeclarationStatementSyntax_">LuaSyntaxVisitor.VisitLocalFunctionDeclarationStatement(LocalFunctionDeclarationStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitFunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_FunctionDeclarationStatementSyntax_">LuaSyntaxVisitor.VisitFunctionDeclarationStatement(FunctionDeclarationStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitDoStatement_Loretta_CodeAnalysis_Lua_Syntax_DoStatementSyntax_">LuaSyntaxVisitor.VisitDoStatement(DoStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitGotoLabelStatement_Loretta_CodeAnalysis_Lua_Syntax_GotoLabelStatementSyntax_">LuaSyntaxVisitor.VisitGotoLabelStatement(GotoLabelStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitExpressionStatement_Loretta_CodeAnalysis_Lua_Syntax_ExpressionStatementSyntax_">LuaSyntaxVisitor.VisitExpressionStatement(ExpressionStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitEmptyStatement_Loretta_CodeAnalysis_Lua_Syntax_EmptyStatementSyntax_">LuaSyntaxVisitor.VisitEmptyStatement(EmptyStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_TypeDeclarationStatementSyntax_">LuaSyntaxVisitor.VisitTypeDeclarationStatement(TypeDeclarationStatementSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeBinding_Loretta_CodeAnalysis_Lua_Syntax_TypeBindingSyntax_">LuaSyntaxVisitor.VisitTypeBinding(TypeBindingSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitSimpleTypeName_Loretta_CodeAnalysis_Lua_Syntax_SimpleTypeNameSyntax_">LuaSyntaxVisitor.VisitSimpleTypeName(SimpleTypeNameSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitCompositeTypeName_Loretta_CodeAnalysis_Lua_Syntax_CompositeTypeNameSyntax_">LuaSyntaxVisitor.VisitCompositeTypeName(CompositeTypeNameSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitNilableType_Loretta_CodeAnalysis_Lua_Syntax_NilableTypeSyntax_">LuaSyntaxVisitor.VisitNilableType(NilableTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitParenthesizedType_Loretta_CodeAnalysis_Lua_Syntax_ParenthesizedTypeSyntax_">LuaSyntaxVisitor.VisitParenthesizedType(ParenthesizedTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypePack_Loretta_CodeAnalysis_Lua_Syntax_TypePackSyntax_">LuaSyntaxVisitor.VisitTypePack(TypePackSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitFunctionType_Loretta_CodeAnalysis_Lua_Syntax_FunctionTypeSyntax_">LuaSyntaxVisitor.VisitFunctionType(FunctionTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitArrayType_Loretta_CodeAnalysis_Lua_Syntax_ArrayTypeSyntax_">LuaSyntaxVisitor.VisitArrayType(ArrayTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTableTypeIndexer_Loretta_CodeAnalysis_Lua_Syntax_TableTypeIndexerSyntax_">LuaSyntaxVisitor.VisitTableTypeIndexer(TableTypeIndexerSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTableTypeProperty_Loretta_CodeAnalysis_Lua_Syntax_TableTypePropertySyntax_">LuaSyntaxVisitor.VisitTableTypeProperty(TableTypePropertySyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTableType_Loretta_CodeAnalysis_Lua_Syntax_TableTypeSyntax_">LuaSyntaxVisitor.VisitTableType(TableTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeCastExpression_Loretta_CodeAnalysis_Lua_Syntax_TypeCastExpressionSyntax_">LuaSyntaxVisitor.VisitTypeCastExpression(TypeCastExpressionSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitUnionType_Loretta_CodeAnalysis_Lua_Syntax_UnionTypeSyntax_">LuaSyntaxVisitor.VisitUnionType(UnionTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitIntersectionType_Loretta_CodeAnalysis_Lua_Syntax_IntersectionTypeSyntax_">LuaSyntaxVisitor.VisitIntersectionType(IntersectionTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitEqualsType_Loretta_CodeAnalysis_Lua_Syntax_EqualsTypeSyntax_">LuaSyntaxVisitor.VisitEqualsType(EqualsTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeParameter_Loretta_CodeAnalysis_Lua_Syntax_TypeParameterSyntax_">LuaSyntaxVisitor.VisitTypeParameter(TypeParameterSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeParameterList_Loretta_CodeAnalysis_Lua_Syntax_TypeParameterListSyntax_">LuaSyntaxVisitor.VisitTypeParameterList(TypeParameterListSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeArgumentList_Loretta_CodeAnalysis_Lua_Syntax_TypeArgumentListSyntax_">LuaSyntaxVisitor.VisitTypeArgumentList(TypeArgumentListSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitLiteralType_Loretta_CodeAnalysis_Lua_Syntax_LiteralTypeSyntax_">LuaSyntaxVisitor.VisitLiteralType(LiteralTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeofType_Loretta_CodeAnalysis_Lua_Syntax_TypeofTypeSyntax_">LuaSyntaxVisitor.VisitTypeofType(TypeofTypeSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitVariadicTypePack_Loretta_CodeAnalysis_Lua_Syntax_VariadicTypePackSyntax_">LuaSyntaxVisitor.VisitVariadicTypePack(VariadicTypePackSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitGenericTypePack_Loretta_CodeAnalysis_Lua_Syntax_GenericTypePackSyntax_">LuaSyntaxVisitor.VisitGenericTypePack(GenericTypePackSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitCompilationUnit_Loretta_CodeAnalysis_Lua_Syntax_CompilationUnitSyntax_">LuaSyntaxVisitor.VisitCompilationUnit(CompilationUnitSyntax)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.Lua.html">Loretta.CodeAnalysis.Lua</a></h6>
+  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.Lua.dll</h6>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class LuaSyntaxWalker : LuaSyntaxVisitor</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker__ctor_Loretta_CodeAnalysis_SyntaxWalkerDepth_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.%23ctor(Loretta.CodeAnalysis.SyntaxWalkerDepth)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L21">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker__ctor_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.#ctor*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker__ctor_Loretta_CodeAnalysis_SyntaxWalkerDepth_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.#ctor(Loretta.CodeAnalysis.SyntaxWalkerDepth)">LuaSyntaxWalker(SyntaxWalkerDepth)</h4>
+  <div class="markdown level1 summary"><p>Initializes the syntax walker with hte provided depth.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected LuaSyntaxWalker(SyntaxWalkerDepth depth = SyntaxWalkerDepth.Node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxWalkerDepth.html">SyntaxWalkerDepth</a></td>
+        <td><span class="parametername">depth</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_Depth.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.Depth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L15">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_Depth_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.Depth*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_Depth" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.Depth">Depth</h4>
+  <div class="markdown level1 summary"><p>The depth up to which the walker should go into.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SyntaxWalkerDepth Depth { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxWalkerDepth.html">SyntaxWalkerDepth</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_DefaultVisit_Loretta_CodeAnalysis_SyntaxNode_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.DefaultVisit(Loretta.CodeAnalysis.SyntaxNode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L49">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_DefaultVisit_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.DefaultVisit*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_DefaultVisit_Loretta_CodeAnalysis_SyntaxNode_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.DefaultVisit(Loretta.CodeAnalysis.SyntaxNode)">DefaultVisit(SyntaxNode)</h4>
+  <div class="markdown level1 summary"><p>Called when the walker walks into a node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void DefaultVisit(SyntaxNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a></td>
+        <td><span class="parametername">node</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_DefaultVisit_Loretta_CodeAnalysis_SyntaxNode_">LuaSyntaxVisitor.DefaultVisit(SyntaxNode)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_Visit_Loretta_CodeAnalysis_SyntaxNode_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.Visit(Loretta.CodeAnalysis.SyntaxNode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L32">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_Visit_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.Visit*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_Visit_Loretta_CodeAnalysis_SyntaxNode_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.Visit(Loretta.CodeAnalysis.SyntaxNode)">Visit(SyntaxNode)</h4>
+  <div class="markdown level1 summary"><p>Called when the syntax walker visits a node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Visit(SyntaxNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a></td>
+        <td><span class="parametername">node</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_Visit_Loretta_CodeAnalysis_SyntaxNode_">LuaSyntaxVisitor.Visit(SyntaxNode)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitLeadingTrivia_Loretta_CodeAnalysis_SyntaxToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitLeadingTrivia(Loretta.CodeAnalysis.SyntaxToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L94">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitLeadingTrivia_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitLeadingTrivia*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitLeadingTrivia_Loretta_CodeAnalysis_SyntaxToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitLeadingTrivia(Loretta.CodeAnalysis.SyntaxToken)">VisitLeadingTrivia(SyntaxToken)</h4>
+  <div class="markdown level1 summary"><p>Called when the walker should visit the leading trivia of a token.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void VisitLeadingTrivia(SyntaxToken token)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a></td>
+        <td><span class="parametername">token</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitToken_Loretta_CodeAnalysis_SyntaxToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitToken(Loretta.CodeAnalysis.SyntaxToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L81">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitToken*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitToken_Loretta_CodeAnalysis_SyntaxToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitToken(Loretta.CodeAnalysis.SyntaxToken)">VisitToken(SyntaxToken)</h4>
+  <div class="markdown level1 summary"><p>Called when the walker visits a token.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void VisitToken(SyntaxToken token)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a></td>
+        <td><span class="parametername">token</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitTrailingTrivia_Loretta_CodeAnalysis_SyntaxToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitTrailingTrivia(Loretta.CodeAnalysis.SyntaxToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L109">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitTrailingTrivia_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitTrailingTrivia*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitTrailingTrivia_Loretta_CodeAnalysis_SyntaxToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitTrailingTrivia(Loretta.CodeAnalysis.SyntaxToken)">VisitTrailingTrivia(SyntaxToken)</h4>
+  <div class="markdown level1 summary"><p>Called when the walker should visit the trailing trivia of a token.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void VisitTrailingTrivia(SyntaxToken token)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a></td>
+        <td><span class="parametername">token</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitTrivia_Loretta_CodeAnalysis_SyntaxTrivia_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitTrivia(Loretta.CodeAnalysis.SyntaxTrivia)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L124">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitTrivia_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitTrivia*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxWalker_VisitTrivia_Loretta_CodeAnalysis_SyntaxTrivia_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.VisitTrivia(Loretta.CodeAnalysis.SyntaxTrivia)">VisitTrivia(SyntaxTrivia)</h4>
+  <div class="markdown level1 summary"><p>Called when the walker visits a trivia.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void VisitTrivia(SyntaxTrivia trivia)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTrivia.html">SyntaxTrivia</a></td>
+        <td><span class="parametername">trivia</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxWalker.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxWalker%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxWalker.cs/#L10" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              <p>Copyright (c) LorettaDevs</p><p>Generated by <strong>DocFX</strong></p>
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

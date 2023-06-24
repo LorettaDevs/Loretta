@@ -1,0 +1,1338 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class LuaSyntaxTree
+   | Loretta </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class LuaSyntaxTree
+   | Loretta ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../images/logo_32x32.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/logo.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree">
+  
+  
+  <h1 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree" class="text-break">Class LuaSyntaxTree
+  </h1>
+  <div class="markdown level0 summary"><p>The parsed representation of a Lua source document.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a></div>
+    <div class="level2"><span class="xref">LuaSyntaxTree</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_FilePath">SyntaxTree.FilePath</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_HasCompilationUnitRoot">SyntaxTree.HasCompilationUnitRoot</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_Length">SyntaxTree.Length</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_TryGetText_Loretta_CodeAnalysis_Text_SourceText__">SyntaxTree.TryGetText(SourceText)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetText_CancellationToken_">SyntaxTree.GetText(CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_Encoding">SyntaxTree.Encoding</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetTextAsync_CancellationToken_">SyntaxTree.GetTextAsync(CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_TryGetRoot_Loretta_CodeAnalysis_SyntaxNode__">SyntaxTree.TryGetRoot(SyntaxNode)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetReference_Loretta_CodeAnalysis_SyntaxNode_">SyntaxTree.GetReference(SyntaxNode)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_WithRootAndOptions_Loretta_CodeAnalysis_SyntaxNode_Loretta_CodeAnalysis_ParseOptions_">SyntaxTree.WithRootAndOptions(SyntaxNode, ParseOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_WithFilePath_System_String_">SyntaxTree.WithFilePath(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_ToString">SyntaxTree.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.Lua.html">Loretta.CodeAnalysis.Lua</a></h6>
+  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.Lua.dll</h6>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class LuaSyntaxTree : SyntaxTree</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_Options.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.Options%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L22">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_Options_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.Options*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_Options" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.Options">Options</h4>
+  <div class="markdown level1 summary"><p>The options used by the parser to produce the syntax tree.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract LuaParseOptions Options { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaParseOptions.html">LuaParseOptions</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_CloneNodeAsRoot__1___0_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.CloneNodeAsRoot%60%601(%60%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L44">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_CloneNodeAsRoot_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.CloneNodeAsRoot*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_CloneNodeAsRoot__1___0_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.CloneNodeAsRoot``1(``0)">CloneNodeAsRoot&lt;T&gt;(T)</h4>
+  <div class="markdown level1 summary"><p>Produces a clone of a <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html">LuaSyntaxNode</a> which will have current syntax tree as its parent.</p>
+<p>Caller must guarantee that if the same instance of <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html">LuaSyntaxNode</a> makes multiple calls
+to this function, only one result is observable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected T CloneNodeAsRoot&lt;T&gt;(T node)
+    where T : LuaSyntaxNode</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>The original syntax node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>A clone of the original syntax node that has current <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html">LuaSyntaxTree</a> as its parent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of the syntax node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_Create_Loretta_CodeAnalysis_Lua_LuaSyntaxNode_Loretta_CodeAnalysis_Lua_LuaParseOptions_System_String_System_Text_Encoding_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.Create(Loretta.CodeAnalysis.Lua.LuaSyntaxNode%2CLoretta.CodeAnalysis.Lua.LuaParseOptions%2CSystem.String%2CSystem.Text.Encoding)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L93">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_Create_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.Create*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_Create_Loretta_CodeAnalysis_Lua_LuaSyntaxNode_Loretta_CodeAnalysis_Lua_LuaParseOptions_System_String_System_Text_Encoding_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.Create(Loretta.CodeAnalysis.Lua.LuaSyntaxNode,Loretta.CodeAnalysis.Lua.LuaParseOptions,System.String,System.Text.Encoding)">Create(LuaSyntaxNode, LuaParseOptions, String, Encoding)</h4>
+  <div class="markdown level1 summary"><p>Creates a new syntax tree from a syntax node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SyntaxTree Create(LuaSyntaxNode root, LuaParseOptions options = null, string path = &quot;&quot;, Encoding encoding = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html">LuaSyntaxNode</a></td>
+        <td><span class="parametername">root</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaParseOptions.html">LuaParseOptions</a></td>
+        <td><span class="parametername">options</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></td>
+        <td><span class="parametername">encoding</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetChangedSpans_Loretta_CodeAnalysis_SyntaxTree_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChangedSpans(Loretta.CodeAnalysis.SyntaxTree)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L247">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetChangedSpans_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChangedSpans*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetChangedSpans_Loretta_CodeAnalysis_SyntaxTree_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChangedSpans(Loretta.CodeAnalysis.SyntaxTree)">GetChangedSpans(SyntaxTree)</h4>
+  <div class="markdown level1 summary"><p>Produces a pessimistic list of spans that denote the regions of text in this tree that
+are changed from the text of the old tree.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IList&lt;TextSpan&gt; GetChangedSpans(SyntaxTree oldTree)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a></td>
+        <td><span class="parametername">oldTree</span></td>
+        <td><p>The old tree. Cannot be <code>null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetChangedSpans_Loretta_CodeAnalysis_SyntaxTree_">SyntaxTree.GetChangedSpans(SyntaxTree)</a></div>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetChangedSpans_Loretta_CodeAnalysis_SyntaxTree__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The list is pessimistic because it may claim more or larger regions than actually changed.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetChanges_Loretta_CodeAnalysis_SyntaxTree_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChanges(Loretta.CodeAnalysis.SyntaxTree)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L258">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetChanges_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChanges*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetChanges_Loretta_CodeAnalysis_SyntaxTree_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetChanges(Loretta.CodeAnalysis.SyntaxTree)">GetChanges(SyntaxTree)</h4>
+  <div class="markdown level1 summary"><p>Gets a list of text changes that when applied to the old tree produce this tree.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IList&lt;TextChange&gt; GetChanges(SyntaxTree oldTree)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a></td>
+        <td><span class="parametername">oldTree</span></td>
+        <td><p>The old tree. Cannot be <code>null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Text.TextChange.html">TextChange</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetChanges_Loretta_CodeAnalysis_SyntaxTree_">SyntaxTree.GetChanges(SyntaxTree)</a></div>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetChanges_Loretta_CodeAnalysis_SyntaxTree__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The list of changes may be different than the original changes that produced this tree.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetCompilationUnitRoot_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetCompilationUnitRoot(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L74">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetCompilationUnitRoot_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetCompilationUnitRoot*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetCompilationUnitRoot_CancellationToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetCompilationUnitRoot(CancellationToken)">GetCompilationUnitRoot(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets the root of the syntax tree statically typed as <a class="xref" href="Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.html">CompilationUnitSyntax</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CompilationUnitSyntax GetCompilationUnitRoot(CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.html">CompilationUnitSyntax</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetCompilationUnitRoot_CancellationToken__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Ensure that <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_HasCompilationUnitRoot">HasCompilationUnitRoot</a> is true for this tree prior to invoking this method.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L385">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_CancellationToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(CancellationToken)">GetDiagnostics(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a list of all the diagnostics in the syntax tree.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Diagnostic&gt; GetDiagnostics(CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_CancellationToken__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method does not filter diagnostics based on <code>#pragma</code>s and compiler options
+like /nowarn, /warnaserror etc.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNode_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L299">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNode_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNode)">GetDiagnostics(SyntaxNode)</h4>
+  <div class="markdown level1 summary"><p>Gets a list of all the diagnostics in the sub tree that has the specified node as its root.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Diagnostic&gt; GetDiagnostics(SyntaxNode node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a></td>
+        <td><span class="parametername">node</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNode_">SyntaxTree.GetDiagnostics(SyntaxNode)</a></div>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNode__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method does not filter diagnostics based on <code>#pragma</code>s and compiler options
+like /nowarn, /warnaserror etc.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNodeOrToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNodeOrToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L369">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNodeOrToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNodeOrToken)">GetDiagnostics(SyntaxNodeOrToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a list of all the diagnostics in either the sub tree that has the specified node as its root or
+associated with the token and its related trivia.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Diagnostic&gt; GetDiagnostics(SyntaxNodeOrToken nodeOrToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxNodeOrToken.html">SyntaxNodeOrToken</a></td>
+        <td><span class="parametername">nodeOrToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNodeOrToken_">SyntaxTree.GetDiagnostics(SyntaxNodeOrToken)</a></div>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNodeOrToken__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method does not filter diagnostics based on <code>#pragma</code>s and compiler options
+like /nowarn, /warnaserror etc.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L336">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxToken)">GetDiagnostics(SyntaxToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a list of all the diagnostics associated with the token and any related trivia.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Diagnostic&gt; GetDiagnostics(SyntaxToken token)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxToken.html">SyntaxToken</a></td>
+        <td><span class="parametername">token</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxToken_">SyntaxTree.GetDiagnostics(SyntaxToken)</a></div>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxToken__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method does not filter diagnostics based on <code>#pragma</code>s and compiler options
+like /nowarn, /warnaserror etc.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxTrivia_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxTrivia)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L352">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxTrivia_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxTrivia)">GetDiagnostics(SyntaxTrivia)</h4>
+  <div class="markdown level1 summary"><p>Gets a list of all the diagnostics associated with the trivia.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Diagnostic&gt; GetDiagnostics(SyntaxTrivia trivia)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTrivia.html">SyntaxTrivia</a></td>
+        <td><span class="parametername">trivia</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Diagnostic.html">Diagnostic</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxTrivia_">SyntaxTree.GetDiagnostics(SyntaxTrivia)</a></div>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxTrivia__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method does not filter diagnostics based on <code>#pragma</code>s and compiler options
+like /nowarn, /warnaserror etc.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetLineSpan_Loretta_CodeAnalysis_Text_TextSpan_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetLineSpan(Loretta.CodeAnalysis.Text.TextSpan%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L277">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetLineSpan_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetLineSpan*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetLineSpan_Loretta_CodeAnalysis_Text_TextSpan_CancellationToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetLineSpan(Loretta.CodeAnalysis.Text.TextSpan,CancellationToken)">GetLineSpan(TextSpan, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets the location in terms of path, line and column for a given span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override FileLinePositionSpan GetLineSpan(TextSpan span, CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span within the tree.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a></td>
+        <td><p><a class="xref" href="Loretta.CodeAnalysis.FileLinePositionSpan.html">FileLinePositionSpan</a> that contains path, line and column information.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetLineSpan_Loretta_CodeAnalysis_Text_TextSpan_CancellationToken__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The values are not affected by line mapping directives (<code>#line</code>).</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetLocation_Loretta_CodeAnalysis_Text_TextSpan_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetLocation(Loretta.CodeAnalysis.Text.TextSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L286">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetLocation_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetLocation*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetLocation_Loretta_CodeAnalysis_Text_TextSpan_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetLocation(Loretta.CodeAnalysis.Text.TextSpan)">GetLocation(TextSpan)</h4>
+  <div class="markdown level1 summary"><p>Gets a <a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a> for the specified text <code data-dev-comment-type="paramref" class="paramref">span</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Location GetLocation(TextSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a></td>
+        <td><span class="parametername">span</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Location.html">Location</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetLocation_Loretta_CodeAnalysis_Text_TextSpan_">SyntaxTree.GetLocation(TextSpan)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetRoot_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetRoot(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L50">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetRoot_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetRoot*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetRoot_CancellationToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetRoot(CancellationToken)">GetRoot(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets the root node of the syntax tree.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract LuaSyntaxNode GetRoot(CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html">LuaSyntaxNode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetRootAsync_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetRootAsync(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L64">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetRootAsync_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetRootAsync*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetRootAsync_CancellationToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.GetRootAsync(CancellationToken)">GetRootAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets the root node of the syntax tree asynchronously.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;LuaSyntaxNode&gt; GetRootAsync(CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html">LuaSyntaxNode</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetRootAsync_CancellationToken__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>By default, the work associated with this method will be executed immediately on the current thread.
+Implementations that wish to schedule this work differently should override <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html#Loretta_CodeAnalysis_Lua_LuaSyntaxTree_GetRootAsync_CancellationToken_">GetRootAsync(CancellationToken)</a>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_IsEquivalentTo_Loretta_CodeAnalysis_SyntaxTree_System_Boolean_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxTree%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L85">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_IsEquivalentTo_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.IsEquivalentTo*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_IsEquivalentTo_Loretta_CodeAnalysis_SyntaxTree_System_Boolean_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxTree,System.Boolean)">IsEquivalentTo(SyntaxTree, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Determines if two trees are the same, disregarding trivia differences.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsEquivalentTo(SyntaxTree tree, bool topLevel = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a></td>
+        <td><span class="parametername">tree</span></td>
+        <td><p>The tree to compare against.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">topLevel</span></td>
+        <td><p>If true then the trees are equivalent if the contained nodes and tokens declaring metadata visible symbolic information are equivalent,
+ignoring any differences of nodes inside method bodies or initializer expressions, otherwise all nodes and tokens must be equivalent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_IsEquivalentTo_Loretta_CodeAnalysis_SyntaxTree_System_Boolean_">SyntaxTree.IsEquivalentTo(SyntaxTree, Boolean)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_Loretta_CodeAnalysis_Text_SourceText_Loretta_CodeAnalysis_Lua_LuaParseOptions_System_String_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.ParseText(Loretta.CodeAnalysis.Text.SourceText%2CLoretta.CodeAnalysis.Lua.LuaParseOptions%2CSystem.String%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L153">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.ParseText*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_Loretta_CodeAnalysis_Text_SourceText_Loretta_CodeAnalysis_Lua_LuaParseOptions_System_String_CancellationToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.ParseText(Loretta.CodeAnalysis.Text.SourceText,Loretta.CodeAnalysis.Lua.LuaParseOptions,System.String,CancellationToken)">ParseText(SourceText, LuaParseOptions, String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Produces a syntax tree by parsing the source text.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SyntaxTree ParseText(SourceText text, LuaParseOptions options = null, string path = &quot;&quot;, CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a></td>
+        <td><span class="parametername">text</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaParseOptions.html">LuaParseOptions</a></td>
+        <td><span class="parametername">options</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_System_String_Loretta_CodeAnalysis_Lua_LuaParseOptions_System_String_System_Text_Encoding_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.ParseText(System.String%2CLoretta.CodeAnalysis.Lua.LuaParseOptions%2CSystem.String%2CSystem.Text.Encoding%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L142">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.ParseText*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_ParseText_System_String_Loretta_CodeAnalysis_Lua_LuaParseOptions_System_String_System_Text_Encoding_CancellationToken_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.ParseText(System.String,Loretta.CodeAnalysis.Lua.LuaParseOptions,System.String,System.Text.Encoding,CancellationToken)">ParseText(String, LuaParseOptions, String, Encoding, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Produces a syntax tree by parsing the source text.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SyntaxTree ParseText(string text, LuaParseOptions options = null, string path = &quot;&quot;, Encoding encoding = null, CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">text</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaParseOptions.html">LuaParseOptions</a></td>
+        <td><span class="parametername">options</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></td>
+        <td><span class="parametername">encoding</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_TryGetRoot_Loretta_CodeAnalysis_Lua_LuaSyntaxNode__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.TryGetRoot(Loretta.CodeAnalysis.Lua.LuaSyntaxNode%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L55">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_TryGetRoot_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.TryGetRoot*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_TryGetRoot_Loretta_CodeAnalysis_Lua_LuaSyntaxNode__" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.TryGetRoot(Loretta.CodeAnalysis.Lua.LuaSyntaxNode@)">TryGetRoot(out LuaSyntaxNode)</h4>
+  <div class="markdown level1 summary"><p>Gets the root node of the syntax tree if it is already available.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool TryGetRoot(out LuaSyntaxNode root)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html">LuaSyntaxNode</a></td>
+        <td><span class="parametername">root</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree_WithChangedText_Loretta_CodeAnalysis_Text_SourceText_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree.WithChangedText(Loretta.CodeAnalysis.Text.SourceText)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.cs/#L189">View Source</a>
+  </span>
+  <a id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_WithChangedText_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.WithChangedText*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_WithChangedText_Loretta_CodeAnalysis_Text_SourceText_" data-uid="Loretta.CodeAnalysis.Lua.LuaSyntaxTree.WithChangedText(Loretta.CodeAnalysis.Text.SourceText)">WithChangedText(SourceText)</h4>
+  <div class="markdown level1 summary"><p>Creates a new syntax based off this tree using a new source text.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override SyntaxTree WithChangedText(SourceText newText)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a></td>
+        <td><span class="parametername">newText</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_WithChangedText_Loretta_CodeAnalysis_Text_SourceText_">SyntaxTree.WithChangedText(SourceText)</a></div>
+  <h5 id="Loretta_CodeAnalysis_Lua_LuaSyntaxTree_WithChangedText_Loretta_CodeAnalysis_Text_SourceText__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the new source text is a minor change from the current source text an incremental parse will occur
+reusing most of the current syntax tree internal data.  Otherwise, a full parse will occur using the new
+source text.</p>
+</div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaExtensions.html#Loretta_CodeAnalysis_Lua_LuaExtensions_GetCompilationUnitRoot_Loretta_CodeAnalysis_SyntaxTree_CancellationToken_">LuaExtensions.GetCompilationUnitRoot(SyntaxTree, CancellationToken)</a>
+  </div>
+  <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.html#Loretta_CodeAnalysis_Lua_Experimental_LuaExtensions_Minify_Loretta_CodeAnalysis_SyntaxTree_">LuaExtensions.Minify(SyntaxTree)</a>
+  </div>
+  <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.html#Loretta_CodeAnalysis_Lua_Experimental_LuaExtensions_Minify_Loretta_CodeAnalysis_SyntaxTree_Loretta_CodeAnalysis_Lua_Experimental_Minifying_NamingStrategy_">LuaExtensions.Minify(SyntaxTree, NamingStrategy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.html#Loretta_CodeAnalysis_Lua_Experimental_LuaExtensions_Minify_Loretta_CodeAnalysis_SyntaxTree_Loretta_CodeAnalysis_Lua_Experimental_Minifying_NamingStrategy_Loretta_CodeAnalysis_Lua_Experimental_Minifying_ISlotAllocator_">LuaExtensions.Minify(SyntaxTree, NamingStrategy, ISlotAllocator)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/new/docs/concepts/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_LuaSyntaxTree.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.LuaSyntaxTree%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/LorettaDevs/Loretta/blob/docs/concepts/src/Compilers/Lua/Portable/Syntax/LuaSyntaxTree.ParsedSyntaxTree.cs/#L10" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              <p>Copyright (c) LorettaDevs</p><p>Generated by <strong>DocFX</strong></p>
+              
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

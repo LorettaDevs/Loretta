@@ -1,0 +1,2554 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/a/Loretta/Loretta/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      },
+      "is_incremental": false
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.AnnotationExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.AnnotationExtensions.html",
+          "hash": "GyOBI8ErCtbCHDVV4bIYOpl5W+tBWDNe0Dcor7cx/Fw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Enumerator.html",
+          "hash": "6GbKRMBrulE2c6NHPHLJmwZugGbOC4oLkW6NrgPFenU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Reversed.Enumerator.html",
+          "hash": "85se3ITS/57WHfNofL5bF9p5c+fJ37YGH9aZMGipsJc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Reversed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.Reversed.html",
+          "hash": "f3iENnGwUlxu0XsK+q2h8IUgLUyrOWi/ZW7e4GJMS84="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.ChildSyntaxList.html",
+          "hash": "kcehpJUsUgbjzbqaMq555vx4dUVhOZ0OLge/8eeFFZc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Diagnostic.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Diagnostic.html",
+          "hash": "LDxK4prU98xLDfHzJbCxIz3tU2o2oBPgpMRjW2h91Jo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.DiagnosticDescriptor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.DiagnosticDescriptor.html",
+          "hash": "RTb6sQ1panH0OzGdoRiFpDAfQMOL+Gd/bMNF+hFw+So="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.DiagnosticFormatter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.DiagnosticFormatter.html",
+          "hash": "Bmj9zmK3xsIBm18RtLiR/5wouB/DnMd6XCuuVjT18Rw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.DiagnosticSeverity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.DiagnosticSeverity.html",
+          "hash": "QiNY5N6fOUPYLVP/RlVZAaT4m8D6qbCe52lCn5XLYuE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.DocumentationMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.DocumentationMode.html",
+          "hash": "YhwQbrhHQcwLtJnqF7BvpUBoaYI+K+tMXeS0w9Tq+fs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.FileLinePositionSpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.FileLinePositionSpan.html",
+          "hash": "oyt5n0FXz7JXBTeo23ixSD6g5t7cs8MK0xeTKqLw4n4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.ICompilationUnitSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.ICompilationUnitSyntax.html",
+          "hash": "JZj6pPjxUx2ElPT2nbcuLMMtrINRVK3tag+GpEusDLw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.IStructuredTriviaSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.IStructuredTriviaSyntax.html",
+          "hash": "e16zw4A1TEk5qEQRTtkWfYx9mpIyMHQpXwLCQ4LrLkk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.LanguageNames.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.LanguageNames.html",
+          "hash": "Bou0peDMnZ5Jee1BhhUXzfAAqNTDx4HbcVDX489Aypk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.LocalizableResourceString.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.LocalizableResourceString.html",
+          "hash": "yK0g281ijhDstDDDhuvAxc66jT39EC4LBU+DGB4NJDY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.LocalizableString.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.LocalizableString.html",
+          "hash": "6d4jsWJ2xzMnCk1V1s+kK5zl9VupdSTg+Al2iwg0mnI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Location.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Location.html",
+          "hash": "LJNCReth4Jb5bTXHLbdHMP7Ir3oUrvnr14HmcBBX7Pw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.LocationKind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.LocationKind.html",
+          "hash": "lBk1BZqLDAeFK9oEhG996zu2GDv9fWbAc6bSpE7q2vE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.ContinueType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.ContinueType.html",
+          "hash": "NjsEdoR0kJQCQD2+YpvYjw0RYecdZmFjPhMRSC3lp3U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.html",
+          "hash": "MrxxCSQ3DKj/ZHlpCMMNhBqpuWvdSKEyx97qt/uD7Vs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.LuaExtensions.html",
+          "hash": "osliln3UM4HovOcEOvyyOzc/ge0xzcGVz10NWhFYBnc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.ISlotAllocator.html",
+          "hash": "7LSzw3Q81lEvsGyxRty8tr6n5Vjt0suo7nj27U2gyE4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.MinifyingUtils.html",
+          "hash": "SnwKmiKCH2UQk+5mLA8Jy6Lv7G+r/MjQQguvh+wNMo8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategies.html",
+          "hash": "ot5nKgAgJNnwICQOChBBvJ4nP8z6Dyov1ecA/1jHJIY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.NamingStrategy.html",
+          "hash": "Sd2qAXnUnfYGtPfcM7lyO8Bd5YHUjJcDfsGVuQnKISg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SequentialSlotAllocator.html",
+          "hash": "ce5wYhy0nPSm8QMnbO6QrUXR3Whrh8PObFapvssBTk8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.SortedSlotAllocator.html",
+          "hash": "FQwbHOmXGnWfCLhpUGjgz4ypi06fOsRBNr45TdKlzIE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.Minifying.html",
+          "hash": "IKJo0gTi3x4++2IopPE0y2YMV9Ny+XGi804ekwRy7h8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.html",
+          "hash": "XkwwOaFr9GTtticHTYsiJufhJQmxUPORK6tvfCIbPpU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Experimental.html",
+          "hash": "VVpUS0a0ASr/Ow6QM9a89w6UsQlOuRnVEBzz0UvCl7E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.IFileScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.IFileScope.html",
+          "hash": "OPruKizVMwjx74WU1vv6ZA9rWdzMet/pg5Bx8oPn29Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.IFunctionScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.IFunctionScope.html",
+          "hash": "x0PS6VhpJewsA/kQc3zQOnoClR6sRaVjxCvNBtSr2js="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.IGotoLabel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.IGotoLabel.html",
+          "hash": "jkmxnQgSIvS/383fjNpx/P6ROA0qsN9G/vme3BuAsFA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.IScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.IScope.html",
+          "hash": "sXeQ0BNBFzX9puiLFK2VvXX81o5muI0lg9+JSXqgRgQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.IVariable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.IVariable.html",
+          "hash": "QuPt8LOUg0RyGMKUsx0zkSTriwYDCyF+Ja3VLwxBXBM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.IdentifierNameNotSupportedError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.IdentifierNameNotSupportedError.html",
+          "hash": "P0u2/jBmOTWjkLsFdvpml1py1l+UsHf7lfAqTb5yzp0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.IntegerFormats.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.IntegerFormats.html",
+          "hash": "Ev9nwvyBQWjhRygEOTnpF8ear1Yr04jPgOA4bW09kUc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaDiagnosticFormatter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaDiagnosticFormatter.html",
+          "hash": "T8dSU31x7/wfiPww3H9E2BNcoplhT7Gi9CXOzhrraIQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaExtensions.html",
+          "hash": "P2KZVIjkjUmLhl3Uqc6rvn9hDdG7GLmu9zxM8Tyfw0w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaParseOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaParseOptions.html",
+          "hash": "qEmVXekkPJxDInuTmh0r2pVuUjIlP1Li+bSgAe94zeQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxNode.html",
+          "hash": "C8UstLUB4+AE9gfrHGKNx6XvzC1X7T2NPyfwNFCpar0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html",
+          "hash": "htBdePkAXNu7ugWrqJ9HCjI9+sVOwPWXhC1nfsaOojs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html",
+          "hash": "jmLmem6WhJ9hvVxD4jzezc9mY/VpABwxodubhy62kJg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxTree.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxTree.html",
+          "hash": "/BlXwhTnPl3wCRgDEhBafOn8yOFgQkq6KXT2T/2Wifs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html",
+          "hash": "4y5XL+dvkJylq8Wif2bWpsbv2p7wjRUzvnZJWR4zKIw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html",
+          "hash": "+I1Az6ND9nez7kL0mYH08q1sC9InahTGZKPh+NxEC4k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.LuaSyntaxWalker.html",
+          "hash": "Yp3HGOWQBMr5025X9t7peuTJqDRIGWqwVsBg/9RacZA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.RenameError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.RenameError.html",
+          "hash": "rKI8FLnr0DTVG+uMGr3/1TQl0gz0HF9LFCIFuI2zH30="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.ScopeKind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.ScopeKind.html",
+          "hash": "OfLMc5OWVB1qNW1+w4IQ9+auOTZ6wKTTkEhkKr0f/84="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Script.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Script.html",
+          "hash": "IkvMIh1ePcwmDQnoBpQh8hDrasZHh+KwWIo9PVM6qiY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.html",
+          "hash": "6zSFhS2pWIGy+mPx6lgtp6atd/l9Dx8s2C0qo3kFuDU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.SymbolDisplay.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.SymbolDisplay.html",
+          "hash": "TaInbc45qba+JvTI/Mamur+FcxO65oJr1rHIvvpPt84="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.AnonymousFunctionExpressionSyntax.html",
+          "hash": "AbJ8BBko0pSFPXyxY0t2CFQMWbf6JrXyQz5SKi6SWYU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ArrayTypeSyntax.html",
+          "hash": "U50pkDNq9UUSVItA9eBwTKoZSncTmhkgpjEyZwpp7ds="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.AssignmentStatementSyntax.html",
+          "hash": "31hKAnmvHX4vhVPsNK4gR/qMaMlQLuMi00NW9/0ORMM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.BinaryExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.BinaryExpressionSyntax.html",
+          "hash": "P6Yoj/9SC4IHhXcYT8RNXow0UwtXiqxtTkEGoZVDPpk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.BreakStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.BreakStatementSyntax.html",
+          "hash": "71IKdQ8T24UICSBbBtoQ8eztwgG/xCc8M0kt7bqNCdk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompilationUnitSyntax.html",
+          "hash": "nJMzpcQdQOUxM/vTijvVjxyg6/l+Gt+sG7/u/ehkUGw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompositeTypeNameSyntax.html",
+          "hash": "Gt7OW2jBWOJofh7Ofq4Jr/00LZDsQNRHMuz2RdNVJx8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.CompoundAssignmentStatementSyntax.html",
+          "hash": "NuooJnUOVb2npN7mX2ym74n0PtPXzsjI7Q8v8a+GvCc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ContinueStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ContinueStatementSyntax.html",
+          "hash": "zNZm54EZGP0KHpqUZWP08eLyW0HWyC00worJzPVMwC8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.DoStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.DoStatementSyntax.html",
+          "hash": "u6vjjRTcIXUm83fFhGfnIywMc5cd3pTptU/tcc5HMHk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElementAccessExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElementAccessExpressionSyntax.html",
+          "hash": "kiMOXsnwpu7NKLFfCKFX5CJaGWMmCAGUpkOyOLki/gw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseClauseSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseClauseSyntax.html",
+          "hash": "AWIONuFwf0RpuPJtHH3vF9bj71tZgstS6g1UxroBd9I="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseIfClauseSyntax.html",
+          "hash": "1QGmEhOlhYPS9/EwuOHZWZzn8UAKxP/+WdujYNwiKsA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseIfExpressionClauseSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ElseIfExpressionClauseSyntax.html",
+          "hash": "mqsuB/URRbU8ATQI/XBOXWuT52PFP+n0GhYrVI53ymE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EmptyStatementSyntax.html",
+          "hash": "x2LAN8DKNcBlyWVrjmpNUp539S7VNQGdkoghFnRHudM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EqualsTypeSyntax.html",
+          "hash": "OO1bexmihpl0ahcNlmpF+J/U9B33ln4KNLiGecr/9sk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.EqualsValuesClauseSyntax.html",
+          "hash": "k55ubntqRi5+vYJ+/ZIw3Qt1f8Ri0Ad65inOjFpTZLY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionKeyedTableFieldSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionKeyedTableFieldSyntax.html",
+          "hash": "gXYiNkyWMdrIJtHC2NKh/05A7aBkOI6ELhsmkExqlMU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionListFunctionArgumentSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionListFunctionArgumentSyntax.html",
+          "hash": "fz5OuHJe5zZobK3EdX31Svdk0KVpV5uPGEoe//tnYOg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionStatementSyntax.html",
+          "hash": "zv7BYUxd621C0HKgqRZ/iZU8b9VHVe4RWuEuNY3RBiI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax.html",
+          "hash": "9YoDexWXiLy+KZuEE4OdjgD5k0I2WdonDDXBFTOHfuc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionArgumentSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionArgumentSyntax.html",
+          "hash": "6WTQ0csrLY7G1p8d2to6x+sMOn2jR3UptBY71OXTwIc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.html",
+          "hash": "4VexnvDj7TrHjZUiYh7eFD3azDUqdnieXx8JTLSYb4Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionDeclarationStatementSyntax.html",
+          "hash": "Q1ebmbG0aZbEX105YV/DKw8W0hqRneBxx+3bcluDw4c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionNameSyntax.html",
+          "hash": "0XforI3F4z9dPKy23sDdsJj4pdAxdG2rMljY+oemre0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.FunctionTypeSyntax.html",
+          "hash": "laFPwkV9Lau1Qzl4Ae6ra7udVSUEbq/4Ub4OlcDFmTA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GenericForStatementSyntax.html",
+          "hash": "VK1hwLk27IgrZabYKYAqKqxKDp0rJe2r/BOfp2flwc4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GenericTypePackSyntax.html",
+          "hash": "WnanU6UjLt7U1J61xfdC69uINDxYQYrsrbVZjOo69B0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GotoLabelStatementSyntax.html",
+          "hash": "Eg5H/Zd4pZw9TDV4qqUIxhcYaus9Iz2NsRamUaj0CJk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GotoStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.GotoStatementSyntax.html",
+          "hash": "uSeuLDe7DAA4asppu2QNMlFlSz87rIWiXowGs7H86O0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierKeyedTableFieldSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierKeyedTableFieldSyntax.html",
+          "hash": "EhiNcaQWgfDteaI39+t/jYX0iRdwV/60MFEX63zKjR8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax.html",
+          "hash": "xhG1oY49RgkTkeSxTjku72uW1Isf5uRmG6NtnXWPyiE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IfExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IfExpressionSyntax.html",
+          "hash": "szqNaxkF68YLepqefjLxT1+BkfU1+FIFxqCkQkaVUWg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.html",
+          "hash": "MnP+RCYxxqKADPydPZSWZc4CsIhNvZbJ7+QbnvCXnUA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.html",
+          "hash": "iBK2HluyRK2GoBY2MaDGf9p+IhQOv2TTVGZkttOHHBs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LiteralExpressionSyntax.html",
+          "hash": "NWQwetnbBnNP2bGuN80zYBm5waVaZXaJ/OKKwJLnxeU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LiteralTypeSyntax.html",
+          "hash": "SPRNtxxKFLY6wU4J6Ep2hHzCynagfunoFWC8z+Hl10o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalDeclarationNameSyntax.html",
+          "hash": "/xn4+FWHmUZLo1U9IwCTTlzzLkB4PV6/09IhZhT7V4M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalFunctionDeclarationStatementSyntax.html",
+          "hash": "Puh5WRx32p3i2SzO66OyrsS1+jVIHSJVkQllD9ngET8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.LocalVariableDeclarationStatementSyntax.html",
+          "hash": "cYtUNHjWmKLlh4RYdbh4Q0ey923oMX8KY/dQGYc8vE8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MemberAccessExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MemberAccessExpressionSyntax.html",
+          "hash": "wFaKsBg3lMh6iLjNxy1fbkZkyLodi4aixXhhqjjOoZg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MemberFunctionNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MemberFunctionNameSyntax.html",
+          "hash": "CCkSdJn+xcoQ/35eJkM5OJy36AWKdLfCDFIpsxwaAQo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MethodCallExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MethodCallExpressionSyntax.html",
+          "hash": "HinxjlTFWC78IUVbtOJHSSyrFqCf85nrYUyZ16jOMHA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.MethodFunctionNameSyntax.html",
+          "hash": "UKnFyRjWpiBhyaFPzHzGc5q6AtPc+/bip3KSI18tHUY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NamedParameterSyntax.html",
+          "hash": "C+Oxnf1KBnOlhjXZGgxtj7da6kTSr3GZzDsZSEinhfU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NilableTypeSyntax.html",
+          "hash": "v6wA//wwtpmYJcJfFzaqNNX9yE83AdH6OhSWhi7+lyc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.NumericForStatementSyntax.html",
+          "hash": "n90QL8n3To/cl1r61kWsmIteG0vCK3bmc6mpsG4EBzI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax.html",
+          "hash": "y6DbvyZQuERFjJUutbK7ix4MXh9pcnENH5ZleRMN6YY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax.html",
+          "hash": "goAVxflAme8gqXZ/c1Y1wcayfuxQspCYhY7n24Dcmj4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedExpressionSyntax.html",
+          "hash": "QOQ+49YinXcNq4sAyLa1t9hgj8wKA4xvUHQWKtYSj7s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ParenthesizedTypeSyntax.html",
+          "hash": "9ke0gIK0Ntha5BXERiKHRQiax5a2u9lkg4qxh5Zn+aY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.PrefixExpressionSyntax.html",
+          "hash": "OfaBwwXUQkUk1+DfeSsengn7M401pZ8tOuY8Fk80dNQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.RepeatUntilStatementSyntax.html",
+          "hash": "EO1lmOhyMiZbZDkPlz5CGhowSsQ0iNdBgyMDQ64hE3E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ReturnStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.ReturnStatementSyntax.html",
+          "hash": "ckHmRYjEZ5rENyRCyZrEVSZoYmLfCqWFRBcmTk7liVQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SimpleFunctionNameSyntax.html",
+          "hash": "OP81ilkDooJzOM9rQydhxuY9uq/jrmYDJUigQWCJBOA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SimpleTypeNameSyntax.html",
+          "hash": "Azm0y9YR1c3+gOup5fKHKA1/PCVONLb/Y7Fw580lHJI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.SkippedTokensTriviaSyntax.html",
+          "hash": "viWXg1srAjn4hm7STfT3JXBoA6fRGCARIN1CEQGDzJE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax.html",
+          "hash": "IDxsdWaEKrTWQYccxOZ+N1xOCU15FR7Ye2alEKrxdJs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax.html",
+          "hash": "yEgRxx4/6zKHClziEThcm8xriuYWu9edbESyeygtI8g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StringFunctionArgumentSyntax.html",
+          "hash": "u8tcMwHGN5YVOmTNTzK8p2ZIWaywW4Gws/Cep+ltE8w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StructuredTriviaSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.StructuredTriviaSyntax.html",
+          "hash": "TRxHDlvah+tZk+LT7XyTxZT3DZAs6hhJXSWcZA1d870="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableBasedTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableBasedTypeSyntax.html",
+          "hash": "bkpJcJoFrBou0hLmseW7Rd80WOv/rcFWNhOfUoTfisI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableConstructorExpressionSyntax.html",
+          "hash": "7d6HIdrPE5BLEowb0njEube5TxIw0+Q6EoYxbvKqM1g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableConstructorFunctionArgumentSyntax.html",
+          "hash": "/BkZs+nEPX8gBlwX/XTb1VVkf139uaGYy5a30LTVe6o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableFieldSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableFieldSyntax.html",
+          "hash": "cq+l+bG33kN9bLVjfZz1hIe0r8p67JEagczfthC+H5w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeElementSyntax.html",
+          "hash": "E/ucunNSZYWri+QmN+Ko3c+ZRvxZYT9V7EAfs5Fh/As="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeIndexerSyntax.html",
+          "hash": "oEsWZGLx9CvTsgJwzqUB+wPislDDupkcnnHvCuWxln8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypePropertySyntax.html",
+          "hash": "JERM5RWRY2dJXxfkXzvRfjj73V82p4cL09y4+xfTPZQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TableTypeSyntax.html",
+          "hash": "S5fCMEOLlW3RYLjXNyjrPJf3ojRvDC17x6JSd1vXbaQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeArgumentListSyntax.html",
+          "hash": "n69nT/eQjrpUGYfSgORkAnL+G/0x/CzKRiyqn3NXRQI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax.html",
+          "hash": "5pCfZcEIY1b2sUx28oXeD4OJlZ4nCWpfzg1oYKmndNg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeCastExpressionSyntax.html",
+          "hash": "BbFyhIlSLUL+qLDaUnwArOatVP8i2leCG04ztNOWiHI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeDeclarationStatementSyntax.html",
+          "hash": "E1GvnZ6PIIvpNTc2i2j4RGv+pP8g2VvcReU2gVXgtFo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax.html",
+          "hash": "E+ITSp/+BoiUgpAdzPWnoK6VpUqXKTYraaboGy+qZfM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypePackSyntax.html",
+          "hash": "V4l9aRUclgnJosJHpOyicej4BVPiVKOdRX7nPiH59/A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeParameterListSyntax.html",
+          "hash": "+eV+e/p+V1rtSg5511KtCt78TUS+5Q3KiEkJ0RAms0o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeParameterSyntax.html",
+          "hash": "+pWNGhFKaXNvLDlJm3sMv4LDrK7q0fuNVbiP/kVee3U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax.html",
+          "hash": "bNBJ4Xbzy4X1xyKXtymQE5oBket96/y49qs2Iox0hIE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.html",
+          "hash": "65GW+mP8T9WYNkmSxhyqCKROfb7TyJG2m0kQF6SEVzk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax.html",
+          "hash": "w9mT7dVeBKFc2+wHOwpBvmUEPP69hWmNVeHZ6hJQYbI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnaryExpressionSyntax.html",
+          "hash": "CKQjBe69oiQo/OBzdBnSuxcWVDoQu7GLpuly/JuPPdI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.html",
+          "hash": "caVH2zHzbxxKOZp4dMl5zqbaPNCbZlozQih/zn0DDVU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.UnkeyedTableFieldSyntax.html",
+          "hash": "VRnYFV4bGxONLHvg0RicEAfA4lsLuog5vQK4nUs0Kcw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VarArgExpressionSyntax.html",
+          "hash": "3PYGRwWrer6W3pYKUymUkDsNBirZ/T/4ggpUSG1At3U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VarArgParameterSyntax.html",
+          "hash": "USibroE7mljnSbIdi70uV++9MGqbZe0Np9mjFzOiOxQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariableAttributeSyntax.html",
+          "hash": "Rx96WTDZrri4/nnZp4jyjNaOu9dFVGROomfIdPtGzgc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariableExpressionSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariableExpressionSyntax.html",
+          "hash": "45krPPLdReTRPXDL7k3GZmoE+7+/eAvWgbzbF3a1SqU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.VariadicTypePackSyntax.html",
+          "hash": "ZRluokAtFkAIfyXdgKhVarhYivy3BYdetUashGB52R8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.WhileStatementSyntax.html",
+          "hash": "JI1NIxIES9/9nfv6cc6Sged1mwVIQ3GoMk8jJbuDL1M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.Syntax.html",
+          "hash": "LSSpPgRuuCqaKJbcLhsYqCU8y7awgiHDaINUFrCKnbk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxExtensions.html",
+          "hash": "ELNeqZXJLRcl1eJAdx3f12DsIkx2aIzRxn9N1uK/tWI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html",
+          "hash": "Fn668OUDFRMGG08iEl8hRIJd+Be4AJjAZD3bB3Hvk+k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxFacts.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxFacts.html",
+          "hash": "c6T+bMnF0FXPzB7OKVSazGvtiRvvRBiaoEH5szFuG64="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxKind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.SyntaxKind.html",
+          "hash": "dyTB60+XeI6DR/ilnKLf0ORmgWKxmy+xKn5AzIjbzfI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.VariableConflictError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.VariableConflictError.html",
+          "hash": "buFdjUzZ96AxI2Jn3FEtAKkQAcox9OXcAtCXMEyTsb4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.VariableKind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.VariableKind.html",
+          "hash": "d+yN3CpqCq1bmEXmkrgeVArFE9ORtoC5+caL4vcsGOI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Lua.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Lua.html",
+          "hash": "4txNzRkgxCSNVjz4/EiwI/Hs7i/m4tMn4gflp66LwhI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.LuaExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.LuaExtensions.html",
+          "hash": "lbfAhBsTfCdYlopua0WeIy93K3f5RBaAfROw1hK1nbs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.ObjectDisplayOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.ObjectDisplayOptions.html",
+          "hash": "ytsl9n1exR01QQAWmLpRrDHwzDHcyEP9bbJ/8Tj/PgI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.ParseOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.ParseOptions.html",
+          "hash": "HNMeHUwudWhywonl83R6MhprxFn7kmkk3P4X/yPmNk0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SeparatedSyntaxList-1.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SeparatedSyntaxList-1.Enumerator.html",
+          "hash": "bUMs5YC28XlKmHcJvtz0581SYNy6ljXRnu29DW3iMrQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SeparatedSyntaxList-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SeparatedSyntaxList-1.html",
+          "hash": "WdybilFCohOAL6dX1FxhuRUstzRIhiWnMmdsJ0N/ZhI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxAnnotation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxAnnotation.html",
+          "hash": "jvG/mXg5YjE+46837WQoZg8KQuVDMKMEwMUfzqyQOng="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxList-1.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxList-1.Enumerator.html",
+          "hash": "7RNqroeZoGRDKjcHL6VIKIgW0byskh4bB0PLq6biv+E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxList-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxList-1.html",
+          "hash": "RrjF5L191vmH7DzS+PpmuGxjtjVZYuCj48c8VY4Hu78="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxNode.html",
+          "hash": "AoKlhAZ8xKRiDmfApryJLMdHiMPVB+IuziQEwRz5cDk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeExtensions.html",
+          "hash": "YPVgQGioYn1Wj3wp453Rb4RkCkKRy8Wi9ucQxjOXPNg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrToken.html",
+          "hash": "u4pka+efFLwKxyGdY+vOVAM3c1Rx3WxLiK+8yGxFWvc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrTokenList.Enumerator.html",
+          "hash": "Dku47Ah3cZug+BmI3VKfZtWYgks0LOEt9XhbFyKoCb8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrTokenList.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxNodeOrTokenList.html",
+          "hash": "2mLH+E0Vy8WYBTLf+AGtscW/I/Ed7x+m9islT5CEL7Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxReference.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxReference.html",
+          "hash": "Qk63CtkrGUUANh6VYQM7iFcG6vfdUcagTyQp4R8KrbI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxRemoveOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxRemoveOptions.html",
+          "hash": "sCTbiLeM60EG4dbiDcEscwQdwmHlcUf+GX7iA6SxJVw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxToken.html",
+          "hash": "3SMNFDHILftkEuHs4WJOrsXv8GdtiRlXYZGwKBloEPU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Enumerator.html",
+          "hash": "EYp2trAoG1oY5qnyxmjAF4/8tvW/pQo0BQ96t9P9kXs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Reversed.Enumerator.html",
+          "hash": "fO8qmifGea6GNiFOLwrR37wBL9767vQ4wuxKCCt2Yas="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Reversed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.Reversed.html",
+          "hash": "3pUoLj5zxoHv2vPl9hFgKZ3UBr+j5uHCrIQtim7BwFQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTokenList.html",
+          "hash": "NBc22HCtnHd/cTbNkylIjk/5GvYsGBgXwIIpjwEMytI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTree.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTree.html",
+          "hash": "jaBe6wI8zQmYZmsdUHcOB/RkXS9tzuOy4s2CK5BbhPM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTrivia.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTrivia.html",
+          "hash": "4g5ITGuBxs08icM3lyjugEzzb0Z1uVbwr0wBzsmsWz0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Enumerator.html",
+          "hash": "XvrPuWx6F8OMy6/jEp2fbGkVFBbN1zf1Dj5zYgrOCcw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.Enumerator.html",
+          "hash": "ojV6VIxmwxAG8RHolmEadWk0wxf2i+nVF++vJ+1oNVc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.Reversed.html",
+          "hash": "DXfIL6WRQRP0xJFyo0FBQjNDIJ3P21TsTJAPXVTmUCg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxTriviaList.html",
+          "hash": "JNoQxIbuZKXgVxeDIDH8SU2OgyAXjTpBDt3bZUowGqQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxWalker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxWalker.html",
+          "hash": "PURSigF+nMapUpW+iBo6hiFOFBsU/eEVf4s3qZBxZQw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.SyntaxWalkerDepth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.SyntaxWalkerDepth.html",
+          "hash": "s1u5lQzQXuXgFQS36zRMnKYZ+HW4KSS8xrgmHcc6Ym4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.LinePosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.LinePosition.html",
+          "hash": "kYHNCHqAuDr7EbtXuJ+vidpyO4WHM0ZjKYAaFym/Txk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.LinePositionSpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.LinePositionSpan.html",
+          "hash": "LsE9P5bEo0YY8FCnaQgloCa6bv3y9+fSu6TpyeC7Ie4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.SourceHashAlgorithm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.SourceHashAlgorithm.html",
+          "hash": "meBS4HOGAhY1lut0v+u0d8fRfPPTLLpq4XD2aC0uG5A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.SourceText.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.SourceText.html",
+          "hash": "9X+Wuam5Zw2e/Zgkz+G0uMP0KF96Iv2eEY3/PZvVf6g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.SourceTextContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.SourceTextContainer.html",
+          "hash": "g04D6r85M2CJFK+8U5jURNyctifbKLX8PzQ43o5QOzs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.TextChange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.TextChange.html",
+          "hash": "FiBoiYwJZ/4CT3vYKYJaZEr77Lt9kruxNXcJuar0Y40="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.TextChangeEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.TextChangeEventArgs.html",
+          "hash": "JbBV22pn6Rr9RTXIdNdZefoRY2FxPMADubHKuI3yTWY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.TextChangeRange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.TextChangeRange.html",
+          "hash": "Iz6hsfANuUHnI8ppzrtlCE7nRgN03tIMawKZO5qKN7w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.TextLine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.TextLine.html",
+          "hash": "5ZldfsMx6ayT5vJk46JZeg5PGvEoUF49jIFIXJPBiZg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.TextLineCollection.Enumerator.html",
+          "hash": "pWJCgHNeQfsJlmbmuh4iWU5xNqDnnaySJeAhXg2kVzI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.TextLineCollection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.TextLineCollection.html",
+          "hash": "761RiZn31kVgCGZ4WW06p95fzZwamW/02ImCJUaxvoQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.TextSpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.TextSpan.html",
+          "hash": "J6WX7XohoPR29sm9ZmggHYtfoEuQf2Ae6EqMhlFpJ8o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.Text.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.Text.html",
+          "hash": "H/UyG9YD1eKHWvD6c8xVzVQiqLbYEwhsZiWGA/06HvM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.WellKnownDiagnosticTags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.WellKnownDiagnosticTags.html",
+          "hash": "nX1go5Jg36qJrNgP2p+dDVWS+BQXR6o8lgGMPbo3zWg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Loretta.CodeAnalysis.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Loretta.CodeAnalysis.html",
+          "hash": "CixNvZultxO+sAAMmbt8bBe6hjQkp9AXjev20b9U1Dc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "TvpLW1Mfemq/PWfSLs9Jylxos0KPRmPRwixo1nc+i4Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "Z+fBWRBFLmclWO4Utjwc19Ba4hK+vIX8gJVIoZG6lFU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/basics/locations.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/basics/locations.html",
+          "hash": "AUn4TW9CyI2AM1ZkSDg3sjF61Ep31sMvR8ZbLNhkZiY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/basics/sourcetext.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/basics/sourcetext.html",
+          "hash": "D0/P2e+l3hCXavXmvLI5ibJGLnUX8SGAiMkrsfAEz2c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/experimental/constant-folder.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/experimental/constant-folder.html",
+          "hash": "atO+j2dVGrRmk8UJiVNC3+WF7LrJaW5zYTWAFTUfkDw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/experimental/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/experimental/index.html",
+          "hash": "Q5pTxTucErZPahOvPRnprqIjJ+Vbs5PER8yZ3N7PPgw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/experimental/minifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/experimental/minifier.html",
+          "hash": "gAhpPFAo2YpszXi4p09Cq1RXOI9tplHeRpiOHypqR34="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "5vKdOgteLDaQh+5dnr3VFiPs5Q5FZYo474SwwX2zhdg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "qZazZcLxLSLpVCYaDGssA7EXH/Garw5eNptL/9YYOyc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo_32x32.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo_32x32.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "5F9dwySYsP94DVqPutADiXEWJtApI6FThWGcAkH1Vts="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "J6gmxnantuptwC38yTt93r/f/F9llSOjgLUPCqZ2Esc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "tutorials/creating-a-localizer/part-1.md",
+      "output": {
+        ".html": {
+          "relative_path": "tutorials/creating-a-localizer/part-1.html",
+          "hash": "4iVVnFTuZVZRQpjY0aVpFnYD9DuIf6Bn2Fn6O/u5Vhs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "tutorials/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "tutorials/toc.html",
+          "hash": "gbH6AQfJpjq7NRVkp+DAkqrGy7vVcUdI1uTF727hX7c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 9,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 192,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
