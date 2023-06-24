@@ -227,14 +227,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                         currentTriviaList.Add(trivia);
                     }
 
-                    if (NeedsLineBreakAfter(trivia))
+                    if (NeedsLineBreakAfter(trivia, isTrailing))
                     {
-                        if (!isTrailing)
-                        {
-                            currentTriviaList.Add(GetEndOfLine());
-                            _afterLineBreak = true;
-                            _afterIndentation = false;
-                        }
+                        currentTriviaList.Add(GetEndOfLine());
+                        _afterLineBreak = true;
+                        _afterIndentation = false;
                     }
                     else
                     {
@@ -254,7 +251,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                         _afterIndentation = false;
                     }
                 }
-                else if (mustHaveSeparator)
+                else if (mustHaveSeparator
+                    && (!currentTriviaList.Any() || currentTriviaList.Last().Kind() is not (SyntaxKind.WhitespaceTrivia or SyntaxKind.EndOfLineTrivia)))
                 {
                     currentTriviaList.Add(GetSpace());
                     _afterLineBreak = false;
@@ -317,8 +315,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             };
         }
 
-        private static bool NeedsLineBreakAfter(SyntaxTrivia trivia) =>
-            trivia.IsKind(SyntaxKind.SingleLineCommentTrivia);
+        private static bool NeedsLineBreakAfter(SyntaxTrivia trivia, bool isTrailingTrivia)
+        {
+            var kind = trivia.Kind();
+            return kind switch
+            {
+                SyntaxKind.SingleLineCommentTrivia => true,
+                SyntaxKind.MultiLineCommentTrivia => !isTrailingTrivia,
+                _ => false
+            };
+        }
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Will be used when we have doc comments.")]

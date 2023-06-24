@@ -1234,6 +1234,79 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             AssertNormalizeCore(root, "print(1, 2)");
         }
 
+        [Theory]
+        [WorkItem(117, "https://github.com/LorettaDevs/Loretta/issues/117")]
+        [InlineData("""
+                    string_format(
+                        "%s %s",
+                        "test", -- comment here
+                        "test2"
+                    )
+                    """,
+                    """
+                    string_format("%s %s", "test", -- comment here
+                    "test2")
+                    """)]
+        [InlineData("""
+                    string_format(
+                        "test", -- comment here
+                        "%s %s",
+                        "test2"
+                    )
+                    """,
+                    """
+                    string_format("test", -- comment here
+                    "%s %s", "test2")
+                    """)]
+        [InlineData("""
+                    string_format(
+                        "%s %s",
+                        "test2",
+                        "test" -- comment here
+                    )
+                    """,
+                    """
+                    string_format("%s %s", "test2", "test" -- comment here
+                    )
+                    """)]
+        [InlineData("""
+                    string_format(
+                        "%s %s",
+                        "test", --[[ comment here ]]
+                        "test2"
+                    )
+                    """,
+                    """
+                    string_format("%s %s", "test", --[[ comment here ]] "test2")
+                    """)]
+        [InlineData("""
+                    string_format(
+                        "test", --[[ comment here ]]
+                        "%s %s",
+                        "test2"
+                    )
+                    """,
+                    """
+                    string_format("test", --[[ comment here ]] "%s %s", "test2")
+                    """)]
+        [InlineData("""
+                    string_format(
+                        "%s %s",
+                        "test2",
+                        "test" --[[ comment here ]]
+                    )
+                    """,
+                    """
+                    string_format("%s %s", "test2", "test" --[[ comment here ]])
+                    """)]
+        public void SyntaxNormalizer_CorrectlyAddsLineBreaksAfterSingleLineComments(string input, string expected)
+        {
+            var tree = ParseAndValidate(input, s_luaParseOptions);
+            var root = tree.GetRoot();
+
+            AssertNormalizeCore(root, expected);
+        }
+
         #region Class Implementation Details
 
         private static void AssertNormalizeCore(SyntaxNode node, string expected)
