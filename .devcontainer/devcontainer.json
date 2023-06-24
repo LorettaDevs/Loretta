@@ -9,7 +9,10 @@
 		"vscode": {
 			"extensions": [
 				"EditorConfig.EditorConfig",
+				"ms-dotnettools.csdevkit",
 				"ms-dotnettools.csharp",
+				"ms-dotnettools.vscodeintellicode-csharp",
+				"ms-dotnettools.vscode-dotnet-runtime",
 				"valentjn.vscode-ltex",
 				"VisualStudioExptTeam.vscodeintellicode"
 			]
