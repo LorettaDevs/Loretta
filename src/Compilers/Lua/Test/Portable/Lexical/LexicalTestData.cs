@@ -292,7 +292,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             if (options.AcceptHexEscapesInStrings || !options.AcceptInvalidEscapes)
             {
                 shortStringContentValue = shortStringContentValue.Replace("xFxFF", "\xF\xFF");
-            } 
+            }
 
             if (options.AcceptUnicodeEscape || !options.AcceptInvalidEscapes)
             {

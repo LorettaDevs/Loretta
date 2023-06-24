@@ -137,7 +137,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             {
                                 if (_options.SyntaxOptions.AcceptInvalidEscapes && !_options.SyntaxOptions.AcceptUnicodeEscape)
                                     goto default;
-                                    
+
                                 TextWindow.AdvanceChar();
                                 var parsed = parseUnicodeEscape(escapeStart);
                                 _builder.Append(parsed);
