@@ -7,6 +7,11 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      target_branch:
+        type: string
+        description: The branch the results will be deployed to
+        default: cf-pages
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -62,11 +67,11 @@ jobs:
             !docs/api/index.md
 
       - name: Publish
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: cf-pages
+          publish_branch: "${{ github.event_name == 'workflow_dispatch' && inputs.target_branch || 'cf-pages' }}"
           publish_dir: docs/_site
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
