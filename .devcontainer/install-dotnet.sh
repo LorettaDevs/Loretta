@@ -3,7 +3,7 @@ set -xeuo
 
 INSTALL_SCRIPT=/tmp/dotnet-install.sh
 INSTALL_PATH=/usr/local/dotnet/current
-INSTALL_SCRIPT_HASH="3d5a87bc29fb96e8dac8c2f88d95ff619c3a921903b4c9ff720e07ca0906d55e  $INSTALL_SCRIPT"
+INSTALL_SCRIPT_HASH="5840ce64f4186ccc4dac0c0fd8703acd0d387091ce48f310fef758e5f84d7a7f  $INSTALL_SCRIPT"
 
 apt-get update -y
 apt-get -y install --no-install-recommends wget ca-certificates icu-devtools
