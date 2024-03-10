@@ -1306,6 +1306,16 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
             AssertNormalizeCore(root, expected);
         }
+        
+        [Fact]
+        [WorkItem(122, "https://github.com/LorettaDevs/Loretta/issues/122")]
+        public void SyntaxNormalizer_CorrectlyAddsWhitespaceBetweenDoubleUnaryMinus()
+        {
+            var tree = ParseAndValidate("local a = - - 2", s_luaParseOptions);
+            var root = tree.GetRoot();
+
+            AssertNormalizeCore(root, "local a = - -2");
+        }
 
         #region Class Implementation Details
 

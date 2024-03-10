@@ -1071,6 +1071,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (SyntaxFacts.IsKeyword(node.OperatorToken.Kind()))
                 AddSpaceAfterToken(node.OperatorToken);
 
+            if (node.IsKind(SyntaxKind.UnaryMinusExpression)
+                && node.Operand.IsKind(SyntaxKind.UnaryMinusExpression))
+            {
+                AddSpaceAfterToken(node.OperatorToken);
+            }
+
             return base.VisitUnaryExpression(node);
         }
 

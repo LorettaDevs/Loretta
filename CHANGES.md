@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed `LuaSyntaxOptions.AcceptInvalidEscapes` not suppressing errors in cases where `LuaSyntaxOptions.{AcceptWhitespaceEscape,AcceptHexEscapesInStrings,AcceptUnicodeEscape}` were `false` by @TheGreatSageEqualToHeaven in https://github.com/LorettaDevs/Loretta/pull/116.
 - Fixed single line comments not getting a line break added after them in `NormalizeWhitespace` by @GGG-KILLER in https://github.com/LorettaDevs/Loretta/pull/118.
+- Fixed double unary minus not being spaced out in `NormalizeWhitespace` by @toxamin in https://github.com/LorettaDevs/Loretta/pull/124
 
 ### Removed
 - Removed `LanguageNames.{CSharp,FSharp,VisualBasic}` by @GGG-KILLER in https://github.com/LorettaDevs/Loretta/pull/115.

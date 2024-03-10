@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # Custom project stuff
 !src/Compilers/Lua/Portable/Generated/**
+
+# JetBrains
+.idea
