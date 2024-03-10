@@ -34,3 +34,4 @@
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qv0.2.8\nAdded\nAdded support for string length to the constant folder.\\E$"}
 {"rule":"EN_A_VS_AN","sentence":"^\\QFixed\nFix parameters not having an \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q associated with them.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Qv0.2.4\nAdded\nAdd nuget params to \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q and \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q;\nAdd CD flow to publish packages to a public myget.org (not nuget.org) feed.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qv0.2.12\nFixed\nFixed \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q not suppressing errors in cases where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q were \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q by @TheGreatSageEqualToHeaven in https://github.com/LorettaDevs/Loretta/pull/116.\\E$"}

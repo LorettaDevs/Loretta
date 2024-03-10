@@ -53,10 +53,7 @@ abstract Loretta.CodeAnalysis.Text.SourceTextContainer.TextChanged -> System.Eve
 abstract Loretta.CodeAnalysis.Text.TextLineCollection.Count.get -> int
 abstract Loretta.CodeAnalysis.Text.TextLineCollection.IndexOf(int position) -> int
 abstract Loretta.CodeAnalysis.Text.TextLineCollection.this[int index].get -> Loretta.CodeAnalysis.Text.TextLine
-const Loretta.CodeAnalysis.LanguageNames.CSharp = "C#" -> string!
-const Loretta.CodeAnalysis.LanguageNames.FSharp = "F#" -> string!
 const Loretta.CodeAnalysis.LanguageNames.Lua = "Lua" -> string!
-const Loretta.CodeAnalysis.LanguageNames.VisualBasic = "Visual Basic" -> string!
 const Loretta.CodeAnalysis.WellKnownDiagnosticTags.Build = "Build" -> string!
 const Loretta.CodeAnalysis.WellKnownDiagnosticTags.Compiler = "Compiler" -> string!
 const Loretta.CodeAnalysis.WellKnownDiagnosticTags.NotConfigurable = "NotConfigurable" -> string!
