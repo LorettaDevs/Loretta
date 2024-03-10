@@ -392,9 +392,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 info.ValueKind = ValueKind.Complex;
                 info.ComplexValue = new Complex(0, result);
             }
+            // We check for IntegerFormats.NotSupported because on places where integers aren't supported,
+            // numbers are parsed as doubles which means there's no overflow behavior so we shouldn't check
+            // for it either.
             else if (isHexFloat || _options.SyntaxOptions.HexIntegerFormat == IntegerFormats.NotSupported)
             {
-                if (!_options.SyntaxOptions.AcceptHexFloatLiterals)
+                if (isHexFloat && !_options.SyntaxOptions.AcceptHexFloatLiterals)
                     AddError(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion);
 
                 var result = 0d;

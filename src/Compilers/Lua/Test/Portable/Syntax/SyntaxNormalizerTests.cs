@@ -1307,6 +1307,21 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             AssertNormalizeCore(root, expected);
         }
 
+        [Theory]
+        [WorkItem(122, "https://github.com/LorettaDevs/Loretta/issues/122")]
+        [InlineData("print(  -      -      2)", "print(- -2)")]
+        [InlineData("print(  -      -      -      2)", "print(- - -2)")]
+        [InlineData("print(  -      -      -      -      2)", "print(- - - -2)")]
+        [InlineData("print(  -      -      -      -      -      2)", "print(- - - - -2)")]
+        [InlineData("print(  -      -      -      -      -      -      -      -      -      -      -      -      -      2)", "print(- - - - - - - - - - - - -2)")]
+        public void SyntaxNormalizer_CorrectlyAddsSpacesOnDoubleUnaryMinus(string input, string expected)
+        {
+            var tree = ParseAndValidate(input, s_luaParseOptions);
+            var root = tree.GetRoot();
+
+            AssertNormalizeCore(root, expected);
+        }
+
         #region Class Implementation Details
 
         private static void AssertNormalizeCore(SyntaxNode node, string expected)
