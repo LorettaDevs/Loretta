@@ -1071,6 +1071,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             if (SyntaxFacts.IsKeyword(node.OperatorToken.Kind()))
                 AddSpaceAfterToken(node.OperatorToken);
 
+            if (node.OperatorToken.Kind() is SyntaxKind.MinusToken && node.Operand is UnaryExpressionSyntax { OperatorToken.RawKind: (int) SyntaxKind.MinusToken })
+                AddSpaceAfterToken(node.OperatorToken);
+
             return base.VisitUnaryExpression(node);
         }
 
