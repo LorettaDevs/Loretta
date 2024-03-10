@@ -41,5 +41,20 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             Assert.Equal((double) 0x049bbe662, token.Value);
             Assert.False(token.ContainsDiagnostics);
         }
+
+        [Fact]
+        [WorkItem(120, "https://github.com/LorettaDevs/Loretta/issues/120")]
+        [Trait("Type", TestType.Regression)]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_Warns_AboutHexFloatsProperlyWhenPresetDoesntSupportIntegers()
+        {
+            const string RawText = "0X049bbe662.ff";
+
+            var token = LexToken(RawText, LuaSyntaxOptions.Lua51);
+
+            Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
+            Assert.Equal(RawText, token.Text);
+            Assert.True(token.ContainsDiagnostics);
+        }
     }
 }
