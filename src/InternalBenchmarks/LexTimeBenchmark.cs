@@ -8,7 +8,8 @@ using Loretta.InternalBenchmarks.Attributes;
 
 namespace Loretta.InternalBenchmarks
 {
-    [SimpleJob(RuntimeMoniker.Net60)]
+    [SimpleJob(RuntimeMoniker.Net80)]
+    [SimpleJob(RuntimeMoniker.Net90)]
     [MeanThroughputColumn("File"), MedianColumn, MedianThroughputColumn("File")]
     [MemoryDiagnoser]
     public class LexTimeBenchmark

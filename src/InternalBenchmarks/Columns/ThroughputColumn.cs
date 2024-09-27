@@ -42,7 +42,7 @@ namespace Loretta.InternalBenchmarks.Columns
         public string GetValue(Summary summary, BenchmarkCase benchmarkCase, SummaryStyle style)
         {
             var file = (TestFile) benchmarkCase.Parameters[_paramName];
-            var statistics = summary[benchmarkCase].ResultStatistics;
+            var statistics = summary[benchmarkCase]!.ResultStatistics!;
 
             var size = file.Contents.Length;
             var time = _func(statistics);
