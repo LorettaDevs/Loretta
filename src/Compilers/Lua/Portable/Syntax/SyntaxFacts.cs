@@ -40,6 +40,19 @@ namespace Loretta.CodeAnalysis.Lua
             };
 
         /// <summary>
+        /// Checks whether a keyword has been disabled by the <paramref name="syntaxOptions"/>.
+        /// </summary>
+        /// <param name="kind">The keyword's <see cref="SyntaxKind"/>.</param>
+        /// <param name="syntaxOptions">The <see cref="LuaSyntaxOptions"/> to check against.</param>
+        /// <returns></returns>
+        public static bool HasKeywordBeenDisabled(SyntaxKind kind, LuaSyntaxOptions syntaxOptions)
+            => kind switch
+            {
+                SyntaxKind.ContinueKeyword => syntaxOptions.ContinueType == ContinueType.None,
+                _                          => false,
+            };
+
+        /// <summary>
         /// Checks whether a given kind is a contextual keyword.
         /// </summary>
         /// <param name="kind"></param>

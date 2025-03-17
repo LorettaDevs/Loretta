@@ -6,7 +6,8 @@
         {
             if (ScanIdentifier(ref info))
             {
-                if (!_cache.TryGetKeywordKind(info.Text!, out info.Kind))
+                if (!_cache.TryGetKeywordKind(info.Text!, out info.Kind)
+                    || SyntaxFacts.HasKeywordBeenDisabled(info.Kind, _options.SyntaxOptions))
                 {
                     info.ContextualKind = info.Kind = SyntaxKind.IdentifierToken;
                 }
