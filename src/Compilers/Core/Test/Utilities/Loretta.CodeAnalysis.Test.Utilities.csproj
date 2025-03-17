@@ -6,8 +6,8 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFrameworks>net6.0;netstandard2.0;net472</TargetFrameworks>
-        <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net6.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;netstandard2.0;net472</TargetFrameworks>
+        <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net8.0</TargetFrameworks>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
