@@ -95,5 +95,35 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 (SyntaxKind.EndOfFileToken, SyntaxKind.EndOfFileToken),
             ], tokens);
         }
+
+        // This didn't exactly come from this issue, but it was another keyword that didn't have this handling.
+        [Fact]
+        [WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
+        [Trait("Type", TestType.Regression)]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_DoesNotLexGotoAsKeywordWhenItHasBeenDisabled()
+        {
+            const string RawText = """
+                                   ::label::
+
+                                   goto label
+                                   """;
+
+            var tokens = Lex(RawText, LuaSyntaxOptions.Lua51).Select(static t => (t.Kind(), t.ContextualKind()));
+            
+            Assert.Equal([
+                // ::label::
+                (SyntaxKind.ColonToken, SyntaxKind.ColonToken),
+                (SyntaxKind.ColonToken, SyntaxKind.ColonToken),
+                (SyntaxKind.IdentifierToken, SyntaxKind.None),
+                (SyntaxKind.ColonToken, SyntaxKind.ColonToken),
+                (SyntaxKind.ColonToken, SyntaxKind.ColonToken),
+                
+                // goto label
+                (SyntaxKind.IdentifierToken, SyntaxKind.None),
+                (SyntaxKind.IdentifierToken, SyntaxKind.None),
+                (SyntaxKind.EndOfFileToken, SyntaxKind.EndOfFileToken),
+            ], tokens);
+        }
     }
 }
