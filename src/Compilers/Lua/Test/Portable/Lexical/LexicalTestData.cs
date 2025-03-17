@@ -31,12 +31,15 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
         public static IEnumerable<ShortToken> GetTokens(LuaSyntaxOptions options)
         {
-            foreach (var token in from kind in Enum.GetValues(typeof(SyntaxKind))
-                                                   .Cast<SyntaxKind>()
+#pragma warning disable CA2263 (Unavailable in .NET Framework)
+            foreach (var token in from kind in Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
+#pragma warning restore CA2263 (Unavailable in .NET Framework)
                                   where !SyntaxFacts.IsManufacturedToken(kind, options)
+                                        && !SyntaxFacts.HasKeywordBeenDisabled(kind, options)
+                                        && (kind != SyntaxKind.ColonColonToken || options.AcceptGoto)
+                                        && (kind != SyntaxKind.SlashSlashToken || options.AcceptFloorDivision)
                                   let text = SyntaxFacts.GetText(kind)
                                   where !string.IsNullOrEmpty(text)
-                                    && (text != "//" || options.AcceptFloorDivision)
                                   select new ShortToken(kind, text))
             {
                 yield return token;
@@ -363,6 +366,10 @@ fourth line \xFF.";
             {
                 yield return new ShortToken(SyntaxKind.IdentifierToken, identifier);
             }
+
+            if (options.ContinueType == ContinueType.None)
+                yield return new ShortToken(SyntaxKind.IdentifierToken, "continue");
+            if (!options.AcceptGoto) yield return new ShortToken(SyntaxKind.IdentifierToken, "goto");
         }
 
         public static IEnumerable<ShortToken> GetTrivia(LuaSyntaxOptions options)
