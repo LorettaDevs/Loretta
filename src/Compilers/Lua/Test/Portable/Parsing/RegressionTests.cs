@@ -236,7 +236,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 Diagnostic(ErrorCode.ERR_InvalidStatement, ":").WithLocation(1, 1),
                 // (1,2): error LUA1012: Invalid statement
                 // ::label:: goto label
-                Diagnostic(ErrorCode.ERR_InvalidStatement, ":labe").WithLocation(1, 2),
+                Diagnostic(ErrorCode.ERR_InvalidStatement, ":").WithLocation(1, 2),
                 // (1,9): error LUA1001: Identifier expected
                 // ::label:: goto label
                 Diagnostic(ErrorCode.ERR_IdentifierExpected, ":").WithLocation(1, 9),
