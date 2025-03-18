@@ -152,7 +152,7 @@ namespace Loretta.CodeAnalysis.Lua
             // Luau parses hex as a long and then converts it to a double
             hexIntegerFormat: IntegerFormats.Double,
             acceptTypedLua: true,
-            acceptFloorDivision: false,
+            acceptFloorDivision: true,
             acceptLuaJITNumberSuffixes: false,
             acceptNestingOfLongStrings: true);
 
