@@ -31,9 +31,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
         public static IEnumerable<ShortToken> GetTokens(LuaSyntaxOptions options)
         {
-#pragma warning disable CA2263 (Unavailable in .NET Framework)
+#pragma warning disable CA2263 // Unavailable in .NET Framework
             foreach (var token in from kind in Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
-#pragma warning restore CA2263 (Unavailable in .NET Framework)
+#pragma warning restore CA2263 // Unavailable in .NET Framework
                                   where !SyntaxFacts.IsManufacturedToken(kind, options)
                                         && !SyntaxFacts.HasKeywordBeenDisabled(kind, options)
                                         && (kind != SyntaxKind.ColonColonToken || options.AcceptGoto)

@@ -182,14 +182,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             // If the expression is missing, reset and then consume the token we cannot process
                             // generating a *minimal* missing statement so that we can continue.
                             Reset(ref restorePoint);
-                            var token = EatToken();
-                            return AddError(
-                                SyntaxFactory.ExpressionStatement(
-                                    AddLeadingSkippedSyntax(
-                                        CreateMissingIdentifierName(),
-                                        token),
-                                    null),
-                                ErrorCode.ERR_InvalidStatement);
+
+                            // Error needs to be added to the token so that offset calculations can work correctly with
+                            // the mechanism we have to set the offset of the diagnostic.
+                            // TODO: Remove this hack when Semantic Analysis gets implemented as this is a semantic
+                            //       analysis check wrongly placed inside the parser.
+                            var token = AddError(EatToken(), ErrorCode.ERR_InvalidStatement);
+                            return SyntaxFactory.ExpressionStatement(
+                                SyntaxFactory.IdentifierName(
+                                    AddLeadingSkippedSyntax(CreateMissingIdentifierToken(), token)),
+                                null);
                         }
                         else
                         {
