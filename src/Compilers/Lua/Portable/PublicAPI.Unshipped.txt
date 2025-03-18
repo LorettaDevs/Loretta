@@ -1,1 +1,2 @@
 #nullable enable
+static Loretta.CodeAnalysis.Lua.SyntaxFacts.HasKeywordBeenDisabled(Loretta.CodeAnalysis.Lua.SyntaxKind kind, Loretta.CodeAnalysis.Lua.LuaSyntaxOptions! syntaxOptions) -> bool

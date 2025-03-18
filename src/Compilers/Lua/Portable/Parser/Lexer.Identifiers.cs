@@ -6,18 +6,19 @@
         {
             if (ScanIdentifier(ref info))
             {
-                if (!_cache.TryGetKeywordKind(info.Text!, out info.Kind))
+                if (!_cache.TryGetKeywordKind(info.Text!, out info.Kind)
+                    || SyntaxFacts.HasKeywordBeenDisabled(info.Kind, _options.SyntaxOptions))
                 {
-                    info.ContextualKind = info.Kind = SyntaxKind.IdentifierToken;
+                    info.ContextualKind = SyntaxKind.None;
+                    info.Kind           = SyntaxKind.IdentifierToken;
                 }
                 else if (SyntaxFacts.IsContextualKeyword(info.Kind, _options.SyntaxOptions))
                 {
                     info.ContextualKind = info.Kind;
-                    info.Kind = SyntaxKind.IdentifierToken;
+                    info.Kind           = SyntaxKind.IdentifierToken;
                 }
 
-                if (info.Kind is SyntaxKind.None)
-                    info.Kind = SyntaxKind.IdentifierToken;
+                if (info.Kind is SyntaxKind.None) info.Kind = SyntaxKind.IdentifierToken;
 
                 return true;
             }
