@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Identifier tokens now never have a `ContextualKind` by @GGG-KILLER in https://github.com/LorettaDevs/Loretta/pull/134.
+- **[Breaking]** `LuaSyntaxOptions.Luau` has been modified to enable floor division by @GGG-KILLER in https://github.com/LorettaDevs/Loretta/pull/133.
 
 ### Fixed
 

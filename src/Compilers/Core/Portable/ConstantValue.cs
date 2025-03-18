@@ -39,7 +39,7 @@ namespace Loretta.CodeAnalysis
         //       It appears that in all cases so far we considered isDefaultValue, and not about value being 
         //       arithmetic zero (especially when definition is ambiguous).
 
-        public const ConstantValue NotAvailable = null;
+        public const ConstantValue? NotAvailable = null;
 
         public static ConstantValue Bad => ConstantValueBad.Instance;
         public static ConstantValue Nil => ConstantValueNil.Instance;
