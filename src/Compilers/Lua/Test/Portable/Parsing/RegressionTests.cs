@@ -153,6 +153,13 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 // local x = y | z
                 Diagnostic(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion, "|").WithLocation(1, 13));
 
+        [Fact, WorkItem(126, "https://github.com/LorettaDevs/Loretta/issues/126")]
+        public void LanguageParser_DoesNotGenerateOutOfRangeDiagnostics()
+            => ParseAndValidate("\n\"hello\"\n", LuaSyntaxOptions.Lua51,
+                                // (2,1): error LUA1012: Invalid statement
+                                // "hello"
+                                Diagnostic(ErrorCode.ERR_InvalidStatement, @"""hello""").WithLocation(2, 1));
+
         [Fact, WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
         public void LanguageParser_ProperlyTreatsContinueAsNormalIdentifierWhenContinueTypeIsNone()
         {
@@ -227,7 +234,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
             }
             EOF();
         }
-        
+
         [Fact, WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
         public void LanguageParser_DoesNotFindGotosNorGotoLabelsWhenAcceptGotoIsNotTrue() =>
             ParseAndValidate("::label:: goto label", LuaSyntaxOptions.Lua51,
@@ -255,6 +262,5 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 // (1,21): error LUA1003: ) expected
                 // ::label:: goto label
                 Diagnostic(ErrorCode.ERR_CloseParenExpected, "").WithLocation(1, 21));
-        
     }
 }
