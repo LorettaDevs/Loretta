@@ -21125,6 +21125,19 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFacts.GetVariableExpressionKinds
   nameWithType: SyntaxFacts.GetVariableExpressionKinds
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFacts.HasKeywordBeenDisabled(Loretta.CodeAnalysis.Lua.SyntaxKind,Loretta.CodeAnalysis.Lua.LuaSyntaxOptions)
+  name: HasKeywordBeenDisabled(SyntaxKind, LuaSyntaxOptions)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFacts.html#Loretta_CodeAnalysis_Lua_SyntaxFacts_HasKeywordBeenDisabled_Loretta_CodeAnalysis_Lua_SyntaxKind_Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFacts.HasKeywordBeenDisabled(Loretta.CodeAnalysis.Lua.SyntaxKind,Loretta.CodeAnalysis.Lua.LuaSyntaxOptions)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFacts.HasKeywordBeenDisabled(Loretta.CodeAnalysis.Lua.SyntaxKind, Loretta.CodeAnalysis.Lua.LuaSyntaxOptions)
+  nameWithType: SyntaxFacts.HasKeywordBeenDisabled(SyntaxKind, LuaSyntaxOptions)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFacts.HasKeywordBeenDisabled*
+  name: HasKeywordBeenDisabled
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFacts.html#Loretta_CodeAnalysis_Lua_SyntaxFacts_HasKeywordBeenDisabled_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.SyntaxFacts.HasKeywordBeenDisabled
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFacts.HasKeywordBeenDisabled
+  nameWithType: SyntaxFacts.HasKeywordBeenDisabled
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFacts.IsBinaryExpression(Loretta.CodeAnalysis.Lua.SyntaxKind)
   name: IsBinaryExpression(SyntaxKind)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFacts.html#Loretta_CodeAnalysis_Lua_SyntaxFacts_IsBinaryExpression_Loretta_CodeAnalysis_Lua_SyntaxKind_
