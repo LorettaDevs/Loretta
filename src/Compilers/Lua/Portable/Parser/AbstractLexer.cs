@@ -1,12 +1,11 @@
-﻿using System.Text;
-using Loretta.CodeAnalysis.Text;
+﻿using Loretta.CodeAnalysis.Text;
 
 namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal class AbstractLexer : IDisposable
     {
-        internal readonly SlidingTextWindow TextWindow;
-        private List<SyntaxDiagnosticInfo>? _errors;
+        internal readonly SlidingTextWindow           TextWindow;
+        private           List<SyntaxDiagnosticInfo>? _errors;
 
         public AbstractLexer(SourceText text)
         {
@@ -52,20 +51,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected void AddError(int position, int width, ErrorCode code) => AddError(MakeError(position, width, code));
 
-        protected void AddError(int position, int width, ErrorCode code, params object[] args) => AddError(MakeError(position, width, code, args));
+        protected void AddError(int position, int width, ErrorCode code, params object[] args)
+            => AddError(MakeError(position, width, code, args));
 
         protected void AddError(ErrorCode code) => AddError(MakeError(0, TextWindow.Width, code));
 
-        protected void AddError(ErrorCode code, params object[] args) => AddError(MakeError(0, TextWindow.Width, code, args));
+        protected void AddError(ErrorCode code, params object[] args)
+            => AddError(MakeError(position: 0, TextWindow.Width, code, args));
 
-        protected void AddError(SyntaxDiagnosticInfo error)
+        protected void AddError(SyntaxDiagnosticInfo? error)
         {
-            if (error != null)
-            {
-                _errors ??= new List<SyntaxDiagnosticInfo>(8);
+            if (error == null) return;
 
-                _errors.Add(error);
-            }
+            _errors ??= new List<SyntaxDiagnosticInfo>(capacity: 8);
+            _errors.Add(error);
         }
 
         protected static SyntaxDiagnosticInfo MakeError(ErrorCode code) => new(code);
@@ -84,8 +83,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return new SyntaxDiagnosticInfo(offset, width, code, args);
         }
 
-        private int GetOffsetFromPosition(int position) =>
-            position >= TextWindow.LexemeStartPosition ? position - TextWindow.LexemeStartPosition : position;
+        private int GetOffsetFromPosition(int position)
+            => position >= TextWindow.LexemeStartPosition ? position - TextWindow.LexemeStartPosition : position;
 
         #endregion AddError
 

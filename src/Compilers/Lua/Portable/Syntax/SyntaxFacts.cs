@@ -75,8 +75,11 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="kind"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        internal static bool IsManufacturedToken(SyntaxKind kind, LuaSyntaxOptions options) =>
-            IsContextualKeyword(kind, options) || kind == SyntaxKind.GreaterThanGreaterThanToken;
+        internal static bool IsManufacturedToken(SyntaxKind kind, LuaSyntaxOptions options)
+            => IsContextualKeyword(kind, options)
+               || kind == SyntaxKind.GreaterThanGreaterThanToken
+               || kind == SyntaxKind.BacktickToken
+               || kind == SyntaxKind.InterpolatedStringTextToken;
 
         /// <summary>
         /// Whether two tokens/trivia require a separator between them.

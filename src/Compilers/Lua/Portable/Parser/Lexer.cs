@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Text;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
@@ -9,7 +8,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal sealed partial class Lexer : AbstractLexer, IDisposable
     {
-        private enum ValueKind
+        internal enum ValueKind
         {
             None = 0,
             String,
@@ -20,44 +19,42 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             Complex
         }
 
-        private struct TokenInfo
+        internal struct TokenInfo
         {
             // scanned values
             internal SyntaxKind Kind;
             internal SyntaxKind ContextualKind;
-            internal string? Text;
-            internal ValueKind ValueKind;
-            internal string? StringValue;
-            internal double DoubleValue;
-            internal uint UIntValue;
-            internal long LongValue;
-            internal ulong ULongValue;
-            internal Complex ComplexValue;
+            internal string?    Text;
+            internal ValueKind  ValueKind;
+            internal string?    StringValue;
+            internal double     DoubleValue;
+            internal uint       UIntValue;
+            internal long       LongValue;
+            internal ulong      ULongValue;
+            internal Complex    ComplexValue;
         }
 
         private readonly LuaParseOptions _options;
-        private readonly StringBuilder _builder = new();
+        private readonly StringBuilder   _builder = new();
 
-        private readonly LexerCache _cache = new();
-        private readonly SyntaxListBuilder _leadingTriviaCache = new(10);
+        private readonly LexerCache        _cache               = new();
+        private readonly SyntaxListBuilder _leadingTriviaCache  = new(size: 10);
         private readonly SyntaxListBuilder _trailingTriviaCache = new(10);
-        private int _badTokenCount; // cumulative count of bad tokens produced
+        private          int               _badTokenCount; // cumulative count of bad tokens produced
 
         private static int GetFullWidth(SyntaxListBuilder builder)
         {
-            var width = 0;
-            for (var idx = 0; idx < builder.Count; idx++)
-                width += builder[idx]!.FullWidth;
+            var width                                           = 0;
+            for (var idx = 0; idx < builder.Count; idx++) width += builder[idx]!.FullWidth;
             return width;
         }
 
-        public Lexer(SourceText text, LuaParseOptions options)
-            : base(text)
+        public Lexer(SourceText text, LuaParseOptions options) : base(text)
         {
             LorettaDebug.Assert(options is not null);
-            _options = options;
+            _options                        = options;
             _createWhitespaceTriviaFunction = CreateWhitespaceTrivia;
-            _createQuickTokenFunction = CreateQuickToken;
+            _createQuickTokenFunction       = CreateQuickToken;
         }
 
         public LuaParseOptions Options => _options;
@@ -68,8 +65,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             base.Dispose();
         }
 
-        public SyntaxToken Lex() =>
-            QuickScanSyntaxToken() ?? LexSyntaxToken();
+        public SyntaxToken Lex() => QuickScanSyntaxToken() ?? LexSyntaxToken();
 
         private SyntaxToken LexSyntaxToken()
         {
@@ -91,7 +87,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             _leadingTriviaCache.Clear();
             LexSyntaxTrivia(isTrailing: false, _leadingTriviaCache);
             return new SyntaxTriviaList(
-                default,
+                token: default(CodeAnalysis.SyntaxToken),
                 _leadingTriviaCache.ToListNode(),
                 position: 0,
                 index: 0);
@@ -102,21 +98,21 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             _trailingTriviaCache.Clear();
             LexSyntaxTrivia(isTrailing: true, _trailingTriviaCache);
             return new SyntaxTriviaList(
-                default,
+                token: default(CodeAnalysis.SyntaxToken),
                 _trailingTriviaCache.ToListNode(),
                 position: 0,
                 index: 0);
         }
 
         private static SyntaxToken Create(
-            ref TokenInfo info,
-            SyntaxListBuilder leading,
-            SyntaxListBuilder trailing,
+            ref TokenInfo           info,
+            SyntaxListBuilder       leading,
+            SyntaxListBuilder       trailing,
             SyntaxDiagnosticInfo[]? errors)
         {
             LorettaDebug.Assert(info.Kind != SyntaxKind.IdentifierToken || info.StringValue != null);
 
-            var leadingNode = leading.ToListNode();
+            var leadingNode  = leading.ToListNode();
             var trailingNode = trailing.ToListNode();
 
             SyntaxToken token;
@@ -131,14 +127,25 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case SyntaxKind.NumericLiteralToken:
                     LorettaDebug.AssertNotNull(info.Text);
-                    LorettaDebug.Assert(info.ValueKind is ValueKind.Double or ValueKind.Long or ValueKind.ULong or ValueKind.Complex);
+                    LorettaDebug.Assert(
+                        info.ValueKind is ValueKind.Double or ValueKind.Long or ValueKind.ULong or ValueKind.Complex);
 
                     token = info.ValueKind switch
                     {
-                        ValueKind.Double => SyntaxFactory.Literal(leadingNode, info.Text, info.DoubleValue, trailingNode),
-                        ValueKind.Long => SyntaxFactory.Literal(leadingNode, info.Text, info.LongValue, trailingNode),
-                        ValueKind.ULong => SyntaxFactory.Literal(leadingNode, info.Text, info.ULongValue, trailingNode),
-                        ValueKind.Complex => SyntaxFactory.Literal(leadingNode, info.Text, info.ComplexValue, trailingNode),
+                        ValueKind.Double =>
+                            SyntaxFactory.Literal(leadingNode, info.Text, info.DoubleValue, trailingNode),
+                        ValueKind.Long =>
+                            SyntaxFactory.Literal(leadingNode, info.Text, info.LongValue, trailingNode),
+                        ValueKind.ULong => SyntaxFactory.Literal(
+                            leadingNode,
+                            info.Text,
+                            info.ULongValue,
+                            trailingNode),
+                        ValueKind.Complex => SyntaxFactory.Literal(
+                            leadingNode,
+                            info.Text,
+                            info.ComplexValue,
+                            trailingNode),
                         _ => throw ExceptionUtilities.UnexpectedValue(info.ValueKind),
                     };
                     break;
@@ -155,6 +162,18 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     LorettaDebug.Assert(info.ValueKind is ValueKind.UInt);
 
                     token = SyntaxFactory.HashLiteral(leadingNode, info.Text, info.UIntValue, trailingNode);
+                    break;
+                
+                case SyntaxKind.InterpolatedStringToken:
+                    LorettaDebug.AssertNotNull(info.Text);
+
+                    // we do not record a separate "value" for an interpolated string token, as it must be rescanned during parsing.
+                    token = SyntaxFactory.Literal(
+                        leadingNode,
+                        info.Text,
+                        SyntaxKind.InterpolatedStringToken,
+                        info.Text,
+                        trailingNode);
                     break;
 
                 case SyntaxKind.EndOfFileToken:
@@ -186,10 +205,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private void LexSyntaxToken(ref TokenInfo info)
         {
             // Initialize for new token scan
-            info.Kind = SyntaxKind.None;
+            info.Kind           = SyntaxKind.None;
             info.ContextualKind = SyntaxKind.None;
-            info.Text = null;
-            info.ValueKind = ValueKind.None;
+            info.Text           = null;
+            info.ValueKind      = ValueKind.None;
             var startingPosition = TextWindow.Position;
 
             char ch;
@@ -274,15 +293,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case '[':
                 {
-                    if (ConsumeLongString(true, out var contents, out var closingNotFound))
+                    if (TryScanLongString(out var contentStart, out var contentEnd, out var isTerminated))
                     {
-                        if (closingNotFound)
-                            AddError(ErrorCode.ERR_UnfinishedString);
+                        if (!isTerminated) AddError(ErrorCode.ERR_UnfinishedString);
 
-                        info.Kind = SyntaxKind.StringLiteralToken;
-                        info.Text = TextWindow.GetText(intern: true);
-                        info.ValueKind = ValueKind.String;
-                        info.StringValue = contents;
+                        info.Kind        = SyntaxKind.StringLiteralToken;
+                        info.Text        = TextWindow.GetText(intern: true);
+                        info.ValueKind   = ValueKind.String;
+                        info.StringValue = TextWindow.GetText(contentStart, contentEnd - contentStart, intern: true);
                     }
                     else
                     {
@@ -373,10 +391,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                             info.Kind = SyntaxKind.SlashSlashToken;
                             break;
 
-                        default:
-                            info.Kind = SyntaxKind.SlashToken;
-                            break;
-                    };
+                        default: info.Kind = SyntaxKind.SlashToken; break;
+                    }
 
                     break;
 
@@ -561,29 +577,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case '"':
                 case '\'':
-                {
-                    info.Kind = SyntaxKind.StringLiteralToken;
-                    info.ValueKind = ValueKind.String;
-                    info.StringValue = ParseShortString();
-                    info.Text = TextWindow.GetText(intern: true);
+                    ScanStringLiteral(ref info);
                     return;
-                }
 
                 case '`':
-                {
-                    info.Kind = SyntaxKind.HashStringLiteralToken;
-                    var stringValue = ParseShortString();
-                    // Jenkins' one-at-a-time hash doesn't do this but FiveM does.
-                    stringValue = stringValue.ToLowerInvariant();
-                    info.ValueKind = ValueKind.UInt;
-                    info.UIntValue = Hash.GetJenkinsOneAtATimeHashCode(stringValue.AsSpan());
-                    info.Text = TextWindow.GetText(intern: true);
-
-                    if (!_options.SyntaxOptions.AcceptHashStrings)
-                        AddError(ErrorCode.ERR_HashStringsNotSupportedInVersion);
-
-                    return;
-                }
+                    if (_options.SyntaxOptions.BacktickStringType == BacktickStringType.HashLiteral)
+                        ScanStringLiteral(ref info);
+                    else
+                        ScanInterpolatedStringLiteral(ref info);
+                    break;
 
                 #endregion Literals
 
@@ -650,20 +652,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 #endregion Identifiers
 
                 case SlidingTextWindow.InvalidCharacter:
-                    if (!TextWindow.IsReallyAtEnd())
-                        goto default;
+                    if (!TextWindow.IsReallyAtEnd()) goto default;
                     info.Kind = SyntaxKind.EndOfFileToken;
                     break;
 
                 default:
-                    if (CharUtils.IsValidFirstIdentifierChar(ch))
-                    {
-                        goto case 'a';
-                    }
-                    else if (_badTokenCount++ > 200)
+                    if (CharUtils.IsValidFirstIdentifierChar(ch)) goto case 'a';
+
+                    if (_badTokenCount++ > 200)
                     {
                         // If we get too many characters that we cannot make sense of, absorb the rest of the input.
-                        var end = TextWindow.Text.Length;
+                        var end   = TextWindow.Text.Length;
                         var width = end - startingPosition;
                         info.Text = TextWindow.Text.ToString(new TextSpan(startingPosition, width));
                         TextWindow.Reset(end);
@@ -681,8 +680,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private int ConsumeCharSequence(char ch)
         {
             var start = TextWindow.Position;
-            while (TextWindow.PeekChar() == ch)
-                TextWindow.AdvanceChar();
+            while (TextWindow.PeekChar() == ch) TextWindow.AdvanceChar();
             return TextWindow.Position - start;
         }
 
@@ -713,171 +711,158 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         break;
 
                     case '-':
-                        if (TextWindow.PeekChar(1) == '-')
-                        {
-                            TextWindow.AdvanceChar(2);
+                    {
+                        // Abort if it isn't a comment.
+                        if (!TryScanComment(out var isTerminated)) return;
 
-                            if (!ConsumeLongString(false, out _, out var closingNotFound))
-                                ScanToEndOfLine();
-                            else if (closingNotFound)
-                                AddError(ErrorCode.ERR_UnfinishedLongComment);
+                        if (!isTerminated) AddError(ErrorCode.ERR_UnfinishedLongComment);
 
-                            var text = TextWindow.GetText(false);
-                            AddTrivia(SyntaxFactory.Comment(text), builder);
-                            onlyShebangsAndNewLines = false;
-                        }
-                        else
-                        {
-                            return;
-                        }
+                        var text = TextWindow.GetText(intern: false);
+                        AddTrivia(SyntaxFactory.Comment(text), builder);
+                        onlyShebangsAndNewLines = false;
                         break;
+                    }
 
-                    case '/' when _options.SyntaxOptions.AcceptCCommentSyntax:
-                        if ((ch = TextWindow.PeekChar(1)) == '/')
-                        {
-                            ScanToEndOfLine();
+                    case '/':
+                    {
+                        if (!_options.SyntaxOptions.AcceptCCommentSyntax) return;
+                        if (!TryScanCComment(out var isTerminated)) return;
+                        onlyShebangsAndNewLines = false;
+                        if (!isTerminated) AddError(ErrorCode.ERR_UnfinishedLongComment);
 
-                            var text = TextWindow.GetText(false);
-                            AddTrivia(SyntaxFactory.Comment(text), builder);
-                            onlyShebangsAndNewLines = false;
-                        }
-                        else if (ch == '*')
-                        {
-                            ScanMultiLineCComment(out var isTerminated);
-                            if (!isTerminated)
-                                AddError(ErrorCode.ERR_UnfinishedLongComment);
-
-                            var text = TextWindow.GetText(false);
-                            AddTrivia(SyntaxFactory.Comment(text), builder);
-                            onlyShebangsAndNewLines = false;
-                        }
-                        else
-                        {
-                            return;
-                        }
+                        var text = TextWindow.GetText(intern: false);
+                        AddTrivia(SyntaxFactory.Comment(text), builder);
                         break;
+                    }
 
                     case '\r':
                     case '\n':
                         AddTrivia(ScanEndOfLine()!, builder);
-                        if (isTrailing)
-                            return;
+                        if (isTrailing) return;
                         break;
 
                     case '#':
-                        if (onlyShebangsAndNewLines && TextWindow.PeekChar(1) == '!')
-                        {
-                            ScanToEndOfLine();
-                            if (!_options.SyntaxOptions.AcceptShebang)
-                                AddError(ErrorCode.ERR_ShebangNotSupportedInLuaVersion);
+                    {
+                        if (!onlyShebangsAndNewLines || TextWindow.PeekChar(1) != '!') return;
 
-                            var text = TextWindow.GetText(false);
-                            AddTrivia(SyntaxFactory.Shebang(text), builder);
-                            break;
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    default:
-                        return;
+                        ScanToEndOfLine();
+                        if (!_options.SyntaxOptions.AcceptShebang)
+                            AddError(ErrorCode.ERR_ShebangNotSupportedInLuaVersion);
+
+                        var text = TextWindow.GetText(false);
+                        AddTrivia(SyntaxFactory.Shebang(text), builder);
+                        break;
+                    }
+
+                    default: return;
                 }
             }
+        }
+
+        public bool TryScanComment(out bool isTerminated)
+        {
+            isTerminated = true;
+            if (TextWindow.PeekChar() != '-' || TextWindow.PeekChar(delta: 1) != '-') return false;
+
+            // Skip leading '--'
+            TextWindow.AdvanceChar(n: 2);
+
+            // Try to scan long comment
+            if (TryScanLongString(out _, out _, out isTerminated)) return true;
+
+            // Scan to end of line since it's single-line comment
+            isTerminated = true;
+            ScanToEndOfLine();
+            return true;
+        }
+
+        public bool TryScanCComment(out bool isTerminated)
+        {
+            isTerminated = true;
+
+            if (TextWindow.PeekChar() != '/') return false;
+
+            var ch = TextWindow.PeekChar(delta: 1);
+            switch (ch)
+            {
+                case '/': ScanToEndOfLine(); break;
+                case '*': ScanMultiLineCComment(out isTerminated); break;
+                default:  return false;
+            }
+            return true;
         }
 
         private SyntaxTrivia ScanWhitespace()
         {
             _createWhitespaceTriviaFunction ??= CreateWhitespaceTrivia;
 
-            var hashCode = Hash.FnvOffsetBias;
-            char ch = SlidingTextWindow.InvalidCharacter,
-                lastCh = SlidingTextWindow.InvalidCharacter;
+            var  hashCode = Hash.FnvOffsetBias;
+            var ch       = SlidingTextWindow.InvalidCharacter;
 
         top:
-            lastCh = ch;
+            var lastCh = ch;
             ch = TextWindow.PeekChar();
 
             switch (ch)
             {
-                case '\t':       // Horizontal tab
-                case '\v':       // Vertical Tab
-                case '\f':       // Form-feed
+                case '\t': // Horizontal tab
+                case '\v': // Vertical Tab
+                case '\f': // Form-feed
                 case ' ':
                     TextWindow.AdvanceChar();
                     hashCode = Hash.CombineFNVHash(hashCode, ch);
                     goto top;
 
-                case '\r':      // Carriage Return
-                case '\n':      // Line-feed
-                    break;
-
-                default:
+                case '\r': // Carriage Return
+                case '\n': // Line-feed
                     break;
             }
 
-            if (TextWindow.Width == 1 && lastCh == ' ')
-            {
-                return SyntaxFactory.Space;
-            }
-            else if (TextWindow.Width == 1 && lastCh == '\t')
-            {
-                return SyntaxFactory.Tab;
-            }
-            else
-            {
-                var width = TextWindow.Width;
+            if (TextWindow.Width == 1 && lastCh == ' ') return SyntaxFactory.Space;
+            if (TextWindow.Width == 1 && lastCh == '\t') return SyntaxFactory.Tab;
+            
+            var width = TextWindow.Width;
 
-                if (width < MaxCachedTokenSize)
-                {
-                    return _cache.LookupTrivia(
-                        TextWindow.CharacterWindow,
-                        TextWindow.LexemeRelativeStart,
-                        width,
-                        hashCode,
-                        _createWhitespaceTriviaFunction);
-                }
-                else
-                {
-                    return _createWhitespaceTriviaFunction();
-                }
+            if (width < MaxCachedTokenSize)
+            {
+                return _cache.LookupTrivia(
+                    TextWindow.CharacterWindow,
+                    TextWindow.LexemeRelativeStart,
+                    width,
+                    hashCode,
+                    _createWhitespaceTriviaFunction);
             }
+
+            return _createWhitespaceTriviaFunction();
         }
 
-        private bool ScanMultiLineCComment(out bool isTerminated)
+        private void ScanMultiLineCComment(out bool isTerminated)
         {
-            if (TextWindow.PeekChar() == '/' && TextWindow.PeekChar(1) == '*')
+            isTerminated = false;
+
+            LorettaDebug.Assert(TextWindow.PeekChar() == '/' && TextWindow.PeekChar(1) == '*');
+            TextWindow.AdvanceChar(2);
+
+            while (true)
             {
-                while (true)
+                var ch = TextWindow.PeekChar();
+
+                if (IsAtEnd(ch)) break;
+
+                if (ch == '*' && TextWindow.PeekChar(1) == '/')
                 {
-                    var ch = TextWindow.PeekChar();
-                    if (IsAtEnd(ch))
-                    {
-                        isTerminated = false;
-                        break;
-                    }
-                    else if (ch == '*' && TextWindow.PeekChar(1) == '/')
-                    {
-                        TextWindow.AdvanceChar(2);
-                        isTerminated = true;
-                        break;
-                    }
-                    else
-                    {
-                        TextWindow.AdvanceChar();
-                    }
+                    TextWindow.AdvanceChar(2);
+                    isTerminated = true;
+                    break;
                 }
 
-                return true;
+                TextWindow.AdvanceChar();
             }
-
-            isTerminated = false;
-            return false;
         }
 
         private Func<SyntaxTrivia> _createWhitespaceTriviaFunction;
 
-        private SyntaxTrivia CreateWhitespaceTrivia() =>
-            SyntaxFactory.Whitespace(TextWindow.GetText(intern: true));
+        private SyntaxTrivia CreateWhitespaceTrivia() => SyntaxFactory.Whitespace(TextWindow.GetText(intern: true));
 
         private void AddTrivia(LuaSyntaxNode trivia, SyntaxListBuilder builder)
         {
@@ -885,95 +870,88 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             builder.Add(trivia);
         }
 
-        private bool ConsumeLongString(bool includeContents, [NotNullWhen(true)] out string? contents, out bool closingNotFound)
+        public bool TryScanLongString(out int contentStart, out int contentEnd, out bool isTerminated)
         {
-            closingNotFound = true;
-            var start = TextWindow.Position;
+            contentStart = contentEnd = 0;
+            isTerminated = false;
 
-            if (TextWindow.PeekChar() == '[' && TextWindow.PeekChar(1) is '=' or '[')
+            var start = TextWindow.Position;
+            if (TextWindow.PeekChar() != '[' || TextWindow.PeekChar(delta: 1) is not ('=' or '[')) return false;
+
+            TextWindow.AdvanceChar();
+            var initialEqualsCount = ConsumeCharSequence(ch: '=');
+
+            if (TextWindow.PeekChar() == '[')
             {
                 TextWindow.AdvanceChar();
-                var initialEqualsCount = ConsumeCharSequence('=');
 
-                if (TextWindow.PeekChar() == '[')
+                // Skips the leading new line if we have any.
+                _ = ScanEndOfLine();
+
+                contentStart = TextWindow.Position;
+                while (true)
                 {
-                    TextWindow.AdvanceChar();
+                    var ch = TextWindow.PeekChar();
 
-                    // Skips the leading new line if we have any.
-                    _ = ScanEndOfLine();
-
-                    var contentStart = TextWindow.Position;
-                    int contentEnd;
-                    while (true)
+                    if (IsAtEnd(ch))
                     {
-                        var ch = TextWindow.PeekChar();
-
-                        if (IsAtEnd(ch))
-                        {
-                            contentEnd = TextWindow.Position;
-                            break;
-                        }
-
-                        switch (ch)
-                        {
-                            case '[' when !_options.SyntaxOptions.AcceptNestingOfLongStrings:
-                            {
-                                TextWindow.AdvanceChar();
-                                if (TextWindow.PeekChar() == '[')
-                                {
-                                    TextWindow.AdvanceChar();
-                                    AddError(ErrorCode.ERR_Lua51NestingInLongString);
-                                }
-                                continue;
-                            }
-                            case ']':
-                            {
-                                break;
-                            }
-                            default:
-                            {
-                                // If not a possible ending, just skip over it.
-                                TextWindow.AdvanceChar();
-                                continue;
-                            }
-                        }
-
                         contentEnd = TextWindow.Position;
-                        TextWindow.AdvanceChar();
+                        break;
+                    }
 
-                        var equalsCount = ConsumeCharSequence('=');
-                        if (initialEqualsCount != equalsCount)
-                            continue;
-
-                        if (TextWindow.PeekChar() == ']')
+                    switch (ch)
+                    {
+                        case '[' when !_options.SyntaxOptions.AcceptNestingOfLongStrings:
                         {
                             TextWindow.AdvanceChar();
-                            closingNotFound = false;
+                            if (TextWindow.PeekChar() == '[')
+                            {
+                                TextWindow.AdvanceChar();
+                                AddError(ErrorCode.ERR_Lua51NestingInLongString);
+                            }
+                            continue;
+                        }
+
+                        case ']':
+                        {
                             break;
+                        }
+
+                        default:
+                        {
+                            // If not a possible ending, just skip over it.
+                            TextWindow.AdvanceChar();
+                            continue;
                         }
                     }
 
-                    contents = includeContents
-                        ? TextWindow.GetText(contentStart, contentEnd - contentStart, intern: true)
-                        : "";
-                    return true;
+                    contentEnd = TextWindow.Position;
+                    TextWindow.AdvanceChar();
+
+                    var equalsCount = ConsumeCharSequence(ch: '=');
+                    if (initialEqualsCount != equalsCount) continue;
+
+                    if (TextWindow.PeekChar() != ']') continue;
+
+                    TextWindow.AdvanceChar();
+                    isTerminated = true;
+                    break;
                 }
 
-                TextWindow.Reset(start);
+                return true;
             }
 
-            contents = null;
+            TextWindow.Reset(start);
+
             return false;
         }
 
-        private bool IsAtEnd(char ch) =>
-            ch == SlidingTextWindow.InvalidCharacter && TextWindow.IsReallyAtEnd();
+        private bool IsAtEnd(char ch) => ch == SlidingTextWindow.InvalidCharacter && TextWindow.IsReallyAtEnd();
 
         private void ScanToEndOfLine()
         {
             char ch;
-            while (!CharUtils.IsNewLine(ch = TextWindow.PeekChar()) && !IsAtEnd(ch))
-                TextWindow.AdvanceChar();
+            while (!CharUtils.IsNewLine(ch = TextWindow.PeekChar()) && !IsAtEnd(ch)) TextWindow.AdvanceChar();
         }
 
         private SyntaxTrivia? ScanEndOfLine()
@@ -999,8 +977,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     }
                     return SyntaxFactory.CarriageReturn;
 
-                default:
-                    return null;
+                default: return null;
             }
         }
     }

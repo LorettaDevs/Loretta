@@ -19,6 +19,7 @@
         <Compile Include="..\..\..\Compilers\Lua\Portable\LuaSyntaxOptions.cs" Link="Grammar\LuaSyntaxOptions.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
         <Compile Include="..\..\..\Compilers\Lua\Portable\ContinueType.cs" Link="Grammar\ContinueType.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
         <Compile Include="..\..\..\Compilers\Lua\Portable\IntegerFormats.cs" Link="Grammar\IntegerFormats.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
+        <Compile Include="..\..\..\Compilers\Lua\Portable\BacktickStringType.cs" Link="Grammar\BacktickStringType.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
         <Compile Include="..\..\..\Compilers\Lua\Portable\Syntax\SyntaxFacts.cs" Link="Grammar\SyntaxFacts.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
         <Compile Include="..\..\..\Compilers\Lua\Portable\Generated\Loretta.Generators.SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.SyntaxFactsGenerator\SyntaxFacts.g.cs" Link="Grammar\SyntaxFacts.g.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
         <Compile Include="..\..\..\Compilers\Lua\Portable\Generated\Loretta.Generators.SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.SyntaxFactsGenerator\SyntaxKindAttributes.g.cs" Link="Grammar\SyntaxKindAttributes.g.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'" />

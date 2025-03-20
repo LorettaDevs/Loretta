@@ -100,21 +100,19 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         {
             var tokenKinds = Enum.GetValues(typeof(SyntaxKind))
                                  .Cast<SyntaxKind>()
-                                 .Where(k => SyntaxFacts.IsToken(k) || SyntaxFacts.IsTrivia(k));
+                                 .Where(static k => SyntaxFacts.IsToken(k) || SyntaxFacts.IsTrivia(k));
 
             var testedTokenKinds = LuaSyntaxOptions.AllPresets.SelectMany(LexicalTestData.GetTokens)
                                                               .Concat(LuaSyntaxOptions.AllPresets.SelectMany(LexicalTestData.GetTrivia))
-                                                              .Select(t => t.Kind);
+                                                              .Select(static t => t.Kind);
 
             var untestedTokenKinds = new SortedSet<SyntaxKind>(tokenKinds);
             untestedTokenKinds.Remove(SyntaxKind.BadToken);
             untestedTokenKinds.Remove(SyntaxKind.EndOfFileToken);
             untestedTokenKinds.Remove(SyntaxKind.SkippedTokensTrivia);
-
-            var manufacturedKinds = tokenKinds.Where(kind =>
-                LuaSyntaxOptions.AllPresets.All(preset =>
-                    SyntaxFacts.IsManufacturedToken(kind, preset)));
-            untestedTokenKinds.ExceptWith(manufacturedKinds);
+            untestedTokenKinds.RemoveWhere(
+                static kind => LuaSyntaxOptions.AllPresets.All(
+                    preset => SyntaxFacts.IsManufacturedToken(kind, preset)));
 
             untestedTokenKinds.ExceptWith(testedTokenKinds);
 

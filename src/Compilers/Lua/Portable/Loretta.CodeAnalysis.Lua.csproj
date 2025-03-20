@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="$(MSBuildThisFileDirectory)../../../../build/LibraryProject.props" />
+    <Import Project="$(MSBuildThisFileDirectory)../../../../build/LibraryProject.props"/>
 
     <!-- Package data -->
     <PropertyGroup>
@@ -15,26 +15,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities" />
-        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities" />
-        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.UnitTests" />
-        <InternalsVisibleTo Include="Loretta.CLI" />
-        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.StatisticsCollector" />
-        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Experimental" />
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Test.Utilities"/>
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Test.Utilities"/>
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.UnitTests"/>
+        <InternalsVisibleTo Include="Loretta.CLI"/>
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.StatisticsCollector"/>
+        <InternalsVisibleTo Include="Loretta.CodeAnalysis.Lua.Experimental"/>
     </ItemGroup>
 
     <!-- Packages that we need from .NET 6+ on .NET Standard 2.0 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
+
+    <ItemGroup>
+        <PackageReference Include="Tsu" Version="2.2.2"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Tsu" Version="2.2.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\..\..\Tools\Generators\ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="..\..\..\Tools\Generators\SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\..\..\Tools\Generators\ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+        <ProjectReference Include="..\..\..\Tools\Generators\SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
         <ProjectReference Include="..\..\..\Tools\Generators\SyntaxXml\Loretta.Generators.SyntaxXml.csproj">
             <OutputItemType>Analyzer</OutputItemType>
             <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -43,7 +40,7 @@
                  we want to grab the generator.-->
             <SetTargetFramework>TargetFramework=netstandard2.0</SetTargetFramework>
         </ProjectReference>
-        <ProjectReference Include="..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
+        <ProjectReference Include="..\..\Core\Portable\Loretta.CodeAnalysis.csproj"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Update="LuaResources.Designer.cs">
@@ -62,15 +59,20 @@
 
 
     <ItemGroup Condition="'$(DocGen)' != 'true'">
-        <Folder Include="Generated\" />
+        <Folder Include="Generated\"/>
 
-        <AdditionalFiles Include="Syntax\Syntax.xml" />
-        <None Include="Syntax\Syntax.xsd" />
+        <AdditionalFiles Include="Syntax\Syntax.xml"/>
+        <None Include="Syntax\Syntax.xsd"/>
 
         <!-- Don't include the output from a previous source generator execution into future runs; the */** trick here ensures that there's
          at least one subdirectory, which is our key that it's coming from a source generator as opposed to something that is coming from
          some other tool. -->
-        <Compile Remove="$(CompilerGeneratedFilesOutputPath)/*/**/*.cs" />
+        <Compile Remove="$(CompilerGeneratedFilesOutputPath)/*/**/*.cs"/>
+    </ItemGroup>
+
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="System.Collections.Immutable" Version="8.0.0"/>
     </ItemGroup>
 
 </Project>
