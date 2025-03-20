@@ -132,7 +132,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public SyntaxToken Identifier => new SyntaxToken(this, ((Syntax.InternalSyntax.NamedParameterSyntax)this.Green).identifier, Position, 0);
 
         /// <summary>
-        /// The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+        /// The
+        /// <see cref="TypeBindingSyntax" />
+        /// containing the (optional) type.
         /// </summary>
         public TypeBindingSyntax? TypeBinding => GetRed(ref this.typeBinding, 1);
 
@@ -179,7 +181,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public SyntaxToken VarArgToken => new SyntaxToken(this, ((Syntax.InternalSyntax.VarArgParameterSyntax)this.Green).varArgToken, Position, 0);
 
         /// <summary>
-        /// The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+        /// The
+        /// <see cref="TypeBindingSyntax" />
+        /// containing the (optional) type.
         /// </summary>
         public TypeBindingSyntax? TypeBinding => GetRed(ref this.typeBinding, 1);
 
@@ -739,6 +743,118 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public ExpressionListFunctionArgumentSyntax AddExpressions(params ExpressionSyntax[] items) => WithExpressions(this.Expressions.AddRange(items));
     }
 
+    /// <summary>
+    /// The base class interpolated string parts, either an
+    /// <see cref="InterpolatedStringTextSyntax" />
+    /// with
+    /// plain text or an
+    /// <see cref="InterpolationSyntax" />
+    /// with an expression to be formatted.
+    /// </summary>
+    public abstract partial class InterpolatedStringContentSyntax : LuaSyntaxNode
+    {
+        internal InterpolatedStringContentSyntax(InternalSyntax.LuaSyntaxNode green, SyntaxNode? parent, int position)
+          : base(green, parent, position)
+        {
+        }
+    }
+
+    /// <summary>
+    /// The part of an interpolated string with plain text.
+    /// </summary>
+    /// <remarks>
+    /// <para>This node is associated with the following syntax kinds:</para>
+    /// <list type="bullet">
+    /// <item><description><see cref="SyntaxKind.InterpolatedStringText"/></description></item>
+    /// </list>
+    /// </remarks>
+    public sealed partial class InterpolatedStringTextSyntax : InterpolatedStringContentSyntax
+    {
+
+        internal InterpolatedStringTextSyntax(InternalSyntax.LuaSyntaxNode green, SyntaxNode? parent, int position)
+          : base(green, parent, position)
+        {
+        }
+
+        /// <summary>The text contents of a part of the interpolated string.</summary>
+        public SyntaxToken TextToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolatedStringTextSyntax)this.Green).textToken, Position, 0);
+
+        internal override SyntaxNode? GetNodeSlot(int index) => null;
+
+        internal override SyntaxNode? GetCachedSlot(int index) => null;
+
+        public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitInterpolatedStringText(this);
+        public override TResult? Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) where TResult : default => visitor.VisitInterpolatedStringText(this);
+
+        public InterpolatedStringTextSyntax Update(SyntaxToken textToken)
+        {
+            if (textToken != this.TextToken)
+            {
+                var newNode = SyntaxFactory.InterpolatedStringText(textToken);
+                var annotations = GetAnnotations();
+                return annotations?.Length > 0 ? newNode.WithAnnotations(annotations) : newNode;
+            }
+
+            return this;
+        }
+
+        public InterpolatedStringTextSyntax WithTextToken(SyntaxToken textToken) => Update(textToken);
+    }
+
+    /// <summary>
+    /// An expression to be interpolated into the string.
+    /// </summary>
+    /// <remarks>
+    /// <para>This node is associated with the following syntax kinds:</para>
+    /// <list type="bullet">
+    /// <item><description><see cref="SyntaxKind.Interpolation"/></description></item>
+    /// </list>
+    /// </remarks>
+    public sealed partial class InterpolationSyntax : InterpolatedStringContentSyntax
+    {
+        private ExpressionSyntax? expression;
+
+        internal InterpolationSyntax(InternalSyntax.LuaSyntaxNode green, SyntaxNode? parent, int position)
+          : base(green, parent, position)
+        {
+        }
+
+        /// <summary>
+        /// This could be a single <c>{</c> or multiple in a row.
+        /// </summary>
+        public SyntaxToken OpenBraceToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolationSyntax)this.Green).openBraceToken, Position, 0);
+
+        public ExpressionSyntax Expression => GetRed(ref this.expression, 1)!;
+
+        /// <summary>
+        /// This could be a single <c>}</c> or multiple in a row.
+        /// </summary>
+        public SyntaxToken CloseBraceToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolationSyntax)this.Green).closeBraceToken, GetChildPosition(2), GetChildIndex(2));
+
+        internal override SyntaxNode? GetNodeSlot(int index) => index == 1 ? GetRed(ref this.expression, 1)! : null;
+
+        internal override SyntaxNode? GetCachedSlot(int index) => index == 1 ? this.expression : null;
+
+        public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitInterpolation(this);
+        public override TResult? Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) where TResult : default => visitor.VisitInterpolation(this);
+
+        public InterpolationSyntax Update(SyntaxToken openBraceToken, ExpressionSyntax expression, SyntaxToken closeBraceToken)
+        {
+            if (openBraceToken != this.OpenBraceToken || expression != this.Expression || closeBraceToken != this.CloseBraceToken)
+            {
+                var newNode = SyntaxFactory.Interpolation(openBraceToken, expression, closeBraceToken);
+                var annotations = GetAnnotations();
+                return annotations?.Length > 0 ? newNode.WithAnnotations(annotations) : newNode;
+            }
+
+            return this;
+        }
+
+        public InterpolationSyntax WithOpenBraceToken(SyntaxToken openBraceToken) => Update(openBraceToken, this.Expression, this.CloseBraceToken);
+        public InterpolationSyntax WithExpression(ExpressionSyntax expression) => Update(this.OpenBraceToken, expression, this.CloseBraceToken);
+        public InterpolationSyntax WithCloseBraceToken(SyntaxToken closeBraceToken) => Update(this.OpenBraceToken, this.Expression, closeBraceToken);
+    }
+
     /// <summary>The base class for expressions.</summary>
     public abstract partial class ExpressionSyntax : LuaSyntaxNode
     {
@@ -937,6 +1053,63 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
 
         public LiteralExpressionSyntax WithToken(SyntaxToken token) => Update(token);
+    }
+
+    /// <remarks>
+    /// <para>This node is associated with the following syntax kinds:</para>
+    /// <list type="bullet">
+    /// <item><description><see cref="SyntaxKind.InterpolatedStringExpression"/></description></item>
+    /// </list>
+    /// </remarks>
+    public sealed partial class InterpolatedStringExpressionSyntax : ExpressionSyntax
+    {
+        private SyntaxNode? contents;
+
+        internal InterpolatedStringExpressionSyntax(InternalSyntax.LuaSyntaxNode green, SyntaxNode? parent, int position)
+          : base(green, parent, position)
+        {
+        }
+
+        /// <summary>
+        /// The first part of an interpolated string:
+        /// <c>`</c>
+        /// </summary>
+        public SyntaxToken StringStartToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolatedStringExpressionSyntax)this.Green).stringStartToken, Position, 0);
+
+        /// <summary>
+        /// List of parts of the interpolated string, each one is either a literal part or an interpolation.
+        /// </summary>
+        public SyntaxList<InterpolatedStringContentSyntax> Contents => new SyntaxList<InterpolatedStringContentSyntax>(GetRed(ref this.contents, 1));
+
+        /// <summary>
+        /// The closing <c>`</c> of the interpolated string.
+        /// </summary>
+        public SyntaxToken StringEndToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolatedStringExpressionSyntax)this.Green).stringEndToken, GetChildPosition(2), GetChildIndex(2));
+
+        internal override SyntaxNode? GetNodeSlot(int index) => index == 1 ? GetRed(ref this.contents, 1)! : null;
+
+        internal override SyntaxNode? GetCachedSlot(int index) => index == 1 ? this.contents : null;
+
+        public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitInterpolatedStringExpression(this);
+        public override TResult? Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) where TResult : default => visitor.VisitInterpolatedStringExpression(this);
+
+        public InterpolatedStringExpressionSyntax Update(SyntaxToken stringStartToken, SyntaxList<InterpolatedStringContentSyntax> contents, SyntaxToken stringEndToken)
+        {
+            if (stringStartToken != this.StringStartToken || contents != this.Contents || stringEndToken != this.StringEndToken)
+            {
+                var newNode = SyntaxFactory.InterpolatedStringExpression(stringStartToken, contents, stringEndToken);
+                var annotations = GetAnnotations();
+                return annotations?.Length > 0 ? newNode.WithAnnotations(annotations) : newNode;
+            }
+
+            return this;
+        }
+
+        public InterpolatedStringExpressionSyntax WithStringStartToken(SyntaxToken stringStartToken) => Update(stringStartToken, this.Contents, this.StringEndToken);
+        public InterpolatedStringExpressionSyntax WithContents(SyntaxList<InterpolatedStringContentSyntax> contents) => Update(this.StringStartToken, contents, this.StringEndToken);
+        public InterpolatedStringExpressionSyntax WithStringEndToken(SyntaxToken stringEndToken) => Update(this.StringStartToken, this.Contents, stringEndToken);
+
+        public InterpolatedStringExpressionSyntax AddContents(params InterpolatedStringContentSyntax[] items) => WithContents(this.Contents.AddRange(items));
     }
 
     /// <summary>Represents a vararg expression.</summary>
@@ -1678,7 +1851,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
     }
 
     /// <summary>
-    /// Represents a variable name in a <see cref="LocalVariableDeclarationStatementSyntax" /> node.
+    /// Represents a variable name in a
+    /// <see cref="LocalVariableDeclarationStatementSyntax" />
+    /// node.
     /// </summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
@@ -1698,17 +1873,23 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
 
         /// <summary>
-        /// The <see cref="IdentifierNameSyntax" /> containing the name.
+        /// The
+        /// <see cref="IdentifierNameSyntax" />
+        /// containing the name.
         /// </summary>
         public IdentifierNameSyntax IdentifierName => GetRedAtZero(ref this.identifierName)!;
 
         /// <summary>
-        /// The <see cref="VariableAttributeSyntax" /> containing the (optional) variable attribute.
+        /// The
+        /// <see cref="VariableAttributeSyntax" />
+        /// containing the (optional) variable attribute.
         /// </summary>
         public VariableAttributeSyntax? Attribute => GetRed(ref this.attribute, 1);
 
         /// <summary>
-        /// The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+        /// The
+        /// <see cref="TypeBindingSyntax" />
+        /// containing the (optional) type.
         /// </summary>
         public TypeBindingSyntax? TypeBinding => GetRed(ref this.typeBinding, 2);
 
@@ -1750,7 +1931,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public LocalDeclarationNameSyntax WithTypeBinding(TypeBindingSyntax? typeBinding) => Update(this.IdentifierName, this.Attribute, typeBinding);
     }
 
-    /// <summary>Represents the values being assigned to the names in an assignment or variable declaration.</summary>
+    /// <summary>Represents the values being assigned to the names in an assignment or variable declaration.
+    /// </summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
     /// <list type="bullet">
@@ -4412,7 +4594,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         {
         }
 
-        /// <c> = </c>
+        /// <c>=</c>
         public SyntaxToken EqualsToken => new SyntaxToken(this, ((Syntax.InternalSyntax.EqualsTypeSyntax)this.Green).equalsToken, Position, 0);
 
         /// <summary>Gets the type value.</summary>

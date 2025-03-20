@@ -58,6 +58,12 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Called when the visitor visits a ExpressionListFunctionArgumentSyntax node.</summary>
         public virtual TResult? VisitExpressionListFunctionArgument(ExpressionListFunctionArgumentSyntax node) => this.DefaultVisit(node);
 
+        /// <summary>Called when the visitor visits a InterpolatedStringTextSyntax node.</summary>
+        public virtual TResult? VisitInterpolatedStringText(InterpolatedStringTextSyntax node) => this.DefaultVisit(node);
+
+        /// <summary>Called when the visitor visits a InterpolationSyntax node.</summary>
+        public virtual TResult? VisitInterpolation(InterpolationSyntax node) => this.DefaultVisit(node);
+
         /// <summary>Called when the visitor visits a AnonymousFunctionExpressionSyntax node.</summary>
         public virtual TResult? VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax node) => this.DefaultVisit(node);
 
@@ -66,6 +72,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         /// <summary>Called when the visitor visits a LiteralExpressionSyntax node.</summary>
         public virtual TResult? VisitLiteralExpression(LiteralExpressionSyntax node) => this.DefaultVisit(node);
+
+        /// <summary>Called when the visitor visits a InterpolatedStringExpressionSyntax node.</summary>
+        public virtual TResult? VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax node) => this.DefaultVisit(node);
 
         /// <summary>Called when the visitor visits a VarArgExpressionSyntax node.</summary>
         public virtual TResult? VisitVarArgExpression(VarArgExpressionSyntax node) => this.DefaultVisit(node);
@@ -289,6 +298,12 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Called when the visitor visits a ExpressionListFunctionArgumentSyntax node.</summary>
         public virtual void VisitExpressionListFunctionArgument(ExpressionListFunctionArgumentSyntax node) => this.DefaultVisit(node);
 
+        /// <summary>Called when the visitor visits a InterpolatedStringTextSyntax node.</summary>
+        public virtual void VisitInterpolatedStringText(InterpolatedStringTextSyntax node) => this.DefaultVisit(node);
+
+        /// <summary>Called when the visitor visits a InterpolationSyntax node.</summary>
+        public virtual void VisitInterpolation(InterpolationSyntax node) => this.DefaultVisit(node);
+
         /// <summary>Called when the visitor visits a AnonymousFunctionExpressionSyntax node.</summary>
         public virtual void VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax node) => this.DefaultVisit(node);
 
@@ -297,6 +312,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         /// <summary>Called when the visitor visits a LiteralExpressionSyntax node.</summary>
         public virtual void VisitLiteralExpression(LiteralExpressionSyntax node) => this.DefaultVisit(node);
+
+        /// <summary>Called when the visitor visits a InterpolatedStringExpressionSyntax node.</summary>
+        public virtual void VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax node) => this.DefaultVisit(node);
 
         /// <summary>Called when the visitor visits a VarArgExpressionSyntax node.</summary>
         public virtual void VisitVarArgExpression(VarArgExpressionSyntax node) => this.DefaultVisit(node);
@@ -520,6 +538,12 @@ namespace Loretta.CodeAnalysis.Lua
         public override SyntaxNode? VisitExpressionListFunctionArgument(ExpressionListFunctionArgumentSyntax node)
             => node.Update(VisitToken(node.OpenParenthesisToken), VisitList(node.Expressions), VisitToken(node.CloseParenthesisToken));
 
+        public override SyntaxNode? VisitInterpolatedStringText(InterpolatedStringTextSyntax node)
+            => node.Update(VisitToken(node.TextToken));
+
+        public override SyntaxNode? VisitInterpolation(InterpolationSyntax node)
+            => node.Update(VisitToken(node.OpenBraceToken), (ExpressionSyntax?)Visit(node.Expression) ?? throw new ArgumentNullException("expression"), VisitToken(node.CloseBraceToken));
+
         public override SyntaxNode? VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax node)
             => node.Update(VisitToken(node.FunctionKeyword), (TypeParameterListSyntax?)Visit(node.TypeParameterList), (ParameterListSyntax?)Visit(node.Parameters) ?? throw new ArgumentNullException("parameters"), (TypeBindingSyntax?)Visit(node.TypeBinding), (StatementListSyntax?)Visit(node.Body) ?? throw new ArgumentNullException("body"), VisitToken(node.EndKeyword));
 
@@ -528,6 +552,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         public override SyntaxNode? VisitLiteralExpression(LiteralExpressionSyntax node)
             => node.Update(VisitToken(node.Token));
+
+        public override SyntaxNode? VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax node)
+            => node.Update(VisitToken(node.StringStartToken), VisitList(node.Contents), VisitToken(node.StringEndToken));
 
         public override SyntaxNode? VisitVarArgExpression(VarArgExpressionSyntax node)
             => node.Update(VisitToken(node.VarArgToken));
@@ -720,7 +747,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.SkippedTokensTrivia(default(SyntaxTokenList));
 
         /// <summary>
-        /// Creates a new <see cref="StatementListSyntax" /> node.
+        /// Creates a new
+        /// <see cref="StatementListSyntax" />
+        /// node.
         /// </summary>
         public static StatementListSyntax StatementList(SyntaxList<StatementSyntax> statements)
         {
@@ -732,7 +761,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.StatementList(default(SyntaxList<StatementSyntax>));
 
         /// <summary>
-        /// Creates a new <see cref="NamedParameterSyntax" /> node.
+        /// Creates a new
+        /// <see cref="NamedParameterSyntax" />
+        /// node.
         /// </summary>
         public static NamedParameterSyntax NamedParameter(SyntaxToken identifier, TypeBindingSyntax? typeBinding)
         {
@@ -749,7 +780,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.NamedParameter(SyntaxFactory.Identifier(identifier), default(TypeBindingSyntax?));
 
         /// <summary>
-        /// Creates a new <see cref="VarArgParameterSyntax" /> node.
+        /// Creates a new
+        /// <see cref="VarArgParameterSyntax" />
+        /// node.
         /// </summary>
         public static VarArgParameterSyntax VarArgParameter(SyntaxToken varArgToken, TypeBindingSyntax? typeBinding)
         {
@@ -762,7 +795,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.VarArgParameter(SyntaxFactory.Token(SyntaxKind.DotDotDotToken), typeBinding);
 
         /// <summary>
-        /// Creates a new <see cref="ParameterListSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ParameterListSyntax" />
+        /// node.
         /// </summary>
         public static ParameterListSyntax ParameterList(SyntaxToken openParenthesisToken, SeparatedSyntaxList<ParameterSyntax> parameters, SyntaxToken closeParenthesisToken)
         {
@@ -776,7 +811,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ParameterList(SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), parameters, SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
         /// <summary>
-        /// Creates a new <see cref="IdentifierKeyedTableFieldSyntax" /> node.
+        /// Creates a new
+        /// <see cref="IdentifierKeyedTableFieldSyntax" />
+        /// node.
         /// </summary>
         public static IdentifierKeyedTableFieldSyntax IdentifierKeyedTableField(SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax value)
         {
@@ -795,7 +832,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.IdentifierKeyedTableField(SyntaxFactory.Identifier(identifier), SyntaxFactory.Token(SyntaxKind.EqualsToken), value);
 
         /// <summary>
-        /// Creates a new <see cref="ExpressionKeyedTableFieldSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ExpressionKeyedTableFieldSyntax" />
+        /// node.
         /// </summary>
         public static ExpressionKeyedTableFieldSyntax ExpressionKeyedTableField(SyntaxToken openBracketToken, ExpressionSyntax key, SyntaxToken closeBracketToken, SyntaxToken equalsToken, ExpressionSyntax value)
         {
@@ -812,7 +851,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ExpressionKeyedTableField(SyntaxFactory.Token(SyntaxKind.OpenBracketToken), key, SyntaxFactory.Token(SyntaxKind.CloseBracketToken), SyntaxFactory.Token(SyntaxKind.EqualsToken), value);
 
         /// <summary>
-        /// Creates a new <see cref="UnkeyedTableFieldSyntax" /> node.
+        /// Creates a new
+        /// <see cref="UnkeyedTableFieldSyntax" />
+        /// node.
         /// </summary>
         public static UnkeyedTableFieldSyntax UnkeyedTableField(ExpressionSyntax value)
         {
@@ -821,7 +862,9 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
-        /// Creates a new <see cref="SimpleFunctionNameSyntax" /> node.
+        /// Creates a new
+        /// <see cref="SimpleFunctionNameSyntax" />
+        /// node.
         /// </summary>
         public static SimpleFunctionNameSyntax SimpleFunctionName(SyntaxToken name)
         {
@@ -830,7 +873,9 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
-        /// Creates a new <see cref="MemberFunctionNameSyntax" /> node.
+        /// Creates a new
+        /// <see cref="MemberFunctionNameSyntax" />
+        /// node.
         /// </summary>
         public static MemberFunctionNameSyntax MemberFunctionName(FunctionNameSyntax baseName, SyntaxToken dotToken, SyntaxToken name)
         {
@@ -849,7 +894,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.MemberFunctionName(baseName, SyntaxFactory.Token(SyntaxKind.DotToken), SyntaxFactory.Identifier(name));
 
         /// <summary>
-        /// Creates a new <see cref="MethodFunctionNameSyntax" /> node.
+        /// Creates a new
+        /// <see cref="MethodFunctionNameSyntax" />
+        /// node.
         /// </summary>
         public static MethodFunctionNameSyntax MethodFunctionName(FunctionNameSyntax baseName, SyntaxToken colonToken, SyntaxToken name)
         {
@@ -868,7 +915,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.MethodFunctionName(baseName, SyntaxFactory.Token(SyntaxKind.ColonToken), SyntaxFactory.Identifier(name));
 
         /// <summary>
-        /// Creates a new <see cref="StringFunctionArgumentSyntax" /> node.
+        /// Creates a new
+        /// <see cref="StringFunctionArgumentSyntax" />
+        /// node.
         /// </summary>
         public static StringFunctionArgumentSyntax StringFunctionArgument(LiteralExpressionSyntax expression)
         {
@@ -877,7 +926,9 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
-        /// Creates a new <see cref="TableConstructorFunctionArgumentSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TableConstructorFunctionArgumentSyntax" />
+        /// node.
         /// </summary>
         public static TableConstructorFunctionArgumentSyntax TableConstructorFunctionArgument(TableConstructorExpressionSyntax tableConstructor)
         {
@@ -886,7 +937,9 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
-        /// Creates a new <see cref="ExpressionListFunctionArgumentSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ExpressionListFunctionArgumentSyntax" />
+        /// node.
         /// </summary>
         public static ExpressionListFunctionArgumentSyntax ExpressionListFunctionArgument(SyntaxToken openParenthesisToken, SeparatedSyntaxList<ExpressionSyntax> expressions, SyntaxToken closeParenthesisToken)
         {
@@ -899,8 +952,32 @@ namespace Loretta.CodeAnalysis.Lua
         public static ExpressionListFunctionArgumentSyntax ExpressionListFunctionArgument(SeparatedSyntaxList<ExpressionSyntax> expressions = default)
             => SyntaxFactory.ExpressionListFunctionArgument(SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), expressions, SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
+        public static InterpolatedStringTextSyntax InterpolatedStringText(SyntaxToken textToken)
+        {
+            if (textToken.Kind() != SyntaxKind.InterpolatedStringTextToken) throw new ArgumentException($"Invalid kind provided. Expected InterpolatedStringTextToken but got {textToken.Kind()}.", nameof(textToken));
+            return (InterpolatedStringTextSyntax)Syntax.InternalSyntax.SyntaxFactory.InterpolatedStringText((Syntax.InternalSyntax.SyntaxToken)textToken.Node!).CreateRed();
+        }
+
+        /// <summary>Creates a new InterpolatedStringTextSyntax instance.</summary>
+        public static InterpolatedStringTextSyntax InterpolatedStringText()
+            => SyntaxFactory.InterpolatedStringText(SyntaxFactory.Token(SyntaxKind.InterpolatedStringTextToken));
+
+        public static InterpolationSyntax Interpolation(SyntaxToken openBraceToken, ExpressionSyntax expression, SyntaxToken closeBraceToken)
+        {
+            if (openBraceToken.Kind() != SyntaxKind.OpenBraceToken) throw new ArgumentException($"Invalid kind provided. Expected OpenBraceToken but got {openBraceToken.Kind()}.", nameof(openBraceToken));
+            if (expression == null) throw new ArgumentNullException(nameof(expression));
+            if (closeBraceToken.Kind() != SyntaxKind.CloseBraceToken) throw new ArgumentException($"Invalid kind provided. Expected CloseBraceToken but got {closeBraceToken.Kind()}.", nameof(closeBraceToken));
+            return (InterpolationSyntax)Syntax.InternalSyntax.SyntaxFactory.Interpolation((Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node!, (Syntax.InternalSyntax.ExpressionSyntax)expression.Green, (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node!).CreateRed();
+        }
+
+        /// <summary>Creates a new InterpolationSyntax instance.</summary>
+        public static InterpolationSyntax Interpolation(ExpressionSyntax expression)
+            => SyntaxFactory.Interpolation(SyntaxFactory.Token(SyntaxKind.OpenBraceToken), expression, SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
+
         /// <summary>
-        /// Creates a new <see cref="AnonymousFunctionExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="AnonymousFunctionExpressionSyntax" />
+        /// node.
         /// </summary>
         public static AnonymousFunctionExpressionSyntax AnonymousFunctionExpression(SyntaxToken functionKeyword, TypeParameterListSyntax? typeParameterList, ParameterListSyntax parameters, TypeBindingSyntax? typeBinding, StatementListSyntax body, SyntaxToken endKeyword)
         {
@@ -920,7 +997,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.AnonymousFunctionExpression(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), default(TypeParameterListSyntax?), parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword));
 
         /// <summary>
-        /// Creates a new <see cref="TableConstructorExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TableConstructorExpressionSyntax" />
+        /// node.
         /// </summary>
         public static TableConstructorExpressionSyntax TableConstructorExpression(SyntaxToken openBraceToken, SeparatedSyntaxList<TableFieldSyntax> fields, SyntaxToken closeBraceToken)
         {
@@ -934,7 +1013,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TableConstructorExpression(SyntaxFactory.Token(SyntaxKind.OpenBraceToken), fields, SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
 
         /// <summary>
-        /// Creates a new <see cref="LiteralExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="LiteralExpressionSyntax" />
+        /// node.
         /// </summary>
         public static LiteralExpressionSyntax LiteralExpression(SyntaxKind kind, SyntaxToken token)
         {
@@ -977,8 +1058,21 @@ namespace Loretta.CodeAnalysis.Lua
                 _ => throw new ArgumentOutOfRangeException(),
             };
 
+        public static InterpolatedStringExpressionSyntax InterpolatedStringExpression(SyntaxToken stringStartToken, SyntaxList<InterpolatedStringContentSyntax> contents, SyntaxToken stringEndToken)
+        {
+            if (stringStartToken.Kind() != SyntaxKind.BacktickToken) throw new ArgumentException($"Invalid kind provided. Expected BacktickToken but got {stringStartToken.Kind()}.", nameof(stringStartToken));
+            if (stringEndToken.Kind() != SyntaxKind.BacktickToken) throw new ArgumentException($"Invalid kind provided. Expected BacktickToken but got {stringEndToken.Kind()}.", nameof(stringEndToken));
+            return (InterpolatedStringExpressionSyntax)Syntax.InternalSyntax.SyntaxFactory.InterpolatedStringExpression((Syntax.InternalSyntax.SyntaxToken)stringStartToken.Node!, contents.Node.ToGreenList<Syntax.InternalSyntax.InterpolatedStringContentSyntax>(), (Syntax.InternalSyntax.SyntaxToken)stringEndToken.Node!).CreateRed();
+        }
+
+        /// <summary>Creates a new InterpolatedStringExpressionSyntax instance.</summary>
+        public static InterpolatedStringExpressionSyntax InterpolatedStringExpression(SyntaxList<InterpolatedStringContentSyntax> contents = default)
+            => SyntaxFactory.InterpolatedStringExpression(SyntaxFactory.Token(SyntaxKind.BacktickToken), contents, SyntaxFactory.Token(SyntaxKind.BacktickToken));
+
         /// <summary>
-        /// Creates a new <see cref="VarArgExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="VarArgExpressionSyntax" />
+        /// node.
         /// </summary>
         public static VarArgExpressionSyntax VarArgExpression(SyntaxToken varArgToken)
         {
@@ -991,7 +1085,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.VarArgExpression(SyntaxFactory.Token(SyntaxKind.DotDotDotToken));
 
         /// <summary>
-        /// Creates a new <see cref="IdentifierNameSyntax" /> node.
+        /// Creates a new
+        /// <see cref="IdentifierNameSyntax" />
+        /// node.
         /// </summary>
         public static IdentifierNameSyntax IdentifierName(SyntaxToken identifier)
         {
@@ -1000,7 +1096,9 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
-        /// Creates a new <see cref="MemberAccessExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="MemberAccessExpressionSyntax" />
+        /// node.
         /// </summary>
         public static MemberAccessExpressionSyntax MemberAccessExpression(PrefixExpressionSyntax expression, SyntaxToken dotSeparator, SyntaxToken memberName)
         {
@@ -1019,7 +1117,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.MemberAccessExpression(expression, SyntaxFactory.Token(SyntaxKind.DotToken), SyntaxFactory.Identifier(memberName));
 
         /// <summary>
-        /// Creates a new <see cref="ElementAccessExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ElementAccessExpressionSyntax" />
+        /// node.
         /// </summary>
         public static ElementAccessExpressionSyntax ElementAccessExpression(PrefixExpressionSyntax expression, SyntaxToken openBracketToken, ExpressionSyntax keyExpression, SyntaxToken closeBracketToken)
         {
@@ -1035,7 +1135,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ElementAccessExpression(expression, SyntaxFactory.Token(SyntaxKind.OpenBracketToken), keyExpression, SyntaxFactory.Token(SyntaxKind.CloseBracketToken));
 
         /// <summary>
-        /// Creates a new <see cref="UnaryExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="UnaryExpressionSyntax" />
+        /// node.
         /// </summary>
         public static UnaryExpressionSyntax UnaryExpression(SyntaxKind kind, SyntaxToken operatorToken, ExpressionSyntax operand)
         {
@@ -1061,7 +1163,9 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
-        /// Creates a new <see cref="BinaryExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="BinaryExpressionSyntax" />
+        /// node.
         /// </summary>
         public static BinaryExpressionSyntax BinaryExpression(SyntaxKind kind, ExpressionSyntax left, SyntaxToken operatorToken, ExpressionSyntax right)
         {
@@ -1138,7 +1242,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ElseIfExpressionClause(SyntaxFactory.Token(SyntaxKind.ElseIfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), value);
 
         /// <summary>
-        /// Creates a new <see cref="IfExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="IfExpressionSyntax" />
+        /// node.
         /// </summary>
         public static IfExpressionSyntax IfExpression(SyntaxToken ifKeyword, ExpressionSyntax condition, SyntaxToken thenKeyword, ExpressionSyntax trueValue, SyntaxList<ElseIfExpressionClauseSyntax> elseIfClauses, SyntaxToken elseKeyword, ExpressionSyntax falseValue)
         {
@@ -1173,7 +1279,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ParenthesizedExpression(SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), expression, SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
         /// <summary>
-        /// Creates a new <see cref="FunctionCallExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="FunctionCallExpressionSyntax" />
+        /// node.
         /// </summary>
         public static FunctionCallExpressionSyntax FunctionCallExpression(PrefixExpressionSyntax expression, FunctionArgumentSyntax argument)
         {
@@ -1183,7 +1291,9 @@ namespace Loretta.CodeAnalysis.Lua
         }
 
         /// <summary>
-        /// Creates a new <see cref="MethodCallExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="MethodCallExpressionSyntax" />
+        /// node.
         /// </summary>
         public static MethodCallExpressionSyntax MethodCallExpression(PrefixExpressionSyntax expression, SyntaxToken colonToken, SyntaxToken identifier, FunctionArgumentSyntax argument)
         {
@@ -1203,7 +1313,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.MethodCallExpression(expression, SyntaxFactory.Token(SyntaxKind.ColonToken), SyntaxFactory.Identifier(identifier), argument);
 
         /// <summary>
-        /// Creates a new <see cref="VariableAttributeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="VariableAttributeSyntax" />
+        /// node.
         /// </summary>
         public static VariableAttributeSyntax VariableAttribute(SyntaxToken lessThanToken, SyntaxToken identifier, SyntaxToken greaterThanToken)
         {
@@ -1222,7 +1334,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.VariableAttribute(SyntaxFactory.Token(SyntaxKind.LessThanToken), SyntaxFactory.Identifier(identifier), SyntaxFactory.Token(SyntaxKind.GreaterThanToken));
 
         /// <summary>
-        /// Creates a new <see cref="LocalDeclarationNameSyntax" /> node.
+        /// Creates a new
+        /// <see cref="LocalDeclarationNameSyntax" />
+        /// node.
         /// </summary>
         public static LocalDeclarationNameSyntax LocalDeclarationName(IdentifierNameSyntax identifierName, VariableAttributeSyntax? attribute, TypeBindingSyntax? typeBinding)
         {
@@ -1239,7 +1353,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.LocalDeclarationName(SyntaxFactory.IdentifierName(identifierName), default(VariableAttributeSyntax?), default(TypeBindingSyntax?));
 
         /// <summary>
-        /// Creates a new <see cref="EqualsValuesClauseSyntax" /> node.
+        /// Creates a new
+        /// <see cref="EqualsValuesClauseSyntax" />
+        /// node.
         /// </summary>
         public static EqualsValuesClauseSyntax EqualsValuesClause(SyntaxToken equalsToken, SeparatedSyntaxList<ExpressionSyntax> values)
         {
@@ -1253,7 +1369,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.EqualsValuesClause(SyntaxFactory.Token(SyntaxKind.EqualsToken), values);
 
         /// <summary>
-        /// Creates a new <see cref="AssignmentStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="AssignmentStatementSyntax" />
+        /// node.
         /// </summary>
         public static AssignmentStatementSyntax AssignmentStatement(SeparatedSyntaxList<PrefixExpressionSyntax> variables, EqualsValuesClauseSyntax equalsValues, SyntaxToken semicolonToken)
         {
@@ -1273,7 +1391,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.AssignmentStatement(variables, equalsValues, default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="CompoundAssignmentStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="CompoundAssignmentStatementSyntax" />
+        /// node.
         /// </summary>
         public static CompoundAssignmentStatementSyntax CompoundAssignmentStatement(SyntaxKind kind, PrefixExpressionSyntax variable, SyntaxToken assignmentOperatorToken, ExpressionSyntax expression, SyntaxToken semicolonToken)
         {
@@ -1328,7 +1448,9 @@ namespace Loretta.CodeAnalysis.Lua
             };
 
         /// <summary>
-        /// Creates a new <see cref="LocalVariableDeclarationStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="LocalVariableDeclarationStatementSyntax" />
+        /// node.
         /// </summary>
         public static LocalVariableDeclarationStatementSyntax LocalVariableDeclarationStatement(SyntaxToken localKeyword, SeparatedSyntaxList<LocalDeclarationNameSyntax> names, EqualsValuesClauseSyntax? equalsValues, SyntaxToken semicolonToken)
         {
@@ -1352,7 +1474,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.LocalVariableDeclarationStatement(SyntaxFactory.Token(SyntaxKind.LocalKeyword), names, default(EqualsValuesClauseSyntax?), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="TypedIdentifierNameSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypedIdentifierNameSyntax" />
+        /// node.
         /// </summary>
         public static TypedIdentifierNameSyntax TypedIdentifierName(IdentifierNameSyntax identifierName, TypeBindingSyntax? typeBinding)
         {
@@ -1369,7 +1493,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypedIdentifierName(SyntaxFactory.IdentifierName(identifierName), default(TypeBindingSyntax?));
 
         /// <summary>
-        /// Creates a new <see cref="NumericForStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="NumericForStatementSyntax" />
+        /// node.
         /// </summary>
         public static NumericForStatementSyntax NumericForStatement(SyntaxToken forKeyword, TypedIdentifierNameSyntax identifier, SyntaxToken equalsToken, ExpressionSyntax initialValue, SyntaxToken finalValueCommaToken, ExpressionSyntax finalValue, SyntaxToken stepValueCommaToken, ExpressionSyntax? stepValue, SyntaxToken doKeyword, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
         {
@@ -1410,7 +1536,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.NumericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), SyntaxFactory.TypedIdentifierName(identifier), SyntaxFactory.Token(SyntaxKind.EqualsToken), initialValue, SyntaxFactory.Token(SyntaxKind.CommaToken), finalValue, default(SyntaxToken), default(ExpressionSyntax?), SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="GenericForStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="GenericForStatementSyntax" />
+        /// node.
         /// </summary>
         public static GenericForStatementSyntax GenericForStatement(SyntaxToken forKeyword, SeparatedSyntaxList<TypedIdentifierNameSyntax> identifiers, SyntaxToken inKeyword, SeparatedSyntaxList<ExpressionSyntax> expressions, SyntaxToken doKeyword, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
         {
@@ -1435,7 +1563,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.GenericForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), identifiers, SyntaxFactory.Token(SyntaxKind.InKeyword), expressions, SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="WhileStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="WhileStatementSyntax" />
+        /// node.
         /// </summary>
         public static WhileStatementSyntax WhileStatement(SyntaxToken whileKeyword, ExpressionSyntax condition, SyntaxToken doKeyword, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
         {
@@ -1458,7 +1588,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.WhileStatement(SyntaxFactory.Token(SyntaxKind.WhileKeyword), condition, SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="RepeatUntilStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="RepeatUntilStatementSyntax" />
+        /// node.
         /// </summary>
         public static RepeatUntilStatementSyntax RepeatUntilStatement(SyntaxToken repeatKeyword, StatementListSyntax body, SyntaxToken untilKeyword, ExpressionSyntax condition, SyntaxToken semicolonToken)
         {
@@ -1480,7 +1612,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.RepeatUntilStatement(SyntaxFactory.Token(SyntaxKind.RepeatKeyword), body, SyntaxFactory.Token(SyntaxKind.UntilKeyword), condition, default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="IfStatementSyntax" /> comment.
+        /// Creates a new
+        /// <see cref="IfStatementSyntax" />
+        /// comment.
         /// </summary>
         public static IfStatementSyntax IfStatement(SyntaxToken ifKeyword, ExpressionSyntax condition, SyntaxToken thenKeyword, StatementListSyntax body, SyntaxList<ElseIfClauseSyntax> elseIfClauses, ElseClauseSyntax? elseClause, SyntaxToken endKeyword, SyntaxToken semicolonToken)
         {
@@ -1507,7 +1641,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), body, default(SyntaxList<ElseIfClauseSyntax>), default(ElseClauseSyntax?), SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="ElseIfClauseSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ElseIfClauseSyntax" />
+        /// node.
         /// </summary>
         public static ElseIfClauseSyntax ElseIfClause(SyntaxToken elseIfKeyword, ExpressionSyntax condition, SyntaxToken thenKeyword, StatementListSyntax body)
         {
@@ -1523,7 +1659,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ElseIfClause(SyntaxFactory.Token(SyntaxKind.ElseIfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), body);
 
         /// <summary>
-        /// Creates a new <see cref="ElseClauseSyntax" /> comment.
+        /// Creates a new
+        /// <see cref="ElseClauseSyntax" />
+        /// comment.
         /// </summary>
         public static ElseClauseSyntax ElseClause(SyntaxToken elseKeyword, StatementListSyntax elseBody)
         {
@@ -1537,7 +1675,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ElseClause(SyntaxFactory.Token(SyntaxKind.ElseKeyword), elseBody);
 
         /// <summary>
-        /// Creates a new <see cref="GotoStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="GotoStatementSyntax" />
+        /// node.
         /// </summary>
         public static GotoStatementSyntax GotoStatement(SyntaxToken gotoKeyword, SyntaxToken labelName, SyntaxToken semicolonToken)
         {
@@ -1561,7 +1701,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.GotoStatement(SyntaxFactory.Token(SyntaxKind.GotoKeyword), SyntaxFactory.Identifier(labelName), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="BreakStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="BreakStatementSyntax" />
+        /// node.
         /// </summary>
         public static BreakStatementSyntax BreakStatement(SyntaxToken breakKeyword, SyntaxToken semicolonToken)
         {
@@ -1580,7 +1722,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.BreakStatement(SyntaxFactory.Token(SyntaxKind.BreakKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="ReturnStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ReturnStatementSyntax" />
+        /// node.
         /// </summary>
         public static ReturnStatementSyntax ReturnStatement(SyntaxToken returnKeyword, SeparatedSyntaxList<ExpressionSyntax> expressions, SyntaxToken semicolonToken)
         {
@@ -1599,7 +1743,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ReturnStatement(SyntaxFactory.Token(SyntaxKind.ReturnKeyword), expressions, default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="ContinueStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ContinueStatementSyntax" />
+        /// node.
         /// </summary>
         public static ContinueStatementSyntax ContinueStatement(SyntaxToken continueKeyword, SyntaxToken semicolonToken)
         {
@@ -1618,7 +1764,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ContinueStatement(SyntaxFactory.Token(SyntaxKind.ContinueKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="LocalFunctionDeclarationStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="LocalFunctionDeclarationStatementSyntax" />
+        /// node.
         /// </summary>
         public static LocalFunctionDeclarationStatementSyntax LocalFunctionDeclarationStatement(SyntaxToken localKeyword, SyntaxToken functionKeyword, IdentifierNameSyntax name, TypeParameterListSyntax? typeParameterList, ParameterListSyntax parameters, TypeBindingSyntax? typeBinding, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
         {
@@ -1650,7 +1798,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.LocalFunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.LocalKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), SyntaxFactory.IdentifierName(name), default(TypeParameterListSyntax?), parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="FunctionDeclarationStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="FunctionDeclarationStatementSyntax" />
+        /// node.
         /// </summary>
         public static FunctionDeclarationStatementSyntax FunctionDeclarationStatement(SyntaxToken functionKeyword, FunctionNameSyntax name, TypeParameterListSyntax? typeParameterList, ParameterListSyntax parameters, TypeBindingSyntax? typeBinding, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
         {
@@ -1677,7 +1827,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.FunctionDeclarationStatement(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, default(TypeParameterListSyntax?), parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="DoStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="DoStatementSyntax" />
+        /// node.
         /// </summary>
         public static DoStatementSyntax DoStatement(SyntaxToken doKeyword, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
         {
@@ -1698,7 +1850,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="GotoLabelStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="GotoLabelStatementSyntax" />
+        /// node.
         /// </summary>
         public static GotoLabelStatementSyntax GotoLabelStatement(SyntaxToken leftDelimiterToken, SyntaxToken identifier, SyntaxToken rightDelimiterToken, SyntaxToken semicolonToken)
         {
@@ -1723,7 +1877,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.GotoLabelStatement(SyntaxFactory.Token(SyntaxKind.ColonColonToken), SyntaxFactory.Identifier(identifier), SyntaxFactory.Token(SyntaxKind.ColonColonToken), default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="ExpressionStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ExpressionStatementSyntax" />
+        /// node.
         /// </summary>
         public static ExpressionStatementSyntax ExpressionStatement(ExpressionSyntax expression, SyntaxToken semicolonToken)
         {
@@ -1742,7 +1898,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ExpressionStatement(expression, default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="EmptyStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="EmptyStatementSyntax" />
+        /// node.
         /// </summary>
         public static EmptyStatementSyntax EmptyStatement(SyntaxToken semicolonToken)
         {
@@ -1760,7 +1918,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.EmptyStatement(default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="TypeDeclarationStatementSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypeDeclarationStatementSyntax" />
+        /// node.
         /// </summary>
         public static TypeDeclarationStatementSyntax TypeDeclarationStatement(SyntaxToken exportKeyword, SyntaxToken typeKeyword, SyntaxToken name, TypeParameterListSyntax? typeParameterList, SyntaxToken equalsToken, TypeSyntax type, SyntaxToken semicolonToken)
         {
@@ -1796,7 +1956,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypeDeclarationStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.TypeKeyword), SyntaxFactory.Identifier(name), default(TypeParameterListSyntax?), SyntaxFactory.Token(SyntaxKind.EqualsToken), type, default(SyntaxToken));
 
         /// <summary>
-        /// Creates a new <see cref="TypeBindingSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypeBindingSyntax" />
+        /// node.
         /// </summary>
         public static TypeBindingSyntax TypeBinding(SyntaxToken colonToken, TypeSyntax type)
         {
@@ -1810,7 +1972,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypeBinding(SyntaxFactory.Token(SyntaxKind.ColonToken), type);
 
         /// <summary>
-        /// Creates a new <see cref="SimpleTypeNameSyntax" /> node.
+        /// Creates a new
+        /// <see cref="SimpleTypeNameSyntax" />
+        /// node.
         /// </summary>
         public static SimpleTypeNameSyntax SimpleTypeName(SyntaxToken identifierToken, TypeArgumentListSyntax? typeArgumentList)
         {
@@ -1827,7 +1991,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.SimpleTypeName(SyntaxFactory.Identifier(identifierToken), default(TypeArgumentListSyntax?));
 
         /// <summary>
-        /// Creates a new <see cref="CompositeTypeNameSyntax" /> node.
+        /// Creates a new
+        /// <see cref="CompositeTypeNameSyntax" />
+        /// node.
         /// </summary>
         public static CompositeTypeNameSyntax CompositeTypeName(TypeNameSyntax @base, SyntaxToken dotToken, SyntaxToken identifierToken, TypeArgumentListSyntax? typeArgumentList)
         {
@@ -1850,7 +2016,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.CompositeTypeName(@base, SyntaxFactory.Token(SyntaxKind.DotToken), SyntaxFactory.Identifier(identifierToken), default(TypeArgumentListSyntax?));
 
         /// <summary>
-        /// Creates a new <see cref="NilableTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="NilableTypeSyntax" />
+        /// node.
         /// </summary>
         public static NilableTypeSyntax NilableType(TypeSyntax type, SyntaxToken questionToken)
         {
@@ -1864,7 +2032,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.NilableType(type, SyntaxFactory.Token(SyntaxKind.QuestionToken));
 
         /// <summary>
-        /// Creates a new <see cref="ParenthesizedTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ParenthesizedTypeSyntax" />
+        /// node.
         /// </summary>
         public static ParenthesizedTypeSyntax ParenthesizedType(SyntaxToken openParenthesisToken, TypeSyntax type, SyntaxToken closeParenthesisToken)
         {
@@ -1879,7 +2049,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ParenthesizedType(SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), type, SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
         /// <summary>
-        /// Creates a new <see cref="TypePackSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypePackSyntax" />
+        /// node.
         /// </summary>
         public static TypePackSyntax TypePack(SyntaxToken openParenthesisToken, SeparatedSyntaxList<TypeSyntax> types, SyntaxToken closeParenthesisToken)
         {
@@ -1893,7 +2065,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypePack(SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), types, SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
         /// <summary>
-        /// Creates a new <see cref="FunctionTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="FunctionTypeSyntax" />
+        /// node.
         /// </summary>
         public static FunctionTypeSyntax FunctionType(TypeParameterListSyntax? typeParameterList, SyntaxToken openParenthesisToken, SeparatedSyntaxList<TypeSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
         {
@@ -1913,7 +2087,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.FunctionType(default(TypeParameterListSyntax?), SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), default(SeparatedSyntaxList<TypeSyntax>), SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken), SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), returnType);
 
         /// <summary>
-        /// Creates a new <see cref="ArrayTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="ArrayTypeSyntax" />
+        /// node.
         /// </summary>
         public static ArrayTypeSyntax ArrayType(SyntaxToken openBraceToken, TypeSyntax type, SyntaxToken closeBraceToken)
         {
@@ -1928,7 +2104,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.ArrayType(SyntaxFactory.Token(SyntaxKind.OpenBraceToken), type, SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
 
         /// <summary>
-        /// Creates a new <see cref="TableTypeIndexerSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TableTypeIndexerSyntax" />
+        /// node.
         /// </summary>
         public static TableTypeIndexerSyntax TableTypeIndexer(SyntaxToken openBracketToken, TypeSyntax indexType, SyntaxToken closeBracketToken, SyntaxToken colonToken, TypeSyntax valueType)
         {
@@ -1945,7 +2123,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TableTypeIndexer(SyntaxFactory.Token(SyntaxKind.OpenBracketToken), indexType, SyntaxFactory.Token(SyntaxKind.CloseBracketToken), SyntaxFactory.Token(SyntaxKind.ColonToken), valueType);
 
         /// <summary>
-        /// Creates a new <see cref="TableTypePropertySyntax" /> node.
+        /// Creates a new
+        /// <see cref="TableTypePropertySyntax" />
+        /// node.
         /// </summary>
         public static TableTypePropertySyntax TableTypeProperty(SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax valueType)
         {
@@ -1964,7 +2144,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TableTypeProperty(SyntaxFactory.Identifier(identifier), SyntaxFactory.Token(SyntaxKind.ColonToken), valueType);
 
         /// <summary>
-        /// Creates a new <see cref="TableTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TableTypeSyntax" />
+        /// node.
         /// </summary>
         public static TableTypeSyntax TableType(SyntaxToken openBraceToken, SeparatedSyntaxList<TableTypeElementSyntax> elements, SyntaxToken closeBraceToken)
         {
@@ -1978,7 +2160,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TableType(SyntaxFactory.Token(SyntaxKind.OpenBraceToken), elements, SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
 
         /// <summary>
-        /// Creates a new <see cref="TypeCastExpressionSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypeCastExpressionSyntax" />
+        /// node.
         /// </summary>
         public static TypeCastExpressionSyntax TypeCastExpression(ExpressionSyntax expression, SyntaxToken colonColonToken, TypeSyntax type)
         {
@@ -1993,7 +2177,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypeCastExpression(expression, SyntaxFactory.Token(SyntaxKind.ColonColonToken), type);
 
         /// <summary>
-        /// Creates a new <see cref="UnionTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="UnionTypeSyntax" />
+        /// node.
         /// </summary>
         public static UnionTypeSyntax UnionType(TypeSyntax left, SyntaxToken pipeToken, TypeSyntax right)
         {
@@ -2008,7 +2194,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.UnionType(left, SyntaxFactory.Token(SyntaxKind.PipeToken), right);
 
         /// <summary>
-        /// Creates a new <see cref="IntersectionTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="IntersectionTypeSyntax" />
+        /// node.
         /// </summary>
         public static IntersectionTypeSyntax IntersectionType(TypeSyntax left, SyntaxToken ampersandToken, TypeSyntax right)
         {
@@ -2023,7 +2211,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.IntersectionType(left, SyntaxFactory.Token(SyntaxKind.AmpersandToken), right);
 
         /// <summary>
-        /// Creates a new <see cref="EqualsTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="EqualsTypeSyntax" />
+        /// node.
         /// </summary>
         public static EqualsTypeSyntax EqualsType(SyntaxToken equalsToken, TypeSyntax type)
         {
@@ -2037,7 +2227,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.EqualsType(SyntaxFactory.Token(SyntaxKind.EqualsToken), type);
 
         /// <summary>
-        /// Creates a new <see cref="TypeParameterSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypeParameterSyntax" />
+        /// node.
         /// </summary>
         public static TypeParameterSyntax TypeParameter(SyntaxToken identifier, SyntaxToken dotDotDotToken, EqualsTypeSyntax? equalsType)
         {
@@ -2064,7 +2256,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypeParameter(SyntaxFactory.Identifier(identifier), default(SyntaxToken), default(EqualsTypeSyntax?));
 
         /// <summary>
-        /// Creates a new <see cref="TypeParameterListSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypeParameterListSyntax" />
+        /// node.
         /// </summary>
         public static TypeParameterListSyntax TypeParameterList(SyntaxToken lessThanToken, SeparatedSyntaxList<TypeParameterSyntax> names, SyntaxToken greaterThanToken)
         {
@@ -2078,7 +2272,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypeParameterList(SyntaxFactory.Token(SyntaxKind.LessThanToken), names, SyntaxFactory.Token(SyntaxKind.GreaterThanToken));
 
         /// <summary>
-        /// Creates a new <see cref="TypeArgumentListSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypeArgumentListSyntax" />
+        /// node.
         /// </summary>
         public static TypeArgumentListSyntax TypeArgumentList(SyntaxToken lessThanToken, SeparatedSyntaxList<TypeSyntax> arguments, SyntaxToken greaterThanToken)
         {
@@ -2092,7 +2288,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypeArgumentList(SyntaxFactory.Token(SyntaxKind.LessThanToken), arguments, SyntaxFactory.Token(SyntaxKind.GreaterThanToken));
 
         /// <summary>
-        /// Creates a new <see cref="LiteralTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="LiteralTypeSyntax" />
+        /// node.
         /// </summary>
         public static LiteralTypeSyntax LiteralType(SyntaxKind kind, SyntaxToken token)
         {
@@ -2130,7 +2328,9 @@ namespace Loretta.CodeAnalysis.Lua
             };
 
         /// <summary>
-        /// Creates a new <see cref="TypeofTypeSyntax" /> node.
+        /// Creates a new
+        /// <see cref="TypeofTypeSyntax" />
+        /// node.
         /// </summary>
         public static TypeofTypeSyntax TypeofType(SyntaxToken typeofKeyword, SyntaxToken openParenthesisToken, ExpressionSyntax expression, SyntaxToken closeParenthesisToken)
         {
@@ -2146,7 +2346,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.TypeofType(SyntaxFactory.Token(SyntaxKind.TypeofKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), expression, SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
         /// <summary>
-        /// Creates a new <see cref="VariadicTypePackSyntax" /> node.
+        /// Creates a new
+        /// <see cref="VariadicTypePackSyntax" />
+        /// node.
         /// </summary>
         public static VariadicTypePackSyntax VariadicTypePack(SyntaxToken dotDotDotToken, TypeSyntax type)
         {
@@ -2160,7 +2362,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.VariadicTypePack(SyntaxFactory.Token(SyntaxKind.DotDotDotToken), type);
 
         /// <summary>
-        /// Creates a new <see cref="GenericTypePackSyntax" /> node.
+        /// Creates a new
+        /// <see cref="GenericTypePackSyntax" />
+        /// node.
         /// </summary>
         public static GenericTypePackSyntax GenericTypePack(SyntaxToken identifier, SyntaxToken dotDotDotToken)
         {
@@ -2178,7 +2382,9 @@ namespace Loretta.CodeAnalysis.Lua
             => SyntaxFactory.GenericTypePack(SyntaxFactory.Identifier(identifier), SyntaxFactory.Token(SyntaxKind.DotDotDotToken));
 
         /// <summary>
-        /// Creates a new <see cref="CompilationUnitSyntax" /> node.
+        /// Creates a new
+        /// <see cref="CompilationUnitSyntax" />
+        /// node.
         /// </summary>
         public static CompilationUnitSyntax CompilationUnit(StatementListSyntax statements, SyntaxToken endOfFileToken)
         {
