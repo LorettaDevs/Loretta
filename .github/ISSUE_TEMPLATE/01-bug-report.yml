@@ -1,0 +1,105 @@
+name: Bug Report
+description: An issue in a given version of Loretta
+type: Bug
+labels: ["bug"]
+body:
+  # HEADER
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking your time to submit this report.
+
+        **Important:**
+        - Be respectful in your communication. Any disrespect will result in a ban from the repository.
+        - Ensure you are using the latest Loretta version (including nigthlies).
+        - Do not leave any field blank. Please fill all of them in or your issue will be closed.
+  # Description
+  - type: input
+    id: description
+    attributes:
+      label: What is the issue you are experiencing?
+      description: A clear and concise description of what the issue is.
+      placeholder: When X is done, using LuaSyntaxOptions.Y, Z happens.
+    validations:
+      required: True
+  # Expected
+  - type: textarea
+    id: expected
+    attributes:
+      label: What was the expected result?
+    validations:
+      required: True
+  # Actual
+  - type: textarea
+    id: actual
+    attributes:
+      label: What was the actual result?
+    validations:
+      required: True
+  # Reproduction Steps
+  - type: textarea
+    id: steps
+    attributes:
+      label: What are the steps to reproduce this issue?
+      description: A clear, concise and COMPLETE list of steps to fully reproducing the issue on the version you are experiencing the issue on.
+      value: |
+        **DO NOT POST A LINK TO YOUR REPO, MAKE A SMALL REPRODUCTION SAMPLE**
+
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        ...
+        N. See error
+    validations:
+      required: True
+  # Loretta Version
+  - type: input
+    id: loretta-version
+    attributes:
+      label: What version of Loretta are you experiencing this issue in?
+      placeholder: "v0.X.Y"
+    validations:
+      required: True
+  # Affected Lua Versions
+  - type: dropdown
+    id: lua-versions
+    attributes:
+      label: What Lua versions are affected by this issue?
+      description: This is not required if the issue applies to all versions of Lua or if it's not a parsing issue (e.g. formatting, constant folding, minification).
+      multiple: True
+      options:
+        - Lua 5.1
+        - Lua 5.2
+        - Lua 5.3
+        - Lua 5.4
+        - Luau
+        - GMod Lua
+        - FiveM
+    validations:
+      required: False
+  # Additional Information
+  - type: textarea
+    id: extra-info
+    attributes:
+      label: Is there any additional information you wish to add?
+      description: Related Loretta source code, log excerpts or other useful information.
+    validations:
+      required: False
+  # Sanity Checks
+  - type: checkboxes
+    id: sanity-checks
+    attributes:
+      label: "Please ensure you have done the following actions:"
+      options:
+        - label: I have checked that there are no similar issues already open.
+          required: True
+        - label: I confirm this is not an usage question but an actual bug within Loretta.
+          required: True
+        - label: I have confirmed that this issue still happens on the latest nightly version.
+          required: False
+        - label: I have confirmed that this issue is because of Loretta and not because of my own code.
+          required: True
+        - label: I acknowledge my issue will be closed if any step has been skipped.
+          required: True
+    validations:
+      required: True

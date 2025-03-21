@@ -1,0 +1,24 @@
+name: Epic
+description: DO NOT USE IF YOU ARE NOT A MAINTAINER. Issue type for maintainer usage and organization.
+body:
+  # HEADER
+  - type: markdown
+    attributes:
+      value: |
+        # DO NOT USE IF YOU ARE NOT A MAINTAINER
+  # Area
+  - type: textarea
+    id: area
+    attributes:
+      label: Area
+      description: The area this epic covers.
+    validations:
+      required: True
+  # Description
+  - type: textarea
+    id: description
+    attributes:
+      label: What is this epic about?
+      description: A clear and concise description of what the epic is.
+    validations:
+      required: True

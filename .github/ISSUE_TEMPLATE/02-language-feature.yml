@@ -1,0 +1,66 @@
+name: Language Feature Request
+description: A request to support a feature from a Lua version
+type: Feature
+labels: ["enhancement"]
+body:
+  # HEADER
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking your time to submit this request.
+
+        **Important:**
+        - Be respectful in your communication. Any disrespect will result in a ban from the repository.
+        - Ensure that you have checked the latest Loretta version (including nigthlies) for this feature.
+        - Do not leave any field blank. Please fill all of them in or your issue will be closed.
+  # Source Lua Versions
+  - type: dropdown
+    id: lua-version
+    attributes:
+      label: What lua version(s) is this feature from?
+      description: If you pick Other, please be sure to mention the version in following field.
+      multiple: True
+      options:
+        - Lua 5.1
+        - Lua 5.2
+        - Lua 5.3
+        - Lua 5.4
+        - Luau
+        - GMod Lua
+        - FiveM
+        - Other
+    validations:
+      required: True
+  # Description
+  - type: textarea
+    id: description
+    attributes:
+      label: What feature are you requesting?
+      description: A clear and concise description of what the feature is.
+      placeholder: Lua X has feature Y which allows you to Z.
+    validations:
+      required: True
+  # Extra info
+  - type: textarea
+    id: extra-info
+    attributes:
+      label: Can you go in further detail of what this feature is about?
+      description: A more in-depth description of the feature, providing documentation links and other useful information.
+    validations:
+      required: False
+  # Sanity Checks
+  - type: checkboxes
+    id: sanity-checks
+    attributes:
+      label: "Please ensure you have done the following actions:"
+      options:
+        - label: I have checked that there are no similar requests already open.
+          required: True
+        - label: I have confirmed that this has not been implemented on the latest nightly version.
+          required: True
+        - label: I have confirmed that this is a custom syntax that requires modifications to be supported.
+          required: True
+        - label: I acknowledge my issue will be closed if any step has been skipped.
+          required: True
+    validations:
+      required: True
