@@ -3,13 +3,9 @@ using Xunit.Abstractions;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 {
-    public class TypeParsingTests : ParsingTestsBase
+    public class TypeParsingTests(ITestOutputHelper output) : ParsingTestsBase(output)
     {
         private const string TypeArgumentListString = "<Type, Type..., ...Type, Type.Member>";
-
-        public TypeParsingTests(ITestOutputHelper output) : base(output)
-        {
-        }
 
         private void CheckTypeArgumentList()
         {

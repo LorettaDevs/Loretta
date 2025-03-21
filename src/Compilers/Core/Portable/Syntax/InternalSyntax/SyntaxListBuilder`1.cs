@@ -32,13 +32,13 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public void Clear() => _builder.Clear();
 
-        public SyntaxListBuilder<TNode> Add(TNode node)
+        public SyntaxListBuilder<TNode> Add(TNode? node)
         {
             _builder.Add(node);
             return this;
         }
 
-        public void AddRange(TNode[] items, int offset, int length) =>
+        public void AddRange(TNode?[] items, int offset, int length) =>
             _builder.AddRange(items, offset, length);
 
         public void AddRange(SyntaxList<TNode> nodes) => _builder.AddRange(nodes);

@@ -87,6 +87,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         internal static SyntaxToken Token(GreenNode? leading, SyntaxKind kind, GreenNode? trailing)
             => SyntaxToken.Create(kind, leading, trailing);
 
+        /// <summary>
+        /// Creates a token whose <see cref="SyntaxToken.Text"/> and <see cref="SyntaxToken.ValueText"/> are the same.
+        /// </summary>
+        internal static SyntaxToken Token(GreenNode? leading, SyntaxKind kind, string text, GreenNode? trailing)
+            => Token(leading, kind, text, text, trailing);
+
         internal static SyntaxToken Token(
             GreenNode? leading,
             SyntaxKind kind,

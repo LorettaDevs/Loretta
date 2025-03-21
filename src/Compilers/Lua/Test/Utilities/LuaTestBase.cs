@@ -40,6 +40,17 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             return CheckSerializable(SyntaxFactory.ParseExpression(stringText, options));
         }
 
+        public static StatementSyntax ParseStatement(
+            string          text,
+            LuaParseOptions options  = null,
+            Encoding        encoding = null)
+        {
+            options ??= LuaParseOptions.Default;
+
+            var stringText = SourceText.From(text, encoding ?? Encoding.UTF8);
+            return CheckSerializable(SyntaxFactory.ParseStatement(stringText, options));
+        }
+
         public static TypeSyntax ParseType(
             string text,
             LuaParseOptions options = null,
@@ -104,6 +115,16 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             LuaParseOptions options = null)
         {
             var node = ParseExpression(text, options: options ?? LuaParseOptions.Default);
+            // we validate the text roundtrips
+            Assert.Equal(text, node.ToFullString());
+            return node;
+        }
+
+        public static StatementSyntax ParseStatementWithRoundTripCheck(
+            string text,
+            LuaParseOptions options = null)
+        {
+            var node = ParseStatement(text, options: options ?? LuaParseOptions.Default);
             // we validate the text roundtrips
             Assert.Equal(text, node.ToFullString());
             return node;

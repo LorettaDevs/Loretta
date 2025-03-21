@@ -4,12 +4,8 @@ using Xunit.Abstractions;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 {
-    public class LocalVariableAttributeTests : ParsingTestsBase
+    public class LocalVariableAttributeTests(ITestOutputHelper output) : ParsingTestsBase(output)
     {
-        public LocalVariableAttributeTests(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Fact]
         public void Parser_GeneratesAnErrorDiagnosticWhen_IdentifierIsMissing()
         {

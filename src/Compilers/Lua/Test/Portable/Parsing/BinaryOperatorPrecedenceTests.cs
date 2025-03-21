@@ -3,12 +3,8 @@ using Xunit.Abstractions;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 {
-    public class BinaryOperatorPrecedenceTests : ParsingTestsBase
+    public class BinaryOperatorPrecedenceTests(ITestOutputHelper output) : ParsingTestsBase(output)
     {
-        public BinaryOperatorPrecedenceTests(ITestOutputHelper output) : base(output)
-        {
-        }
-
         public static IEnumerable<object[]> GetBinaryOperatorPairsData()
         {
             var untestedKinds = new[]

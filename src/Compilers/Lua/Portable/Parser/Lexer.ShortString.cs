@@ -591,7 +591,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 // an error was given by the caller
             }
         }
-        
+
         internal readonly struct Interpolation(Range openBraceRange, Range closeBraceRange)
         {
             public readonly Range OpenBraceRange = openBraceRange;

@@ -5,22 +5,18 @@ using Xunit.Abstractions;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 {
-    public class RegressionTests : ParsingTestsBase
+    public class RegressionTests(ITestOutputHelper output) : ParsingTestsBase(output)
     {
-        public RegressionTests(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Fact]
         public void IncrementalParsing_DoesNotBreak_WithInvalidCastException()
         {
             SyntaxNode firstIdent, secondIdent;
-            var initial = ParseWithRoundTripCheck("""
+            
+            var initial = UsingTree(
+                """
                 local a = b
                 local b = c
                 """);
-
-            UsingNode((LuaSyntaxNode) initial.GetRoot());
             N(SyntaxKind.CompilationUnit);
             {
                 N(SyntaxKind.StatementList);

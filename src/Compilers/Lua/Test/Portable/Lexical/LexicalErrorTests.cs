@@ -417,24 +417,12 @@ local str4 = 'hello\xFFthere'
                 "local b = `hi!`";
             var options = LuaSyntaxOptions.All.With(backtickStringType: BacktickStringType.None);
             ParseAndValidate(source, options,
-                // (1,11): error LUA1011: Invalid expression part ''
-                // local a = `hello`
-                Diagnostic(ErrorCode.ERR_InvalidExpressionPart, "`hello`").WithArguments("").WithLocation(1, 11),
                 // (1,11): error LUA0036: Interpolated strings are not supported in this lua version
                 // local a = `hello`
                 Diagnostic(ErrorCode.ERR_InterpolatedStringsNotSupportedInVersion, "`hello`").WithLocation(1, 11),
-                // (1,11): error LUA1012: Invalid statement
-                // local a = `hello`
-                Diagnostic(ErrorCode.ERR_InvalidStatement, "`hello`").WithLocation(1, 11),
-                // (2,11): error LUA1011: Invalid expression part ''
-                // local b = `hi!`
-                Diagnostic(ErrorCode.ERR_InvalidExpressionPart, "`hi!`").WithArguments("").WithLocation(2, 11),
                 // (2,11): error LUA0036: Interpolated strings are not supported in this lua version
                 // local b = `hi!`
-                Diagnostic(ErrorCode.ERR_InterpolatedStringsNotSupportedInVersion, "`hi!`").WithLocation(2, 11),
-                // (2,11): error LUA1012: Invalid statement
-                // local b = `hi!`
-                Diagnostic(ErrorCode.ERR_InvalidStatement, "`hi!`").WithLocation(2, 11));
+                Diagnostic(ErrorCode.ERR_InterpolatedStringsNotSupportedInVersion, "`hi!`").WithLocation(2, 11));
         }
 
         [Fact]

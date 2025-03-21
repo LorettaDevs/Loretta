@@ -18,20 +18,21 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// </summary>
         private readonly struct Cursor
         {
-            public readonly SyntaxNodeOrToken CurrentNodeOrToken;
-            private readonly int _indexInParent;
+            public readonly  SyntaxNodeOrToken CurrentNodeOrToken;
+            private readonly int               _indexInParent;
 
             private Cursor(SyntaxNodeOrToken node, int indexInParent)
             {
                 CurrentNodeOrToken = node;
-                _indexInParent = indexInParent;
+                _indexInParent     = indexInParent;
             }
 
             public static Cursor FromRoot(Lua.LuaSyntaxNode node) => new(node, indexInParent: 0);
 
             public bool IsFinished => CurrentNodeOrToken.Kind() is SyntaxKind.None or SyntaxKind.EndOfFileToken;
 
-            private static bool IsNonZeroWidthOrIsEndOfFile(SyntaxNodeOrToken token) => token.Kind() == SyntaxKind.EndOfFileToken || token.FullWidth != 0;
+            private static bool IsNonZeroWidthOrIsEndOfFile(SyntaxNodeOrToken token)
+                => token.Kind() == SyntaxKind.EndOfFileToken || token.FullWidth != 0;
 
             public Cursor MoveToNextSibling()
             {
@@ -60,7 +61,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             private Cursor MoveToParent()
             {
                 var parent = CurrentNodeOrToken.Parent;
-                var index = IndexOfNodeInParent(parent);
+                var index  = IndexOfNodeInParent(parent);
                 return new Cursor(parent, index);
             }
 
@@ -72,7 +73,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 }
 
                 var children = node.Parent.ChildNodesAndTokens();
-                var index = SyntaxNodeOrToken.GetFirstChildIndexSpanningPosition(children, ((Lua.LuaSyntaxNode) node).Position);
+                var index = SyntaxNodeOrToken.GetFirstChildIndexSpanningPosition(
+                    children,
+                    ((Lua.LuaSyntaxNode) node).Position);
                 for (int i = index, n = children.Count; i < n; i++)
                 {
                     var child = children[i];
@@ -89,12 +92,24 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 LorettaDebug.Assert(CurrentNodeOrToken.IsNode);
 
-                // Just try to get the first node directly.  This is faster than getting the list of
+                // Just try to get the first node directly. This is faster than getting the list of
                 // child nodes and tokens (which forces all children to be enumerated for the sake
-                // of counting.  It should always be safe to index the 0th element of a node.  But
+                // of counting). It should always be safe to index the 0th element of a node. But
                 // just to make sure that this is not a problem, we verify that the slot count of the
                 // node is greater than 0.
-                var node = CurrentNodeOrToken.AsNode();
+                var node = CurrentNodeOrToken.AsNode()!;
+
+                // Interpolated strings cannot be scanned or parsed incrementally. Instead, they must be
+                // turned into and then reparsed from the single InterpolatedStringToken.  We therefore
+                // do not break interpolated string nodes down into their constituent tokens, but
+                // instead replace the whole parsed interpolated string expression with its pre-parsed
+                // interpolated string token.
+                if (node.Kind() == SyntaxKind.InterpolatedStringExpression)
+                {
+                    var greenToken = Lexer.RescanInterpolatedString((InterpolatedStringExpressionSyntax) node.Green);
+                    var redToken = new CodeAnalysis.SyntaxToken(node.Parent, greenToken, node.Position, _indexInParent);
+                    return new Cursor(redToken, _indexInParent);
+                }
 
                 if (node.SlotCount > 0)
                 {
@@ -125,7 +140,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var cursor = this;
                 if (!cursor.IsFinished)
                 {
-                    for (var node = cursor.CurrentNodeOrToken; node.Kind() != SyntaxKind.None && !SyntaxFacts.IsToken(node.Kind()); node = cursor.CurrentNodeOrToken)
+                    for (var node = cursor.CurrentNodeOrToken;
+                         node.Kind() != SyntaxKind.None && !SyntaxFacts.IsToken(node.Kind());
+                         node = cursor.CurrentNodeOrToken)
                     {
                         cursor = cursor.MoveToFirstChild();
                     }
