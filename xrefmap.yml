@@ -1614,6 +1614,30 @@ references:
   commentId: N:Loretta.CodeAnalysis.Lua
   fullName: Loretta.CodeAnalysis.Lua
   nameWithType: Loretta.CodeAnalysis.Lua
+- uid: Loretta.CodeAnalysis.Lua.BacktickStringType
+  name: BacktickStringType
+  href: api/Loretta.CodeAnalysis.Lua.BacktickStringType.html
+  commentId: T:Loretta.CodeAnalysis.Lua.BacktickStringType
+  fullName: Loretta.CodeAnalysis.Lua.BacktickStringType
+  nameWithType: BacktickStringType
+- uid: Loretta.CodeAnalysis.Lua.BacktickStringType.HashLiteral
+  name: HashLiteral
+  href: api/Loretta.CodeAnalysis.Lua.BacktickStringType.html#Loretta_CodeAnalysis_Lua_BacktickStringType_HashLiteral
+  commentId: F:Loretta.CodeAnalysis.Lua.BacktickStringType.HashLiteral
+  fullName: Loretta.CodeAnalysis.Lua.BacktickStringType.HashLiteral
+  nameWithType: BacktickStringType.HashLiteral
+- uid: Loretta.CodeAnalysis.Lua.BacktickStringType.InterpolatedStringLiteral
+  name: InterpolatedStringLiteral
+  href: api/Loretta.CodeAnalysis.Lua.BacktickStringType.html#Loretta_CodeAnalysis_Lua_BacktickStringType_InterpolatedStringLiteral
+  commentId: F:Loretta.CodeAnalysis.Lua.BacktickStringType.InterpolatedStringLiteral
+  fullName: Loretta.CodeAnalysis.Lua.BacktickStringType.InterpolatedStringLiteral
+  nameWithType: BacktickStringType.InterpolatedStringLiteral
+- uid: Loretta.CodeAnalysis.Lua.BacktickStringType.None
+  name: None
+  href: api/Loretta.CodeAnalysis.Lua.BacktickStringType.html#Loretta_CodeAnalysis_Lua_BacktickStringType_None
+  commentId: F:Loretta.CodeAnalysis.Lua.BacktickStringType.None
+  fullName: Loretta.CodeAnalysis.Lua.BacktickStringType.None
+  nameWithType: BacktickStringType.None
 - uid: Loretta.CodeAnalysis.Lua.ContinueType
   name: ContinueType
   href: api/Loretta.CodeAnalysis.Lua.ContinueType.html
@@ -2777,12 +2801,12 @@ references:
   commentId: T:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions
   fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions
   nameWithType: LuaSyntaxOptions
-- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.ContinueType,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name: LuaSyntaxOptions(Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, ContinueType, Boolean, Boolean, Boolean, Boolean, IntegerFormats, IntegerFormats, IntegerFormats, IntegerFormats, Boolean, Boolean, Boolean, Boolean)
-  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions__ctor_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Loretta_CodeAnalysis_Lua_ContinueType_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Loretta_CodeAnalysis_Lua_IntegerFormats_Loretta_CodeAnalysis_Lua_IntegerFormats_Loretta_CodeAnalysis_Lua_IntegerFormats_Loretta_CodeAnalysis_Lua_IntegerFormats_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
-  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.ContinueType,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.LuaSyntaxOptions(System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, Loretta.CodeAnalysis.Lua.ContinueType, System.Boolean, System.Boolean, System.Boolean, System.Boolean, Loretta.CodeAnalysis.Lua.IntegerFormats, Loretta.CodeAnalysis.Lua.IntegerFormats, Loretta.CodeAnalysis.Lua.IntegerFormats, Loretta.CodeAnalysis.Lua.IntegerFormats, System.Boolean, System.Boolean, System.Boolean, System.Boolean)
-  nameWithType: LuaSyntaxOptions.LuaSyntaxOptions(Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, ContinueType, Boolean, Boolean, Boolean, Boolean, IntegerFormats, IntegerFormats, IntegerFormats, IntegerFormats, Boolean, Boolean, Boolean, Boolean)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.ContinueType,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.BacktickStringType)
+  name: LuaSyntaxOptions(Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, ContinueType, Boolean, Boolean, Boolean, IntegerFormats, IntegerFormats, IntegerFormats, IntegerFormats, Boolean, Boolean, Boolean, Boolean, BacktickStringType)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions__ctor_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Loretta_CodeAnalysis_Lua_ContinueType_System_Boolean_System_Boolean_System_Boolean_Loretta_CodeAnalysis_Lua_IntegerFormats_Loretta_CodeAnalysis_Lua_IntegerFormats_Loretta_CodeAnalysis_Lua_IntegerFormats_Loretta_CodeAnalysis_Lua_IntegerFormats_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Loretta_CodeAnalysis_Lua_BacktickStringType_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.ContinueType,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,Loretta.CodeAnalysis.Lua.IntegerFormats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Loretta.CodeAnalysis.Lua.BacktickStringType)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.LuaSyntaxOptions(System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, Loretta.CodeAnalysis.Lua.ContinueType, System.Boolean, System.Boolean, System.Boolean, Loretta.CodeAnalysis.Lua.IntegerFormats, Loretta.CodeAnalysis.Lua.IntegerFormats, Loretta.CodeAnalysis.Lua.IntegerFormats, Loretta.CodeAnalysis.Lua.IntegerFormats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, Loretta.CodeAnalysis.Lua.BacktickStringType)
+  nameWithType: LuaSyntaxOptions.LuaSyntaxOptions(Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, ContinueType, Boolean, Boolean, Boolean, IntegerFormats, IntegerFormats, IntegerFormats, IntegerFormats, Boolean, Boolean, Boolean, Boolean, BacktickStringType)
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.#ctor*
   name: LuaSyntaxOptions
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions__ctor_
@@ -3101,6 +3125,19 @@ references:
   commentId: F:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AllWithIntegers
   fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.AllWithIntegers
   nameWithType: LuaSyntaxOptions.AllWithIntegers
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.BacktickStringType
+  name: BacktickStringType
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_BacktickStringType
+  commentId: P:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.BacktickStringType
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.BacktickStringType
+  nameWithType: LuaSyntaxOptions.BacktickStringType
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.BacktickStringType*
+  name: BacktickStringType
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_BacktickStringType_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.BacktickStringType
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.BacktickStringType
+  nameWithType: LuaSyntaxOptions.BacktickStringType
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.BinaryIntegerFormat
   name: BinaryIntegerFormat
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_BinaryIntegerFormat
@@ -3310,15 +3347,15 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.UseLuaJitIdentifierRules
   nameWithType: LuaSyntaxOptions.UseLuaJitIdentifierRules
-- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.ContinueType},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean})
-  name: With(Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<ContinueType>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<IntegerFormats>, Option<IntegerFormats>, Option<IntegerFormats>, Option<IntegerFormats>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>)
-  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_With_Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_Loretta_CodeAnalysis_Lua_ContinueType__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_Loretta_CodeAnalysis_Lua_IntegerFormats__Option_Loretta_CodeAnalysis_Lua_IntegerFormats__Option_Loretta_CodeAnalysis_Lua_IntegerFormats__Option_Loretta_CodeAnalysis_Lua_IntegerFormats__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__
-  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.ContinueType},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean})
-  name.vb: With(Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of ContinueType), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean))
-  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<Loretta.CodeAnalysis.Lua.ContinueType>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<Loretta.CodeAnalysis.Lua.IntegerFormats>, Option<Loretta.CodeAnalysis.Lua.IntegerFormats>, Option<Loretta.CodeAnalysis.Lua.IntegerFormats>, Option<Loretta.CodeAnalysis.Lua.IntegerFormats>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>)
-  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of Loretta.CodeAnalysis.Lua.ContinueType), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of Loretta.CodeAnalysis.Lua.IntegerFormats), Option(Of Loretta.CodeAnalysis.Lua.IntegerFormats), Option(Of Loretta.CodeAnalysis.Lua.IntegerFormats), Option(Of Loretta.CodeAnalysis.Lua.IntegerFormats), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean))
-  nameWithType: LuaSyntaxOptions.With(Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<ContinueType>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<IntegerFormats>, Option<IntegerFormats>, Option<IntegerFormats>, Option<IntegerFormats>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>)
-  nameWithType.vb: LuaSyntaxOptions.With(Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of ContinueType), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean))
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.ContinueType},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.BacktickStringType})
+  name: With(Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<ContinueType>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<IntegerFormats>, Option<IntegerFormats>, Option<IntegerFormats>, Option<IntegerFormats>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<BacktickStringType>)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_With_Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_Loretta_CodeAnalysis_Lua_ContinueType__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_Loretta_CodeAnalysis_Lua_IntegerFormats__Option_Loretta_CodeAnalysis_Lua_IntegerFormats__Option_Loretta_CodeAnalysis_Lua_IntegerFormats__Option_Loretta_CodeAnalysis_Lua_IntegerFormats__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_System_Boolean__Option_Loretta_CodeAnalysis_Lua_BacktickStringType__
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.ContinueType},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{Loretta.CodeAnalysis.Lua.IntegerFormats},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{System.Boolean},Option{Loretta.CodeAnalysis.Lua.BacktickStringType})
+  name.vb: With(Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of ContinueType), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of BacktickStringType))
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<Loretta.CodeAnalysis.Lua.ContinueType>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<Loretta.CodeAnalysis.Lua.IntegerFormats>, Option<Loretta.CodeAnalysis.Lua.IntegerFormats>, Option<Loretta.CodeAnalysis.Lua.IntegerFormats>, Option<Loretta.CodeAnalysis.Lua.IntegerFormats>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<System.Boolean>, Option<Loretta.CodeAnalysis.Lua.BacktickStringType>)
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With(Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of Loretta.CodeAnalysis.Lua.ContinueType), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of Loretta.CodeAnalysis.Lua.IntegerFormats), Option(Of Loretta.CodeAnalysis.Lua.IntegerFormats), Option(Of Loretta.CodeAnalysis.Lua.IntegerFormats), Option(Of Loretta.CodeAnalysis.Lua.IntegerFormats), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of System.Boolean), Option(Of Loretta.CodeAnalysis.Lua.BacktickStringType))
+  nameWithType: LuaSyntaxOptions.With(Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<ContinueType>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<IntegerFormats>, Option<IntegerFormats>, Option<IntegerFormats>, Option<IntegerFormats>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<Boolean>, Option<BacktickStringType>)
+  nameWithType.vb: LuaSyntaxOptions.With(Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of ContinueType), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of IntegerFormats), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of Boolean), Option(Of BacktickStringType))
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.With*
   name: With
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxOptions.html#Loretta_CodeAnalysis_Lua_LuaSyntaxOptions_With_
@@ -3761,6 +3798,45 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitIfStatement
   nameWithType: LuaSyntaxRewriter.VisitIfStatement
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  name: VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitInterpolatedStringExpression_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  nameWithType: LuaSyntaxRewriter.VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringExpression*
+  name: VisitInterpolatedStringExpression
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitInterpolatedStringExpression_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringExpression
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringExpression
+  nameWithType: LuaSyntaxRewriter.VisitInterpolatedStringExpression
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  name: VisitInterpolatedStringText(InterpolatedStringTextSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitInterpolatedStringText_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  nameWithType: LuaSyntaxRewriter.VisitInterpolatedStringText(InterpolatedStringTextSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringText*
+  name: VisitInterpolatedStringText
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitInterpolatedStringText_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringText
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolatedStringText
+  nameWithType: LuaSyntaxRewriter.VisitInterpolatedStringText
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  name: VisitInterpolation(InterpolationSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitInterpolation_Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  nameWithType: LuaSyntaxRewriter.VisitInterpolation(InterpolationSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolation*
+  name: VisitInterpolation
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitInterpolation_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolation
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitInterpolation
+  nameWithType: LuaSyntaxRewriter.VisitInterpolation
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitIntersectionType(Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax)
   name: VisitIntersectionType(IntersectionTypeSyntax)
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitIntersectionType_Loretta_CodeAnalysis_Lua_Syntax_IntersectionTypeSyntax_
@@ -5129,6 +5205,45 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitIfStatement
   nameWithType: LuaSyntaxVisitor.VisitIfStatement
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  name: VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitInterpolatedStringExpression_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  nameWithType: LuaSyntaxVisitor.VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringExpression*
+  name: VisitInterpolatedStringExpression
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitInterpolatedStringExpression_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringExpression
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringExpression
+  nameWithType: LuaSyntaxVisitor.VisitInterpolatedStringExpression
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  name: VisitInterpolatedStringText(InterpolatedStringTextSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitInterpolatedStringText_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  nameWithType: LuaSyntaxVisitor.VisitInterpolatedStringText(InterpolatedStringTextSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringText*
+  name: VisitInterpolatedStringText
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitInterpolatedStringText_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringText
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolatedStringText
+  nameWithType: LuaSyntaxVisitor.VisitInterpolatedStringText
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  name: VisitInterpolation(InterpolationSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitInterpolation_Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  nameWithType: LuaSyntaxVisitor.VisitInterpolation(InterpolationSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolation*
+  name: VisitInterpolation
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitInterpolation_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolation
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitInterpolation
+  nameWithType: LuaSyntaxVisitor.VisitInterpolation
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitIntersectionType(Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax)
   name: VisitIntersectionType(IntersectionTypeSyntax)
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitIntersectionType_Loretta_CodeAnalysis_Lua_Syntax_IntersectionTypeSyntax_
@@ -6284,6 +6399,57 @@ references:
   fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitIfStatement
   nameWithType: LuaSyntaxVisitor<TResult>.VisitIfStatement
   nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitIfStatement
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  name: VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitInterpolatedStringExpression_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitInterpolatedStringExpression(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax)
+  nameWithType: LuaSyntaxVisitor<TResult>.VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax)
+  nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolatedStringExpression*
+  name: VisitInterpolatedStringExpression
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitInterpolatedStringExpression_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolatedStringExpression
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitInterpolatedStringExpression
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitInterpolatedStringExpression
+  nameWithType: LuaSyntaxVisitor<TResult>.VisitInterpolatedStringExpression
+  nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitInterpolatedStringExpression
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  name: VisitInterpolatedStringText(InterpolatedStringTextSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitInterpolatedStringText_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitInterpolatedStringText(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax)
+  nameWithType: LuaSyntaxVisitor<TResult>.VisitInterpolatedStringText(InterpolatedStringTextSyntax)
+  nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitInterpolatedStringText(InterpolatedStringTextSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolatedStringText*
+  name: VisitInterpolatedStringText
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitInterpolatedStringText_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolatedStringText
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitInterpolatedStringText
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitInterpolatedStringText
+  nameWithType: LuaSyntaxVisitor<TResult>.VisitInterpolatedStringText
+  nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitInterpolatedStringText
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  name: VisitInterpolation(InterpolationSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitInterpolation_Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitInterpolation(Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax)
+  nameWithType: LuaSyntaxVisitor<TResult>.VisitInterpolation(InterpolationSyntax)
+  nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitInterpolation(InterpolationSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolation*
+  name: VisitInterpolation
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitInterpolation_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitInterpolation
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitInterpolation
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitInterpolation
+  nameWithType: LuaSyntaxVisitor<TResult>.VisitInterpolation
+  nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitInterpolation
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitIntersectionType(Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax)
   name: VisitIntersectionType(IntersectionTypeSyntax)
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitIntersectionType_Loretta_CodeAnalysis_Lua_Syntax_IntersectionTypeSyntax_
@@ -12119,6 +12285,339 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.Syntax.IfStatementSyntax.WithThenKeyword
   nameWithType: IfStatementSyntax.WithThenKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax
+  name: InterpolatedStringContentSyntax
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax.html
+  commentId: T:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax
+  nameWithType: InterpolatedStringContentSyntax
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax
+  name: InterpolatedStringExpressionSyntax
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html
+  commentId: T:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax
+  nameWithType: InterpolatedStringExpressionSyntax
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  name: Accept(LuaSyntaxVisitor)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_Accept_Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  nameWithType: InterpolatedStringExpressionSyntax.Accept(LuaSyntaxVisitor)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept*
+  name: Accept
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_Accept_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept
+  nameWithType: InterpolatedStringExpressionSyntax.Accept
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept``1(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor{``0})
+  name: Accept<TResult>(LuaSyntaxVisitor<TResult>)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_Accept__1_Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor___0__
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept``1(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor{``0})
+  name.vb: Accept(Of TResult)(LuaSyntaxVisitor(Of TResult))
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>)
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Accept(Of TResult)(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult))
+  nameWithType: InterpolatedStringExpressionSyntax.Accept<TResult>(LuaSyntaxVisitor<TResult>)
+  nameWithType.vb: InterpolatedStringExpressionSyntax.Accept(Of TResult)(LuaSyntaxVisitor(Of TResult))
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.AddContents(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax[])
+  name: AddContents(InterpolatedStringContentSyntax[])
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_AddContents_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringContentSyntax___
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.AddContents(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax[])
+  name.vb: AddContents(InterpolatedStringContentSyntax())
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.AddContents(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax[])
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.AddContents(Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax())
+  nameWithType: InterpolatedStringExpressionSyntax.AddContents(InterpolatedStringContentSyntax[])
+  nameWithType.vb: InterpolatedStringExpressionSyntax.AddContents(InterpolatedStringContentSyntax())
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.AddContents*
+  name: AddContents
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_AddContents_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.AddContents
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.AddContents
+  nameWithType: InterpolatedStringExpressionSyntax.AddContents
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Contents
+  name: Contents
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_Contents
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Contents
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Contents
+  nameWithType: InterpolatedStringExpressionSyntax.Contents
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Contents*
+  name: Contents
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_Contents_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Contents
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Contents
+  nameWithType: InterpolatedStringExpressionSyntax.Contents
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringEndToken
+  name: StringEndToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_StringEndToken
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringEndToken
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringEndToken
+  nameWithType: InterpolatedStringExpressionSyntax.StringEndToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringEndToken*
+  name: StringEndToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_StringEndToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringEndToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringEndToken
+  nameWithType: InterpolatedStringExpressionSyntax.StringEndToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringStartToken
+  name: StringStartToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_StringStartToken
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringStartToken
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringStartToken
+  nameWithType: InterpolatedStringExpressionSyntax.StringStartToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringStartToken*
+  name: StringStartToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_StringStartToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringStartToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.StringStartToken
+  nameWithType: InterpolatedStringExpressionSyntax.StringStartToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Update(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxList{Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax},Loretta.CodeAnalysis.SyntaxToken)
+  name: Update(SyntaxToken, SyntaxList<InterpolatedStringContentSyntax>, SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_Update_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxList_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringContentSyntax__Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Update(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxList{Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax},Loretta.CodeAnalysis.SyntaxToken)
+  name.vb: Update(SyntaxToken, SyntaxList(Of InterpolatedStringContentSyntax), SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Update(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax>, Loretta.CodeAnalysis.SyntaxToken)
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Update(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxList(Of Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax), Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: InterpolatedStringExpressionSyntax.Update(SyntaxToken, SyntaxList<InterpolatedStringContentSyntax>, SyntaxToken)
+  nameWithType.vb: InterpolatedStringExpressionSyntax.Update(SyntaxToken, SyntaxList(Of InterpolatedStringContentSyntax), SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Update*
+  name: Update
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_Update_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Update
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.Update
+  nameWithType: InterpolatedStringExpressionSyntax.Update
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithContents(Loretta.CodeAnalysis.SyntaxList{Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax})
+  name: WithContents(SyntaxList<InterpolatedStringContentSyntax>)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_WithContents_Loretta_CodeAnalysis_SyntaxList_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringContentSyntax__
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithContents(Loretta.CodeAnalysis.SyntaxList{Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax})
+  name.vb: WithContents(SyntaxList(Of InterpolatedStringContentSyntax))
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithContents(Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax>)
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithContents(Loretta.CodeAnalysis.SyntaxList(Of Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax))
+  nameWithType: InterpolatedStringExpressionSyntax.WithContents(SyntaxList<InterpolatedStringContentSyntax>)
+  nameWithType.vb: InterpolatedStringExpressionSyntax.WithContents(SyntaxList(Of InterpolatedStringContentSyntax))
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithContents*
+  name: WithContents
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_WithContents_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithContents
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithContents
+  nameWithType: InterpolatedStringExpressionSyntax.WithContents
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringEndToken(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithStringEndToken(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_WithStringEndToken_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringEndToken(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringEndToken(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: InterpolatedStringExpressionSyntax.WithStringEndToken(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringEndToken*
+  name: WithStringEndToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_WithStringEndToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringEndToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringEndToken
+  nameWithType: InterpolatedStringExpressionSyntax.WithStringEndToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringStartToken(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithStringStartToken(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_WithStringStartToken_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringStartToken(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringStartToken(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: InterpolatedStringExpressionSyntax.WithStringStartToken(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringStartToken*
+  name: WithStringStartToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringExpressionSyntax_WithStringStartToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringStartToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringExpressionSyntax.WithStringStartToken
+  nameWithType: InterpolatedStringExpressionSyntax.WithStringStartToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax
+  name: InterpolatedStringTextSyntax
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html
+  commentId: T:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax
+  nameWithType: InterpolatedStringTextSyntax
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  name: Accept(LuaSyntaxVisitor)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_Accept_Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  nameWithType: InterpolatedStringTextSyntax.Accept(LuaSyntaxVisitor)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept*
+  name: Accept
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_Accept_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept
+  nameWithType: InterpolatedStringTextSyntax.Accept
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept``1(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor{``0})
+  name: Accept<TResult>(LuaSyntaxVisitor<TResult>)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_Accept__1_Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor___0__
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept``1(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor{``0})
+  name.vb: Accept(Of TResult)(LuaSyntaxVisitor(Of TResult))
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>)
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Accept(Of TResult)(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult))
+  nameWithType: InterpolatedStringTextSyntax.Accept<TResult>(LuaSyntaxVisitor<TResult>)
+  nameWithType.vb: InterpolatedStringTextSyntax.Accept(Of TResult)(LuaSyntaxVisitor(Of TResult))
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.TextToken
+  name: TextToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_TextToken
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.TextToken
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.TextToken
+  nameWithType: InterpolatedStringTextSyntax.TextToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.TextToken*
+  name: TextToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_TextToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.TextToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.TextToken
+  nameWithType: InterpolatedStringTextSyntax.TextToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Update(Loretta.CodeAnalysis.SyntaxToken)
+  name: Update(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_Update_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Update(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Update(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: InterpolatedStringTextSyntax.Update(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Update*
+  name: Update
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_Update_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Update
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.Update
+  nameWithType: InterpolatedStringTextSyntax.Update
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.WithTextToken(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithTextToken(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_WithTextToken_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.WithTextToken(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.WithTextToken(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: InterpolatedStringTextSyntax.WithTextToken(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.WithTextToken*
+  name: WithTextToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringTextSyntax_WithTextToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.WithTextToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringTextSyntax.WithTextToken
+  nameWithType: InterpolatedStringTextSyntax.WithTextToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax
+  name: InterpolationSyntax
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html
+  commentId: T:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax
+  nameWithType: InterpolationSyntax
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  name: Accept(LuaSyntaxVisitor)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_Accept_Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  nameWithType: InterpolationSyntax.Accept(LuaSyntaxVisitor)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept*
+  name: Accept
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_Accept_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept
+  nameWithType: InterpolationSyntax.Accept
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept``1(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor{``0})
+  name: Accept<TResult>(LuaSyntaxVisitor<TResult>)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_Accept__1_Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor___0__
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept``1(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor{``0})
+  name.vb: Accept(Of TResult)(LuaSyntaxVisitor(Of TResult))
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>)
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Accept(Of TResult)(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult))
+  nameWithType: InterpolationSyntax.Accept<TResult>(LuaSyntaxVisitor<TResult>)
+  nameWithType.vb: InterpolationSyntax.Accept(Of TResult)(LuaSyntaxVisitor(Of TResult))
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.CloseBraceToken
+  name: CloseBraceToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_CloseBraceToken
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.CloseBraceToken
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.CloseBraceToken
+  nameWithType: InterpolationSyntax.CloseBraceToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.CloseBraceToken*
+  name: CloseBraceToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_CloseBraceToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.CloseBraceToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.CloseBraceToken
+  nameWithType: InterpolationSyntax.CloseBraceToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Expression
+  name: Expression
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_Expression
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Expression
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Expression
+  nameWithType: InterpolationSyntax.Expression
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Expression*
+  name: Expression
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_Expression_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Expression
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Expression
+  nameWithType: InterpolationSyntax.Expression
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.OpenBraceToken
+  name: OpenBraceToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_OpenBraceToken
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.OpenBraceToken
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.OpenBraceToken
+  nameWithType: InterpolationSyntax.OpenBraceToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.OpenBraceToken*
+  name: OpenBraceToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_OpenBraceToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.OpenBraceToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.OpenBraceToken
+  nameWithType: InterpolationSyntax.OpenBraceToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Update(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken)
+  name: Update(SyntaxToken, ExpressionSyntax, SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_Update_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Update(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Update(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: InterpolationSyntax.Update(SyntaxToken, ExpressionSyntax, SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Update*
+  name: Update
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_Update_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Update
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.Update
+  nameWithType: InterpolationSyntax.Update
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithCloseBraceToken(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithCloseBraceToken(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_WithCloseBraceToken_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithCloseBraceToken(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithCloseBraceToken(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: InterpolationSyntax.WithCloseBraceToken(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithCloseBraceToken*
+  name: WithCloseBraceToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_WithCloseBraceToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithCloseBraceToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithCloseBraceToken
+  nameWithType: InterpolationSyntax.WithCloseBraceToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
+  name: WithExpression(ExpressionSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_WithExpression_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithExpression(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
+  nameWithType: InterpolationSyntax.WithExpression(ExpressionSyntax)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithExpression*
+  name: WithExpression
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_WithExpression_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithExpression
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithExpression
+  nameWithType: InterpolationSyntax.WithExpression
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithOpenBraceToken(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithOpenBraceToken(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_WithOpenBraceToken_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithOpenBraceToken(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithOpenBraceToken(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: InterpolationSyntax.WithOpenBraceToken(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithOpenBraceToken*
+  name: WithOpenBraceToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_InterpolationSyntax_WithOpenBraceToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithOpenBraceToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.InterpolationSyntax.WithOpenBraceToken
+  nameWithType: InterpolationSyntax.WithOpenBraceToken
 - uid: Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax
   name: IntersectionTypeSyntax
   href: api/Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.html
@@ -19164,6 +19663,69 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.IfStatement
   nameWithType: SyntaxFactory.IfStatement
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression(Loretta.CodeAnalysis.SyntaxList{Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax})
+  name: InterpolatedStringExpression(SyntaxList<InterpolatedStringContentSyntax>)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_InterpolatedStringExpression_Loretta_CodeAnalysis_SyntaxList_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringContentSyntax__
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression(Loretta.CodeAnalysis.SyntaxList{Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax})
+  name.vb: InterpolatedStringExpression(SyntaxList(Of InterpolatedStringContentSyntax))
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression(Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax>)
+  fullName.vb: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression(Loretta.CodeAnalysis.SyntaxList(Of Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax))
+  nameWithType: SyntaxFactory.InterpolatedStringExpression(SyntaxList<InterpolatedStringContentSyntax>)
+  nameWithType.vb: SyntaxFactory.InterpolatedStringExpression(SyntaxList(Of InterpolatedStringContentSyntax))
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxList{Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax},Loretta.CodeAnalysis.SyntaxToken)
+  name: InterpolatedStringExpression(SyntaxToken, SyntaxList<InterpolatedStringContentSyntax>, SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_InterpolatedStringExpression_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxList_Loretta_CodeAnalysis_Lua_Syntax_InterpolatedStringContentSyntax__Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxList{Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax},Loretta.CodeAnalysis.SyntaxToken)
+  name.vb: InterpolatedStringExpression(SyntaxToken, SyntaxList(Of InterpolatedStringContentSyntax), SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxList<Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax>, Loretta.CodeAnalysis.SyntaxToken)
+  fullName.vb: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxList(Of Loretta.CodeAnalysis.Lua.Syntax.InterpolatedStringContentSyntax), Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: SyntaxFactory.InterpolatedStringExpression(SyntaxToken, SyntaxList<InterpolatedStringContentSyntax>, SyntaxToken)
+  nameWithType.vb: SyntaxFactory.InterpolatedStringExpression(SyntaxToken, SyntaxList(Of InterpolatedStringContentSyntax), SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression*
+  name: InterpolatedStringExpression
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_InterpolatedStringExpression_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringExpression
+  nameWithType: SyntaxFactory.InterpolatedStringExpression
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText
+  name: InterpolatedStringText()
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_InterpolatedStringText
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText()
+  nameWithType: SyntaxFactory.InterpolatedStringText()
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText(Loretta.CodeAnalysis.SyntaxToken)
+  name: InterpolatedStringText(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_InterpolatedStringText_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: SyntaxFactory.InterpolatedStringText(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText*
+  name: InterpolatedStringText
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_InterpolatedStringText_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.InterpolatedStringText
+  nameWithType: SyntaxFactory.InterpolatedStringText
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
+  name: Interpolation(ExpressionSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_Interpolation_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
+  nameWithType: SyntaxFactory.Interpolation(ExpressionSyntax)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken)
+  name: Interpolation(SyntaxToken, ExpressionSyntax, SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_Interpolation_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax,Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax, Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: SyntaxFactory.Interpolation(SyntaxToken, ExpressionSyntax, SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation*
+  name: Interpolation
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_Interpolation_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.Interpolation
+  nameWithType: SyntaxFactory.Interpolation
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.IntersectionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax)
   name: IntersectionType(TypeSyntax, TypeSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_IntersectionType_Loretta_CodeAnalysis_Lua_Syntax_TypeSyntax_Loretta_CodeAnalysis_Lua_Syntax_TypeSyntax_
@@ -21413,6 +21975,12 @@ references:
   commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.AssignmentStatement
   fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.AssignmentStatement
   nameWithType: SyntaxKind.AssignmentStatement
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.BacktickToken
+  name: BacktickToken
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_BacktickToken
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.BacktickToken
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.BacktickToken
+  nameWithType: SyntaxKind.BacktickToken
 - uid: Loretta.CodeAnalysis.Lua.SyntaxKind.BadToken
   name: BadToken
   href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_BadToken
@@ -21899,6 +22467,36 @@ references:
   commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.InKeyword
   fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.InKeyword
   nameWithType: SyntaxKind.InKeyword
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringExpression
+  name: InterpolatedStringExpression
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_InterpolatedStringExpression
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringExpression
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringExpression
+  nameWithType: SyntaxKind.InterpolatedStringExpression
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringText
+  name: InterpolatedStringText
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_InterpolatedStringText
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringText
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringText
+  nameWithType: SyntaxKind.InterpolatedStringText
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringTextToken
+  name: InterpolatedStringTextToken
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_InterpolatedStringTextToken
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringTextToken
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringTextToken
+  nameWithType: SyntaxKind.InterpolatedStringTextToken
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringToken
+  name: InterpolatedStringToken
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_InterpolatedStringToken
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringToken
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringToken
+  nameWithType: SyntaxKind.InterpolatedStringToken
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.Interpolation
+  name: Interpolation
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_Interpolation
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.Interpolation
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.Interpolation
+  nameWithType: SyntaxKind.Interpolation
 - uid: Loretta.CodeAnalysis.Lua.SyntaxKind.IntersectionType
   name: IntersectionType
   href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_IntersectionType
