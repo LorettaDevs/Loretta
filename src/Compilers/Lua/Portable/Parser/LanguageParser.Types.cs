@@ -467,7 +467,7 @@
         {
             var typeofKeyword = EatContextualToken(SyntaxKind.TypeofKeyword);
             var openParenthesis = EatToken(SyntaxKind.OpenParenthesisToken);
-            var expression = ParseExpression();
+            var expression = ParseExpressionCore();
             var closeParenthesis = EatToken(SyntaxKind.CloseParenthesisToken);
 
             return SyntaxFactory.TypeofType(typeofKeyword, openParenthesis, expression, closeParenthesis);

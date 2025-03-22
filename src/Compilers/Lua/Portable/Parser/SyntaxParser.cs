@@ -28,7 +28,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private int _resetCount;
         private int _resetStart;
 
-        private static readonly ObjectPool<BlendedNode[]> s_blendedNodesPool = new(() => new BlendedNode[32], 2);
+        private static readonly ObjectPool<BlendedNode[]> s_blendedNodesPool = new(static () => new BlendedNode[32], 2);
 
         private BlendedNode[] _blendedTokens;
 
@@ -653,7 +653,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
-        protected TNode AddError<TNode>(TNode node, ErrorCode code) where TNode : GreenNode => AddError(node, code, Array.Empty<object>());
+        protected TNode AddError<TNode>(TNode node, ErrorCode code) where TNode : GreenNode => AddError(node, code, []);
 
         protected TNode AddError<TNode>(TNode node, ErrorCode code, params object[] args) where TNode : GreenNode
         {
@@ -715,13 +715,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         protected TNode AddErrorToFirstToken<TNode>(TNode node, ErrorCode code) where TNode : LuaSyntaxNode
         {
-            var firstToken = node.GetFirstToken();
+            var firstToken = node.GetFirstToken()!;
             return WithAdditionalDiagnostics(node, MakeError(firstToken.GetLeadingTriviaWidth(), firstToken.Width, code));
         }
 
         protected TNode AddErrorToFirstToken<TNode>(TNode node, ErrorCode code, params object[] args) where TNode : LuaSyntaxNode
         {
-            var firstToken = node.GetFirstToken();
+            var firstToken = node.GetFirstToken()!;
             return WithAdditionalDiagnostics(node, MakeError(firstToken.GetLeadingTriviaWidth(), firstToken.Width, code, args));
         }
 

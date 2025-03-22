@@ -50,9 +50,9 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public void AddRange(GreenNode[] items) => AddRange(items, 0, items.Length);
+        public void AddRange(GreenNode?[] items) => AddRange(items, 0, items.Length);
 
-        public void AddRange(GreenNode[] items, int offset, int length)
+        public void AddRange(GreenNode?[] items, int offset, int length)
         {
             // Necessary, but not sufficient (e.g. for nested lists).
             EnsureAdditionalCapacity(length - offset);

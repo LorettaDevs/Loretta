@@ -745,6 +745,7 @@ namespace Loretta.CodeAnalysis.Lua
 
                 SyntaxKind.AmpersandAmpersandToken => "&&",
                 SyntaxKind.AmpersandToken => "&",
+                SyntaxKind.BacktickToken => "`",
                 SyntaxKind.BangEqualsToken => "!=",
                 SyntaxKind.BangToken => "!",
                 SyntaxKind.CloseBraceToken => "}",
@@ -864,6 +865,7 @@ namespace Loretta.CodeAnalysis.Lua
                 SyntaxKind.NumericLiteralToken => Loretta.CodeAnalysis.Lua.SyntaxKind.NumericalLiteralExpression,
                 SyntaxKind.StringLiteralToken => Loretta.CodeAnalysis.Lua.SyntaxKind.StringLiteralExpression,
                 SyntaxKind.HashStringLiteralToken => Loretta.CodeAnalysis.Lua.SyntaxKind.HashStringLiteralExpression,
+                SyntaxKind.InterpolatedStringToken => Loretta.CodeAnalysis.Lua.SyntaxKind.InterpolatedStringExpression,
                 _ => default,
             };
         }
@@ -984,6 +986,7 @@ namespace Loretta.CodeAnalysis.Lua
                 case SyntaxKind.AmpersandAmpersandToken:
                 case SyntaxKind.AmpersandToken:
                 case SyntaxKind.AndKeyword:
+                case SyntaxKind.BacktickToken:
                 case SyntaxKind.BadToken:
                 case SyntaxKind.BangEqualsToken:
                 case SyntaxKind.BangToken:
@@ -1021,6 +1024,8 @@ namespace Loretta.CodeAnalysis.Lua
                 case SyntaxKind.IdentifierToken:
                 case SyntaxKind.IfKeyword:
                 case SyntaxKind.InKeyword:
+                case SyntaxKind.InterpolatedStringTextToken:
+                case SyntaxKind.InterpolatedStringToken:
                 case SyntaxKind.LessThanEqualsToken:
                 case SyntaxKind.LessThanLessThanToken:
                 case SyntaxKind.LessThanToken:
@@ -1217,6 +1222,7 @@ namespace Loretta.CodeAnalysis.Lua
             {
                 case SyntaxKind.FalseKeyword:
                 case SyntaxKind.HashStringLiteralToken:
+                case SyntaxKind.InterpolatedStringToken:
                 case SyntaxKind.NilKeyword:
                 case SyntaxKind.NumericLiteralToken:
                 case SyntaxKind.StringLiteralToken:
@@ -1240,6 +1246,7 @@ namespace Loretta.CodeAnalysis.Lua
             SyntaxKind.NumericLiteralToken,
             SyntaxKind.StringLiteralToken,
             SyntaxKind.HashStringLiteralToken,
+            SyntaxKind.InterpolatedStringToken,
         });
 
         /// <summary>

@@ -3,12 +3,8 @@ using Xunit.Abstractions;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
 {
-    public class TypeParsingErrorTests : ParsingTestsBase
+    public class TypeParsingErrorTests(ITestOutputHelper output) : ParsingTestsBase(output)
     {
-        public TypeParsingErrorTests(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Fact]
         public void Parser_ParsesTableType_WithMultipleIndexers_ButErrors()
         {

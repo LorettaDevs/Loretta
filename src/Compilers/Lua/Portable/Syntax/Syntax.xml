@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Tree Root="SyntaxNode">
 
-    <PredefinedNode Name="LuaSyntaxNode" Base="SyntaxNode" />
-    <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode" />
-    <PredefinedNode Name="StructuredTriviaSyntax" Base="LuaSyntaxNode" />
+    <PredefinedNode Name="LuaSyntaxNode" Base="SyntaxNode"/>
+    <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode"/>
+    <PredefinedNode Name="StructuredTriviaSyntax" Base="LuaSyntaxNode"/>
 
     <!-- Structured Trivia -->
 
@@ -19,10 +19,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="StatementListSyntax" /> node.
+                Creates a new
+                <see cref="StatementListSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="StatementList" />
+        <Kind Name="StatementList"/>
         <Field Name="Statements" Type="SyntaxList&lt;StatementSyntax&gt;">
             <PropertyComment>
                 <summary>The list of statements contained within this block.</summary>
@@ -44,23 +46,27 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="NamedParameterSyntax" /> node.
+                Creates a new
+                <see cref="NamedParameterSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="NamedParameter" />
+        <Kind Name="NamedParameter"/>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The name of the parameter.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
                 <summary>
-                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                    The
+                    <see cref="TypeBindingSyntax"/>
+                    containing the (optional) type.
                 </summary>
             </PropertyComment>
-            <Kind Name="TypeBinding" />
+            <Kind Name="TypeBinding"/>
         </Field>
     </Node>
 
@@ -70,23 +76,27 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="VarArgParameterSyntax" /> node.
+                Creates a new
+                <see cref="VarArgParameterSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="VarArgParameter" />
+        <Kind Name="VarArgParameter"/>
         <Field Name="VarArgToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The vararg token.</summary>
             </PropertyComment>
-            <Kind Name="DotDotDotToken" />
+            <Kind Name="DotDotDotToken"/>
         </Field>
         <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
                 <summary>
-                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                    The
+                    <see cref="TypeBindingSyntax"/>
+                    containing the (optional) type.
                 </summary>
             </PropertyComment>
-            <Kind Name="TypeBinding" />
+            <Kind Name="TypeBinding"/>
         </Field>
     </Node>
 
@@ -96,15 +106,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ParameterListSyntax" /> node.
+                Creates a new
+                <see cref="ParameterListSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ParameterList" />
+        <Kind Name="ParameterList"/>
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The parameter list opening parenthesis.</summary>
             </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
+            <Kind Name="OpenParenthesisToken"/>
         </Field>
         <Field Name="Parameters" Type="SeparatedSyntaxList&lt;ParameterSyntax&gt;">
             <PropertyComment>
@@ -115,7 +127,7 @@
             <PropertyComment>
                 <summary>The close parenthesis token.</summary>
             </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
+            <Kind Name="CloseParenthesisToken"/>
         </Field>
     </Node>
 
@@ -133,21 +145,23 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="IdentifierKeyedTableFieldSyntax" /> node.
+                Creates a new
+                <see cref="IdentifierKeyedTableFieldSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="IdentifierKeyedTableField" />
+        <Kind Name="IdentifierKeyedTableField"/>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The table field's key.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The equals token.</summary>
             </PropertyComment>
-            <Kind Name="EqualsToken" />
+            <Kind Name="EqualsToken"/>
         </Field>
         <Field Name="Value" Type="ExpressionSyntax">
             <PropertyComment>
@@ -162,15 +176,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ExpressionKeyedTableFieldSyntax" /> node.
+                Creates a new
+                <see cref="ExpressionKeyedTableFieldSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ExpressionKeyedTableField" />
+        <Kind Name="ExpressionKeyedTableField"/>
         <Field Name="OpenBracketToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The opening bracket token.</summary>
             </PropertyComment>
-            <Kind Name="OpenBracketToken" />
+            <Kind Name="OpenBracketToken"/>
         </Field>
         <Field Name="Key" Type="ExpressionSyntax">
             <PropertyComment>
@@ -181,13 +197,13 @@
             <PropertyComment>
                 <summary>The closing bracket token.</summary>
             </PropertyComment>
-            <Kind Name="CloseBracketToken" />
+            <Kind Name="CloseBracketToken"/>
         </Field>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The equals token.</summary>
             </PropertyComment>
-            <Kind Name="EqualsToken" />
+            <Kind Name="EqualsToken"/>
         </Field>
         <Field Name="Value" Type="ExpressionSyntax">
             <PropertyComment>
@@ -202,10 +218,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="UnkeyedTableFieldSyntax" /> node.
+                Creates a new
+                <see cref="UnkeyedTableFieldSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="UnkeyedTableField" />
+        <Kind Name="UnkeyedTableField"/>
         <Field Name="Value" Type="ExpressionSyntax">
             <PropertyComment>
                 <summary>The table field's value.</summary>
@@ -223,7 +241,7 @@
             <PropertyComment>
                 <summary>The member name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
     </AbstractNode>
 
@@ -233,15 +251,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="SimpleFunctionNameSyntax" /> node.
+                Creates a new
+                <see cref="SimpleFunctionNameSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="SimpleFunctionName" />
+        <Kind Name="SimpleFunctionName"/>
         <Field Name="Name" Type="SyntaxToken" Override="true">
             <PropertyComment>
                 <summary>The function name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
     </Node>
 
@@ -251,10 +271,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="MemberFunctionNameSyntax" /> node.
+                Creates a new
+                <see cref="MemberFunctionNameSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="MemberFunctionName" />
+        <Kind Name="MemberFunctionName"/>
         <Field Name="BaseName" Type="FunctionNameSyntax">
             <PropertyComment>
                 <summary>The base function name.</summary>
@@ -264,13 +286,13 @@
             <PropertyComment>
                 <summary>The dot token.</summary>
             </PropertyComment>
-            <Kind Name="DotToken" />
+            <Kind Name="DotToken"/>
         </Field>
         <Field Name="Name" Type="SyntaxToken" Override="true">
             <PropertyComment>
                 <summary>The member name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
     </Node>
 
@@ -280,10 +302,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="MethodFunctionNameSyntax" /> node.
+                Creates a new
+                <see cref="MethodFunctionNameSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="MethodFunctionName" />
+        <Kind Name="MethodFunctionName"/>
         <Field Name="BaseName" Type="FunctionNameSyntax">
             <PropertyComment>
                 <summary>The base name for this method.</summary>
@@ -293,13 +317,13 @@
             <PropertyComment>
                 <summary>The colon token.</summary>
             </PropertyComment>
-            <Kind Name="ColonToken" />
+            <Kind Name="ColonToken"/>
         </Field>
         <Field Name="Name" Type="SyntaxToken" Override="true">
             <PropertyComment>
                 <summary>The method name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
     </Node>
 
@@ -317,15 +341,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="StringFunctionArgumentSyntax" /> node.
+                Creates a new
+                <see cref="StringFunctionArgumentSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="StringFunctionArgument" />
+        <Kind Name="StringFunctionArgument"/>
         <Field Name="Expression" Type="LiteralExpressionSyntax">
             <PropertyComment>
                 <summary>The string literal being passed as an argument.</summary>
             </PropertyComment>
-            <Kind Name="StringLiteralExpression" />
+            <Kind Name="StringLiteralExpression"/>
         </Field>
     </Node>
 
@@ -335,10 +361,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TableConstructorFunctionArgumentSyntax" /> node.
+                Creates a new
+                <see cref="TableConstructorFunctionArgumentSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TableConstructorFunctionArgument" />
+        <Kind Name="TableConstructorFunctionArgument"/>
         <Field Name="TableConstructor" Type="TableConstructorExpressionSyntax">
             <PropertyComment>
                 <summary>The actual table constructor.</summary>
@@ -352,15 +380,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ExpressionListFunctionArgumentSyntax" /> node.
+                Creates a new
+                <see cref="ExpressionListFunctionArgumentSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ExpressionListFunctionArgument" />
+        <Kind Name="ExpressionListFunctionArgument"/>
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The argument list's opening parenthesis token.</summary>
             </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
+            <Kind Name="OpenParenthesisToken"/>
         </Field>
         <Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;">
             <PropertyComment>
@@ -371,7 +401,63 @@
             <PropertyComment>
                 <summary>The argument list's closing parenthesis token.</summary>
             </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
+            <Kind Name="CloseParenthesisToken"/>
+        </Field>
+    </Node>
+
+    <!-- Interpolated string parts -->
+
+    <AbstractNode Name="InterpolatedStringContentSyntax" Base="LuaSyntaxNode">
+        <TypeComment>
+            <summary>
+                The base class interpolated string parts, either an
+                <see cref="InterpolatedStringTextSyntax"/>
+                with
+                plain text or an
+                <see cref="InterpolationSyntax"/>
+                with an expression to be formatted.
+            </summary>
+        </TypeComment>
+    </AbstractNode>
+
+    <Node Name="InterpolatedStringTextSyntax" Base="InterpolatedStringContentSyntax">
+        <TypeComment>
+            <summary>
+                The part of an interpolated string with plain text.
+            </summary>
+        </TypeComment>
+        <Kind Name="InterpolatedStringText"/>
+        <Field Name="TextToken" Type="SyntaxToken">
+            <Kind Name="InterpolatedStringTextToken"/>
+            <PropertyComment>
+                <summary>The text contents of a part of the interpolated string.</summary>
+            </PropertyComment>
+        </Field>
+    </Node>
+
+    <Node Name="InterpolationSyntax" Base="InterpolatedStringContentSyntax">
+        <TypeComment>
+            <summary>
+                An expression to be interpolated into the string.
+            </summary>
+        </TypeComment>
+        <Kind Name="Interpolation"/>
+        <Field Name="OpenBraceToken" Type="SyntaxToken">
+            <Kind Name="OpenBraceToken"/>
+            <PropertyComment>
+                <summary>
+                    This could be a single <c>{</c> or multiple in a row.
+                </summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="Expression" Type="ExpressionSyntax"/>
+        <Field Name="CloseBraceToken" Type="SyntaxToken">
+            <Kind Name="CloseBraceToken"/>
+            <PropertyComment>
+                <summary>
+                    This could be a single <c>}</c> or multiple in a row.
+                </summary>
+            </PropertyComment>
         </Field>
     </Node>
 
@@ -391,15 +477,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="AnonymousFunctionExpressionSyntax" /> node.
+                Creates a new
+                <see cref="AnonymousFunctionExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="AnonymousFunctionExpression" />
+        <Kind Name="AnonymousFunctionExpression"/>
         <Field Name="FunctionKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'function' keyword.</summary>
             </PropertyComment>
-            <Kind Name="FunctionKeyword" />
+            <Kind Name="FunctionKeyword"/>
         </Field>
         <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
             <PropertyComment>
@@ -425,7 +513,7 @@
             <PropertyComment>
                 <summary>The 'end' keyword.</summary>
             </PropertyComment>
-            <Kind Name="EndKeyword" />
+            <Kind Name="EndKeyword"/>
         </Field>
     </Node>
 
@@ -435,15 +523,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TableConstructorExpressionSyntax" /> node.
+                Creates a new
+                <see cref="TableConstructorExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TableConstructorExpression" />
+        <Kind Name="TableConstructorExpression"/>
         <Field Name="OpenBraceToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The opening brace token.</summary>
             </PropertyComment>
-            <Kind Name="OpenBraceToken" />
+            <Kind Name="OpenBraceToken"/>
         </Field>
         <Field Name="Fields" Type="SeparatedSyntaxList&lt;TableFieldSyntax&gt;" AllowTrailingSeparator="true">
             <PropertyComment>
@@ -454,7 +544,7 @@
             <PropertyComment>
                 <summary>The closing brace token.</summary>
             </PropertyComment>
-            <Kind Name="CloseBraceToken" />
+            <Kind Name="CloseBraceToken"/>
         </Field>
     </Node>
 
@@ -464,25 +554,55 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="LiteralExpressionSyntax" /> node.
+                Creates a new
+                <see cref="LiteralExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="NumericalLiteralExpression" />
-        <Kind Name="StringLiteralExpression" />
-        <Kind Name="TrueLiteralExpression" />
-        <Kind Name="FalseLiteralExpression" />
-        <Kind Name="NilLiteralExpression" />
-        <Kind Name="HashStringLiteralExpression" />
+        <Kind Name="NumericalLiteralExpression"/>
+        <Kind Name="StringLiteralExpression"/>
+        <Kind Name="TrueLiteralExpression"/>
+        <Kind Name="FalseLiteralExpression"/>
+        <Kind Name="NilLiteralExpression"/>
+        <Kind Name="HashStringLiteralExpression"/>
         <Field Name="Token" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The literal token.</summary>
             </PropertyComment>
-            <Kind Name="NumericLiteralToken" />
-            <Kind Name="StringLiteralToken" />
-            <Kind Name="TrueKeyword" />
-            <Kind Name="FalseKeyword" />
-            <Kind Name="NilKeyword" />
-            <Kind Name="HashStringLiteralToken" />
+            <Kind Name="NumericLiteralToken"/>
+            <Kind Name="StringLiteralToken"/>
+            <Kind Name="TrueKeyword"/>
+            <Kind Name="FalseKeyword"/>
+            <Kind Name="NilKeyword"/>
+            <Kind Name="HashStringLiteralToken"/>
+        </Field>
+    </Node>
+
+    <Node Name="InterpolatedStringExpressionSyntax" Base="ExpressionSyntax">
+        <Kind Name="InterpolatedStringExpression"/>
+        <Field Name="StringStartToken" Type="SyntaxToken">
+            <Kind Name="BacktickToken"/>
+            <PropertyComment>
+                <summary>
+                    The first part of an interpolated string:
+                    <c>`</c>
+                </summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="Contents" Type="SyntaxList&lt;InterpolatedStringContentSyntax&gt;">
+            <PropertyComment>
+                <summary>
+                    List of parts of the interpolated string, each one is either a literal part or an interpolation.
+                </summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="StringEndToken" Type="SyntaxToken">
+            <Kind Name="BacktickToken"/>
+            <PropertyComment>
+                <summary>
+                    The closing <c>`</c> of the interpolated string.
+                </summary>
+            </PropertyComment>
         </Field>
     </Node>
 
@@ -492,15 +612,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="VarArgExpressionSyntax" /> node.
+                Creates a new
+                <see cref="VarArgExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="VarArgExpression" />
+        <Kind Name="VarArgExpression"/>
         <Field Name="VarArgToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The vararg token.</summary>
             </PropertyComment>
-            <Kind Name="DotDotDotToken" />
+            <Kind Name="DotDotDotToken"/>
         </Field>
     </Node>
 
@@ -516,15 +638,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="IdentifierNameSyntax" /> node.
+                Creates a new
+                <see cref="IdentifierNameSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="IdentifierName" />
+        <Kind Name="IdentifierName"/>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The identifier.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
     </Node>
 
@@ -534,10 +658,12 @@
         </PropertyComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="MemberAccessExpressionSyntax" /> node.
+                Creates a new
+                <see cref="MemberAccessExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="MemberAccessExpression" />
+        <Kind Name="MemberAccessExpression"/>
         <Field Name="Expression" Type="PrefixExpressionSyntax">
             <PropertyComment>
                 <summary>The expression that contains the member being accessed.</summary>
@@ -547,13 +673,13 @@
             <PropertyComment>
                 <summary>The dot separating the expression and the identifier.</summary>
             </PropertyComment>
-            <Kind Name="DotToken" />
+            <Kind Name="DotToken"/>
         </Field>
         <Field Name="MemberName" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The identifier representing the member name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
     </Node>
 
@@ -563,10 +689,12 @@
         </PropertyComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ElementAccessExpressionSyntax" /> node.
+                Creates a new
+                <see cref="ElementAccessExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ElementAccessExpression" />
+        <Kind Name="ElementAccessExpression"/>
         <Field Name="Expression" Type="PrefixExpressionSyntax">
             <PropertyComment>
                 <summary>The expression that contains the member being accessed.</summary>
@@ -576,7 +704,7 @@
             <PropertyComment>
                 <summary>The opening bracket token.</summary>
             </PropertyComment>
-            <Kind Name="OpenBracketToken" />
+            <Kind Name="OpenBracketToken"/>
         </Field>
         <Field Name="KeyExpression" Type="ExpressionSyntax">
             <PropertyComment>
@@ -587,7 +715,7 @@
             <PropertyComment>
                 <summary>The closing bracket token.</summary>
             </PropertyComment>
-            <Kind Name="CloseBracketToken" />
+            <Kind Name="CloseBracketToken"/>
         </Field>
     </Node>
 
@@ -597,22 +725,24 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="UnaryExpressionSyntax" /> node.
+                Creates a new
+                <see cref="UnaryExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="BitwiseNotExpression" />
-        <Kind Name="LengthExpression" />
-        <Kind Name="LogicalNotExpression" />
-        <Kind Name="UnaryMinusExpression" />
+        <Kind Name="BitwiseNotExpression"/>
+        <Kind Name="LengthExpression"/>
+        <Kind Name="LogicalNotExpression"/>
+        <Kind Name="UnaryMinusExpression"/>
         <Field Name="OperatorToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The operator token.</summary>
             </PropertyComment>
-            <Kind Name="BangToken" />
-            <Kind Name="HashToken" />
-            <Kind Name="MinusToken" />
-            <Kind Name="NotKeyword" />
-            <Kind Name="TildeToken" />
+            <Kind Name="BangToken"/>
+            <Kind Name="HashToken"/>
+            <Kind Name="MinusToken"/>
+            <Kind Name="NotKeyword"/>
+            <Kind Name="TildeToken"/>
         </Field>
         <Field Name="Operand" Type="ExpressionSyntax">
             <PropertyComment>
@@ -627,30 +757,32 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="BinaryExpressionSyntax" /> node.
+                Creates a new
+                <see cref="BinaryExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="AddExpression" />
-        <Kind Name="BitwiseAndExpression" />
-        <Kind Name="BitwiseOrExpression" />
-        <Kind Name="ConcatExpression" />
-        <Kind Name="DivideExpression" />
-        <Kind Name="EqualsExpression" />
-        <Kind Name="ExclusiveOrExpression" />
-        <Kind Name="ExponentiateExpression" />
-        <Kind Name="GreaterThanExpression" />
-        <Kind Name="GreaterThanOrEqualExpression" />
-        <Kind Name="LeftShiftExpression" />
-        <Kind Name="LessThanExpression" />
-        <Kind Name="LessThanOrEqualExpression" />
-        <Kind Name="LogicalAndExpression" />
-        <Kind Name="LogicalOrExpression" />
-        <Kind Name="ModuloExpression" />
-        <Kind Name="MultiplyExpression" />
-        <Kind Name="NotEqualsExpression" />
-        <Kind Name="RightShiftExpression" />
-        <Kind Name="SubtractExpression" />
-        <Kind Name="FloorDivideExpression" />
+        <Kind Name="AddExpression"/>
+        <Kind Name="BitwiseAndExpression"/>
+        <Kind Name="BitwiseOrExpression"/>
+        <Kind Name="ConcatExpression"/>
+        <Kind Name="DivideExpression"/>
+        <Kind Name="EqualsExpression"/>
+        <Kind Name="ExclusiveOrExpression"/>
+        <Kind Name="ExponentiateExpression"/>
+        <Kind Name="GreaterThanExpression"/>
+        <Kind Name="GreaterThanOrEqualExpression"/>
+        <Kind Name="LeftShiftExpression"/>
+        <Kind Name="LessThanExpression"/>
+        <Kind Name="LessThanOrEqualExpression"/>
+        <Kind Name="LogicalAndExpression"/>
+        <Kind Name="LogicalOrExpression"/>
+        <Kind Name="ModuloExpression"/>
+        <Kind Name="MultiplyExpression"/>
+        <Kind Name="NotEqualsExpression"/>
+        <Kind Name="RightShiftExpression"/>
+        <Kind Name="SubtractExpression"/>
+        <Kind Name="FloorDivideExpression"/>
         <Field Name="Left" Type="ExpressionSyntax">
             <PropertyComment>
                 <summary>The expression on the left side of the operator.</summary>
@@ -660,30 +792,30 @@
             <PropertyComment>
                 <summary>The operator token.</summary>
             </PropertyComment>
-            <Kind Name="AmpersandAmpersandToken" />
-            <Kind Name="AmpersandToken" />
-            <Kind Name="AndKeyword" />
-            <Kind Name="BangEqualsToken" />
-            <Kind Name="DotDotToken" />
-            <Kind Name="EqualsEqualsToken" />
-            <Kind Name="GreaterThanEqualsToken" />
-            <Kind Name="GreaterThanGreaterThanToken" />
-            <Kind Name="GreaterThanToken" />
-            <Kind Name="HatToken" />
-            <Kind Name="LessThanEqualsToken" />
-            <Kind Name="LessThanLessThanToken" />
-            <Kind Name="LessThanToken" />
-            <Kind Name="MinusToken" />
-            <Kind Name="OrKeyword" />
-            <Kind Name="PercentToken" />
-            <Kind Name="PipePipeToken" />
-            <Kind Name="PipeToken" />
-            <Kind Name="PlusToken" />
-            <Kind Name="SlashToken" />
-            <Kind Name="StarToken" />
-            <Kind Name="TildeEqualsToken" />
-            <Kind Name="TildeToken" />
-            <Kind Name="SlashSlashToken" />
+            <Kind Name="AmpersandAmpersandToken"/>
+            <Kind Name="AmpersandToken"/>
+            <Kind Name="AndKeyword"/>
+            <Kind Name="BangEqualsToken"/>
+            <Kind Name="DotDotToken"/>
+            <Kind Name="EqualsEqualsToken"/>
+            <Kind Name="GreaterThanEqualsToken"/>
+            <Kind Name="GreaterThanGreaterThanToken"/>
+            <Kind Name="GreaterThanToken"/>
+            <Kind Name="HatToken"/>
+            <Kind Name="LessThanEqualsToken"/>
+            <Kind Name="LessThanLessThanToken"/>
+            <Kind Name="LessThanToken"/>
+            <Kind Name="MinusToken"/>
+            <Kind Name="OrKeyword"/>
+            <Kind Name="PercentToken"/>
+            <Kind Name="PipePipeToken"/>
+            <Kind Name="PipeToken"/>
+            <Kind Name="PlusToken"/>
+            <Kind Name="SlashToken"/>
+            <Kind Name="StarToken"/>
+            <Kind Name="TildeEqualsToken"/>
+            <Kind Name="TildeToken"/>
+            <Kind Name="SlashSlashToken"/>
         </Field>
         <Field Name="Right" Type="ExpressionSyntax">
             <PropertyComment>
@@ -699,14 +831,16 @@
             </summary>
         </TypeComment>
         <FactoryComment>
-            Creates a new <see cref="ElseIfExpressionClauseSyntax" /> node.
+            Creates a new
+            <see cref="ElseIfExpressionClauseSyntax"/>
+            node.
         </FactoryComment>
-        <Kind Name="ElseIfExpressionClause" />
+        <Kind Name="ElseIfExpressionClause"/>
         <Field Name="ElseIfKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'elseif' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ElseIfKeyword" />
+            <Kind Name="ElseIfKeyword"/>
         </Field>
         <Field Name="Condition" Type="ExpressionSyntax">
             <PropertyComment>
@@ -717,7 +851,7 @@
             <PropertyComment>
                 <summary>The 'then' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ThenKeyword" />
+            <Kind Name="ThenKeyword"/>
         </Field>
         <Field Name="Value" Type="ExpressionSyntax">
             <PropertyComment>
@@ -734,15 +868,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="IfExpressionSyntax" /> node.
+                Creates a new
+                <see cref="IfExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="IfExpression" />
+        <Kind Name="IfExpression"/>
         <Field Name="IfKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'if' keyword.</summary>
             </PropertyComment>
-            <Kind Name="IfKeyword" />
+            <Kind Name="IfKeyword"/>
         </Field>
         <Field Name="Condition" Type="ExpressionSyntax">
             <PropertyComment>
@@ -753,7 +889,7 @@
             <PropertyComment>
                 <summary>The 'then' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ThenKeyword" />
+            <Kind Name="ThenKeyword"/>
         </Field>
         <Field Name="TrueValue" Type="ExpressionSyntax">
             <PropertyComment>
@@ -769,7 +905,7 @@
             <PropertyComment>
                 <summary>The 'else' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ElseKeyword" />
+            <Kind Name="ElseKeyword"/>
         </Field>
         <Field Name="FalseValue" Type="ExpressionSyntax">
             <PropertyComment>
@@ -793,14 +929,16 @@
             <summary>Represents a parenthesized expression.</summary>
         </PropertyComment>
         <FactoryComment>
-            Creates a new <see cref="ParenthesizedExpressionSyntax" /> node.
+            Creates a new
+            <see cref="ParenthesizedExpressionSyntax"/>
+            node.
         </FactoryComment>
-        <Kind Name="ParenthesizedExpression" />
+        <Kind Name="ParenthesizedExpression"/>
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The opening parenthesis token.</summary>
             </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
+            <Kind Name="OpenParenthesisToken"/>
         </Field>
         <Field Name="Expression" Type="ExpressionSyntax">
             <PropertyComment>
@@ -811,7 +949,7 @@
             <PropertyComment>
                 <summary>The closing parenthesis token.</summary>
             </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
+            <Kind Name="CloseParenthesisToken"/>
         </Field>
     </Node>
 
@@ -821,10 +959,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="FunctionCallExpressionSyntax" /> node.
+                Creates a new
+                <see cref="FunctionCallExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="FunctionCallExpression" />
+        <Kind Name="FunctionCallExpression"/>
         <Field Name="Expression" Type="PrefixExpressionSyntax">
             <PropertyComment>
                 <summary>The expression returning the function to be called.</summary>
@@ -843,10 +983,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="MethodCallExpressionSyntax" /> node.
+                Creates a new
+                <see cref="MethodCallExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="MethodCallExpression" />
+        <Kind Name="MethodCallExpression"/>
         <Field Name="Expression" Type="PrefixExpressionSyntax">
             <PropertyComment>
                 <summary>The expression that contains the method being called.</summary>
@@ -856,13 +998,13 @@
             <PropertyComment>
                 <summary>The colon token.</summary>
             </PropertyComment>
-            <Kind Name="ColonToken" />
+            <Kind Name="ColonToken"/>
         </Field>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The identifier containing the method name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="Argument" Type="FunctionArgumentSyntax">
             <PropertyComment>
@@ -881,7 +1023,7 @@
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </AbstractNode>
 
@@ -893,23 +1035,25 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="VariableAttributeSyntax" /> node.
+                Creates a new
+                <see cref="VariableAttributeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="VariableAttribute" />
+        <Kind Name="VariableAttribute"/>
         <Field Name="LessThanToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     The leading <c>&lt;</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="LessThanToken" />
+            <Kind Name="LessThanToken"/>
         </Field>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The attribute name identifier token.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="GreaterThanToken" Type="SyntaxToken">
             <PropertyComment>
@@ -917,63 +1061,76 @@
                     The trailing <c>&gt;</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="GreaterThanToken" />
+            <Kind Name="GreaterThanToken"/>
         </Field>
     </Node>
 
     <Node Name="LocalDeclarationNameSyntax" Base="LuaSyntaxNode">
         <TypeComment>
             <summary>
-                Represents a variable name in a <see cref="LocalVariableDeclarationStatementSyntax" /> node.
+                Represents a variable name in a
+                <see cref="LocalVariableDeclarationStatementSyntax"/>
+                node.
             </summary>
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="LocalDeclarationNameSyntax" /> node.
+                Creates a new
+                <see cref="LocalDeclarationNameSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="LocalDeclarationName" />
+        <Kind Name="LocalDeclarationName"/>
         <Field Name="IdentifierName" Type="IdentifierNameSyntax">
             <PropertyComment>
                 <summary>
-                    The <see cref="IdentifierNameSyntax" /> containing the name.
+                    The
+                    <see cref="IdentifierNameSyntax"/>
+                    containing the name.
                 </summary>
             </PropertyComment>
-            <Kind Name="IdentifierName" />
+            <Kind Name="IdentifierName"/>
         </Field>
         <Field Name="Attribute" Type="VariableAttributeSyntax" Optional="true">
             <PropertyComment>
                 <summary>
-                    The <see cref="VariableAttributeSyntax" /> containing the (optional) variable attribute.
+                    The
+                    <see cref="VariableAttributeSyntax"/>
+                    containing the (optional) variable attribute.
                 </summary>
             </PropertyComment>
-            <Kind Name="VariableAttribute" />
+            <Kind Name="VariableAttribute"/>
         </Field>
         <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
                 <summary>
-                    The <see cref="TypeBindingSyntax" /> containing the (optional) type.
+                    The
+                    <see cref="TypeBindingSyntax"/>
+                    containing the (optional) type.
                 </summary>
             </PropertyComment>
-            <Kind Name="TypeBinding" />
+            <Kind Name="TypeBinding"/>
         </Field>
     </Node>
 
     <Node Name="EqualsValuesClauseSyntax" Base="LuaSyntaxNode">
         <TypeComment>
-            <summary>Represents the values being assigned to the names in an assignment or variable declaration.</summary>
+            <summary>Represents the values being assigned to the names in an assignment or variable declaration.
+            </summary>
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="EqualsValuesClauseSyntax" /> node.
+                Creates a new
+                <see cref="EqualsValuesClauseSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="EqualsValuesClause" />
+        <Kind Name="EqualsValuesClause"/>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The equals token.</summary>
             </PropertyComment>
-            <Kind Name="EqualsToken" />
+            <Kind Name="EqualsToken"/>
         </Field>
         <Field Name="Values" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
             <PropertyComment>
@@ -988,10 +1145,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="AssignmentStatementSyntax" /> node.
+                Creates a new
+                <see cref="AssignmentStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="AssignmentStatement" />
+        <Kind Name="AssignmentStatement"/>
         <Field Name="Variables" Type="SeparatedSyntaxList&lt;PrefixExpressionSyntax&gt;" MinCount="1">
             <PropertyComment>
                 <summary>The variables being assigned to.</summary>
@@ -1006,7 +1165,7 @@
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1016,16 +1175,18 @@
         </PropertyComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="CompoundAssignmentStatementSyntax" /> node.
+                Creates a new
+                <see cref="CompoundAssignmentStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="AddAssignmentStatement" />
-        <Kind Name="SubtractAssignmentStatement" />
-        <Kind Name="MultiplyAssignmentStatement" />
-        <Kind Name="DivideAssignmentStatement" />
-        <Kind Name="ModuloAssignmentStatement" />
-        <Kind Name="ConcatAssignmentStatement" />
-        <Kind Name="ExponentiateAssignmentStatement" />
+        <Kind Name="AddAssignmentStatement"/>
+        <Kind Name="SubtractAssignmentStatement"/>
+        <Kind Name="MultiplyAssignmentStatement"/>
+        <Kind Name="DivideAssignmentStatement"/>
+        <Kind Name="ModuloAssignmentStatement"/>
+        <Kind Name="ConcatAssignmentStatement"/>
+        <Kind Name="ExponentiateAssignmentStatement"/>
         <Field Name="Variable" Type="PrefixExpressionSyntax">
             <PropertyComment>
                 <summary>The variable being assigned to.</summary>
@@ -1035,13 +1196,13 @@
             <PropertyComment>
                 <summary>The compound assignment operator token.</summary>
             </PropertyComment>
-            <Kind Name="PlusEqualsToken" />
-            <Kind Name="MinusEqualsToken" />
-            <Kind Name="StarEqualsToken" />
-            <Kind Name="SlashEqualsToken" />
-            <Kind Name="PercentEqualsToken" />
-            <Kind Name="DotDotEqualsToken" />
-            <Kind Name="HatEqualsToken" />
+            <Kind Name="PlusEqualsToken"/>
+            <Kind Name="MinusEqualsToken"/>
+            <Kind Name="StarEqualsToken"/>
+            <Kind Name="SlashEqualsToken"/>
+            <Kind Name="PercentEqualsToken"/>
+            <Kind Name="DotDotEqualsToken"/>
+            <Kind Name="HatEqualsToken"/>
         </Field>
         <Field Name="Expression" Type="ExpressionSyntax">
             <PropertyComment>
@@ -1052,7 +1213,7 @@
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1062,15 +1223,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="LocalVariableDeclarationStatementSyntax" /> node.
+                Creates a new
+                <see cref="LocalVariableDeclarationStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="LocalVariableDeclarationStatement" />
+        <Kind Name="LocalVariableDeclarationStatement"/>
         <Field Name="LocalKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'local' keyword.</summary>
             </PropertyComment>
-            <Kind Name="LocalKeyword" />
+            <Kind Name="LocalKeyword"/>
         </Field>
         <Field Name="Names" Type="SeparatedSyntaxList&lt;LocalDeclarationNameSyntax&gt;" MinCount="1">
             <PropertyComment>
@@ -1086,7 +1249,7 @@
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1098,10 +1261,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypedIdentifierNameSyntax" /> node.
+                Creates a new
+                <see cref="TypedIdentifierNameSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypedIdentifierName" />
+        <Kind Name="TypedIdentifierName"/>
         <Field Name="IdentifierName" Type="IdentifierNameSyntax">
             <PropertyComment>
                 <summary>The identifier.</summary>
@@ -1113,7 +1278,7 @@
                     The type binding containing the type (if any).
                 </summary>
             </PropertyComment>
-            <Kind Name="TypeBinding" />
+            <Kind Name="TypeBinding"/>
         </Field>
     </Node>
 
@@ -1123,15 +1288,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="NumericForStatementSyntax" /> node.
+                Creates a new
+                <see cref="NumericForStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="NumericForStatement" />
+        <Kind Name="NumericForStatement"/>
         <Field Name="ForKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'for' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ForKeyword" />
+            <Kind Name="ForKeyword"/>
         </Field>
         <Field Name="Identifier" Type="TypedIdentifierNameSyntax">
             <PropertyComment>
@@ -1142,7 +1309,7 @@
             <PropertyComment>
                 <summary>The equals token.</summary>
             </PropertyComment>
-            <Kind Name="EqualsToken" />
+            <Kind Name="EqualsToken"/>
         </Field>
         <Field Name="InitialValue" Type="ExpressionSyntax">
             <PropertyComment>
@@ -1153,7 +1320,7 @@
             <PropertyComment>
                 <summary>The comma separating the initial value from the final value.</summary>
             </PropertyComment>
-            <Kind Name="CommaToken" />
+            <Kind Name="CommaToken"/>
         </Field>
         <Field Name="FinalValue" Type="ExpressionSyntax">
             <PropertyComment>
@@ -1168,7 +1335,7 @@
                         May be None if there is no step.
                     </summary>
                 </PropertyComment>
-                <Kind Name="CommaToken" />
+                <Kind Name="CommaToken"/>
             </Field>
             <Field Name="StepValue" Type="ExpressionSyntax">
                 <PropertyComment>
@@ -1183,7 +1350,7 @@
             <PropertyComment>
                 <summary>The 'do' keyword.</summary>
             </PropertyComment>
-            <Kind Name="DoKeyword" />
+            <Kind Name="DoKeyword"/>
         </Field>
         <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
@@ -1194,13 +1361,13 @@
             <PropertyComment>
                 <summary>The 'end' keyword.</summary>
             </PropertyComment>
-            <Kind Name="EndKeyword" />
+            <Kind Name="EndKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1210,15 +1377,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="GenericForStatementSyntax" /> node.
+                Creates a new
+                <see cref="GenericForStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="GenericForStatement" />
+        <Kind Name="GenericForStatement"/>
         <Field Name="ForKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'for' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ForKeyword" />
+            <Kind Name="ForKeyword"/>
         </Field>
         <Field Name="Identifiers" Type="SeparatedSyntaxList&lt;TypedIdentifierNameSyntax&gt;" MinCount="1">
             <PropertyComment>
@@ -1229,7 +1398,7 @@
             <PropertyComment>
                 <summary>The 'in' keyword.</summary>
             </PropertyComment>
-            <Kind Name="InKeyword" />
+            <Kind Name="InKeyword"/>
         </Field>
         <Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;" MinCount="1">
             <PropertyComment>
@@ -1240,7 +1409,7 @@
             <PropertyComment>
                 <summary>The 'do' keyword.</summary>
             </PropertyComment>
-            <Kind Name="DoKeyword" />
+            <Kind Name="DoKeyword"/>
         </Field>
         <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
@@ -1251,13 +1420,13 @@
             <PropertyComment>
                 <summary>The 'end' keyword.</summary>
             </PropertyComment>
-            <Kind Name="EndKeyword" />
+            <Kind Name="EndKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1267,15 +1436,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="WhileStatementSyntax" /> node.
+                Creates a new
+                <see cref="WhileStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="WhileStatement" />
+        <Kind Name="WhileStatement"/>
         <Field Name="WhileKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'while' keyword.</summary>
             </PropertyComment>
-            <Kind Name="WhileKeyword" />
+            <Kind Name="WhileKeyword"/>
         </Field>
         <Field Name="Condition" Type="ExpressionSyntax">
             <PropertyComment>
@@ -1286,7 +1457,7 @@
             <PropertyComment>
                 <summary>The 'do' keyword.</summary>
             </PropertyComment>
-            <Kind Name="DoKeyword" />
+            <Kind Name="DoKeyword"/>
         </Field>
         <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
@@ -1297,13 +1468,13 @@
             <PropertyComment>
                 <summary>The 'end' keyword.</summary>
             </PropertyComment>
-            <Kind Name="EndKeyword" />
+            <Kind Name="EndKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1313,15 +1484,17 @@
         </PropertyComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="RepeatUntilStatementSyntax" /> node.
+                Creates a new
+                <see cref="RepeatUntilStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="RepeatUntilStatement" />
+        <Kind Name="RepeatUntilStatement"/>
         <Field Name="RepeatKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'repeat' until keyword.</summary>
             </PropertyComment>
-            <Kind Name="RepeatKeyword" />
+            <Kind Name="RepeatKeyword"/>
         </Field>
         <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
@@ -1332,7 +1505,7 @@
             <PropertyComment>
                 <summary>The 'until' keyword.</summary>
             </PropertyComment>
-            <Kind Name="UntilKeyword" />
+            <Kind Name="UntilKeyword"/>
         </Field>
         <Field Name="Condition" Type="ExpressionSyntax">
             <PropertyComment>
@@ -1343,7 +1516,7 @@
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1355,15 +1528,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="IfStatementSyntax" /> comment.
+                Creates a new
+                <see cref="IfStatementSyntax"/>
+                comment.
             </summary>
         </FactoryComment>
-        <Kind Name="IfStatement" />
+        <Kind Name="IfStatement"/>
         <Field Name="IfKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'if' keyword.</summary>
             </PropertyComment>
-            <Kind Name="IfKeyword" />
+            <Kind Name="IfKeyword"/>
         </Field>
         <Field Name="Condition" Type="ExpressionSyntax">
             <PropertyComment>
@@ -1374,7 +1549,7 @@
             <PropertyComment>
                 <summary>The 'then' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ThenKeyword" />
+            <Kind Name="ThenKeyword"/>
         </Field>
         <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
@@ -1395,13 +1570,13 @@
             <PropertyComment>
                 <summary>The 'end' keyword.</summary>
             </PropertyComment>
-            <Kind Name="EndKeyword" />
+            <Kind Name="EndKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1411,15 +1586,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ElseIfClauseSyntax" /> node.
+                Creates a new
+                <see cref="ElseIfClauseSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ElseIfClause" />
+        <Kind Name="ElseIfClause"/>
         <Field Name="ElseIfKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'elseif' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ElseIfKeyword" />
+            <Kind Name="ElseIfKeyword"/>
         </Field>
         <Field Name="Condition" Type="ExpressionSyntax">
             <PropertyComment>
@@ -1430,7 +1607,7 @@
             <PropertyComment>
                 <summary>The 'then' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ThenKeyword" />
+            <Kind Name="ThenKeyword"/>
         </Field>
         <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
@@ -1445,15 +1622,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ElseClauseSyntax" /> comment.
+                Creates a new
+                <see cref="ElseClauseSyntax"/>
+                comment.
             </summary>
         </FactoryComment>
-        <Kind Name="ElseClause" />
+        <Kind Name="ElseClause"/>
         <Field Name="ElseKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'else' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ElseKeyword" />
+            <Kind Name="ElseKeyword"/>
         </Field>
         <Field Name="ElseBody" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
@@ -1468,27 +1647,29 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="GotoStatementSyntax" /> node.
+                Creates a new
+                <see cref="GotoStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="GotoStatement" />
+        <Kind Name="GotoStatement"/>
         <Field Name="GotoKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'goto' keyword.</summary>
             </PropertyComment>
-            <Kind Name="GotoKeyword" />
+            <Kind Name="GotoKeyword"/>
         </Field>
         <Field Name="LabelName" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The name of the label being jumped to.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1498,21 +1679,23 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="BreakStatementSyntax" /> node.
+                Creates a new
+                <see cref="BreakStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="BreakStatement" />
+        <Kind Name="BreakStatement"/>
         <Field Name="BreakKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'break' keyword.</summary>
             </PropertyComment>
-            <Kind Name="BreakKeyword" />
+            <Kind Name="BreakKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1522,15 +1705,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ReturnStatementSyntax" /> node.
+                Creates a new
+                <see cref="ReturnStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ReturnStatement" />
+        <Kind Name="ReturnStatement"/>
         <Field Name="ReturnKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'return' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ReturnKeyword" />
+            <Kind Name="ReturnKeyword"/>
         </Field>
         <Field Name="Expressions" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;">
             <PropertyComment>
@@ -1541,7 +1726,7 @@
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1551,21 +1736,23 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ContinueStatementSyntax" /> node.
+                Creates a new
+                <see cref="ContinueStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ContinueStatement" />
+        <Kind Name="ContinueStatement"/>
         <Field Name="ContinueKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'continue' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ContinueKeyword" />
+            <Kind Name="ContinueKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1575,27 +1762,29 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="LocalFunctionDeclarationStatementSyntax" /> node.
+                Creates a new
+                <see cref="LocalFunctionDeclarationStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="LocalFunctionDeclarationStatement" />
+        <Kind Name="LocalFunctionDeclarationStatement"/>
         <Field Name="LocalKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'local' keyword.</summary>
             </PropertyComment>
-            <Kind Name="LocalKeyword" />
+            <Kind Name="LocalKeyword"/>
         </Field>
         <Field Name="FunctionKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'function' keyword.</summary>
             </PropertyComment>
-            <Kind Name="FunctionKeyword" />
+            <Kind Name="FunctionKeyword"/>
         </Field>
         <Field Name="Name" Type="IdentifierNameSyntax">
             <PropertyComment>
                 <summary>The function's name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
             <PropertyComment>
@@ -1621,13 +1810,13 @@
             <PropertyComment>
                 <summary>The 'end' keyword.</summary>
             </PropertyComment>
-            <Kind Name="EndKeyword" />
+            <Kind Name="EndKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1637,15 +1826,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="FunctionDeclarationStatementSyntax" /> node.
+                Creates a new
+                <see cref="FunctionDeclarationStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="FunctionDeclarationStatement" />
+        <Kind Name="FunctionDeclarationStatement"/>
         <Field Name="FunctionKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'function' keyword.</summary>
             </PropertyComment>
-            <Kind Name="FunctionKeyword" />
+            <Kind Name="FunctionKeyword"/>
         </Field>
         <Field Name="Name" Type="FunctionNameSyntax">
             <PropertyComment>
@@ -1676,13 +1867,13 @@
             <PropertyComment>
                 <summary>The 'end' keyword.</summary>
             </PropertyComment>
-            <Kind Name="EndKeyword" />
+            <Kind Name="EndKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1692,15 +1883,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="DoStatementSyntax" /> node.
+                Creates a new
+                <see cref="DoStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="DoStatement" />
+        <Kind Name="DoStatement"/>
         <Field Name="DoKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'do' keyword.</summary>
             </PropertyComment>
-            <Kind Name="DoKeyword" />
+            <Kind Name="DoKeyword"/>
         </Field>
         <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
@@ -1711,13 +1904,13 @@
             <PropertyComment>
                 <summary>The 'end' keyword.</summary>
             </PropertyComment>
-            <Kind Name="EndKeyword" />
+            <Kind Name="EndKeyword"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1727,33 +1920,35 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="GotoLabelStatementSyntax" /> node.
+                Creates a new
+                <see cref="GotoLabelStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="GotoLabelStatement" />
+        <Kind Name="GotoLabelStatement"/>
         <Field Name="LeftDelimiterToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The delimiter on the left of the name.</summary>
             </PropertyComment>
-            <Kind Name="ColonColonToken" />
+            <Kind Name="ColonColonToken"/>
         </Field>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The label name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="RightDelimiterToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The delimiter on the right of the name.</summary>
             </PropertyComment>
-            <Kind Name="ColonColonToken" />
+            <Kind Name="ColonColonToken"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1763,10 +1958,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ExpressionStatementSyntax" /> node.
+                Creates a new
+                <see cref="ExpressionStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ExpressionStatement" />
+        <Kind Name="ExpressionStatement"/>
         <Field Name="Expression" Type="ExpressionSyntax">
             <PropertyComment>
                 <summary>The function call expression.</summary>
@@ -1776,7 +1973,7 @@
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1786,15 +1983,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="EmptyStatementSyntax" /> node.
+                Creates a new
+                <see cref="EmptyStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="EmptyStatement" />
+        <Kind Name="EmptyStatement"/>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1804,27 +2003,29 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypeDeclarationStatementSyntax" /> node.
+                Creates a new
+                <see cref="TypeDeclarationStatementSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypeDeclarationStatement" />
+        <Kind Name="TypeDeclarationStatement"/>
         <Field Name="ExportKeyword" Type="SyntaxToken" Optional="true">
             <PropertyComment>
                 <summary>The 'export' keyword.</summary>
             </PropertyComment>
-            <Kind Name="ExportKeyword" />
+            <Kind Name="ExportKeyword"/>
         </Field>
         <Field Name="TypeKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'type' keyword.</summary>
             </PropertyComment>
-            <Kind Name="TypeKeyword" />
+            <Kind Name="TypeKeyword"/>
         </Field>
         <Field Name="Name" Type="SyntaxToken">
             <PropertyComment>
                 <summary>Represents the type's name.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
             <PropertyComment>
@@ -1835,19 +2036,19 @@
             <PropertyComment>
                 <summary>The equals token of the type.</summary>
             </PropertyComment>
-            <Kind Name="EqualsToken" />
+            <Kind Name="EqualsToken"/>
         </Field>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
                 <summary>Represents the declared type.</summary>
             </PropertyComment>
-            <Kind Name="TypeSyntax" />
+            <Kind Name="TypeSyntax"/>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
             <PropertyComment>
                 <summary>The semicolon at the end of the statement (if any).</summary>
             </PropertyComment>
-            <Kind Name="SemicolonToken" />
+            <Kind Name="SemicolonToken"/>
         </Field>
     </Node>
 
@@ -1865,17 +2066,19 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypeBindingSyntax" /> node.
+                Creates a new
+                <see cref="TypeBindingSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypeBinding" />
+        <Kind Name="TypeBinding"/>
         <Field Name="ColonToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     Gets the <c>:</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="ColonToken" />
+            <Kind Name="ColonToken"/>
         </Field>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
@@ -1901,15 +2104,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="SimpleTypeNameSyntax" /> node.
+                Creates a new
+                <see cref="SimpleTypeNameSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="SimpleTypeName" />
+        <Kind Name="SimpleTypeName"/>
         <Field Name="IdentifierToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>Gets the name of the type.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true" Override="true">
             <PropertyComment>
@@ -1924,10 +2129,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="CompositeTypeNameSyntax" /> node.
+                Creates a new
+                <see cref="CompositeTypeNameSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="CompositeTypeName" />
+        <Kind Name="CompositeTypeName"/>
         <Field Name="Base" Type="TypeNameSyntax">
             <PropertyComment>
                 <summary>Gets the name of the type.</summary>
@@ -1939,13 +2146,13 @@
                     Gets the . token.
                 </summary>
             </PropertyComment>
-            <Kind Name="DotToken" />
+            <Kind Name="DotToken"/>
         </Field>
         <Field Name="IdentifierToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>Gets the name of the type.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="TypeArgumentList" Type="TypeArgumentListSyntax" Optional="true" Override="true">
             <PropertyComment>
@@ -1960,10 +2167,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="NilableTypeSyntax" /> node.
+                Creates a new
+                <see cref="NilableTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="NilableType" />
+        <Kind Name="NilableType"/>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
                 <summary>Gets the base type that's being made nilable.</summary>
@@ -1975,7 +2184,7 @@
                     Gets the <c>?</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="QuestionToken" />
+            <Kind Name="QuestionToken"/>
         </Field>
     </Node>
 
@@ -1985,17 +2194,19 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ParenthesizedTypeSyntax" /> node.
+                Creates a new
+                <see cref="ParenthesizedTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ParenthesizedType" />
+        <Kind Name="ParenthesizedType"/>
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     Gets the <c>(</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
+            <Kind Name="OpenParenthesisToken"/>
         </Field>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
@@ -2008,7 +2219,7 @@
                     Gets the <c>)</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
+            <Kind Name="CloseParenthesisToken"/>
         </Field>
     </Node>
 
@@ -2018,17 +2229,19 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypePackSyntax" /> node.
+                Creates a new
+                <see cref="TypePackSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypePack" />
+        <Kind Name="TypePack"/>
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     Gets the <c>(</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
+            <Kind Name="OpenParenthesisToken"/>
         </Field>
         <Field Name="Types" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
             <PropertyComment>
@@ -2041,7 +2254,7 @@
                     Gets the <c>)</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
+            <Kind Name="CloseParenthesisToken"/>
         </Field>
     </Node>
 
@@ -2051,10 +2264,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="FunctionTypeSyntax" /> node.
+                Creates a new
+                <see cref="FunctionTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="FunctionType" />
+        <Kind Name="FunctionType"/>
         <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true">
             <PropertyComment>
                 <summary>Gets the type parameter list for this function (if any).</summary>
@@ -2066,7 +2281,7 @@
                     Gets the <c>(</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
+            <Kind Name="OpenParenthesisToken"/>
         </Field>
         <Field Name="Parameters" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
             <PropertyComment>
@@ -2079,7 +2294,7 @@
                     Gets the <c>)</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
+            <Kind Name="CloseParenthesisToken"/>
         </Field>
         <Field Name="MinusGreaterThanToken" Type="SyntaxToken">
             <PropertyComment>
@@ -2087,7 +2302,7 @@
                     Gets the <c>-&gt;</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="MinusGreaterThanToken" />
+            <Kind Name="MinusGreaterThanToken"/>
         </Field>
         <Field Name="ReturnType" Type="TypeSyntax">
             <PropertyComment>
@@ -2108,17 +2323,19 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="ArrayTypeSyntax" /> node.
+                Creates a new
+                <see cref="ArrayTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="ArrayType" />
+        <Kind Name="ArrayType"/>
         <Field Name="OpenBraceToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     Gets the <c>{</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="OpenBraceToken" />
+            <Kind Name="OpenBraceToken"/>
         </Field>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
@@ -2131,7 +2348,7 @@
                     Gets the <c>}</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="CloseBraceToken" />
+            <Kind Name="CloseBraceToken"/>
         </Field>
     </Node>
 
@@ -2147,15 +2364,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TableTypeIndexerSyntax" /> node.
+                Creates a new
+                <see cref="TableTypeIndexerSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TableTypeIndexer" />
+        <Kind Name="TableTypeIndexer"/>
         <Field Name="OpenBracketToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The open bracket token.</summary>
             </PropertyComment>
-            <Kind Name="OpenBracketToken" />
+            <Kind Name="OpenBracketToken"/>
         </Field>
         <Field Name="IndexType" Type="TypeSyntax">
             <PropertyComment>
@@ -2166,13 +2385,13 @@
             <PropertyComment>
                 <summary>The close bracket token.</summary>
             </PropertyComment>
-            <Kind Name="CloseBracketToken" />
+            <Kind Name="CloseBracketToken"/>
         </Field>
         <Field Name="ColonToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The colon token.</summary>
             </PropertyComment>
-            <Kind Name="ColonToken" />
+            <Kind Name="ColonToken"/>
         </Field>
         <Field Name="ValueType" Type="TypeSyntax">
             <PropertyComment>
@@ -2187,21 +2406,23 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TableTypePropertySyntax" /> node.
+                Creates a new
+                <see cref="TableTypePropertySyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TableTypeProperty" />
+        <Kind Name="TableTypeProperty"/>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The type's index</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="ColonToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The colon token.</summary>
             </PropertyComment>
-            <Kind Name="ColonToken" />
+            <Kind Name="ColonToken"/>
         </Field>
         <Field Name="ValueType" Type="TypeSyntax">
             <PropertyComment>
@@ -2216,17 +2437,19 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TableTypeSyntax" /> node.
+                Creates a new
+                <see cref="TableTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TableType" />
+        <Kind Name="TableType"/>
         <Field Name="OpenBraceToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     Gets the <c>{</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="OpenBraceToken" />
+            <Kind Name="OpenBraceToken"/>
         </Field>
         <Field Name="Elements" Type="SeparatedSyntaxList&lt;TableTypeElementSyntax&gt;">
             <PropertyComment>
@@ -2239,7 +2462,7 @@
                     Gets the <c>}</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="CloseBraceToken" />
+            <Kind Name="CloseBraceToken"/>
         </Field>
     </Node>
 
@@ -2249,10 +2472,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypeCastExpressionSyntax" /> node.
+                Creates a new
+                <see cref="TypeCastExpressionSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypeCastExpression" />
+        <Kind Name="TypeCastExpression"/>
         <Field Name="Expression" Type="ExpressionSyntax">
             <PropertyComment>
                 <summary>Gets the expression being cast to another type.</summary>
@@ -2264,7 +2489,7 @@
                     Gets the <c>::</c> operator token.
                 </summary>
             </PropertyComment>
-            <Kind Name="ColonColonToken" />
+            <Kind Name="ColonColonToken"/>
         </Field>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
@@ -2279,10 +2504,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="UnionTypeSyntax" /> node.
+                Creates a new
+                <see cref="UnionTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="UnionType" />
+        <Kind Name="UnionType"/>
         <Field Name="Left" Type="TypeSyntax">
             <PropertyComment>
                 <summary>Gets the type on the left side of the operator.</summary>
@@ -2294,7 +2521,7 @@
                     Gets the <c>|</c> operator token.
                 </summary>
             </PropertyComment>
-            <Kind Name="PipeToken" />
+            <Kind Name="PipeToken"/>
         </Field>
         <Field Name="Right" Type="TypeSyntax">
             <PropertyComment>
@@ -2309,10 +2536,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="IntersectionTypeSyntax" /> node.
+                Creates a new
+                <see cref="IntersectionTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="IntersectionType" />
+        <Kind Name="IntersectionType"/>
         <Field Name="Left" Type="TypeSyntax">
             <PropertyComment>
                 <summary>Gets the type on the left side of the operator.</summary>
@@ -2324,7 +2553,7 @@
                     Gets the <c>&amp;</c> operator token.
                 </summary>
             </PropertyComment>
-            <Kind Name="AmpersandToken" />
+            <Kind Name="AmpersandToken"/>
         </Field>
         <Field Name="Right" Type="TypeSyntax">
             <PropertyComment>
@@ -2339,15 +2568,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="EqualsTypeSyntax" /> node.
+                Creates a new
+                <see cref="EqualsTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="EqualsType" />
+        <Kind Name="EqualsType"/>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>
-                Gets the <c> = </c> token.
+                Gets the <c>=</c> token.
             </PropertyComment>
-            <Kind Name="EqualsToken" />
+            <Kind Name="EqualsToken"/>
         </Field>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
@@ -2362,15 +2593,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypeParameterSyntax" /> node.
+                Creates a new
+                <see cref="TypeParameterSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypeParameter" />
+        <Kind Name="TypeParameter"/>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>Gets the type parameter name identifier token.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="DotDotDotToken" Type="SyntaxToken" Optional="true">
             <PropertyComment>
@@ -2378,7 +2611,7 @@
                     Gets the <c>...</c> token (if this type parameter is a type pack).
                 </summary>
             </PropertyComment>
-            <Kind Name="DotDotDotToken" />
+            <Kind Name="DotDotDotToken"/>
         </Field>
         <Field Name="EqualsType" Type="EqualsTypeSyntax" Optional="true">
             <PropertyComent>
@@ -2395,17 +2628,19 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypeParameterListSyntax" /> node.
+                Creates a new
+                <see cref="TypeParameterListSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypeParameterList" />
+        <Kind Name="TypeParameterList"/>
         <Field Name="LessThanToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     Gets the <c>&lt;</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="LessThanToken" />
+            <Kind Name="LessThanToken"/>
         </Field>
         <Field Name="Names" Type="SeparatedSyntaxList&lt;TypeParameterSyntax&gt;">
             <PropertyComment>
@@ -2418,7 +2653,7 @@
                     Gets the <c>&gt;</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="GreaterThanToken" />
+            <Kind Name="GreaterThanToken"/>
         </Field>
     </Node>
 
@@ -2428,17 +2663,19 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypeArgumentListSyntax" /> node.
+                Creates a new
+                <see cref="TypeArgumentListSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypeArgumentList" />
+        <Kind Name="TypeArgumentList"/>
         <Field Name="LessThanToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     Gets the <c>&lt;</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="LessThanToken" />
+            <Kind Name="LessThanToken"/>
         </Field>
         <Field Name="Arguments" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
             <PropertyComment>
@@ -2451,7 +2688,7 @@
                     Gets the <c>&gt;</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="GreaterThanToken" />
+            <Kind Name="GreaterThanToken"/>
         </Field>
     </Node>
 
@@ -2461,21 +2698,23 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="LiteralTypeSyntax" /> node.
+                Creates a new
+                <see cref="LiteralTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="StringType" />
-        <Kind Name="TrueType" />
-        <Kind Name="FalseType" />
-        <Kind Name="NilType" />
+        <Kind Name="StringType"/>
+        <Kind Name="TrueType"/>
+        <Kind Name="FalseType"/>
+        <Kind Name="NilType"/>
         <Field Name="Token" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The literal token.</summary>
             </PropertyComment>
-            <Kind Name="StringLiteralToken" />
-            <Kind Name="TrueKeyword" />
-            <Kind Name="FalseKeyword" />
-            <Kind Name="NilKeyword" />
+            <Kind Name="StringLiteralToken"/>
+            <Kind Name="TrueKeyword"/>
+            <Kind Name="FalseKeyword"/>
+            <Kind Name="NilKeyword"/>
         </Field>
     </Node>
 
@@ -2485,21 +2724,23 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="TypeofTypeSyntax" /> node.
+                Creates a new
+                <see cref="TypeofTypeSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="TypeofType" />
+        <Kind Name="TypeofType"/>
         <Field Name="TypeofKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The typeof keyword.</summary>
             </PropertyComment>
-            <Kind Name="TypeofKeyword" />
+            <Kind Name="TypeofKeyword"/>
         </Field>
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The open parenthesis token.</summary>
             </PropertyComment>
-            <Kind Name="OpenParenthesisToken" />
+            <Kind Name="OpenParenthesisToken"/>
         </Field>
         <Field Name="Expression" Type="ExpressionSyntax">
             <PropertyComment>
@@ -2510,7 +2751,7 @@
             <PropertyComment>
                 <summary>The close parenthesis token.</summary>
             </PropertyComment>
-            <Kind Name="CloseParenthesisToken" />
+            <Kind Name="CloseParenthesisToken"/>
         </Field>
     </Node>
 
@@ -2520,17 +2761,19 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="VariadicTypePackSyntax" /> node.
+                Creates a new
+                <see cref="VariadicTypePackSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="VariadicTypePack" />
+        <Kind Name="VariadicTypePack"/>
         <Field Name="DotDotDotToken" Type="SyntaxToken">
             <PropertyComment>
                 <summary>
                     The <c>...</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="DotDotDotToken" />
+            <Kind Name="DotDotDotToken"/>
         </Field>
         <Field Name="Type" Type="TypeSyntax">
             <PropertyComment>
@@ -2545,15 +2788,17 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="GenericTypePackSyntax" /> node.
+                Creates a new
+                <see cref="GenericTypePackSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="GenericTypePack" />
+        <Kind Name="GenericTypePack"/>
         <Field Name="Identifier" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The identifier token.</summary>
             </PropertyComment>
-            <Kind Name="IdentifierToken" />
+            <Kind Name="IdentifierToken"/>
         </Field>
         <Field Name="DotDotDotToken" Type="SyntaxToken">
             <PropertyComment>
@@ -2561,7 +2806,7 @@
                     The <c>...</c> token.
                 </summary>
             </PropertyComment>
-            <Kind Name="DotDotDotToken" />
+            <Kind Name="DotDotDotToken"/>
         </Field>
     </Node>
 
@@ -2571,10 +2816,12 @@
         </TypeComment>
         <FactoryComment>
             <summary>
-                Creates a new <see cref="CompilationUnitSyntax" /> node.
+                Creates a new
+                <see cref="CompilationUnitSyntax"/>
+                node.
             </summary>
         </FactoryComment>
-        <Kind Name="CompilationUnit" />
+        <Kind Name="CompilationUnit"/>
         <Field Name="Statements" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
                 <summary>The statements in the compilation unit.</summary>
@@ -2584,7 +2831,7 @@
             <PropertyComment>
                 <summary>The end-of-file token.</summary>
             </PropertyComment>
-            <Kind Name="EndOfFileToken" />
+            <Kind Name="EndOfFileToken"/>
         </Field>
     </Node>
 

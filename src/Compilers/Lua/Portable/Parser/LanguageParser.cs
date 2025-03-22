@@ -29,8 +29,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         internal CompilationUnitSyntax ParseCompilationUnit()
         {
             return ParseWithStackGuard(
-                ParseCompilationUnitCore,
-                () => SyntaxFactory.CompilationUnit(
+                static @this => @this.ParseCompilationUnitCore(),
+                static _ => SyntaxFactory.CompilationUnit(
                     SyntaxFactory.StatementList(),
                     SyntaxFactory.Token(SyntaxKind.EndOfFileToken)));
         }
@@ -42,7 +42,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return SyntaxFactory.CompilationUnit(statements, endOfFileToken);
         }
 
-        internal TNode ParseWithStackGuard<TNode>(Func<TNode> parseFunc, Func<TNode> createEmptyNodeFunc) where TNode : LuaSyntaxNode
+        internal TNode ParseWithStackGuard<TNode>(
+            Func<LanguageParser, TNode> parseFunc,
+            Func<LanguageParser, TNode> createEmptyNodeFunc) where TNode : LuaSyntaxNode
         {
             // If this value is non-zero then we are nesting calls to ParseWithStackGuard which should not be
             // happening.  It's not a bug but it's inefficient and should be changed.
@@ -50,11 +52,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             try
             {
-                return parseFunc();
+                return parseFunc(this);
             }
             catch (InsufficientExecutionStackException)
             {
-                return CreateForGlobalFailure(_lexer.TextWindow.Position, createEmptyNodeFunc());
+                return CreateForGlobalFailure(_lexer.TextWindow.Position, createEmptyNodeFunc(this));
             }
         }
 
@@ -302,7 +304,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var expressionsAndSeparatorsBuilder =
                     _pool.AllocateSeparated<ExpressionSyntax>();
 
-                var value = ParseExpression();
+                var value = ParseExpressionCore();
                 expressionsAndSeparatorsBuilder.Add(value);
 
                 while (CurrentToken.Kind is SyntaxKind.CommaToken)
@@ -310,7 +312,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     var separator = EatToken(SyntaxKind.CommaToken);
                     expressionsAndSeparatorsBuilder.AddSeparator(separator);
 
-                    value = ParseExpression();
+                    value = ParseExpressionCore();
                     expressionsAndSeparatorsBuilder.Add(value);
                 }
 
@@ -354,15 +356,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private NumericForStatementSyntax ParseNumericForStatement(SyntaxToken forKeyword, TypedIdentifierNameSyntax forLoopVariable)
         {
             var equalsToken = EatToken(SyntaxKind.EqualsToken);
-            var initialValue = ParseExpression();
+            var initialValue = ParseExpressionCore();
             var finalValueCommaToken = EatToken(SyntaxKind.CommaToken);
-            var finalValue = ParseExpression();
+            var finalValue = ParseExpressionCore();
             SyntaxToken? stepValueCommaToken = null;
             ExpressionSyntax? stepValue = null;
             if (CurrentToken.Kind == SyntaxKind.CommaToken)
             {
                 stepValueCommaToken = EatToken(SyntaxKind.CommaToken);
-                stepValue = ParseExpression();
+                stepValue = ParseExpressionCore();
             }
             var doKeyword = EatToken(SyntaxKind.DoKeyword);
             var body = ParseStatementList(SyntaxKind.EndKeyword);
@@ -406,14 +408,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var expressionsAndSeparatorsBuilder =
                 _pool.AllocateSeparated<ExpressionSyntax>();
 
-            var expression = ParseExpression();
+            var expression = ParseExpressionCore();
             expressionsAndSeparatorsBuilder.Add(expression);
             while (CurrentToken.Kind is SyntaxKind.CommaToken)
             {
                 var separator = EatToken(SyntaxKind.CommaToken);
                 expressionsAndSeparatorsBuilder.AddSeparator(separator);
 
-                expression = ParseExpression();
+                expression = ParseExpressionCore();
                 expressionsAndSeparatorsBuilder.Add(expression);
             }
 
@@ -438,7 +440,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private IfStatementSyntax ParseIfStatement()
         {
             var ifKeyword = EatToken(SyntaxKind.IfKeyword);
-            var condition = ParseExpression();
+            var condition = ParseExpressionCore();
             var thenKeyword = EatToken(SyntaxKind.ThenKeyword);
             var body = ParseStatementList(SyntaxKind.ElseIfKeyword, SyntaxKind.ElseKeyword, SyntaxKind.EndKeyword);
 
@@ -446,7 +448,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             while (CurrentToken.Kind is SyntaxKind.ElseIfKeyword)
             {
                 var elseIfKeyword = EatToken(SyntaxKind.ElseIfKeyword);
-                var elseIfCondition = ParseExpression();
+                var elseIfCondition = ParseExpressionCore();
                 var elseIfThenKeyword = EatToken(SyntaxKind.ThenKeyword);
                 var elseIfBody = ParseStatementList(SyntaxKind.ElseIfKeyword, SyntaxKind.ElseKeyword, SyntaxKind.EndKeyword);
 
@@ -485,7 +487,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var repeatKeyword = EatToken(SyntaxKind.RepeatKeyword);
             var body = ParseStatementList(SyntaxKind.UntilKeyword);
             var untilKeyword = EatToken(SyntaxKind.UntilKeyword);
-            var condition = ParseExpression();
+            var condition = ParseExpressionCore();
             var semicolonToken = TryMatchSemicolon();
             return SyntaxFactory.RepeatUntilStatement(
                 repeatKeyword,
@@ -498,7 +500,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private WhileStatementSyntax ParseWhileStatement()
         {
             var whileKeyword = EatToken(SyntaxKind.WhileKeyword);
-            var condition = ParseExpression();
+            var condition = ParseExpressionCore();
             var doKeyword = EatToken(SyntaxKind.DoKeyword);
             var body = ParseStatementList(SyntaxKind.EndKeyword);
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
@@ -619,7 +621,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 var expressionsAndSeparatorsBuilder =
                     _pool.AllocateSeparated<ExpressionSyntax>();
 
-                var expression = ParseExpression();
+                var expression = ParseExpressionCore();
                 expressionsAndSeparatorsBuilder.Add(expression);
 
                 while (CurrentToken.Kind == SyntaxKind.CommaToken)
@@ -627,7 +629,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     var separator = EatToken(SyntaxKind.CommaToken);
                     expressionsAndSeparatorsBuilder.AddSeparator(separator);
 
-                    expression = ParseExpression();
+                    expression = ParseExpressionCore();
                     expressionsAndSeparatorsBuilder.Add(expression);
                 }
 
@@ -663,14 +665,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
             var valuesAndSeparatorsBuilder =
                 _pool.AllocateSeparated<ExpressionSyntax>();
-            var value = ParseExpression();
+            var value = ParseExpressionCore();
             valuesAndSeparatorsBuilder.Add(value);
             while (CurrentToken.Kind == SyntaxKind.CommaToken)
             {
                 var separator = EatToken(SyntaxKind.CommaToken);
                 valuesAndSeparatorsBuilder.AddSeparator(separator);
 
-                value = ParseExpression();
+                value = ParseExpressionCore();
                 valuesAndSeparatorsBuilder.Add(value);
             }
 
@@ -693,7 +695,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 variable = AddError(variable, ErrorCode.ERR_CannotBeAssignedTo);
             var assignmentOperatorToken = EatToken();
             var kind = SyntaxFacts.GetCompoundAssignmentStatement(assignmentOperatorToken.Kind).Value;
-            var expression = ParseExpression();
+            var expression = ParseExpressionCore();
             var semicolonToken = TryMatchSemicolon();
 
             var compoundAssignment = SyntaxFactory.CompoundAssignmentStatement(
@@ -706,8 +708,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 compoundAssignment = AddError(compoundAssignment, ErrorCode.ERR_CompoundAssignmentNotSupportedInLuaVersion);
             return compoundAssignment;
         }
-
-        internal ExpressionSyntax ParseExpression() =>
+        
+        public ExpressionSyntax ParseExpression()
+        {
+            return ParseWithStackGuard(
+                static @this => @this.ParseExpressionCore(),
+                static _ => CreateMissingIdentifierName());
+        }
+        
+        private ExpressionSyntax ParseExpressionCore() =>
             ParseBinaryExpression(0);
 
         internal ExpressionSyntax ParseBinaryExpression(int parentPrecedence)
@@ -835,17 +844,21 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             ExpressionSyntax expression = CurrentToken.Kind switch
             {
                 SyntaxKind.NilKeyword
-                or SyntaxKind.TrueKeyword
-                or SyntaxKind.FalseKeyword
-                or SyntaxKind.NumericLiteralToken
-                or SyntaxKind.StringLiteralToken
-                or SyntaxKind.HashStringLiteralToken => ParseLiteralExpression(),
+                    or SyntaxKind.TrueKeyword
+                    or SyntaxKind.FalseKeyword
+                    or SyntaxKind.NumericLiteralToken
+                    or SyntaxKind.StringLiteralToken
+                    or SyntaxKind.HashStringLiteralToken => ParseLiteralExpression(),
                 SyntaxKind.DotDotDotToken => ParseVarArgExpression(),
                 SyntaxKind.OpenBraceToken => ParseTableConstructorExpression(),
                 SyntaxKind.FunctionKeyword when PeekToken(1).Kind is SyntaxKind.OpenParenthesisToken
-                                                                  or SyntaxKind.LessThanToken => ParseAnonymousFunctionExpression(),
+                                                                     or SyntaxKind.LessThanToken =>
+                    ParseAnonymousFunctionExpression(),
                 SyntaxKind.IfKeyword => ParseIfExpression(),
-                _ => ParsePrefixOrVariableExpression(),
+                SyntaxKind.BacktickToken =>
+                    throw new NotImplementedException(), // this should not occur because these tokens are produced and parsed immediately
+                SyntaxKind.InterpolatedStringToken => ParseInterpolatedStringToken(),
+                _                                  => ParsePrefixOrVariableExpression(),
             };
 
             if (CurrentToken.Kind is SyntaxKind.ColonColonToken
@@ -959,7 +972,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private ElementAccessExpressionSyntax ParseElementAccessExpression(PrefixExpressionSyntax expression)
         {
             var openBracketToken = EatToken(SyntaxKind.OpenBracketToken);
-            var elementExpression = ParseExpression();
+            var elementExpression = ParseExpressionCore();
             var closeBracketToken = EatToken(SyntaxKind.CloseBracketToken);
 
             return SyntaxFactory.ElementAccessExpression(
@@ -1017,7 +1030,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var argumentsAndSeparatorsBuilder = _pool.AllocateSeparated<ExpressionSyntax>();
             while (CurrentToken.Kind is not (SyntaxKind.CloseParenthesisToken or SyntaxKind.EndOfFileToken))
             {
-                var argument = ParseExpression();
+                var argument = ParseExpressionCore();
                 argumentsAndSeparatorsBuilder.Add(argument);
                 if (CurrentToken.Kind is SyntaxKind.CommaToken)
                 {
@@ -1114,7 +1127,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         private ParenthesizedExpressionSyntax ParseParenthesizedExpression()
         {
             var open = EatToken(SyntaxKind.OpenParenthesisToken);
-            var expression = ParseExpression();
+            var expression = ParseExpressionCore();
             var closing = EatToken(SyntaxKind.CloseParenthesisToken);
             return SyntaxFactory.ParenthesizedExpression(open, expression, closing);
         }
@@ -1154,23 +1167,23 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 var identifier = EatToken(SyntaxKind.IdentifierToken);
                 var equalsToken = EatToken(SyntaxKind.EqualsToken);
-                var value = ParseExpression();
+                var value = ParseExpressionCore();
 
                 return SyntaxFactory.IdentifierKeyedTableField(identifier, equalsToken, value);
             }
             else if (CurrentToken.Kind == SyntaxKind.OpenBracketToken)
             {
                 var openBracketToken = EatToken(SyntaxKind.OpenBracketToken);
-                var key = ParseExpression();
+                var key = ParseExpressionCore();
                 var closeBracketToken = EatToken(SyntaxKind.CloseBracketToken);
                 var equalsToken = EatToken(SyntaxKind.EqualsToken);
-                var value = ParseExpression();
+                var value = ParseExpressionCore();
 
                 return SyntaxFactory.ExpressionKeyedTableField(openBracketToken, key, closeBracketToken, equalsToken, value);
             }
             else
             {
-                var value = ParseExpression();
+                var value = ParseExpressionCore();
                 return SyntaxFactory.UnkeyedTableField(value);
             }
         }
@@ -1190,10 +1203,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
             else
             {
-                condition = ParseExpression();
+                condition = ParseExpressionCore();
             }
             var thenKeyword = EatToken(SyntaxKind.ThenKeyword);
-            var trueValue = ParseExpression();
+            var trueValue = ParseExpressionCore();
 
             var elseIfClauses = _pool.Allocate<ElseIfExpressionClauseSyntax>();
             while (CurrentToken.Kind == SyntaxKind.ElseIfKeyword)
@@ -1210,10 +1223,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 }
                 else
                 {
-                    elseIfCondition = ParseExpression();
+                    elseIfCondition = ParseExpressionCore();
                 }
                 var elseIfThenKeyword = EatToken(SyntaxKind.ThenKeyword);
-                var elseIfValue = ParseExpression();
+                var elseIfValue = ParseExpressionCore();
 
                 elseIfClauses.Add(SyntaxFactory.ElseIfExpressionClause(
                     elseIfKeyword,
@@ -1223,7 +1236,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
 
             var elseKeyword = EatToken(SyntaxKind.ElseKeyword);
-            var falseValue = ParseExpression();
+            var falseValue = ParseExpressionCore();
 
             var ifExpression = SyntaxFactory.IfExpression(
                 ifKeyword,

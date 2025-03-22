@@ -25,10 +25,12 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var textfulTokens = new[]
             {
                 SyntaxKind.BadToken,
+                SyntaxKind.HashStringLiteralToken,
+                SyntaxKind.IdentifierToken,
+                SyntaxKind.InterpolatedStringTextToken,
+                SyntaxKind.InterpolatedStringToken,
                 SyntaxKind.NumericLiteralToken,
                 SyntaxKind.StringLiteralToken,
-                SyntaxKind.IdentifierToken,
-                SyntaxKind.HashStringLiteralToken,
             };
 
             foreach (var kind in kinds)
