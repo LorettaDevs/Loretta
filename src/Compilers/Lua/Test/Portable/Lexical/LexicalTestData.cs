@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Numerics;
-using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Text;
 using static Tsu.Option;

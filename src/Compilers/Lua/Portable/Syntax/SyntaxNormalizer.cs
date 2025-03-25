@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Diagnostics.CodeAnalysis;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 
@@ -9,7 +10,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
     // This *slightly* based on VB's SyntaxNormalizer as it is more similar to Lua than C#
     // It has been heavily modified as maintaining the token pair comparisons was too much of a pain and wasn't worth it.
     // It makes a lot of references to the rules in ../Generated/Lua.Generated.g4
-    internal class SyntaxNormalizer : LuaSyntaxRewriter
+    internal sealed class SyntaxNormalizer : LuaSyntaxRewriter
     {
         private readonly TextSpan _consideredSpan;
         private readonly string _indentWhitespace;
@@ -77,7 +78,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         private void Free() => _indentations?.Free();
 
         /// <summary>
-        /// Obtains the indentaion for the provided depth.
+        /// Obtains the indentation for the provided depth.
         /// </summary>
         /// <param name="depth"></param>
         /// <returns></returns>
@@ -191,7 +192,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                         continue;
 
                     // check if there's a separator or a line break needed between the trivia itself
-                    var tokenParent = trivia.Token.Parent;
                     var needsSeparator = currentTriviaList.Count == 0 && isTrailing;
                     var needsLineBreak = NeedsLineBreakBefore(trivia) || (currentTriviaList.Count > 0 && NeedsLineBreakBetween(currentTriviaList.Last(), trivia, isTrailing));
 
@@ -327,7 +327,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Will be used when we have doc comments.")]
+        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Will be used when we have doc comments.")]
+        [SuppressMessage("ReSharper", "UnusedParameter.Local", Justification = "Will be used when we have doc comments.")]
 #pragma warning restore IDE0079 // Remove unnecessary suppression
         // Left here for when we add documentation comments
         private static bool NeedsLineBreakBefore(SyntaxTrivia trivia) =>
@@ -373,9 +374,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         {
             var nextToken = token.GetNextToken(
                 static t => t.Kind() != SyntaxKind.None,
-                static t => false);
+                static _ => false);
 
-            return _consideredSpan.Contains(nextToken.FullSpan) ? nextToken : default;
+            return _consideredSpan.Contains(nextToken.FullSpan) ? nextToken : default(SyntaxToken);
         }
 
         private void AddLineBreaksAfterElements<TNode>(SyntaxList<TNode> list, int lineBreaksBetweenElements = 1, int lineBreaksAfterLastElement = 0)
@@ -506,8 +507,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         //   ;
         public override SyntaxNode? VisitDoStatement(DoStatementSyntax node)
         {
-            AddLineBreaksAfterToken(node.DoKeyword, 1);
-            AddLineBreaksAfterToken(node.Body.GetLastToken(), 1);
+            AddLineBreaksAfterToken(node.DoKeyword);
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
 
             return base.VisitDoStatement(node);
         }
@@ -521,7 +522,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public override SyntaxNode? VisitFunctionDeclarationStatement(FunctionDeclarationStatementSyntax node)
         {
             AddSpaceAfterToken(node.FunctionKeyword);
-            AddLineBreaksAfterToken(node.TypeBinding is not null ? node.TypeBinding.GetLastToken() : node.Parameters.GetLastToken());
+            AddLineBreaksAfterToken(node.TypeBinding?.GetLastToken() ?? node.Parameters.GetLastToken());
             AddLineBreaksAfterToken(node.Body.GetLastToken());
 
             return base.VisitFunctionDeclarationStatement(node);
@@ -650,7 +651,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         {
             AddSpaceAfterToken(node.LocalKeyword);
             AddSpaceAfterToken(node.FunctionKeyword);
-            AddLineBreaksAfterToken(node.TypeBinding is not null ? node.TypeBinding.GetLastToken() : node.Parameters.GetLastToken());
+            AddLineBreaksAfterToken(node.TypeBinding?.GetLastToken() ?? node.Parameters.GetLastToken());
             AddLineBreaksAfterToken(node.Body.GetLastToken());
 
             return base.VisitLocalFunctionDeclarationStatement(node);
@@ -896,7 +897,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         //   ;
         public override SyntaxNode? VisitAnonymousFunctionExpression(AnonymousFunctionExpressionSyntax node)
         {
-            AddLineBreaksAfterToken(node.TypeBinding is not null ? node.TypeBinding.GetLastToken() : node.Parameters.GetLastToken());
+            AddLineBreaksAfterToken(node.TypeBinding?.GetLastToken() ?? node.Parameters.GetLastToken());
             AddLineBreaksAfterToken(node.Body.GetLastToken());
 
             return base.VisitAnonymousFunctionExpression(node);
@@ -934,7 +935,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             // We add around because this will always have an expression before it
             AddSpacesAroundToken(node.ElseIfKeyword);
             AddSpacesAroundToken(node.ThenKeyword);
-            // No spaces after because the first line of this method and VisitIfExpression handle the space afterwards.
+            // No spaces after because the first line of this method and VisitIfExpression handle the space afterward.
 
             return base.VisitElseIfExpressionClause(node);
         }
@@ -982,9 +983,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         // table_constructor_expression
         //   : '{' (table_field (',' table_field)* ','?)? '}'
         //   ;
-        public override SyntaxNode? VisitTableConstructorExpression(TableConstructorExpressionSyntax node)
+        public override SyntaxNode VisitTableConstructorExpression(TableConstructorExpressionSyntax node)
         {
-            // First visit is only used to define whether or not it'll be a multi-line table.
+            // First visit is only used to define whether it'll be a multi-line table.
             var multiLineTable = WithTempState(VisitList, node.Fields).Any(IsMultiLineNode);
 
             if (multiLineTable)
@@ -1082,6 +1083,6 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         #endregion Expressions
 
         private static bool IsMultiLineNode(SyntaxNode node) =>
-            node.DescendantTrivia().Any(trivia => trivia.IsKind(SyntaxKind.EndOfLineTrivia));
+            node.DescendantTrivia().Any(static trivia => trivia.IsKind(SyntaxKind.EndOfLineTrivia));
     }
 }

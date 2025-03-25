@@ -2,9 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Text;
-using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.PooledObjects;
-
 #if DEBUG
 #endif
 
@@ -32,17 +30,17 @@ namespace Loretta.Utilities
 
         // Size of local cache.
         private const int LocalSizeBits = 11;
-        private const int LocalSize = 1 << LocalSizeBits;
+        private const int LocalSize     = 1 << LocalSizeBits;
         private const int LocalSizeMask = LocalSize - 1;
 
         // max size of shared cache.
         private const int SharedSizeBits = 16;
-        private const int SharedSize = 1 << SharedSizeBits;
+        private const int SharedSize     = 1 << SharedSizeBits;
         private const int SharedSizeMask = SharedSize - 1;
 
         // size of bucket in shared cache. (local cache has bucket size 1).
-        private const int SharedBucketBits = 4;
-        private const int SharedBucketSize = 1 << SharedBucketBits;
+        private const int SharedBucketBits     = 4;
+        private const int SharedBucketSize     = 1 << SharedBucketBits;
         private const int SharedBucketSizeMask = SharedBucketSize - 1;
 
         // local (L1) cache
@@ -69,12 +67,10 @@ namespace Loretta.Utilities
         // same as above but for users that go directly with unbuffered shared cache.
         private static int s_sharedRandom = Environment.TickCount;
 
-        internal StringTable()
-            : this(null)
-        {
-        }
+        internal StringTable() : this(null) { }
 
         // implement Poolable object pattern
+
         #region "Poolable"
 
         private StringTable(ObjectPool<StringTable>? pool)
@@ -82,8 +78,8 @@ namespace Loretta.Utilities
             _pool = pool;
         }
 
-        private readonly ObjectPool<StringTable>? _pool;
-        private static readonly ObjectPool<StringTable> s_staticPool = CreatePool();
+        private readonly        ObjectPool<StringTable>? _pool;
+        private static readonly ObjectPool<StringTable>  s_staticPool = CreatePool();
 
         private static ObjectPool<StringTable> CreatePool()
         {
@@ -93,18 +89,18 @@ namespace Loretta.Utilities
 
         public static StringTable GetInstance() => s_staticPool.Allocate();
 
-        public void Free() =>
-            // leave cache content in the cache, just return it to the pool
-            // Array.Clear(this.localTable, 0, this.localTable.Length);
-            // Array.Clear(sharedTable, 0, sharedTable.Length);
-
-            _pool?.Free(this);
+        public void Free()
+            =>
+                // leave cache content in the cache, just return it to the pool
+                // Array.Clear(this.localTable, 0, this.localTable.Length);
+                // Array.Clear(sharedTable, 0, sharedTable.Length);
+                _pool?.Free(this);
 
         #endregion // Poolable
 
         internal string Add(char[] chars, int start, int len)
         {
-            var span = chars.AsSpan(start, len);
+            var span     = chars.AsSpan(start, len);
             var hashCode = Hash.GetFNVHashCode(chars, start, len);
 
             // capture array to avoid extra range checks
@@ -129,7 +125,7 @@ namespace Loretta.Utilities
                 //       because current JIT produces better code compared to
                 //       arr[idx] = new Entry(...)
                 arr[idx].HashCode = hashCode;
-                arr[idx].Text = shared;
+                arr[idx].Text     = shared;
 
                 return shared;
             }
@@ -163,7 +159,7 @@ namespace Loretta.Utilities
                 //       because current JIT produces better code compared to
                 //       arr[idx] = new Entry(...)
                 arr[idx].HashCode = hashCode;
-                arr[idx].Text = shared;
+                arr[idx].Text     = shared;
 
                 return shared;
             }
@@ -197,7 +193,7 @@ namespace Loretta.Utilities
                 //       because current JIT produces better code compared to
                 //       arr[idx] = new Entry(...)
                 arr[idx].HashCode = hashCode;
-                arr[idx].Text = shared;
+                arr[idx].Text     = shared;
 
                 return shared;
             }
@@ -231,7 +227,7 @@ namespace Loretta.Utilities
                 //       because current JIT produces better code compared to
                 //       arr[idx] = new Entry(...)
                 arr[idx].HashCode = hashCode;
-                arr[idx].Text = shared;
+                arr[idx].Text     = shared;
 
                 return shared;
             }
@@ -265,7 +261,7 @@ namespace Loretta.Utilities
                 //       because current JIT produces better code compared to
                 //       arr[idx] = new Entry(...)
                 arr[idx].HashCode = hashCode;
-                arr[idx].Text = shared;
+                arr[idx].Text     = shared;
 
                 return shared;
             }
@@ -299,7 +295,7 @@ namespace Loretta.Utilities
                 //       because current JIT produces better code compared to
                 //       arr[idx] = new Entry(...)
                 arr[idx].HashCode = hashCode;
-                arr[idx].Text = shared;
+                arr[idx].Text     = shared;
 
                 return shared;
             }
@@ -596,7 +592,7 @@ namespace Loretta.Utilities
             var arr = _localTable;
             var idx = LocalIdxFromHash(hashCode);
             arr[idx].HashCode = hashCode;
-            arr[idx].Text = chars;
+            arr[idx].Text     = chars;
         }
 
         private void AddSharedEntry(int hashCode, string text)
@@ -720,9 +716,10 @@ namespace Loretta.Utilities
 
         private static int LocalIdxFromHash(int hash) => hash & LocalSizeMask;
 
-        private static int SharedIdxFromHash(int hash) =>
-            // we can afford to mix some more hash bits here
-            (hash ^ (hash >> LocalSizeBits)) & SharedSizeMask;
+        private static int SharedIdxFromHash(int hash)
+            =>
+                // we can afford to mix some more hash bits here
+                (hash ^ (hash >> LocalSizeBits)) & SharedSizeMask;
 
         private int LocalNextRandom() => _localRandom++;
 
@@ -772,7 +769,9 @@ namespace Loretta.Utilities
 #if DEBUG
             for (var i = 0; i < ascii.Length; i++)
             {
-                LorettaDebug.Assert((ascii[i] & 0x80) == 0, $"The {nameof(ascii)} input to this method must be valid ASCII.");
+                LorettaDebug.Assert(
+                    (ascii[i] & 0x80) == 0,
+                    $"The {nameof(ascii)} input to this method must be valid ASCII.");
             }
 #endif
 

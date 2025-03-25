@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Loretta.CodeAnalysis;
+using System.Text;
 
 namespace Loretta.Utilities
 {
@@ -40,7 +40,7 @@ namespace Loretta.Utilities
             }
 
             var hashCode = 0;
-            var count = 0;
+            var count    = 0;
             foreach (var value in values)
             {
                 if (count++ >= maxItemsToHash)
@@ -65,7 +65,7 @@ namespace Loretta.Utilities
                 return 0;
             }
 
-            var maxSize = Math.Min(maxItemsToHash, values.Length);
+            var maxSize  = Math.Min(maxItemsToHash, values.Length);
             var hashCode = 0;
 
             for (int i = 0; i < maxSize; i++)
@@ -90,7 +90,7 @@ namespace Loretta.Utilities
             }
 
             var hashCode = 0;
-            var count = 0;
+            var count    = 0;
             foreach (var value in values)
             {
                 if (count++ >= maxItemsToHash)
@@ -108,7 +108,10 @@ namespace Loretta.Utilities
             return hashCode;
         }
 
-        internal static int CombineValues(IEnumerable<string?>? values, StringComparer stringComparer, int maxItemsToHash = int.MaxValue)
+        internal static int CombineValues(
+            IEnumerable<string?>? values,
+            StringComparer        stringComparer,
+            int                   maxItemsToHash = int.MaxValue)
         {
             if (values == null)
             {
@@ -116,7 +119,7 @@ namespace Loretta.Utilities
             }
 
             var hashCode = 0;
-            var count = 0;
+            var count    = 0;
             foreach (var value in values)
             {
                 if (count++ >= maxItemsToHash)
@@ -182,7 +185,7 @@ namespace Loretta.Utilities
             {
                 byte b = data[i];
                 asciiMask |= b;
-                hashCode = unchecked((hashCode ^ b) * FnvPrime);
+                hashCode  =  unchecked((hashCode ^ b) * FnvPrime);
             }
 
             isAscii = (asciiMask & 0x80) == 0;
@@ -249,7 +252,8 @@ namespace Loretta.Utilities
         /// <param name="text">The input string</param>
         /// <param name="start">The start index of the first character to hash</param>
         /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending at the end of the string.</returns>
-        internal static int GetFNVHashCode(string text, int start) => GetFNVHashCode(text, start, length: text.Length - start);
+        internal static int GetFNVHashCode(string text, int start)
+            => GetFNVHashCode(text, start, length: text.Length - start);
 
         /// <summary>
         /// Compute the hashcode of a string using FNV-1a
@@ -265,10 +269,10 @@ namespace Loretta.Utilities
         /// </summary>
         /// <param name="text">The input string</param>
         /// <returns>The FNV-1a hash code of <paramref name="text"/></returns>
-        internal static int GetFNVHashCode(System.Text.StringBuilder text)
+        internal static int GetFNVHashCode(StringBuilder text)
         {
             int hashCode = FnvOffsetBias;
-            int end = text.Length;
+            int end      = text.Length;
 
             for (int i = 0; i < end; i++)
             {
@@ -289,7 +293,7 @@ namespace Loretta.Utilities
         internal static int GetFNVHashCode(char[] text, int start, int length)
         {
             int hashCode = FnvOffsetBias;
-            int end = start + length;
+            int end      = start + length;
 
             for (int i = start; i < end; i++)
             {

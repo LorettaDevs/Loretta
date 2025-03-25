@@ -183,7 +183,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
                         writer.WriteLineNoTabs("");
 
                         var groupKinds = new KindList(group.ToImmutableArray());
-                        GenerateIsX(groupKinds, writer, group.Key, static k => true);
+                        GenerateIsX(groupKinds, writer, group.Key, static _ => true);
 
                         writer.WriteLineNoTabs("");
                         writer.WriteLine("/// <summary>");

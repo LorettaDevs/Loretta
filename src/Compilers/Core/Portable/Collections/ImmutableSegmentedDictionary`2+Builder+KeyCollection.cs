@@ -11,9 +11,9 @@ namespace Loretta.CodeAnalysis.Collections
         {
             public readonly struct KeyCollection : ICollection<TKey>, IReadOnlyCollection<TKey>, ICollection
             {
-                private readonly ImmutableSegmentedDictionary<TKey, TValue>.Builder _dictionary;
+                private readonly Builder _dictionary;
 
-                internal KeyCollection(ImmutableSegmentedDictionary<TKey, TValue>.Builder dictionary)
+                internal KeyCollection(Builder dictionary)
                 {
                     LorettaDebug.Assert(dictionary is not null);
                     _dictionary = dictionary!;
@@ -27,14 +27,11 @@ namespace Loretta.CodeAnalysis.Collections
 
                 object ICollection.SyncRoot => ((ICollection) _dictionary).SyncRoot;
 
-                void ICollection<TKey>.Add(TKey item)
-                    => throw new NotSupportedException();
+                void ICollection<TKey>.Add(TKey item) => throw new NotSupportedException();
 
-                public void Clear()
-                    => _dictionary.Clear();
+                public void Clear() => _dictionary.Clear();
 
-                public bool Contains(TKey item)
-                    => _dictionary.ContainsKey(item);
+                public bool Contains(TKey item) => _dictionary.ContainsKey(item);
 
                 public void CopyTo(TKey[] array, int arrayIndex)
                     => _dictionary.ReadOnlyDictionary.Keys.CopyTo(array, arrayIndex);
@@ -42,17 +39,14 @@ namespace Loretta.CodeAnalysis.Collections
                 public ImmutableSegmentedDictionary<TKey, TValue>.KeyCollection.Enumerator GetEnumerator()
                     => new(_dictionary.GetEnumerator());
 
-                public bool Remove(TKey item)
-                    => _dictionary.Remove(item);
+                public bool Remove(TKey item) => _dictionary.Remove(item);
 
                 void ICollection.CopyTo(Array array, int index)
                     => ((ICollection) _dictionary.ReadOnlyDictionary.Keys).CopyTo(array, index);
 
-                IEnumerator<TKey> IEnumerable<TKey>.GetEnumerator()
-                    => GetEnumerator();
+                IEnumerator<TKey> IEnumerable<TKey>.GetEnumerator() => GetEnumerator();
 
-                IEnumerator IEnumerable.GetEnumerator()
-                    => GetEnumerator();
+                IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
             }
         }
     }

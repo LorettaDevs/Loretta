@@ -5,7 +5,6 @@
 #nullable disable
 
 using System.Text;
-using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Test.Utilities;
 using Loretta.CodeAnalysis.Text;

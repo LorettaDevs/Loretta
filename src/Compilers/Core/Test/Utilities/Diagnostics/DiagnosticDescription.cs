@@ -5,7 +5,6 @@
 
 using System.Text;
 using System.Text.RegularExpressions;
-using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Test.Utilities;

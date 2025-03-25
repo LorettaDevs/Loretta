@@ -21,7 +21,7 @@ namespace Loretta.CodeAnalysis.Lua
             _syntaxTree = null;
             _current = null;
             _position = position;
-            if (node != null && node.ContainsDiagnostics)
+            if (node is { ContainsDiagnostics: true })
             {
                 _syntaxTree = syntaxTree;
                 _stack = new NodeIterationStack(DefaultStackCapacity);
@@ -103,7 +103,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>
         /// The current diagnostic that the enumerator is pointing at.
         /// </summary>
-        public Diagnostic Current
+        public readonly Diagnostic Current
         {
             get { LorettaDebug.Assert(_current is not null); return _current; }
         }
@@ -177,11 +177,11 @@ namespace Loretta.CodeAnalysis.Lua
 
             internal void Pop() => _count--;
 
-            internal bool Any() => _count > 0;
+            internal readonly bool Any() => _count > 0;
 
-            internal NodeIteration Top => this[_count - 1];
+            internal readonly NodeIteration Top => this[_count - 1];
 
-            internal NodeIteration this[int index]
+            internal readonly NodeIteration this[int index]
             {
                 get
                 {
@@ -191,14 +191,14 @@ namespace Loretta.CodeAnalysis.Lua
                 }
             }
 
-            internal void UpdateSlotIndexForStackTop(int slotIndex)
+            internal readonly void UpdateSlotIndexForStackTop(int slotIndex)
             {
                 LorettaDebug.Assert(_stack != null);
                 LorettaDebug.Assert(_count > 0);
                 _stack[_count - 1].SlotIndex = slotIndex;
             }
 
-            internal void UpdateDiagnosticIndexForStackTop(int diagnosticIndex)
+            internal readonly void UpdateDiagnosticIndexForStackTop(int diagnosticIndex)
             {
                 LorettaDebug.Assert(_stack != null);
                 LorettaDebug.Assert(_count > 0);

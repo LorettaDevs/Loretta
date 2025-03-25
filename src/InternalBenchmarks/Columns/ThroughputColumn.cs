@@ -2,7 +2,6 @@
 using BenchmarkDotNet.Mathematics;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
-using Perfolizer.Horology;
 using Tsu.Numerics;
 
 namespace Loretta.InternalBenchmarks.Columns

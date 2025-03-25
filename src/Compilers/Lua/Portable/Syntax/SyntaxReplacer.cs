@@ -23,14 +23,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 tokens, computeReplacementToken,
                 trivia, computeReplacementTrivia);
 
-            if (replacer.HasWork)
-            {
-                return replacer.Visit(root);
-            }
-            else
-            {
-                return root;
-            }
+            return replacer.HasWork ? replacer.Visit(root) : root;
         }
 
         internal static SyntaxToken Replace(
@@ -47,17 +40,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 tokens, computeReplacementToken,
                 trivia, computeReplacementTrivia);
 
-            if (replacer.HasWork)
-            {
-                return replacer.VisitToken(root);
-            }
-            else
-            {
-                return root;
-            }
+            return replacer.HasWork ? replacer.VisitToken(root) : root;
         }
 
-        private class Replacer<TNode> : LuaSyntaxRewriter where TNode : SyntaxNode
+        private sealed class Replacer<TNode> : LuaSyntaxRewriter where TNode : SyntaxNode
         {
             private readonly Func<TNode, TNode, SyntaxNode>? _computeReplacementNode;
             private readonly Func<SyntaxToken, SyntaxToken, SyntaxToken>? _computeReplacementToken;
@@ -69,8 +55,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             private readonly HashSet<TextSpan> _spanSet;
 
             private readonly TextSpan _totalSpan;
-            private readonly bool _visitIntoStructuredTrivia;
-            private readonly bool _shouldVisitTrivia;
+            private readonly bool     _shouldVisitTrivia;
 
             public Replacer(
                 IEnumerable<TNode>? nodes,
@@ -84,30 +69,31 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
                 _computeReplacementToken = computeReplacementToken;
                 _computeReplacementTrivia = computeReplacementTrivia;
 
-                _nodeSet = nodes != null ? new HashSet<SyntaxNode>(nodes) : s_noNodes;
-                _tokenSet = tokens != null ? new HashSet<SyntaxToken>(tokens) : s_noTokens;
-                _triviaSet = trivia != null ? new HashSet<SyntaxTrivia>(trivia) : s_noTrivia;
+                _nodeSet   = nodes != null ? [..nodes] : s_noNodes;
+                _tokenSet  = tokens != null ? [..tokens] : s_noTokens;
+                _triviaSet = trivia != null ? [..trivia] : s_noTrivia;
 
-                _spanSet = new HashSet<TextSpan>(
-                    _nodeSet.Select(n => n.FullSpan).Concat(
-                    _tokenSet.Select(t => t.FullSpan).Concat(
-                    _triviaSet.Select(t => t.FullSpan))));
+                _spanSet =
+                [
+                    .. _nodeSet.Select(static n => n.FullSpan).Concat(
+                        _tokenSet.Select(static t => t.FullSpan).Concat(_triviaSet.Select(static t => t.FullSpan))),
+                ];
 
                 _totalSpan = ComputeTotalSpan(_spanSet);
 
-                _visitIntoStructuredTrivia =
-                    _nodeSet.Any(n => n.IsPartOfStructuredTrivia()) ||
-                    _tokenSet.Any(t => t.IsPartOfStructuredTrivia()) ||
-                    _triviaSet.Any(t => t.IsPartOfStructuredTrivia());
+                VisitIntoStructuredTrivia =
+                    _nodeSet.Any(static n => n.IsPartOfStructuredTrivia()) ||
+                    _tokenSet.Any(static t => t.IsPartOfStructuredTrivia()) ||
+                    _triviaSet.Any(static t => t.IsPartOfStructuredTrivia());
 
-                _shouldVisitTrivia = _triviaSet.Count > 0 || _visitIntoStructuredTrivia;
+                _shouldVisitTrivia = _triviaSet.Count > 0 || VisitIntoStructuredTrivia;
             }
 
-            private static readonly HashSet<SyntaxNode> s_noNodes = new();
-            private static readonly HashSet<SyntaxToken> s_noTokens = new();
-            private static readonly HashSet<SyntaxTrivia> s_noTrivia = new();
+            private static readonly HashSet<SyntaxNode>   s_noNodes  = [];
+            private static readonly HashSet<SyntaxToken>  s_noTokens = [];
+            private static readonly HashSet<SyntaxTrivia> s_noTrivia = [];
 
-            public override bool VisitIntoStructuredTrivia => _visitIntoStructuredTrivia;
+            public override bool VisitIntoStructuredTrivia { get; }
 
             public bool HasWork => _nodeSet.Count + _tokenSet.Count + _triviaSet.Count > 0;
 
@@ -138,43 +124,23 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             private bool ShouldVisit(TextSpan span)
             {
                 // first do quick check against total span
-                if (!span.IntersectsWith(_totalSpan))
-                {
-                    // if the node is outside the total span of the nodes to be replaced
-                    // then we won't find any nodes to replace below it.
-                    return false;
-                }
-
-                foreach (var s in _spanSet)
-                {
-                    if (span.IntersectsWith(s))
-                    {
-                        // node's full span intersects with at least one node to be replaced
-                        // so we need to visit node's children to find it.
-                        return true;
-                    }
-                }
-
-                return false;
+                return span.IntersectsWith(_totalSpan)
+                       // if the node is outside the total span of the nodes to be replaced
+                       // then we won't find any nodes to replace below it.
+                       && _spanSet.Any(span.IntersectsWith);
             }
 
-            [return: NotNullIfNotNull("node")]
+            [return: NotNullIfNotNull(nameof(node))]
             public override SyntaxNode? Visit(SyntaxNode? node)
             {
+                if (node == null) return null;
+                
                 var rewritten = node;
+                
+                if (ShouldVisit(node.FullSpan)) rewritten = base.Visit(node);
 
-                if (node != null)
-                {
-                    if (ShouldVisit(node.FullSpan))
-                    {
-                        rewritten = base.Visit(node);
-                    }
-
-                    if (_nodeSet.Contains(node) && _computeReplacementNode != null)
-                    {
-                        rewritten = _computeReplacementNode((TNode) node, (TNode) rewritten!);
-                    }
-                }
+                if (_nodeSet.Contains(node) && _computeReplacementNode != null)
+                    rewritten = _computeReplacementNode((TNode) node, (TNode) rewritten);
 
                 return rewritten;
             }
@@ -247,41 +213,25 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
         private static InvalidOperationException GetItemNotListElementException() => new(CodeAnalysisResources.MissingListItem);
 
-        private abstract class BaseListEditor : LuaSyntaxRewriter
+        private abstract class BaseListEditor(
+            TextSpan     elementSpan,
+            ListEditKind editKind,
+            bool         visitTrivia,
+            bool         visitIntoStructuredTrivia
+        ) : LuaSyntaxRewriter
         {
-            private readonly TextSpan _elementSpan;
-            private readonly bool _visitTrivia;
-            private readonly bool _visitIntoStructuredTrivia;
+            private readonly   bool         _visitTrivia = visitTrivia || visitIntoStructuredTrivia;
+            protected readonly ListEditKind EditKind     = editKind;
 
-            protected readonly ListEditKind editKind;
-
-            public BaseListEditor(
-                TextSpan elementSpan,
-                ListEditKind editKind,
-                bool visitTrivia,
-                bool visitIntoStructuredTrivia)
-            {
-                _elementSpan = elementSpan;
-                this.editKind = editKind;
-                _visitTrivia = visitTrivia || visitIntoStructuredTrivia;
-                _visitIntoStructuredTrivia = visitIntoStructuredTrivia;
-            }
-
-            public override bool VisitIntoStructuredTrivia => _visitIntoStructuredTrivia;
+            public override bool VisitIntoStructuredTrivia => visitIntoStructuredTrivia;
 
             private bool ShouldVisit(TextSpan span)
-            {
-                if (span.IntersectsWith(_elementSpan))
-                {
+                =>
                     // node's full span intersects with at least one node to be replaced
                     // so we need to visit node's children to find it.
-                    return true;
-                }
+                    span.IntersectsWith(elementSpan);
 
-                return false;
-            }
-
-            [return: NotNullIfNotNull("node")]
+            [return: NotNullIfNotNull(nameof(node))]
             public override SyntaxNode? Visit(SyntaxNode? node)
             {
                 var rewritten = node;
@@ -322,25 +272,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             }
         }
 
-        private class NodeListEditor : BaseListEditor
+        private sealed class NodeListEditor(
+            SyntaxNode              originalNode,
+            IEnumerable<SyntaxNode> replacementNodes,
+            ListEditKind            editKind
+        ) : BaseListEditor(originalNode.Span, editKind, false, originalNode.IsPartOfStructuredTrivia())
         {
-            private readonly SyntaxNode _originalNode;
-            private readonly IEnumerable<SyntaxNode> _newNodes;
-
-            public NodeListEditor(
-                SyntaxNode originalNode,
-                IEnumerable<SyntaxNode> replacementNodes,
-                ListEditKind editKind)
-                : base(originalNode.Span, editKind, false, originalNode.IsPartOfStructuredTrivia())
-            {
-                _originalNode = originalNode;
-                _newNodes = replacementNodes;
-            }
-
-            [return: NotNullIfNotNull("node")]
+            [return: NotNullIfNotNull(nameof(node))]
             public override SyntaxNode? Visit(SyntaxNode? node)
             {
-                if (node == _originalNode)
+                if (node == originalNode)
                 {
                     throw GetItemNotListElementException();
                 }
@@ -350,71 +291,46 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             public override SeparatedSyntaxList<TNode> VisitList<TNode>(SeparatedSyntaxList<TNode> list)
             {
-                if (_originalNode is TNode node)
+                if (originalNode is not TNode node) return base.VisitList(list);
+                
+                var index = list.IndexOf(node);
+                if (index < 0 || index >= list.Count) return base.VisitList(list);
+
+                return EditKind switch
                 {
-                    var index = list.IndexOf(node);
-                    if (index >= 0 && index < list.Count)
-                    {
-                        switch (editKind)
-                        {
-                            case ListEditKind.Replace:
-                                return list.ReplaceRange(node, _newNodes.Cast<TNode>());
-
-                            case ListEditKind.InsertAfter:
-                                return list.InsertRange(index + 1, _newNodes.Cast<TNode>());
-
-                            case ListEditKind.InsertBefore:
-                                return list.InsertRange(index, _newNodes.Cast<TNode>());
-                        }
-                    }
-                }
-
-                return base.VisitList(list);
+                    ListEditKind.Replace      => list.ReplaceRange(node, replacementNodes.Cast<TNode>()),
+                    ListEditKind.InsertAfter  => list.InsertRange(index + 1, replacementNodes.Cast<TNode>()),
+                    ListEditKind.InsertBefore => list.InsertRange(index, replacementNodes.Cast<TNode>()),
+                    _                         => base.VisitList(list),
+                };
             }
 
             public override SyntaxList<TNode> VisitList<TNode>(SyntaxList<TNode> list)
             {
-                if (_originalNode is TNode node)
+                if (originalNode is not TNode node) return base.VisitList(list);
+                
+                var index = list.IndexOf(node);
+                if (index < 0 || index >= list.Count) return base.VisitList(list);
+                
+                return EditKind switch
                 {
-                    var index = list.IndexOf(node);
-                    if (index >= 0 && index < list.Count)
-                    {
-                        switch (editKind)
-                        {
-                            case ListEditKind.Replace:
-                                return list.ReplaceRange(node, _newNodes.Cast<TNode>());
-
-                            case ListEditKind.InsertAfter:
-                                return list.InsertRange(index + 1, _newNodes.Cast<TNode>());
-
-                            case ListEditKind.InsertBefore:
-                                return list.InsertRange(index, _newNodes.Cast<TNode>());
-                        }
-                    }
-                }
-
-                return base.VisitList(list);
+                    ListEditKind.Replace      => list.ReplaceRange(node, replacementNodes.Cast<TNode>()),
+                    ListEditKind.InsertAfter  => list.InsertRange(index + 1, replacementNodes.Cast<TNode>()),
+                    ListEditKind.InsertBefore => list.InsertRange(index, replacementNodes.Cast<TNode>()),
+                    _                         => base.VisitList(list),
+                };
             }
         }
 
-        private class TokenListEditor : BaseListEditor
+        private sealed class TokenListEditor(
+            SyntaxToken              originalToken,
+            IEnumerable<SyntaxToken> newTokens,
+            ListEditKind             editKind
+        ) : BaseListEditor(originalToken.Span, editKind, false, originalToken.IsPartOfStructuredTrivia())
         {
-            private readonly SyntaxToken _originalToken;
-            private readonly IEnumerable<SyntaxToken> _newTokens;
-
-            public TokenListEditor(
-                SyntaxToken originalToken,
-                IEnumerable<SyntaxToken> newTokens,
-                ListEditKind editKind)
-                : base(originalToken.Span, editKind, false, originalToken.IsPartOfStructuredTrivia())
-            {
-                _originalToken = originalToken;
-                _newTokens = newTokens;
-            }
-
             public override SyntaxToken VisitToken(SyntaxToken token)
             {
-                if (token == _originalToken)
+                if (token == originalToken)
                 {
                     throw GetItemNotListElementException();
                 }
@@ -424,60 +340,37 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
             public override SyntaxTokenList VisitList(SyntaxTokenList list)
             {
-                var index = list.IndexOf(_originalToken);
-                if (index >= 0 && index < list.Count)
+                var index = list.IndexOf(originalToken);
+                if (index < 0 || index >= list.Count) return base.VisitList(list);
+
+                return EditKind switch
                 {
-                    switch (editKind)
-                    {
-                        case ListEditKind.Replace:
-                            return list.ReplaceRange(_originalToken, _newTokens);
-
-                        case ListEditKind.InsertAfter:
-                            return list.InsertRange(index + 1, _newTokens);
-
-                        case ListEditKind.InsertBefore:
-                            return list.InsertRange(index, _newTokens);
-                    }
-                }
-
-                return base.VisitList(list);
+                    ListEditKind.Replace      => list.ReplaceRange(originalToken, newTokens),
+                    ListEditKind.InsertAfter  => list.InsertRange(index + 1, newTokens),
+                    ListEditKind.InsertBefore => list.InsertRange(index, newTokens),
+                    _                         => base.VisitList(list),
+                };
             }
         }
 
-        private class TriviaListEditor : BaseListEditor
+        private sealed class TriviaListEditor(
+            SyntaxTrivia              originalTrivia,
+            IEnumerable<SyntaxTrivia> newTrivia,
+            ListEditKind              editKind
+        ) : BaseListEditor(originalTrivia.Span, editKind, true, originalTrivia.IsPartOfStructuredTrivia())
         {
-            private readonly SyntaxTrivia _originalTrivia;
-            private readonly IEnumerable<SyntaxTrivia> _newTrivia;
-
-            public TriviaListEditor(
-                SyntaxTrivia originalTrivia,
-                IEnumerable<SyntaxTrivia> newTrivia,
-                ListEditKind editKind)
-                : base(originalTrivia.Span, editKind, true, originalTrivia.IsPartOfStructuredTrivia())
-            {
-                _originalTrivia = originalTrivia;
-                _newTrivia = newTrivia;
-            }
-
             public override SyntaxTriviaList VisitList(SyntaxTriviaList list)
             {
-                var index = list.IndexOf(_originalTrivia);
-                if (index >= 0 && index < list.Count)
+                var index = list.IndexOf(originalTrivia);
+                if (index < 0 || index >= list.Count) return base.VisitList(list);
+
+                return EditKind switch
                 {
-                    switch (editKind)
-                    {
-                        case ListEditKind.Replace:
-                            return list.ReplaceRange(_originalTrivia, _newTrivia);
-
-                        case ListEditKind.InsertAfter:
-                            return list.InsertRange(index + 1, _newTrivia);
-
-                        case ListEditKind.InsertBefore:
-                            return list.InsertRange(index, _newTrivia);
-                    }
-                }
-
-                return base.VisitList(list);
+                    ListEditKind.Replace      => list.ReplaceRange(originalTrivia, newTrivia),
+                    ListEditKind.InsertAfter  => list.InsertRange(index + 1, newTrivia),
+                    ListEditKind.InsertBefore => list.InsertRange(index, newTrivia),
+                    _                         => base.VisitList(list),
+                };
             }
         }
     }
