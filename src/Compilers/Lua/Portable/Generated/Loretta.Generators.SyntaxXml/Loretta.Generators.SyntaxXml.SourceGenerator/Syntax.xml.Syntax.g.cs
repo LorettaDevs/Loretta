@@ -131,8 +131,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         /// <summary>The name of the parameter.</summary>
         public SyntaxToken Identifier => new SyntaxToken(this, ((Syntax.InternalSyntax.NamedParameterSyntax)this.Green).identifier, Position, 0);
 
-        /// <summary>
-        /// The
+        /// <summary>The
         /// <see cref="TypeBindingSyntax" />
         /// containing the (optional) type.
         /// </summary>
@@ -180,8 +179,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         /// <summary>The vararg token.</summary>
         public SyntaxToken VarArgToken => new SyntaxToken(this, ((Syntax.InternalSyntax.VarArgParameterSyntax)this.Green).varArgToken, Position, 0);
 
-        /// <summary>
-        /// The
+        /// <summary>The
         /// <see cref="TypeBindingSyntax" />
         /// containing the (optional) type.
         /// </summary>
@@ -746,10 +744,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
     /// <summary>
     /// The base class interpolated string parts, either an
     /// <see cref="InterpolatedStringTextSyntax" />
-    /// with
-    /// plain text or an
+    /// with plain text or an
     /// <see cref="InterpolationSyntax" />
-    /// with an expression to be formatted.
+    /// with an expression to be
+    /// formatted.
     /// </summary>
     public abstract partial class InterpolatedStringContentSyntax : LuaSyntaxNode
     {
@@ -819,16 +817,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         {
         }
 
-        /// <summary>
-        /// This could be a single <c>{</c> or multiple in a row.
-        /// </summary>
         public SyntaxToken OpenBraceToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolationSyntax)this.Green).openBraceToken, Position, 0);
 
         public ExpressionSyntax Expression => GetRed(ref this.expression, 1)!;
 
-        /// <summary>
-        /// This could be a single <c>}</c> or multiple in a row.
-        /// </summary>
         public SyntaxToken CloseBraceToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolationSyntax)this.Green).closeBraceToken, GetChildPosition(2), GetChildIndex(2));
 
         internal override SyntaxNode? GetNodeSlot(int index) => index == 1 ? GetRed(ref this.expression, 1)! : null;
@@ -1070,8 +1062,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         {
         }
 
-        /// <summary>
-        /// The first part of an interpolated string:
+        /// <summary>The first part of an interpolated string:
         /// <c>`</c>
         /// </summary>
         public SyntaxToken StringStartToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolatedStringExpressionSyntax)this.Green).stringStartToken, Position, 0);
@@ -1081,8 +1072,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         /// </summary>
         public SyntaxList<InterpolatedStringContentSyntax> Contents => new SyntaxList<InterpolatedStringContentSyntax>(GetRed(ref this.contents, 1));
 
-        /// <summary>
-        /// The closing <c>`</c> of the interpolated string.
+        /// <summary>The closing <c>`</c> of the interpolated string.
         /// </summary>
         public SyntaxToken StringEndToken => new SyntaxToken(this, ((Syntax.InternalSyntax.InterpolatedStringExpressionSyntax)this.Green).stringEndToken, GetChildPosition(2), GetChildIndex(2));
 
@@ -1201,6 +1191,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public IdentifierNameSyntax WithIdentifier(SyntaxToken identifier) => Update(identifier);
     }
 
+    /// <summary>Represents a member access expression.</summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
     /// <list type="bullet">
@@ -1249,6 +1240,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public MemberAccessExpressionSyntax WithMemberName(SyntaxToken memberName) => Update(this.Expression, this.DotSeparator, memberName);
     }
 
+    /// <summary>Represents an element access expression.</summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
     /// <list type="bullet">
@@ -1612,6 +1604,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
     }
 
+    /// <summary>Represents a parenthesized expression.</summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
     /// <list type="bullet">
@@ -2066,6 +2059,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public AssignmentStatementSyntax AddEqualsValuesValues(params ExpressionSyntax[] items) => WithEqualsValues(this.EqualsValues.WithValues(this.EqualsValues.Values.AddRange(items)));
     }
 
+    /// <summary>Represents a compound assignment expression.</summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
     /// <list type="bullet">
@@ -2328,7 +2322,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
         /// <summary>
         /// The comma separating the final value from the step value.
-        /// May be None if there is no step.
+        /// It may be None if there is no step.
         /// </summary>
         public SyntaxToken StepValueCommaToken
         {
@@ -2341,7 +2335,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
         /// <summary>
         /// The expression defining the step value of the loop variable.
-        /// May be None if there is no step.
+        /// It may be None if there is no step.
         /// </summary>
         public ExpressionSyntax? StepValue => GetRed(ref this.stepValue, 7);
 
@@ -2613,6 +2607,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public WhileStatementSyntax AddBodyStatements(params StatementSyntax[] items) => WithBody(this.Body.WithStatements(this.Body.Statements.AddRange(items)));
     }
 
+    /// <summary>Represents a repeat until statement.</summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
     /// <list type="bullet">
@@ -2632,13 +2627,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         /// <summary>The 'repeat' until keyword.</summary>
         public SyntaxToken RepeatKeyword => new SyntaxToken(this, ((Syntax.InternalSyntax.RepeatUntilStatementSyntax)this.Green).repeatKeyword, Position, 0);
 
-        /// <summary>The repeat until's body.</summary>
+        /// <summary>The "repeat until"'s body.</summary>
         public StatementListSyntax Body => GetRed(ref this.body, 1)!;
 
         /// <summary>The 'until' keyword.</summary>
         public SyntaxToken UntilKeyword => new SyntaxToken(this, ((Syntax.InternalSyntax.RepeatUntilStatementSyntax)this.Green).untilKeyword, GetChildPosition(2), GetChildIndex(2));
 
-        /// <summary>The repeat until's condition.</summary>
+        /// <summary>The "repeat until"'s condition.</summary>
         public ExpressionSyntax Condition => GetRed(ref this.condition, 3)!;
 
         /// <summary>The semicolon at the end of the statement (if any).</summary>
@@ -3746,7 +3741,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         internal abstract TypeNameSyntax AddTypeArgumentListArgumentsCore(params TypeSyntax[] items);
     }
 
-    /// <summary>This node reperesents a simple name (T).</summary>
+    /// <summary>This node represents a simple name (T).</summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
     /// <list type="bullet">
@@ -4196,7 +4191,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public ArrayTypeSyntax WithCloseBraceToken(SyntaxToken closeBraceToken) => Update(this.OpenBraceToken, this.Type, closeBraceToken);
     }
 
-    /// <summary>This node represents a type inside of a table type.</summary>
+    /// <summary>This node represents a type inside a table type.</summary>
     public abstract partial class TableTypeElementSyntax : LuaSyntaxNode
     {
         internal TableTypeElementSyntax(InternalSyntax.LuaSyntaxNode green, SyntaxNode? parent, int position)
@@ -4594,7 +4589,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         {
         }
 
-        /// <c>=</c>
+        /// <summary>Gets the <c>=</c> token.
+        /// </summary>
         public SyntaxToken EqualsToken => new SyntaxToken(this, ((Syntax.InternalSyntax.EqualsTypeSyntax)this.Green).equalsToken, Position, 0);
 
         /// <summary>Gets the type value.</summary>
@@ -4654,6 +4650,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             }
         }
 
+        /// <summary>
+        /// The default value of the type parameter (if any).
+        /// </summary>
         public EqualsTypeSyntax? EqualsType => GetRed(ref this.equalsType, 2);
 
         internal override SyntaxNode? GetNodeSlot(int index) => index == 2 ? GetRed(ref this.equalsType, 2) : null;
@@ -4993,7 +4992,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public GenericTypePackSyntax WithDotDotDotToken(SyntaxToken dotDotDotToken) => Update(this.Identifier, dotDotDotToken);
     }
 
-    /// <summary>The node containing all of the file's contents.</summary>
+    /// <summary>The node containing all the file's contents.</summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
     /// <list type="bullet">

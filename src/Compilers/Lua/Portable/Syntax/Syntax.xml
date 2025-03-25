@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Tree Root="SyntaxNode">
+<Tree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="Syntax.xsd"
+      Root="SyntaxNode">
 
     <PredefinedNode Name="LuaSyntaxNode" Base="SyntaxNode"/>
     <PredefinedNode Name="SyntaxToken" Base="LuaSyntaxNode"/>
@@ -18,8 +20,7 @@
             <summary>Represents a block of code.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="StatementListSyntax"/>
                 node.
             </summary>
@@ -45,8 +46,7 @@
             <summary>Represents a named function parameter.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="NamedParameterSyntax"/>
                 node.
             </summary>
@@ -60,8 +60,7 @@
         </Field>
         <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
-                <summary>
-                    The
+                <summary>The
                     <see cref="TypeBindingSyntax"/>
                     containing the (optional) type.
                 </summary>
@@ -75,8 +74,7 @@
             <summary>Represents a vararg function parameter.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="VarArgParameterSyntax"/>
                 node.
             </summary>
@@ -90,8 +88,7 @@
         </Field>
         <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
             <PropertyComment>
-                <summary>
-                    The
+                <summary>The
                     <see cref="TypeBindingSyntax"/>
                     containing the (optional) type.
                 </summary>
@@ -105,8 +102,7 @@
             <summary>Represents a function declaration's parameter list.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="ParameterListSyntax"/>
                 node.
             </summary>
@@ -144,8 +140,7 @@
             <summary>Represents a table field whose key is an identifier.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="IdentifierKeyedTableFieldSyntax"/>
                 node.
             </summary>
@@ -175,8 +170,7 @@
             <summary>Represents a table field whose key is an expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="ExpressionKeyedTableFieldSyntax"/>
                 node.
             </summary>
@@ -217,8 +211,7 @@
             <summary>Represents a table field without a key.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="UnkeyedTableFieldSyntax"/>
                 node.
             </summary>
@@ -250,8 +243,7 @@
             <summary>Represents a function name which is only an identifier.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="SimpleFunctionNameSyntax"/>
                 node.
             </summary>
@@ -270,8 +262,7 @@
             <summary>Represents a function name which is a member.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="MemberFunctionNameSyntax"/>
                 node.
             </summary>
@@ -301,8 +292,7 @@
             <summary>Represents a method-style function name syntax.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="MethodFunctionNameSyntax"/>
                 node.
             </summary>
@@ -340,8 +330,7 @@
             <summary>Represents a string being passed as a function call's argument.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="StringFunctionArgumentSyntax"/>
                 node.
             </summary>
@@ -360,8 +349,7 @@
             <summary>Represents a table being passed as a function call's arguments.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="TableConstructorFunctionArgumentSyntax"/>
                 node.
             </summary>
@@ -379,8 +367,7 @@
             <summary>Represents a list of expressions being passed as a function's arguments.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="ExpressionListFunctionArgumentSyntax"/>
                 node.
             </summary>
@@ -412,10 +399,10 @@
             <summary>
                 The base class interpolated string parts, either an
                 <see cref="InterpolatedStringTextSyntax"/>
-                with
-                plain text or an
+                with plain text or an
                 <see cref="InterpolationSyntax"/>
-                with an expression to be formatted.
+                with an expression to be
+                formatted.
             </summary>
         </TypeComment>
     </AbstractNode>
@@ -428,10 +415,10 @@
         </TypeComment>
         <Kind Name="InterpolatedStringText"/>
         <Field Name="TextToken" Type="SyntaxToken">
-            <Kind Name="InterpolatedStringTextToken"/>
             <PropertyComment>
                 <summary>The text contents of a part of the interpolated string.</summary>
             </PropertyComment>
+            <Kind Name="InterpolatedStringTextToken"/>
         </Field>
     </Node>
 
@@ -444,20 +431,10 @@
         <Kind Name="Interpolation"/>
         <Field Name="OpenBraceToken" Type="SyntaxToken">
             <Kind Name="OpenBraceToken"/>
-            <PropertyComment>
-                <summary>
-                    This could be a single <c>{</c> or multiple in a row.
-                </summary>
-            </PropertyComment>
         </Field>
         <Field Name="Expression" Type="ExpressionSyntax"/>
         <Field Name="CloseBraceToken" Type="SyntaxToken">
             <Kind Name="CloseBraceToken"/>
-            <PropertyComment>
-                <summary>
-                    This could be a single <c>}</c> or multiple in a row.
-                </summary>
-            </PropertyComment>
         </Field>
     </Node>
 
@@ -476,8 +453,7 @@
             <summary>Represents an anonymous function expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="AnonymousFunctionExpressionSyntax"/>
                 node.
             </summary>
@@ -522,8 +498,7 @@
             <summary>Represents a table constructor expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="TableConstructorExpressionSyntax"/>
                 node.
             </summary>
@@ -553,8 +528,7 @@
             <summary>Represents a literal expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="LiteralExpressionSyntax"/>
                 node.
             </summary>
@@ -581,13 +555,12 @@
     <Node Name="InterpolatedStringExpressionSyntax" Base="ExpressionSyntax">
         <Kind Name="InterpolatedStringExpression"/>
         <Field Name="StringStartToken" Type="SyntaxToken">
-            <Kind Name="BacktickToken"/>
             <PropertyComment>
-                <summary>
-                    The first part of an interpolated string:
+                <summary>The first part of an interpolated string:
                     <c>`</c>
                 </summary>
             </PropertyComment>
+            <Kind Name="BacktickToken"/>
         </Field>
         <Field Name="Contents" Type="SyntaxList&lt;InterpolatedStringContentSyntax&gt;">
             <PropertyComment>
@@ -597,12 +570,11 @@
             </PropertyComment>
         </Field>
         <Field Name="StringEndToken" Type="SyntaxToken">
-            <Kind Name="BacktickToken"/>
             <PropertyComment>
-                <summary>
-                    The closing <c>`</c> of the interpolated string.
+                <summary>The closing <c>`</c> of the interpolated string.
                 </summary>
             </PropertyComment>
+            <Kind Name="BacktickToken"/>
         </Field>
     </Node>
 
@@ -611,8 +583,7 @@
             <summary>Represents a vararg expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="VarArgExpressionSyntax"/>
                 node.
             </summary>
@@ -637,8 +608,7 @@
             <summary>A name expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="IdentifierNameSyntax"/>
                 node.
             </summary>
@@ -653,12 +623,11 @@
     </Node>
 
     <Node Name="MemberAccessExpressionSyntax" Base="VariableExpressionSyntax">
-        <PropertyComment>
+        <TypeComment>
             <summary>Represents a member access expression.</summary>
-        </PropertyComment>
+        </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="MemberAccessExpressionSyntax"/>
                 node.
             </summary>
@@ -684,12 +653,11 @@
     </Node>
 
     <Node Name="ElementAccessExpressionSyntax" Base="VariableExpressionSyntax">
-        <PropertyComment>
+        <TypeComment>
             <summary>Represents an element access expression.</summary>
-        </PropertyComment>
+        </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="ElementAccessExpressionSyntax"/>
                 node.
             </summary>
@@ -724,8 +692,7 @@
             <summary>Represents an unary expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="UnaryExpressionSyntax"/>
                 node.
             </summary>
@@ -756,8 +723,7 @@
             <summary>Represents a binary expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="BinaryExpressionSyntax"/>
                 node.
             </summary>
@@ -831,9 +797,10 @@
             </summary>
         </TypeComment>
         <FactoryComment>
-            Creates a new
-            <see cref="ElseIfExpressionClauseSyntax"/>
-            node.
+            <summary>Creates a new
+                <see cref="ElseIfExpressionClauseSyntax"/>
+                node.
+            </summary>
         </FactoryComment>
         <Kind Name="ElseIfExpressionClause"/>
         <Field Name="ElseIfKeyword" Type="SyntaxToken">
@@ -867,8 +834,7 @@
             </summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="IfExpressionSyntax"/>
                 node.
             </summary>
@@ -925,13 +891,14 @@
     </AbstractNode>
 
     <Node Name="ParenthesizedExpressionSyntax" Base="PrefixExpressionSyntax">
-        <PropertyComment>
+        <TypeComment>
             <summary>Represents a parenthesized expression.</summary>
-        </PropertyComment>
+        </TypeComment>
         <FactoryComment>
-            Creates a new
-            <see cref="ParenthesizedExpressionSyntax"/>
-            node.
+            <summary>Creates a new
+                <see cref="ParenthesizedExpressionSyntax"/>
+                node.
+            </summary>
         </FactoryComment>
         <Kind Name="ParenthesizedExpression"/>
         <Field Name="OpenParenthesisToken" Type="SyntaxToken">
@@ -958,8 +925,7 @@
             <summary>Represents a function call expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="FunctionCallExpressionSyntax"/>
                 node.
             </summary>
@@ -982,8 +948,7 @@
             <summary>Represents a method call (obj:method args...) expression.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="MethodCallExpressionSyntax"/>
                 node.
             </summary>
@@ -1034,8 +999,7 @@
             <summary>Represents a variable attribute syntax.</summary>
         </TypeComment>
         <FactoryComment>
-            <summary>
-                Creates a new
+            <summary>Creates a new
                 <see cref="VariableAttributeSyntax"/>
                 node.
             </summary>
@@ -1170,9 +1134,9 @@
     </Node>
 
     <Node Name="CompoundAssignmentStatementSyntax" Base="StatementSyntax">
-        <PropertyComment>
+        <TypeComment>
             <summary>Represents a compound assignment expression.</summary>
-        </PropertyComment>
+        </TypeComment>
         <FactoryComment>
             <summary>
                 Creates a new
@@ -1327,25 +1291,27 @@
                 <summary>The expression defining the final value of the loop variable.</summary>
             </PropertyComment>
         </Field>
-        <Sequence Optional="true">
-            <Field Name="StepValueCommaToken" Type="SyntaxToken">
-                <PropertyComment>
-                    <summary>
-                        The comma separating the final value from the step value.
-                        May be None if there is no step.
-                    </summary>
-                </PropertyComment>
-                <Kind Name="CommaToken"/>
-            </Field>
-            <Field Name="StepValue" Type="ExpressionSyntax">
-                <PropertyComment>
-                    <summary>
-                        The expression defining the step value of the loop variable.
-                        May be None if there is no step.
-                    </summary>
-                </PropertyComment>
-            </Field>
-        </Sequence>
+        <Choice>
+            <Sequence Optional="true">
+                <Field Name="StepValueCommaToken" Type="SyntaxToken">
+                    <PropertyComment>
+                        <summary>
+                            The comma separating the final value from the step value.
+                            It may be None if there is no step.
+                        </summary>
+                    </PropertyComment>
+                    <Kind Name="CommaToken"/>
+                </Field>
+                <Field Name="StepValue" Type="ExpressionSyntax">
+                    <PropertyComment>
+                        <summary>
+                            The expression defining the step value of the loop variable.
+                            It may be None if there is no step.
+                        </summary>
+                    </PropertyComment>
+                </Field>
+            </Sequence>
+        </Choice>
         <Field Name="DoKeyword" Type="SyntaxToken">
             <PropertyComment>
                 <summary>The 'do' keyword.</summary>
@@ -1479,9 +1445,9 @@
     </Node>
 
     <Node Name="RepeatUntilStatementSyntax" Base="StatementSyntax">
-        <PropertyComment>
+        <TypeComment>
             <summary>Represents a repeat until statement.</summary>
-        </PropertyComment>
+        </TypeComment>
         <FactoryComment>
             <summary>
                 Creates a new
@@ -1498,7 +1464,7 @@
         </Field>
         <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
             <PropertyComment>
-                <summary>The repeat until's body.</summary>
+                <summary>The "repeat until"'s body.</summary>
             </PropertyComment>
         </Field>
         <Field Name="UntilKeyword" Type="SyntaxToken">
@@ -1509,7 +1475,7 @@
         </Field>
         <Field Name="Condition" Type="ExpressionSyntax">
             <PropertyComment>
-                <summary>The repeat until's condition.</summary>
+                <summary>The "repeat until"'s condition.</summary>
             </PropertyComment>
         </Field>
         <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -2100,7 +2066,7 @@
 
     <Node Name="SimpleTypeNameSyntax" Base="TypeNameSyntax">
         <TypeComment>
-            <summary>This node reperesents a simple name (T).</summary>
+            <summary>This node represents a simple name (T).</summary>
         </TypeComment>
         <FactoryComment>
             <summary>
@@ -2354,7 +2320,7 @@
 
     <AbstractNode Name="TableTypeElementSyntax" Base="LuaSyntaxNode">
         <TypeComment>
-            <summary>This node represents a type inside of a table type.</summary>
+            <summary>This node represents a type inside a table type.</summary>
         </TypeComment>
     </AbstractNode>
 
@@ -2576,7 +2542,8 @@
         <Kind Name="EqualsType"/>
         <Field Name="EqualsToken" Type="SyntaxToken">
             <PropertyComment>
-                Gets the <c>=</c> token.
+                <summary>Gets the <c>=</c> token.
+                </summary>
             </PropertyComment>
             <Kind Name="EqualsToken"/>
         </Field>
@@ -2614,11 +2581,11 @@
             <Kind Name="DotDotDotToken"/>
         </Field>
         <Field Name="EqualsType" Type="EqualsTypeSyntax" Optional="true">
-            <PropertyComent>
+            <PropertyComment>
                 <summary>
                     The default value of the type parameter (if any).
                 </summary>
-            </PropertyComent>
+            </PropertyComment>
         </Field>
     </Node>
 
@@ -2812,7 +2779,7 @@
 
     <Node Name="CompilationUnitSyntax" Base="LuaSyntaxNode">
         <TypeComment>
-            <summary>The node containing all of the file's contents.</summary>
+            <summary>The node containing all the file's contents.</summary>
         </TypeComment>
         <FactoryComment>
             <summary>

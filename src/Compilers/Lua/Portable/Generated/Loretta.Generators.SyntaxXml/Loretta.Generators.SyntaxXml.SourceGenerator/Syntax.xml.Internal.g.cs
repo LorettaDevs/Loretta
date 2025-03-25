@@ -234,8 +234,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         /// <summary>The name of the parameter.</summary>
         public SyntaxToken Identifier => this.identifier;
-        /// <summary>
-        /// The
+        /// <summary>The
         /// <see cref="TypeBindingSyntax" />
         /// containing the (optional) type.
         /// </summary>
@@ -339,8 +338,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         /// <summary>The vararg token.</summary>
         public SyntaxToken VarArgToken => this.varArgToken;
-        /// <summary>
-        /// The
+        /// <summary>The
         /// <see cref="TypeBindingSyntax" />
         /// containing the (optional) type.
         /// </summary>
@@ -1443,10 +1441,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
     /// <summary>
     /// The base class interpolated string parts, either an
     /// <see cref="InterpolatedStringTextSyntax" />
-    /// with
-    /// plain text or an
+    /// with plain text or an
     /// <see cref="InterpolationSyntax" />
-    /// with an expression to be formatted.
+    /// with an expression to be
+    /// formatted.
     /// </summary>
     internal abstract partial class InterpolatedStringContentSyntax : LuaSyntaxNode
     {
@@ -1577,14 +1575,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             this.closeBraceToken = closeBraceToken;
         }
 
-        /// <summary>
-        /// This could be a single <c>{</c> or multiple in a row.
-        /// </summary>
         public SyntaxToken OpenBraceToken => this.openBraceToken;
         public ExpressionSyntax Expression => this.expression;
-        /// <summary>
-        /// This could be a single <c>}</c> or multiple in a row.
-        /// </summary>
         public SyntaxToken CloseBraceToken => this.closeBraceToken;
 
         internal override GreenNode? GetSlot(int index)
@@ -2055,8 +2047,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             this.stringEndToken = stringEndToken;
         }
 
-        /// <summary>
-        /// The first part of an interpolated string:
+        /// <summary>The first part of an interpolated string:
         /// <c>`</c>
         /// </summary>
         public SyntaxToken StringStartToken => this.stringStartToken;
@@ -2064,8 +2055,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// List of parts of the interpolated string, each one is either a literal part or an interpolation.
         /// </summary>
         public Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<InterpolatedStringContentSyntax> Contents => new Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<InterpolatedStringContentSyntax>(this.contents);
-        /// <summary>
-        /// The closing <c>`</c> of the interpolated string.
+        /// <summary>The closing <c>`</c> of the interpolated string.
         /// </summary>
         public SyntaxToken StringEndToken => this.stringEndToken;
 
@@ -2309,6 +2299,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
+    /// <summary>Represents a member access expression.</summary>
     internal sealed partial class MemberAccessExpressionSyntax : VariableExpressionSyntax
     {
         internal readonly PrefixExpressionSyntax expression;
@@ -2412,6 +2403,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
+    /// <summary>Represents an element access expression.</summary>
     internal sealed partial class ElementAccessExpressionSyntax : VariableExpressionSyntax
     {
         internal readonly PrefixExpressionSyntax expression;
@@ -3026,6 +3018,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
+    /// <summary>Represents a parenthesized expression.</summary>
     internal sealed partial class ParenthesizedExpressionSyntax : PrefixExpressionSyntax
     {
         internal readonly SyntaxToken openParenthesisToken;
@@ -3829,6 +3822,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
+    /// <summary>Represents a compound assignment expression.</summary>
     internal sealed partial class CompoundAssignmentStatementSyntax : StatementSyntax
     {
         internal readonly PrefixExpressionSyntax variable;
@@ -4307,12 +4301,12 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public ExpressionSyntax FinalValue => this.finalValue;
         /// <summary>
         /// The comma separating the final value from the step value.
-        /// May be None if there is no step.
+        /// It may be None if there is no step.
         /// </summary>
         public SyntaxToken? StepValueCommaToken => this.stepValueCommaToken;
         /// <summary>
         /// The expression defining the step value of the loop variable.
-        /// May be None if there is no step.
+        /// It may be None if there is no step.
         /// </summary>
         public ExpressionSyntax? StepValue => this.stepValue;
         /// <summary>The 'do' keyword.</summary>
@@ -4784,6 +4778,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
+    /// <summary>Represents a repeat until statement.</summary>
     internal sealed partial class RepeatUntilStatementSyntax : StatementSyntax
     {
         internal readonly SyntaxToken repeatKeyword;
@@ -4832,11 +4827,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         /// <summary>The 'repeat' until keyword.</summary>
         public SyntaxToken RepeatKeyword => this.repeatKeyword;
-        /// <summary>The repeat until's body.</summary>
+        /// <summary>The "repeat until"'s body.</summary>
         public StatementListSyntax Body => this.body;
         /// <summary>The 'until' keyword.</summary>
         public SyntaxToken UntilKeyword => this.untilKeyword;
-        /// <summary>The repeat until's condition.</summary>
+        /// <summary>The "repeat until"'s condition.</summary>
         public ExpressionSyntax Condition => this.condition;
         /// <summary>The semicolon at the end of the statement (if any).</summary>
         public override SyntaxToken? SemicolonToken => this.semicolonToken;
@@ -6900,7 +6895,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public abstract TypeArgumentListSyntax? TypeArgumentList { get; }
     }
 
-    /// <summary>This node reperesents a simple name (T).</summary>
+    /// <summary>This node represents a simple name (T).</summary>
     internal sealed partial class SimpleTypeNameSyntax : TypeNameSyntax
     {
         internal readonly SyntaxToken identifierToken;
@@ -7738,7 +7733,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
-    /// <summary>This node represents a type inside of a table type.</summary>
+    /// <summary>This node represents a type inside a table type.</summary>
     internal abstract partial class TableTypeElementSyntax : LuaSyntaxNode
     {
         internal TableTypeElementSyntax(SyntaxKind kind, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations)
@@ -8450,7 +8445,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             this.type = type;
         }
 
-        /// <c>=</c>
+        /// <summary>Gets the <c>=</c> token.
+        /// </summary>
         public SyntaxToken EqualsToken => this.equalsToken;
         /// <summary>Gets the type value.</summary>
         public TypeSyntax Type => this.type;
@@ -8565,6 +8561,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// Gets the <c>...</c> token (if this type parameter is a type pack).
         /// </summary>
         public SyntaxToken? DotDotDotToken => this.dotDotDotToken;
+        /// <summary>
+        /// The default value of the type parameter (if any).
+        /// </summary>
         public EqualsTypeSyntax? EqualsType => this.equalsType;
 
         internal override GreenNode? GetSlot(int index)
@@ -9253,7 +9252,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
-    /// <summary>The node containing all of the file's contents.</summary>
+    /// <summary>The node containing all the file's contents.</summary>
     internal sealed partial class CompilationUnitSyntax : LuaSyntaxNode
     {
         internal readonly StatementListSyntax statements;
