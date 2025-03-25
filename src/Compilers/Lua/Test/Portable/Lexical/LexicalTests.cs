@@ -1,4 +1,5 @@
 ﻿//#define LARGE_TESTS_DEBUG
+
 using Loretta.CodeAnalysis.Lua.SymbolDisplay;
 using Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 using Loretta.CodeAnalysis.Text;
@@ -34,7 +35,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         [InlineData("--[= =[")]
         public void Lexer_DoesNot_IdentifyLongCommentsNaively(string text)
         {
-            var eof = LexToken(text);
+            var eof    = LexToken(text);
             var trivia = Assert.Single(eof.LeadingTrivia);
             Assert.Equal(SyntaxKind.SingleLineCommentTrivia, trivia.Kind());
             Assert.Equal(text, trivia.ToFullString());
@@ -49,7 +50,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         {
             const string shebang = "#!/bin/bash";
 
-            var eof = LexToken(shebang);
+            var eof    = LexToken(shebang);
             var trivia = Assert.Single(eof.LeadingTrivia);
             Assert.Equal(SyntaxKind.ShebangTrivia, trivia.Kind());
             Assert.Equal(shebang, trivia.ToFullString());
@@ -70,7 +71,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             Assert.Equal(expectedBrokenTokens.Length, tokens.Length);
             for (var idx = 0; idx < expectedBrokenTokens.Length; idx++)
             {
-                var token = tokens[idx];
+                var token    = tokens[idx];
                 var expected = expectedBrokenTokens[idx];
 
                 Assert.Equal(expected.Kind, token.Kind());
@@ -83,11 +84,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         [Trait("Category", "Lexer/Output")]
         public void Lexer_LexesInvalidEscapes_WhenLuaSyntaxOptionsAcceptInvalidEscapesIsTrue()
         {
-            const string RawText = @"'\A\B\C\D\E'";
-            const string Value = "ABCDE";
-            var strToken = LexToken(
-                RawText,
-                LuaSyntaxOptions.All.With(acceptInvalidEscapes: true));
+            const string RawText  = @"'\A\B\C\D\E'";
+            const string Value    = "ABCDE";
+            var          strToken = LexToken(RawText, LuaSyntaxOptions.All.With(acceptInvalidEscapes: true));
 
             Assert.Equal(SyntaxKind.StringLiteralToken, strToken.Kind());
             Assert.Equal(RawText, strToken.Text);
@@ -98,13 +97,13 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         [Trait("Category", "Lexer/Lexer_Tests")]
         public void Lexer_Covers_AllTokens()
         {
-            var tokenKinds = Enum.GetValues(typeof(SyntaxKind))
-                                 .Cast<SyntaxKind>()
+            var tokenKinds = Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
                                  .Where(static k => SyntaxFacts.IsToken(k) || SyntaxFacts.IsTrivia(k));
 
             var testedTokenKinds = LuaSyntaxOptions.AllPresets.SelectMany(LexicalTestData.GetTokens)
-                                                              .Concat(LuaSyntaxOptions.AllPresets.SelectMany(LexicalTestData.GetTrivia))
-                                                              .Select(static t => t.Kind);
+                                                   .Concat(
+                                                       LuaSyntaxOptions.AllPresets.SelectMany(
+                                                           LexicalTestData.GetTrivia)).Select(static t => t.Kind);
 
             var untestedTokenKinds = new SortedSet<SyntaxKind>(tokenKinds);
             untestedTokenKinds.Remove(SyntaxKind.BadToken);
@@ -133,8 +132,12 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 if (expectedToken.Value.Value is string expectedStr)
                 {
                     var actualStr = Assert.IsType<string>(token.Value);
-                    var formattedExpected = ObjectDisplay.FormatLiteral(expectedStr, ObjectDisplayOptions.EscapeNonPrintableCharacters);
-                    var formattedActual = ObjectDisplay.FormatLiteral(actualStr, ObjectDisplayOptions.EscapeNonPrintableCharacters);
+                    var formattedExpected = ObjectDisplay.FormatLiteral(
+                        expectedStr,
+                        ObjectDisplayOptions.EscapeNonPrintableCharacters);
+                    var formattedActual = ObjectDisplay.FormatLiteral(
+                        actualStr,
+                        ObjectDisplayOptions.EscapeNonPrintableCharacters);
                     Assert.Equal(formattedExpected, formattedActual);
                 }
                 Assert.Equal(expectedToken.Value.Value, token.Value);
@@ -146,7 +149,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         [MemberData(nameof(GetTriviaData))]
         public void Lexer_Lexes_Trivia(LuaSyntaxOptions options, ShortToken expectedTrivia)
         {
-            var token = LexToken(expectedTrivia.Text, options: options);
+            var token        = LexToken(expectedTrivia.Text, options: options);
             var actualTrivia = Assert.Single(token.LeadingTrivia);
             Assert.Equal(expectedTrivia.Kind, actualTrivia.Kind());
             Assert.Equal(expectedTrivia.Text, actualTrivia.ToFullString());
@@ -155,10 +158,12 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
         [ConditionalTheory(typeof(NoLongTestsCondition))]
         [Trait("Category", "Lexer/Output")]
+        [Trait("IsLongTest", "1")]
+        [Trait("LongTestType", "TokenPairs")]
         [MemberData(nameof(GetTokenPairsData))]
         public void Lexer_Lexes_TokenPairs(LuaSyntaxOptions options, ShortToken tokenA, ShortToken tokenB)
         {
-            var text = tokenA.Text + tokenB.Text;
+            var text   = tokenA.Text + tokenB.Text;
             var tokens = Lex(text, options: options).ToImmutableArray();
 
             Assert.Equal(3, tokens.Length);
@@ -173,14 +178,16 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
         [ConditionalTheory(typeof(NoLongTestsCondition))]
         [Trait("Category", "Lexer/Output")]
+        [Trait("IsLongTest", "1")]
+        [Trait("LongTestType", "TokenPairs")]
         [MemberData(nameof(GetTokenPairsWithSeparatorsData))]
         public void Lexer_Lexes_TokenPairs_WithSeparators(
             LuaSyntaxOptions options,
-            ShortToken tokenA,
-            ShortToken expectedSeparator,
-            ShortToken tokenB)
+            ShortToken       tokenA,
+            ShortToken       expectedSeparator,
+            ShortToken       tokenB)
         {
-            var text = tokenA.Text + expectedSeparator.Text + tokenB.Text;
+            var text   = tokenA.Text + expectedSeparator.Text + tokenB.Text;
             var tokens = Lex(text, options: options).ToImmutableArray();
 
             Assert.Equal(3, tokens.Length);
@@ -200,40 +207,44 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             Assert.Equal(SyntaxKind.EndOfFileToken, tokens[2].Kind());
         }
 
-        public static IEnumerable<object[]> GetTokensData() =>
+        public static IEnumerable<object[]> GetTokensData()
+            =>
 #if LARGE_TESTS_DEBUG
             from options in new[] { LuaSyntaxOptions.All }
 #else
-            from options in LuaSyntaxOptions.AllPresets
+                from options in LuaSyntaxOptions.AllPresets
 #endif
-            from token in LexicalTestData.GetTokens(options)
-            select new object[] { options, token };
+                from token in LexicalTestData.GetTokens(options)
+                select new object[] { options, token };
 
-        public static IEnumerable<object[]> GetTriviaData() =>
+        public static IEnumerable<object[]> GetTriviaData()
+            =>
 #if LARGE_TESTS_DEBUG
             from options in new[] { LuaSyntaxOptions.All }
 #else
-            from options in LuaSyntaxOptions.AllPresets
+                from options in LuaSyntaxOptions.AllPresets
 #endif
-            from trivia in LexicalTestData.GetTrivia(options)
-            select new object[] { options, trivia };
+                from trivia in LexicalTestData.GetTrivia(options)
+                select new object[] { options, trivia };
 
-        public static IEnumerable<object[]> GetTokenPairsData() =>
+        public static IEnumerable<object[]> GetTokenPairsData()
+            =>
 #if LARGE_TESTS_DEBUG
             from options in new[] { LuaSyntaxOptions.All }
 #else
-            from options in LuaSyntaxOptions.AllPresets
+                from options in LuaSyntaxOptions.AllPresets
 #endif
-            from pair in LexicalTestData.GetTokenPairs(options)
-            select new object[] { options, pair.tokenA, pair.tokenB };
+                from pair in LexicalTestData.GetTokenPairs(options)
+                select new object[] { options, pair.tokenA, pair.tokenB };
 
-        public static IEnumerable<object[]> GetTokenPairsWithSeparatorsData() =>
+        public static IEnumerable<object[]> GetTokenPairsWithSeparatorsData()
+            =>
 #if LARGE_TESTS_DEBUG
             from options in new[] { LuaSyntaxOptions.All }
 #else
-            from options in LuaSyntaxOptions.AllPresets
+                from options in LuaSyntaxOptions.AllPresets
 #endif
-            from tuple in LexicalTestData.GetTokenPairsWithSeparators(options)
-            select new object[] { options, tuple.tokenA, tuple.separator, tuple.tokenB };
+                from tuple in LexicalTestData.GetTokenPairsWithSeparators(options)
+                select new object[] { options, tuple.tokenA, tuple.separator, tuple.tokenB };
     }
 }
