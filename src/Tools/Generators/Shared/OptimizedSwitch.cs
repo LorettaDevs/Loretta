@@ -3,383 +3,346 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Loretta.Generators
 {
-    internal readonly record struct OptimizedSwitchClause(string Key, Action<SourceWriter> BodyWriter);
-
-    internal class OptimizedSwitch
+    internal sealed class OptimizedSwitch
     {
-        public OptimizedSwitch(int id = 0)
-        {
-            Id = id;
-        }
+        private readonly List<OptimizedSwitchClause> _clauses = [];
 
-        public int Id { get; }
-        public List<OptimizedSwitchClause> Clauses { get; } = new();
-        public Action<SourceWriter>? DefaultBodyWriter { get; set; }
+        public Action<SourceWriter>? DefaultBodyWriter { get; init; }
 
         public OptimizedSwitch AddClause(string key, Action<SourceWriter> bodyWriter)
         {
-            Clauses.Add(new(key, bodyWriter));
+            if (key is null) throw new ArgumentNullException(nameof(key));
+            if (bodyWriter is null) throw new ArgumentNullException(nameof(bodyWriter));
+
+            _clauses.Add(new OptimizedSwitchClause(key, bodyWriter));
             return this;
         }
 
-        public void Generate(SourceWriter writer, string inputName, bool inputIsSpan)
+        public void Generate(SourceWriter writer, string inputName, bool isInputSpan)
         {
-            var clauses = Clauses.ToImmutableArray();
-            var groups = clauses.GroupBy(clause => clause.Key.Length);
-
-            // Write a normal switch if we won't be able to optimize it
-            if (!inputIsSpan && groups.Any(group => GetUniqueColumnLocation(group.Select(clause => clause.Key), out _) == -1))
-            {
-                writer.Write("switch (");
-                writer.Write(inputName);
-                writer.Write(')');
-                using (writer.CurlyIndenter())
+            var clauses = _clauses.ToArray();
+            var groups = clauses.GroupBy(static clause => clause.Key.Length).Select(
+                static group =>
                 {
-                    foreach (var clause in clauses)
-                    {
-                        writer.Write("case ");
-                        writer.Write(SymbolDisplay.FormatLiteral(clause.Key, true));
-                        writer.Write(':');
-                        using (writer.CurlyIndenter())
-                        {
-                            clause.BodyWriter(writer);
-                        }
-                    }
-                    if (DefaultBodyWriter is not null)
-                    {
-                        writer.Write("default:");
-                        using (writer.CurlyIndenter())
-                        {
-                            DefaultBodyWriter(writer);
-                        }
-                    }
-                }
+                    var clauses = group.ToArray();
+                    var index = GetDiscriminatorIndexAndLength(
+                        input: Array.ConvertAll(clauses, static clause => clause.Key),
+                        length: out var length);
+                    return new OptimizedSwitchGroup(group.Key, index, length, clauses);
+                }).ToArray();
+
+            // Write a normal switch if we won't be able to optimize any branches
+            if (groups.All(static group => group.DiscriminatorIndex == -1))
+            {
+                WritePlainSwitch(
+                    writer,
+                    isInputSpan,
+                    inputName,
+                    clauses,
+                    static (writer, clause) => clause.BodyWriter(writer),
+                    DefaultBodyWriter);
                 return;
             }
 
-            var defaultDestination = -1;
-            if (DefaultBodyWriter is not null)
-            {
-                defaultDestination = clauses.Length;
-            }
+            var hash = string.Join(
+                                 "|",
+                                 values: _clauses.Select(static c => c.Key)
+                                                 .Append(DefaultBodyWriter is null ? "default" : "nodefault"))
+                             .GetHashCode();
+            var branchVariableName = $"__branch__{hash:X8}";
 
-            var candidateName = $"__candidate__{Id}";
-            var destinationName = $"__destination__{Id}";
-            var skipCheckName = $"__skipCheck__{Id}";
-
-            writer.Write("string? "); writer.Write(candidateName); writer.WriteLine(" = null;");
-            writer.Write("int "); writer.Write(destinationName); writer.WriteLine(" = -1;");
-            writer.Write("var "); writer.Write(skipCheckName); writer.WriteLine(" = false;");
+            writer.Write("int ");
+            writer.Write(branchVariableName);
+            writer.WriteLine(" = -1;");
 
             writer.Write("switch (");
             writer.Write(inputName);
             writer.WriteLine(".Length)");
             using (writer.CurlyIndenter())
             {
-                foreach (var group in groups.OrderBy(g => g.Key))
+                foreach (var (length, discriminatorIndex, discriminatorLength, groupClauses) in groups.OrderBy(
+                             static g => g.InputLength))
                 {
                     writer.Write("case ");
-                    writer.Write(SymbolDisplay.FormatPrimitive(group.Key, false, false));
-                    writer.WriteLine(':');
+                    writer.Write(
+                        SymbolDisplay.FormatPrimitive(length, quoteStrings: false, useHexadecimalNumbers: false));
+                    if (groupClauses.Length == 1)
+                    {
+                        writer.Write(" when ");
+                        WriteEqualityComparison(writer, inputName, isInputSpan, groupClauses[0].Key);
+                    }
+                    writer.WriteLine(value: ':');
                     using (writer.Indenter())
                     {
-                        if (group.Count() > 1)
+                        if (groupClauses.Length > 1)
                         {
-                            var uniqueCharIdx = GetUniqueColumnLocation(group.Select(clause => clause.Key), out var charsToRead);
-                            if (uniqueCharIdx != -1)
+                            if (discriminatorIndex != -1)
                             {
-                                var uniqueCharIdxLit = SymbolDisplay.FormatPrimitive(uniqueCharIdx, false, false);
-                                writer.Write("switch (");
-                                WriteGetDiscriminator(writer, inputName, inputIsSpan, uniqueCharIdx, charsToRead);
-                                writer.WriteLine(')');
-                                using (writer.CurlyIndenter())
-                                {
-                                    foreach (var clause in group)
-                                    {
-                                        var discriminator = GetDiscriminatorFromString(clause.Key, uniqueCharIdx, charsToRead);
-
-                                        writer.Write("case ");
-                                        writer.Write(SymbolDisplay.FormatPrimitive(discriminator, true, true));
-                                        writer.WriteLine(':');
-                                        using (writer.Indenter())
-                                        {
-                                            writeDestinationAndCandidateForClause(clause, clause.Key.Length == charsToRead);
-                                            writer.WriteLine("break;");
-                                        }
-                                    }
-                                }
+                                WriteDiscriminatorSwitch(discriminatorIndex, discriminatorLength, groupClauses);
                             }
                             else
                             {
-                                if (inputIsSpan)
-                                {
-                                    var first = true;
-                                    foreach (var clause in group)
-                                    {
-                                        if (!first)
-                                        {
-                                            writer.Write("else ");
-                                            first = false;
-                                        }
-                                        writer.Write("if (");
-                                        WriteEqualityComparison(writer, inputName, inputIsSpan, clause.Key);
-                                        writer.WriteLine(')');
-                                        using (writer.CurlyIndenter())
-                                        {
-                                            writeDestinationAndCandidateForClause(clause, true);
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    writer.Write("switch (");
-                                    writer.Write(inputName);
-                                    writer.WriteLine(')');
-                                    using (writer.CurlyIndenter())
-                                    {
-                                        foreach (var clause in group)
-                                        {
-                                            writer.Write("case ");
-                                            writer.Write(SymbolDisplay.FormatLiteral(clause.Key, true));
-                                            writer.WriteLine(':');
-                                            using (writer.Indenter())
-                                            {
-                                                writeDestinationAndCandidateForClause(clause, true);
-                                                writer.WriteLine("break;");
-                                            }
-                                        }
-                                    }
-                                }
+                                WritePlainSwitch(
+                                    writer,
+                                    isInputSpan,
+                                    inputName,
+                                    groupClauses,
+                                    (_, clause) => WriteDestinationForClause(clause));
                             }
                         }
                         else
                         {
-                            var clause = group.Single();
-                            writeDestinationAndCandidateForClause(clause, false);
-                            WriteClauseIfStatement(writer, inputName, inputIsSpan, clause);
+                            WriteDestinationForClause(groupClauses[0]);
                         }
                         writer.WriteLine("break;");
                     }
                 }
             }
 
-            writer.Write("if (");
-            writer.Write(destinationName);
-            writer.Write(" != -1 && (");
-            writer.Write(skipCheckName);
-            writer.Write(" || ");
-            WriteEqualityComparison(writer, inputIsSpan, inputName, false, candidateName);
-            writer.WriteLine("))");
+            writer.WriteLineNoTabs("");
+            writer.Write("switch (");
+            writer.Write(branchVariableName);
+            writer.WriteLine(value: ')');
             using (writer.CurlyIndenter())
             {
-                writer.Write("switch ("); writer.Write(destinationName); writer.WriteLine(')');
+                for (var idx = 0; idx < clauses.Length; idx++)
+                {
+                    var clause = clauses[idx];
+                    writer.Write("case ");
+                    writer.Write(SymbolDisplay.FormatPrimitive(idx, quoteStrings: false, useHexadecimalNumbers: false));
+                    writer.WriteLine(value: ':');
+                    using (writer.CurlyIndenter()) clause.BodyWriter(writer);
+                    writer.WriteLineNoTabs("#pragma warning disable CS0162 // Unreachable code detected");
+                    writer.WriteLine("break;");
+                    writer.WriteLineNoTabs("#pragma warning restore CS0162 // Unreachable code detected");
+                }
+
+                writer.WriteLine("default:");
+                // ReSharper disable once RemoveRedundantBraces (inf loop)
+                if (DefaultBodyWriter is not null)
+                {
+                    using (writer.CurlyIndenter()) DefaultBodyWriter(writer);
+                }
+                writer.WriteLineNoTabs("#pragma warning disable CS0162 // Unreachable code detected");
+                writer.WriteLine("break;");
+                writer.WriteLineNoTabs("#pragma warning restore CS0162 // Unreachable code detected");
+            }
+            return;
+
+            void WriteDiscriminatorSwitch(
+                int                                discriminatorIndex,
+                int                                discriminatorLength,
+                IEnumerable<OptimizedSwitchClause> groupClauses)
+            {
+                writer.Write("switch (");
+                WriteDiscriminatorRead(writer, inputName, isInputSpan, discriminatorIndex, discriminatorLength);
+                writer.WriteLine(value: ')');
                 using (writer.CurlyIndenter())
                 {
-                    for (var idx = 0; idx < clauses.Length; idx++)
+                    foreach (var clause in groupClauses)
                     {
-                        var clause = clauses[idx];
-                        writer.Write("case ");
-                        writer.Write(SymbolDisplay.FormatPrimitive(idx, false, false));
-                        writer.WriteLine(':');
-                        using (writer.CurlyIndenter())
+                        var discriminator = (object) ReadDiscriminator(
+                            clause.Key,
+                            discriminatorIndex,
+                            discriminatorLength);
+                        switch (discriminatorLength)
                         {
-                            clause.BodyWriter(writer);
+                            case 1: discriminator = (char) (long) discriminator; break;
+                            case 2: discriminator = (int) (long) discriminator; break;
+                        }
+
+                        if (discriminatorLength != clause.Key.Length)
+                        {
+                            writer.Write("// ");
+                            writer.WriteLine(clause.Key);
+                        }
+                        writer.Write("case /* \"");
+                        writer.Write(clause.Key.Substring(discriminatorIndex, discriminatorLength));
+                        writer.Write("\" = */ ");
+                        writer.Write(
+                            SymbolDisplay.FormatPrimitive(
+                                discriminator,
+                                quoteStrings: true,
+                                useHexadecimalNumbers: true));
+                        if (discriminatorLength != clause.Key.Length)
+                        {
+                            writer.Write(" when ");
+                            WriteEqualityComparison(writer, inputName, isInputSpan, clause.Key);
+                        }
+                        writer.WriteLine(':');
+                        using (writer.Indenter())
+                        {
+                            WriteDestinationForClause(clause);
+                            writer.WriteLine("break;");
                         }
                     }
-                    writer.WriteLine("default:");
-                    writer.WriteLineIndented("throw new InvalidOperationException();");
-                }
-            }
-            if (DefaultBodyWriter is not null)
-            {
-                writer.WriteLine("else");
-                using (writer.CurlyIndenter())
-                {
-                    DefaultBodyWriter(writer);
                 }
             }
 
-            void writeDestinationAndCandidateForClause(OptimizedSwitchClause clause, bool skipCheck)
+            void WriteDestinationForClause(OptimizedSwitchClause clause)
             {
-                var destinationIndex = clauses.IndexOf(clause);
-                writeDestinationAndCandidate(clause.Key, destinationIndex, skipCheck);
-            }
-
-            void writeDestinationAndCandidate(string? key, int destination, bool skipCheck)
-            {
-                if (key != null)
-                {
-                    writer.Write(candidateName);
-                    writer.Write(" = ");
-                    writer.Write(SymbolDisplay.FormatLiteral(key, true));
-                    writer.WriteLine(';');
-                }
-
-                writer.Write(destinationName);
+                writer.Write(branchVariableName);
                 writer.Write(" = ");
-                writer.Write(SymbolDisplay.FormatPrimitive(destination, false, false));
-                writer.WriteLine(';');
+                writer.Write(
+                    SymbolDisplay.FormatPrimitive(
+                        obj: Array.IndexOf(clauses, clause),
+                        quoteStrings: false,
+                        useHexadecimalNumbers: false));
+                writer.WriteLine(value: ';');
+            }
+        }
 
-                if (skipCheck)
+        private static void WritePlainSwitch(
+            SourceWriter                                writer,
+            bool                                        isInputSpan,
+            string                                      inputName,
+            IEnumerable<OptimizedSwitchClause>          clauses,
+            Action<SourceWriter, OptimizedSwitchClause> writeClause,
+            Action<SourceWriter>?                       writeDefault = null)
+        {
+            if (isInputSpan)
+            {
+                var first = true;
+                foreach (var clause in clauses)
                 {
-                    writer.Write(skipCheckName);
-                    writer.WriteLine(" = true;");
+                    if (!first) writer.Write("else ");
+                    first = false;
+
+                    writer.Write("if (");
+                    WriteEqualityComparison(writer, inputName, valueIsSpan: true, clause.Key);
+                    writer.WriteLine(value: ')');
+                    using (writer.CurlyIndenter()) writeClause(writer, clause);
                 }
-            }
-        }
 
-        private static object GetDiscriminatorFromString(string str, int index, int charsToRead)
-        {
-            return charsToRead switch
-            {
-                1 => (object) str[index],
-                2 => (object) MemoryMarshal.Read<int>(MemoryMarshal.Cast<char, byte>(str.AsSpan(index, 2))),
-                4 => (object) MemoryMarshal.Read<long>(MemoryMarshal.Cast<char, byte>(str.AsSpan(index, 4))),
-                _ => throw new ArgumentOutOfRangeException(nameof(charsToRead))
-            };
-        }
-
-        private static void WriteClauseIfStatement(SourceWriter writer, string inputName, bool inputIsSpan, OptimizedSwitchClause clause)
-        {
-            writer.Write("if (");
-            WriteEqualityComparison(writer, inputName, inputIsSpan, clause.Key);
-            writer.WriteLine(')');
-            using (writer.CurlyIndenter())
-            {
-                clause.BodyWriter(writer);
-            }
-        }
-
-        private static void WriteEqualityComparison(SourceWriter writer, bool leftIsSpan, string left, bool rightIsSpan, string right)
-        {
-            if (leftIsSpan || rightIsSpan)
-            {
-                writer.Write("System.MemoryExtensions.Equals(");
-                writer.Write(left);
-                if (!leftIsSpan)
-                    writer.Write(".AsSpan()");
-                writer.Write(", ");
-                writer.Write(right);
-                if (!rightIsSpan)
-                    writer.Write(".AsSpan()");
-                writer.Write(", StringComparison.Ordinal)");
+                if (writeDefault is null) return;
+                writer.WriteLine("else");
+                using (writer.CurlyIndenter()) writeDefault(writer);
             }
             else
             {
-                writer.Write("string.Equals(");
-                writer.Write(left);
-                writer.Write(", ");
-                writer.Write(right);
-                writer.Write(", StringComparison.Ordinal)");
+                writer.Write("switch (");
+                writer.Write(inputName);
+                writer.Write(value: ')');
+                using (writer.CurlyIndenter())
+                {
+                    foreach (var clause in clauses)
+                    {
+                        writer.Write("case ");
+                        writer.Write(SymbolDisplay.FormatLiteral(clause.Key, quote: true));
+                        writer.Write(value: ':');
+                        using (writer.CurlyIndenter()) writeClause(writer, clause);
+                    }
+
+                    if (writeDefault is null) return;
+                    writer.Write("default:");
+                    using (writer.CurlyIndenter()) writeDefault(writer);
+                }
             }
         }
 
-        private static void WriteEqualityComparison(SourceWriter writer, string left, bool leftIsSpan, string value)
+        private static void WriteEqualityComparison(SourceWriter writer, string value, bool valueIsSpan, string literal)
         {
-            if (leftIsSpan)
+            if (valueIsSpan)
             {
-                writer.Write(left);
+                writer.Write(value);
                 writer.Write(".Equals(");
-                writer.Write(SymbolDisplay.FormatLiteral(value, true));
+                writer.Write(SymbolDisplay.FormatLiteral(literal, quote: true));
                 writer.Write(".AsSpan(), StringComparison.Ordinal)");
             }
             else
             {
                 writer.Write("string.Equals(");
-                writer.Write(left);
+                writer.Write(value);
                 writer.Write(", ");
-                writer.Write(SymbolDisplay.FormatLiteral(value, true));
+                writer.Write(SymbolDisplay.FormatLiteral(literal, quote: true));
                 writer.Write(", StringComparison.Ordinal)");
             }
         }
 
-        private static void WriteGetDiscriminator(SourceWriter writer, string inputName, bool inputIsSpan, int index, int charsToRead)
+        private static void WriteDiscriminatorRead(
+            SourceWriter writer,
+            string       inputName,
+            bool         inputIsSpan,
+            int          index,
+            int          discriminatorLength)
         {
-            if (charsToRead == 1)
+            if (discriminatorLength == 1)
             {
                 writer.Write(inputName);
-                writer.Write('[');
-                writer.Write(SymbolDisplay.FormatPrimitive(index, false, false));
-                writer.Write(']');
+                writer.Write(value: '[');
+                writer.Write(SymbolDisplay.FormatPrimitive(index, quoteStrings: false, useHexadecimalNumbers: false));
+                writer.Write(value: ']');
                 return;
             }
 
-            var discrimType = charsToRead == 2 ? "int" : "long";
+            var discriminatorType = discriminatorLength == 2 ? "int" : "long";
 
             writer.Write("System.Runtime.InteropServices.MemoryMarshal.Read<");
-            writer.Write(discrimType);
+            writer.Write(discriminatorType);
             writer.Write(">(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(");
             writer.Write(inputName);
-            if (inputIsSpan)
-                writer.Write(".Slice(");
-            else
-                writer.Write(".AsSpan(");
-            writer.Write(SymbolDisplay.FormatPrimitive(index, false, false));
+            writer.Write(inputIsSpan ? ".Slice(" : ".AsSpan(");
+            writer.Write(SymbolDisplay.FormatPrimitive(index, quoteStrings: false, useHexadecimalNumbers: false));
             writer.Write(", ");
-            writer.Write(SymbolDisplay.FormatPrimitive(charsToRead, false, false));
+            writer.Write(
+                SymbolDisplay.FormatPrimitive(discriminatorLength, quoteStrings: false, useHexadecimalNumbers: false));
             writer.Write(")))");
         }
 
-        private static int GetUniqueColumnLocation(IEnumerable<string> input, out int charsToRead)
+        private static int GetDiscriminatorIndexAndLength(IEnumerable<string> input, out int length)
         {
             var inputArr = input.ToArray();
+
             if (inputArr.Length < 1)
+                throw new ArgumentException("Input must contain at least one string.", paramName: nameof(input));
+
+            if (inputArr.Select(static str => str.Length).Distinct().Count() > 1)
+                throw new ArgumentException("All strings must have the same length.", paramName: nameof(input));
+
+            // Just read the full thing if we can, that way we can skip the equals check.
+            var len = inputArr[0].Length;
+            switch (len)
             {
-                throw new ArgumentException("Input must contain at least one string.", nameof(input));
+                case 2: return GetDiscriminatorIndexAndLengthCore(inputArr, length: length = 2);
+                case 4: return GetDiscriminatorIndexAndLengthCore(inputArr, length: length = 4);
             }
 
-            if (inputArr.Select(str => str.Length).Distinct().Count() > 1)
-            {
-                throw new ArgumentException("All strings must have the same length.", nameof(input));
-            }
-
-            var idx = GetUniqueColumnLocationCore(inputArr, charsToRead = 1);
-            if (idx == -1)
-                idx = GetUniqueColumnLocationCore(inputArr, charsToRead = 2);
-            if (idx == -1)
-                idx = GetUniqueColumnLocationCore(inputArr, charsToRead = 4);
+            var idx            = GetDiscriminatorIndexAndLengthCore(inputArr, length: length = 1);
+            if (idx == -1) idx = GetDiscriminatorIndexAndLengthCore(inputArr, length: length = 2);
+            if (idx == -1) idx = GetDiscriminatorIndexAndLengthCore(inputArr, length: length = 4);
             return idx;
 
-            static int GetUniqueColumnLocationCore(string[] inputArr, int charsToRead)
+            static int GetDiscriminatorIndexAndLengthCore(string[] keys, int length)
             {
-                var strLength = inputArr[0].Length;
-                var occurrences = new HashSet<long>[strLength - charsToRead + 1];
-                for (var idx = 0; idx < occurrences.Length; idx++)
+                var keysLength = keys[0].Length;
+                for (var offset = 0; offset < keysLength - length + 1; offset++)
                 {
-                    occurrences[idx] = new HashSet<long>();
-                }
+                    var occurrences = new HashSet<long>(keys.Select(str => ReadDiscriminator(str, offset, length)));
 
-                for (var arrIdx = 0; arrIdx < inputArr.Length; arrIdx++)
-                {
-                    var str = inputArr[arrIdx];
-                    for (var strIdx = 0; strIdx < str.Length - charsToRead + 1; strIdx++)
-                    {
-                        var discrim = getDiscriminator(str, strIdx, charsToRead);
-                        var idxOccs = occurrences[strIdx];
-                        idxOccs.Add(discrim);
-                    }
-                }
-
-                for (var idx = 0; idx < occurrences.Length; idx++)
-                {
-                    if (occurrences[idx].Count == inputArr.Length)
-                    {
-                        return idx;
-                    }
+                    if (occurrences.Count == keys.Length) return offset;
                 }
                 return -1;
             }
-
-            static long getDiscriminator(string str, int index, int charsToRead)
-            {
-                return charsToRead switch
-                {
-                    1 => str[index],
-                    2 => MemoryMarshal.Read<int>(MemoryMarshal.Cast<char, byte>(str.AsSpan(index, 2))),
-                    4 => MemoryMarshal.Read<long>(MemoryMarshal.Cast<char, byte>(str.AsSpan(index, 4))),
-                    _ => throw new ArgumentOutOfRangeException(nameof(charsToRead))
-                };
-            }
         }
+
+        private static long ReadDiscriminator(string str, int index, int charsToRead)
+        {
+            return charsToRead switch
+            {
+                1 => str[index],
+                2 => MemoryMarshal.Read<int>(MemoryMarshal.Cast<char, byte>(str.AsSpan(index, length: 2))),
+                4 => MemoryMarshal.Read<long>(MemoryMarshal.Cast<char, byte>(str.AsSpan(index, length: 4))),
+                _ => throw new ArgumentOutOfRangeException(nameof(charsToRead)),
+            };
+        }
+
+        private readonly record struct OptimizedSwitchClause(string Key, Action<SourceWriter> BodyWriter);
+
+        private readonly record struct OptimizedSwitchGroup(
+            int                     InputLength,
+            int                     DiscriminatorIndex,
+            int                     DiscriminatorLength,
+            OptimizedSwitchClause[] Clauses
+        );
     }
 }

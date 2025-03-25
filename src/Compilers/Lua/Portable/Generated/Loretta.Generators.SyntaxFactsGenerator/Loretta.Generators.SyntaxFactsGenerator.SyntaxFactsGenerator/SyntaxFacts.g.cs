@@ -167,261 +167,327 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static SyntaxKind GetKeywordKind(String text)
         {
-            string? __candidate__0 = null;
-            int __destination__0 = -1;
-            var __skipCheck__0 = false;
+            int __branch__216C9C4E = -1;
             switch (text.Length)
             {
                 case 2:
-                    switch (text[1])
+                    switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(text.AsSpan(0, 2))))
                     {
-                        case 'o':
-                            __candidate__0 = "do";
-                            __destination__0 = 3;
+                        case /* "do" = */ 0x006f0064:
+                            __branch__216C9C4E = 3;
                             break;
-                        case 'f':
-                            __candidate__0 = "if";
-                            __destination__0 = 12;
+                        case /* "if" = */ 0x00660069:
+                            __branch__216C9C4E = 12;
                             break;
-                        case 'n':
-                            __candidate__0 = "in";
-                            __destination__0 = 13;
+                        case /* "in" = */ 0x006e0069:
+                            __branch__216C9C4E = 13;
                             break;
-                        case 'r':
-                            __candidate__0 = "or";
-                            __destination__0 = 17;
+                        case /* "or" = */ 0x0072006f:
+                            __branch__216C9C4E = 17;
                             break;
                     }
                     break;
                 case 3:
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(text.AsSpan(0, 2))))
                     {
-                        case 0x006e0061:
-                            __candidate__0 = "and";
-                            __destination__0 = 0;
+                        // and
+                        case /* "an" = */ 0x006e0061 when string.Equals(text, "and", StringComparison.Ordinal):
+                            __branch__216C9C4E = 0;
                             break;
-                        case 0x006e0065:
-                            __candidate__0 = "end";
-                            __destination__0 = 6;
+                        // end
+                        case /* "en" = */ 0x006e0065 when string.Equals(text, "end", StringComparison.Ordinal):
+                            __branch__216C9C4E = 6;
                             break;
-                        case 0x006f0066:
-                            __candidate__0 = "for";
-                            __destination__0 = 9;
+                        // for
+                        case /* "fo" = */ 0x006f0066 when string.Equals(text, "for", StringComparison.Ordinal):
+                            __branch__216C9C4E = 9;
                             break;
-                        case 0x0069006e:
-                            __candidate__0 = "nil";
-                            __destination__0 = 15;
+                        // nil
+                        case /* "ni" = */ 0x0069006e when string.Equals(text, "nil", StringComparison.Ordinal):
+                            __branch__216C9C4E = 15;
                             break;
-                        case 0x006f006e:
-                            __candidate__0 = "not";
-                            __destination__0 = 16;
+                        // not
+                        case /* "no" = */ 0x006f006e when string.Equals(text, "not", StringComparison.Ordinal):
+                            __branch__216C9C4E = 16;
                             break;
                     }
                     break;
                 case 4:
-                    switch (text[1])
+                    switch (System.Runtime.InteropServices.MemoryMarshal.Read<long>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(text.AsSpan(0, 4))))
                     {
-                        case 'l':
-                            __candidate__0 = "else";
-                            __destination__0 = 5;
+                        case /* "else" = */ 0x00650073006c0065:
+                            __branch__216C9C4E = 5;
                             break;
-                        case 'o':
-                            __candidate__0 = "goto";
-                            __destination__0 = 11;
+                        case /* "goto" = */ 0x006f0074006f0067:
+                            __branch__216C9C4E = 11;
                             break;
-                        case 'h':
-                            __candidate__0 = "then";
-                            __destination__0 = 20;
+                        case /* "then" = */ 0x006e006500680074:
+                            __branch__216C9C4E = 20;
                             break;
-                        case 'r':
-                            __candidate__0 = "true";
-                            __destination__0 = 21;
+                        case /* "true" = */ 0x0065007500720074:
+                            __branch__216C9C4E = 21;
                             break;
-                        case 'y':
-                            __candidate__0 = "type";
-                            __destination__0 = 22;
+                        case /* "type" = */ 0x0065007000790074:
+                            __branch__216C9C4E = 22;
                             break;
                     }
                     break;
                 case 5:
                     switch (text[0])
                     {
-                        case 'b':
-                            __candidate__0 = "break";
-                            __destination__0 = 1;
+                        // break
+                        case /* "b" = */ 'b' when string.Equals(text, "break", StringComparison.Ordinal):
+                            __branch__216C9C4E = 1;
                             break;
-                        case 'f':
-                            __candidate__0 = "false";
-                            __destination__0 = 8;
+                        // false
+                        case /* "f" = */ 'f' when string.Equals(text, "false", StringComparison.Ordinal):
+                            __branch__216C9C4E = 8;
                             break;
-                        case 'l':
-                            __candidate__0 = "local";
-                            __destination__0 = 14;
+                        // local
+                        case /* "l" = */ 'l' when string.Equals(text, "local", StringComparison.Ordinal):
+                            __branch__216C9C4E = 14;
                             break;
-                        case 'u':
-                            __candidate__0 = "until";
-                            __destination__0 = 24;
+                        // until
+                        case /* "u" = */ 'u' when string.Equals(text, "until", StringComparison.Ordinal):
+                            __branch__216C9C4E = 24;
                             break;
-                        case 'w':
-                            __candidate__0 = "while";
-                            __destination__0 = 25;
+                        // while
+                        case /* "w" = */ 'w' when string.Equals(text, "while", StringComparison.Ordinal):
+                            __branch__216C9C4E = 25;
                             break;
                     }
                     break;
                 case 6:
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(text.AsSpan(1, 2))))
                     {
-                        case 0x0073006c:
-                            __candidate__0 = "elseif";
-                            __destination__0 = 4;
+                        // elseif
+                        case /* "ls" = */ 0x0073006c when string.Equals(text, "elseif", StringComparison.Ordinal):
+                            __branch__216C9C4E = 4;
                             break;
-                        case 0x00700078:
-                            __candidate__0 = "export";
-                            __destination__0 = 7;
+                        // export
+                        case /* "xp" = */ 0x00700078 when string.Equals(text, "export", StringComparison.Ordinal):
+                            __branch__216C9C4E = 7;
                             break;
-                        case 0x00700065:
-                            __candidate__0 = "repeat";
-                            __destination__0 = 18;
+                        // repeat
+                        case /* "ep" = */ 0x00700065 when string.Equals(text, "repeat", StringComparison.Ordinal):
+                            __branch__216C9C4E = 18;
                             break;
-                        case 0x00740065:
-                            __candidate__0 = "return";
-                            __destination__0 = 19;
+                        // return
+                        case /* "et" = */ 0x00740065 when string.Equals(text, "return", StringComparison.Ordinal):
+                            __branch__216C9C4E = 19;
                             break;
-                        case 0x00700079:
-                            __candidate__0 = "typeof";
-                            __destination__0 = 23;
+                        // typeof
+                        case /* "yp" = */ 0x00700079 when string.Equals(text, "typeof", StringComparison.Ordinal):
+                            __branch__216C9C4E = 23;
                             break;
                     }
                     break;
                 case 8:
                     switch (text[0])
                     {
-                        case 'c':
-                            __candidate__0 = "continue";
-                            __destination__0 = 2;
+                        // continue
+                        case /* "c" = */ 'c' when string.Equals(text, "continue", StringComparison.Ordinal):
+                            __branch__216C9C4E = 2;
                             break;
-                        case 'f':
-                            __candidate__0 = "function";
-                            __destination__0 = 10;
+                        // function
+                        case /* "f" = */ 'f' when string.Equals(text, "function", StringComparison.Ordinal):
+                            __branch__216C9C4E = 10;
                             break;
                     }
                     break;
             }
-            if (__destination__0 != -1 && (__skipCheck__0 || string.Equals(text, __candidate__0, StringComparison.Ordinal)))
+
+            switch (__branch__216C9C4E)
             {
-                switch (__destination__0)
+                case 0:
                 {
-                    case 0:
-                    {
-                        return SyntaxKind.AndKeyword;
-                    }
-                    case 1:
-                    {
-                        return SyntaxKind.BreakKeyword;
-                    }
-                    case 2:
-                    {
-                        return SyntaxKind.ContinueKeyword;
-                    }
-                    case 3:
-                    {
-                        return SyntaxKind.DoKeyword;
-                    }
-                    case 4:
-                    {
-                        return SyntaxKind.ElseIfKeyword;
-                    }
-                    case 5:
-                    {
-                        return SyntaxKind.ElseKeyword;
-                    }
-                    case 6:
-                    {
-                        return SyntaxKind.EndKeyword;
-                    }
-                    case 7:
-                    {
-                        return SyntaxKind.ExportKeyword;
-                    }
-                    case 8:
-                    {
-                        return SyntaxKind.FalseKeyword;
-                    }
-                    case 9:
-                    {
-                        return SyntaxKind.ForKeyword;
-                    }
-                    case 10:
-                    {
-                        return SyntaxKind.FunctionKeyword;
-                    }
-                    case 11:
-                    {
-                        return SyntaxKind.GotoKeyword;
-                    }
-                    case 12:
-                    {
-                        return SyntaxKind.IfKeyword;
-                    }
-                    case 13:
-                    {
-                        return SyntaxKind.InKeyword;
-                    }
-                    case 14:
-                    {
-                        return SyntaxKind.LocalKeyword;
-                    }
-                    case 15:
-                    {
-                        return SyntaxKind.NilKeyword;
-                    }
-                    case 16:
-                    {
-                        return SyntaxKind.NotKeyword;
-                    }
-                    case 17:
-                    {
-                        return SyntaxKind.OrKeyword;
-                    }
-                    case 18:
-                    {
-                        return SyntaxKind.RepeatKeyword;
-                    }
-                    case 19:
-                    {
-                        return SyntaxKind.ReturnKeyword;
-                    }
-                    case 20:
-                    {
-                        return SyntaxKind.ThenKeyword;
-                    }
-                    case 21:
-                    {
-                        return SyntaxKind.TrueKeyword;
-                    }
-                    case 22:
-                    {
-                        return SyntaxKind.TypeKeyword;
-                    }
-                    case 23:
-                    {
-                        return SyntaxKind.TypeofKeyword;
-                    }
-                    case 24:
-                    {
-                        return SyntaxKind.UntilKeyword;
-                    }
-                    case 25:
-                    {
-                        return SyntaxKind.WhileKeyword;
-                    }
-                    default:
-                        throw new InvalidOperationException();
+                    return SyntaxKind.AndKeyword;
                 }
-            }
-            else
-            {
-                return SyntaxKind.IdentifierToken;
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 1:
+                {
+                    return SyntaxKind.BreakKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 2:
+                {
+                    return SyntaxKind.ContinueKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 3:
+                {
+                    return SyntaxKind.DoKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 4:
+                {
+                    return SyntaxKind.ElseIfKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 5:
+                {
+                    return SyntaxKind.ElseKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 6:
+                {
+                    return SyntaxKind.EndKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 7:
+                {
+                    return SyntaxKind.ExportKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 8:
+                {
+                    return SyntaxKind.FalseKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 9:
+                {
+                    return SyntaxKind.ForKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 10:
+                {
+                    return SyntaxKind.FunctionKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 11:
+                {
+                    return SyntaxKind.GotoKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 12:
+                {
+                    return SyntaxKind.IfKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 13:
+                {
+                    return SyntaxKind.InKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 14:
+                {
+                    return SyntaxKind.LocalKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 15:
+                {
+                    return SyntaxKind.NilKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 16:
+                {
+                    return SyntaxKind.NotKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 17:
+                {
+                    return SyntaxKind.OrKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 18:
+                {
+                    return SyntaxKind.RepeatKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 19:
+                {
+                    return SyntaxKind.ReturnKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 20:
+                {
+                    return SyntaxKind.ThenKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 21:
+                {
+                    return SyntaxKind.TrueKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 22:
+                {
+                    return SyntaxKind.TypeKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 23:
+                {
+                    return SyntaxKind.TypeofKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 24:
+                {
+                    return SyntaxKind.UntilKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 25:
+                {
+                    return SyntaxKind.WhileKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                default:
+                {
+                    return SyntaxKind.IdentifierToken;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
             }
         }
         
@@ -430,261 +496,327 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static SyntaxKind GetKeywordKind(ReadOnlySpan<char> span)
         {
-            string? __candidate__0 = null;
-            int __destination__0 = -1;
-            var __skipCheck__0 = false;
+            int __branch__216C9C4E = -1;
             switch (span.Length)
             {
                 case 2:
-                    switch (span[1])
+                    switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(span.Slice(0, 2))))
                     {
-                        case 'o':
-                            __candidate__0 = "do";
-                            __destination__0 = 3;
+                        case /* "do" = */ 0x006f0064:
+                            __branch__216C9C4E = 3;
                             break;
-                        case 'f':
-                            __candidate__0 = "if";
-                            __destination__0 = 12;
+                        case /* "if" = */ 0x00660069:
+                            __branch__216C9C4E = 12;
                             break;
-                        case 'n':
-                            __candidate__0 = "in";
-                            __destination__0 = 13;
+                        case /* "in" = */ 0x006e0069:
+                            __branch__216C9C4E = 13;
                             break;
-                        case 'r':
-                            __candidate__0 = "or";
-                            __destination__0 = 17;
+                        case /* "or" = */ 0x0072006f:
+                            __branch__216C9C4E = 17;
                             break;
                     }
                     break;
                 case 3:
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(span.Slice(0, 2))))
                     {
-                        case 0x006e0061:
-                            __candidate__0 = "and";
-                            __destination__0 = 0;
+                        // and
+                        case /* "an" = */ 0x006e0061 when span.Equals("and".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 0;
                             break;
-                        case 0x006e0065:
-                            __candidate__0 = "end";
-                            __destination__0 = 6;
+                        // end
+                        case /* "en" = */ 0x006e0065 when span.Equals("end".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 6;
                             break;
-                        case 0x006f0066:
-                            __candidate__0 = "for";
-                            __destination__0 = 9;
+                        // for
+                        case /* "fo" = */ 0x006f0066 when span.Equals("for".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 9;
                             break;
-                        case 0x0069006e:
-                            __candidate__0 = "nil";
-                            __destination__0 = 15;
+                        // nil
+                        case /* "ni" = */ 0x0069006e when span.Equals("nil".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 15;
                             break;
-                        case 0x006f006e:
-                            __candidate__0 = "not";
-                            __destination__0 = 16;
+                        // not
+                        case /* "no" = */ 0x006f006e when span.Equals("not".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 16;
                             break;
                     }
                     break;
                 case 4:
-                    switch (span[1])
+                    switch (System.Runtime.InteropServices.MemoryMarshal.Read<long>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(span.Slice(0, 4))))
                     {
-                        case 'l':
-                            __candidate__0 = "else";
-                            __destination__0 = 5;
+                        case /* "else" = */ 0x00650073006c0065:
+                            __branch__216C9C4E = 5;
                             break;
-                        case 'o':
-                            __candidate__0 = "goto";
-                            __destination__0 = 11;
+                        case /* "goto" = */ 0x006f0074006f0067:
+                            __branch__216C9C4E = 11;
                             break;
-                        case 'h':
-                            __candidate__0 = "then";
-                            __destination__0 = 20;
+                        case /* "then" = */ 0x006e006500680074:
+                            __branch__216C9C4E = 20;
                             break;
-                        case 'r':
-                            __candidate__0 = "true";
-                            __destination__0 = 21;
+                        case /* "true" = */ 0x0065007500720074:
+                            __branch__216C9C4E = 21;
                             break;
-                        case 'y':
-                            __candidate__0 = "type";
-                            __destination__0 = 22;
+                        case /* "type" = */ 0x0065007000790074:
+                            __branch__216C9C4E = 22;
                             break;
                     }
                     break;
                 case 5:
                     switch (span[0])
                     {
-                        case 'b':
-                            __candidate__0 = "break";
-                            __destination__0 = 1;
+                        // break
+                        case /* "b" = */ 'b' when span.Equals("break".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 1;
                             break;
-                        case 'f':
-                            __candidate__0 = "false";
-                            __destination__0 = 8;
+                        // false
+                        case /* "f" = */ 'f' when span.Equals("false".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 8;
                             break;
-                        case 'l':
-                            __candidate__0 = "local";
-                            __destination__0 = 14;
+                        // local
+                        case /* "l" = */ 'l' when span.Equals("local".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 14;
                             break;
-                        case 'u':
-                            __candidate__0 = "until";
-                            __destination__0 = 24;
+                        // until
+                        case /* "u" = */ 'u' when span.Equals("until".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 24;
                             break;
-                        case 'w':
-                            __candidate__0 = "while";
-                            __destination__0 = 25;
+                        // while
+                        case /* "w" = */ 'w' when span.Equals("while".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 25;
                             break;
                     }
                     break;
                 case 6:
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(span.Slice(1, 2))))
                     {
-                        case 0x0073006c:
-                            __candidate__0 = "elseif";
-                            __destination__0 = 4;
+                        // elseif
+                        case /* "ls" = */ 0x0073006c when span.Equals("elseif".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 4;
                             break;
-                        case 0x00700078:
-                            __candidate__0 = "export";
-                            __destination__0 = 7;
+                        // export
+                        case /* "xp" = */ 0x00700078 when span.Equals("export".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 7;
                             break;
-                        case 0x00700065:
-                            __candidate__0 = "repeat";
-                            __destination__0 = 18;
+                        // repeat
+                        case /* "ep" = */ 0x00700065 when span.Equals("repeat".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 18;
                             break;
-                        case 0x00740065:
-                            __candidate__0 = "return";
-                            __destination__0 = 19;
+                        // return
+                        case /* "et" = */ 0x00740065 when span.Equals("return".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 19;
                             break;
-                        case 0x00700079:
-                            __candidate__0 = "typeof";
-                            __destination__0 = 23;
+                        // typeof
+                        case /* "yp" = */ 0x00700079 when span.Equals("typeof".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 23;
                             break;
                     }
                     break;
                 case 8:
                     switch (span[0])
                     {
-                        case 'c':
-                            __candidate__0 = "continue";
-                            __destination__0 = 2;
+                        // continue
+                        case /* "c" = */ 'c' when span.Equals("continue".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 2;
                             break;
-                        case 'f':
-                            __candidate__0 = "function";
-                            __destination__0 = 10;
+                        // function
+                        case /* "f" = */ 'f' when span.Equals("function".AsSpan(), StringComparison.Ordinal):
+                            __branch__216C9C4E = 10;
                             break;
                     }
                     break;
             }
-            if (__destination__0 != -1 && (__skipCheck__0 || System.MemoryExtensions.Equals(span, __candidate__0.AsSpan(), StringComparison.Ordinal)))
+
+            switch (__branch__216C9C4E)
             {
-                switch (__destination__0)
+                case 0:
                 {
-                    case 0:
-                    {
-                        return SyntaxKind.AndKeyword;
-                    }
-                    case 1:
-                    {
-                        return SyntaxKind.BreakKeyword;
-                    }
-                    case 2:
-                    {
-                        return SyntaxKind.ContinueKeyword;
-                    }
-                    case 3:
-                    {
-                        return SyntaxKind.DoKeyword;
-                    }
-                    case 4:
-                    {
-                        return SyntaxKind.ElseIfKeyword;
-                    }
-                    case 5:
-                    {
-                        return SyntaxKind.ElseKeyword;
-                    }
-                    case 6:
-                    {
-                        return SyntaxKind.EndKeyword;
-                    }
-                    case 7:
-                    {
-                        return SyntaxKind.ExportKeyword;
-                    }
-                    case 8:
-                    {
-                        return SyntaxKind.FalseKeyword;
-                    }
-                    case 9:
-                    {
-                        return SyntaxKind.ForKeyword;
-                    }
-                    case 10:
-                    {
-                        return SyntaxKind.FunctionKeyword;
-                    }
-                    case 11:
-                    {
-                        return SyntaxKind.GotoKeyword;
-                    }
-                    case 12:
-                    {
-                        return SyntaxKind.IfKeyword;
-                    }
-                    case 13:
-                    {
-                        return SyntaxKind.InKeyword;
-                    }
-                    case 14:
-                    {
-                        return SyntaxKind.LocalKeyword;
-                    }
-                    case 15:
-                    {
-                        return SyntaxKind.NilKeyword;
-                    }
-                    case 16:
-                    {
-                        return SyntaxKind.NotKeyword;
-                    }
-                    case 17:
-                    {
-                        return SyntaxKind.OrKeyword;
-                    }
-                    case 18:
-                    {
-                        return SyntaxKind.RepeatKeyword;
-                    }
-                    case 19:
-                    {
-                        return SyntaxKind.ReturnKeyword;
-                    }
-                    case 20:
-                    {
-                        return SyntaxKind.ThenKeyword;
-                    }
-                    case 21:
-                    {
-                        return SyntaxKind.TrueKeyword;
-                    }
-                    case 22:
-                    {
-                        return SyntaxKind.TypeKeyword;
-                    }
-                    case 23:
-                    {
-                        return SyntaxKind.TypeofKeyword;
-                    }
-                    case 24:
-                    {
-                        return SyntaxKind.UntilKeyword;
-                    }
-                    case 25:
-                    {
-                        return SyntaxKind.WhileKeyword;
-                    }
-                    default:
-                        throw new InvalidOperationException();
+                    return SyntaxKind.AndKeyword;
                 }
-            }
-            else
-            {
-                return SyntaxKind.IdentifierToken;
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 1:
+                {
+                    return SyntaxKind.BreakKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 2:
+                {
+                    return SyntaxKind.ContinueKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 3:
+                {
+                    return SyntaxKind.DoKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 4:
+                {
+                    return SyntaxKind.ElseIfKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 5:
+                {
+                    return SyntaxKind.ElseKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 6:
+                {
+                    return SyntaxKind.EndKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 7:
+                {
+                    return SyntaxKind.ExportKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 8:
+                {
+                    return SyntaxKind.FalseKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 9:
+                {
+                    return SyntaxKind.ForKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 10:
+                {
+                    return SyntaxKind.FunctionKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 11:
+                {
+                    return SyntaxKind.GotoKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 12:
+                {
+                    return SyntaxKind.IfKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 13:
+                {
+                    return SyntaxKind.InKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 14:
+                {
+                    return SyntaxKind.LocalKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 15:
+                {
+                    return SyntaxKind.NilKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 16:
+                {
+                    return SyntaxKind.NotKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 17:
+                {
+                    return SyntaxKind.OrKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 18:
+                {
+                    return SyntaxKind.RepeatKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 19:
+                {
+                    return SyntaxKind.ReturnKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 20:
+                {
+                    return SyntaxKind.ThenKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 21:
+                {
+                    return SyntaxKind.TrueKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 22:
+                {
+                    return SyntaxKind.TypeKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 23:
+                {
+                    return SyntaxKind.TypeofKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 24:
+                {
+                    return SyntaxKind.UntilKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                case 25:
+                {
+                    return SyntaxKind.WhileKeyword;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
+                default:
+                {
+                    return SyntaxKind.IdentifierToken;
+                }
+#pragma warning disable CS0162 // Unreachable code detected
+                break;
+#pragma warning restore CS0162 // Unreachable code detected
             }
         }
 
