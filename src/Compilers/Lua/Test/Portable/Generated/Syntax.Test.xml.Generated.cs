@@ -54,6 +54,12 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         private static Syntax.InternalSyntax.ExpressionListFunctionArgumentSyntax GenerateExpressionListFunctionArgument()
             => InternalSyntaxFactory.ExpressionListFunctionArgument(InternalSyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), SeparatedSyntaxList<Syntax.InternalSyntax.ExpressionSyntax>(), InternalSyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
+        private static Syntax.InternalSyntax.InterpolatedStringTextSyntax GenerateInterpolatedStringText()
+            => InternalSyntaxFactory.InterpolatedStringText(InternalSyntaxFactory.Token(SyntaxKind.InterpolatedStringTextToken));
+
+        private static Syntax.InternalSyntax.InterpolationSyntax GenerateInterpolation()
+            => InternalSyntaxFactory.Interpolation(InternalSyntaxFactory.Token(SyntaxKind.OpenBraceToken), GenerateAnonymousFunctionExpression(), InternalSyntaxFactory.Token(SyntaxKind.CloseBraceToken));
+
         private static Syntax.InternalSyntax.AnonymousFunctionExpressionSyntax GenerateAnonymousFunctionExpression()
             => InternalSyntaxFactory.AnonymousFunctionExpression(InternalSyntaxFactory.Token(SyntaxKind.FunctionKeyword), null, GenerateParameterList(), null, GenerateStatementList(), InternalSyntaxFactory.Token(SyntaxKind.EndKeyword));
 
@@ -62,6 +68,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
         private static Syntax.InternalSyntax.LiteralExpressionSyntax GenerateLiteralExpression()
             => InternalSyntaxFactory.LiteralExpression(SyntaxKind.NumericalLiteralExpression, InternalSyntaxFactory.Literal(null, "1", 1, null));
+
+        private static Syntax.InternalSyntax.InterpolatedStringExpressionSyntax GenerateInterpolatedStringExpression()
+            => InternalSyntaxFactory.InterpolatedStringExpression(InternalSyntaxFactory.Token(SyntaxKind.BacktickToken), SyntaxList<Syntax.InternalSyntax.InterpolatedStringContentSyntax>(), InternalSyntaxFactory.Token(SyntaxKind.BacktickToken));
 
         private static Syntax.InternalSyntax.VarArgExpressionSyntax GenerateVarArgExpression()
             => InternalSyntaxFactory.VarArgExpression(InternalSyntaxFactory.Token(SyntaxKind.DotDotDotToken));
@@ -399,6 +408,28 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         }
 
         [Fact]
+        public void TestInterpolatedStringTextFactoryAndProperties()
+        {
+            var node = GenerateInterpolatedStringText();
+
+            Assert.Equal(SyntaxKind.InterpolatedStringTextToken, node.TextToken.Kind);
+
+            AttachAndCheckDiagnostics(node);
+        }
+
+        [Fact]
+        public void TestInterpolationFactoryAndProperties()
+        {
+            var node = GenerateInterpolation();
+
+            Assert.Equal(SyntaxKind.OpenBraceToken, node.OpenBraceToken.Kind);
+            Assert.NotNull(node.Expression);
+            Assert.Equal(SyntaxKind.CloseBraceToken, node.CloseBraceToken.Kind);
+
+            AttachAndCheckDiagnostics(node);
+        }
+
+        [Fact]
         public void TestAnonymousFunctionExpressionFactoryAndProperties()
         {
             var node = GenerateAnonymousFunctionExpression();
@@ -431,6 +462,18 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             var node = GenerateLiteralExpression();
 
             Assert.Equal(SyntaxKind.NumericLiteralToken, node.Token.Kind);
+
+            AttachAndCheckDiagnostics(node);
+        }
+
+        [Fact]
+        public void TestInterpolatedStringExpressionFactoryAndProperties()
+        {
+            var node = GenerateInterpolatedStringExpression();
+
+            Assert.Equal(SyntaxKind.BacktickToken, node.StringStartToken.Kind);
+            Assert.Equal(default, node.Contents);
+            Assert.Equal(SyntaxKind.BacktickToken, node.StringEndToken.Kind);
 
             AttachAndCheckDiagnostics(node);
         }
@@ -1545,6 +1588,58 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         }
 
         [Fact]
+        public void TestInterpolatedStringTextTokenDeleteRewriter()
+        {
+            var oldNode = GenerateInterpolatedStringText();
+            var rewriter = new TokenDeleteRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            if (!oldNode.IsMissing)
+            {
+                Assert.NotEqual(oldNode, newNode);
+            }
+
+            Assert.NotNull(newNode);
+            Assert.True(newNode.IsMissing, "No tokens => missing");
+        }
+
+        [Fact]
+        public void TestInterpolatedStringTextIdentityRewriter()
+        {
+            var oldNode = GenerateInterpolatedStringText();
+            var rewriter = new IdentityRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            Assert.Same(oldNode, newNode);
+        }
+
+        [Fact]
+        public void TestInterpolationTokenDeleteRewriter()
+        {
+            var oldNode = GenerateInterpolation();
+            var rewriter = new TokenDeleteRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            if (!oldNode.IsMissing)
+            {
+                Assert.NotEqual(oldNode, newNode);
+            }
+
+            Assert.NotNull(newNode);
+            Assert.True(newNode.IsMissing, "No tokens => missing");
+        }
+
+        [Fact]
+        public void TestInterpolationIdentityRewriter()
+        {
+            var oldNode = GenerateInterpolation();
+            var rewriter = new IdentityRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            Assert.Same(oldNode, newNode);
+        }
+
+        [Fact]
         public void TestAnonymousFunctionExpressionTokenDeleteRewriter()
         {
             var oldNode = GenerateAnonymousFunctionExpression();
@@ -1616,6 +1711,32 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         public void TestLiteralExpressionIdentityRewriter()
         {
             var oldNode = GenerateLiteralExpression();
+            var rewriter = new IdentityRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            Assert.Same(oldNode, newNode);
+        }
+
+        [Fact]
+        public void TestInterpolatedStringExpressionTokenDeleteRewriter()
+        {
+            var oldNode = GenerateInterpolatedStringExpression();
+            var rewriter = new TokenDeleteRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            if (!oldNode.IsMissing)
+            {
+                Assert.NotEqual(oldNode, newNode);
+            }
+
+            Assert.NotNull(newNode);
+            Assert.True(newNode.IsMissing, "No tokens => missing");
+        }
+
+        [Fact]
+        public void TestInterpolatedStringExpressionIdentityRewriter()
+        {
+            var oldNode = GenerateInterpolatedStringExpression();
             var rewriter = new IdentityRewriter();
             var newNode = rewriter.Visit(oldNode);
 
@@ -3203,6 +3324,12 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         private static ExpressionListFunctionArgumentSyntax GenerateExpressionListFunctionArgument()
             => SyntaxFactory.ExpressionListFunctionArgument(SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), SeparatedSyntaxList<ExpressionSyntax>(), SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
+        private static InterpolatedStringTextSyntax GenerateInterpolatedStringText()
+            => SyntaxFactory.InterpolatedStringText(SyntaxFactory.Token(SyntaxKind.InterpolatedStringTextToken));
+
+        private static InterpolationSyntax GenerateInterpolation()
+            => SyntaxFactory.Interpolation(SyntaxFactory.Token(SyntaxKind.OpenBraceToken), GenerateAnonymousFunctionExpression(), SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
+
         private static AnonymousFunctionExpressionSyntax GenerateAnonymousFunctionExpression()
             => SyntaxFactory.AnonymousFunctionExpression(SyntaxFactory.Token(SyntaxKind.FunctionKeyword), default(TypeParameterListSyntax), GenerateParameterList(), default(TypeBindingSyntax), GenerateStatementList(), SyntaxFactory.Token(SyntaxKind.EndKeyword));
 
@@ -3211,6 +3338,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
         private static LiteralExpressionSyntax GenerateLiteralExpression()
             => SyntaxFactory.LiteralExpression(SyntaxKind.NumericalLiteralExpression, SyntaxFactory.Literal("1", 1));
+
+        private static InterpolatedStringExpressionSyntax GenerateInterpolatedStringExpression()
+            => SyntaxFactory.InterpolatedStringExpression(SyntaxFactory.Token(SyntaxKind.BacktickToken), SyntaxList<InterpolatedStringContentSyntax>(), SyntaxFactory.Token(SyntaxKind.BacktickToken));
 
         private static VarArgExpressionSyntax GenerateVarArgExpression()
             => SyntaxFactory.VarArgExpression(SyntaxFactory.Token(SyntaxKind.DotDotDotToken));
@@ -3548,6 +3678,28 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         }
 
         [Fact]
+        public void TestInterpolatedStringTextFactoryAndProperties()
+        {
+            var node = GenerateInterpolatedStringText();
+
+            Assert.Equal(SyntaxKind.InterpolatedStringTextToken, node.TextToken.Kind());
+            var newNode = node.WithTextToken(node.TextToken);
+            Assert.Equal(node, newNode);
+        }
+
+        [Fact]
+        public void TestInterpolationFactoryAndProperties()
+        {
+            var node = GenerateInterpolation();
+
+            Assert.Equal(SyntaxKind.OpenBraceToken, node.OpenBraceToken.Kind());
+            Assert.NotNull(node.Expression);
+            Assert.Equal(SyntaxKind.CloseBraceToken, node.CloseBraceToken.Kind());
+            var newNode = node.WithOpenBraceToken(node.OpenBraceToken).WithExpression(node.Expression).WithCloseBraceToken(node.CloseBraceToken);
+            Assert.Equal(node, newNode);
+        }
+
+        [Fact]
         public void TestAnonymousFunctionExpressionFactoryAndProperties()
         {
             var node = GenerateAnonymousFunctionExpression();
@@ -3581,6 +3733,18 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
             Assert.Equal(SyntaxKind.NumericLiteralToken, node.Token.Kind());
             var newNode = node.WithToken(node.Token);
+            Assert.Equal(node, newNode);
+        }
+
+        [Fact]
+        public void TestInterpolatedStringExpressionFactoryAndProperties()
+        {
+            var node = GenerateInterpolatedStringExpression();
+
+            Assert.Equal(SyntaxKind.BacktickToken, node.StringStartToken.Kind());
+            Assert.Equal(default, node.Contents);
+            Assert.Equal(SyntaxKind.BacktickToken, node.StringEndToken.Kind());
+            var newNode = node.WithStringStartToken(node.StringStartToken).WithContents(node.Contents).WithStringEndToken(node.StringEndToken);
             Assert.Equal(node, newNode);
         }
 
@@ -4694,6 +4858,58 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         }
 
         [Fact]
+        public void TestInterpolatedStringTextTokenDeleteRewriter()
+        {
+            var oldNode = GenerateInterpolatedStringText();
+            var rewriter = new TokenDeleteRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            if (!oldNode.IsMissing)
+            {
+                Assert.NotEqual(oldNode, newNode);
+            }
+
+            Assert.NotNull(newNode);
+            Assert.True(newNode.IsMissing, "No tokens => missing");
+        }
+
+        [Fact]
+        public void TestInterpolatedStringTextIdentityRewriter()
+        {
+            var oldNode = GenerateInterpolatedStringText();
+            var rewriter = new IdentityRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            Assert.Same(oldNode, newNode);
+        }
+
+        [Fact]
+        public void TestInterpolationTokenDeleteRewriter()
+        {
+            var oldNode = GenerateInterpolation();
+            var rewriter = new TokenDeleteRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            if (!oldNode.IsMissing)
+            {
+                Assert.NotEqual(oldNode, newNode);
+            }
+
+            Assert.NotNull(newNode);
+            Assert.True(newNode.IsMissing, "No tokens => missing");
+        }
+
+        [Fact]
+        public void TestInterpolationIdentityRewriter()
+        {
+            var oldNode = GenerateInterpolation();
+            var rewriter = new IdentityRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            Assert.Same(oldNode, newNode);
+        }
+
+        [Fact]
         public void TestAnonymousFunctionExpressionTokenDeleteRewriter()
         {
             var oldNode = GenerateAnonymousFunctionExpression();
@@ -4765,6 +4981,32 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         public void TestLiteralExpressionIdentityRewriter()
         {
             var oldNode = GenerateLiteralExpression();
+            var rewriter = new IdentityRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            Assert.Same(oldNode, newNode);
+        }
+
+        [Fact]
+        public void TestInterpolatedStringExpressionTokenDeleteRewriter()
+        {
+            var oldNode = GenerateInterpolatedStringExpression();
+            var rewriter = new TokenDeleteRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            if (!oldNode.IsMissing)
+            {
+                Assert.NotEqual(oldNode, newNode);
+            }
+
+            Assert.NotNull(newNode);
+            Assert.True(newNode.IsMissing, "No tokens => missing");
+        }
+
+        [Fact]
+        public void TestInterpolatedStringExpressionIdentityRewriter()
+        {
+            var oldNode = GenerateInterpolatedStringExpression();
             var rewriter = new IdentityRewriter();
             var newNode = rewriter.Visit(oldNode);
 

@@ -350,7 +350,7 @@ variable_attribute
   ;
 
 numeric_for_statement
-  : 'for' typed_identifier_name '=' expression ',' expression (',' expression) 'do' statement_list 'end' ';'?
+  : 'for' typed_identifier_name '=' expression ',' expression ((',' expression)) 'do' statement_list 'end' ';'?
   ;
 
 repeat_until_statement
@@ -373,6 +373,7 @@ expression
   : anonymous_function_expression
   | binary_expression
   | if_expression
+  | interpolated_string_expression
   | literal_expression
   | prefix_expression
   | table_constructor_expression
@@ -397,6 +398,23 @@ else_if_expression_clause
   : 'elseif' expression 'then' expression
   ;
 
+interpolated_string_expression
+  : '`' interpolated_string_content* '`'
+  ;
+
+interpolated_string_content
+  : interpolated_string_text
+  | interpolation
+  ;
+
+interpolated_string_text
+  : interpolated_string_text_token
+  ;
+
+interpolation
+  : '{' expression '}'
+  ;
+
 type_cast_expression
   : expression '::' type
   ;
@@ -418,6 +436,10 @@ hash_string_literal_token
   ;
 
 identifier_token
+  : /* see lexical specification */
+  ;
+
+interpolated_string_text_token
   : /* see lexical specification */
   ;
 
