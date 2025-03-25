@@ -4,8 +4,8 @@
 
 namespace Loretta.Generators.SyntaxXml
 {
-    public class AbstractNode : TreeType
+    public sealed class AbstractNode : TreeType
     {
-        public readonly List<Field> Fields = new();
+        public readonly List<Field> Fields = [];
     }
 }

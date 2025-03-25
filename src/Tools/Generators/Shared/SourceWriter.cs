@@ -9,18 +9,18 @@ namespace Loretta.Generators
         private readonly MemoryStream _stream;
         private readonly StreamWriter _writer;
 
-        public SourceWriter(string tabString = "    ")
-            : base(new StreamWriter(new MemoryStream(), Encoding.UTF8), tabString)
+        public SourceWriter(string tabString = "    ") : base(
+            writer: new StreamWriter(stream: new MemoryStream(), Encoding.UTF8),
+            tabString)
         {
             _writer = (StreamWriter) InnerWriter;
             _stream = (MemoryStream) _writer.BaseStream;
         }
 
-        public Indenter Indenter(string openingLine = "") =>
-            new(this, openingLine);
+        public Indenter Indenter(string openingLine = "") => new(indentedTextWriter: this, openingLine);
 
-        public CurlyIndenter CurlyIndenter(string openingLine = "", string closingExtra = "") =>
-            new(this, openingLine, closingExtra);
+        public CurlyIndenter CurlyIndenter(string openingLine = "", string closingExtra = "")
+            => new(indentedTextWriter: this, openingLine, closingExtra);
 
         public void WriteLineIndented(string text)
         {
@@ -37,7 +37,7 @@ namespace Loretta.Generators
             var pos = _stream.Position;
             try
             {
-                _stream.Seek(0, SeekOrigin.Begin);
+                _stream.Seek(offset: 0, SeekOrigin.Begin);
                 return SourceText.From(
                     _stream,
                     Encoding.UTF8,

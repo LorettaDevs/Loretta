@@ -5,18 +5,18 @@ using Microsoft.CodeAnalysis.Text;
 namespace Loretta.Generators.SyntaxFactsGenerator
 {
     [Generator]
-    public sealed partial class SyntaxFactsGenerator : IIncrementalGenerator
+    public sealed class SyntaxFactsGenerator : IIncrementalGenerator
     {
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
             context.RegisterPostInitializationOutput(
-                context => context.AddSource("SyntaxKindAttributes.g.cs", KindUtils.SyntaxKindAttributesText));
+                static context => context.AddSource("SyntaxKindAttributes.g.cs", KindUtils.SyntaxKindAttributesText));
 
             var symbolsProvider = context.CompilationProvider.Select(
-                (compilation, token) => new WantedSymbols(
+                static (compilation, _) => new WantedSymbols(
                     syntaxKindType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.SyntaxKind"),
-                    extraCategoriesAttributeType: compilation.GetTypeByMetadataName(
-                        "Loretta.CodeAnalysis.Lua.ExtraCategoriesAttribute")!,
+                    extraCategoriesAttributeType:
+                    compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.ExtraCategoriesAttribute")!,
                     triviaAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.TriviaAttribute")!,
                     tokenAttributeType: compilation.GetTypeByMetadataName("Loretta.CodeAnalysis.Lua.TokenAttribute")!,
                     keywordAttributeType:
@@ -30,7 +30,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
 
             context.RegisterSourceOutput(
                 symbolsProvider,
-                (context, symbols) =>
+                static (context, symbols) =>
                 {
                     var kinds = KindUtils.ExtractKindList(context, symbols) ?? throw new Exception("KindList is null");
                     if (kinds.Count < 1)
@@ -65,7 +65,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
                 using (writer.CurlyIndenter("namespace Loretta.CodeAnalysis.Lua"))
                 using (writer.CurlyIndenter("public static partial class SyntaxFacts"))
                 {
-                    GenerateMinMaxLength(kinds.Tokens.Concat(kinds.Keywords), writer, "Token");
+                    GenerateMinMaxLength(kinds: kinds.Tokens.Concat(kinds.Keywords), writer, "Token");
                     GenerateMinMaxLength(kinds.Tokens, writer, "NonKeywordToken");
                     GenerateMinMaxLength(kinds.Keywords, writer, "Keyword");
                     GenerateMinMaxLength(kinds.UnaryOperators, writer, "UnaryOperator");
@@ -105,20 +105,17 @@ namespace Loretta.Generators.SyntaxFactsGenerator
 
                     var properties = kinds
                                      .SelectMany(
-                                         kind => kind.Properties.Select(kv => (kind, key: kv.Key, value: kv.Value)))
-                                     .GroupBy(t => t.key, t => (t.kind, t.value)).OrderBy(
-                                         g => g.Key,
+                                         static kind => kind.Properties.Select(
+                                             kv => (kind, key: kv.Key, value: kv.Value)))
+                                     .GroupBy(static t => t.key, static t => (t.kind, t.value)).OrderBy(
+                                         static g => g.Key,
                                          StringComparer.OrdinalIgnoreCase);
                     foreach (var propertyGroup in properties)
                     {
                         var possibleTypes = propertyGroup.Select(t => t.value.Type).Where(t => t is not null)
                                                          .Distinct(SymbolEqualityComparer.Default).ToImmutableArray();
 
-                        string type;
-                        if (possibleTypes.Length > 1)
-                            type = "object?";
-                        else
-                            type = possibleTypes.Single()!.ToString();
+                        var type = possibleTypes.Length > 1 ? "object?" : possibleTypes.Single()!.ToString();
 
                         writer.WriteLineNoTabs("");
                         using (new CurlyIndenter(
@@ -133,7 +130,10 @@ namespace Loretta.Generators.SyntaxFactsGenerator
                             {
                                 foreach (var value in values)
                                 {
-                                    writer.Write(string.Join(" or ", value.Select(k => $"SyntaxKind.{k.Field.Name}")));
+                                    writer.Write(
+                                        string.Join(
+                                            " or ",
+                                            values: value.Select(static k => $"SyntaxKind.{k.Field.Name}")));
                                     writer.Write(" => ");
                                     writer.Write(value.Key.ToCSharpString());
                                     writer.WriteLine(",");
@@ -147,38 +147,43 @@ namespace Loretta.Generators.SyntaxFactsGenerator
                     writer.WriteLineNoTabs("");
 
                     // Generate IsTrivia
-                    GenerateIsX(kinds, writer, "Trivia", kind => kind.IsTrivia);
+                    GenerateIsX(kinds, writer, "Trivia", static kind => kind.IsTrivia);
 
                     writer.WriteLineNoTabs("");
 
                     // Generate IsKeyword
-                    GenerateIsX(kinds, writer, "Keyword", kind => kind.TokenInfo?.IsKeyword is true);
+                    GenerateIsX(kinds, writer, "Keyword", static kind => kind.TokenInfo?.IsKeyword is true);
 
                     writer.WriteLineNoTabs("");
 
                     // Generate IsToken
-                    GenerateIsX(kinds, writer, "Token", kind => kind.TokenInfo is not null);
+                    GenerateIsX(kinds, writer, "Token", static kind => kind.TokenInfo is not null);
 
                     // Generate Is(Unary|Binary)Operator
                     GenerateIsX(
                         kinds,
                         writer,
                         "OperatorToken",
-                        kind => kind.UnaryOperatorInfo is not null || kind.BinaryOperatorInfo is not null);
-                    GenerateIsX(kinds, writer, "UnaryOperatorToken", kind => kind.UnaryOperatorInfo is not null);
-                    GenerateIsX(kinds, writer, "BinaryOperatorToken", kind => kind.BinaryOperatorInfo is not null);
+                        static kind => kind.UnaryOperatorInfo is not null || kind.BinaryOperatorInfo is not null);
+                    GenerateIsX(kinds, writer, "UnaryOperatorToken", static kind => kind.UnaryOperatorInfo is not null);
+                    GenerateIsX(
+                        kinds,
+                        writer,
+                        "BinaryOperatorToken",
+                        static kind => kind.BinaryOperatorInfo is not null);
 
                     writer.WriteLineNoTabs("");
 
                     // Extra Categories
-                    var extraCategories = kinds.SelectMany(kind => kind.ExtraCategories.Select(cat => (cat, kind)))
-                                               .GroupBy(t => t.cat, t => t.kind);
+                    var extraCategories = kinds
+                                          .SelectMany(static kind => kind.ExtraCategories.Select(cat => (cat, kind)))
+                                          .GroupBy(static t => t.cat, static t => t.kind);
                     foreach (var group in extraCategories)
                     {
                         writer.WriteLineNoTabs("");
 
                         var groupKinds = new KindList(group.ToImmutableArray());
-                        GenerateIsX(groupKinds, writer, group.Key, k => true);
+                        GenerateIsX(groupKinds, writer, group.Key, static k => true);
 
                         writer.WriteLineNoTabs("");
                         writer.WriteLine("/// <summary>");
@@ -187,14 +192,10 @@ namespace Loretta.Generators.SyntaxFactsGenerator
                         writer.WriteLine("/// </summary>");
                         writer.WriteLine("/// <returns></returns>");
                         using (writer.CurlyIndenter(
-                                   openingLine:
                                    $"public static IEnumerable<SyntaxKind> Get{group.Key}Kinds() => ImmutableArray.Create(new[]",
                                    ");"))
                         {
-                            foreach (var kind in group)
-                            {
-                                writer.WriteLine($"SyntaxKind.{kind.Field.Name},");
-                            }
+                            foreach (var kind in group) writer.WriteLine($"SyntaxKind.{kind.Field.Name},");
                         }
                     }
                 }
@@ -208,8 +209,8 @@ namespace Loretta.Generators.SyntaxFactsGenerator
         private static void GenerateMinMaxLength(IEnumerable<KindInfo> kinds, SourceWriter writer, string typeName)
         {
             var filteredKinds = kinds.ToImmutableArray();
-            var min           = filteredKinds.Min(kind => kind.TokenInfo!.Value.Text!.Length);
-            var max           = filteredKinds.Max(kind => kind.TokenInfo!.Value.Text!.Length);
+            var min           = filteredKinds.Min(static kind => kind.TokenInfo!.Value.Text!.Length);
+            var max           = filteredKinds.Max(static kind => kind.TokenInfo!.Value.Text!.Length);
             writer.WriteLine($"internal static readonly int Min{typeName}Length = {min};");
             writer.WriteLine($"internal static readonly int Max{typeName}Length = {max};");
         }
@@ -227,14 +228,12 @@ namespace Loretta.Generators.SyntaxFactsGenerator
             using (writer.CurlyIndenter("public static int GetUnaryOperatorPrecedence(SyntaxKind kind)"))
             using (writer.CurlyIndenter("switch (kind)"))
             {
-                var groups = kinds.UnaryOperators.GroupBy(kind => kind.UnaryOperatorInfo!.Value.Precedence);
+                var groups = kinds.UnaryOperators.GroupBy(static kind => kind.UnaryOperatorInfo!.Value.Precedence);
 
-                foreach (var group in groups.OrderByDescending(g => g.Key))
+                foreach (var group in groups.OrderByDescending(static g => g.Key))
                 {
-                    foreach (var kind in group.OrderByDescending(info => info.Field.Name))
-                    {
+                    foreach (var kind in group.OrderByDescending(static info => info.Field.Name))
                         writer.WriteLine($"case SyntaxKind.{kind.Field.Name}:");
-                    }
                     using (writer.Indenter()) writer.WriteLine($"return {group.Key};");
                 }
 
@@ -280,14 +279,12 @@ namespace Loretta.Generators.SyntaxFactsGenerator
             using (writer.CurlyIndenter("public static int GetBinaryOperatorPrecedence(SyntaxKind kind)"))
             using (writer.CurlyIndenter("switch (kind)"))
             {
-                var groups = kinds.BinaryOperators.GroupBy(kind => kind.BinaryOperatorInfo!.Value.Precedence);
+                var groups = kinds.BinaryOperators.GroupBy(static kind => kind.BinaryOperatorInfo!.Value.Precedence);
 
-                foreach (var group in groups.OrderByDescending(g => g.Key))
+                foreach (var group in groups.OrderByDescending(static g => g.Key))
                 {
-                    foreach (var kind in group.OrderByDescending(info => info.Field.Name))
-                    {
+                    foreach (var kind in group.OrderByDescending(static info => info.Field.Name))
                         writer.WriteLine($"case SyntaxKind.{kind.Field.Name}:");
-                    }
                     using (new Indenter(writer)) writer.WriteLine($"return {group.Key};");
 
                     writer.WriteLineNoTabs("");
@@ -339,26 +336,20 @@ namespace Loretta.Generators.SyntaxFactsGenerator
                     });
             }
 
-            writeHeader(writer);
+            writer.WriteLine("/// <summary>");
+            writer.WriteLine(
+                "/// Returns the <see cref=\"SyntaxKind\"/> for a given keyword or <see cref=\"SyntaxKind.IdentifierName\"/> if not a keyword.");
+            writer.WriteLine("/// </summary>");
             using (writer.CurlyIndenter("public static SyntaxKind GetKeywordKind(String text)"))
-            {
-                optimized.Generate(writer, "text", false);
-            }
+                optimized.Generate(writer, "text", isInputSpan: false);
 
             writer.WriteLine();
-            writeHeader(writer);
+            writer.WriteLine("/// <summary>");
+            writer.WriteLine(
+                "/// Returns the <see cref=\"SyntaxKind\"/> for a given keyword or <see cref=\"SyntaxKind.IdentifierName\"/> if not a keyword.");
+            writer.WriteLine("/// </summary>");
             using (writer.CurlyIndenter("public static SyntaxKind GetKeywordKind(ReadOnlySpan<char> span)"))
-            {
-                optimized.Generate(writer, "span", true);
-            }
-
-            static void writeHeader(SourceWriter writer)
-            {
-                writer.WriteLine("/// <summary>");
-                writer.WriteLine(
-                    "/// Returns the <see cref=\"SyntaxKind\"/> for a given keyword or <see cref=\"SyntaxKind.IdentifierName\"/> if not a keyword.");
-                writer.WriteLine("/// </summary>");
-            }
+                optimized.Generate(writer, "span", isInputSpan: true);
         }
 
         private static void GenerateGetUnaryOperatorKinds(KindList kinds, SourceWriter writer)
@@ -371,10 +362,8 @@ namespace Loretta.Generators.SyntaxFactsGenerator
                        "public static IEnumerable<SyntaxKind> GetUnaryOperatorKinds() => ImmutableArray.Create(new[]",
                        ");"))
             {
-                foreach (var unaryOperator in kinds.UnaryOperators.OrderBy(unaryOp => unaryOp.Field.Name))
-                {
+                foreach (var unaryOperator in kinds.UnaryOperators.OrderBy(static unaryOp => unaryOp.Field.Name))
                     writer.WriteLine($"SyntaxKind.{unaryOperator.Field.Name},");
-                }
             }
         }
 
@@ -388,10 +377,8 @@ namespace Loretta.Generators.SyntaxFactsGenerator
                        "public static IEnumerable<SyntaxKind> GetBinaryOperatorKinds() => ImmutableArray.Create(new[]",
                        ");"))
             {
-                foreach (var binaryOperator in kinds.BinaryOperators.OrderBy(binaryOp => binaryOp.Field.Name))
-                {
+                foreach (var binaryOperator in kinds.BinaryOperators.OrderBy(static binaryOp => binaryOp.Field.Name))
                     writer.WriteLine($"SyntaxKind.{binaryOperator.Field.Name},");
-                }
             }
         }
 
@@ -408,19 +395,15 @@ namespace Loretta.Generators.SyntaxFactsGenerator
             {
                 writer.WriteLine("#region Tokens");
                 writer.WriteLineNoTabs("");
-                foreach (var token in kinds.Tokens.OrderBy(tok => tok.Field.Name))
-                {
+                foreach (var token in kinds.Tokens.OrderBy(static tok => tok.Field.Name))
                     writer.WriteLine($"SyntaxKind.{token.Field.Name} => \"{token.TokenInfo!.Value.Text}\",");
-                }
                 writer.WriteLineNoTabs("");
                 writer.WriteLine("#endregion Tokens");
 
                 writer.WriteLine("#region Keywords");
                 writer.WriteLineNoTabs("");
-                foreach (var keyword in kinds.Keywords.OrderBy(kw => kw.Field.Name))
-                {
+                foreach (var keyword in kinds.Keywords.OrderBy(static kw => kw.Field.Name))
                     writer.WriteLine($"SyntaxKind.{keyword.Field.Name} => \"{keyword.TokenInfo!.Value.Text}\",");
-                }
                 writer.WriteLineNoTabs("");
                 writer.WriteLine("#endregion Keywords");
 
@@ -444,7 +427,7 @@ namespace Loretta.Generators.SyntaxFactsGenerator
             using (writer.CurlyIndenter("switch (kind)"))
             {
                 var filteredKinds = kinds.Where(filter);
-                foreach (var keyword in filteredKinds.OrderBy(kw => kw.Field.Name))
+                foreach (var keyword in filteredKinds.OrderBy(static kw => kw.Field.Name))
                     writer.WriteLine($"case SyntaxKind.{keyword.Field.Name}:");
                 using (writer.Indenter()) writer.WriteLine("return true;");
                 writer.WriteLineNoTabs("");

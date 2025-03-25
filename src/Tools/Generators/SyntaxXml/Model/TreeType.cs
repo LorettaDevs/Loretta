@@ -23,9 +23,9 @@ namespace Loretta.Generators.SyntaxXml
         [XmlElement]
         public Comment FactoryComment;
 
-        [XmlElement(ElementName = "Field", Type = typeof(Field))]
-        [XmlElement(ElementName = "Choice", Type = typeof(Choice))]
-        [XmlElement(ElementName = "Sequence", Type = typeof(Sequence))]
-        public List<TreeTypeChild> Children = new();
+        [XmlElement(ElementName = "Field", Type = typeof(Field)),
+         XmlElement(ElementName = "Choice", Type = typeof(Choice)),
+         XmlElement(ElementName = "Sequence", Type = typeof(Sequence))]
+        public List<TreeTypeChild> Children = [];
     }
 }

@@ -9,7 +9,7 @@ namespace Loretta.Generators
         {
             var result = new List<INamedTypeSymbol>();
             GetAllTypes(result, symbol.GlobalNamespace);
-            result.Sort((x, y) => x.MetadataName.CompareTo(y.MetadataName));
+            result.Sort(static (x, y) => string.Compare(x.MetadataName, y.MetadataName, StringComparison.Ordinal));
             return result.ToImmutableArray();
         }
 
@@ -19,8 +19,7 @@ namespace Loretta.Generators
 
             while (current != null)
             {
-                if (SymbolEqualityComparer.Default.Equals(current, baseType))
-                    return true;
+                if (SymbolEqualityComparer.Default.Equals(current, baseType)) return true;
 
                 current = current.BaseType;
             }
@@ -38,8 +37,7 @@ namespace Loretta.Generators
             var current = type?.BaseType;
             while (current != null)
             {
-                if (SymbolEqualityComparer.Default.Equals(current, baseType))
-                    break;
+                if (SymbolEqualityComparer.Default.Equals(current, baseType)) break;
 
                 parents.Add(current);
                 current = current.BaseType;
@@ -50,54 +48,44 @@ namespace Loretta.Generators
 
         public static bool IsPartial(INamedTypeSymbol type)
         {
-            foreach (var declaration in type.DeclaringSyntaxReferences)
+            foreach (var syntax in type.DeclaringSyntaxReferences.Select(static declaration => declaration.GetSyntax()))
             {
-                var syntax = declaration.GetSyntax();
-                if (syntax is TypeDeclarationSyntax typeDeclaration)
-                {
-                    foreach (var modifer in typeDeclaration.Modifiers)
-                    {
-                        if (modifer.ValueText == "partial")
-                            return true;
-                    }
-                }
+                if (syntax is not TypeDeclarationSyntax typeDeclaration) continue;
+                if (typeDeclaration.Modifiers.Any(static modifer => modifer.ValueText == "partial")) return true;
             }
 
             return false;
         }
 
-        public static AttributeData? GetAttribute(ISymbol symbol, INamedTypeSymbol attributeType) =>
-            symbol.GetAttributes()
-                  .SingleOrDefault(data => SymbolEqualityComparer.Default.Equals(attributeType, data.AttributeClass));
+        public static AttributeData? GetAttribute(ISymbol symbol, INamedTypeSymbol attributeType)
+            => symbol.GetAttributes().SingleOrDefault(
+                data => SymbolEqualityComparer.Default.Equals(attributeType, data.AttributeClass));
 
-        public static ImmutableArray<AttributeData> GetAttributes(ISymbol symbol, INamedTypeSymbol attributeType) =>
-            symbol.GetAttributes()
-                  .Where(data => SymbolEqualityComparer.Default.Equals(data.AttributeClass, attributeType))
-                  .ToImmutableArray();
+        public static ImmutableArray<AttributeData> GetAttributes(ISymbol symbol, INamedTypeSymbol attributeType)
+            => symbol.GetAttributes()
+                     .Where(data => SymbolEqualityComparer.Default.Equals(data.AttributeClass, attributeType))
+                     .ToImmutableArray();
 
         public static IEnumerable<ITypeSymbol> AncestorsAndSelf(ITypeSymbol topType, ITypeSymbol? limit = null)
         {
-            for (var type = topType; type != null && !SymbolEqualityComparer.Default.Equals(type, limit); type = type.BaseType)
-            {
+            for (var type = topType;
+                 type != null && !SymbolEqualityComparer.Default.Equals(type, limit);
+                 type = type.BaseType)
                 yield return type;
-            }
         }
 
-        public static string TypeToShortString(INamedTypeSymbol typeSymbol) =>
-            typeSymbol.TypeArguments.IsEmpty
-            ? typeSymbol.Name
-            : $"{typeSymbol.Name}<{string.Join(", ", typeSymbol.TypeArguments.Select(t => TypeToShortString((INamedTypeSymbol) t)))}>";
+        public static string TypeToShortString(INamedTypeSymbol typeSymbol)
+            => typeSymbol.TypeArguments.IsEmpty
+                   ? typeSymbol.Name
+                   : $"{typeSymbol.Name}<{string.Join(", ", values: typeSymbol.TypeArguments.Select(static t => TypeToShortString((INamedTypeSymbol) t)))}>";
 
         private static void GetAllTypes(List<INamedTypeSymbol> result, INamespaceOrTypeSymbol symbol)
         {
-            if (symbol is INamedTypeSymbol type)
-                result.Add(type);
+            if (symbol is INamedTypeSymbol type) result.Add(type);
 
             foreach (var child in symbol.GetMembers())
-            {
                 if (child is INamespaceOrTypeSymbol nsChild)
                     GetAllTypes(result, nsChild);
-            }
         }
     }
 }

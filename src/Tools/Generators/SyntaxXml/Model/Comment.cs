@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace Loretta.Generators.SyntaxXml
 {
-    public class Comment
+    public sealed class Comment
     {
         [XmlAnyElement]
         public XmlElement[] Body;

@@ -4,25 +4,20 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
 namespace Loretta.Generators.SyntaxXml
 {
     internal class SignatureWriter
     {
-        private readonly TextWriter _writer;
-        private readonly Tree _tree;
+        private readonly TextWriter                 _writer;
+        private readonly Tree                       _tree;
         private readonly Dictionary<string, string> _typeMap;
 
         private SignatureWriter(TextWriter writer, Tree tree)
         {
-            _writer = writer;
-            _tree = tree;
-            _typeMap = tree.Types.ToDictionary(n => n.Name, n => n.Base);
-            _typeMap.Add(tree.Root, null);
+            _writer  = writer;
+            _tree    = tree;
+            _typeMap = tree.Types.ToDictionary(static n => n.Name, static n => n.Base);
+            _typeMap.Add(tree.Root, value: null);
         }
 
         public static void Write(TextWriter writer, Tree tree) => new SignatureWriter(writer, tree).WriteFile();
@@ -45,7 +40,7 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteTypes()
         {
-            var nodes = _tree.Types.Where(n => n is not PredefinedNode).ToList();
+            var nodes = _tree.Types.Where(static n => n is not PredefinedNode).ToList();
             for (int i = 0, n = nodes.Count; i < n; i++)
             {
                 var node = nodes[i];
@@ -56,67 +51,47 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteType(TreeType node)
         {
-            if (node is AbstractNode and)
+            switch (node)
             {
-                _writer.WriteLine("  public abstract partial class {0} : {1}", node.Name, node.Base);
-                _writer.WriteLine("  {");
-                for (int i = 0, n = and.Fields.Count; i < n; i++)
-                {
-                    var field = and.Fields[i];
-                    if (IsNodeOrNodeList(field.Type))
-                    {
+                case AbstractNode and:
+                    _writer.WriteLine("  public abstract partial class {0} : {1}", node.Name, node.Base);
+                    _writer.WriteLine("  {");
+                    foreach (var field in and.Fields.Where(field => IsNodeOrNodeList(field.Type)))
                         _writer.WriteLine("    public abstract {0}{1} {2} {{ get; }}", "", field.Type, field.Name);
-                    }
-                }
-                _writer.WriteLine("  }");
-            }
-            else if (node is Node nd)
-            {
-                _writer.WriteLine("  public partial class {0} : {1}", node.Name, node.Base);
-                _writer.WriteLine("  {");
+                    _writer.WriteLine("  }");
+                    break;
 
-                WriteKinds(nd.Kinds);
+                case Node nd:
+                    _writer.WriteLine("  public partial class {0} : {1}", node.Name, node.Base);
+                    _writer.WriteLine("  {");
 
-                var valueFields = nd.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList();
-                var nodeFields = nd.Fields.Where(n => IsNodeOrNodeList(n.Type)).ToList();
+                    WriteKinds(nd.Kinds);
 
-                for (int i = 0, n = nodeFields.Count; i < n; i++)
-                {
-                    var field = nodeFields[i];
-                    _writer.WriteLine("    public {0}{1}{2} {3} {{ get; }}", "", "", field.Type, field.Name);
-                }
+                    foreach (var field in nd.Fields.Where(n => IsNodeOrNodeList(n.Type)).ToList())
+                        _writer.WriteLine("    public {0}{1}{2} {3} {{ get; }}", "", "", field.Type, field.Name);
 
-                for (int i = 0, n = valueFields.Count; i < n; i++)
-                {
-                    var field = valueFields[i];
-                    _writer.WriteLine("    public {0}{1}{2} {3} {{ get; }}", "", "", field.Type, field.Name);
-                }
+                    foreach (var field in nd.Fields.Where(n => !IsNodeOrNodeList(n.Type)).ToList())
+                        _writer.WriteLine("    public {0}{1}{2} {3} {{ get; }}", "", "", field.Type, field.Name);
 
-                _writer.WriteLine("  }");
+                    _writer.WriteLine("  }");
+                    break;
             }
         }
 
         private void WriteKinds(List<Kind> kinds)
         {
-            if (kinds.Count > 1)
-            {
-                foreach (var kind in kinds)
-                {
-                    _writer.WriteLine("    // {0}", kind.Name);
-                }
-            }
+            if (kinds.Count <= 1) return;
+            foreach (var kind in kinds) _writer.WriteLine("    // {0}", kind.Name);
         }
 
-        private static bool IsSeparatedNodeList(string typeName) =>
-            typeName.StartsWith("SeparatedSyntaxList<", StringComparison.Ordinal);
+        private static bool IsSeparatedNodeList(string typeName)
+            => typeName.StartsWith("SeparatedSyntaxList<", StringComparison.Ordinal);
 
-        private static bool IsNodeList(string typeName) =>
-            typeName.StartsWith("SyntaxList<", StringComparison.Ordinal);
+        private static bool IsNodeList(string typeName) => typeName.StartsWith("SyntaxList<", StringComparison.Ordinal);
 
-        public bool IsNodeOrNodeList(string typeName) =>
-            IsNode(typeName) || IsNodeList(typeName) || IsSeparatedNodeList(typeName);
+        private bool IsNodeOrNodeList(string typeName)
+            => IsNode(typeName) || IsNodeList(typeName) || IsSeparatedNodeList(typeName);
 
-        private bool IsNode(string typeName) =>
-            _typeMap.ContainsKey(typeName);
+        private bool IsNode(string typeName) => _typeMap.ContainsKey(typeName);
     }
 }

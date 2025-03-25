@@ -2,62 +2,46 @@
 
 namespace Loretta.Generators.SyntaxFactsGenerator
 {
-    internal readonly struct KindInfo
+    internal readonly struct KindInfo(
+        IFieldSymbol                               field,
+        bool                                       isTrivia,
+        TokenInfo?                                 tokenInfo,
+        OperatorInfo?                              unaryOperatorInfo,
+        OperatorInfo?                              binaryOperatorInfo,
+        ImmutableArray<string>                     extraCategories,
+        ImmutableDictionary<string, TypedConstant> properties
+    )
     {
-        public KindInfo(
-            IFieldSymbol field,
-            bool isTrivia,
-            TokenInfo? tokenInfo,
-            OperatorInfo? unaryOperatorInfo,
-            OperatorInfo? binaryOperatorInfo,
-            ImmutableArray<string> extraCategories,
-            ImmutableDictionary<string, TypedConstant> properties)
-        {
-            Field = field ?? throw new ArgumentNullException(nameof(field));
-            IsTrivia = isTrivia;
-            TokenInfo = tokenInfo;
-            UnaryOperatorInfo = unaryOperatorInfo;
-            BinaryOperatorInfo = binaryOperatorInfo;
-            ExtraCategories = extraCategories;
-            Properties = properties;
-        }
+        public IFieldSymbol Field { get; } = field ?? throw new ArgumentNullException(nameof(field));
 
-        public IFieldSymbol Field { get; }
-        public bool IsTrivia { get; }
-        public TokenInfo? TokenInfo { get; }
-        public OperatorInfo? UnaryOperatorInfo { get; }
-        public OperatorInfo? BinaryOperatorInfo { get; }
-        public ImmutableArray<string> ExtraCategories { get; }
-        public ImmutableDictionary<string, TypedConstant> Properties { get; }
+        public bool IsTrivia { get; } = isTrivia;
+
+        public TokenInfo? TokenInfo { get; } = tokenInfo;
+
+        public OperatorInfo? UnaryOperatorInfo { get; } = unaryOperatorInfo;
+
+        public OperatorInfo? BinaryOperatorInfo { get; } = binaryOperatorInfo;
+
+        public ImmutableArray<string> ExtraCategories { get; } = extraCategories;
+
+        public ImmutableDictionary<string, TypedConstant> Properties { get; } = properties;
     }
 
-    internal readonly struct TokenInfo
+    internal readonly struct TokenInfo(string? text, bool isKeyword)
     {
-        public TokenInfo(string? text, bool isKeyword)
-        {
-            Text = text;
-            IsKeyword = isKeyword;
-        }
+        public string? Text { get; } = text;
 
-        public string? Text { get; }
-        public bool IsKeyword { get; }
+        public bool IsKeyword { get; } = isKeyword;
 
-        public override string ToString() =>
-            $"{{ Text = \"{Text}\", IsKeyword = {IsKeyword} }}";
+        public override string ToString() => $"{{ Text = \"{Text}\", IsKeyword = {IsKeyword} }}";
     }
 
-    internal readonly struct OperatorInfo
+    internal readonly struct OperatorInfo(int precedence, TypedConstant expression)
     {
-        public OperatorInfo(int precedence, TypedConstant expression)
-        {
-            Precedence = precedence;
-            Expression = expression;
-        }
+        public int Precedence { get; } = precedence;
 
-        public int Precedence { get; }
-        public TypedConstant Expression { get; }
+        public TypedConstant Expression { get; } = expression;
 
-        public override string ToString() =>
-            $"{{ Precedence = {Precedence}, Expression = {Expression} }}";
+        public override string ToString() => $"{{ Precedence = {Precedence}, Expression = {Expression} }}";
     }
 }

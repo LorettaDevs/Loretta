@@ -7,9 +7,10 @@ namespace Loretta.Generators.SyntaxXml
 {
     internal class TestWriter : AbstractFileWriter
     {
-        private TestWriter(TextWriter writer, Tree tree, CancellationToken cancellationToken = default) : base(writer, tree, cancellationToken)
-        {
-        }
+        private TestWriter(TextWriter writer, Tree tree, CancellationToken cancellationToken = default) : base(
+            writer,
+            tree,
+            cancellationToken) { }
 
         public static void Write(TextWriter writer, Tree tree) => new TestWriter(writer, tree).WriteFile();
 
@@ -73,54 +74,44 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteNodeGenerators(bool isGreen)
         {
-            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode));
+            var nodes = Tree.Types.Where(static n => n is not (PredefinedNode or AbstractNode));
             var first = true;
             foreach (var node in nodes)
             {
-                if (!first)
-                {
-                    WriteLine();
-                }
+                if (!first) WriteLine();
                 first = false;
-                WriteNodeGenerator((Node) node, isGreen);
+                WriteNodeGenerator(node: (Node) node, isGreen);
             }
         }
 
         private void WriteValue(
-            bool isOptional,
-            string type,
-            bool isGreen,
-            string internalNamespace,
-            string luaNamespace,
-            string syntaxFactory,
-            string? kind = null,
-            int minCount = 0,
-            string identName = "name")
+            bool    isOptional,
+            string  type,
+            bool    isGreen,
+            string  internalNamespace,
+            string  luaNamespace,
+            string  syntaxFactory,
+            string? kind      = null,
+            int     minCount  = 0,
+            string  identName = "name")
         {
             if (isOptional)
             {
-                if (isGreen)
-                {
-                    Write("null");
-                }
-                else
-                {
-                    Write($"default({type})");
-                }
+                Write(isGreen ? "null" : $"default({type})");
             }
             else if (IsAnyList(type))
             {
                 string typeName;
-                bool noNew = false;
-                if ((type.StartsWith("SyntaxList<") && type != "SyntaxList<SyntaxToken>")
-                    || type.StartsWith("SeparatedSyntaxList<"))
+                var    noNew = false;
+                if ((type.StartsWith("SyntaxList<", StringComparison.Ordinal) && type != "SyntaxList<SyntaxToken>")
+                    || type.StartsWith("SeparatedSyntaxList<", StringComparison.Ordinal))
                 {
-                    typeName = isGreen ? type.Replace("<", "<" + luaNamespace) : type;
-                    noNew = true;
+                    typeName = isGreen ? type.Replace("<", newValue: "<" + luaNamespace) : type;
+                    noNew    = true;
                 }
                 else if (isGreen)
                 {
-                    typeName = internalNamespace + type.Replace("<", "<" + luaNamespace);
+                    typeName = internalNamespace + type.Replace("<", newValue: "<" + luaNamespace);
                 }
                 else if (type == "SyntaxList<SyntaxToken>")
                 {
@@ -131,16 +122,14 @@ namespace Loretta.Generators.SyntaxXml
                     typeName = type;
                 }
 
-                if (!noNew)
-                    Write("new ");
+                if (!noNew) Write("new ");
                 Write($"{typeName}(");
                 for (var idx = 0; idx < minCount; idx++)
                 {
-                    if (idx > 0)
-                        Write(", ");
+                    if (idx > 0) Write(", ");
                     WriteValue(
-                        false,
-                        GetElementType(type),
+                        isOptional: false,
+                        type: GetElementType(type),
                         isGreen,
                         internalNamespace,
                         luaNamespace,
@@ -151,24 +140,16 @@ namespace Loretta.Generators.SyntaxXml
             else if (type == "SyntaxToken")
             {
                 Debug.Assert(kind is not null);
-                var leadingTrivia = isGreen ? "null, " : string.Empty;
+                var leadingTrivia  = isGreen ? "null, " : string.Empty;
                 var trailingTrivia = isGreen ? ", null" : string.Empty;
                 if (kind == "IdentifierToken")
-                {
                     Write($"{syntaxFactory}.Identifier(\"{identName}\")");
-                }
                 else if (kind == "StringLiteralToken")
-                {
                     Write($"{syntaxFactory}.Literal({leadingTrivia}\"string\", \"string\"{trailingTrivia})");
-                }
                 else if (kind == "NumericLiteralToken")
-                {
                     Write($"{syntaxFactory}.Literal({leadingTrivia}\"1\", 1{trailingTrivia})");
-                }
                 else
-                {
                     Write($"{syntaxFactory}.Token(SyntaxKind.{kind})");
-                }
             }
             else if (type == "LuaSyntaxNode")
             {
@@ -179,24 +160,22 @@ namespace Loretta.Generators.SyntaxXml
                 //drill down to a concrete type
                 while (true)
                 {
-                    var subTypes = ChildMap[type];
-                    if (!subTypes.Any())
-                    {
-                        break;
-                    }
+                    var subTypes = ChildMap[type].ToArray();
+                    if (subTypes.Length == 0) break;
                     type = subTypes.First();
                 }
                 Write($"Generate{StripPost(type, "Syntax")}()");
             }
         }
+
         private void WriteNodeGenerator(Node node, bool isGreen)
         {
             var valueFields = node.Fields.Where(n => !IsNodeOrNodeList(n.Type));
-            var nodeFields = node.Fields.Where(n => IsNodeOrNodeList(n.Type));
+            var nodeFields  = node.Fields.Where(n => IsNodeOrNodeList(n.Type));
 
             var internalNamespace = isGreen ? "Loretta.CodeAnalysis.Syntax.InternalSyntax." : "";
-            var luaNamespace = isGreen ? "Syntax.InternalSyntax." : "";
-            var syntaxFactory = isGreen ? "InternalSyntaxFactory" : "SyntaxFactory";
+            var luaNamespace      = isGreen ? "Syntax.InternalSyntax." : "";
+            var syntaxFactory     = isGreen ? "InternalSyntaxFactory" : "SyntaxFactory";
 
             var strippedName = StripPost(node.Name, "Syntax");
 
@@ -215,10 +194,7 @@ namespace Loretta.Generators.SyntaxXml
 
             foreach (var field in nodeFields)
             {
-                if (!first)
-                {
-                    Write(", ");
-                }
+                if (!first) Write(", ");
                 first = false;
 
                 WriteValue(
@@ -228,17 +204,14 @@ namespace Loretta.Generators.SyntaxXml
                     internalNamespace,
                     luaNamespace,
                     syntaxFactory,
-                    ChooseValidKind(field, node),
+                    kind: ChooseValidKind(field, node),
                     field.MinCount,
                     field.Name);
             }
 
             foreach (var field in valueFields)
             {
-                if (!first)
-                {
-                    Write(", ");
-                }
+                if (!first) Write(", ");
                 first = false;
 
                 Write($"new {field.Type}()");
@@ -249,23 +222,20 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteFactoryPropertyTests(bool isGreen)
         {
-            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode));
+            var nodes = Tree.Types.Where(static n => n is not (PredefinedNode or AbstractNode));
             var first = true;
             foreach (var node in nodes)
             {
-                if (!first)
-                {
-                    WriteLine();
-                }
+                if (!first) WriteLine();
                 first = false;
-                WriteFactoryPropertyTest((Node) node, isGreen);
+                WriteFactoryPropertyTest(node: (Node) node, isGreen);
             }
         }
 
         private void WriteFactoryPropertyTest(Node node, bool isGreen)
         {
             var valueFields = node.Fields.Where(n => !IsNodeOrNodeList(n.Type));
-            var nodeFields = node.Fields.Where(n => IsNodeOrNodeList(n.Type));
+            var nodeFields  = node.Fields.Where(n => IsNodeOrNodeList(n.Type));
 
             var strippedName = StripPost(node.Name, "Syntax");
 
@@ -285,25 +255,17 @@ namespace Loretta.Generators.SyntaxXml
                     if (IsOptional(field))
                     {
                         if (!isGreen && field.Type == "SyntaxToken")
-                        {
                             WriteLine($"Assert.Equal(SyntaxKind.None, node.{field.Name}.Kind());");
-                        }
                         else
-                        {
                             WriteLine($"Assert.Null(node.{field.Name});");
-                        }
                     }
                     else if (field.Type == "SyntaxToken")
                     {
                         var kind = ChooseValidKind(field, node);
-                        if (!isGreen)
-                        {
-                            WriteLine($"Assert.Equal(SyntaxKind.{kind}, node.{field.Name}.Kind());");
-                        }
-                        else
-                        {
-                            WriteLine($"Assert.Equal(SyntaxKind.{kind}, node.{field.Name}.Kind);");
-                        }
+                        WriteLine(
+                            !isGreen
+                                ? $"Assert.Equal(SyntaxKind.{kind}, node.{field.Name}.Kind());"
+                                : $"Assert.Equal(SyntaxKind.{kind}, node.{field.Name}.Kind);");
                     }
                     else
                     {
@@ -311,19 +273,14 @@ namespace Loretta.Generators.SyntaxXml
                         {
                             WriteLine($"Assert.NotEqual(default, node.{field.Name});");
                         }
-                        else if (
-                            field.Type == "SyntaxTokenList" ||
-                            field.Type.StartsWith("SyntaxList<") ||
-                            field.Type.StartsWith("SeparatedSyntaxList<"))
+                        else if (field.Type == "SyntaxTokenList"
+                                 || field.Type.StartsWith("SyntaxList<", StringComparison.Ordinal)
+                                 || field.Type.StartsWith("SeparatedSyntaxList<", StringComparison.Ordinal))
                         {
-                            if (field.MinCount > 0)
-                            {
-                                WriteLine($"Assert.Equal({field.MinCount}, node.{field.Name}.Count);");
-                            }
-                            else
-                            {
-                                WriteLine($"Assert.Equal(default, node.{field.Name});");
-                            }
+                            WriteLine(
+                                field.MinCount > 0
+                                    ? $"Assert.Equal({field.MinCount}, node.{field.Name}.Count);"
+                                    : $"Assert.Equal(default, node.{field.Name});");
                         }
                         else
                         {
@@ -331,19 +288,13 @@ namespace Loretta.Generators.SyntaxXml
                         }
                     }
 
-                    if (!isGreen)
-                    {
-                        withStat += $".With{field.Name}(node.{field.Name})";
-                    }
+                    if (!isGreen) withStat += $".With{field.Name}(node.{field.Name})";
                 }
 
                 foreach (var field in valueFields)
                 {
                     WriteLine($"Assert.Equal(new {field.Type}(), node.{field.Name});");
-                    if (!isGreen)
-                    {
-                        withStat += $".With{field.Name}(node.{field.Name})";
-                    }
+                    if (!isGreen) withStat += $".With{field.Name}(node.{field.Name})";
                 }
 
                 if (!isGreen && withStat != null)
@@ -364,14 +315,11 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteRewriterTests()
         {
-            var nodes = Tree.Types.Where(n => n is not (PredefinedNode or AbstractNode));
+            var nodes = Tree.Types.Where(static n => n is not (PredefinedNode or AbstractNode));
             var first = true;
             foreach (var node in nodes)
             {
-                if (!first)
-                {
-                    WriteLine();
-                }
+                if (!first) WriteLine();
                 first = false;
                 WriteTokenDeleteRewriterTest((Node) node);
                 WriteLine();
@@ -381,9 +329,6 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteTokenDeleteRewriterTest(Node node)
         {
-            var valueFields = node.Fields.Where(n => !IsNodeOrNodeList(n.Type));
-            var nodeFields = node.Fields.Where(n => IsNodeOrNodeList(n.Type));
-
             var strippedName = StripPost(node.Name, "Syntax");
 
             WriteLine("[Fact]");
@@ -409,9 +354,6 @@ namespace Loretta.Generators.SyntaxXml
 
         private void WriteIdentityRewriterTest(Node node)
         {
-            var valueFields = node.Fields.Where(n => !IsNodeOrNodeList(n.Type));
-            var nodeFields = node.Fields.Where(n => IsNodeOrNodeList(n.Type));
-
             var strippedName = StripPost(node.Name, "Syntax");
 
             WriteLine("[Fact]");

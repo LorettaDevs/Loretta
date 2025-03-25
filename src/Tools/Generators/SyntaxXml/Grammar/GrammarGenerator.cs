@@ -6,175 +6,213 @@
 
 // We only support grammar generation in the command line version for now which is the netcoreapp target
 #if NETCOREAPP
-
 using System.Text.RegularExpressions;
 using Loretta.CodeAnalysis.Lua;
+
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace Loretta.Generators.SyntaxXml.Grammar
 {
     // TODO: Fix this
-    internal static class GrammarGenerator
+    internal static partial class GrammarGenerator
     {
         public static string Run(List<TreeType> types)
         {
-            var rules = types.ToDictionary(n => n.Name, _ => new List<Production>());
+            var rules = types.ToDictionary(static n => n.Name, static _ => new List<Production>());
             foreach (var type in types)
             {
                 if (type.Base != null && rules.TryGetValue(type.Base, out var productions))
                     productions.Add(RuleReference(type.Name));
 
-                if (type is Node && type.Children.Count > 0)
-                {
-                    // Convert rules like `a: (x | y) ...` into:
-                    //
-                    // a: x ...
-                    //  | y ...;
-                    //
-                    // Note: if we have `a: (a1 | b1) ... (ax | bx) presume that that's a paired construct and generate:
-                    //
-                    // a: a1 ... ax
-                    //  | b1 ... bx;
+                if (type is not Node || type.Children.Count <= 0) continue;
 
-                    if (type.Children.First() is Field firstField && firstField.Kinds.Count > 0)
+                // Convert rules like `a: (x | y) ...` into:
+                //
+                // a: x ...
+                //  | y ...;
+                //
+                // Note: if we have `a: (a1 | b1) ... (ax | bx) presume that that's a paired construct and generate:
+                //
+                // a: a1 ... ax
+                //  | b1 ... bx;
+
+                if (type.Children.First() is Field firstField && firstField.Kinds.Count > 0)
+                {
+                    var originalFirstFieldKinds = firstField.Kinds.ToList();
+                    if (type.Children.Count >= 2
+                        && type.Children.Last() is Field lastField
+                        && lastField.Kinds.Count == firstField.Kinds.Count)
                     {
-                        var originalFirstFieldKinds = firstField.Kinds.ToList();
-                        if (type.Children.Count >= 2 && type.Children.Last() is Field lastField && lastField.Kinds.Count == firstField.Kinds.Count)
+                        var originalLastFieldKinds = lastField.Kinds.ToList();
+                        for (var i = 0; i < originalFirstFieldKinds.Count; i++)
                         {
-                            var originalLastFieldKinds = lastField.Kinds.ToList();
-                            for (int i = 0; i < originalFirstFieldKinds.Count; i++)
-                            {
-                                firstField.Kinds = new List<Kind> { originalFirstFieldKinds[i] };
-                                lastField.Kinds = new List<Kind> { originalLastFieldKinds[i] };
-                                rules[type.Name].Add(HandleChildren(type.Children));
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < originalFirstFieldKinds.Count; i++)
-                            {
-                                firstField.Kinds = new List<Kind> { originalFirstFieldKinds[i] };
-                                rules[type.Name].Add(HandleChildren(type.Children));
-                            }
+                            firstField.Kinds = [originalFirstFieldKinds[i]];
+                            lastField.Kinds = [originalLastFieldKinds[i]];
+                            rules[type.Name].Add(HandleChildren(type.Children));
                         }
                     }
                     else
                     {
-                        rules[type.Name].Add(HandleChildren(type.Children));
+                        foreach (var kind in originalFirstFieldKinds)
+                        {
+                            firstField.Kinds = [kind];
+                            rules[type.Name].Add(HandleChildren(type.Children));
+                        }
                     }
                 }
+                else
+                    rules[type.Name].Add(HandleChildren(type.Children));
             }
 
             // The grammar will bottom out with certain lexical productions. Create rules for these.
-            var lexicalRules = rules.Values.SelectMany(ps => ps).SelectMany(p => p.ReferencedRules)
-                .Where(r => !rules.TryGetValue(r, out var productions) || productions.Count == 0).ToArray();
-            foreach (var name in lexicalRules)
-                rules[name] = new List<Production> { new Production("/* see lexical specification */") };
+            var lexicalRules = rules.Values.SelectMany(static ps => ps).SelectMany(static p => p.ReferencedRules)
+                                    .Where(
+                                        r => !rules.TryGetValue(r, out var productions)
+                                             || productions.Count == 0).ToArray();
+            foreach (var name in lexicalRules) rules[name] = [new Production("/* see lexical specification */")];
 
             var seen = new HashSet<string>();
 
             // Define a few major sections to help keep the grammar file naturally grouped.
-            var majorRules = ImmutableArray.Create(
-                "CompilationUnitSyntax", "StatementSyntax", "ExpressionSyntax");
+            var majorRules = ImmutableArray.Create("CompilationUnitSyntax", "StatementSyntax", "ExpressionSyntax");
 
-            var result = "// <auto-generated />" + Environment.NewLine + "grammar Lua;" + Environment.NewLine;
+            var result = """
+                         // <auto-generated />
+                         grammar Lua;
+
+                         """;
 
             // Handle each major section first and then walk any rules not hit transitively from them.
-            foreach (var rule in majorRules.Concat(rules.Keys.OrderBy(a => a)))
-                processRule(rule, ref result);
+            foreach (var rule in majorRules.Concat(rules.Keys.OrderBy(static a => a))) ProcessRule(rule, ref result);
 
             return result;
 
-            void processRule(string name, ref string result)
+            // ReSharper disable once VariableHidesOuterVariable
+            void ProcessRule(string name, ref string result)
             {
-                if (name != "LuaSyntaxNode" && seen.Add(name))
-                {
-                    // Order the productions to keep us independent from whatever changes happen in Syntax.xml.
-                    var sorted = rules[name].OrderBy(v => v);
-                    result += Environment.NewLine + RuleReference(name).Text + Environment.NewLine + "  : " +
-                                string.Join(Environment.NewLine + "  | ", sorted) + Environment.NewLine + "  ;" + Environment.NewLine;
+                if (name == "LuaSyntaxNode" || !seen.Add(name)) return;
 
-                    // Now proceed in depth-first fashion through the referenced rules to keep related rules
-                    // close by. Don't recurse into major-sections to help keep them separated in grammar file.
-                    foreach (var production in sorted)
-                    {
-                        foreach (var referencedRule in production.ReferencedRules)
-                        {
-                            if (!majorRules.Concat(lexicalRules).Contains(referencedRule))
-                                processRule(referencedRule, ref result);
-                        }
-                    }
+                // Order the productions to keep us independent of whatever changes happen in Syntax.xml.
+                var sorted = rules[name].OrderBy(static v => v);
+                result += $"""
+
+                           {RuleReference(name).Text}
+                             : {string.Join(Environment.NewLine + "  | ", sorted)}
+                             ;
+
+                           """;
+
+                // Now proceed in depth-first fashion through the referenced rules to keep related rules
+                // close by. Don't recurse into major-sections to help keep them separated in grammar file.
+                foreach (var production in sorted)
+                {
+                    foreach (var referencedRule in production.ReferencedRules.Where(
+                                 referencedRule => !majorRules.Concat(lexicalRules).Contains(referencedRule)))
+                        ProcessRule(referencedRule, ref result);
                 }
             }
         }
 
         private static Production Join(string delim, IEnumerable<Production> productions)
-            => new(string.Join(delim, productions.Where(p => p.Text.Length > 0)), productions.SelectMany(p => p.ReferencedRules));
+            => new(
+                string.Join(delim, productions.Where(static p => p.Text.Length > 0)),
+                productions.SelectMany(static p => p.ReferencedRules));
 
         private static Production HandleChildren(IEnumerable<TreeTypeChild> children, string delim = " ")
-            => Join(delim, children.Select(child =>
-                child is Choice c ? HandleChildren(c.Children, delim: " | ").Parenthesize().Suffix("?", when: c.Optional) :
-                child is Sequence s ? HandleChildren(s.Children).Parenthesize() :
-                child is Field f ? HandleField(f).Suffix("?", when: f.Optional) : throw new InvalidOperationException()));
+            => Join(
+                delim,
+                children.Select(
+                    static child => child switch
+                    {
+                        Choice c   => HandleChildren(c.Children, " | ").Parenthesize().Suffix("?", c.Optional),
+                        Sequence s => HandleChildren(s.Children).Parenthesize(),
+                        Field f    => HandleField(f).Suffix("?", f.Optional),
+                        _          => throw new InvalidOperationException(),
+                    }));
 
         private static Production HandleField(Field field)
+        {
             // 'bool' fields are for a few properties we generate on DirectiveTrivia. They're not
             // relevant to the grammar, so we just return an empty production to ignore them.
-            => field.Type == "bool" ? new Production("") :
-               field.Type == "LuaSyntaxNode" ? RuleReference(field.Kinds.Single().Name + "Syntax") :
-               field.Type.StartsWith("SeparatedSyntaxList") ? HandleSeparatedList(field, field.Type[("SeparatedSyntaxList".Length + 1)..^1]) :
-               field.Type.StartsWith("SyntaxList") ? HandleList(field, field.Type[("SyntaxList".Length + 1)..^1]) :
-               field.IsToken ? HandleTokenField(field) : RuleReference(field.Type);
+            switch (field.Type)
+            {
+                case "bool":          return new Production("");
+                case "LuaSyntaxNode": return RuleReference(field.Kinds.Single().Name + "Syntax");
+            }
+
+            if (field.Type.StartsWith("SeparatedSyntaxList", StringComparison.Ordinal))
+                return HandleSeparatedList(field, field.Type[("SeparatedSyntaxList".Length + 1)..^1]);
+
+            if (field.Type.StartsWith("SyntaxList", StringComparison.Ordinal))
+                return HandleList(field, field.Type[("SyntaxList".Length + 1)..^1]);
+
+            return field.IsToken ? HandleTokenField(field) : RuleReference(field.Type);
+        }
 
         private static Production HandleSeparatedList(Field field, string elementType)
             => RuleReference(elementType).Suffix(" (',' " + RuleReference(elementType) + ")")
-                .Suffix("*", when: field.MinCount < 2).Suffix("+", when: field.MinCount >= 2)
-                .Suffix(" ','?", when: field.AllowTrailingSeparator)
-                .Parenthesize(when: field.MinCount == 0).Suffix("?", when: field.MinCount == 0);
+                                         .Suffix("*", field.MinCount < 2).Suffix("+", field.MinCount >= 2)
+                                         .Suffix(" ','?", field.AllowTrailingSeparator)
+                                         .Parenthesize(field.MinCount == 0)
+                                         .Suffix("?", field.MinCount == 0);
 
         private static Production HandleList(Field field, string elementType)
-            => (elementType != "SyntaxToken" ? RuleReference(elementType) : RuleReference(elementType))
-                .Suffix(field.MinCount == 0 ? "*" : "+");
+            => RuleReference(elementType).Suffix(field.MinCount == 0 ? "*" : "+");
 
         private static Production HandleTokenField(Field field)
             => field.Kinds.Count == 0
-                ? HandleTokenName(field.Name)
-                : Join(" | ", field.Kinds.Select(k => HandleTokenName(k.Name))).Parenthesize(when: field.Kinds.Count >= 2);
+                   ? HandleTokenName(field.Name)
+                   : Join(" | ", field.Kinds.Select(static k => HandleTokenName(k.Name)))
+                       .Parenthesize(field.Kinds.Count >= 2);
 
         private static Production HandleTokenName(string tokenName)
-            => GetSyntaxKind(tokenName) is var kind && kind == SyntaxKind.None ? RuleReference("SyntaxToken") :
-               SyntaxFacts.GetText(kind) is var text && text != "" ? new Production(text == "'" ? "'\\''" : $"'{text}'") :
-               tokenName.StartsWith("EndOf") ? new Production("") :
-               tokenName.StartsWith("Omitted") ? new Production("/* epsilon */") : RuleReference(tokenName);
+        {
+            var kind = GetSyntaxKind(tokenName);
+            if (kind == SyntaxKind.None) return RuleReference("SyntaxToken");
+
+            var text = SyntaxFacts.GetText(kind);
+            if (text != "") return new Production(text == "'" ? "'\\''" : $"'{text}'");
+
+            if (tokenName.StartsWith("EndOf", StringComparison.Ordinal)) return new Production("");
+
+            return tokenName.StartsWith("Omitted", StringComparison.Ordinal)
+                       ? new Production("/* epsilon */")
+                       : RuleReference(tokenName);
+        }
 
         private static SyntaxKind GetSyntaxKind(string name)
             => Enum.TryParse<SyntaxKind>(name, out var kind) ? kind : SyntaxKind.None;
 
         private static Production RuleReference(string name)
             => new(
-                s_normalizationRegex.Replace(name.EndsWith("Syntax") ? name[..^"Syntax".Length] : name, "_").ToLower(),
-                ImmutableArray.Create(name));
+                NormalizationRegex().Replace(
+                    name.EndsWith("Syntax", StringComparison.Ordinal) ? name[..^"Syntax".Length] : name,
+                    "_").ToLower(),
+                [name]);
+
+        [GeneratedRegex(
+            "(?<=[A-Z])(?=[A-Z][a-z]) | (?<=[^A-Z])(?=[A-Z]) | (?<=[A-Za-z])(?=[^A-Za-z])",
+            RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace)]
+        private static partial Regex NormalizationRegex();
 
         // Converts a PascalCased name into snake_cased name.
-        private static readonly Regex s_normalizationRegex = new(
-            "(?<=[A-Z])(?=[A-Z][a-z]) | (?<=[^A-Z])(?=[A-Z]) | (?<=[A-Za-z])(?=[^A-Za-z])",
-            RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
     }
 
-    internal readonly struct Production : IComparable<Production>
+    internal readonly struct Production(string text, IEnumerable<string> referencedRules = null)
+        : IComparable<Production>
     {
-        public readonly string Text;
-        public readonly ImmutableArray<string> ReferencedRules;
-
-        public Production(string text, IEnumerable<string> referencedRules = null)
-        {
-            Text = text;
-            ReferencedRules = referencedRules?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
-        }
+        public readonly string                 Text = text;
+        public readonly ImmutableArray<string> ReferencedRules = referencedRules?.ToImmutableArray() ?? [];
 
         public override string ToString() => Text;
+
         public int CompareTo(Production other) => StringComparer.Ordinal.Compare(Text, other.Text);
+
         public Production Prefix(string prefix) => new(prefix + this, ReferencedRules);
-        public Production Suffix(string suffix, bool when = true) => when ? new Production(this + suffix, ReferencedRules) : this;
+
+        public Production Suffix(string suffix, bool when = true)
+            => when ? new Production(this + suffix, ReferencedRules) : this;
+
         public Production Parenthesize(bool when = true) => when ? Prefix("(").Suffix(")") : this;
     }
 }

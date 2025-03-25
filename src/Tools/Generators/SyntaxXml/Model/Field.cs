@@ -6,35 +6,33 @@ using System.Xml.Serialization;
 
 namespace Loretta.Generators.SyntaxXml
 {
-    public abstract class TreeTypeChild
-    {
-    }
+    public abstract class TreeTypeChild;
 
-    public class Choice : TreeTypeChild
+    public sealed class Choice : TreeTypeChild
     {
         // Note: 'Choice's should not be children of a 'Choice'.  It's not necessary, and the child
         // choice can just be inlined into the parent.
-        [XmlElement(ElementName = "Field", Type = typeof(Field))]
-        [XmlElement(ElementName = "Sequence", Type = typeof(Sequence))]
+        [XmlElement(ElementName = "Field", Type = typeof(Field)),
+         XmlElement(ElementName = "Sequence", Type = typeof(Sequence))]
         public List<TreeTypeChild> Children;
 
         [XmlAttribute]
         public bool Optional;
     }
 
-    public class Sequence : TreeTypeChild
+    public sealed class Sequence : TreeTypeChild
     {
         // Note: 'Sequence's should not be children of a 'Sequence'.  It's not necessary, and the
         // child choice can just be inlined into the parent.
-        [XmlElement(ElementName = "Field", Type = typeof(Field))]
-        [XmlElement(ElementName = "Choice", Type = typeof(Choice))]
+        [XmlElement(ElementName = "Field", Type = typeof(Field)),
+         XmlElement(ElementName = "Choice", Type = typeof(Choice))]
         public List<TreeTypeChild> Children;
 
         [XmlAttribute]
         public bool Optional;
     }
 
-    public class Field : TreeTypeChild
+    public sealed class Field : TreeTypeChild
     {
         [XmlAttribute]
         public string Name;
@@ -58,15 +56,14 @@ namespace Loretta.Generators.SyntaxXml
         public bool AllowTrailingSeparator;
 
         /// <summary>
-        /// Basically tells whether this should always be required
-        /// in the red factory even if it is a node that can be
-        /// auto-constructed or a list that has no MinCount.
+        ///     Basically tells whether this should always be required in the red factory even if it is a node that can be
+        ///     auto-constructed or a list that has no MinCount.
         /// </summary>
         [XmlAttribute]
         public bool FactoryRequired;
 
         [XmlElement(ElementName = "Kind", Type = typeof(Kind))]
-        public List<Kind> Kinds = new();
+        public List<Kind> Kinds = [];
 
         [XmlElement]
         public Comment PropertyComment;

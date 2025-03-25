@@ -22,7 +22,7 @@
 
     <!-- Implicit Usings -->
     <ItemGroup>
-        <Using Include="System.Collections.Immutable" />
+        <Using Include="System.Collections.Immutable"/>
     </ItemGroup>
 
     <!-- Packages -->

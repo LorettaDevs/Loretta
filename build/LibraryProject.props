@@ -1,6 +1,6 @@
 ﻿<Project>
 
-    <Import Project="$(MSBuildThisFileDirectory)BaseProject.props" />
+    <Import Project="$(MSBuildThisFileDirectory)BaseProject.props"/>
 
     <PropertyGroup>
         <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
@@ -17,7 +17,7 @@
 
     <!-- Implicit Usings -->
     <ItemGroup>
-        <Using Include="Loretta.Utilities" />
+        <Using Include="Loretta.Utilities"/>
     </ItemGroup>
 
     <!-- Package props -->

@@ -6,17 +6,11 @@ using System.Xml.Serialization;
 
 namespace Loretta.Generators.SyntaxXml
 {
-    public class Node : TreeType
+    public sealed class Node : TreeType
     {
-        [XmlAttribute]
-        public string Root;
-
-        [XmlAttribute]
-        public string Errors;
-
         [XmlElement(ElementName = "Kind", Type = typeof(Kind))]
-        public List<Kind> Kinds = new();
+        public List<Kind> Kinds = [];
 
-        public readonly List<Field> Fields = new();
+        public readonly List<Field> Fields = [];
     }
 }
