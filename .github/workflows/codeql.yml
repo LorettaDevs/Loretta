@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths-ignore:
-      - '.github/**'
+      - '.github/ISSUE_TEMPLATE/**'
       - 'docs/**'
       - '**/*.md'
       - '**/*.txt'
@@ -61,6 +61,18 @@ jobs:
           threat-models: local
           paths-ignore:
             - 'docs/**'
+            - '**/*.g.cs'
+          query-filters:
+            - exclude:
+                id: cs/local-shadows-member
+            - exclude:
+                id: cs/complex-block
+            - exclude:
+                id: cs/useless-upcast
+            - exclude:
+                id: cs/linq/missed-select
+            - exclude:
+                id: cs/missed-ternary-operator
 
     # If the analyze step fails for one of the languages you are analyzing with
     # "We were unable to automatically build your code", modify the matrix above
