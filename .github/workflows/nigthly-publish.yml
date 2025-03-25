@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
+    permissions:
+      contents: write # Allow to checkout (read) and push tags (write)
     outputs:
       full-version: ${{ steps.gen-version.outputs.VERSION }}
       no-prefix-version: ${{ steps.gen-version.outputs.NO_PREFIX_VERSION }}
@@ -54,6 +56,8 @@ jobs:
     needs:
       - build
       - extract-nightly-info
+    permissions:
+      contents: write # Allow to checkout (read) and make new releases (write)
     if: needs.extract-nightly-info.outputs.has-nightly == 'yes'
     steps:
       - name: Checkout

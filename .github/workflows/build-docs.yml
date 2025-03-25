@@ -14,12 +14,14 @@ on:
         default: cf-pages
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
   build-docs:
     runs-on: windows-latest
+    permissions:
+      contents: write # Let the action push to the gh pages branch
     steps:
       - name: Checkout
         uses: actions/checkout@v4
