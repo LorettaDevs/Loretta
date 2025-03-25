@@ -8,6 +8,8 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: read
     uses: ./.github/workflows/build-and-test.yml
 
   release:
