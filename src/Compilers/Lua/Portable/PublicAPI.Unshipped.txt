@@ -1,3 +1,4 @@
+#nullable enable
 Loretta.CodeAnalysis.Lua.BacktickStringType
 Loretta.CodeAnalysis.Lua.BacktickStringType.HashLiteral = 1 -> Loretta.CodeAnalysis.Lua.BacktickStringType
 Loretta.CodeAnalysis.Lua.BacktickStringType.InterpolatedStringLiteral = 2 -> Loretta.CodeAnalysis.Lua.BacktickStringType
