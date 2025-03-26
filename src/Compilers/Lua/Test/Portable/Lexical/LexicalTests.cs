@@ -17,7 +17,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         public void Lexer_DoesNot_CountNumberDigitsNaively(string text)
         {
             var token = LexToken(text);
-            Assert.NotEqual(default, token);
+            Assert.NotEqual(default(SyntaxToken), token);
             Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
             Assert.Equal(1d, token.Value);
             Assert.Equal(text, token.Text);
@@ -84,13 +84,14 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         [Trait("Category", "Lexer/Output")]
         public void Lexer_LexesInvalidEscapes_WhenLuaSyntaxOptionsAcceptInvalidEscapesIsTrue()
         {
-            const string RawText  = @"'\A\B\C\D\E'";
-            const string Value    = "ABCDE";
-            var          strToken = LexToken(RawText, LuaSyntaxOptions.All.With(acceptInvalidEscapes: true));
+            const string rawText  = @"'\A\B\C\D\E'";
+            const string value    = "ABCDE";
+            var          strToken = LexToken(rawText, LuaSyntaxOptions.All.With(acceptInvalidEscapes: true));
 
             Assert.Equal(SyntaxKind.StringLiteralToken, strToken.Kind());
-            Assert.Equal(RawText, strToken.Text);
-            Assert.Equal(Value, strToken.Value);
+            Assert.Equal(rawText, strToken.Text);
+            Assert.Equal(value, strToken.Value);
+            strToken.GetDiagnostics().Verify();
         }
 
         [Fact]
@@ -124,24 +125,24 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         public void Lexer_Lexes_Token(LuaSyntaxOptions options, ShortToken expectedToken)
         {
             var token = LexToken(expectedToken.Text, options);
+
+            token.GetDiagnostics().Verify();
             Assert.Equal(expectedToken.Kind, token.Kind());
             Assert.Equal(expectedToken.Text, token.Text);
             Assert.Equal(expectedToken.Span, token.Span);
-            if (expectedToken.Value.IsSome)
+            if (expectedToken.Value is not { IsSome: true, Value: var expectedValue }) return;
+            if (expectedValue is string expectedStr)
             {
-                if (expectedToken.Value.Value is string expectedStr)
-                {
-                    var actualStr = Assert.IsType<string>(token.Value);
-                    var formattedExpected = ObjectDisplay.FormatLiteral(
-                        expectedStr,
-                        ObjectDisplayOptions.EscapeNonPrintableCharacters);
-                    var formattedActual = ObjectDisplay.FormatLiteral(
-                        actualStr,
-                        ObjectDisplayOptions.EscapeNonPrintableCharacters);
-                    Assert.Equal(formattedExpected, formattedActual);
-                }
-                Assert.Equal(expectedToken.Value.Value, token.Value);
+                var actualStr = Assert.IsType<string>(token.Value);
+                var formattedExpected = ObjectDisplay.FormatLiteral(
+                    expectedStr,
+                    ObjectDisplayOptions.EscapeNonPrintableCharacters);
+                var formattedActual = ObjectDisplay.FormatLiteral(
+                    actualStr,
+                    ObjectDisplayOptions.EscapeNonPrintableCharacters);
+                Assert.Equal(formattedExpected, formattedActual);
             }
+            Assert.Equal(expectedToken.Value.Value, token.Value);
         }
 
         [Theory]
@@ -151,6 +152,8 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         {
             var token        = LexToken(expectedTrivia.Text, options: options);
             var actualTrivia = Assert.Single(token.LeadingTrivia);
+
+            token.GetDiagnostics().Verify();
             Assert.Equal(expectedTrivia.Kind, actualTrivia.Kind());
             Assert.Equal(expectedTrivia.Text, actualTrivia.ToFullString());
             Assert.Equal(expectedTrivia.Span, actualTrivia.Span);
@@ -167,12 +170,11 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             var tokens = Lex(text, options: options).ToImmutableArray();
 
             Assert.Equal(3, tokens.Length);
-            Assert.Equal(tokenA.Kind, tokens[0].Kind());
-            Assert.Equal(tokenA.Text, tokens[0].Text);
-            Assert.Equal(tokenA.Span, tokens[0].Span);
-            Assert.Equal(tokenB.Kind, tokens[1].Kind());
-            Assert.Equal(tokenB.Text, tokens[1].Text);
-            Assert.Equal(tokenB.Span, tokens[1].Span);
+            tokens[0].GetDiagnostics().Verify();
+            Assert.StrictEqual(tokenA, new ShortToken(tokens[0]));
+            tokens[1].GetDiagnostics().Verify();
+            Assert.StrictEqual(tokenB, new ShortToken(tokens[1]));
+            tokens[2].GetDiagnostics().Verify();
             Assert.Equal(SyntaxKind.EndOfFileToken, tokens[2].Kind());
         }
 
@@ -191,26 +193,25 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             var tokens = Lex(text, options: options).ToImmutableArray();
 
             Assert.Equal(3, tokens.Length);
-            Assert.Equal(tokenA.Kind, tokens[0].Kind());
-            Assert.Equal(tokenA.Text, tokens[0].Text);
-            Assert.Equal(tokenA.Span, tokens[0].Span);
+
+            tokens[0].GetDiagnostics().Verify();
+            Assert.StrictEqual(tokenA, new ShortToken(tokens[0]));
 
             var actualSeparator = Assert.Single(tokens[0].TrailingTrivia);
-            Assert.Equal(expectedSeparator.Kind, actualSeparator.Kind());
-            Assert.Equal(expectedSeparator.Text, actualSeparator.ToFullString());
-            Assert.Equal(expectedSeparator.Span, actualSeparator.Span);
+            actualSeparator.GetDiagnostics().Verify();
+            Assert.StrictEqual(expectedSeparator, new ShortToken(actualSeparator));
 
-            Assert.Equal(tokenB.Kind, tokens[1].Kind());
-            Assert.Equal(tokenB.Text, tokens[1].Text);
-            Assert.Equal(tokenB.Span, tokens[1].Span);
+            tokens[1].GetDiagnostics().Verify();
+            Assert.StrictEqual(tokenB, new ShortToken(tokens[1]));
 
+            tokens[2].GetDiagnostics().Verify();
             Assert.Equal(SyntaxKind.EndOfFileToken, tokens[2].Kind());
         }
 
         public static IEnumerable<object[]> GetTokensData()
             =>
 #if LARGE_TESTS_DEBUG
-            from options in new[] { LuaSyntaxOptions.All }
+                from options in new[] { LuaSyntaxOptions.All }
 #else
                 from options in LuaSyntaxOptions.AllPresets
 #endif
@@ -220,7 +221,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         public static IEnumerable<object[]> GetTriviaData()
             =>
 #if LARGE_TESTS_DEBUG
-            from options in new[] { LuaSyntaxOptions.All }
+                from options in new[] { LuaSyntaxOptions.All }
 #else
                 from options in LuaSyntaxOptions.AllPresets
 #endif
@@ -230,7 +231,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         public static IEnumerable<object[]> GetTokenPairsData()
             =>
 #if LARGE_TESTS_DEBUG
-            from options in new[] { LuaSyntaxOptions.All }
+                from options in new[] { LuaSyntaxOptions.All }
 #else
                 from options in LuaSyntaxOptions.AllPresets
 #endif
@@ -240,7 +241,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
         public static IEnumerable<object[]> GetTokenPairsWithSeparatorsData()
             =>
 #if LARGE_TESTS_DEBUG
-            from options in new[] { LuaSyntaxOptions.All }
+                from options in new[] { LuaSyntaxOptions.All }
 #else
                 from options in LuaSyntaxOptions.AllPresets
 #endif

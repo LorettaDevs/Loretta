@@ -56,7 +56,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
             Assert.Equal(SyntaxKind.NumericLiteralToken, token.Kind());
             Assert.Equal(rawText, token.Text);
-            token.GetDiagnostics().Verify();
+            token.GetDiagnostics().Verify(
+                // error LUA0010: Hexadecimal floating point numeric literals are not supported in this lua version
+                Diagnostic(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion).WithLocation(1, 1));
         }
 
         [Fact]

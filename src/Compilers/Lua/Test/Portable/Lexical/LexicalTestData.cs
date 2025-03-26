@@ -17,7 +17,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                     str[2..].Replace("_", ""),
                     NumberStyles.AllowHexSpecifier,
                     CultureInfo.InvariantCulture),
-                _ => throw new InvalidOperationException()
+                _ => throw new InvalidOperationException(),
             };
 
         private static double ParseDouble(string str, int @base)
@@ -41,6 +41,18 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                                         && !SyntaxFacts.HasKeywordBeenDisabled(kind, options)
                                         && (kind != SyntaxKind.ColonColonToken || options.AcceptGoto)
                                         && (kind != SyntaxKind.SlashSlashToken || options.AcceptFloorDivision)
+                                        && (kind is not (SyntaxKind.AmpersandAmpersandToken
+                                                         or SyntaxKind.PipePipeToken
+                                                         or SyntaxKind.BangToken)
+                                            || options.AcceptCBooleanOperators)
+                                        && (kind is not (SyntaxKind.AmpersandToken
+                                                         or SyntaxKind.PipeToken
+                                                         or SyntaxKind.LessThanLessThanToken
+                                                         or SyntaxKind.GreaterThanEqualsToken
+                                                         or SyntaxKind.TildeToken)
+                                            || options.AcceptBitwiseOperators)
+                                        && (SyntaxFacts.IsCompoundAssignmentOperatorToken(kind)
+                                            || options.AcceptCompoundAssignment)
                                   let text = SyntaxFacts.GetText(kind)
                                   where !string.IsNullOrEmpty(text)
                                   select new ShortToken(kind, text))
@@ -51,167 +63,183 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             #region Numbers
 
             // Binary
-            foreach (var text in new[] { "0b10", "0b10_10", "0B10", "0B10_10" })
+            if (options.AcceptBinaryNumbers)
             {
-                var value = Some<object?>(
-                    options.BinaryIntegerFormat == IntegerFormats.Int64
-                        ? (object) ParseLong(text, 2)
-                        : ParseDouble(text, 2));
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
+                foreach (var text in new[] { "0b10", "0B10" })
+                {
+                    var value = Some<object?>(
+                        options.BinaryIntegerFormat == IntegerFormats.Int64
+                            ? (object) ParseLong(text, 2)
+                            : ParseDouble(text, 2));
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
+                }
+
+                if (options.AcceptUnderscoreInNumberLiterals)
+                {
+                    foreach (var text in new[] { "0b10_10", "0B10_10" })
+                    {
+                        var value = Some<object?>(
+                            options.BinaryIntegerFormat == IntegerFormats.Int64
+                                ? (object) ParseLong(text, 2)
+                                : ParseDouble(text, 2));
+                        yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
+                    }
+                }
             }
 
             // Octal
-            foreach (var text in new[] { "0o77", "0o77_77", "0O77", "0O77_77" })
+            if (options.AcceptOctalNumbers)
             {
-                var value = Some<object?>(
-                    options.OctalIntegerFormat == IntegerFormats.Int64
-                        ? (object) ParseLong(text, 8)
-                        : ParseDouble(text, 8));
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
+                foreach (var text in new[] { "0o77", "0O77" })
+                {
+                    var value = Some<object?>(
+                        options.OctalIntegerFormat == IntegerFormats.Int64
+                            ? (object) ParseLong(text, 8)
+                            : ParseDouble(text, 8));
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
+                }
+
+                if (options.AcceptUnderscoreInNumberLiterals)
+                {
+                    foreach (var text in new[] { "0o77_77", "0O77_77" })
+                    {
+                        var value = Some<object?>(
+                            options.OctalIntegerFormat == IntegerFormats.Int64
+                                ? (object) ParseLong(text, 8)
+                                : ParseDouble(text, 8));
+                        yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
+                    }
+                }
             }
 
             // Decimal
-            foreach (var text in new[]
-                     {
-                         "1", "1e10", "1.1", "1.1e10", ".1", ".1e10", "1_1", "1_1e1_0", "1_1.1_1", "1_1.1_1e1_0",
-                         ".1_1", ".1_1e1_0"
-                     })
+            foreach (var text in new[] { "1", "1e10", "1.1", "1.1e10", ".1", ".1e10" })
             {
-                object value;
-                if (options.DecimalIntegerFormat != IntegerFormats.NotSupported
-                    && !text.Contains('.')
-                    && !text.Contains('e'))
-                {
-                    value = options.DecimalIntegerFormat switch
-                    {
-                        IntegerFormats.Double => (double) ParseLong(text, 10),
-                        IntegerFormats.Int64  => (object) ParseLong(text, 10),
-                        _                     => throw new InvalidOperationException(),
-                    };
-                }
-                else
-                {
-                    value = ParseDouble(text, 10);
-                }
-
+                var value = GetDecimalNumberValue(options, text);
                 yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
+            }
+            if (options.AcceptUnderscoreInNumberLiterals)
+            {
+                foreach (var text in new[] { "1_1", "1_1e1_0", "1_1.1_1", "1_1.1_1e1_0", ".1_1", ".1_1e1_0", })
+                {
+                    var value = GetDecimalNumberValue(options, text);
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
+                }
             }
 
             // LuaJIT
 
             // Normal
-            foreach (var text in new[]
-                     {
-                         "10ULL", "20ULL", "200005ULL", "18446744073709551615ULL", "10uLL", "20uLL", "200005uLL",
-                         "18446744073709551615uLL"
-                     })
+            if (options.AcceptLuaJITNumberSuffixes)
             {
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, ulong.Parse(text[..^3]));
-            }
+                foreach (var text in new[]
+                         {
+                             "10ULL", "20ULL", "200005ULL", "18446744073709551615ULL", "10uLL", "20uLL",
+                             "200005uLL", "18446744073709551615uLL",
+                         })
+                {
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, ulong.Parse(text[..^3]));
+                }
 
-            foreach (var text in new[]
-                     {
-                         "10LL", "20LL", "200005LL", "9223372036854775807LL", "10lL", "20lL", "200005lL",
-                         "9223372036854775807lL"
-                     })
-            {
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[..^2]));
-            }
+                foreach (var text in new[]
+                         {
+                             "10LL", "20LL", "200005LL", "9223372036854775807LL", "10lL", "20lL", "200005lL",
+                             "9223372036854775807lL",
+                         })
+                {
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[..^2]));
+                }
 
-            // Binary & Hexadecimal
-            foreach (var text in new[]
-                     {
-                         "0b0001LL", "0b000111LL",
-                         "0b0111111111111111111111111111111111111111111111111111111111111111LL", "0b0001lL",
-                         "0b000111lL", "0b0111111111111111111111111111111111111111111111111111111111111111lL"
-                     })
-            {
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Convert.ToInt64(text[2..^2], 2));
-            }
+                // Binary & Hexadecimal
+                foreach (var text in new[]
+                         {
+                             "0b0001LL", "0b000111LL",
+                             "0b0111111111111111111111111111111111111111111111111111111111111111LL", "0b0001lL",
+                             "0b000111lL", "0b0111111111111111111111111111111111111111111111111111111111111111lL",
+                         })
+                {
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Convert.ToInt64(text[2..^2], 2));
+                }
 
-            foreach (var text in new[]
-                     {
-                         "0x11000013d077020LL", "0x7FFFFFFFFFFFFFFFLL", "0x11000013d077020lL",
-                         "0x7FFFFFFFFFFFFFFFlL"
-                     })
-            {
-                yield return new ShortToken(
-                    SyntaxKind.NumericLiteralToken,
-                    text,
-                    long.Parse(text[2..^2], NumberStyles.HexNumber));
-            }
+                foreach (var text in new[]
+                         {
+                             "0x11000013d077020LL", "0x7FFFFFFFFFFFFFFFLL", "0x11000013d077020lL",
+                             "0x7FFFFFFFFFFFFFFFlL",
+                         })
+                {
+                    yield return new ShortToken(
+                        SyntaxKind.NumericLiteralToken,
+                        text,
+                        long.Parse(text[2..^2], NumberStyles.HexNumber));
+                }
 
-            foreach (var text in new[]
-                     {
-                         "0b0001ULL", "0b000111ULL",
-                         "0b1111111111111111111111111111111111111111111111111111111111111111ULL", "0b0001uLl",
-                         "0b000111uLl", "0b1111111111111111111111111111111111111111111111111111111111111111uLl"
-                     })
-            {
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Convert.ToUInt64(text[2..^3], 2));
-            }
+                foreach (var text in new[]
+                         {
+                             "0b0001ULL", "0b000111ULL",
+                             "0b1111111111111111111111111111111111111111111111111111111111111111ULL", "0b0001uLl",
+                             "0b000111uLl", "0b1111111111111111111111111111111111111111111111111111111111111111uLl",
+                         })
+                {
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Convert.ToUInt64(text[2..^3], 2));
+                }
 
-            foreach (var text in new[]
-                     {
-                         "0x11000013d077020ULL", "0xFFFFFFFFFFFFFFFFULL", "0x11000013d077020uLl",
-                         "0xFFFFFFFFFFFFFFFFuLl"
-                     })
-            {
-                yield return new ShortToken(
-                    SyntaxKind.NumericLiteralToken,
-                    text,
-                    ulong.Parse(text[2..^3], NumberStyles.HexNumber));
-            }
+                foreach (var text in new[]
+                         {
+                             "0x11000013d077020ULL", "0xFFFFFFFFFFFFFFFFULL", "0x11000013d077020uLl",
+                             "0xFFFFFFFFFFFFFFFFuLl",
+                         })
+                {
+                    yield return new ShortToken(
+                        SyntaxKind.NumericLiteralToken,
+                        text,
+                        ulong.Parse(text[2..^3], NumberStyles.HexNumber));
+                }
 
-            foreach (var text in new[] { "0x11i", "0x1020i", "0x11I", "0x1020I" })
-            {
-                yield return new ShortToken(
-                    SyntaxKind.NumericLiteralToken,
-                    text,
-                    new Complex(0, ParseDouble(text[..^1], 16)));
-            }
+                foreach (var text in new[] { "0x11i", "0x1020i", "0x11I", "0x1020I" })
+                {
+                    yield return new ShortToken(
+                        SyntaxKind.NumericLiteralToken,
+                        text,
+                        new Complex(0, ParseDouble(text[..^1], 16)));
+                }
 
-            foreach (var text in new[] { "0b0001i", "0b111111i" })
-            {
-                yield return new ShortToken(
-                    SyntaxKind.NumericLiteralToken,
-                    text,
-                    new Complex(0, ParseDouble(text[..^1], 2)));
-            }
+                foreach (var text in new[] { "0b0001i", "0b111111i" })
+                {
+                    yield return new ShortToken(
+                        SyntaxKind.NumericLiteralToken,
+                        text,
+                        new Complex(0, ParseDouble(text[..^1], 2)));
+                }
 
-            foreach (var text in new[] { "100i", "999999999999999i", "100I", "999999999999999I" })
-            {
-                yield return new ShortToken(
-                    SyntaxKind.NumericLiteralToken,
-                    text,
-                    new Complex(0, ParseDouble(text[..^1], 10)));
+                foreach (var text in new[] { "100i", "999999999999999i", "100I", "999999999999999I" })
+                {
+                    yield return new ShortToken(
+                        SyntaxKind.NumericLiteralToken,
+                        text,
+                        new Complex(0, ParseDouble(text[..^1], 10)));
+                }
             }
 
             // Hexadecimal
-            foreach (var text in new[]
-                     {
-                         "0xf", "0xfp10", "0xf.f", "0xf.fp10", "0x.f", "0x.fp10", "0xf_f", "0xf_f.f_f",
-                         "0xf_f.f_fp1_0", "0x.f_f", "0x.f_fp1_0", "0xf_fp1_0"
-                     })
+            if (options.AcceptHexFloatLiterals)
             {
-                object value;
-                if (options.HexIntegerFormat != IntegerFormats.NotSupported
-                    && !text.Contains('.')
-                    && !text.Contains('p'))
+                foreach (var text in new[] { "0xf", "0xfp10", "0xf.f", "0xf.fp10", "0x.f", "0x.fp10" })
                 {
-                    value = options.HexIntegerFormat switch
-                    {
-                        IntegerFormats.Double => (double) ParseLong(text, 16),
-                        IntegerFormats.Int64  => (object) ParseLong(text, 16),
-                        _                     => throw new InvalidOperationException(),
-                    };
-                }
-                else
-                {
-                    value = ParseDouble(text, 16);
+                    var value = GetHexFloatValue(options, text);
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
                 }
 
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
+                if (options.AcceptUnderscoreInNumberLiterals)
+                {
+                    foreach (var text in new[]
+                             {
+                                 "0xf_f", "0xf_f.f_f", "0xf_f.f_fp1_0", "0x.f_f", "0x.f_fp1_0", "0xf_fp1_0",
+                             })
+                    {
+                        var value = GetHexFloatValue(options, text);
+                        yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
+                    }
+                }
             }
 
             #endregion Numbers
@@ -221,18 +249,33 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             var shortStringContentText  = "hi\\n\\r\\b\\f\\n\\v\\\n\\u{D800}\\u{10FFFF}\\xF\\xFF\\z ";
             var shortStringContentValue = "hi\n\r\b\f\n\v\nu{D800}u{10FFFF}xFxFFz ";
 
-            if (options.AcceptHexEscapesInStrings || !options.AcceptInvalidEscapes)
+            if (options.AcceptHexEscapesInStrings)
             {
                 shortStringContentValue = shortStringContentValue.Replace("xFxFF", "\xF\xFF");
             }
+            else if (!options.AcceptInvalidEscapes)
+            {
+                shortStringContentText  = shortStringContentText.Replace("\\u{D800}\\u{10FFFF}", "");
+                shortStringContentValue = shortStringContentValue.Replace("u{D800}u{10FFFF}", "");
+            }
 
-            if (options.AcceptUnicodeEscape || !options.AcceptInvalidEscapes)
+            if (options.AcceptUnicodeEscape)
             {
                 shortStringContentValue = shortStringContentValue.Replace("u{D800}u{10FFFF}", "\uD800\U0010FFFF");
             }
-
-            if (options.AcceptWhitespaceEscape || !options.AcceptInvalidEscapes)
+            else if (!options.AcceptInvalidEscapes)
             {
+                shortStringContentText  = shortStringContentText.Replace("\\xF\\xFF", "");
+                shortStringContentValue = shortStringContentValue.Replace("xFxFF", "");
+            }
+
+            if (options.AcceptWhitespaceEscape)
+            {
+                shortStringContentValue = shortStringContentValue.Replace("z ", "");
+            }
+            else if (!options.AcceptInvalidEscapes)
+            {
+                shortStringContentText  = shortStringContentText.Replace("\\z ", "");
                 shortStringContentValue = shortStringContentValue.Replace("z ", "");
             }
 
@@ -251,14 +294,15 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                     shortStringContentValue);
             }
 
-            const string longStringContent = @"first line \n
-second line \r\n
-third line \r
-fourth line \xFF.";
+            const string longStringContent = """
+                                             first line \n
+                                             second line \r\n
+                                             third line \r
+                                             fourth line \xFF.
+                                             """;
 
             // Long Strings
-            IEnumerable<string> separators = Enumerable.Range(0, 6).Select(n => new string('=', n)).ToImmutableArray();
-            foreach (var separator in separators)
+            foreach (var separator in Enumerable.Range(0, 6).Select(static n => new string('=', n)))
             {
                 yield return new ShortToken(
                     SyntaxKind.StringLiteralToken,
@@ -284,21 +328,67 @@ fourth line \xFF.";
             #endregion Strings
 
             // Identifiers
-            foreach (var identifier in new[]
-                     {
-                         "a", "abc", "_", "🅱", "\ufeff",                      /* ZERO WIDTH NO-BREAK SPACE */
-                         "\u206b", /* ACTIVATE SYMMETRIC SWAPPING */ "\u202a", /* LEFT-TO-RIGHT EMBEDDING */
-                         "\u206a", /* INHIBIT SYMMETRIC SWAPPING */ "\ufeff",  /* ZERO WIDTH NO-BREAK SPACE */
-                         "\u206a", /* INHIBIT SYMMETRIC SWAPPING */ "\u200e",  /* LEFT-TO-RIGHT MARK */
-                         "\u200c", /* ZERO WIDTH NON-JOINER */ "\u200e",       /* LEFT-TO-RIGHT MARK */
-                     })
+            if (options.UseLuaJitIdentifierRules)
             {
-                yield return new ShortToken(SyntaxKind.IdentifierToken, identifier);
+                foreach (var identifier in new[]
+                         {
+                             "a", "abc", "_", "🅱", "\ufeff",                      /* ZERO WIDTH NO-BREAK SPACE */
+                             "\u206b", /* ACTIVATE SYMMETRIC SWAPPING */ "\u202a", /* LEFT-TO-RIGHT EMBEDDING */
+                             "\u206a", /* INHIBIT SYMMETRIC SWAPPING */ "\ufeff",  /* ZERO WIDTH NO-BREAK SPACE */
+                             "\u206a", /* INHIBIT SYMMETRIC SWAPPING */ "\u200e",  /* LEFT-TO-RIGHT MARK */
+                             "\u200c", /* ZERO WIDTH NON-JOINER */ "\u200e",       /* LEFT-TO-RIGHT MARK */
+                         })
+                {
+                    yield return new ShortToken(SyntaxKind.IdentifierToken, identifier);
+                }
             }
 
             if (options.ContinueType == ContinueType.None)
                 yield return new ShortToken(SyntaxKind.IdentifierToken, "continue");
             if (!options.AcceptGoto) yield return new ShortToken(SyntaxKind.IdentifierToken, "goto");
+            yield break;
+
+            static object GetDecimalNumberValue(LuaSyntaxOptions luaSyntaxOptions, string text)
+            {
+                object value;
+                if (luaSyntaxOptions.DecimalIntegerFormat != IntegerFormats.NotSupported
+                    && !text.Contains('.')
+                    && !text.Contains('e'))
+                {
+                    value = luaSyntaxOptions.DecimalIntegerFormat switch
+                    {
+                        IntegerFormats.Double => (double) ParseLong(text, 10),
+                        IntegerFormats.Int64  => (object) ParseLong(text, 10),
+                        _                     => throw new InvalidOperationException(),
+                    };
+                }
+                else
+                {
+                    value = ParseDouble(text, 10);
+                }
+                return value;
+            }
+
+            object GetHexFloatValue(LuaSyntaxOptions luaSyntaxOptions, string text)
+            {
+                object value;
+                if (luaSyntaxOptions.HexIntegerFormat != IntegerFormats.NotSupported
+                    && !text.Contains('.')
+                    && !text.Contains('p'))
+                {
+                    value = luaSyntaxOptions.HexIntegerFormat switch
+                    {
+                        IntegerFormats.Double => (double) ParseLong(text, 16),
+                        IntegerFormats.Int64  => (object) ParseLong(text, 16),
+                        _                     => throw new InvalidOperationException(),
+                    };
+                }
+                else
+                {
+                    value = ParseDouble(text, 16);
+                }
+                return value;
+            }
         }
 
         public static IEnumerable<ShortToken> GetTrivia(LuaSyntaxOptions options)
@@ -309,7 +399,7 @@ fourth line \xFF.";
             yield return new ShortToken(SyntaxKind.ShebangTrivia, "#!/bin/bash");
         }
 
-        public static IEnumerable<ShortToken> GetSeparators(LuaSyntaxOptions options)
+        private static IEnumerable<ShortToken> GetSeparators(LuaSyntaxOptions options)
         {
             foreach (var ws in new[] { " ", "  ", "\t" }) yield return new ShortToken(SyntaxKind.WhitespaceTrivia, ws);
             foreach (var eol in new[] { "\r", "\n", "\r\n" })
@@ -322,9 +412,11 @@ fourth line \xFF.";
             foreach (var comment in new[]
                      {
                          "--[[]]", "--[[\naaa\n]]", "--[=[]=]", "--[=[\naaa\n]=]", "--[====[]====]",
-                         "--[====[\naaa\n]====]"
+                         "--[====[\naaa\n]====]",
                      })
+            {
                 yield return new ShortToken(SyntaxKind.MultiLineCommentTrivia, comment);
+            }
         }
 
         public static IEnumerable<(ShortToken tokenA, ShortToken tokenB)> GetTokenPairs(LuaSyntaxOptions options)
