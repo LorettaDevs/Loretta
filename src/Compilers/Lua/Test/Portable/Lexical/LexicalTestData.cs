@@ -246,8 +246,9 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 
             #region Strings
 
-            var shortStringContentText  = "hi\\n\\r\\b\\f\\n\\v\\\n\\u{D800}\\u{10FFFF}\\xF\\xFF\\z ";
-            var shortStringContentValue = "hi\n\r\b\f\n\v\nu{D800}u{10FFFF}xFxFFz ";
+            var shortStringContentText = "hi\\n\\r\\b\\f\\n\\v\\1\\11\\111\\\n\\u{D800}\\u{10FFFF}\\xF\\xFF\\z ";
+            // ReSharper disable once CanSimplifyStringEscapeSequence VariableLengthStringHexEscapeSequence
+            var shortStringContentValue = "hi\n\r\b\f\n\v\x01\x0B\x6F\nu{D800}u{10FFFF}xFxFFz ";
 
             if (options.AcceptHexEscapesInStrings)
             {
