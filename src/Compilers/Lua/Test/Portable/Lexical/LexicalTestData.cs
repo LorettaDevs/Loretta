@@ -37,25 +37,10 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 #pragma warning disable CA2263 // Unavailable in .NET Framework
             foreach (var token in from kind in Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
 #pragma warning restore CA2263 // Unavailable in .NET Framework
-                                  where !SyntaxFacts.IsManufacturedToken(kind, options)
-                                        && !SyntaxFacts.HasKeywordBeenDisabled(kind, options)
-                                        && (kind != SyntaxKind.ColonColonToken || options.AcceptGoto)
-                                        && (kind != SyntaxKind.SlashSlashToken || options.AcceptFloorDivision)
-                                        && (kind is not (SyntaxKind.AmpersandAmpersandToken
-                                                         or SyntaxKind.PipePipeToken
-                                                         or SyntaxKind.BangToken)
-                                            || options.AcceptCBooleanOperators)
-                                        && (kind is not (SyntaxKind.AmpersandToken
-                                                         or SyntaxKind.PipeToken
-                                                         or SyntaxKind.LessThanLessThanToken
-                                                         or SyntaxKind.GreaterThanEqualsToken
-                                                         or SyntaxKind.TildeToken)
-                                            || options.AcceptBitwiseOperators)
-                                        && (SyntaxFacts.IsCompoundAssignmentOperatorToken(kind)
-                                            || options.AcceptCompoundAssignment)
+                                  where SyntaxFacts.IsTokenOrTriviaKindEnabled(kind, options)
                                   let text = SyntaxFacts.GetText(kind)
                                   where !string.IsNullOrEmpty(text)
-                                  select new ShortToken(kind, text))
+                                  select new ShortToken(kind, text, SyntaxFacts.GetConstantValue(kind).Or(text)))
             {
                 yield return token;
             }
@@ -116,22 +101,22 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             foreach (var text in new[] { "1", "1e10", "1.1", "1.1e10", ".1", ".1e10" })
             {
                 var value = GetDecimalNumberValue(options, text);
-                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
+                yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
             }
             if (options.AcceptUnderscoreInNumberLiterals)
             {
                 foreach (var text in new[] { "1_1", "1_1e1_0", "1_1.1_1", "1_1.1_1e1_0", ".1_1", ".1_1e1_0", })
                 {
                     var value = GetDecimalNumberValue(options, text);
-                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
                 }
             }
 
             // LuaJIT
 
-            // Normal
             if (options.AcceptLuaJITNumberSuffixes)
             {
+                // Decimal
                 foreach (var text in new[]
                          {
                              "10ULL", "20ULL", "200005ULL", "18446744073709551615ULL", "10uLL", "20uLL",
@@ -150,17 +135,55 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                     yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, long.Parse(text[..^2]));
                 }
 
-                // Binary & Hexadecimal
-                foreach (var text in new[]
-                         {
-                             "0b0001LL", "0b000111LL",
-                             "0b0111111111111111111111111111111111111111111111111111111111111111LL", "0b0001lL",
-                             "0b000111lL", "0b0111111111111111111111111111111111111111111111111111111111111111lL",
-                         })
+                foreach (var text in new[] { "100i", "999999999999999i", "100I", "999999999999999I" })
                 {
-                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Convert.ToInt64(text[2..^2], 2));
+                    yield return new ShortToken(
+                        SyntaxKind.NumericLiteralToken,
+                        text,
+                        new Complex(0, ParseDouble(text[..^1], 10)));
                 }
 
+                // Binary
+                if (options.AcceptBinaryNumbers)
+                {
+                    foreach (var text in new[]
+                             {
+                                 "0b0001LL", "0b000111LL",
+                                 "0b0111111111111111111111111111111111111111111111111111111111111111LL", "0b0001lL",
+                                 "0b000111lL",
+                                 "0b0111111111111111111111111111111111111111111111111111111111111111lL",
+                             })
+                    {
+                        yield return new ShortToken(
+                            SyntaxKind.NumericLiteralToken,
+                            text,
+                            Convert.ToInt64(text[2..^2], 2));
+                    }
+
+                    foreach (var text in new[]
+                             {
+                                 "0b0001ULL", "0b000111ULL",
+                                 "0b1111111111111111111111111111111111111111111111111111111111111111ULL",
+                                 "0b0001uLl", "0b000111uLl",
+                                 "0b1111111111111111111111111111111111111111111111111111111111111111uLl",
+                             })
+                    {
+                        yield return new ShortToken(
+                            SyntaxKind.NumericLiteralToken,
+                            text,
+                            Convert.ToUInt64(text[2..^3], 2));
+                    }
+
+                    foreach (var text in new[] { "0b0001i", "0b111111i" })
+                    {
+                        yield return new ShortToken(
+                            SyntaxKind.NumericLiteralToken,
+                            text,
+                            new Complex(0, ParseDouble(text[..^1], 2)));
+                    }
+                }
+
+                // Hexadecimal
                 foreach (var text in new[]
                          {
                              "0x11000013d077020LL", "0x7FFFFFFFFFFFFFFFLL", "0x11000013d077020lL",
@@ -171,16 +194,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                         SyntaxKind.NumericLiteralToken,
                         text,
                         long.Parse(text[2..^2], NumberStyles.HexNumber));
-                }
-
-                foreach (var text in new[]
-                         {
-                             "0b0001ULL", "0b000111ULL",
-                             "0b1111111111111111111111111111111111111111111111111111111111111111ULL", "0b0001uLl",
-                             "0b000111uLl", "0b1111111111111111111111111111111111111111111111111111111111111111uLl",
-                         })
-                {
-                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Convert.ToUInt64(text[2..^3], 2));
                 }
 
                 foreach (var text in new[]
@@ -202,22 +215,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                         text,
                         new Complex(0, ParseDouble(text[..^1], 16)));
                 }
-
-                foreach (var text in new[] { "0b0001i", "0b111111i" })
-                {
-                    yield return new ShortToken(
-                        SyntaxKind.NumericLiteralToken,
-                        text,
-                        new Complex(0, ParseDouble(text[..^1], 2)));
-                }
-
-                foreach (var text in new[] { "100i", "999999999999999i", "100I", "999999999999999I" })
-                {
-                    yield return new ShortToken(
-                        SyntaxKind.NumericLiteralToken,
-                        text,
-                        new Complex(0, ParseDouble(text[..^1], 10)));
-                }
             }
 
             // Hexadecimal
@@ -226,7 +223,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 foreach (var text in new[] { "0xf", "0xfp10", "0xf.f", "0xf.fp10", "0x.f", "0x.fp10" })
                 {
                     var value = GetHexFloatValue(options, text);
-                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
+                    yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
                 }
 
                 if (options.AcceptUnderscoreInNumberLiterals)
@@ -237,7 +234,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                              })
                     {
                         var value = GetHexFloatValue(options, text);
-                        yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, Some<object?>(value));
+                        yield return new ShortToken(SyntaxKind.NumericLiteralToken, text, value);
                     }
                 }
             }
@@ -256,8 +253,8 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             }
             else if (!options.AcceptInvalidEscapes)
             {
-                shortStringContentText  = shortStringContentText.Replace("\\u{D800}\\u{10FFFF}", "");
-                shortStringContentValue = shortStringContentValue.Replace("u{D800}u{10FFFF}", "");
+                shortStringContentText  = shortStringContentText.Replace("\\xF\\xFF", "");
+                shortStringContentValue = shortStringContentValue.Replace("xFxFF", "");
             }
 
             if (options.AcceptUnicodeEscape)
@@ -266,8 +263,8 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             }
             else if (!options.AcceptInvalidEscapes)
             {
-                shortStringContentText  = shortStringContentText.Replace("\\xF\\xFF", "");
-                shortStringContentValue = shortStringContentValue.Replace("xFxFF", "");
+                shortStringContentText  = shortStringContentText.Replace("\\u{D800}\\u{10FFFF}", "");
+                shortStringContentValue = shortStringContentValue.Replace("u{D800}u{10FFFF}", "");
             }
 
             if (options.AcceptWhitespaceEscape)
@@ -318,7 +315,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                     $"`{shortStringContentText}`",
                     Hash.GetJenkinsOneAtATimeHashCode(shortStringContentValue.ToLowerInvariant().AsSpan()));
             }
-            else
+            else if (options.BacktickStringType == BacktickStringType.InterpolatedStringLiteral)
             {
                 yield return new ShortToken(
                     SyntaxKind.InterpolatedStringToken,
@@ -340,13 +337,13 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                              "\u200c", /* ZERO WIDTH NON-JOINER */ "\u200e",       /* LEFT-TO-RIGHT MARK */
                          })
                 {
-                    yield return new ShortToken(SyntaxKind.IdentifierToken, identifier);
+                    yield return new ShortToken(SyntaxKind.IdentifierToken, identifier, identifier);
                 }
             }
 
             if (options.ContinueType == ContinueType.None)
-                yield return new ShortToken(SyntaxKind.IdentifierToken, "continue");
-            if (!options.AcceptGoto) yield return new ShortToken(SyntaxKind.IdentifierToken, "goto");
+                yield return new ShortToken(SyntaxKind.IdentifierToken, "continue", "continue");
+            if (!options.AcceptGoto) yield return new ShortToken(SyntaxKind.IdentifierToken, "goto", "goto");
             yield break;
 
             static object GetDecimalNumberValue(LuaSyntaxOptions luaSyntaxOptions, string text)
@@ -370,7 +367,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
                 return value;
             }
 
-            object GetHexFloatValue(LuaSyntaxOptions luaSyntaxOptions, string text)
+            static object GetHexFloatValue(LuaSyntaxOptions luaSyntaxOptions, string text)
             {
                 object value;
                 if (luaSyntaxOptions.HexIntegerFormat != IntegerFormats.NotSupported

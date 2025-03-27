@@ -101,21 +101,17 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
             var tokenKinds = Enum.GetValues(typeof(SyntaxKind)).Cast<SyntaxKind>()
                                  .Where(static k => SyntaxFacts.IsToken(k) || SyntaxFacts.IsTrivia(k));
 
-            var testedTokenKinds = LuaSyntaxOptions.AllPresets.SelectMany(LexicalTestData.GetTokens)
-                                                   .Concat(
-                                                       LuaSyntaxOptions.AllPresets.SelectMany(
-                                                           LexicalTestData.GetTrivia)).Select(static t => t.Kind);
-
-            var untestedTokenKinds = new SortedSet<SyntaxKind>(tokenKinds);
-            untestedTokenKinds.Remove(SyntaxKind.BadToken);
-            untestedTokenKinds.Remove(SyntaxKind.EndOfFileToken);
-            untestedTokenKinds.Remove(SyntaxKind.SkippedTokensTrivia);
+            var untestedTokenKinds = new HashSet<(LuaSyntaxOptions Preset, SyntaxKind Kind)>(
+                from kind in tokenKinds from preset in LuaSyntaxOptions.AllPresets select (preset, kind));
+            untestedTokenKinds.RemoveWhere(static pair => pair.Kind == SyntaxKind.BadToken);
+            untestedTokenKinds.RemoveWhere(static pair => pair.Kind == SyntaxKind.EndOfFileToken);
+            untestedTokenKinds.RemoveWhere(static pair => pair.Kind == SyntaxKind.SkippedTokensTrivia);
             untestedTokenKinds.RemoveWhere(
-                static kind => LuaSyntaxOptions.AllPresets.All(
-                    preset => SyntaxFacts.IsManufacturedToken(kind, preset)));
-
-            untestedTokenKinds.ExceptWith(testedTokenKinds);
-
+                static pair => !SyntaxFacts.IsTokenOrTriviaKindEnabled(pair.Kind, pair.Preset));
+            untestedTokenKinds.RemoveWhere(
+                static pair => LexicalTestData.GetTokens(pair.Preset).Any(token => token.Kind == pair.Kind)
+                               || LexicalTestData.GetTrivia(pair.Preset).Any(token => token.Kind == pair.Kind));
+            
             Assert.Empty(untestedTokenKinds);
         }
 
