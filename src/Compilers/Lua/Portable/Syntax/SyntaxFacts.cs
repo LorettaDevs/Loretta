@@ -88,23 +88,30 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="options">The <see cref="LuaSyntaxOptions"/> to check against.</param>
         /// <returns>Whether the token is enabled or not.</returns>
         internal static bool IsTokenOrTriviaKindEnabled(SyntaxKind kind, LuaSyntaxOptions options)
-            => !IsManufacturedToken(kind, options)
-               && !HasKeywordBeenDisabled(kind, options)
-               && (kind != SyntaxKind.ColonColonToken || options.AcceptGoto)
-               && (kind != SyntaxKind.SlashSlashToken || options.AcceptFloorDivision)
-               && (kind is not (SyntaxKind.AmpersandAmpersandToken or SyntaxKind.PipePipeToken or SyntaxKind.BangToken)
-                   || options.AcceptCBooleanOperators)
-               && (kind is not (SyntaxKind.AmpersandToken
-                                or SyntaxKind.PipeToken
-                                or SyntaxKind.LessThanLessThanToken
-                                or SyntaxKind.GreaterThanEqualsToken
-                                or SyntaxKind.TildeToken)
-                   || options.AcceptBitwiseOperators)
-               && (!IsCompoundAssignmentOperatorToken(kind) || options.AcceptCompoundAssignment)
-               && (kind != SyntaxKind.HashStringLiteralToken
-                   || options.BacktickStringType == BacktickStringType.HashLiteral)
-               && (kind != SyntaxKind.InterpolatedStringToken
-                   || options.BacktickStringType == BacktickStringType.InterpolatedStringLiteral);
+        {
+            switch (kind)
+            {
+                case SyntaxKind.ColonColonToken when !options.AcceptGoto:
+                case SyntaxKind.SlashSlashToken when !options.AcceptFloorDivision:
+                case SyntaxKind.AmpersandAmpersandToken or SyntaxKind.PipePipeToken or SyntaxKind.BangToken
+                    when !options.AcceptCBooleanOperators:
+                case SyntaxKind.AmpersandToken
+                     or SyntaxKind.PipeToken
+                     or SyntaxKind.LessThanLessThanToken
+                     or SyntaxKind.GreaterThanEqualsToken
+                     or SyntaxKind.TildeToken when !options.AcceptBitwiseOperators:
+                case SyntaxKind.HashStringLiteralToken
+                    when options.BacktickStringType != BacktickStringType.HashLiteral:
+                case SyntaxKind.InterpolatedStringToken
+                    when options.BacktickStringType != BacktickStringType.InterpolatedStringLiteral:
+                    return false;
+
+                default:
+                    return !IsManufacturedToken(kind, options)
+                           && !HasKeywordBeenDisabled(kind, options)
+                           && (!IsCompoundAssignmentOperatorToken(kind) || options.AcceptCompoundAssignment);
+            }
+        }
 
         /// <summary>
         /// Whether two tokens/trivia require a separator between them.
