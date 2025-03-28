@@ -226,7 +226,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             // ReSharper disable once VariableHidesOuterVariable
             char ParseDecimalInteger(int start, char initial)
             {
-                var readChars = 0;
+                var readChars = 1; // Start at one because initial was already read.
                 var num       = initial - '0';
                 // ReSharper disable once VariableHidesOuterVariable
                 char ch;
@@ -237,7 +237,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     readChars++;
                 }
 
-                if (readChars >= 1 && num <= 255) return (char) num;
+                if (num <= 255) return (char) num;
 
                 AddError(start, TextWindow.Position - start, ErrorCode.ERR_InvalidStringEscape);
                 return SlidingTextWindow.InvalidCharacter;

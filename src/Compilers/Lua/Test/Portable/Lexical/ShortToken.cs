@@ -1,41 +1,27 @@
-﻿#define LARGE_TESTS
-//#define LARGE_TESTS_DEBUG
-using Loretta.CodeAnalysis.Text;
+﻿using Loretta.CodeAnalysis.Text;
 using Tsu;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
-    public readonly struct ShortToken
+    public readonly record struct ShortToken(
+        SyntaxKind      Kind,
+        string          Text,
+        TextSpan        Span,
+        Option<object?> Value = default
+    )
     {
-        public readonly SyntaxKind Kind;
-        public readonly string Text;
-        public readonly Option<object?> Value;
-        public readonly TextSpan Span;
+        public ShortToken(SyntaxKind kind, string text, Option<object?> value = default) : this(
+            kind,
+            text,
+            new TextSpan(0, text.Length),
+            value) { }
 
-        public ShortToken(SyntaxKind kind, string text, Option<object?> value = default)
-        {
-            Kind = kind;
-            Text = text;
-            Value = value;
-            Span = new TextSpan(0, text.Length);
-        }
+        public ShortToken(SyntaxToken token) : this(token.Kind(), token.Text, token.Span, token.Value) { }
 
-        public ShortToken(SyntaxKind kind, string text, TextSpan span, Option<object?> value = default)
-        {
-            Kind = kind;
-            Text = text;
-            Value = value;
-            Span = span;
-        }
+        public ShortToken(SyntaxTrivia trivia) : this(trivia.Kind(), trivia.ToFullString(), trivia.Span) { }
 
-        public ShortToken(SyntaxToken token)
-            : this(token.Kind(), token.Text, token.Span, token.Value)
-        {
-        }
+        public ShortToken WithSpan(TextSpan span) => this with { Span = span };
 
-        public ShortToken WithSpan(TextSpan span) =>
-            new(Kind, Text, span, Value);
-
-        public override string ToString() => $"{Kind}<{Text}>";
+        public override string ToString() => $"{Kind}<{Text}> ({Span}){(Value.IsSome ? $" = {Value.Value}" : "")}";
     }
 }

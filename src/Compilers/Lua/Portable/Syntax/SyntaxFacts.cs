@@ -82,6 +82,38 @@ namespace Loretta.CodeAnalysis.Lua
                || kind == SyntaxKind.InterpolatedStringTextToken;
 
         /// <summary>
+        /// Checks whether a token/trivia is enabled according to the provided <paramref name="options"/>.
+        /// </summary>
+        /// <param name="kind">The token/trivia kind.</param>
+        /// <param name="options">The <see cref="LuaSyntaxOptions"/> to check against.</param>
+        /// <returns>Whether the token is enabled or not.</returns>
+        internal static bool IsTokenOrTriviaKindEnabled(SyntaxKind kind, LuaSyntaxOptions options)
+        {
+            switch (kind)
+            {
+                case SyntaxKind.ColonColonToken when !options.AcceptGoto:
+                case SyntaxKind.SlashSlashToken when !options.AcceptFloorDivision:
+                case SyntaxKind.AmpersandAmpersandToken or SyntaxKind.PipePipeToken or SyntaxKind.BangToken
+                    when !options.AcceptCBooleanOperators:
+                case SyntaxKind.AmpersandToken
+                     or SyntaxKind.PipeToken
+                     or SyntaxKind.LessThanLessThanToken
+                     or SyntaxKind.GreaterThanEqualsToken
+                     or SyntaxKind.TildeToken when !options.AcceptBitwiseOperators:
+                case SyntaxKind.HashStringLiteralToken
+                    when options.BacktickStringType != BacktickStringType.HashLiteral:
+                case SyntaxKind.InterpolatedStringToken
+                    when options.BacktickStringType != BacktickStringType.InterpolatedStringLiteral:
+                    return false;
+
+                default:
+                    return !IsManufacturedToken(kind, options)
+                           && !HasKeywordBeenDisabled(kind, options)
+                           && (!IsCompoundAssignmentOperatorToken(kind) || options.AcceptCompoundAssignment);
+            }
+        }
+
+        /// <summary>
         /// Whether two tokens/trivia require a separator between them.
         /// </summary>
         /// <param name="kindA"></param>
