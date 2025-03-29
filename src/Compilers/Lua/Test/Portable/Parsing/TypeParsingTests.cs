@@ -374,9 +374,12 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
             N(SyntaxKind.FunctionType);
             {
                 N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.SimpleTypeName);
+                N(SyntaxKind.FunctionTypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
                 }
                 N(SyntaxKind.CloseParenthesisToken);
                 N(SyntaxKind.MinusGreaterThanToken);
@@ -396,14 +399,230 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
             N(SyntaxKind.FunctionType);
             {
                 N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.SimpleTypeName);
+                N(SyntaxKind.FunctionTypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
                 }
                 N(SyntaxKind.CommaToken);
-                N(SyntaxKind.VariadicTypePack);
+                N(SyntaxKind.FunctionTypeParameter);
                 {
-                    N(SyntaxKind.DotDotDotToken);
+                    N(SyntaxKind.VariadicTypePack);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+                N(SyntaxKind.CloseParenthesisToken);
+
+                N(SyntaxKind.MinusGreaterThanToken);
+
+                N(SyntaxKind.TypePack);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.VariadicTypePack);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTrailingVariadicPack_AndTypePackReturn_AndParameterNameOnFirstParameter()
+        {
+            UsingType("(p1: T, ...T) -> (T, ...T)");
+
+            N(SyntaxKind.FunctionType);
+            {
+                N(SyntaxKind.OpenParenthesisToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p1");
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.VariadicTypePack);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+                N(SyntaxKind.CloseParenthesisToken);
+
+                N(SyntaxKind.MinusGreaterThanToken);
+
+                N(SyntaxKind.TypePack);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.VariadicTypePack);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnFirstParameter()
+        {
+            UsingType("(p1: T, T) -> (T, ...T)");
+
+            N(SyntaxKind.FunctionType);
+            {
+                N(SyntaxKind.OpenParenthesisToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p1");
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CloseParenthesisToken);
+
+                N(SyntaxKind.MinusGreaterThanToken);
+
+                N(SyntaxKind.TypePack);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.VariadicTypePack);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnSecondParameter()
+        {
+            UsingType("(T, p2: T) -> (T, ...T)");
+
+            N(SyntaxKind.FunctionType);
+            {
+                N(SyntaxKind.OpenParenthesisToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p2");
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CloseParenthesisToken);
+
+                N(SyntaxKind.MinusGreaterThanToken);
+
+                N(SyntaxKind.TypePack);
+                {
+                    N(SyntaxKind.OpenParenthesisToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.VariadicTypePack);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                    N(SyntaxKind.CloseParenthesisToken);
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnBothParameters()
+        {
+            UsingType("(p1: T, p2: T) -> (T, ...T)");
+
+            N(SyntaxKind.FunctionType);
+            {
+                N(SyntaxKind.OpenParenthesisToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p1");
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p2");
+                    N(SyntaxKind.ColonToken);
                     N(SyntaxKind.SimpleTypeName);
                     {
                         N(SyntaxKind.IdentifierToken, "T");
@@ -500,14 +719,315 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing
                 // /TypeParameterList
 
                 N(SyntaxKind.OpenParenthesisToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    // No name
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    // No name
+                    N(SyntaxKind.VariadicTypePack);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+                N(SyntaxKind.CloseParenthesisToken);
+
+                N(SyntaxKind.MinusGreaterThanToken);
+
                 N(SyntaxKind.SimpleTypeName);
                 {
                     N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.VariadicTypePack);
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesFunctionType_WithTypeParameters_AndTrailingVariadicPack_AndTypeReturn_AndParameterNameOnFirstParameter()
+        {
+            UsingType("<T, T = T, T... = ...T, T... = T...> (p1: T, ...T) -> T");
+
+            N(SyntaxKind.FunctionType);
+            {
+                N(SyntaxKind.TypeParameterList);
                 {
-                    N(SyntaxKind.DotDotDotToken);
+                    N(SyntaxKind.LessThanToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.VariadicTypePack);
+                            {
+                                N(SyntaxKind.DotDotDotToken);
+                                N(SyntaxKind.SimpleTypeName);
+                                {
+                                    N(SyntaxKind.IdentifierToken, "T");
+                                }
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.GenericTypePack);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                                N(SyntaxKind.DotDotDotToken);
+                            }
+                        }
+                    }
+                    N(SyntaxKind.GreaterThanToken);
+                }
+                // /TypeParameterList
+
+                N(SyntaxKind.OpenParenthesisToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p1");
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    // No name
+                    N(SyntaxKind.VariadicTypePack);
+                    {
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.SimpleTypeName);
+                        {
+                            N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+                N(SyntaxKind.CloseParenthesisToken);
+
+                N(SyntaxKind.MinusGreaterThanToken);
+
+                N(SyntaxKind.SimpleTypeName);
+                {
+                    N(SyntaxKind.IdentifierToken, "T");
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesFunctionType_WithTypeParameters_AndTypeReturn_AndParameterNameOnSecondParameter()
+        {
+            UsingType("<T, T = T, T... = ...T, T... = T...> (T, p2: T) -> T");
+
+            N(SyntaxKind.FunctionType);
+            {
+                N(SyntaxKind.TypeParameterList);
+                {
+                    N(SyntaxKind.LessThanToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.VariadicTypePack);
+                            {
+                                N(SyntaxKind.DotDotDotToken);
+                                N(SyntaxKind.SimpleTypeName);
+                                {
+                                    N(SyntaxKind.IdentifierToken, "T");
+                                }
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.GenericTypePack);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                                N(SyntaxKind.DotDotDotToken);
+                            }
+                        }
+                    }
+                    N(SyntaxKind.GreaterThanToken);
+                }
+                // /TypeParameterList
+
+                N(SyntaxKind.OpenParenthesisToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p2");
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CloseParenthesisToken);
+
+                N(SyntaxKind.MinusGreaterThanToken);
+
+                N(SyntaxKind.SimpleTypeName);
+                {
+                    N(SyntaxKind.IdentifierToken, "T");
+                }
+            }
+            EOF();
+        }
+
+        [Fact]
+        public void Parser_ParsesFunctionType_WithTypeParameters_AndTypeReturn_AndParameterNameOnBothParameters()
+        {
+            UsingType("<T, T = T, T... = ...T, T... = T...> (p1: T, p2: T) -> T");
+
+            N(SyntaxKind.FunctionType);
+            {
+                N(SyntaxKind.TypeParameterList);
+                {
+                    N(SyntaxKind.LessThanToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.SimpleTypeName);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.VariadicTypePack);
+                            {
+                                N(SyntaxKind.DotDotDotToken);
+                                N(SyntaxKind.SimpleTypeName);
+                                {
+                                    N(SyntaxKind.IdentifierToken, "T");
+                                }
+                            }
+                        }
+                    }
+                    N(SyntaxKind.CommaToken);
+                    N(SyntaxKind.TypeParameter);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                        N(SyntaxKind.DotDotDotToken);
+                        N(SyntaxKind.EqualsType);
+                        {
+                            N(SyntaxKind.EqualsToken);
+                            N(SyntaxKind.GenericTypePack);
+                            {
+                                N(SyntaxKind.IdentifierToken, "T");
+                                N(SyntaxKind.DotDotDotToken);
+                            }
+                        }
+                    }
+                    N(SyntaxKind.GreaterThanToken);
+                }
+                // /TypeParameterList
+
+                N(SyntaxKind.OpenParenthesisToken);
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p1");
+                    N(SyntaxKind.ColonToken);
+                    N(SyntaxKind.SimpleTypeName);
+                    {
+                        N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                N(SyntaxKind.CommaToken);
+                
+                N(SyntaxKind.FunctionTypeParameter);
+                {
+                    N(SyntaxKind.IdentifierToken, "p2");
+                    N(SyntaxKind.ColonToken);
                     N(SyntaxKind.SimpleTypeName);
                     {
                         N(SyntaxKind.IdentifierToken, "T");

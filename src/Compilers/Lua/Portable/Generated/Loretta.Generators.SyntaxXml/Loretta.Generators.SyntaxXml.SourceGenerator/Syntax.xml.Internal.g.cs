@@ -7442,6 +7442,143 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
+    /// <summary>
+    /// Node that represents a function type argument with an optional preceding name and <c>:</c> token.
+    /// </summary>
+    internal sealed partial class FunctionTypeParameterSyntax : LuaSyntaxNode
+    {
+        internal readonly SyntaxToken? identifier;
+        internal readonly SyntaxToken? colonToken;
+        internal readonly TypeSyntax type;
+
+        internal FunctionTypeParameterSyntax(SyntaxKind kind, SyntaxToken? identifier, SyntaxToken? colonToken, TypeSyntax type, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations)
+          : base(kind, diagnostics, annotations)
+        {
+            this.SlotCount = 3;
+            if (identifier != null)
+            {
+                this.AdjustFlagsAndWidth(identifier);
+                this.identifier = identifier;
+            }
+            if (colonToken != null)
+            {
+                this.AdjustFlagsAndWidth(colonToken);
+                this.colonToken = colonToken;
+            }
+            this.AdjustFlagsAndWidth(type);
+            this.type = type;
+        }
+
+        internal FunctionTypeParameterSyntax(SyntaxKind kind, SyntaxToken? identifier, SyntaxToken? colonToken, TypeSyntax type)
+          : base(kind)
+        {
+            this.SlotCount = 3;
+            if (identifier != null)
+            {
+                this.AdjustFlagsAndWidth(identifier);
+                this.identifier = identifier;
+            }
+            if (colonToken != null)
+            {
+                this.AdjustFlagsAndWidth(colonToken);
+                this.colonToken = colonToken;
+            }
+            this.AdjustFlagsAndWidth(type);
+            this.type = type;
+        }
+
+        /// <summary>
+        /// The (optional) identifier name token that contains the parameter name in the function's signature.
+        /// </summary>
+        /// <remarks>
+        /// Either both this and <see cref="ColonToken" /> are available or both are null.
+        /// </remarks>
+        public SyntaxToken? Identifier => this.identifier;
+        /// <summary>
+        /// The (optional) <c>:</c> token that separates the parameter name from the parameter type.
+        /// </summary>
+        /// <remarks>
+        /// Either both this and <see cref="Identifier" /> are available or both are null.
+        /// </remarks>
+        public SyntaxToken? ColonToken => this.colonToken;
+        /// <summary>
+        /// The type that the parameter in the position this node is located in the function signature should
+        /// have.
+        /// </summary>
+        public TypeSyntax Type => this.type;
+
+        internal override GreenNode? GetSlot(int index)
+            => index switch
+            {
+                0 => this.identifier,
+                1 => this.colonToken,
+                2 => this.type,
+                _ => null,
+            };
+
+        internal override SyntaxNode CreateRed(SyntaxNode? parent, int position) => new Lua.Syntax.FunctionTypeParameterSyntax(this, parent, position);
+
+        public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitFunctionTypeParameter(this);
+        public override TResult Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) => visitor.VisitFunctionTypeParameter(this);
+
+        public FunctionTypeParameterSyntax Update(SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type)
+        {
+            if (identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type)
+            {
+                var newNode = SyntaxFactory.FunctionTypeParameter(identifier, colonToken, type);
+                var diags = GetDiagnostics();
+                if (diags?.Length > 0)
+                    newNode = newNode.WithDiagnosticsGreen(diags);
+                var annotations = GetAnnotations();
+                if (annotations?.Length > 0)
+                    newNode = newNode.WithAnnotationsGreen(annotations);
+                return newNode;
+            }
+
+            return this;
+        }
+
+        internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+            => new FunctionTypeParameterSyntax(this.Kind, this.identifier, this.colonToken, this.type, diagnostics, GetAnnotations());
+
+        internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
+            => new FunctionTypeParameterSyntax(this.Kind, this.identifier, this.colonToken, this.type, GetDiagnostics(), annotations);
+
+        internal FunctionTypeParameterSyntax(ObjectReader reader)
+          : base(reader)
+        {
+            this.SlotCount = 3;
+            var identifier = (SyntaxToken?)reader.ReadValue();
+            if (identifier != null)
+            {
+                AdjustFlagsAndWidth(identifier);
+                this.identifier = identifier;
+            }
+            var colonToken = (SyntaxToken?)reader.ReadValue();
+            if (colonToken != null)
+            {
+                AdjustFlagsAndWidth(colonToken);
+                this.colonToken = colonToken;
+            }
+            var type = (TypeSyntax)reader.ReadValue();
+            AdjustFlagsAndWidth(type);
+            this.type = type;
+        }
+
+        internal override void WriteTo(ObjectWriter writer)
+        {
+            base.WriteTo(writer);
+            writer.WriteValue(this.identifier);
+            writer.WriteValue(this.colonToken);
+            writer.WriteValue(this.type);
+        }
+
+        static FunctionTypeParameterSyntax()
+        {
+            ObjectBinder.RegisterTypeReader(typeof(FunctionTypeParameterSyntax), r => new FunctionTypeParameterSyntax(r));
+        }
+    }
+
     /// <summary>This node represents a function type.</summary>
     internal sealed partial class FunctionTypeSyntax : TypeSyntax
     {
@@ -7506,8 +7643,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         /// Gets the <c>(</c> token.
         /// </summary>
         public SyntaxToken OpenParenthesisToken => this.openParenthesisToken;
-        /// <summary>Gets the list of the types of the function's parameters.</summary>
-        public Loretta.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax> Parameters => new Loretta.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax>(new Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>(this.parameters));
+        /// <summary>Gets the list of the function type's parameters.</summary>
+        public Loretta.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<FunctionTypeParameterSyntax> Parameters => new Loretta.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<FunctionTypeParameterSyntax>(new Loretta.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LuaSyntaxNode>(this.parameters));
         /// <summary>
         /// Gets the <c>)</c> token.
         /// </summary>
@@ -7536,7 +7673,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitFunctionType(this);
         public override TResult Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) => visitor.VisitFunctionType(this);
 
-        public FunctionTypeSyntax Update(TypeParameterListSyntax typeParameterList, SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
+        public FunctionTypeSyntax Update(TypeParameterListSyntax typeParameterList, SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<FunctionTypeParameterSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
         {
             if (typeParameterList != this.TypeParameterList || openParenthesisToken != this.OpenParenthesisToken || parameters != this.Parameters || closeParenthesisToken != this.CloseParenthesisToken || minusGreaterThanToken != this.MinusGreaterThanToken || returnType != this.ReturnType)
             {
@@ -9408,6 +9545,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public virtual TResult VisitNilableType(NilableTypeSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitParenthesizedType(ParenthesizedTypeSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitTypePack(TypePackSyntax node) => this.DefaultVisit(node);
+        public virtual TResult VisitFunctionTypeParameter(FunctionTypeParameterSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitFunctionType(FunctionTypeSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitArrayType(ArrayTypeSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitTableTypeIndexer(TableTypeIndexerSyntax node) => this.DefaultVisit(node);
@@ -9491,6 +9629,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public virtual void VisitNilableType(NilableTypeSyntax node) => this.DefaultVisit(node);
         public virtual void VisitParenthesizedType(ParenthesizedTypeSyntax node) => this.DefaultVisit(node);
         public virtual void VisitTypePack(TypePackSyntax node) => this.DefaultVisit(node);
+        public virtual void VisitFunctionTypeParameter(FunctionTypeParameterSyntax node) => this.DefaultVisit(node);
         public virtual void VisitFunctionType(FunctionTypeSyntax node) => this.DefaultVisit(node);
         public virtual void VisitArrayType(ArrayTypeSyntax node) => this.DefaultVisit(node);
         public virtual void VisitTableTypeIndexer(TableTypeIndexerSyntax node) => this.DefaultVisit(node);
@@ -9697,6 +9836,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public override LuaSyntaxNode VisitTypePack(TypePackSyntax node)
             => node.Update((SyntaxToken)Visit(node.OpenParenthesisToken), VisitList(node.Types), (SyntaxToken)Visit(node.CloseParenthesisToken));
+
+        public override LuaSyntaxNode VisitFunctionTypeParameter(FunctionTypeParameterSyntax node)
+            => node.Update((SyntaxToken)Visit(node.Identifier), (SyntaxToken)Visit(node.ColonToken), (TypeSyntax)Visit(node.Type));
 
         public override LuaSyntaxNode VisitFunctionType(FunctionTypeSyntax node)
             => node.Update((TypeParameterListSyntax)Visit(node.TypeParameterList), (SyntaxToken)Visit(node.OpenParenthesisToken), VisitList(node.Parameters), (SyntaxToken)Visit(node.CloseParenthesisToken), (SyntaxToken)Visit(node.MinusGreaterThanToken), (TypeSyntax)Visit(node.ReturnType));
@@ -11212,7 +11354,44 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return result;
         }
 
-        public static FunctionTypeSyntax FunctionType(TypeParameterListSyntax? typeParameterList, SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
+        public static FunctionTypeParameterSyntax FunctionTypeParameter(SyntaxToken? identifier, SyntaxToken? colonToken, TypeSyntax type)
+        {
+#if DEBUG
+            if (identifier != null)
+            {
+                switch (identifier.Kind)
+                {
+                    case SyntaxKind.IdentifierToken:
+                    case SyntaxKind.None: break;
+                    default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(identifier));
+                }
+            }
+            if (colonToken != null)
+            {
+                switch (colonToken.Kind)
+                {
+                    case SyntaxKind.ColonToken:
+                    case SyntaxKind.None: break;
+                    default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(colonToken));
+                }
+            }
+            if (type == null) throw new ArgumentNullException(nameof(type));
+#endif
+
+            int hash;
+            var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.FunctionTypeParameter, identifier, colonToken, type, out hash);
+            if (cached != null) return (FunctionTypeParameterSyntax)cached;
+
+            var result = new FunctionTypeParameterSyntax(SyntaxKind.FunctionTypeParameter, identifier, colonToken, type);
+            if (hash >= 0)
+            {
+                SyntaxNodeCache.AddNode(result, hash);
+            }
+
+            return result;
+        }
+
+        public static FunctionTypeSyntax FunctionType(TypeParameterListSyntax? typeParameterList, SyntaxToken openParenthesisToken, Loretta.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<FunctionTypeParameterSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
         {
 #if DEBUG
             if (openParenthesisToken == null) throw new ArgumentNullException(nameof(openParenthesisToken));
@@ -11650,6 +11829,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 typeof(NilableTypeSyntax),
                 typeof(ParenthesizedTypeSyntax),
                 typeof(TypePackSyntax),
+                typeof(FunctionTypeParameterSyntax),
                 typeof(FunctionTypeSyntax),
                 typeof(ArrayTypeSyntax),
                 typeof(TableTypeIndexerSyntax),

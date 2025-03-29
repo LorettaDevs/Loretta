@@ -61,7 +61,9 @@ namespace Loretta.Generators.SyntaxXml.Grammar
                     }
                 }
                 else
+                {
                     rules[type.Name].Add(HandleChildren(type.Children));
+                }
             }
 
             // The grammar will bottom out with certain lexical productions. Create rules for these.
@@ -108,7 +110,9 @@ namespace Loretta.Generators.SyntaxXml.Grammar
                 {
                     foreach (var referencedRule in production.ReferencedRules.Where(
                                  referencedRule => !majorRules.Concat(lexicalRules).Contains(referencedRule)))
+                    {
                         ProcessRule(referencedRule, ref result);
+                    }
                 }
             }
         }
@@ -125,7 +129,7 @@ namespace Loretta.Generators.SyntaxXml.Grammar
                     static child => child switch
                     {
                         Choice c   => HandleChildren(c.Children, " | ").Parenthesize().Suffix("?", c.Optional),
-                        Sequence s => HandleChildren(s.Children).Parenthesize(),
+                        Sequence s => HandleChildren(s.Children).Parenthesize().Suffix("?", s.Optional),
                         Field f    => HandleField(f).Suffix("?", f.Optional),
                         _          => throw new InvalidOperationException(),
                     }));

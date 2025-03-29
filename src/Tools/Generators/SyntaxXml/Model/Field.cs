@@ -6,7 +6,11 @@ using System.Xml.Serialization;
 
 namespace Loretta.Generators.SyntaxXml
 {
-    public abstract class TreeTypeChild;
+    public abstract class TreeTypeChild
+    {
+        [XmlAttribute]
+        public bool Optional;
+    }
 
     public sealed class Choice : TreeTypeChild
     {
@@ -15,9 +19,6 @@ namespace Loretta.Generators.SyntaxXml
         [XmlElement(ElementName = "Field", Type = typeof(Field)),
          XmlElement(ElementName = "Sequence", Type = typeof(Sequence))]
         public List<TreeTypeChild> Children;
-
-        [XmlAttribute]
-        public bool Optional;
     }
 
     public sealed class Sequence : TreeTypeChild
@@ -27,9 +28,6 @@ namespace Loretta.Generators.SyntaxXml
         [XmlElement(ElementName = "Field", Type = typeof(Field)),
          XmlElement(ElementName = "Choice", Type = typeof(Choice))]
         public List<TreeTypeChild> Children;
-
-        [XmlAttribute]
-        public bool Optional;
     }
 
     public sealed class Field : TreeTypeChild
@@ -39,9 +37,6 @@ namespace Loretta.Generators.SyntaxXml
 
         [XmlAttribute]
         public string Type;
-
-        [XmlAttribute]
-        public bool Optional;
 
         [XmlAttribute]
         public bool Override;

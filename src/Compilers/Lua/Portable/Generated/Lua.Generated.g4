@@ -199,7 +199,11 @@ type
   ;
 
 function_type
-  : type_parameter_list? '(' (type (',' type)*)? ')' '->' type
+  : type_parameter_list? '(' (function_type_parameter (',' function_type_parameter)*)? ')' '->' type
+  ;
+
+function_type_parameter
+  : (identifier_token ':')? type
   ;
 
 generic_type_pack
@@ -350,7 +354,7 @@ variable_attribute
   ;
 
 numeric_for_statement
-  : 'for' typed_identifier_name '=' expression ',' expression ((',' expression)) 'do' statement_list 'end' ';'?
+  : 'for' typed_identifier_name '=' expression ',' expression ((',' expression)?) 'do' statement_list 'end' ';'?
   ;
 
 repeat_until_statement

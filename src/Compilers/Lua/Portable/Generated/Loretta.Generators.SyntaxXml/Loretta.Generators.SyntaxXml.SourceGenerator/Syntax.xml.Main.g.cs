@@ -202,6 +202,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Called when the visitor visits a TypePackSyntax node.</summary>
         public virtual TResult? VisitTypePack(TypePackSyntax node) => this.DefaultVisit(node);
 
+        /// <summary>Called when the visitor visits a FunctionTypeParameterSyntax node.</summary>
+        public virtual TResult? VisitFunctionTypeParameter(FunctionTypeParameterSyntax node) => this.DefaultVisit(node);
+
         /// <summary>Called when the visitor visits a FunctionTypeSyntax node.</summary>
         public virtual TResult? VisitFunctionType(FunctionTypeSyntax node) => this.DefaultVisit(node);
 
@@ -442,6 +445,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Called when the visitor visits a TypePackSyntax node.</summary>
         public virtual void VisitTypePack(TypePackSyntax node) => this.DefaultVisit(node);
 
+        /// <summary>Called when the visitor visits a FunctionTypeParameterSyntax node.</summary>
+        public virtual void VisitFunctionTypeParameter(FunctionTypeParameterSyntax node) => this.DefaultVisit(node);
+
         /// <summary>Called when the visitor visits a FunctionTypeSyntax node.</summary>
         public virtual void VisitFunctionType(FunctionTypeSyntax node) => this.DefaultVisit(node);
 
@@ -681,6 +687,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         public override SyntaxNode? VisitTypePack(TypePackSyntax node)
             => node.Update(VisitToken(node.OpenParenthesisToken), VisitList(node.Types), VisitToken(node.CloseParenthesisToken));
+
+        public override SyntaxNode? VisitFunctionTypeParameter(FunctionTypeParameterSyntax node)
+            => node.Update(VisitToken(node.Identifier), VisitToken(node.ColonToken), (TypeSyntax?)Visit(node.Type) ?? throw new ArgumentNullException("type"));
 
         public override SyntaxNode? VisitFunctionType(FunctionTypeSyntax node)
             => node.Update((TypeParameterListSyntax?)Visit(node.TypeParameterList), VisitToken(node.OpenParenthesisToken), VisitList(node.Parameters), VisitToken(node.CloseParenthesisToken), VisitToken(node.MinusGreaterThanToken), (TypeSyntax?)Visit(node.ReturnType) ?? throw new ArgumentNullException("returnType"));
@@ -2044,27 +2053,53 @@ namespace Loretta.CodeAnalysis.Lua
         public static TypePackSyntax TypePack(SeparatedSyntaxList<TypeSyntax> types = default)
             => SyntaxFactory.TypePack(SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), types, SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
+        public static FunctionTypeParameterSyntax FunctionTypeParameter(SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type)
+        {
+            switch (identifier.Kind())
+            {
+                case SyntaxKind.IdentifierToken:
+                case SyntaxKind.None: break;
+                default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(identifier));
+            }
+            switch (colonToken.Kind())
+            {
+                case SyntaxKind.ColonToken:
+                case SyntaxKind.None: break;
+                default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(colonToken));
+            }
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            return (FunctionTypeParameterSyntax)Syntax.InternalSyntax.SyntaxFactory.FunctionTypeParameter((Syntax.InternalSyntax.SyntaxToken?)identifier.Node, (Syntax.InternalSyntax.SyntaxToken?)colonToken.Node, (Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
+        }
+
+        /// <summary>Creates a new FunctionTypeParameterSyntax instance.</summary>
+        public static FunctionTypeParameterSyntax FunctionTypeParameter(SyntaxToken identifier, TypeSyntax type)
+            => SyntaxFactory.FunctionTypeParameter(identifier, default(SyntaxToken), type);
+
+        /// <summary>Creates a new FunctionTypeParameterSyntax instance.</summary>
+        public static FunctionTypeParameterSyntax FunctionTypeParameter(TypeSyntax type)
+            => SyntaxFactory.FunctionTypeParameter(default(SyntaxToken), default(SyntaxToken), type);
+
         /// <summary>
         /// Creates a new
         /// <see cref="FunctionTypeSyntax" />
         /// node.
         /// </summary>
-        public static FunctionTypeSyntax FunctionType(TypeParameterListSyntax? typeParameterList, SyntaxToken openParenthesisToken, SeparatedSyntaxList<TypeSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
+        public static FunctionTypeSyntax FunctionType(TypeParameterListSyntax? typeParameterList, SyntaxToken openParenthesisToken, SeparatedSyntaxList<FunctionTypeParameterSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
         {
             if (openParenthesisToken.Kind() != SyntaxKind.OpenParenthesisToken) throw new ArgumentException($"Invalid kind provided. Expected OpenParenthesisToken but got {openParenthesisToken.Kind()}.", nameof(openParenthesisToken));
             if (closeParenthesisToken.Kind() != SyntaxKind.CloseParenthesisToken) throw new ArgumentException($"Invalid kind provided. Expected CloseParenthesisToken but got {closeParenthesisToken.Kind()}.", nameof(closeParenthesisToken));
             if (minusGreaterThanToken.Kind() != SyntaxKind.MinusGreaterThanToken) throw new ArgumentException($"Invalid kind provided. Expected MinusGreaterThanToken but got {minusGreaterThanToken.Kind()}.", nameof(minusGreaterThanToken));
             if (returnType == null) throw new ArgumentNullException(nameof(returnType));
-            return (FunctionTypeSyntax)Syntax.InternalSyntax.SyntaxFactory.FunctionType(typeParameterList == null ? null : (Syntax.InternalSyntax.TypeParameterListSyntax)typeParameterList.Green, (Syntax.InternalSyntax.SyntaxToken)openParenthesisToken.Node!, parameters.Node.ToGreenSeparatedList<Syntax.InternalSyntax.TypeSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeParenthesisToken.Node!, (Syntax.InternalSyntax.SyntaxToken)minusGreaterThanToken.Node!, (Syntax.InternalSyntax.TypeSyntax)returnType.Green).CreateRed();
+            return (FunctionTypeSyntax)Syntax.InternalSyntax.SyntaxFactory.FunctionType(typeParameterList == null ? null : (Syntax.InternalSyntax.TypeParameterListSyntax)typeParameterList.Green, (Syntax.InternalSyntax.SyntaxToken)openParenthesisToken.Node!, parameters.Node.ToGreenSeparatedList<Syntax.InternalSyntax.FunctionTypeParameterSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeParenthesisToken.Node!, (Syntax.InternalSyntax.SyntaxToken)minusGreaterThanToken.Node!, (Syntax.InternalSyntax.TypeSyntax)returnType.Green).CreateRed();
         }
 
         /// <summary>Creates a new FunctionTypeSyntax instance.</summary>
-        public static FunctionTypeSyntax FunctionType(TypeParameterListSyntax? typeParameterList, SeparatedSyntaxList<TypeSyntax> parameters, TypeSyntax returnType)
+        public static FunctionTypeSyntax FunctionType(TypeParameterListSyntax? typeParameterList, SeparatedSyntaxList<FunctionTypeParameterSyntax> parameters, TypeSyntax returnType)
             => SyntaxFactory.FunctionType(typeParameterList, SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), parameters, SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken), SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), returnType);
 
         /// <summary>Creates a new FunctionTypeSyntax instance.</summary>
         public static FunctionTypeSyntax FunctionType(TypeSyntax returnType)
-            => SyntaxFactory.FunctionType(default(TypeParameterListSyntax?), SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), default(SeparatedSyntaxList<TypeSyntax>), SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken), SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), returnType);
+            => SyntaxFactory.FunctionType(default(TypeParameterListSyntax?), SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), default(SeparatedSyntaxList<FunctionTypeParameterSyntax>), SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken), SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), returnType);
 
         /// <summary>
         /// Creates a new

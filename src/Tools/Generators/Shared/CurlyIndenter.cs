@@ -31,7 +31,9 @@ namespace Loretta.Generators
                 _indentedTextWriter.WriteLine(_closingExtra);
             }
             else
+            {
                 _indentedTextWriter.WriteLine("}");
+            }
         }
     }
 }

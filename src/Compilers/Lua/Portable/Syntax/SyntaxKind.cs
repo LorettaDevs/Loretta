@@ -662,7 +662,7 @@ namespace Loretta.CodeAnalysis.Lua
         TypedIdentifierName  = 2118,
 
         InterpolatedStringText = 2113,
-        Interpolation = 2114,
+        Interpolation          = 2114,
 
         // Primary Expressions
         [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
@@ -882,7 +882,8 @@ namespace Loretta.CodeAnalysis.Lua
         TableType = 2098,
 
         //     Function types
-        FunctionType = 2099,
+        FunctionTypeParameter = 2117,
+        FunctionType          = 2099,
 
         //     Literal-based types
         StringType = 2100,
@@ -904,7 +905,7 @@ namespace Loretta.CodeAnalysis.Lua
         //     Type binding
         TypeBinding = 2111,
 
-        // Big gap 2116-3000 (insert new nodes here)
+        // Big gap 2117-3000 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,
