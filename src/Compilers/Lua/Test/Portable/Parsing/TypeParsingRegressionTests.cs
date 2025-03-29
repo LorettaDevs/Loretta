@@ -27,6 +27,10 @@ public sealed class TypeParsingRegressionTests(ITestOutputHelper output) : Parsi
             LuaSyntaxOptions.Luau);
 
     [Fact, WorkItem(119, "https://github.com/LorettaDevs/Loretta/issues/119")]
+    public void LanguageParser_ParsesFunctionTypes_WithParameterNamesCorrectly()
+        => ParseAndValidate("export type a = (p1: any) -> any", LuaSyntaxOptions.Luau);
+
+    [Fact, WorkItem(119, "https://github.com/LorettaDevs/Loretta/issues/119")]
     public void LanguageParser_ParsesVariadicFunctionReturnTypes_Correctly()
         => ParseAndValidate(
             """
