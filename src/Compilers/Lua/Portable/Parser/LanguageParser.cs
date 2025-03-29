@@ -168,8 +168,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         return SyntaxFactory.EmptyStatement(EatToken(SyntaxKind.SemicolonToken));
 
                     case SyntaxKind.IdentifierToken
-                        when CurrentToken.ContextualKind is SyntaxKind.ExportKeyword
-                                                         or SyntaxKind.TypeKeyword:
+                        when (CurrentToken.ContextualKind is SyntaxKind.ExportKeyword
+                              && PeekToken(1) is
+                              {
+                                  Kind: SyntaxKind.IdentifierToken, ContextualKind: SyntaxKind.TypeKeyword,
+                              })
+                             || (CurrentToken.ContextualKind is SyntaxKind.TypeKeyword
+                                 && PeekToken(1).Kind is SyntaxKind.IdentifierToken):
                         return ParseTypeDeclarationStatement();
 
                     default:
@@ -224,6 +229,15 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
         }
 
+        /// <summary>
+        ///     Parses the following non-terminal:
+        ///     <code>
+        ///         type_declaration_statement
+        ///           : 'export'? 'type' identifier_token type_parameter_list? '=' type ';'?
+        ///           ;
+        ///     </code>
+        /// </summary>
+        /// <returns></returns>
         private TypeDeclarationStatementSyntax ParseTypeDeclarationStatement()
         {
             SyntaxToken? exportKeyword = null;
