@@ -198,8 +198,11 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         private static Syntax.InternalSyntax.TypePackSyntax GenerateTypePack()
             => InternalSyntaxFactory.TypePack(InternalSyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), SeparatedSyntaxList<Syntax.InternalSyntax.TypeSyntax>(), InternalSyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
+        private static Syntax.InternalSyntax.FunctionTypeParameterSyntax GenerateFunctionTypeParameter()
+            => InternalSyntaxFactory.FunctionTypeParameter(null, null, GenerateSimpleTypeName());
+
         private static Syntax.InternalSyntax.FunctionTypeSyntax GenerateFunctionType()
-            => InternalSyntaxFactory.FunctionType(null, InternalSyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), SeparatedSyntaxList<Syntax.InternalSyntax.TypeSyntax>(), InternalSyntaxFactory.Token(SyntaxKind.CloseParenthesisToken), InternalSyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), GenerateSimpleTypeName());
+            => InternalSyntaxFactory.FunctionType(null, InternalSyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), SeparatedSyntaxList<Syntax.InternalSyntax.FunctionTypeParameterSyntax>(), InternalSyntaxFactory.Token(SyntaxKind.CloseParenthesisToken), InternalSyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), GenerateSimpleTypeName());
 
         private static Syntax.InternalSyntax.ArrayTypeSyntax GenerateArrayType()
             => InternalSyntaxFactory.ArrayType(InternalSyntaxFactory.Token(SyntaxKind.OpenBraceToken), GenerateSimpleTypeName(), InternalSyntaxFactory.Token(SyntaxKind.CloseBraceToken));
@@ -1013,6 +1016,18 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             Assert.Equal(SyntaxKind.OpenParenthesisToken, node.OpenParenthesisToken.Kind);
             Assert.Equal(default, node.Types);
             Assert.Equal(SyntaxKind.CloseParenthesisToken, node.CloseParenthesisToken.Kind);
+
+            AttachAndCheckDiagnostics(node);
+        }
+
+        [Fact]
+        public void TestFunctionTypeParameterFactoryAndProperties()
+        {
+            var node = GenerateFunctionTypeParameter();
+
+            Assert.Null(node.Identifier);
+            Assert.Null(node.ColonToken);
+            Assert.NotNull(node.Type);
 
             AttachAndCheckDiagnostics(node);
         }
@@ -2836,6 +2851,32 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         }
 
         [Fact]
+        public void TestFunctionTypeParameterTokenDeleteRewriter()
+        {
+            var oldNode = GenerateFunctionTypeParameter();
+            var rewriter = new TokenDeleteRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            if (!oldNode.IsMissing)
+            {
+                Assert.NotEqual(oldNode, newNode);
+            }
+
+            Assert.NotNull(newNode);
+            Assert.True(newNode.IsMissing, "No tokens => missing");
+        }
+
+        [Fact]
+        public void TestFunctionTypeParameterIdentityRewriter()
+        {
+            var oldNode = GenerateFunctionTypeParameter();
+            var rewriter = new IdentityRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            Assert.Same(oldNode, newNode);
+        }
+
+        [Fact]
         public void TestFunctionTypeTokenDeleteRewriter()
         {
             var oldNode = GenerateFunctionType();
@@ -3468,8 +3509,11 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         private static TypePackSyntax GenerateTypePack()
             => SyntaxFactory.TypePack(SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), SeparatedSyntaxList<TypeSyntax>(), SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken));
 
+        private static FunctionTypeParameterSyntax GenerateFunctionTypeParameter()
+            => SyntaxFactory.FunctionTypeParameter(default(SyntaxToken), default(SyntaxToken), GenerateSimpleTypeName());
+
         private static FunctionTypeSyntax GenerateFunctionType()
-            => SyntaxFactory.FunctionType(default(TypeParameterListSyntax), SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), SeparatedSyntaxList<TypeSyntax>(), SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken), SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), GenerateSimpleTypeName());
+            => SyntaxFactory.FunctionType(default(TypeParameterListSyntax), SyntaxFactory.Token(SyntaxKind.OpenParenthesisToken), SeparatedSyntaxList<FunctionTypeParameterSyntax>(), SyntaxFactory.Token(SyntaxKind.CloseParenthesisToken), SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), GenerateSimpleTypeName());
 
         private static ArrayTypeSyntax GenerateArrayType()
             => SyntaxFactory.ArrayType(SyntaxFactory.Token(SyntaxKind.OpenBraceToken), GenerateSimpleTypeName(), SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
@@ -4284,6 +4328,18 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
             Assert.Equal(default, node.Types);
             Assert.Equal(SyntaxKind.CloseParenthesisToken, node.CloseParenthesisToken.Kind());
             var newNode = node.WithOpenParenthesisToken(node.OpenParenthesisToken).WithTypes(node.Types).WithCloseParenthesisToken(node.CloseParenthesisToken);
+            Assert.Equal(node, newNode);
+        }
+
+        [Fact]
+        public void TestFunctionTypeParameterFactoryAndProperties()
+        {
+            var node = GenerateFunctionTypeParameter();
+
+            Assert.Equal(SyntaxKind.None, node.Identifier.Kind());
+            Assert.Equal(SyntaxKind.None, node.ColonToken.Kind());
+            Assert.NotNull(node.Type);
+            var newNode = node.WithIdentifier(node.Identifier).WithColonToken(node.ColonToken).WithType(node.Type);
             Assert.Equal(node, newNode);
         }
 
@@ -6099,6 +6155,32 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         public void TestTypePackIdentityRewriter()
         {
             var oldNode = GenerateTypePack();
+            var rewriter = new IdentityRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            Assert.Same(oldNode, newNode);
+        }
+
+        [Fact]
+        public void TestFunctionTypeParameterTokenDeleteRewriter()
+        {
+            var oldNode = GenerateFunctionTypeParameter();
+            var rewriter = new TokenDeleteRewriter();
+            var newNode = rewriter.Visit(oldNode);
+
+            if (!oldNode.IsMissing)
+            {
+                Assert.NotEqual(oldNode, newNode);
+            }
+
+            Assert.NotNull(newNode);
+            Assert.True(newNode.IsMissing, "No tokens => missing");
+        }
+
+        [Fact]
+        public void TestFunctionTypeParameterIdentityRewriter()
+        {
+            var oldNode = GenerateFunctionTypeParameter();
             var rewriter = new IdentityRewriter();
             var newNode = rewriter.Visit(oldNode);
 

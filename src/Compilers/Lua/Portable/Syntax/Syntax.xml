@@ -2223,6 +2223,47 @@
             <Kind Name="CloseParenthesisToken"/>
         </Field>
     </Node>
+    
+    <Node Base="LuaSyntaxNode" Name="FunctionTypeParameterSyntax">
+        <TypeComment>
+            <summary>
+                Node that represents a function type argument with an optional preceding name and <c>:</c> token.
+            </summary>
+        </TypeComment>
+        <Kind Name="FunctionTypeParameter"/>
+        <Sequence Optional="true">
+            <Field Name="Identifier" Type="SyntaxToken">
+                <PropertyComment>
+                    <summary>
+                        The (optional) identifier name token that contains the parameter name in the function's signature.
+                    </summary>
+                    <remarks>
+                        Either both this and <see cref="ColonToken"/> are available or both are null.
+                    </remarks>
+                </PropertyComment>
+                <Kind Name="IdentifierToken"/>
+            </Field>
+            <Field Name="ColonToken" Type="SyntaxToken">
+                <PropertyComment>
+                    <summary>
+                        The (optional) <c>:</c> token that separates the parameter name from the parameter type.
+                    </summary>
+                    <remarks>
+                        Either both this and <see cref="Identifier"/> are available or both are null.
+                    </remarks>
+                </PropertyComment>
+                <Kind Name="ColonToken"/>
+            </Field>
+        </Sequence>
+        <Field Name="Type" Type="TypeSyntax">
+            <PropertyComment>
+                <summary>
+                    The type that the parameter in the position this node is located in the function signature should
+                    have.
+                </summary>
+            </PropertyComment>
+        </Field>
+    </Node>
 
     <Node Name="FunctionTypeSyntax" Base="TypeSyntax">
         <TypeComment>
@@ -2249,9 +2290,9 @@
             </PropertyComment>
             <Kind Name="OpenParenthesisToken"/>
         </Field>
-        <Field Name="Parameters" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
+        <Field Name="Parameters" Type="SeparatedSyntaxList&lt;FunctionTypeParameterSyntax&gt;">
             <PropertyComment>
-                <summary>Gets the list of the types of the function's parameters.</summary>
+                <summary>Gets the list of the function type's parameters.</summary>
             </PropertyComment>
         </Field>
         <Field Name="CloseParenthesisToken" Type="SyntaxToken">

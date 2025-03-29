@@ -4032,6 +4032,84 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public TypePackSyntax AddTypes(params TypeSyntax[] items) => WithTypes(this.Types.AddRange(items));
     }
 
+    /// <summary>
+    /// Node that represents a function type argument with an optional preceding name and <c>:</c> token.
+    /// </summary>
+    /// <remarks>
+    /// <para>This node is associated with the following syntax kinds:</para>
+    /// <list type="bullet">
+    /// <item><description><see cref="SyntaxKind.FunctionTypeParameter"/></description></item>
+    /// </list>
+    /// </remarks>
+    public sealed partial class FunctionTypeParameterSyntax : LuaSyntaxNode
+    {
+        private TypeSyntax? type;
+
+        internal FunctionTypeParameterSyntax(InternalSyntax.LuaSyntaxNode green, SyntaxNode? parent, int position)
+          : base(green, parent, position)
+        {
+        }
+
+        /// <summary>
+        /// The (optional) identifier name token that contains the parameter name in the function's signature.
+        /// </summary>
+        /// <remarks>
+        /// Either both this and <see cref="ColonToken" /> are available or both are null.
+        /// </remarks>
+        public SyntaxToken Identifier
+        {
+            get
+            {
+                var slot = ((Syntax.InternalSyntax.FunctionTypeParameterSyntax)this.Green).identifier;
+                return slot != null ? new SyntaxToken(this, slot, Position, 0) : default;
+            }
+        }
+
+        /// <summary>
+        /// The (optional) <c>:</c> token that separates the parameter name from the parameter type.
+        /// </summary>
+        /// <remarks>
+        /// Either both this and <see cref="Identifier" /> are available or both are null.
+        /// </remarks>
+        public SyntaxToken ColonToken
+        {
+            get
+            {
+                var slot = ((Syntax.InternalSyntax.FunctionTypeParameterSyntax)this.Green).colonToken;
+                return slot != null ? new SyntaxToken(this, slot, GetChildPosition(1), GetChildIndex(1)) : default;
+            }
+        }
+
+        /// <summary>
+        /// The type that the parameter in the position this node is located in the function signature should
+        /// have.
+        /// </summary>
+        public TypeSyntax Type => GetRed(ref this.type, 2)!;
+
+        internal override SyntaxNode? GetNodeSlot(int index) => index == 2 ? GetRed(ref this.type, 2)! : null;
+
+        internal override SyntaxNode? GetCachedSlot(int index) => index == 2 ? this.type : null;
+
+        public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitFunctionTypeParameter(this);
+        public override TResult? Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) where TResult : default => visitor.VisitFunctionTypeParameter(this);
+
+        public FunctionTypeParameterSyntax Update(SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type)
+        {
+            if (identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type)
+            {
+                var newNode = SyntaxFactory.FunctionTypeParameter(identifier, colonToken, type);
+                var annotations = GetAnnotations();
+                return annotations?.Length > 0 ? newNode.WithAnnotations(annotations) : newNode;
+            }
+
+            return this;
+        }
+
+        public FunctionTypeParameterSyntax WithIdentifier(SyntaxToken identifier) => Update(identifier, this.ColonToken, this.Type);
+        public FunctionTypeParameterSyntax WithColonToken(SyntaxToken colonToken) => Update(this.Identifier, colonToken, this.Type);
+        public FunctionTypeParameterSyntax WithType(TypeSyntax type) => Update(this.Identifier, this.ColonToken, type);
+    }
+
     /// <summary>This node represents a function type.</summary>
     /// <remarks>
     /// <para>This node is associated with the following syntax kinds:</para>
@@ -4058,13 +4136,13 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         /// </summary>
         public SyntaxToken OpenParenthesisToken => new SyntaxToken(this, ((Syntax.InternalSyntax.FunctionTypeSyntax)this.Green).openParenthesisToken, GetChildPosition(1), GetChildIndex(1));
 
-        /// <summary>Gets the list of the types of the function's parameters.</summary>
-        public SeparatedSyntaxList<TypeSyntax> Parameters
+        /// <summary>Gets the list of the function type's parameters.</summary>
+        public SeparatedSyntaxList<FunctionTypeParameterSyntax> Parameters
         {
             get
             {
                 var red = GetRed(ref this.parameters, 2);
-                return red != null ? new SeparatedSyntaxList<TypeSyntax>(red, GetChildIndex(2)) : default;
+                return red != null ? new SeparatedSyntaxList<FunctionTypeParameterSyntax>(red, GetChildIndex(2)) : default;
             }
         }
 
@@ -4102,7 +4180,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitFunctionType(this);
         public override TResult? Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) where TResult : default => visitor.VisitFunctionType(this);
 
-        public FunctionTypeSyntax Update(TypeParameterListSyntax? typeParameterList, SyntaxToken openParenthesisToken, SeparatedSyntaxList<TypeSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
+        public FunctionTypeSyntax Update(TypeParameterListSyntax? typeParameterList, SyntaxToken openParenthesisToken, SeparatedSyntaxList<FunctionTypeParameterSyntax> parameters, SyntaxToken closeParenthesisToken, SyntaxToken minusGreaterThanToken, TypeSyntax returnType)
         {
             if (typeParameterList != this.TypeParameterList || openParenthesisToken != this.OpenParenthesisToken || parameters != this.Parameters || closeParenthesisToken != this.CloseParenthesisToken || minusGreaterThanToken != this.MinusGreaterThanToken || returnType != this.ReturnType)
             {
@@ -4116,7 +4194,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
 
         public FunctionTypeSyntax WithTypeParameterList(TypeParameterListSyntax? typeParameterList) => Update(typeParameterList, this.OpenParenthesisToken, this.Parameters, this.CloseParenthesisToken, this.MinusGreaterThanToken, this.ReturnType);
         public FunctionTypeSyntax WithOpenParenthesisToken(SyntaxToken openParenthesisToken) => Update(this.TypeParameterList, openParenthesisToken, this.Parameters, this.CloseParenthesisToken, this.MinusGreaterThanToken, this.ReturnType);
-        public FunctionTypeSyntax WithParameters(SeparatedSyntaxList<TypeSyntax> parameters) => Update(this.TypeParameterList, this.OpenParenthesisToken, parameters, this.CloseParenthesisToken, this.MinusGreaterThanToken, this.ReturnType);
+        public FunctionTypeSyntax WithParameters(SeparatedSyntaxList<FunctionTypeParameterSyntax> parameters) => Update(this.TypeParameterList, this.OpenParenthesisToken, parameters, this.CloseParenthesisToken, this.MinusGreaterThanToken, this.ReturnType);
         public FunctionTypeSyntax WithCloseParenthesisToken(SyntaxToken closeParenthesisToken) => Update(this.TypeParameterList, this.OpenParenthesisToken, this.Parameters, closeParenthesisToken, this.MinusGreaterThanToken, this.ReturnType);
         public FunctionTypeSyntax WithMinusGreaterThanToken(SyntaxToken minusGreaterThanToken) => Update(this.TypeParameterList, this.OpenParenthesisToken, this.Parameters, this.CloseParenthesisToken, minusGreaterThanToken, this.ReturnType);
         public FunctionTypeSyntax WithReturnType(TypeSyntax returnType) => Update(this.TypeParameterList, this.OpenParenthesisToken, this.Parameters, this.CloseParenthesisToken, this.MinusGreaterThanToken, returnType);
@@ -4126,7 +4204,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             var typeParameterList = this.TypeParameterList ?? SyntaxFactory.TypeParameterList();
             return WithTypeParameterList(typeParameterList.WithNames(typeParameterList.Names.AddRange(items)));
         }
-        public FunctionTypeSyntax AddParameters(params TypeSyntax[] items) => WithParameters(this.Parameters.AddRange(items));
+        public FunctionTypeSyntax AddParameters(params FunctionTypeParameterSyntax[] items) => WithParameters(this.Parameters.AddRange(items));
     }
 
     /// <summary>This node represents a table based type.</summary>

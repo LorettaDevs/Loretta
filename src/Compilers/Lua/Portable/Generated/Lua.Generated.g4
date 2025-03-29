@@ -199,7 +199,11 @@ type
   ;
 
 function_type
-  : type_parameter_list? '(' (type (',' type)*)? ')' '->' type
+  : type_parameter_list? '(' (function_type_parameter (',' function_type_parameter)*)? ')' '->' type
+  ;
+
+function_type_parameter
+  : (identifier_token ':')? type
   ;
 
 generic_type_pack
