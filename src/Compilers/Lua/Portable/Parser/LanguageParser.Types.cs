@@ -18,14 +18,17 @@
 
         private partial TypeSyntax ParseReturnType()
         {
+            // If the user is returning a type pack, then parse that. 
             if (CurrentToken.Kind is SyntaxKind.OpenParenthesisToken)
-            {
                 return ParseTypeStartingWithParenthesis(TypePackType.Some);
-            }
-            else
-            {
-                return ParseType();
-            }
+
+            // If we don't have a variadic type to parse, then just move on.
+            if (CurrentToken.Kind != SyntaxKind.DotDotDotToken) return ParseType();
+
+            // Otherwise, we have a variadic return type, so go ahead with that.
+            var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
+            var type           = ParseType();
+            return SyntaxFactory.VariadicTypePack(dotDotDotToken, type);
         }
 
         private partial TypeBindingSyntax? TryParseTypeBinding()
