@@ -1,4 +1,6 @@
-﻿namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
+﻿using Loretta.CodeAnalysis.Syntax.InternalSyntax;
+
+namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 {
     internal sealed partial class LanguageParser
     {
@@ -309,31 +311,47 @@
             var typeParameterList = TryParseTypeParameterList(true);
 
             var openParenthesisToken = EatToken(SyntaxKind.OpenParenthesisToken);
-            var typesListBuilder = _pool.AllocateSeparated<TypeSyntax>();
+            // We use LuaSyntaxNode here because FunctionTypeParameterSyntax does not inherit from TypeSyntax, so we have
+            // to pick the next common parent, which is LuaSyntaxToken.
+            // We ensure that everything has the correct types through a combination of the hasParameter flag and
+            // typePackType, to ensure we only add FunctionTypeParameterSyntaxes whenever we will be able to accept them.
+            var parenthesizedElements = _pool.AllocateSeparated<LuaSyntaxNode>();
+            var hasParameters         = false;
 
             while (CurrentToken.Kind is not (SyntaxKind.CloseParenthesisToken or SyntaxKind.EndOfFileToken))
             {
-                if (CurrentToken.Kind is SyntaxKind.DotDotDotToken)
+                // Check for the `identifier ':'` pattern for function type parameters.
+                if (typePackType != TypePackType.Only
+                    && CurrentToken.Kind is SyntaxKind.IdentifierToken
+                    && PeekToken(1).Kind is SyntaxKind.ColonToken)
+                {
+                    hasParameters = true;
+                    var name      = EatToken(SyntaxKind.IdentifierToken);
+                    var colon     = EatToken(SyntaxKind.ColonToken);
+                    var type      = ParseType();
+                    var parameter = SyntaxFactory.FunctionTypeParameter(name, colon, type);
+
+                    parenthesizedElements.Add(parameter);
+                }
+                else if (CurrentToken.Kind is SyntaxKind.DotDotDotToken)
                 {
                     var dotDotDotToken = EatToken(SyntaxKind.DotDotDotToken);
-                    var type = ParseType();
-                    var variadicType = SyntaxFactory.VariadicTypePack(
-                        dotDotDotToken,
-                        type);
+                    var type           = ParseType();
+                    var variadicType   = SyntaxFactory.VariadicTypePack(dotDotDotToken, type);
 
-                    typesListBuilder.Add(variadicType);
-                    break;
+                    parenthesizedElements.Add(variadicType);
+                    break; // Leave the loop because nothing is allowed past variadic types.
                 }
                 else
                 {
                     var type = ParseType();
-                    typesListBuilder.Add(type);
+                    parenthesizedElements.Add(type);
                 }
 
                 if (CurrentToken.Kind is SyntaxKind.CommaToken)
                 {
                     var separator = EatToken(SyntaxKind.CommaToken);
-                    typesListBuilder.AddSeparator(separator);
+                    parenthesizedElements.Add(separator);
                 }
                 else
                 {
@@ -341,43 +359,59 @@
                 }
             }
 
-            var typesList = _pool.ToListAndFree(typesListBuilder);
             var closeParenthesisToken = EatToken(SyntaxKind.CloseParenthesisToken);
 
-            if (typePackType == TypePackType.Only)
-                goto pack;
+            if (typePackType == TypePackType.Only) goto pack;
 
             if (typeParameterList is not null
+                // If we have any parameters, there's no option other than a function type.
+                || hasParameters
                 || CurrentToken.Kind == SyntaxKind.MinusGreaterThanToken
-                // If there's not an arrow, then we need to error if there's more than
-                // one type in the list and we aren't allowed to accept packs
-                || (typesList.Count != 1 && typePackType == TypePackType.None))
+                // If there's more than one type in the list, and we are not allowed to accept packs, then assume the
+                // user intended to type a function type.
+                || (parenthesizedElements.Count != 1 && typePackType == TypePackType.None))
             {
-                var slimArrow = EatToken(SyntaxKind.MinusGreaterThanToken);
+                var slimArrow  = EatToken(SyntaxKind.MinusGreaterThanToken);
                 var returnType = ParseReturnType();
+
+                // Convert parameters to a FunctionTypeParameter if they aren't one already.
+                for (var idx = 0; idx < parenthesizedElements.Count; idx += 2)
+                {
+                    var elem = parenthesizedElements[idx];
+                    if (elem is not FunctionTypeParameterSyntax)
+                    {
+                        parenthesizedElements[idx] = SyntaxFactory.FunctionTypeParameter(
+                            identifier: null,
+                            colonToken: null,
+                            (TypeSyntax) elem!);
+                    }
+                }
+
+                var parameters = _pool.ToListAndFree(
+                    new SeparatedSyntaxListBuilder<FunctionTypeParameterSyntax>(
+                        parenthesizedElements.UnderlyingBuilder));
 
                 return SyntaxFactory.FunctionType(
                     typeParameterList,
                     openParenthesisToken,
-                    typesList,
+                    parameters,
                     closeParenthesisToken,
                     slimArrow,
                     returnType);
             }
-            else if (typesList.Count == 1)
+            
+            if (parenthesizedElements.Count == 1)
             {
-                var type = typesList[0]!;
-                return SyntaxFactory.ParenthesizedType(
-                    openParenthesisToken,
-                    type,
-                    closeParenthesisToken);
+                // We won't arrive here if there are any parameters, so the only option is a TypeSyntax.
+                var type = (TypeSyntax) parenthesizedElements[0]!;
+                return SyntaxFactory.ParenthesizedType(openParenthesisToken, type, closeParenthesisToken);
             }
 
         pack:
-            return SyntaxFactory.TypePack(
-                openParenthesisToken,
-                typesList,
-                closeParenthesisToken);
+            // We also only arrive here without parameters.
+            var types = _pool.ToListAndFree(
+                new SeparatedSyntaxListBuilder<TypeSyntax>(parenthesizedElements.UnderlyingBuilder));
+            return SyntaxFactory.TypePack(openParenthesisToken, types, closeParenthesisToken);
         }
 
         private TableBasedTypeSyntax ParseTableBasedType()
