@@ -77,7 +77,9 @@ namespace Loretta.Generators
                         if (groupClauses.Length > 1)
                         {
                             if (discriminatorIndex != -1)
+                            {
                                 WriteDiscriminatorSwitch(discriminatorIndex, discriminatorLength, groupClauses);
+                            }
                             else
                             {
                                 WritePlainSwitch(
@@ -89,7 +91,9 @@ namespace Loretta.Generators
                             }
                         }
                         else
+                        {
                             WriteDestinationForClause(groupClauses[0]);
+                        }
                         writer.WriteLine("break;");
                     }
                 }

@@ -71,7 +71,9 @@ namespace Loretta.Generators
             for (var type = topType;
                  type != null && !SymbolEqualityComparer.Default.Equals(type, limit);
                  type = type.BaseType)
+            {
                 yield return type;
+            }
         }
 
         public static string TypeToShortString(INamedTypeSymbol typeSymbol)
@@ -84,8 +86,10 @@ namespace Loretta.Generators
             if (symbol is INamedTypeSymbol type) result.Add(type);
 
             foreach (var child in symbol.GetMembers())
+            {
                 if (child is INamespaceOrTypeSymbol nsChild)
                     GetAllTypes(result, nsChild);
+            }
         }
     }
 }

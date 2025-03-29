@@ -350,7 +350,7 @@ variable_attribute
   ;
 
 numeric_for_statement
-  : 'for' typed_identifier_name '=' expression ',' expression ((',' expression)) 'do' statement_list 'end' ';'?
+  : 'for' typed_identifier_name '=' expression ',' expression ((',' expression)?) 'do' statement_list 'end' ';'?
   ;
 
 repeat_until_statement

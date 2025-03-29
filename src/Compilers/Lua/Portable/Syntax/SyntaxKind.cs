@@ -662,7 +662,7 @@ namespace Loretta.CodeAnalysis.Lua
         TypedIdentifierName  = 2118,
 
         InterpolatedStringText = 2113,
-        Interpolation = 2114,
+        Interpolation          = 2114,
 
         // Primary Expressions
         [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
