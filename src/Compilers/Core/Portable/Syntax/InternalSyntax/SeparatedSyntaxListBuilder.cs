@@ -17,7 +17,7 @@ namespace Loretta.CodeAnalysis.Syntax.InternalSyntax
 
         public static SeparatedSyntaxListBuilder<TNode> Create() => new(8);
 
-        internal SeparatedSyntaxListBuilder(SyntaxListBuilder builder)
+        internal SeparatedSyntaxListBuilder(SyntaxListBuilder? builder)
         {
             _builder = builder;
         }
