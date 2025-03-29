@@ -57,7 +57,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build-and-test.yml = .github\workflows\build-and-test.yml
 		.github\workflows\build-docs.yml = .github\workflows\build-docs.yml
-		.github\workflows\publish.yml = .github\workflows\publish.yml
+		.github\workflows\nigthly-publish.yml = .github\workflows\nigthly-publish.yml
+		.github\workflows\stable-publish.yml = .github\workflows\stable-publish.yml
+		.github\workflows\codeql.yml = .github\workflows\codeql.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loretta.Generators.ErrorFactsGenerator", "src\Tools\Generators\ErrorFactsGenerator\Loretta.Generators.ErrorFactsGenerator.csproj", "{805968F0-EDBC-4C0B-99CE-1E954DEDC136}"
