@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed `continue` still being parsed as a keyword even when `ContinueType` was `ContinueType.None` by @GGG-KILLER in https://github.com/LorettaDevs/Loretta/pull/134;
 - Fixed `goto` and `::label::` still being parsed when `AcceptGoto` was `false` by @GGG-KILLER in https://github.com/LorettaDevs/Loretta/pull/134.
+- Fixed `type` not being interpreted as a contextual keyword by @GGG-KILLER in https://github.com/LorettaDevs/Loretta/pull/144.
 
 ## v0.2.12
 ### Fixed
