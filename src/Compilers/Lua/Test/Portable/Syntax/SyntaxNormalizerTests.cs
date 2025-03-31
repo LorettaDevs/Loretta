@@ -1390,7 +1390,7 @@ public sealed partial class SyntaxNormalizerTests : LuaTestBase
 
         private static IEnumerator<string> CombineExprHoles(string input, bool isExpected)
         {
-            var matches = ExprHoleRegex().Matches(input);
+            var matches = Regex.Matches(input, @"\{\[\((?:EXPR|TYPE|;)\)\]\}");
             var holes   = new byte[matches.Count];
             var builder = new StringBuilder();
 
@@ -1444,9 +1444,6 @@ public sealed partial class SyntaxNormalizerTests : LuaTestBase
                 };
             }
         }
-
-        [GeneratedRegex(@"\{\[\((?:EXPR|TYPE|;)\)\]\}")]
-        private static partial Regex ExprHoleRegex();
     }
 
     #endregion Class Implementation Details
