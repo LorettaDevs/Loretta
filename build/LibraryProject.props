@@ -22,17 +22,16 @@
 
     <!-- Package props -->
     <PropertyGroup>
-        <Authors>GGG KILLER</Authors>
-        <Copyright>GGG KILLER © 2021</Copyright>
-        <Version>0.2.13</Version>
+        <Authors>Loretta Developers</Authors>
+        <Copyright>Loretta Developers © 2025</Copyright>
         <Version>0.2.14</Version>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-        <RepositoryUrl>https://github.com/GGG-KILLER/Loretta</RepositoryUrl>
+        <RepositoryUrl>https://github.com/LorettaDevs/Loretta</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
 
         <PackageTags>parser;lexer;parsing;lexing;tokenizer;tokenizing</PackageTags>
-        <PackageProjectUrl>https://github.com/GGG-KILLER/Loretta</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/LorettaDevs/Loretta</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
