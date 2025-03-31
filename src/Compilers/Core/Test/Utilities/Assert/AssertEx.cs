@@ -13,49 +13,50 @@ namespace Loretta.Test.Utilities
     /// </summary>
     public static class AssertEx
     {
-        public static void Equal(bool[,] expected, Func<int, int, bool> getResult, int size) =>
-            Equal<bool>(expected, getResult, (b1, b2) => b1 == b2, b => b ? "true" : "false", "{0,-6:G}", size);
+        public static void Equal(bool[,] expected, Func<int, int, bool> getResult, int size)
+            => Equal(
+                expected,
+                getResult,
+                static (b1, b2) => b1 == b2,
+                static b => b ? "true" : "false",
+                "{0,-6:G}",
+                size);
 
-        public static void Equal<T>(T[,] expected, Func<int, int, T> getResult, Func<T, T, bool> valuesEqual, Func<T, string> printValue, string format, int size)
+        public static void Equal<T>(
+            T[,]              expected,
+            Func<int, int, T> getResult,
+            Func<T, T, bool>  valuesEqual,
+            Func<T, string>   printValue,
+            string            format,
+            int               size)
         {
-            bool mismatch = false;
-            for (int i = 0; i < size; i++)
+            var mismatch = false;
+            for (var i = 0; i < size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (var j = 0; j < size; j++)
                 {
-                    if (!valuesEqual(expected[i, j], getResult(i, j)))
-                    {
-                        mismatch = true;
-                    }
+                    if (!valuesEqual(expected[i, j], getResult(i, j))) mismatch = true;
                 }
             }
 
-            if (mismatch)
+            if (!mismatch) return;
+            var builder = new StringBuilder();
+            builder.AppendLine("Actual result: ");
+            for (var i = 0; i < size; i++)
             {
-                var builder = new StringBuilder();
-                builder.AppendLine("Actual result: ");
-                for (int i = 0; i < size; i++)
+                builder.Append("{ ");
+                for (var j = 0; j < size; j++)
                 {
-                    builder.Append("{ ");
-                    for (int j = 0; j < size; j++)
-                    {
-                        string resultWithComma = printValue(getResult(i, j));
-                        if (j < size - 1)
-                        {
-                            resultWithComma += ",";
-                        }
+                    var resultWithComma               = printValue(getResult(i, j));
+                    if (j < size - 1) resultWithComma += ",";
 
-                        builder.Append(string.Format(format, resultWithComma));
-                        if (j < size - 1)
-                        {
-                            builder.Append(' ');
-                        }
-                    }
-                    builder.AppendLine("},");
+                    builder.Append(string.Format(format, resultWithComma));
+                    if (j < size - 1) builder.Append(' ');
                 }
-
-                Assert.True(false, builder.ToString());
+                builder.AppendLine("},");
             }
+
+            Assert.Fail(builder.ToString());
         }
     }
 }

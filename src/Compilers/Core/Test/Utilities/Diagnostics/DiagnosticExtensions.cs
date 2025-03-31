@@ -19,10 +19,7 @@ namespace Loretta.CodeAnalysis
 
         private static void Verify(IEnumerable<Diagnostic> actual, DiagnosticDescription[] expected, bool errorCodeOnly)
         {
-            if (expected == null)
-            {
-                throw new ArgumentException("Must specify expected errors.", nameof(expected));
-            }
+            if (expected == null) throw new ArgumentException("Must specify expected errors.", nameof(expected));
 
             var includeDefaultSeverity = expected.Length > 0 && expected.All(e => e.DefaultSeverity != null);
             var includeEffectiveSeverity = expected.Length > 0 && expected.All(e => e.EffectiveSeverity != null);
@@ -35,20 +32,13 @@ namespace Loretta.CodeAnalysis
             {
                 var index = unmatched.IndexOf(d);
                 if (index > -1)
-                {
                     unmatched.RemoveAt(index);
-                }
                 else
-                {
-                    Assert.True(false, DiagnosticDescription.GetAssertText(expected, actual));
-                }
+                    Assert.Fail(DiagnosticDescription.GetAssertText(expected, actual));
             }
 
             // If any 'extra' errors appear that were not in the 'expected' list, fail test.
-            if (unmatched.Count > 0)
-            {
-                Assert.True(false, DiagnosticDescription.GetAssertText(expected, actual));
-            }
+            if (unmatched.Count > 0) Assert.Fail(DiagnosticDescription.GetAssertText(expected, actual));
         }
     }
 }

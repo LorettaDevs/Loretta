@@ -80,22 +80,15 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
 
         public static SyntaxTree[] Parse(IEnumerable<string> sources, LuaParseOptions options = null)
         {
-            if (sources == null || !sources.Any())
-            {
-                return Array.Empty<SyntaxTree>();
-            }
-
-            return Parse(options, sources.ToArray());
+            var sourcesArr = sources?.ToArray();
+            if (sources == null || sourcesArr.Length == 0) return [];
+            return Parse(options, sourcesArr);
         }
 
         public static SyntaxTree[] Parse(LuaParseOptions options = null, params string[] sources)
         {
-            if (sources == null || (sources.Length == 1 && null == sources[0]))
-            {
-                return Array.Empty<SyntaxTree>();
-            }
-
-            return sources.Select(src => Parse(src, options: options)).ToArray();
+            if (sources == null || (sources.Length == 1 && null == sources[0])) return [];
+            return [.. sources.Select(src => Parse(src, options: options))];
         }
 
         public static SyntaxTree ParseWithRoundTripCheck(
@@ -104,7 +97,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
         {
             var tree = Parse(text, options: options ?? LuaParseOptions.Default);
             var parsedText = tree.GetRoot();
-            // we validate the text roundtrips
+            // we validate the text round trips
             Assert.Equal(text, parsedText.ToFullString());
             return tree;
         }
@@ -114,7 +107,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             LuaParseOptions options = null)
         {
             var node = ParseExpression(text, options: options ?? LuaParseOptions.Default);
-            // we validate the text roundtrips
+            // we validate the text round trips
             Assert.Equal(text, node.ToFullString());
             return node;
         }
@@ -124,7 +117,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             LuaParseOptions options = null)
         {
             var node = ParseStatement(text, options: options ?? LuaParseOptions.Default);
-            // we validate the text roundtrips
+            // we validate the text round trips
             Assert.Equal(text, node.ToFullString());
             return node;
         }
@@ -134,7 +127,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             LuaParseOptions options = null)
         {
             var node = ParseType(text, options: options ?? new LuaParseOptions(LuaSyntaxOptions.Luau));
-            // we validate the text roundtrips
+            // we validate the text round trips
             Assert.Equal(text, node.ToFullString());
             return node;
         }
@@ -147,7 +140,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
 
         protected static List<SyntaxNode> GetSyntaxNodeList(SyntaxNode node, List<SyntaxNode> synList)
         {
-            synList ??= new List<SyntaxNode>();
+            synList ??= [];
 
             synList.Add(node);
 
@@ -160,49 +153,34 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             return synList;
         }
 
-        protected static SyntaxNode GetSyntaxNodeForBinding(List<SyntaxNode> synList) => GetSyntaxNodeOfTypeForBinding<SyntaxNode>(synList);
+        protected static SyntaxNode GetSyntaxNodeForBinding(IEnumerable<SyntaxNode> synList) => GetSyntaxNodeOfTypeForBinding<SyntaxNode>(synList);
 
-        protected const string StartString = "--[[bind]]";
-        protected const string EndString = "--[[/bind]]";
+        protected const string BindingStart = "--[[bind]]";
+        protected const string BindingEnd = "--[[/bind]]";
 
-        protected static TNode GetSyntaxNodeOfTypeForBinding<TNode>(List<SyntaxNode> synList) where TNode : SyntaxNode
+        protected static TNode GetSyntaxNodeOfTypeForBinding<TNode>(IEnumerable<SyntaxNode> synList) where TNode : SyntaxNode
         {
             foreach (var node in synList.OfType<TNode>())
             {
                 var exprFullText = node.ToFullString();
                 exprFullText = exprFullText.Trim();
 
-                if (exprFullText.StartsWith(StartString, StringComparison.Ordinal))
+                if (exprFullText.StartsWith(BindingStart, StringComparison.Ordinal))
                 {
-                    if (exprFullText.Contains(EndString))
+                    if (exprFullText.Contains(BindingEnd))
                     {
-                        if (exprFullText.EndsWith(EndString, StringComparison.Ordinal))
-                        {
+                        if (exprFullText.EndsWith(BindingEnd, StringComparison.Ordinal))
                             return node;
-                        }
-                        else
-                        {
-                            continue;
-                        }
+                        continue;
                     }
-                    else
-                    {
-                        return node;
-                    }
+                    return node;
                 }
 
-                if (exprFullText.EndsWith(EndString, StringComparison.Ordinal))
+                if (exprFullText.EndsWith(BindingEnd, StringComparison.Ordinal))
                 {
-                    if (exprFullText.Contains(StartString))
+                    if (exprFullText.Contains(BindingStart))
                     {
-                        if (exprFullText.StartsWith(StartString, StringComparison.Ordinal))
-                        {
-                            return node;
-                        }
-                        else
-                        {
-                            continue;
-                        }
+                        if (exprFullText.StartsWith(BindingStart, StringComparison.Ordinal)) return node;
                     }
                     else
                     {
@@ -249,6 +227,5 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             parsedNode.GetDiagnostics().Verify();
             return parsedNode;
         }
-#nullable disable
     }
 }

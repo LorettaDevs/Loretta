@@ -60,7 +60,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
 
         internal static string Dump(this SyntaxTree tree) => tree.GetRoot().Dump();
 
-        private class LuaSyntaxPrinter : LuaSyntaxWalker
+        private sealed class LuaSyntaxPrinter : LuaSyntaxWalker
         {
             private readonly PooledStringBuilder _builder;
             private int _indent = 0;
@@ -83,7 +83,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
                 else if (node is IdentifierNameSyntax name)
                 {
                     _builder.Builder.Append(' ');
-                    _builder.Builder.Append(name.ToString());
+                    _builder.Builder.Append(name);
                 }
                 _builder.Builder.AppendLine();
 

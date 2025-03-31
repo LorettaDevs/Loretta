@@ -5,5 +5,5 @@
 
 namespace Loretta.CodeAnalysis.EditAndContinue.UnitTests
 {
-    internal delegate TRet FuncInOutOut<T1, T2, T3, TRet>(T1 guid, out T2 errorCode, out T3 localizedMessage);
+    internal delegate TRet FuncInOutOut<in T1, T2, T3, out TRet>(T1 guid, out T2 errorCode, out T3 localizedMessage);
 }

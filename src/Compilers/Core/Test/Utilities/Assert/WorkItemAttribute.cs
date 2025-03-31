@@ -11,15 +11,9 @@ namespace Loretta.Test.Utilities
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
     public sealed class WorkItemAttribute : Attribute
     {
-        public int Id
-        {
-            get;
-        }
+        public int Id { get; }
 
-        public string Location
-        {
-            get;
-        }
+        public string Location { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkItemAttribute"/>.
@@ -30,7 +24,7 @@ namespace Loretta.Test.Utilities
         /// <paramref name="id"/> in the original source.</param>
         public WorkItemAttribute(int id, string issueUri)
         {
-            Id = id;
+            Id       = id;
             Location = issueUri;
         }
     }

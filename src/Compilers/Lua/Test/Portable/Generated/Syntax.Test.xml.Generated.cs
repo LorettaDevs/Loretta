@@ -3320,7 +3320,7 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests
         #endregion Green Rewriters
     }
 
-    public partial class RedNodeTests
+    public sealed partial class RedNodeTests
     {
         #region Red Generators
         private static SkippedTokensTriviaSyntax GenerateSkippedTokensTrivia()

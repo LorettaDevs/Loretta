@@ -3,11 +3,9 @@
 
 #nullable disable
 
-using System.Diagnostics;
-
 namespace Loretta.CodeAnalysis.Test.Utilities
 {
-    public class DiffUtil
+    public static class DiffUtil
     {
         private enum EditKind
         {
@@ -32,19 +30,12 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             Delete = 3,
         }
 
-        private class LCS<T> : LongestCommonSubsequence<IList<T>>
+        private sealed class Lcs<T>(IEqualityComparer<T> comparer) : LongestCommonSubsequence<IList<T>>
         {
-            public static readonly LCS<T> Default = new(EqualityComparer<T>.Default);
+            public static readonly Lcs<T> Default = new(EqualityComparer<T>.Default);
 
-            private readonly IEqualityComparer<T> _comparer;
-
-            public LCS(IEqualityComparer<T> comparer)
-            {
-                _comparer = comparer;
-            }
-
-            protected override bool ItemsEqual(IList<T> sequenceA, int indexA, IList<T> sequenceB, int indexB) =>
-                _comparer.Equals(sequenceA[indexA], sequenceB[indexB]);
+            protected override bool ItemsEqual(IList<T> sequenceA, int indexA, IList<T> sequenceB, int indexB)
+                => comparer.Equals(sequenceA[indexA], sequenceB[indexB]);
 
             public IEnumerable<string> CalculateDiff(IList<T> sequenceA, IList<T> sequenceB, Func<T, string> toString)
             {
@@ -52,37 +43,35 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                 {
                     switch (edit.Kind)
                     {
-                        case EditKind.Delete:
-                            yield return "--> " + toString(sequenceA[edit.IndexA]);
-                            break;
+                        case EditKind.Delete: yield return "--> " + toString(sequenceA[edit.IndexA]); break;
 
-                        case EditKind.Insert:
-                            yield return "++> " + toString(sequenceB[edit.IndexB]);
-                            break;
+                        case EditKind.Insert: yield return "++> " + toString(sequenceB[edit.IndexB]); break;
 
-                        case EditKind.Update:
-                            yield return "    " + toString(sequenceB[edit.IndexB]);
-                            break;
+                        case EditKind.Update: yield return "    " + toString(sequenceB[edit.IndexB]); break;
                     }
                 }
             }
         }
 
-        public static string DiffReport<T>(IEnumerable<T> expected, IEnumerable<T> actual, string separator, IEqualityComparer<T> comparer = null, Func<T, string> toString = null)
+        public static string DiffReport<T>(
+            IEnumerable<T>       expected,
+            IEnumerable<T>       actual,
+            string               separator,
+            IEqualityComparer<T> comparer = null,
+            Func<T, string>      toString = null)
         {
-            var lcs = (comparer != null) ? new LCS<T>(comparer) : LCS<T>.Default;
-            toString ??= new Func<T, string>(obj => obj.ToString());
+            var lcs = (comparer != null) ? new Lcs<T>(comparer) : Lcs<T>.Default;
+            toString ??= static obj => obj.ToString();
 
-            IList<T> expectedList = expected as IList<T> ?? new List<T>(expected);
-            IList<T> actualList = actual as IList<T> ?? new List<T>(actual);
+            var expectedList = expected as IList<T> ?? [.. expected];
+            var actualList   = actual as IList<T> ?? [.. actual];
 
             return string.Join(separator, lcs.CalculateDiff(expectedList, actualList, toString));
         }
 
-        private static readonly char[] s_lineSplitChars = new[] { '\r', '\n' };
+        private static readonly char[] s_lineSplitChars = ['\r', '\n'];
 
-        public static string[] Lines(string s) =>
-            s.Split(s_lineSplitChars, StringSplitOptions.RemoveEmptyEntries);
+        private static string[] Lines(string s) => s.Split(s_lineSplitChars, StringSplitOptions.RemoveEmptyEntries);
 
         public static string DiffReport(string expected, string actual)
         {
@@ -99,12 +88,12 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             protected readonly struct Edit
             {
                 public readonly EditKind Kind;
-                public readonly int IndexA;
-                public readonly int IndexB;
+                public readonly int      IndexA;
+                public readonly int      IndexB;
 
                 internal Edit(EditKind kind, int indexA, int indexB)
                 {
-                    Kind = kind;
+                    Kind   = kind;
                     IndexA = indexA;
                     IndexB = indexB;
                 }
@@ -116,36 +105,11 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
             protected abstract bool ItemsEqual(TSequence sequenceA, int indexA, TSequence sequenceB, int indexB);
 
-            protected IEnumerable<KeyValuePair<int, int>> GetMatchingPairs(TSequence sequenceA, int lengthA, TSequence sequenceB, int lengthB)
-            {
-                int[,] d = ComputeCostMatrix(sequenceA, lengthA, sequenceB, lengthB);
-                int i = lengthA;
-                int j = lengthB;
-
-                while (i != 0 && j != 0)
-                {
-                    if (d[i, j] == d[i - 1, j] + DeleteCost)
-                    {
-                        i--;
-                    }
-                    else if (d[i, j] == d[i, j - 1] + InsertCost)
-                    {
-                        j--;
-                    }
-                    else
-                    {
-                        i--;
-                        j--;
-                        yield return new KeyValuePair<int, int>(i, j);
-                    }
-                }
-            }
-
             protected IEnumerable<Edit> GetEdits(TSequence sequenceA, int lengthA, TSequence sequenceB, int lengthB)
             {
                 int[,] d = ComputeCostMatrix(sequenceA, lengthA, sequenceB, lengthB);
-                int i = lengthA;
-                int j = lengthB;
+                int    i = lengthA;
+                int    j = lengthB;
 
                 while (i != 0 && j != 0)
                 {
@@ -178,34 +142,6 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                     j--;
                     yield return new Edit(EditKind.Insert, -1, j);
                 }
-            }
-
-            /// <summary>
-            /// Returns a distance [0..1] of the specified sequences.
-            /// The smaller distance the more of their elements match.
-            /// </summary>
-            /// <summary>
-            /// Returns a distance [0..1] of the specified sequences.
-            /// The smaller distance the more of their elements match.
-            /// </summary>
-            protected double ComputeDistance(TSequence sequenceA, int lengthA, TSequence sequenceB, int lengthB)
-            {
-                Debug.Assert(lengthA >= 0 && lengthB >= 0);
-
-                if (lengthA == 0 || lengthB == 0)
-                {
-                    return (lengthA == lengthB) ? 0.0 : 1.0;
-                }
-
-                int lcsLength = 0;
-                foreach (var pair in GetMatchingPairs(sequenceA, lengthA, sequenceB, lengthB))
-                {
-                    lcsLength++;
-                }
-
-                int max = Math.Max(lengthA, lengthB);
-                Debug.Assert(lcsLength <= max);
-                return 1.0 - lcsLength / (double) max;
             }
 
             /// <summary>

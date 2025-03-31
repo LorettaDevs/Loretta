@@ -3,12 +3,13 @@
     <Import Project="$(MSBuildThisFileDirectory)../../../../../build/BaseProject.props" />
 
     <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+        <!--suppress MsbuildTargetFrameworkTagInspection -->
         <TargetFrameworks>net472</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>
         <TargetFrameworks>net8.0;$(TargetFrameworks)</TargetFrameworks>
-        <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net8.0</TargetFrameworks>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <!-- Implicit Usings -->
@@ -17,14 +18,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
         <PackageReference Include="Tsu" Version="2.2.2" />
-        <PackageReference Include="xunit" Version="2.4.2" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+        <PackageReference Include="xunit.v3" Version="1.1.0" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="coverlet.collector" Version="3.1.2">
+        <PackageReference Include="coverlet.collector" Version="6.0.4">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>

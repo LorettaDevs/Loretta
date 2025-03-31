@@ -29,10 +29,11 @@ namespace Loretta.Generators.SyntaxXml
         private static readonly DiagnosticDescriptor s_unableToReadSyntaxXml = new(
             "LSSG1002",
             "Syntax.xml could not be read",
-            "The Syntax.xml file could not even be read. Does it exist?",
+            "The Syntax.xml file could not even be read",
             "SyntaxGenerator",
             DiagnosticSeverity.Error,
-            isEnabledByDefault: true);
+            isEnabledByDefault: true,
+            description: "The Syntax.xml file could not even be read. Does it exist?");
 
         private static readonly DiagnosticDescriptor s_syntaxXmlError = new(
             "LSSG1003",
@@ -133,7 +134,8 @@ namespace Loretta.Generators.SyntaxXml
                     {
                         try
                         {
-                            var path = Path.Combine(path1: Path.GetDirectoryName(input.Path), "SyntaxXmlException.log");
+#pragma warning disable RS1035 // This is only used in a local project so there's no issue.
+                            var path = Path.Combine(path1: Path.GetDirectoryName(input.Path) ?? string.Empty, "SyntaxXmlException.log");
                             File.AppendAllText(
                                 path,
                                 contents: $"""
@@ -141,6 +143,7 @@ namespace Loretta.Generators.SyntaxXml
                                            {ex}
 
                                            """);
+#pragma warning restore RS1035 // This is only used in a local project so there's no issue.
                         }
                         catch
                         {

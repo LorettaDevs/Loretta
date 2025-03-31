@@ -15,10 +15,6 @@ namespace Loretta.Test.Utilities
     /// </summary>
     public abstract class TestBase
     {
-        protected TestBase()
-        {
-        }
-
         #region Diagnostics
 
         internal static DiagnosticDescription Diagnostic(

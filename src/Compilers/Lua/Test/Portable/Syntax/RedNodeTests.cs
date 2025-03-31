@@ -2,43 +2,35 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace Loretta.CodeAnalysis.Lua.UnitTests
+namespace Loretta.CodeAnalysis.Lua.UnitTests;
+
+public sealed partial class RedNodeTests
 {
-    public partial class RedNodeTests
+    private static SeparatedSyntaxList<T> SeparatedSyntaxList<T>(params T[] args) where T : SyntaxNode
     {
-        private static SeparatedSyntaxList<T> SeparatedSyntaxList<T>(params T[] args)
-            where T : SyntaxNode
-        {
-            if (args.Length < 1)
-                return new SeparatedSyntaxList<T>();
+        if (args.Length < 1) return [];
 
-            var builder = new CodeAnalysis.Syntax.SeparatedSyntaxListBuilder<T>(args.Length);
-            foreach (var arg in args)
-                builder.Add(arg);
-            return builder.ToList();
-        }
+        var builder = new CodeAnalysis.Syntax.SeparatedSyntaxListBuilder<T>(args.Length);
+        foreach (var arg in args) builder.Add(arg);
+        return builder.ToList();
+    }
 
-        private static SyntaxList<T> SyntaxList<T>(params T[] args)
-            where T : SyntaxNode
-        {
-            if (args.Length < 1)
-                return new SyntaxList<T>();
+    private static SyntaxList<T> SyntaxList<T>(params T[] args) where T : SyntaxNode
+    {
+        if (args.Length < 1) return [];
 
-            var builder = new CodeAnalysis.Syntax.SyntaxListBuilder<T>(args.Length);
-            foreach (var arg in args)
-                builder.Add(arg);
-            return builder.ToList();
-        }
+        var builder = new CodeAnalysis.Syntax.SyntaxListBuilder<T>(args.Length);
+        foreach (var arg in args) builder.Add(arg);
+        return builder.ToList();
+    }
 
-        private class TokenDeleteRewriter : LuaSyntaxRewriter
-        {
-            public override SyntaxToken VisitToken(SyntaxToken token) =>
-                SyntaxFactory.MissingToken(token.Kind());
-        }
+    private sealed class TokenDeleteRewriter : LuaSyntaxRewriter
+    {
+        public override SyntaxToken VisitToken(SyntaxToken token) => SyntaxFactory.MissingToken(token.Kind());
+    }
 
-        private class IdentityRewriter : LuaSyntaxRewriter
-        {
-            public override SyntaxNode DefaultVisit(SyntaxNode node) => node;
-        }
+    private sealed class IdentityRewriter : LuaSyntaxRewriter
+    {
+        public override SyntaxNode DefaultVisit(SyntaxNode node) => node;
     }
 }

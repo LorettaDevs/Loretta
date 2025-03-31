@@ -5,7 +5,6 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFrameworks>net8.0;netstandard2.0;net472</TargetFrameworks>
-        <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <!-- Implicit Usings -->

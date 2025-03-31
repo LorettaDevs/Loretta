@@ -40,7 +40,7 @@ namespace Loretta.Test.Utilities
             foreach (var skipCondition in skipConditions)
             {
                 var condition = (ExecutionCondition) Activator.CreateInstance(skipCondition);
-                if (condition.ShouldSkip)
+                if (condition!.ShouldSkip)
                 {
                     base.Skip = Reason ?? condition.SkipReason;
                     break;
@@ -52,20 +52,26 @@ namespace Loretta.Test.Utilities
     public abstract class ExecutionCondition
     {
         public abstract bool ShouldSkip { get; }
+
         public abstract string SkipReason { get; }
     }
 
     public static class ExecutionConditionUtil
     {
-        public static ExecutionArchitecture Architecture => IntPtr.Size switch
-        {
-            4 => ExecutionArchitecture.x86,
-            8 => ExecutionArchitecture.x64,
-            _ => throw new InvalidOperationException($"Unrecognized pointer size {IntPtr.Size}")
-        };
-        public static ExecutionConfiguration Configuration =>
+        // ReSharper disable once BuiltInTypeReferenceStyleForMemberAccess
+        public static ExecutionArchitecture Architecture
+            => IntPtr.Size switch
+            {
+                4 => ExecutionArchitecture.X86,
+                8 => ExecutionArchitecture.X64,
+                // ReSharper disable once BuiltInTypeReferenceStyleForMemberAccess
+                _ => throw new InvalidOperationException($"Unrecognized pointer size {IntPtr.Size}"),
+            };
+
+        public static ExecutionConfiguration Configuration
+            =>
 #if DEBUG
-            ExecutionConfiguration.Debug;
+                ExecutionConfiguration.Debug;
 #elif RELEASE
             ExecutionConfiguration.Release;
 #else
@@ -73,23 +79,36 @@ namespace Loretta.Test.Utilities
 #endif
 
         public static bool IsWindows => Path.DirectorySeparatorChar == '\\';
+
         public static bool IsUnix => !IsWindows;
-        public static bool IsMacOS => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
+        public static bool IsMacOs => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
         public static bool IsLinux => RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+
         public static bool IsDesktop => RuntimeUtilities.IsDesktopRuntime;
+
         public static bool IsWindowsDesktop => IsWindows && IsDesktop;
+
         public static bool IsMonoDesktop => Type.GetType("Mono.Runtime") != null;
+
         public static bool IsMono => MonoHelpers.IsRunningOnMono();
+
         public static bool IsCoreClr => !IsDesktop;
+
         public static bool IsCoreClrUnix => IsCoreClr && IsUnix;
+
         public static bool IsMonoOrCoreClr => IsMono || IsCoreClr;
-        public static bool RuntimeSupportsCovariantReturnsOfClasses => Type.GetType("System.Runtime.CompilerServices.RuntimeFeature")?.GetField("CovariantReturnsOfClasses") != null;
+
+        public static bool RuntimeSupportsCovariantReturnsOfClasses
+            => Type.GetType("System.Runtime.CompilerServices.RuntimeFeature")?.GetField("CovariantReturnsOfClasses")
+               != null;
     }
 
     public enum ExecutionArchitecture
     {
-        x86,
-        x64,
+        X86,
+        X64,
     }
 
     public enum ExecutionConfiguration

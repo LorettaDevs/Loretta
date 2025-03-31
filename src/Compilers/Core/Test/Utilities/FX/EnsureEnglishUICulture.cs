@@ -14,8 +14,8 @@ namespace Loretta.Test.Utilities
         {
             get
             {
-                var currentUICultureName = CultureInfo.CurrentUICulture.Name;
-                if (currentUICultureName.Length == 0 || currentUICultureName.StartsWith("en", StringComparison.OrdinalIgnoreCase))
+                var currentUiCultureName = CultureInfo.CurrentUICulture.Name;
+                if (currentUiCultureName.Length == 0 || currentUiCultureName.StartsWith("en", StringComparison.OrdinalIgnoreCase))
                 {
                     return null;
                 }

@@ -5,6 +5,7 @@
     <PropertyGroup>
         <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
         <OutputType Condition="'$(TargetFramework)' != 'netstandard2.0'">Exe</OutputType>
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,8 +27,10 @@
 
         <ProjectReference Include="..\..\..\Compilers\Core\Portable\Loretta.CodeAnalysis.csproj" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
         <PackageReference Include="Tsu" Version="2.2.2" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
+    </ItemGroup>
 
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.5.0" Condition="'$(TargetFramework)' == 'netstandard2.0'"/>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" />
     </ItemGroup>
 
     <Import Project="..\Shared\Loretta.Generators.Shared.projitems" Label="Shared" Condition="'$(TargetFramework)' == 'netstandard2.0'"/>

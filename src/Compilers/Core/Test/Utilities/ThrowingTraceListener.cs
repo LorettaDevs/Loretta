@@ -3,8 +3,6 @@
 
 using System.Diagnostics;
 
-#nullable enable
-
 namespace Loretta.CodeAnalysis
 {
     // To enable this for a process, add the following to the app.config for the project:

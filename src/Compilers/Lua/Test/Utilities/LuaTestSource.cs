@@ -27,14 +27,14 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             switch (Value)
             {
                 case string source:
-                    return new[] { LuaTestBase.Parse(source, filename: sourceFileName, parseOptions) };
+                    return [LuaTestBase.Parse(source, filename: sourceFileName, parseOptions)];
                 case string[] sources:
                     Debug.Assert(string.IsNullOrEmpty(sourceFileName));
                     return LuaTestBase.Parse(parseOptions, sources);
                 case SyntaxTree tree:
                     Debug.Assert(parseOptions == null);
                     Debug.Assert(string.IsNullOrEmpty(sourceFileName));
-                    return new[] { tree };
+                    return [tree];
                 case SyntaxTree[] trees:
                     Debug.Assert(parseOptions == null);
                     Debug.Assert(string.IsNullOrEmpty(sourceFileName));
@@ -42,7 +42,7 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
                 case LuaTestSource[] testSources:
                     return testSources.SelectMany(s => s.GetSyntaxTrees(parseOptions, sourceFileName)).ToArray();
                 case null:
-                    return Array.Empty<SyntaxTree>();
+                    return [];
                 default:
                     throw new Exception($"Unexpected value: {Value}");
             }

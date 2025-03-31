@@ -7,7 +7,6 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFrameworks>net8.0;netstandard2.0;net472</TargetFrameworks>
-        <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net8.0</TargetFrameworks>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
@@ -22,15 +21,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DiffPlex" Version="1.7.1" />
-        <PackageReference Include="Microsoft.CodeAnalysis.AnalyzerUtilities" Version="3.3.3" />
-        <PackageReference Include="Moq" Version="4.18.2" />
-        <PackageReference Include="xunit.assert" Version="2.4.2" />
-        <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
-        <PackageReference Include="Xunit.Combinatorial" Version="1.4.1" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
-        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+        <PackageReference Include="DiffPlex" Version="1.7.2" />
+        <PackageReference Include="Microsoft.CodeAnalysis.AnalyzerUtilities" Version="3.3.4" />
+        <PackageReference Include="Moq" Version="4.20.72" />
+        <PackageReference Include="xunit.v3.assert" Version="1.1.0" />
+        <PackageReference Include="xunit.v3.extensibility.core" Version="1.1.0" />
+        <PackageReference Include="Xunit.Combinatorial" Version="2.0.24" />
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.1" />
+        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.2" />
     </ItemGroup>
 
     <ItemGroup>

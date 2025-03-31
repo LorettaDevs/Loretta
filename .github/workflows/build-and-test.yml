@@ -42,4 +42,14 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Run Tests
-        run: dotnet test --no-build -- xunit.parallelizeAssembly=true xunit.parallelizeTestCollections=true xunit.maxParallelThreads=-1
+        run: |
+          dotnet test \
+            --no-build \
+            -- \
+            --xunit-info --output Detailed \
+            xUnit.DiagnosticMessages=true \
+            xUnit.Explicit=on \
+            xUnit.MaxParallelThreads=unlimited \
+            xUnit.ParallelAlgorithm=aggressive \
+            xUnit.ParallelizeAssembly=true \
+            xUnit.ParallelizeTestCollections=true

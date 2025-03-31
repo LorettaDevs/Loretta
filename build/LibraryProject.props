@@ -4,7 +4,6 @@
 
     <PropertyGroup>
         <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
-        <TargetFrameworks Condition="'$(IsUnusedAnalysis)' == 'true'">net8.0</TargetFrameworks>
         <OutputType>Library</OutputType>
         <NeutralLanguage>en-US</NeutralLanguage>
     </PropertyGroup>
@@ -45,7 +44,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

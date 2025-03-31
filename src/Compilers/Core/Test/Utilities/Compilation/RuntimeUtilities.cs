@@ -9,9 +9,9 @@ using System.Reflection;
 namespace Loretta.CodeAnalysis.Test.Utilities
 {
     /// <summary>
-    /// Hide all of the runtime specific implementations of types that we need to use when multi-targeting.
+    /// Hide all the runtime specific implementations of types that we need to use when multi-targeting.
     /// </summary>
-    public static partial class RuntimeUtilities
+    public static class RuntimeUtilities
     {
         internal static bool IsDesktopRuntime =>
 #if NET472
