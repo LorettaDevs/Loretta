@@ -266,9 +266,6 @@
   <data name="ERR_UnderscoreInNumericLiteralNotSupportedInVersion" xml:space="preserve">
     <value>Underscores in numeric literals are not supported in this lua version</value>
   </data>
-  <data name="ERR_UnescapedLineBreakInString" xml:space="preserve">
-    <value>Unescaped line break in string</value>
-  </data>
   <data name="ERR_UnexpectedToken" xml:space="preserve">
     <value>Unexpected token '{0}'</value>
     <comment>{0} is the actual kind</comment>

@@ -12,35 +12,18 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             LorettaDebug.Assert(quote is '"' or '\'' or '`');
 
             char ch;
-            while (!IsAtEnd(ch = TextWindow.PeekChar()) && ch != quote)
+            while (!IsAtEnd(ch = TextWindow.PeekChar()) && ch != quote && !CharUtils.IsNewLine(ch))
             {
-                var charStart = TextWindow.Position;
-                switch (ch)
+                if (ch == '\\')
                 {
-                    case '\\':
-                    {
-                        var high = ScanEscapeSequence(out var low);
-                        if (high != SlidingTextWindow.InvalidCharacter)
-                        {
-                            _builder.Append(high);
-                            if (low != SlidingTextWindow.InvalidCharacter) _builder.Append(low);
-                        }
-                    }
-                        break;
-
-                    case '\n':
-                    case '\r':
-                    {
-                        _builder.Append(TextWindow.NextChar());
-                        char ch2;
-                        if (CharUtils.IsNewLine(ch2 = TextWindow.PeekChar()) && ch != ch2)
-                            _builder.Append(TextWindow.NextChar());
-
-                        AddError(charStart, TextWindow.Position - charStart, ErrorCode.ERR_UnescapedLineBreakInString);
-                    }
-                        break;
-
-                    default: _builder.Append(TextWindow.NextChar()); break;
+                    var high = ScanEscapeSequence(out var low);
+                    if (high == SlidingTextWindow.InvalidCharacter) continue;
+                    _builder.Append(high);
+                    if (low != SlidingTextWindow.InvalidCharacter) _builder.Append(low);
+                }
+                else
+                {
+                    _builder.Append(TextWindow.NextChar());
                 }
             }
 
@@ -423,7 +406,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             {
                 while (true)
                 {
-                    if (IsAtEnd(allowNewline: true))
+                    if (IsAtEnd(allowNewline: false))
                     {
                         // error: end of line/file before end of string pop out. Error will be reported in
                         // ScanInterpolatedStringLiteralEnd
@@ -436,6 +419,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                         case '{':
                             HandleOpenBraceInContent(interpolations);
+                            continue;
+
+                        case '\\':
+                            // We need to handle escapes but not care about their issues
+                            lexer.ScanEscapeSequence(out _);
                             continue;
 
                         default:

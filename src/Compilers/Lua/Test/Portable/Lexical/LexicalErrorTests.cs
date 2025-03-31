@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical
 {
-    public class LexicalErrorTests : LuaTestBase
+    public sealed class LexicalErrorTests : LuaTestBase
     {
         private static void ParseAndValidate(string text, LuaSyntaxOptions? options = null, params DiagnosticDescription[] expectedErrors) =>
             ParsingTestsBase.ParseAndValidate(text, options, expectedErrors);
@@ -45,36 +45,42 @@ local str = 'some\300text'
 
         [Fact]
         [Trait("Category", "Lexer/Diagnostics")]
-
-        public void Lexer_EmitsDiagnosticsOn_StringWithLineBreak()
+        public void Lexer_EmitsDiagnosticsOn_StringWithLineBreakButLexesRestProperly()
         {
-            const string source = @"
-local str1 = ""some" + "\n" + @"text""
-local str2 = 'some" + "\n" + @"text'
-local str3 = ""some" + "\r" + @"text""
-local str4 = 'some" + "\r" + @"text'
-local str5 = ""some" + "\r\n" + @"text""
-local str6 = 'some" + "\r\n" + @"text'
-";
+            const string source = "local str1 = \"some\nlocal str2 = 'some\r\nlocal str3 = \"some\rlocal str4 = 'some";
             ParseAndValidate(source, null,
-                // (2,19): error LUA0002: Unescaped line break in string
-                // local str1 = "some\ntext"
-                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\n").WithLocation(2, 19),
-                // (4,19): error LUA0002: Unescaped line break in string
-                // local str2 = 'some\ntext'
-                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\n").WithLocation(4, 19),
-                // (6,19): error LUA0002: Unescaped line break in string
-                // local str3 = "some\rtext"
-                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\r").WithLocation(6, 19),
-                // (8,19): error LUA0002: Unescaped line break in string
-                // local str4 = 'some\rtext'
-                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\r").WithLocation(8, 19),
-                // (10,19): error LUA0002: Unescaped line break in string
-                // local str5 = "some\r\ntext"
-                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\r\n").WithLocation(10, 19),
-                // (12,19): error LUA0002: Unescaped line break in string
-                // local str6 = 'some\r\ntext'
-                Diagnostic(ErrorCode.ERR_UnescapedLineBreakInString, "\r\n").WithLocation(12, 19));
+                // (1,14): error LUA0003: Unfinished string
+                // local str1 = "some
+                Diagnostic(ErrorCode.ERR_UnfinishedString, @"""some").WithLocation(1, 14),
+                // (2,14): error LUA0003: Unfinished string
+                // local str2 = 'some
+                Diagnostic(ErrorCode.ERR_UnfinishedString, "'some").WithLocation(2, 14),
+                // (3,14): error LUA0003: Unfinished string
+                // local str3 = "some
+                Diagnostic(ErrorCode.ERR_UnfinishedString, @"""some").WithLocation(3, 14),
+                // (4,14): error LUA0003: Unfinished string
+                // local str4 = 'some
+                Diagnostic(ErrorCode.ERR_UnfinishedString, "'some").WithLocation(4, 14));
+        }
+
+        [Fact]
+        [Trait("Category", "Lexer/Diagnostics")]
+        public void Lexer_EmitsDiagnosticsOn_InterpolatedStringWithLineBreakButLexesRestProperly()
+        {
+            const string source = "local str1 = `some\nlocal str2 = `some\r\nlocal str3 = `some\rlocal str4 = `some";
+            ParseAndValidate(source, null,
+                // (1,18): error LUA0003: Unfinished string
+                // local str1 = `some
+                Diagnostic(ErrorCode.ERR_UnfinishedString, "e").WithLocation(1, 18),
+                // (2,18): error LUA0003: Unfinished string
+                // local str2 = `some
+                Diagnostic(ErrorCode.ERR_UnfinishedString, "e").WithLocation(2, 18),
+                // (3,18): error LUA0003: Unfinished string
+                // local str3 = `some
+                Diagnostic(ErrorCode.ERR_UnfinishedString, "e").WithLocation(3, 18),
+                // (4,18): error LUA0003: Unfinished string
+                // local str4 = `some
+                Diagnostic(ErrorCode.ERR_UnfinishedString, "e").WithLocation(4, 18));
         }
 
         [Theory]

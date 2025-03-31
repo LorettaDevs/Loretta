@@ -1,5 +1,8 @@
-﻿namespace Loretta.CodeAnalysis.Lua
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Loretta.CodeAnalysis.Lua
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal enum ErrorCode
     {
         Void    = InternalErrorCode.Void,
@@ -7,7 +10,6 @@
 
         // Lexer Errors
         ERR_InvalidStringEscape                              = 1,
-        ERR_UnescapedLineBreakInString                       = 2,
         ERR_UnfinishedString                                 = 3,
         ERR_InvalidNumber                                    = 4,
         ERR_NumericLiteralTooLarge                           = 5,
@@ -55,7 +57,7 @@
         ERR_IfExpressionConditionExpected         = 1009,
         ERR_ExpressionExpected                    = 1010,
 
-        // Using part instead of term here because it's more user friendly.
+        // Using part instead of term here because it's more user-friendly.
         ERR_InvalidExpressionPart                      = 1011,
         ERR_InvalidStatement                           = 1012,
         ERR_CompoundAssignmentNotSupportedInLuaVersion = 1013,

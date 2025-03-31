@@ -333,12 +333,6 @@ namespace Loretta.CodeAnalysis.Lua {
             }
         }
         
-        internal static string ERR_UnescapedLineBreakInString {
-            get {
-                return ResourceManager.GetString("ERR_UnescapedLineBreakInString", resourceCulture);
-            }
-        }
-        
         internal static string ERR_UnexpectedToken {
             get {
                 return ResourceManager.GetString("ERR_UnexpectedToken", resourceCulture);
