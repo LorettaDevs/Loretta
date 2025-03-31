@@ -42,5 +42,4 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Run Tests
-        run: |
-          dotnet test --no-build -- --info  
+        run: dotnet test --no-build
