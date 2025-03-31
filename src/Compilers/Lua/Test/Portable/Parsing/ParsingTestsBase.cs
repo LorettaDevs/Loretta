@@ -6,11 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.CodeAnalysis.Lua.Test.Utilities;
 using Loretta.CodeAnalysis.Test.Utilities;
-using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 
-public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, IDisposable
+public abstract class ParsingTestsBase : LuaTestBase, IDisposable
 {
     private LuaSyntaxNode?                  _node;
     private IEnumerator<SyntaxNodeOrToken>? _treeEnumerator;
@@ -25,15 +24,13 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
 
     private void VerifyEnumeratorConsumed()
     {
-        if (_treeEnumerator != null)
-        {
-            var hasNext = _treeEnumerator.MoveNext();
-            if (hasNext)
-            {
-                DumpAndCleanup();
-                Assert.False(hasNext, "Test contains unconsumed syntax left over from UsingNode()");
-            }
-        }
+        if (_treeEnumerator == null) return;
+
+        var hasNext = _treeEnumerator.MoveNext();
+        if (!hasNext) return;
+
+        DumpAndCleanup();
+        Assert.Fail("Test contains unconsumed syntax left over from UsingNode()");
     }
 
     private bool DumpAndCleanup()
@@ -44,21 +41,19 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
         return false;
     }
 
-    public static void ParseAndValidate(
+    public static async Task ParseAndValidateAsync(
         string                         text,
         LuaSyntaxOptions?              options = null,
         params DiagnosticDescription[] expectedErrors)
     {
-        var parsedTree   = ParseWithRoundTripCheck(text, new LuaParseOptions(options ?? LuaSyntaxOptions.All));
-        var actualErrors = parsedTree.GetDiagnostics();
-        actualErrors.Verify(expectedErrors);
+        var parsedTree = await ParseWithRoundTripCheckAsync(text, new LuaParseOptions(options ?? LuaSyntaxOptions.All));
+        parsedTree.GetDiagnostics().Verify(expectedErrors);
     }
 
-    public static void ParseAndValidateFirst(string text, DiagnosticDescription expectedFirstError)
+    public static async Task ParseAndValidateFirstAsync(string text, DiagnosticDescription expectedFirstError)
     {
-        var parsedTree   = ParseWithRoundTripCheck(text);
-        var actualErrors = parsedTree.GetDiagnostics();
-        actualErrors.Take(1).Verify(expectedFirstError);
+        var parsedTree = await ParseWithRoundTripCheckAsync(text);
+        parsedTree.GetDiagnostics().Take(1).Verify(expectedFirstError);
     }
 
     protected virtual SyntaxTree ParseTree(string text, LuaParseOptions? options)
@@ -70,29 +65,32 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
     private CompilationUnitSyntax ParseNode(string text, LuaParseOptions? options)
         => ParseTree(text, options).GetCompilationUnitRoot();
 
-    internal void UsingType(string text, params DiagnosticDescription[] expectedErrors)
-        => UsingType(text, options: null, expectedErrors);
+    internal async Task UsingTypeAsync(string text, params DiagnosticDescription[] expectedErrors)
+        => await UsingTypeAsync(text, options: null, expectedErrors);
 
-    internal void UsingType(string text, LuaParseOptions? options, params DiagnosticDescription[] expectedErrors)
-        => UsingNode(ParseTypeWithRoundTripCheck(text, options: options), expectedErrors);
-
-    internal void UsingStatement(string text, params DiagnosticDescription[] expectedErrors)
-        => UsingStatement(text, options: null, expectedErrors);
-
-    internal void UsingStatement(
+    internal async Task UsingTypeAsync(
         string                         text,
         LuaParseOptions?               options,
         params DiagnosticDescription[] expectedErrors)
-        => UsingNode(ParseStatementWithRoundTripCheck(text, options: options), expectedErrors);
+        => UsingNode(await ParseTypeWithRoundTripCheckAsync(text, options: options), expectedErrors);
 
-    internal void UsingExpression(string text, params DiagnosticDescription[] expectedErrors)
-        => UsingExpression(text, options: null, expectedErrors);
+    internal async Task UsingStatementAsync(string text, params DiagnosticDescription[] expectedErrors)
+        => await UsingStatementAsync(text, options: null, expectedErrors);
 
-    internal void UsingExpression(
+    internal async Task UsingStatementAsync(
         string                         text,
         LuaParseOptions?               options,
         params DiagnosticDescription[] expectedErrors)
-        => UsingNode(ParseExpressionWithRoundTripCheck(text, options: options), expectedErrors);
+        => UsingNode(await ParseStatementWithRoundTripCheckAsync(text, options: options), expectedErrors);
+
+    internal async Task UsingExpressionAsync(string text, params DiagnosticDescription[] expectedErrors)
+        => await UsingExpressionAsync(text, options: null, expectedErrors);
+
+    internal async Task UsingExpressionAsync(
+        string                         text,
+        LuaParseOptions?               options,
+        params DiagnosticDescription[] expectedErrors)
+        => UsingNode(await ParseExpressionWithRoundTripCheckAsync(text, options: options), expectedErrors);
 
     protected void UsingNode(LuaSyntaxNode node, params DiagnosticDescription[] expectedErrors)
     {
@@ -103,10 +101,10 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
     /// <summary>
     /// Parses given string and initializes a depth-first preorder enumerator.
     /// </summary>
-    protected SyntaxTree UsingTree(string text, LuaParseOptions? options = null)
+    protected async Task<SyntaxTree> UsingTreeAsync(string text, LuaParseOptions? options = null)
     {
         VerifyEnumeratorConsumed();
-        var tree = ParseWithRoundTripCheck(text, options);
+        var tree = await ParseWithRoundTripCheckAsync(text, options);
         _node = tree.GetCompilationUnitRoot();
         var nodes = EnumerateNodes(_node, dump: false);
         // ReSharper disable once GenericEnumeratorNotDisposed
@@ -151,15 +149,18 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
     /// Moves the enumerator and asserts that the current node is of the given kind.
     /// </summary>
     [DebuggerHidden]
-    protected SyntaxNodeOrToken N(SyntaxKind kind, string? value = null)
+    protected async Task<SyntaxNodeOrToken> N(SyntaxKind kind, string? value = null)
     {
         try
         {
-            Assert.True(_treeEnumerator!.MoveNext());
-            Assert.Equal(kind, _treeEnumerator.Current.Kind());
-            Assert.False(_treeEnumerator.Current.IsMissing);
-
-            if (value != null) Assert.Equal(_treeEnumerator.Current.ToString(), value);
+            using (Assert.Multiple())
+            {
+                await Assert.That(_treeEnumerator!.MoveNext()).IsTrue();
+                await Assert.That(_treeEnumerator.Current).HasKind(kind).And.Satisfies(
+                    static nodeOrToken => nodeOrToken.IsMissing,
+                    static isMissing => isMissing.IsFalse());
+                if (value != null) await Assert.That(_treeEnumerator.Current.ToString()).IsEqualTo(value);
+            }
 
             return _treeEnumerator.Current;
         }
@@ -174,14 +175,15 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
     /// and is missing.
     /// </summary>
     [DebuggerHidden]
-    protected SyntaxNodeOrToken M(SyntaxKind kind)
+    protected async Task<SyntaxNodeOrToken> M(SyntaxKind kind)
     {
         try
         {
-            Assert.True(_treeEnumerator!.MoveNext());
+            await Assert.That(_treeEnumerator!.MoveNext()).IsTrue();
             var current = _treeEnumerator.Current;
-            Assert.Equal(kind, current.Kind());
-            Assert.True(current.IsMissing);
+            await Assert.That(current).HasKind(kind).And.Satisfies(
+                static nodeOrToken => nodeOrToken.IsMissing,
+                static isMissing => isMissing.IsTrue());
             return current;
         }
         catch when (DumpAndCleanup())
@@ -198,13 +200,13 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
     protected void EOF()
     {
         if (!_treeEnumerator!.MoveNext()) return;
-            
+
         var tk = _treeEnumerator.Current.Kind();
         DumpAndCleanup();
         Assert.Fail("Found unexpected node or token of kind: " + tk);
     }
 
-    private IEnumerable<SyntaxNodeOrToken> EnumerateNodes(LuaSyntaxNode node, bool dump)
+    private static IEnumerable<SyntaxNodeOrToken> EnumerateNodes(LuaSyntaxNode node, bool dump)
     {
         Print(node, dump);
         yield return node;
@@ -238,10 +240,10 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
         Done(dump);
     }
 
-    private void Print(SyntaxNodeOrToken node, bool dump)
+    private static void Print(SyntaxNodeOrToken node, bool dump)
     {
         if (!dump) return;
-            
+
         switch (node.Kind())
         {
             case SyntaxKind.IdentifierToken:
@@ -249,34 +251,25 @@ public abstract class ParsingTestsBase(ITestOutputHelper output) : LuaTestBase, 
             case SyntaxKind.StringLiteralToken:
             case SyntaxKind.InterpolatedStringTextToken:
                 if (node.IsMissing) goto default;
-                output.WriteLine("""N(SyntaxKind.{0}, "{1}");""", node.Kind(), node.ToString());
+                Console.WriteLine($"""await N(SyntaxKind.{node.Kind()}, "{node.ToString()}");""");
                 break;
 
-            default: output.WriteLine("{0}(SyntaxKind.{1});", node.IsMissing ? "M" : "N", node.Kind()); break;
+            default: Console.WriteLine($"await {(node.IsMissing ? "M" : "N")}(SyntaxKind.{node.Kind()});"); break;
         }
     }
 
-    private void Open(bool dump)
+    private static void Open(bool dump)
     {
-        if (dump)
-        {
-            output.WriteLine("{");
-        }
+        if (dump) Console.WriteLine("{");
     }
 
-    private void Close(bool dump)
+    private static void Close(bool dump)
     {
-        if (dump)
-        {
-            output.WriteLine("}");
-        }
+        if (dump) Console.WriteLine("}");
     }
 
-    private void Done(bool dump)
+    private static void Done(bool dump)
     {
-        if (dump)
-        {
-            output.WriteLine("EOF();");
-        }
+        if (dump) Console.WriteLine("EOF();");
     }
 }

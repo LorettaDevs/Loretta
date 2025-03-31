@@ -1,21 +1,20 @@
 ﻿using Loretta.CodeAnalysis.Lua.Test.Utilities;
 using Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 using Loretta.CodeAnalysis.Test.Utilities;
-using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical;
 
 public sealed class LexicalErrorTests : LuaTestBase
 {
-    private static void ParseAndValidate(
+    private static async Task ParseAndValidateAsync(
         string                         text,
         LuaSyntaxOptions?              options = null,
         params DiagnosticDescription[] expectedErrors)
-        => ParsingTestsBase.ParseAndValidate(text, options, expectedErrors);
+        => await ParsingTestsBase.ParseAndValidateAsync(text, options, expectedErrors);
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsOn_InvalidEscapes()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsOn_InvalidEscapes()
     {
         const string source = """
                               local str = "some\ltext"
@@ -25,7 +24,7 @@ public sealed class LexicalErrorTests : LuaTestBase
                               local str = "some\300text"
                               local str = 'some\300text'
                               """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             null,
             // (1,18): error LUA0001: Invalid string escape
@@ -48,12 +47,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_InvalidStringEscape, @"\300").WithLocation(6, 18));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsOn_StringWithLineBreakButLexesRestProperly()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsOn_StringWithLineBreakButLexesRestProperly()
     {
         const string source = "local str1 = \"some\nlocal str2 = 'some\r\nlocal str3 = \"some\rlocal str4 = 'some";
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             null,
             // (1,14): error LUA0003: Unfinished string
@@ -70,12 +69,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_UnfinishedString, "'some").WithLocation(4, 14));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsOn_InterpolatedStringWithLineBreakButLexesRestProperly()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsOn_InterpolatedStringWithLineBreakButLexesRestProperly()
     {
         const string source = "local str1 = `some\nlocal str2 = `some\r\nlocal str3 = `some\rlocal str4 = `some";
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             null,
             // (1,18): error LUA0003: Unfinished string
@@ -92,21 +91,24 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_UnfinishedString, "e").WithLocation(4, 18));
     }
 
-    [Theory]
-    [Trait("Category", "Lexer/Diagnostics")]
-    [InlineData("\"text")]
-    [InlineData("'text")]
-    [InlineData("\"text'")]
-    [InlineData("'text\"")]
-    public void Lexer_EmitsDiagnosticsOn_UnterminatedShortString(string text)
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    [Arguments("\"text")]
+    [Arguments("'text")]
+    [Arguments("\"text'")]
+    [Arguments("'text\"")]
+    public async Task Lexer_EmitsDiagnosticsOn_UnterminatedShortString(string text)
     {
         var srcText = "local str = " + text;
-        ParseAndValidate(srcText, null, Diagnostic(ErrorCode.ERR_UnfinishedString, text).WithLocation(1, 13));
+        await ParseAndValidateAsync(
+            srcText,
+            null,
+            Diagnostic(ErrorCode.ERR_UnfinishedString, text).WithLocation(1, 13));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsOn_InvalidNumbers()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsOn_InvalidNumbers()
     {
         const string srcText = """
                                local num1 = 0b
@@ -114,7 +116,7 @@ public sealed class LexicalErrorTests : LuaTestBase
                                local num3 = 0o
                                local num4 = 0o_
                                """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             null,
             // (1,14): error LUA0004: Invalid number
@@ -131,9 +133,9 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_InvalidNumber, "0o_").WithLocation(4, 14));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsOn_LargeNumbersAndOverflows()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsOn_LargeNumbersAndOverflows()
     {
         const string srcText = """
                                local num1 = 0b10000000000000000000000000000000000000000000000000000000000000000
@@ -141,7 +143,7 @@ public sealed class LexicalErrorTests : LuaTestBase
                                local num3 = 1e999999
                                local num4 = 0x1p999999
                                """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             null,
             // (1,14): error LUA0005: Numeric literal is too large
@@ -160,14 +162,14 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_DoubleOverflow, "0x1p999999").WithLocation(4, 14));
     }
 
-    [Theory]
-    [Trait("Category", "Lexer/Diagnostics")]
-    [InlineData("/* hi")]
-    [InlineData("--[[ hi")]
-    [InlineData("--[=[ hi")]
-    public void Lexer_EmitsDiagnosticOn_UnfinishedLongComment(string text)
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    [Arguments("/* hi")]
+    [Arguments("--[[ hi")]
+    [Arguments("--[=[ hi")]
+    public async Task Lexer_EmitsDiagnosticOn_UnfinishedLongComment(string text)
     {
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             text,
             null,
             // (1,1): error LUA0006: Unfinished multi-line comment
@@ -175,12 +177,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_UnfinishedLongComment, text).WithLocation(1, 1));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticWhen_ShebangIsFound_And_LuaSyntaxOptionsAcceptShebangIsFalse()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticWhen_ShebangIsFound_And_LuaSyntaxOptionsAcceptShebangIsFalse()
     {
         const string srcText = "#!/bin/bash";
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             LuaSyntaxOptions.All.With(acceptShebang: false),
             // (1,1): error LUA0007: Shebangs are not supported in this lua version
@@ -188,12 +190,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_ShebangNotSupportedInLuaVersion, srcText).WithLocation(1, 1));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticWhen_BinaryNumberIsFound_And_LuaSyntaxOptionsAcceptBinaryNumbersIsFalse()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticWhen_BinaryNumberIsFound_And_LuaSyntaxOptionsAcceptBinaryNumbersIsFalse()
     {
         const string srcText = "local num = 0b1010";
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             LuaSyntaxOptions.All.With(acceptBinaryNumbers: false),
             // (1,13): error LUA0008: Binary numeric literals are not supported in this lua version
@@ -201,12 +203,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_BinaryNumericLiteralNotSupportedInVersion, "0b1010").WithLocation(1, 13));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticWhen_OctalNumberIsFound_And_LuaSyntaxOptionsAcceptOctalNumbersIsFalse()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticWhen_OctalNumberIsFound_And_LuaSyntaxOptionsAcceptOctalNumbersIsFalse()
     {
         const string srcText = "local num = 0o77";
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             LuaSyntaxOptions.All.With(acceptOctalNumbers: false),
             // (1,13): error LUA0009: Octal numeric literals are not supported in this lua version
@@ -214,16 +216,16 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_OctalNumericLiteralNotSupportedInVersion, "0o77").WithLocation(1, 13));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticWhen_HexFloatIsFound_And_LuaSyntaxOptionsAcceptHexFloatIsFalse()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticWhen_HexFloatIsFound_And_LuaSyntaxOptionsAcceptHexFloatIsFalse()
     {
         const string srcText = """
                                local num1 = 0xff.ff
                                local num2 = 0xffp10
                                local num3 = 0xff.ffp10
                                """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             LuaSyntaxOptions.All.With(acceptHexFloatLiterals: false),
             // (1,14): error LUA0010: Hexadecimal floating point numeric literals are not supported in this lua version
@@ -237,9 +239,9 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_HexFloatLiteralNotSupportedInVersion, "0xff.ffp10").WithLocation(3, 14));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task
         Lexer_EmitsDiagnosticWhen_UnderscoreInNumberIsFound_And_LuaSyntaxOptionsAcceptUnderscoresInNumbersIsFalse()
     {
         const string srcText = """
@@ -248,7 +250,7 @@ public sealed class LexicalErrorTests : LuaTestBase
                                local num3 = 10_10.10_10
                                local num4 = 0xf_f
                                """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             LuaSyntaxOptions.All.With(acceptUnderscoreInNumberLiterals: false),
             // (1,14): error LUA0011: Underscores in numeric literals are not supported in this lua version
@@ -268,9 +270,9 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion, "0xf_f").WithLocation(4, 14));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task
         Lexer_EmitsDiagnosticWhen_IdentifiersWithCharactersAbove0x7FAreFound_And_LuaSyntaxOptionsUseLuajitIdentifierRulesIsFalse()
     {
         const string srcText = "local 🅱 = 1\r\n"
@@ -280,7 +282,7 @@ public sealed class LexicalErrorTests : LuaTestBase
                                + "local \u206a = 1 -- INHIBIT SYMMETRIC SWAPPING\r\n"
                                + "local \u200e = 1 -- LEFT-TO-RIGHT MARK\r\n"
                                + "local \u200c = 1 -- ZERO WIDTH NON-JOINER";
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             LuaSyntaxOptions.All.With(useLuaJitIdentifierRules: false),
             // (1,7): error LUA0013: Identifiers containing characters with value above 0x7F are not supported in this lua version
@@ -306,12 +308,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_LuajitIdentifierRulesNotSupportedInVersion, "\u200c").WithLocation(7, 7));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticWhen_BadCharactersAreFound()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticWhen_BadCharactersAreFound()
     {
         const string source = @"@$\";
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             null,
             // (1,1): error LUA0014: Bad character input: '@'
@@ -334,9 +336,9 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_InvalidStatement, @"\").WithLocation(1, 3));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsWhen_HexEscapesAreFound_And_LuaSyntaxOptionsAcceptHexEscapesIsFalse()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsWhen_HexEscapesAreFound_And_LuaSyntaxOptionsAcceptHexEscapesIsFalse()
     {
         const string srcText = """
                                local str1 = "hello\xAthere"
@@ -344,7 +346,7 @@ public sealed class LexicalErrorTests : LuaTestBase
                                local str3 = "hello\xFFthere"
                                local str4 = 'hello\xFFthere'
                                """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             srcText,
             LuaSyntaxOptions.All.With(acceptHexEscapesInStrings: false),
             // (1,20): error LUA0016: Hexadecimal string escapes are not supported in this lua version
@@ -361,13 +363,13 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xFF").WithLocation(4, 20));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task
         Lexer_EmitsMultipleDiagnosticsWhen_MultipleHexEscapesAreFound_And_LuaSyntaxOptionsAcceptHexEscapesIsFalse()
     {
-        const string source  = @"local str = 'hello\xAFthere\xBFgood\xCFfriend'";
-        ParseAndValidate(
+        const string source = @"local str = 'hello\xAFthere\xBFgood\xCFfriend'";
+        await ParseAndValidateAsync(
             source,
             LuaSyntaxOptions.All.With(acceptHexEscapesInStrings: false),
             // (1,19): error LUA0016: Hexadecimal string escapes are not supported in this lua version
@@ -381,12 +383,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_HexStringEscapesNotSupportedInVersion, @"\xCF").WithLocation(1, 36));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsWarning_ForExoticLineBreak()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsWarning_ForExoticLineBreak()
     {
         const string source = "local a = 1\n\rlocal b = 2\n\rlocal c = 3";
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             null,
             // (1,12): warning LUA0022: This line break (\n\r) may affect error reporting between the editor and lua
@@ -397,15 +399,16 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.WRN_LineBreakMayAffectErrorReporting, "\n\r").WithLocation(3, 12));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsWhen_WhitespaceEscapesAreFound_And_LuaSyntaxOptionsAcceptWhitespaceEscapeIsFalse()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task
+        Lexer_EmitsDiagnosticsWhen_WhitespaceEscapesAreFound_And_LuaSyntaxOptionsAcceptWhitespaceEscapeIsFalse()
     {
         const string source = """
                               local a = "aaa\z    aaaa"
                               local b = 'aaa\z    aaaa'
                               """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             LuaSyntaxOptions.All.With(acceptWhitespaceEscape: false),
             // (1,15): error LUA0023: The whitespace escape ('\z') is not supported in this lua version.
@@ -416,9 +419,9 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_WhitespaceEscapeNotSupportedInVersion, @"\z    ").WithLocation(2, 15));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsWhen_InvalidUnicodeEscapesAreFound()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsWhen_InvalidUnicodeEscapesAreFound()
     {
         const string source = """
                               local a = '\u{}'
@@ -427,7 +430,7 @@ public sealed class LexicalErrorTests : LuaTestBase
                               local d = '\uFEBF'
                               local e = '\u{1100000}'
                               """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             null,
             // (1,12): error LUA0027: Hexadecimal digit expected
@@ -450,15 +453,15 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_EscapeTooLarge, @"\u{1100000}").WithArguments("10FFFF").WithLocation(5, 12));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsWhen_UnicodeEscapesAreFound_And_LuaSyntaxOptionsAcceptUnicodeEscapeIsFalse()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsWhen_UnicodeEscapesAreFound_And_LuaSyntaxOptionsAcceptUnicodeEscapeIsFalse()
     {
         const string source = """
                               local a = "\u{FEBE}"
                               local b = '\u{FEBE}'
                               """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             LuaSyntaxOptions.All.With(acceptUnicodeEscape: false),
             // (1,12): error LUA0028: Unicode escapes are not supported in this lua version
@@ -469,16 +472,16 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_UnicodeEscapesNotSupportedLuaInVersion, @"\u{FEBE}").WithLocation(2, 12));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task
         Lexer_EmitsDiagnosticsWhen_InterpolatedOrHashStringsAreFound_And_LuaSyntaxOptionsBacktickStringTypeIsNone()
     {
         const string source = """
                               local a = `hello`
                               local b = `hi!`
                               """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             LuaSyntaxOptions.All.With(backtickStringType: BacktickStringType.None),
             // (1,11): error LUA0036: Interpolated strings are not supported in this lua version
@@ -489,12 +492,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_InterpolatedStringsNotSupportedInVersion, "`hi!`").WithLocation(2, 11));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsWhen_LuaJITSuffixIsMalformed()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsWhen_LuaJITSuffixIsMalformed()
     {
-        const string source  = "local a = 2000e5LL";
-        ParseAndValidate(
+        const string source = "local a = 2000e5LL";
+        await ParseAndValidateAsync(
             source,
             LuaSyntaxOptions.All,
             // (1,11): error LUA0031: LuaJIT suffixes cannot be used in floating point numbers
@@ -502,12 +505,12 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_LuajitSuffixInFloat, "2000e5LL").WithLocation(1, 11));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsWhen_LuaJITSuffix_AND_LuaSyntaxOptionsAcceptLuaJITNumberSuffixesIsFalse()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsWhen_LuaJITSuffix_AND_LuaSyntaxOptionsAcceptLuaJITNumberSuffixesIsFalse()
     {
-        const string source  = "local a = 2000ULL";
-        ParseAndValidate(
+        const string source = "local a = 2000ULL";
+        await ParseAndValidateAsync(
             source,
             LuaSyntaxOptions.All.With(acceptLuaJITNumberSuffixes: false),
             // (1,11): error LUA0030: LuaJIT number suffixes are not supported in this lua version
@@ -515,22 +518,22 @@ public sealed class LexicalErrorTests : LuaTestBase
             Diagnostic(ErrorCode.ERR_NumberSuffixNotSupportedInVersion, "2000ULL").WithLocation(1, 11));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsNoDiagnosticsWhen_AnInvalidEscapeIsFound()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsNoDiagnosticsWhen_AnInvalidEscapeIsFound()
     {
-        const string source  = @"local a = '\A\B\C\D\E'";
-        ParseAndValidate(source, LuaSyntaxOptions.All.With(acceptInvalidEscapes: true));
+        const string source = @"local a = '\A\B\C\D\E'";
+        await ParseAndValidateAsync(source, LuaSyntaxOptions.All.With(acceptInvalidEscapes: true));
     }
 
-    [Fact]
-    [Trait("Category", "Lexer/Diagnostics")]
-    public void Lexer_EmitsDiagnosticsWhen_NestingLongStrings()
+    [Test]
+    [TProperty("Category", "Lexer/Diagnostics")]
+    public async Task Lexer_EmitsDiagnosticsWhen_NestingLongStrings()
     {
         const string source = """
                               local a = [[[["]"]];
                               """;
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             source,
             LuaSyntaxOptions.Lua51,
             // (1,11): error LUA0032: Nesting of [[...]] is deprecated

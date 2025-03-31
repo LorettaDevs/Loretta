@@ -9,7 +9,7 @@ using Loretta.CodeAnalysis;
 
 namespace Loretta.Test.Utilities
 {
-    internal static class ModuleInitializer
+    public static class ModuleInitializer
     {
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
         [ModuleInitializer]

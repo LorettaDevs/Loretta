@@ -1,25 +1,13 @@
-﻿using Xunit;
+﻿namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 
-namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
-
-public sealed class BinaryOperatorPrecedenceTests(ITestOutputHelper output) : ParsingTestsBase(output)
+public sealed class BinaryOperatorPrecedenceTests : ParsingTestsBase
 {
-    public static IEnumerable<object[]> GetBinaryOperatorPairsData()
+    public static IEnumerable<(SyntaxKind, SyntaxKind)> GetBinaryOperatorPairsData()
     {
-        var untestedKinds = new[]
-        {
-            SyntaxKind.TypeCastExpression,
-            SyntaxKind.FloorDivideExpression,
-        };
-        return from leftKind in SyntaxFacts.GetBinaryExpressionKinds()
-                                           .Except(untestedKinds)
-               from rightKind in SyntaxFacts.GetBinaryExpressionKinds()
-                                            .Except(untestedKinds)
-               select new object[]
-               {
-                   leftKind,
-                   rightKind
-               };
+        var untestedKinds = new[] { SyntaxKind.TypeCastExpression, SyntaxKind.FloorDivideExpression, };
+        return from leftKind in SyntaxFacts.GetBinaryExpressionKinds().Except(untestedKinds)
+               from rightKind in SyntaxFacts.GetBinaryExpressionKinds().Except(untestedKinds)
+               select (leftKind, rightKind);
     }
 
     private static bool LeftBindsStrongerThanRight(SyntaxKind leftKind, SyntaxKind rightKind)
@@ -27,16 +15,15 @@ public sealed class BinaryOperatorPrecedenceTests(ITestOutputHelper output) : Pa
         var leftPrecedence  = SyntaxFacts.GetBinaryOperatorPrecedence(leftKind);
         var rightPrecedence = SyntaxFacts.GetBinaryOperatorPrecedence(rightKind);
 
-        if (leftPrecedence > rightPrecedence)
-            return true;
-        if (leftPrecedence == rightPrecedence && !SyntaxFacts.IsRightAssociative(leftKind))
-            return true;
-        return false;
+        if (leftPrecedence > rightPrecedence) return true;
+        return leftPrecedence == rightPrecedence && !SyntaxFacts.IsRightAssociative(leftKind);
     }
 
-    [Theory]
-    [MemberData(nameof(GetBinaryOperatorPairsData))]
-    public void Parser_DoesBinaryOperatorPrecedencesCorrectly(SyntaxKind leftExpressionKind, SyntaxKind rightExpressionKind)
+    [Test]
+    [MethodDataSource(nameof(GetBinaryOperatorPairsData))]
+    public async Task Parser_DoesBinaryOperatorPrecedencesCorrectly(
+        SyntaxKind leftExpressionKind,
+        SyntaxKind rightExpressionKind)
     {
         var leftTokenKind  = SyntaxFacts.GetOperatorTokenKind(leftExpressionKind).Value;
         var rightTokenKind = SyntaxFacts.GetOperatorTokenKind(rightExpressionKind).Value;
@@ -46,7 +33,7 @@ public sealed class BinaryOperatorPrecedenceTests(ITestOutputHelper output) : Pa
 
         var text = $"a {leftTokenText} b {rightTokenText} c";
 
-        UsingExpression(text, new LuaParseOptions(LuaSyntaxOptions.All));
+        await UsingExpressionAsync(text, new LuaParseOptions(LuaSyntaxOptions.All));
         if (LeftBindsStrongerThanRight(leftTokenKind, rightTokenKind))
         {
             // Format:
@@ -55,24 +42,24 @@ public sealed class BinaryOperatorPrecedenceTests(ITestOutputHelper output) : Pa
             //   +   c
             //  / \
             // a   b
-            N(rightExpressionKind);
+            await N(rightExpressionKind);
             {
-                N(leftExpressionKind);
+                await N(leftExpressionKind);
                 {
-                    N(SyntaxKind.IdentifierName);
+                    await N(SyntaxKind.IdentifierName);
                     {
-                        N(SyntaxKind.IdentifierToken, "a");
+                        await N(SyntaxKind.IdentifierToken, "a");
                     }
-                    N(leftTokenKind, leftTokenText);
-                    N(SyntaxKind.IdentifierName);
+                    await N(leftTokenKind, leftTokenText);
+                    await N(SyntaxKind.IdentifierName);
                     {
-                        N(SyntaxKind.IdentifierToken, "b");
+                        await N(SyntaxKind.IdentifierToken, "b");
                     }
                 }
-                N(rightTokenKind, rightTokenText);
-                N(SyntaxKind.IdentifierName);
+                await N(rightTokenKind, rightTokenText);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "c");
+                    await N(SyntaxKind.IdentifierToken, "c");
                 }
             }
             EOF();
@@ -85,23 +72,23 @@ public sealed class BinaryOperatorPrecedenceTests(ITestOutputHelper output) : Pa
             //   a  ^
             //     / \
             //    b   c
-            N(leftExpressionKind);
+            await N(leftExpressionKind);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "a");
+                    await N(SyntaxKind.IdentifierToken, "a");
                 }
-                N(leftTokenKind, leftTokenText);
-                N(rightExpressionKind);
+                await N(leftTokenKind, leftTokenText);
+                await N(rightExpressionKind);
                 {
-                    N(SyntaxKind.IdentifierName);
+                    await N(SyntaxKind.IdentifierName);
                     {
-                        N(SyntaxKind.IdentifierToken, "b");
+                        await N(SyntaxKind.IdentifierToken, "b");
                     }
-                    N(rightTokenKind, rightTokenText);
-                    N(SyntaxKind.IdentifierName);
+                    await N(rightTokenKind, rightTokenText);
+                    await N(SyntaxKind.IdentifierName);
                     {
-                        N(SyntaxKind.IdentifierToken, "c");
+                        await N(SyntaxKind.IdentifierToken, "c");
                     }
                 }
             }

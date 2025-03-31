@@ -1,56 +1,59 @@
-﻿using Xunit;
-
-namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping;
+﻿namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping;
 
 public sealed class RenameVariableTests : ScriptTestsBase
 {
-    [Fact]
-    [Trait("Category", "Script/RenameVariable")]
-    public void Script_RenameVariable_ReturnsErrorForUnsupportedIdentifier()
+    [Test]
+    [TProperty("Category", "Script/RenameVariable")]
+    public async Task Script_RenameVariable_ReturnsErrorForUnsupportedIdentifier()
     {
-        var (tree, script) = ParseScript("local a = 2", LuaSyntaxOptions.Lua51);
+        var (tree, script) = await ParseScriptAsync("local a = 2", LuaSyntaxOptions.Lua51);
 
         var variable = script.GetVariable(
-            tree.GetRoot(TestContext.Current.CancellationToken).ChildNodes().First().ChildNodes().First()
-                .ChildNodes().First());
-        Assert.NotNull(variable);
-        var result = script.RenameVariable(variable, "\uFEFF");
-        Assert.True(result.IsErr);
-        var error = Assert.IsType<IdentifierNameNotSupportedError>(Assert.Single(result.Err.Value));
-        Assert.Equal(tree, error.TreeWithoutSupport);
+            (await tree.GetRootAsync()).ChildNodes().First().ChildNodes().First().ChildNodes().First());
+        await Assert.That(variable).IsNotNull();
+        var result = script.RenameVariable(variable!, "\uFEFF");
+        await Assert.That(result.IsErr).IsTrue();
+        var err = await Assert.That(result.Err.Value).HasSingleItem();
+        await Assert.That(err).IsTypeOf<IdentifierNameNotSupportedError>().And.Satisfies(
+            static err => err.TreeWithoutSupport,
+            treeWithout => treeWithout.IsEqualTo(tree));
     }
 
-    [Fact]
-    [Trait("Category", "Script/RenameVariable")]
-    public void Script_RenameVariable_ReturnsErrorForConflictingVariable()
+    [Test]
+    [TProperty("Category", "Script/RenameVariable")]
+    public async Task Script_RenameVariable_ReturnsErrorForConflictingVariable()
     {
-        var (tree, script) = ParseScript("local a, b = 2, 3", LuaSyntaxOptions.Lua51);
+        var (tree, script) = await ParseScriptAsync("local a, b = 2, 3", LuaSyntaxOptions.Lua51);
 
-        var localDecl = tree.GetRoot(TestContext.Current.CancellationToken).ChildNodes().First().ChildNodes()
-                            .First();
+        var localDecl = (await tree.GetRootAsync()).ChildNodes().First().ChildNodes().First();
         var variableA = script.GetVariable(localDecl.ChildNodes().First());
         var variableB = script.GetVariable(localDecl.ChildNodes().ElementAt(1));
-        Assert.NotNull(variableA);
-        Assert.NotNull(variableB);
-        var result = script.RenameVariable(variableA, "b");
-        Assert.True(result.IsErr);
-        var error = Assert.IsType<VariableConflictError>(Assert.Single(result.Err.Value));
-        Assert.Equal(variableB, error.VariableBeingConflictedWith);
+        await Assert.That(variableA).IsNotNull();
+        await Assert.That(variableB).IsNotNull();
+        var result = script.RenameVariable(variableA!, "b");
+        await Assert.That(result.IsErr).IsTrue();
+        var err = await Assert.That(result.Err.Value).HasSingleItem();
+        await Assert.That(err).IsTypeOf<VariableConflictError>().And.Satisfies(
+            static err => err.VariableBeingConflictedWith,
+            var => var.IsEqualTo(variableB));
     }
 
-    [Fact]
-    [Trait("Category", "Script/RenameVariable")]
-    public void Script_RenameVariable_ReturnsCorrectlyRenamedScript()
+    [Test]
+    [TProperty("Category", "Script/RenameVariable")]
+    public async Task Script_RenameVariable_ReturnsCorrectlyRenamedScript()
     {
-        var (tree, script) = ParseScript("local a = 2\r\nlocal function a() end", LuaSyntaxOptions.Lua51);
+        var (tree, script) = await ParseScriptAsync("local a = 2\r\nlocal function a() end", LuaSyntaxOptions.Lua51);
 
         var variable = script.GetVariable(
-            tree.GetRoot(TestContext.Current.CancellationToken).ChildNodes().First().ChildNodes().First()
-                .ChildNodes().First());
-        Assert.NotNull(variable);
-        var result = script.RenameVariable(variable, "b");
-        Assert.True(result.IsOk);
+            (await tree.GetRootAsync()).ChildNodes().First().ChildNodes().First().ChildNodes().First());
+        await Assert.That(variable).IsNotNull();
+        var result = script.RenameVariable(variable!, "b");
+        await Assert.That(result.IsOk).IsTrue();
         var newTree = result.Ok.Value;
-        Assert.Equal("local b = 2\r\nlocal function a() end", Assert.Single(newTree.SyntaxTrees).ToString());
+        await Assert.That(newTree).Satisfies(
+            static script => script.SyntaxTrees,
+            static trees => trees.HasSingleItem().And.Satisfies(
+                static tree => tree[0].ToString(),
+                static text => text.IsEqualTo("local b = 2\r\nlocal function a() end")!));
     }
 }

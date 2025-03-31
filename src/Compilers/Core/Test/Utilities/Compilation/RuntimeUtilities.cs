@@ -13,18 +13,6 @@ namespace Loretta.CodeAnalysis.Test.Utilities
     /// </summary>
     public static class RuntimeUtilities
     {
-        internal static bool IsDesktopRuntime =>
-#if NET472
-            true;
-#elif NETCOREAPP
-            false;
-#elif NETSTANDARD2_0
-            throw new PlatformNotSupportedException();
-#else
-#error Unsupported configuration
-#endif
-        internal static bool IsCoreClrRuntime => !IsDesktopRuntime;
-
         /// <summary>
         /// Get the location of the assembly that contains this type
         /// </summary>

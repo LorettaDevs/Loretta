@@ -1,60 +1,59 @@
 ﻿using Loretta.CodeAnalysis.Lua.Syntax;
 using Loretta.Test.Utilities;
-using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping;
 
 public sealed class ScopeTests : ScriptTestsBase
 {
-    [Fact]
-    [Trait("Category", "Script/FindScope")]
-    public void CompilationUnit_HasFileScope()
+    [Test]
+    [TProperty("Category", "Script/FindScope")]
+    public async Task CompilationUnit_HasFileScope()
     {
-        var (tree, script) = ParseScript("print 'Hello'");
+        var (tree, script) = await ParseScriptAsync("print 'Hello'");
 
-        var compilationUnit      = (CompilationUnitSyntax) tree.GetRoot(TestContext.Current.CancellationToken);
+        var compilationUnit      = (CompilationUnitSyntax) await tree.GetRootAsync();
         var compilationUnitScope = script.GetScope(compilationUnit);
 
-        Assert.NotNull(compilationUnitScope);
-        Assert.Equal(ScopeKind.File, compilationUnitScope.Kind);
-        Assert.Equal(script.RootScope, compilationUnitScope.ContainingScope);
+        await Assert.That(compilationUnitScope).IsNotNull();
+        await Assert.That(compilationUnitScope?.Kind).IsEqualTo(ScopeKind.File);
+        await Assert.That(compilationUnitScope?.ContainingScope).IsEqualTo(script.RootScope);
     }
 
-    [Fact]
-    [Trait("Category", "Script/FindScope")]
-    public void FindScope_OnRootElement_ReturnsRootScope()
+    [Test]
+    [TProperty("Category", "Script/FindScope")]
+    public async Task FindScope_OnRootElement_ReturnsRootScope()
     {
-        var (tree, script) = ParseScript("print 'Hello'");
+        var (tree, script) = await ParseScriptAsync("print 'Hello'");
 
-        var compilationUnit      = (CompilationUnitSyntax) tree.GetRoot(TestContext.Current.CancellationToken);
+        var compilationUnit      = (CompilationUnitSyntax) await tree.GetRootAsync();
         var compilationUnitScope = script.GetScope(compilationUnit);
         var printExpression =
-            (FunctionCallExpressionSyntax)
-            ((ExpressionStatementSyntax) compilationUnit.Statements.Statements.Single()).Expression;
+            (FunctionCallExpressionSyntax) ((ExpressionStatementSyntax) compilationUnit.Statements.Statements.Single())
+            .Expression;
         var printExpressionScope = script.FindScope(printExpression.Expression);
 
-        Assert.Equal(compilationUnitScope, printExpressionScope);
+        await Assert.That(printExpressionScope).IsEqualTo(compilationUnitScope);
     }
 
-    [Fact]
-    [Trait("Category", "Script/FindScope")]
+    [Test]
+    [TProperty("Category", "Script/FindScope")]
     [WorkItem(106, "https://github.com/LorettaDevs/Loretta/issues/106")]
-    public void FindScope_LocalFunctionIsParsed()
+    public async Task FindScope_LocalFunctionIsParsed()
     {
-        var (tree, script) = ParseScript("local function a() end");
-        var fileScope = script.GetScope(tree.GetRoot(TestContext.Current.CancellationToken));
+        var (tree, script) = await ParseScriptAsync("local function a() end");
+        var fileScope = script.GetScope(await tree.GetRootAsync());
 
-        Assert.Equal(1, fileScope?.ContainedScopes.Count());
+        await Assert.That(fileScope?.ContainedScopes).HasCount().EqualTo(1);
     }
 
-    [Fact]
-    [Trait("Category", "Script/FindScope")]
+    [Test]
+    [TProperty("Category", "Script/FindScope")]
     [WorkItem(106, "https://github.com/LorettaDevs/Loretta/issues/106")]
-    public void FindScope_AnonymousFunctionIsParsed()
+    public async Task FindScope_AnonymousFunctionIsParsed()
     {
-        var (tree, script) = ParseScript("(function(Variable) end)()");
-        var fileScope = script.GetScope(tree.GetRoot(TestContext.Current.CancellationToken));
+        var (tree, script) = await ParseScriptAsync("(function(Variable) end)()");
+        var fileScope = script.GetScope(await tree.GetRootAsync());
 
-        Assert.Equal(1, fileScope?.ContainedScopes.Count());
+        await Assert.That(fileScope?.ContainedScopes).HasCount().EqualTo(1);
     }
 }

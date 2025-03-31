@@ -10,7 +10,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
     /// <summary>
     /// Base class for all language specific tests.
     /// </summary>
-    public abstract partial class CommonTestBase : TestBase
+    public abstract class CommonTestBase : TestBase
     {
         public static string WithWindowsLineBreaks(string source)
             => source.Replace(Environment.NewLine, "\r\n");

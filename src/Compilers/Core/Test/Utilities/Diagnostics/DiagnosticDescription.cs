@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Test.Utilities;
-using Xunit;
 
 namespace Loretta.CodeAnalysis.Test.Utilities
 {
@@ -446,7 +445,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                 var message = d.ToString();
                 if (Regex.Match(message, @"{\d+}").Success)
                 {
-                    Assert.True(false, "Diagnostic messages should never contain unsubstituted placeholders.\n    " + message);
+                    Assert.Fail("Diagnostic messages should never contain unsubstituted placeholders.\n    " + message);
                 }
 
                 if (i > 0)

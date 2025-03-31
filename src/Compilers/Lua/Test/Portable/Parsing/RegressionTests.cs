@@ -1,166 +1,165 @@
 ﻿using Loretta.Test.Utilities;
-using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 
-public sealed class RegressionTests(ITestOutputHelper output) : ParsingTestsBase(output)
+public sealed class RegressionTests : ParsingTestsBase
 {
-    [Fact]
-    public void IncrementalParsing_DoesNotBreak_WithInvalidCastException()
+    [Test]
+    public async Task IncrementalParsing_DoesNotBreak_WithInvalidCastException()
     {
         SyntaxNode firstIdent, secondIdent;
 
-        var initial = UsingTree(
-            """
-            local a = b
-            local b = c
-            """);
-        N(SyntaxKind.CompilationUnit);
+        var initial = await UsingTreeAsync(
+                          """
+                          local a = b
+                          local b = c
+                          """);
+        await N(SyntaxKind.CompilationUnit);
         {
-            N(SyntaxKind.StatementList);
+            await N(SyntaxKind.StatementList);
             {
-                N(SyntaxKind.LocalVariableDeclarationStatement);
+                await N(SyntaxKind.LocalVariableDeclarationStatement);
                 {
-                    N(SyntaxKind.LocalKeyword);
-                    N(SyntaxKind.LocalDeclarationName);
+                    await N(SyntaxKind.LocalKeyword);
+                    await N(SyntaxKind.LocalDeclarationName);
                     {
-                        firstIdent = N(SyntaxKind.IdentifierName).AsNode()!;
+                        firstIdent = (await N(SyntaxKind.IdentifierName)).AsNode()!;
                         {
-                            N(SyntaxKind.IdentifierToken, "a").AsToken();
+                            await N(SyntaxKind.IdentifierToken, "a");
                         }
                     }
-                    N(SyntaxKind.EqualsValuesClause);
+                    await N(SyntaxKind.EqualsValuesClause);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.IdentifierName);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.IdentifierName);
                         {
-                            N(SyntaxKind.IdentifierToken, "b");
+                            await N(SyntaxKind.IdentifierToken, "b");
                         }
                     }
                 }
-                N(SyntaxKind.LocalVariableDeclarationStatement);
+                await N(SyntaxKind.LocalVariableDeclarationStatement);
                 {
-                    N(SyntaxKind.LocalKeyword);
-                    N(SyntaxKind.LocalDeclarationName);
+                    await N(SyntaxKind.LocalKeyword);
+                    await N(SyntaxKind.LocalDeclarationName);
                     {
-                        N(SyntaxKind.IdentifierName);
+                        await N(SyntaxKind.IdentifierName);
                         {
-                            N(SyntaxKind.IdentifierToken, "b");
+                            await N(SyntaxKind.IdentifierToken, "b");
                         }
                     }
-                    N(SyntaxKind.EqualsValuesClause);
+                    await N(SyntaxKind.EqualsValuesClause);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.IdentifierName);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.IdentifierName);
                         {
-                            N(SyntaxKind.IdentifierToken, "c");
+                            await N(SyntaxKind.IdentifierToken, "c");
                         }
                     }
                 }
             }
-            N(SyntaxKind.EndOfFileToken);
+            await N(SyntaxKind.EndOfFileToken);
         }
         EOF();
 
         var newTree = initial.WithReplace(11, 0, " :: T");
-        UsingNode((LuaSyntaxNode) newTree.GetRoot(TestContext.Current.CancellationToken));
-        N(SyntaxKind.CompilationUnit);
+        UsingNode((LuaSyntaxNode) await newTree.GetRootAsync());
+        await N(SyntaxKind.CompilationUnit);
         {
-            N(SyntaxKind.StatementList);
+            await N(SyntaxKind.StatementList);
             {
-                N(SyntaxKind.LocalVariableDeclarationStatement);
+                await N(SyntaxKind.LocalVariableDeclarationStatement);
                 {
-                    N(SyntaxKind.LocalKeyword);
-                    N(SyntaxKind.LocalDeclarationName);
+                    await N(SyntaxKind.LocalKeyword);
+                    await N(SyntaxKind.LocalDeclarationName);
                     {
-                        secondIdent = N(SyntaxKind.IdentifierName).AsNode()!;
+                        secondIdent = (await N(SyntaxKind.IdentifierName)).AsNode()!;
                         {
-                            N(SyntaxKind.IdentifierToken, "a").AsToken();
+                            await N(SyntaxKind.IdentifierToken, "a");
                         }
                     }
-                    N(SyntaxKind.EqualsValuesClause);
+                    await N(SyntaxKind.EqualsValuesClause);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.TypeCastExpression);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.TypeCastExpression);
                         {
-                            N(SyntaxKind.IdentifierName);
+                            await N(SyntaxKind.IdentifierName);
                             {
-                                N(SyntaxKind.IdentifierToken, "b");
+                                await N(SyntaxKind.IdentifierToken, "b");
                             }
-                            N(SyntaxKind.ColonColonToken);
-                            N(SyntaxKind.SimpleTypeName);
+                            await N(SyntaxKind.ColonColonToken);
+                            await N(SyntaxKind.SimpleTypeName);
                             {
-                                N(SyntaxKind.IdentifierToken, "T");
+                                await N(SyntaxKind.IdentifierToken, "T");
                             }
                         }
                     }
                 }
-                N(SyntaxKind.LocalVariableDeclarationStatement);
+                await N(SyntaxKind.LocalVariableDeclarationStatement);
                 {
-                    N(SyntaxKind.LocalKeyword);
-                    N(SyntaxKind.LocalDeclarationName);
+                    await N(SyntaxKind.LocalKeyword);
+                    await N(SyntaxKind.LocalDeclarationName);
                     {
-                        N(SyntaxKind.IdentifierName);
+                        await N(SyntaxKind.IdentifierName);
                         {
-                            N(SyntaxKind.IdentifierToken, "b");
+                            await N(SyntaxKind.IdentifierToken, "b");
                         }
                     }
-                    N(SyntaxKind.EqualsValuesClause);
+                    await N(SyntaxKind.EqualsValuesClause);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.IdentifierName);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.IdentifierName);
                         {
-                            N(SyntaxKind.IdentifierToken, "c");
+                            await N(SyntaxKind.IdentifierToken, "c");
                         }
                     }
                 }
             }
-            N(SyntaxKind.EndOfFileToken);
+            await N(SyntaxKind.EndOfFileToken);
         }
         EOF();
 
-        Assert.True(firstIdent.IsEquivalentTo(secondIdent));
+        await Assert.That(firstIdent.IsEquivalentTo(secondIdent)).IsTrue();
     }
 
-    [Fact, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
-    public void LanguageParser_WhenParsingIntersectionTypes_DoNotGenerateBitwiseOperatorNotSupportedErrors()
-        => ParseAndValidate("type T = A & B", LuaSyntaxOptions.Luau);
+    [Test, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
+    public async Task LanguageParser_WhenParsingIntersectionTypes_DoNotGenerateBitwiseOperatorNotSupportedErrors()
+        => await ParseAndValidateAsync("type T = A & B", LuaSyntaxOptions.Luau);
 
-    [Fact, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
-    public void LanguageParser_WhenParsingUnionTypes_DoNotGenerateBitwiseOperatorNotSupportedErrors()
-        => ParseAndValidate("type T = A | B", LuaSyntaxOptions.Luau);
+    [Test, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
+    public async Task LanguageParser_WhenParsingUnionTypes_DoNotGenerateBitwiseOperatorNotSupportedErrors()
+        => await ParseAndValidateAsync("type T = A | B", LuaSyntaxOptions.Luau);
 
-    [Fact, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
-    public void LanguageParser_WhenParsingBitwiseAndExpressions_GeneratesBitwiseOperatorNotSupportedErrors()
-        => ParseAndValidate(
-            "local x = y & z",
-            LuaSyntaxOptions.Luau,
-            // (1,13): error LUA0021: Bitwise operators are not supported in this lua version
-            // local x = y & z
-            Diagnostic(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion, "&").WithLocation(1, 13));
+    [Test, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
+    public async Task LanguageParser_WhenParsingBitwiseAndExpressions_GeneratesBitwiseOperatorNotSupportedErrors()
+        => await ParseAndValidateAsync(
+               "local x = y & z",
+               LuaSyntaxOptions.Luau,
+               // (1,13): error LUA0021: Bitwise operators are not supported in this lua version
+               // local x = y & z
+               Diagnostic(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion, "&").WithLocation(1, 13));
 
-    [Fact, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
-    public void LanguageParser_WhenParsingBitwiseOrExpressions_GeneratesBitwiseOperatorNotSupportedErrors()
-        => ParseAndValidate(
-            "local x = y | z",
-            LuaSyntaxOptions.Luau,
-            // (1,13): error LUA0021: Bitwise operators are not supported in this lua version
-            // local x = y | z
-            Diagnostic(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion, "|").WithLocation(1, 13));
+    [Test, WorkItem(100, "https://github.com/LorettaDevs/Loretta/issues/100")]
+    public async Task LanguageParser_WhenParsingBitwiseOrExpressions_GeneratesBitwiseOperatorNotSupportedErrors()
+        => await ParseAndValidateAsync(
+               "local x = y | z",
+               LuaSyntaxOptions.Luau,
+               // (1,13): error LUA0021: Bitwise operators are not supported in this lua version
+               // local x = y | z
+               Diagnostic(ErrorCode.ERR_BitwiseOperatorsNotSupportedInVersion, "|").WithLocation(1, 13));
 
-    [Fact, WorkItem(126, "https://github.com/LorettaDevs/Loretta/issues/126")]
-    public void LanguageParser_DoesNotGenerateOutOfRangeDiagnostics()
-        => ParseAndValidate(
-            "\n\"hello\"\n",
-            LuaSyntaxOptions.Lua51,
-            // (2,1): error LUA1012: Invalid statement
-            // "hello"
-            Diagnostic(ErrorCode.ERR_InvalidStatement, @"""hello""").WithLocation(2, 1));
+    [Test, WorkItem(126, "https://github.com/LorettaDevs/Loretta/issues/126")]
+    public async Task LanguageParser_DoesNotGenerateOutOfRangeDiagnostics()
+        => await ParseAndValidateAsync(
+               "\n\"hello\"\n",
+               LuaSyntaxOptions.Lua51,
+               // (2,1): error LUA1012: Invalid statement
+               // "hello"
+               Diagnostic(ErrorCode.ERR_InvalidStatement, @"""hello""").WithLocation(2, 1));
 
-    [Fact, WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
-    public void LanguageParser_ProperlyTreatsContinueAsNormalIdentifierWhenContinueTypeIsNone()
+    [Test, WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
+    public async Task LanguageParser_ProperlyTreatsContinueAsNormalIdentifierWhenContinueTypeIsNone()
     {
-        var initial = ParseWithRoundTripCheck(
+        await UsingTreeAsync(
             """
             local continue = true
 
@@ -169,96 +168,94 @@ public sealed class RegressionTests(ITestOutputHelper output) : ParsingTestsBase
             end
             """,
             new LuaParseOptions(LuaSyntaxOptions.Lua51));
-
-        UsingNode((LuaSyntaxNode) initial.GetRoot(TestContext.Current.CancellationToken));
-        N(SyntaxKind.CompilationUnit);
+        await N(SyntaxKind.CompilationUnit);
         {
-            N(SyntaxKind.StatementList);
+            await N(SyntaxKind.StatementList);
             {
-                N(SyntaxKind.LocalVariableDeclarationStatement);
+                await N(SyntaxKind.LocalVariableDeclarationStatement);
                 {
-                    N(SyntaxKind.LocalKeyword);
-                    N(SyntaxKind.LocalDeclarationName);
+                    await N(SyntaxKind.LocalKeyword);
+                    await N(SyntaxKind.LocalDeclarationName);
                     {
-                        N(SyntaxKind.IdentifierName);
+                        await N(SyntaxKind.IdentifierName);
                         {
-                            N(SyntaxKind.IdentifierToken, "continue");
+                            await N(SyntaxKind.IdentifierToken, "continue");
                         }
-                        N(SyntaxKind.EqualsValuesClause);
+                        await N(SyntaxKind.EqualsValuesClause);
                         {
-                            N(SyntaxKind.EqualsToken);
-                            N(SyntaxKind.TrueLiteralExpression);
+                            await N(SyntaxKind.EqualsToken);
+                            await N(SyntaxKind.TrueLiteralExpression);
                             {
-                                N(SyntaxKind.TrueKeyword);
+                                await N(SyntaxKind.TrueKeyword);
                             }
                         }
                     }
                 }
 
-                N(SyntaxKind.IfStatement);
+                await N(SyntaxKind.IfStatement);
                 {
-                    N(SyntaxKind.IfKeyword);
-                    N(SyntaxKind.IdentifierName);
+                    await N(SyntaxKind.IfKeyword);
+                    await N(SyntaxKind.IdentifierName);
                     {
-                        N(SyntaxKind.IdentifierToken, "continue");
+                        await N(SyntaxKind.IdentifierToken, "continue");
                     }
-                    N(SyntaxKind.ThenKeyword);
+                    await N(SyntaxKind.ThenKeyword);
 
-                    N(SyntaxKind.StatementList);
+                    await N(SyntaxKind.StatementList);
                     {
-                        N(SyntaxKind.AssignmentStatement);
+                        await N(SyntaxKind.AssignmentStatement);
                         {
-                            N(SyntaxKind.IdentifierName);
+                            await N(SyntaxKind.IdentifierName);
                             {
-                                N(SyntaxKind.IdentifierToken, "continue");
+                                await N(SyntaxKind.IdentifierToken, "continue");
                             }
 
-                            N(SyntaxKind.EqualsValuesClause);
+                            await N(SyntaxKind.EqualsValuesClause);
                             {
-                                N(SyntaxKind.EqualsToken);
-                                N(SyntaxKind.FalseLiteralExpression);
+                                await N(SyntaxKind.EqualsToken);
+                                await N(SyntaxKind.FalseLiteralExpression);
                                 {
-                                    N(SyntaxKind.FalseKeyword);
+                                    await N(SyntaxKind.FalseKeyword);
                                 }
                             }
                         }
                     }
 
-                    N(SyntaxKind.EndKeyword);
+                    await N(SyntaxKind.EndKeyword);
                 }
             }
-            N(SyntaxKind.EndOfFileToken);
+            await N(SyntaxKind.EndOfFileToken);
         }
         EOF();
     }
 
-    [Fact, WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
-    public void LanguageParser_DoesNotFindGotosNorGotoLabelsWhenAcceptGotoIsNotTrue()
-        => ParseAndValidate(
-            "::label:: goto label",
-            LuaSyntaxOptions.Lua51,
-            // (1,1): error LUA1012: Invalid statement
-            // ::label:: goto label
-            Diagnostic(ErrorCode.ERR_InvalidStatement, ":").WithLocation(1, 1),
-            // (1,2): error LUA1012: Invalid statement
-            // ::label:: goto label
-            Diagnostic(ErrorCode.ERR_InvalidStatement, ":").WithLocation(1, 2),
-            // (1,9): error LUA1001: Identifier expected
-            // ::label:: goto label
-            Diagnostic(ErrorCode.ERR_IdentifierExpected, ":").WithLocation(1, 9),
-            // (1,9): error LUA1006: Syntax error, '(' expected
-            // ::label:: goto label
-            Diagnostic(ErrorCode.ERR_SyntaxError, ":").WithArguments("(", ":").WithLocation(1, 9),
-            // (1,9): error LUA1011: Invalid expression part ':'
-            // ::label:: goto label
-            Diagnostic(ErrorCode.ERR_InvalidExpressionPart, ":").WithArguments(":").WithLocation(1, 9),
-            // (1,9): error LUA1003: ) expected
-            // ::label:: goto label
-            Diagnostic(ErrorCode.ERR_CloseParenExpected, ":").WithLocation(1, 9),
-            // (1,16): error LUA1006: Syntax error, '(' expected
-            // ::label:: goto label
-            Diagnostic(ErrorCode.ERR_SyntaxError, "label").WithArguments("(", "").WithLocation(1, 16),
-            // (1,21): error LUA1003: ) expected
-            // ::label:: goto label
-            Diagnostic(ErrorCode.ERR_CloseParenExpected, "").WithLocation(1, 21));
+    [Test, WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
+    public async Task LanguageParser_DoesNotFindGotosNorGotoLabelsWhenAcceptGotoIsNotTrue()
+        => await ParseAndValidateAsync(
+               "::label:: goto label",
+               LuaSyntaxOptions.Lua51,
+               // (1,1): error LUA1012: Invalid statement
+               // ::label:: goto label
+               Diagnostic(ErrorCode.ERR_InvalidStatement, ":").WithLocation(1, 1),
+               // (1,2): error LUA1012: Invalid statement
+               // ::label:: goto label
+               Diagnostic(ErrorCode.ERR_InvalidStatement, ":").WithLocation(1, 2),
+               // (1,9): error LUA1001: Identifier expected
+               // ::label:: goto label
+               Diagnostic(ErrorCode.ERR_IdentifierExpected, ":").WithLocation(1, 9),
+               // (1,9): error LUA1006: Syntax error, '(' expected
+               // ::label:: goto label
+               Diagnostic(ErrorCode.ERR_SyntaxError, ":").WithArguments("(", ":").WithLocation(1, 9),
+               // (1,9): error LUA1011: Invalid expression part ':'
+               // ::label:: goto label
+               Diagnostic(ErrorCode.ERR_InvalidExpressionPart, ":").WithArguments(":").WithLocation(1, 9),
+               // (1,9): error LUA1003: ) expected
+               // ::label:: goto label
+               Diagnostic(ErrorCode.ERR_CloseParenExpected, ":").WithLocation(1, 9),
+               // (1,16): error LUA1006: Syntax error, '(' expected
+               // ::label:: goto label
+               Diagnostic(ErrorCode.ERR_SyntaxError, "label").WithArguments("(", "").WithLocation(1, 16),
+               // (1,21): error LUA1003: ) expected
+               // ::label:: goto label
+               Diagnostic(ErrorCode.ERR_CloseParenExpected, "").WithLocation(1, 21));
 }

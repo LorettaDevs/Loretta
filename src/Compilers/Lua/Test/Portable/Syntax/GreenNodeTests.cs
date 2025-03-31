@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
-using Xunit;
 using InternalSyntax = Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests;
@@ -20,8 +19,7 @@ public partial class GreenNodeTests
         return builder.ToList();
     }
 
-    private static CodeAnalysis.Syntax.InternalSyntax.SyntaxList<T> SyntaxList<T>(params T[] args)
-        where T : GreenNode
+    private static CodeAnalysis.Syntax.InternalSyntax.SyntaxList<T> SyntaxList<T>(params T[] args) where T : GreenNode
     {
         if (args.Length < 1) return new CodeAnalysis.Syntax.InternalSyntax.SyntaxList<T>();
 
@@ -30,14 +28,14 @@ public partial class GreenNodeTests
         return builder.ToList();
     }
 
-    private static void AttachAndCheckDiagnostics(InternalSyntax.LuaSyntaxNode node)
+    private static async Task AttachAndCheckDiagnosticsAsync(InternalSyntax.LuaSyntaxNode node)
     {
         var nodeWithDiags = node.SetDiagnostics([new LuaDiagnosticInfo(ErrorCode.ERR_CannotBeAssignedTo)]);
         var diags         = nodeWithDiags.GetDiagnostics();
 
-        Assert.NotEqual(node, nodeWithDiags);
-        var diag = Assert.Single(diags);
-        Assert.Equal(ErrorCode.ERR_CannotBeAssignedTo, (ErrorCode) diag.Code);
+        await Assert.That(nodeWithDiags).IsNotEqualTo(node);
+        var diag = await Assert.That(diags).HasSingleItem();
+        await Assert.That((ErrorCode) diag!.Code).IsEqualTo(ErrorCode.ERR_CannotBeAssignedTo);
     }
 
     private sealed class TokenDeleteRewriter : InternalSyntax.LuaSyntaxRewriter

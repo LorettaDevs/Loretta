@@ -1,58 +1,59 @@
 ﻿using Loretta.CodeAnalysis.Lua.Syntax;
-using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping;
 
 public sealed class CanBeAccessedInTests : ScriptTestsBase
 {
-    [Fact]
-    [Trait("Category", "Script/CanBeAccessedIn")]
-    public void Script_CanBeAccessedIn_ReturnsTrueWhenSameScope()
+    [Test]
+    [TProperty("Category", "Script/CanBeAccessedIn")]
+    public async Task Script_CanBeAccessedIn_ReturnsTrueWhenSameScope()
     {
-        var (tree, script) = ParseScript("local a = 1 print(a)");
-        var root       = Assert.IsType<CompilationUnitSyntax>(tree.GetRoot(TestContext.Current.CancellationToken));
-        var assignment = Assert.IsType<LocalVariableDeclarationStatementSyntax>(root.Statements.Statements[0]);
-        var name       = Assert.IsType<LocalDeclarationNameSyntax>(assignment.Names[0]);
+        var (tree, script) = await ParseScriptAsync("local a = 1 print(a)");
+        var root = await Assert.That(await tree.GetRootAsync()).IsTypeOf<CompilationUnitSyntax>();
+        var assignment = await Assert.That(root?.Statements.Statements[0])
+                                     .IsTypeOf<LocalVariableDeclarationStatementSyntax>();
+        var name = await Assert.That(assignment?.Names[0]).IsTypeOf<LocalDeclarationNameSyntax>();
 
-        var variable = script.GetVariable(name);
+        var variable = script.GetVariable(name!);
 
-        Assert.NotNull(variable);
-        Assert.True(variable!.CanBeAccessedIn(variable.ContainingScope));
+        await Assert.That(variable).IsNotNull();
+        await Assert.That(variable!.CanBeAccessedIn(variable.ContainingScope)).IsTrue();
     }
 
-    [Fact]
-    [Trait("Category", "Script/CanBeAccessedIn")]
-    public void Script_CanBeAccessedIn_ReturnsTrueWhenScopeIsChild()
+    [Test]
+    [TProperty("Category", "Script/CanBeAccessedIn")]
+    public async Task Script_CanBeAccessedIn_ReturnsTrueWhenScopeIsChild()
     {
-        var (tree, script) = ParseScript("local a = 1\r\n" + "do\r\n" + "    print(a)\r\n" + "end");
-        var root        = Assert.IsType<CompilationUnitSyntax>(tree.GetRoot(TestContext.Current.CancellationToken));
-        var assignment  = Assert.IsType<LocalVariableDeclarationStatementSyntax>(root.Statements.Statements[0]);
-        var name        = Assert.IsType<LocalDeclarationNameSyntax>(assignment.Names[0]);
-        var doStatement = Assert.IsType<DoStatementSyntax>(root.Statements.Statements[1]);
+        var (tree, script) = await ParseScriptAsync("local a = 1\r\n" + "do\r\n" + "    print(a)\r\n" + "end");
+        var root        = await Assert.That(await tree.GetRootAsync()).IsTypeOf<CompilationUnitSyntax>();
+        var assignment  = await Assert.That(root?.Statements.Statements[0]).IsTypeOf<LocalVariableDeclarationStatementSyntax>();
+        var name        = await Assert.That(assignment?.Names[0]).IsTypeOf<LocalDeclarationNameSyntax>();
+        var doStatement = await Assert.That(root?.Statements.Statements[1]).IsTypeOf<DoStatementSyntax>();
 
-        var variable = script.GetVariable(name);
-        var doScope  = script.GetScope(doStatement);
+        var variable = script.GetVariable(name!);
+        var doScope  = script.GetScope(doStatement!);
 
-        Assert.NotNull(variable);
-        Assert.NotNull(doScope);
-        Assert.True(variable!.CanBeAccessedIn(doScope!));
+        await Assert.That(variable).IsNotNull();
+        await Assert.That(doScope).IsNotNull();
+        await Assert.That(variable!.CanBeAccessedIn(doScope!)).IsTrue();
     }
 
-    [Fact]
-    [Trait("Category", "Script/CanBeAccessedIn")]
-    public void Script_CanBeAccessedIn_ReturnsFalseWhenScopeIsParentOfParent()
+    [Test]
+    [TProperty("Category", "Script/CanBeAccessedIn")]
+    public async Task Script_CanBeAccessedIn_ReturnsFalseWhenScopeIsParentOfParent()
     {
-        var (tree, script) = ParseScript("do\r\n" + "    local a = 1\r\n" + "end");
-        var root        = Assert.IsType<CompilationUnitSyntax>(tree.GetRoot(TestContext.Current.CancellationToken));
-        var doStatement = Assert.IsType<DoStatementSyntax>(root.Statements.Statements[0]);
-        var assignment  = Assert.IsType<LocalVariableDeclarationStatementSyntax>(doStatement.Body.Statements[0]);
-        var name        = Assert.IsType<LocalDeclarationNameSyntax>(assignment.Names[0]);
+        var (tree, script) = await ParseScriptAsync("do\r\n" + "    local a = 1\r\n" + "end");
+        var root        = await Assert.That(await tree.GetRootAsync()).IsTypeOf<CompilationUnitSyntax>();
+        var doStatement = await Assert.That(root?.Statements.Statements[0]).IsTypeOf<DoStatementSyntax>();
+        var assignment = await Assert.That(doStatement?.Body.Statements[0])
+                                     .IsTypeOf<LocalVariableDeclarationStatementSyntax>();
+        var name = await Assert.That(assignment?.Names[0]).IsTypeOf<LocalDeclarationNameSyntax>();
 
-        var variable  = script.GetVariable(name);
-        var rootScope = script.GetScope(root);
+        var variable  = script.GetVariable(name!);
+        var rootScope = script.GetScope(root!);
 
-        Assert.NotNull(variable);
-        Assert.NotNull(rootScope);
-        Assert.False(variable!.CanBeAccessedIn(rootScope!));
+        await Assert.That(variable).IsNotNull();
+        await Assert.That(rootScope).IsNotNull();
+        await Assert.That(variable!.CanBeAccessedIn(rootScope!)).IsFalse();
     }
 }

@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="$(MSBuildThisFileDirectory)../../../../../build/BaseProject.props" />
+    <Import Project="$(MSBuildThisFileDirectory)../../../../../build/BaseProject.props"/>
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFrameworks>net8.0;netstandard2.0;net472</TargetFrameworks>
+        <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <!-- Implicit Usings -->
     <ItemGroup>
-        <Using Include="Loretta.Utilities" />
+        <Using Include="Loretta.Utilities"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Core\Portable\Loretta.CodeAnalysis.csproj" />
-        <ProjectReference Include="..\..\..\Core\Test\Utilities\Loretta.CodeAnalysis.Test.Utilities.csproj" />
-        <ProjectReference Include="..\..\Portable\Loretta.CodeAnalysis.Lua.csproj" />
+        <ProjectReference Include="..\..\..\Core\Portable\Loretta.CodeAnalysis.csproj"/>
+        <ProjectReference Include="..\..\..\Core\Test\Utilities\Loretta.CodeAnalysis.Test.Utilities.csproj"/>
+        <ProjectReference Include="..\..\Portable\Loretta.CodeAnalysis.Lua.csproj"/>
     </ItemGroup>
 
 </Project>

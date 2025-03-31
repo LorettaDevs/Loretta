@@ -1,1732 +1,1680 @@
-﻿using Xunit;
-
+﻿
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 
-public sealed class TypeParsingTests(ITestOutputHelper output) : ParsingTestsBase(output)
+public sealed class TypeParsingTests : ParsingTestsBase
 {
     private const string TypeArgumentListString = "<Type, Type..., ...Type, Type.Member>";
 
-    private void CheckTypeArgumentList()
+    private async Task CheckTypeArgumentListAsync()
     {
-        N(SyntaxKind.TypeArgumentList);
+        await N(SyntaxKind.TypeArgumentList);
         {
-            N(SyntaxKind.LessThanToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.LessThanToken);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "Type");
+                await N(SyntaxKind.IdentifierToken, "Type");
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.GenericTypePack);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.GenericTypePack);
             {
-                N(SyntaxKind.IdentifierToken, "Type");
-                N(SyntaxKind.DotDotDotToken);
+                await N(SyntaxKind.IdentifierToken, "Type");
+                await N(SyntaxKind.DotDotDotToken);
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.VariadicTypePack);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.VariadicTypePack);
             {
-                N(SyntaxKind.DotDotDotToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.DotDotDotToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "Type");
+                    await N(SyntaxKind.IdentifierToken, "Type");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.CompositeTypeName);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.CompositeTypeName);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "Type");
+                    await N(SyntaxKind.IdentifierToken, "Type");
                 }
-                N(SyntaxKind.DotToken);
-                N(SyntaxKind.IdentifierToken, "Member");
+                await N(SyntaxKind.DotToken);
+                await N(SyntaxKind.IdentifierToken, "Member");
             }
-            N(SyntaxKind.GreaterThanToken);
+            await N(SyntaxKind.GreaterThanToken);
         }
     }
 
-    [Fact]
-    public void Parser_ParsesSimpleTypeName()
+    [Test]
+    public async Task Parser_ParsesSimpleTypeName()
     {
-        UsingType("Type");
+        await UsingTypeAsync("Type");
 
-        N(SyntaxKind.SimpleTypeName);
+        await N(SyntaxKind.SimpleTypeName);
         {
-            N(SyntaxKind.IdentifierToken, "Type");
-        }
-        EOF();
-    }
-
-    [Fact]
-    public void Parser_ParsesSimpleTypeName_WithTypeArgumentList()
-    {
-        UsingType($"Type{TypeArgumentListString}");
-
-        N(SyntaxKind.SimpleTypeName);
-        {
-            N(SyntaxKind.IdentifierToken, "Type");
-            CheckTypeArgumentList();
+            await N(SyntaxKind.IdentifierToken, "Type");
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesCompositeTypeName()
+    [Test]
+    public async Task Parser_ParsesSimpleTypeName_WithTypeArgumentList()
     {
-        UsingType("Type.Member");
+        await UsingTypeAsync($"Type{TypeArgumentListString}");
 
-        N(SyntaxKind.CompositeTypeName);
+        await N(SyntaxKind.SimpleTypeName);
         {
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.IdentifierToken, "Type");
+            await CheckTypeArgumentListAsync();
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesCompositeTypeName()
+    {
+        await UsingTypeAsync("Type.Member");
+
+        await N(SyntaxKind.CompositeTypeName);
+        {
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "Type");
+                await N(SyntaxKind.IdentifierToken, "Type");
             }
-            N(SyntaxKind.DotToken);
-            N(SyntaxKind.IdentifierToken, "Member");
+            await N(SyntaxKind.DotToken);
+            await N(SyntaxKind.IdentifierToken, "Member");
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesCompositeTypeName_WithTypeArgumentList()
+    [Test]
+    public async Task Parser_ParsesCompositeTypeName_WithTypeArgumentList()
     {
-        UsingType($"Type.Member{TypeArgumentListString}");
+        await UsingTypeAsync($"Type.Member{TypeArgumentListString}");
 
-        N(SyntaxKind.CompositeTypeName);
+        await N(SyntaxKind.CompositeTypeName);
         {
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "Type");
+                await N(SyntaxKind.IdentifierToken, "Type");
             }
-            N(SyntaxKind.DotToken);
-            N(SyntaxKind.IdentifierToken, "Member");
-            CheckTypeArgumentList();
+            await N(SyntaxKind.DotToken);
+            await N(SyntaxKind.IdentifierToken, "Member");
+            await CheckTypeArgumentListAsync();
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTypeofType_WithStrings()
+    [Test]
+    public async Task Parser_ParsesTypeofType_WithStrings()
     {
-        UsingType("typeof('hi')");
+        await UsingTypeAsync("typeof('hi')");
 
-        N(SyntaxKind.TypeofType);
+        await N(SyntaxKind.TypeofType);
         {
-            N(SyntaxKind.TypeofKeyword);
-            N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.TypeofKeyword);
+            await N(SyntaxKind.OpenParenthesisToken);
             {
-                N(SyntaxKind.StringLiteralExpression);
+                await N(SyntaxKind.StringLiteralExpression);
                 {
-                    N(SyntaxKind.StringLiteralToken, "'hi'");
-                }
-            }
-            N(SyntaxKind.CloseParenthesisToken);
-        }
-        EOF();
-    }
-
-    [Fact]
-    public void Parser_ParsesTypeofType_WithNumbers()
-    {
-        UsingType("typeof(1)");
-
-        N(SyntaxKind.TypeofType);
-        {
-            N(SyntaxKind.TypeofKeyword);
-            N(SyntaxKind.OpenParenthesisToken);
-            {
-                N(SyntaxKind.NumericalLiteralExpression);
-                {
-                    N(SyntaxKind.NumericLiteralToken, "1");
+                    await N(SyntaxKind.StringLiteralToken, "'hi'");
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesTypeofType_WithNumbers()
+    {
+        await UsingTypeAsync("typeof(1)");
+
+        await N(SyntaxKind.TypeofType);
+        {
+            await N(SyntaxKind.TypeofKeyword);
+            await N(SyntaxKind.OpenParenthesisToken);
+            {
+                await N(SyntaxKind.NumericalLiteralExpression);
+                {
+                    await N(SyntaxKind.NumericLiteralToken, "1");
+                }
+            }
+            await N(SyntaxKind.CloseParenthesisToken);
         }
     }
 
-    [Fact]
-    public void Parser_ParsesTypeofType_WithTables()
+    [Test]
+    public async Task Parser_ParsesTypeofType_WithTables()
     {
-        UsingType("typeof({ 1 })");
+        await UsingTypeAsync("typeof({ 1 })");
 
-        N(SyntaxKind.TypeofType);
+        await N(SyntaxKind.TypeofType);
         {
-            N(SyntaxKind.TypeofKeyword);
-            N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.TypeofKeyword);
+            await N(SyntaxKind.OpenParenthesisToken);
             {
-                N(SyntaxKind.TableConstructorExpression);
-                N(SyntaxKind.OpenBraceToken);
+                await N(SyntaxKind.TableConstructorExpression);
+                await N(SyntaxKind.OpenBraceToken);
                 {
-                    N(SyntaxKind.UnkeyedTableField);
+                    await N(SyntaxKind.UnkeyedTableField);
                     {
-                        N(SyntaxKind.NumericalLiteralExpression);
+                        await N(SyntaxKind.NumericalLiteralExpression);
                         {
-                            N(SyntaxKind.NumericLiteralToken, "1");
+                            await N(SyntaxKind.NumericLiteralToken, "1");
                         }
                     }
                 }
-                N(SyntaxKind.CloseBraceToken);
+                await N(SyntaxKind.CloseBraceToken);
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTypeofType_WithComplexExpression()
+    [Test]
+    public async Task Parser_ParsesTypeofType_WithComplexExpression()
     {
-        UsingType("typeof(tbl[1].member:method { 'hi' })");
+        await UsingTypeAsync("typeof(tbl[1].member:method { 'hi' })");
 
-        N(SyntaxKind.TypeofType);
+        await N(SyntaxKind.TypeofType);
         {
-            N(SyntaxKind.TypeofKeyword);
-            N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.TypeofKeyword);
+            await N(SyntaxKind.OpenParenthesisToken);
             {
-                N(SyntaxKind.MethodCallExpression);
+                await N(SyntaxKind.MethodCallExpression);
                 {
-                    N(SyntaxKind.MemberAccessExpression);
+                    await N(SyntaxKind.MemberAccessExpression);
                     {
-                        N(SyntaxKind.ElementAccessExpression);
+                        await N(SyntaxKind.ElementAccessExpression);
                         {
-                            N(SyntaxKind.IdentifierName);
+                            await N(SyntaxKind.IdentifierName);
                             {
-                                N(SyntaxKind.IdentifierToken, "tbl");
+                                await N(SyntaxKind.IdentifierToken, "tbl");
                             }
-                            N(SyntaxKind.OpenBracketToken);
-                            N(SyntaxKind.NumericalLiteralExpression);
+                            await N(SyntaxKind.OpenBracketToken);
+                            await N(SyntaxKind.NumericalLiteralExpression);
                             {
-                                N(SyntaxKind.NumericLiteralToken, "1");
+                                await N(SyntaxKind.NumericLiteralToken, "1");
                             }
-                            N(SyntaxKind.CloseBracketToken);
+                            await N(SyntaxKind.CloseBracketToken);
                         }
-                        N(SyntaxKind.DotToken);
-                        N(SyntaxKind.IdentifierToken, "member");
+                        await N(SyntaxKind.DotToken);
+                        await N(SyntaxKind.IdentifierToken, "member");
                     }
-                    N(SyntaxKind.ColonToken);
-                    N(SyntaxKind.IdentifierToken, "method");
-                    N(SyntaxKind.TableConstructorFunctionArgument);
+                    await N(SyntaxKind.ColonToken);
+                    await N(SyntaxKind.IdentifierToken, "method");
+                    await N(SyntaxKind.TableConstructorFunctionArgument);
                     {
-                        N(SyntaxKind.TableConstructorExpression);
+                        await N(SyntaxKind.TableConstructorExpression);
                         {
-                            N(SyntaxKind.OpenBraceToken);
-                            N(SyntaxKind.UnkeyedTableField);
+                            await N(SyntaxKind.OpenBraceToken);
+                            await N(SyntaxKind.UnkeyedTableField);
                             {
-                                N(SyntaxKind.StringLiteralExpression);
+                                await N(SyntaxKind.StringLiteralExpression);
                                 {
-                                    N(SyntaxKind.StringLiteralToken, "'hi'");
+                                    await N(SyntaxKind.StringLiteralToken, "'hi'");
                                 }
                             }
-                            N(SyntaxKind.CloseBraceToken);
+                            await N(SyntaxKind.CloseBraceToken);
                         }
                     }
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesArrayType_WithSimpleTypeNameElement()
+    [Test]
+    public async Task Parser_ParsesArrayType_WithSimpleTypeNameElement()
     {
-        UsingType("{Type}");
+        await UsingTypeAsync("{Type}");
 
-        N(SyntaxKind.ArrayType);
+        await N(SyntaxKind.ArrayType);
         {
-            N(SyntaxKind.OpenBraceToken);
+            await N(SyntaxKind.OpenBraceToken);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "Type");
+                    await N(SyntaxKind.IdentifierToken, "Type");
                 }
             }
-            N(SyntaxKind.CloseBraceToken);
+            await N(SyntaxKind.CloseBraceToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesArrayType_WithCompositeTypeNameElement()
+    [Test]
+    public async Task Parser_ParsesArrayType_WithCompositeTypeNameElement()
     {
-        UsingType("{Type.Member}");
+        await UsingTypeAsync("{Type.Member}");
 
-        N(SyntaxKind.ArrayType);
+        await N(SyntaxKind.ArrayType);
         {
-            N(SyntaxKind.OpenBraceToken);
+            await N(SyntaxKind.OpenBraceToken);
             {
-                N(SyntaxKind.CompositeTypeName);
+                await N(SyntaxKind.CompositeTypeName);
                 {
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "Type");
+                        await N(SyntaxKind.IdentifierToken, "Type");
                     }
-                    N(SyntaxKind.DotToken);
-                    N(SyntaxKind.IdentifierToken, "Member");
+                    await N(SyntaxKind.DotToken);
+                    await N(SyntaxKind.IdentifierToken, "Member");
                 }
             }
-            N(SyntaxKind.CloseBraceToken);
+            await N(SyntaxKind.CloseBraceToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesArrayType_WithArrayTypeElement()
+    [Test]
+    public async Task Parser_ParsesArrayType_WithArrayTypeElement()
     {
-        UsingType("{{Type}}");
+        await UsingTypeAsync("{{Type}}");
 
-        N(SyntaxKind.ArrayType);
+        await N(SyntaxKind.ArrayType);
         {
-            N(SyntaxKind.OpenBraceToken);
+            await N(SyntaxKind.OpenBraceToken);
             {
-                N(SyntaxKind.ArrayType);
+                await N(SyntaxKind.ArrayType);
                 {
-                    N(SyntaxKind.OpenBraceToken);
+                    await N(SyntaxKind.OpenBraceToken);
                     {
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "Type");
+                            await N(SyntaxKind.IdentifierToken, "Type");
                         }
                     }
-                    N(SyntaxKind.CloseBraceToken);
+                    await N(SyntaxKind.CloseBraceToken);
                 }
             }
-            N(SyntaxKind.CloseBraceToken);
+            await N(SyntaxKind.CloseBraceToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTableType_WithIndexer()
+    [Test]
+    public async Task Parser_ParsesTableType_WithIndexer()
     {
-        UsingType("{[Type]: Type}");
+        await UsingTypeAsync("{[Type]: Type}");
 
-        N(SyntaxKind.TableType);
+        await N(SyntaxKind.TableType);
         {
-            N(SyntaxKind.OpenBraceToken);
+            await N(SyntaxKind.OpenBraceToken);
             {
-                N(SyntaxKind.TableTypeIndexer);
+                await N(SyntaxKind.TableTypeIndexer);
                 {
-                    N(SyntaxKind.OpenBracketToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.OpenBracketToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "Type");
+                        await N(SyntaxKind.IdentifierToken, "Type");
                     }
-                    N(SyntaxKind.CloseBracketToken);
-                    N(SyntaxKind.ColonToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.CloseBracketToken);
+                    await N(SyntaxKind.ColonToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "Type");
+                        await N(SyntaxKind.IdentifierToken, "Type");
                     }
                 }
             }
-            N(SyntaxKind.CloseBraceToken);
+            await N(SyntaxKind.CloseBraceToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTypeTable_WithProperty()
+    [Test]
+    public async Task Parser_ParsesTypeTable_WithProperty()
     {
-        UsingType("{prop1: Type1, prop2: Type2, prop3: Type3}");
+        await UsingTypeAsync("{prop1: Type1, prop2: Type2, prop3: Type3}");
 
-        N(SyntaxKind.TableType);
+        await N(SyntaxKind.TableType);
         {
-            N(SyntaxKind.OpenBraceToken);
-            N(SyntaxKind.TableTypeProperty);
+            await N(SyntaxKind.OpenBraceToken);
+            await N(SyntaxKind.TableTypeProperty);
             {
-                N(SyntaxKind.IdentifierToken, "prop1");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "prop1");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "Type1");
+                    await N(SyntaxKind.IdentifierToken, "Type1");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.TableTypeProperty);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.TableTypeProperty);
             {
-                N(SyntaxKind.IdentifierToken, "prop2");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "prop2");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "Type2");
+                    await N(SyntaxKind.IdentifierToken, "Type2");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.TableTypeProperty);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.TableTypeProperty);
             {
-                N(SyntaxKind.IdentifierToken, "prop3");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "prop3");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "Type3");
+                    await N(SyntaxKind.IdentifierToken, "Type3");
                 }
             }
-            N(SyntaxKind.CloseBraceToken);
+            await N(SyntaxKind.CloseBraceToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndNoTrailingVariadicPack_AndTypeReturn()
+    [Test]
+    public async Task Parser_ParsesFunctionTypes_WithoutTypeParameters_AndNoTrailingVariadicPack_AndTypeReturn()
     {
-        UsingType("(T) -> T");
+        await UsingTypeAsync("(T) -> T");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
-            N(SyntaxKind.MinusGreaterThanToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
-            }
-        }
-        EOF();
-    }
-
-    [Fact]
-    public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTrailingVariadicPack_AndTypePackReturn()
-    {
-        UsingType("(T, ...T) -> (T, ...T)");
-
-        N(SyntaxKind.FunctionType);
-        {
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
-            {
-                N(SyntaxKind.SimpleTypeName);
-                {
-                    N(SyntaxKind.IdentifierToken, "T");
-                }
-            }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.FunctionTypeParameter);
-            {
-                N(SyntaxKind.VariadicTypePack);
-                {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
-                    {
-                        N(SyntaxKind.IdentifierToken, "T");
-                    }
-                }
-            }
-            N(SyntaxKind.CloseParenthesisToken);
-
-            N(SyntaxKind.MinusGreaterThanToken);
-
-            N(SyntaxKind.TypePack);
-            {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.SimpleTypeName);
-                {
-                    N(SyntaxKind.IdentifierToken, "T");
-                }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.VariadicTypePack);
-                {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
-                    {
-                        N(SyntaxKind.IdentifierToken, "T");
-                    }
-                }
-                N(SyntaxKind.CloseParenthesisToken);
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTrailingVariadicPack_AndTypePackReturn_AndParameterNameOnFirstParameter()
+    [Test]
+    public async Task Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTrailingVariadicPack_AndTypePackReturn()
     {
-        UsingType("(p1: T, ...T) -> (T, ...T)");
+        await UsingTypeAsync("(T, ...T) -> (T, ...T)");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p1");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.VariadicTypePack);
+                await N(SyntaxKind.VariadicTypePack);
                 {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
 
-            N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
 
-            N(SyntaxKind.TypePack);
+            await N(SyntaxKind.TypePack);
             {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.VariadicTypePack);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.VariadicTypePack);
                 {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
-                N(SyntaxKind.CloseParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnFirstParameter()
+    [Test]
+    public async Task Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTrailingVariadicPack_AndTypePackReturn_AndParameterNameOnFirstParameter()
     {
-        UsingType("(p1: T, T) -> (T, ...T)");
+        await UsingTypeAsync("(p1: T, ...T) -> (T, ...T)");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p1");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "p1");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.VariadicTypePack);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                }
-            }
-            N(SyntaxKind.CloseParenthesisToken);
-
-            N(SyntaxKind.MinusGreaterThanToken);
-
-            N(SyntaxKind.TypePack);
-            {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.SimpleTypeName);
-                {
-                    N(SyntaxKind.IdentifierToken, "T");
-                }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.VariadicTypePack);
-                {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
-                N(SyntaxKind.CloseParenthesisToken);
+            }
+            await N(SyntaxKind.CloseParenthesisToken);
+
+            await N(SyntaxKind.MinusGreaterThanToken);
+
+            await N(SyntaxKind.TypePack);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.SimpleTypeName);
+                {
+                    await N(SyntaxKind.IdentifierToken, "T");
+                }
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.VariadicTypePack);
+                {
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
+                    {
+                        await N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                await N(SyntaxKind.CloseParenthesisToken);
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnSecondParameter()
+    [Test]
+    public async Task Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnFirstParameter()
     {
-        UsingType("(T, p2: T) -> (T, ...T)");
+        await UsingTypeAsync("(p1: T, T) -> (T, ...T)");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "p1");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p2");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
 
-            N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
 
-            N(SyntaxKind.TypePack);
+            await N(SyntaxKind.TypePack);
             {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.VariadicTypePack);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.VariadicTypePack);
                 {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
-                N(SyntaxKind.CloseParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnBothParameters()
+    [Test]
+    public async Task Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnSecondParameter()
     {
-        UsingType("(p1: T, p2: T) -> (T, ...T)");
+        await UsingTypeAsync("(T, p2: T) -> (T, ...T)");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p1");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p2");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "p2");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
 
-            N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
 
-            N(SyntaxKind.TypePack);
+            await N(SyntaxKind.TypePack);
             {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.VariadicTypePack);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.VariadicTypePack);
                 {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
-                N(SyntaxKind.CloseParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionType_WithTypeParameters_AndTrailingVariadicPack_AndTypeReturn()
+    [Test]
+    public async Task Parser_ParsesFunctionTypes_WithoutTypeParameters_AndTypePackReturn_AndParameterNameOnBothParameters()
     {
-        UsingType("<T, T = T, T... = ...T, T... = T...> (T, ...T) -> T");
+        await UsingTypeAsync("(p1: T, p2: T) -> (T, ...T)");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.TypeParameterList);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.LessThanToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.IdentifierToken, "p1");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+            }
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.FunctionTypeParameter);
+            {
+                await N(SyntaxKind.IdentifierToken, "p2");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                }
+            }
+            await N(SyntaxKind.CloseParenthesisToken);
+
+            await N(SyntaxKind.MinusGreaterThanToken);
+
+            await N(SyntaxKind.TypePack);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.SimpleTypeName);
+                {
+                    await N(SyntaxKind.IdentifierToken, "T");
+                }
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.VariadicTypePack);
+                {
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.IdentifierToken, "T");
+                    }
+                }
+                await N(SyntaxKind.CloseParenthesisToken);
+            }
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesFunctionType_WithTypeParameters_AndTrailingVariadicPack_AndTypeReturn()
+    {
+        await UsingTypeAsync("<T, T = T, T... = ...T, T... = T...> (T, ...T) -> T");
+
+        await N(SyntaxKind.FunctionType);
+        {
+            await N(SyntaxKind.TypeParameterList);
+            {
+                await N(SyntaxKind.LessThanToken);
+                await N(SyntaxKind.TypeParameter);
+                {
+                    await N(SyntaxKind.IdentifierToken, "T");
+                }
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
+                {
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.EqualsType);
+                    {
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.VariadicTypePack);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.VariadicTypePack);
                         {
-                            N(SyntaxKind.DotDotDotToken);
-                            N(SyntaxKind.SimpleTypeName);
+                            await N(SyntaxKind.DotDotDotToken);
+                            await N(SyntaxKind.SimpleTypeName);
                             {
-                                N(SyntaxKind.IdentifierToken, "T");
+                                await N(SyntaxKind.IdentifierToken, "T");
                             }
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.GenericTypePack);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.GenericTypePack);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
-                            N(SyntaxKind.DotDotDotToken);
+                            await N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.DotDotDotToken);
                         }
                     }
                 }
-                N(SyntaxKind.GreaterThanToken);
+                await N(SyntaxKind.GreaterThanToken);
             }
             // /TypeParameterList
 
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
                 // No name
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.CommaToken);
                 
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
                 // No name
-                N(SyntaxKind.VariadicTypePack);
+                await N(SyntaxKind.VariadicTypePack);
                 {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
 
-            N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
 
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionType_WithTypeParameters_AndTrailingVariadicPack_AndTypeReturn_AndParameterNameOnFirstParameter()
+    [Test]
+    public async Task Parser_ParsesFunctionType_WithTypeParameters_AndTrailingVariadicPack_AndTypeReturn_AndParameterNameOnFirstParameter()
     {
-        UsingType("<T, T = T, T... = ...T, T... = T...> (p1: T, ...T) -> T");
+        await UsingTypeAsync("<T, T = T, T... = ...T, T... = T...> (p1: T, ...T) -> T");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.TypeParameterList);
+            await N(SyntaxKind.TypeParameterList);
             {
-                N(SyntaxKind.LessThanToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.LessThanToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.VariadicTypePack);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.VariadicTypePack);
                         {
-                            N(SyntaxKind.DotDotDotToken);
-                            N(SyntaxKind.SimpleTypeName);
+                            await N(SyntaxKind.DotDotDotToken);
+                            await N(SyntaxKind.SimpleTypeName);
                             {
-                                N(SyntaxKind.IdentifierToken, "T");
+                                await N(SyntaxKind.IdentifierToken, "T");
                             }
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.GenericTypePack);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.GenericTypePack);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
-                            N(SyntaxKind.DotDotDotToken);
+                            await N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.DotDotDotToken);
                         }
                     }
                 }
-                N(SyntaxKind.GreaterThanToken);
+                await N(SyntaxKind.GreaterThanToken);
             }
             // /TypeParameterList
 
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p1");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "p1");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.CommaToken);
                 
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
                 // No name
-                N(SyntaxKind.VariadicTypePack);
+                await N(SyntaxKind.VariadicTypePack);
                 {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
 
-            N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
 
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionType_WithTypeParameters_AndTypeReturn_AndParameterNameOnSecondParameter()
+    [Test]
+    public async Task Parser_ParsesFunctionType_WithTypeParameters_AndTypeReturn_AndParameterNameOnSecondParameter()
     {
-        UsingType("<T, T = T, T... = ...T, T... = T...> (T, p2: T) -> T");
+        await UsingTypeAsync("<T, T = T, T... = ...T, T... = T...> (T, p2: T) -> T");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.TypeParameterList);
+            await N(SyntaxKind.TypeParameterList);
             {
-                N(SyntaxKind.LessThanToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.LessThanToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.VariadicTypePack);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.VariadicTypePack);
                         {
-                            N(SyntaxKind.DotDotDotToken);
-                            N(SyntaxKind.SimpleTypeName);
+                            await N(SyntaxKind.DotDotDotToken);
+                            await N(SyntaxKind.SimpleTypeName);
                             {
-                                N(SyntaxKind.IdentifierToken, "T");
+                                await N(SyntaxKind.IdentifierToken, "T");
                             }
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.GenericTypePack);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.GenericTypePack);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
-                            N(SyntaxKind.DotDotDotToken);
+                            await N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.DotDotDotToken);
                         }
                     }
                 }
-                N(SyntaxKind.GreaterThanToken);
+                await N(SyntaxKind.GreaterThanToken);
             }
             // /TypeParameterList
 
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.CommaToken);
                 
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p2");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "p2");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
 
-            N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
 
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFunctionType_WithTypeParameters_AndTypeReturn_AndParameterNameOnBothParameters()
+    [Test]
+    public async Task Parser_ParsesFunctionType_WithTypeParameters_AndTypeReturn_AndParameterNameOnBothParameters()
     {
-        UsingType("<T, T = T, T... = ...T, T... = T...> (p1: T, p2: T) -> T");
+        await UsingTypeAsync("<T, T = T, T... = ...T, T... = T...> (p1: T, p2: T) -> T");
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.TypeParameterList);
+            await N(SyntaxKind.TypeParameterList);
             {
-                N(SyntaxKind.LessThanToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.LessThanToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.VariadicTypePack);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.VariadicTypePack);
                         {
-                            N(SyntaxKind.DotDotDotToken);
-                            N(SyntaxKind.SimpleTypeName);
+                            await N(SyntaxKind.DotDotDotToken);
+                            await N(SyntaxKind.SimpleTypeName);
                             {
-                                N(SyntaxKind.IdentifierToken, "T");
+                                await N(SyntaxKind.IdentifierToken, "T");
                             }
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.EqualsType);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.EqualsType);
                     {
-                        N(SyntaxKind.EqualsToken);
-                        N(SyntaxKind.GenericTypePack);
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.GenericTypePack);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
-                            N(SyntaxKind.DotDotDotToken);
+                            await N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.DotDotDotToken);
                         }
                     }
                 }
-                N(SyntaxKind.GreaterThanToken);
+                await N(SyntaxKind.GreaterThanToken);
             }
             // /TypeParameterList
 
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p1");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "p1");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.CommaToken);
                 
-            N(SyntaxKind.FunctionTypeParameter);
+            await N(SyntaxKind.FunctionTypeParameter);
             {
-                N(SyntaxKind.IdentifierToken, "p2");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "p2");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
 
-            N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
 
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesStringType()
+    [Test]
+    public async Task Parser_ParsesStringType()
     {
-        UsingType("'value'");
+        await UsingTypeAsync("'value'");
 
-        N(SyntaxKind.StringType);
+        await N(SyntaxKind.StringType);
         {
-            N(SyntaxKind.StringLiteralToken, "'value'");
+            await N(SyntaxKind.StringLiteralToken, "'value'");
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTrueType()
+    [Test]
+    public async Task Parser_ParsesTrueType()
     {
-        UsingType("true");
+        await UsingTypeAsync("true");
 
-        N(SyntaxKind.TrueType);
+        await N(SyntaxKind.TrueType);
         {
-            N(SyntaxKind.TrueKeyword, "true");
+            await N(SyntaxKind.TrueKeyword, "true");
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesFalseType()
+    [Test]
+    public async Task Parser_ParsesFalseType()
     {
-        UsingType("false");
+        await UsingTypeAsync("false");
 
-        N(SyntaxKind.FalseType);
+        await N(SyntaxKind.FalseType);
         {
-            N(SyntaxKind.FalseKeyword, "false");
+            await N(SyntaxKind.FalseKeyword, "false");
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesNilType()
+    [Test]
+    public async Task Parser_ParsesNilType()
     {
-        UsingType("nil");
+        await UsingTypeAsync("nil");
 
-        N(SyntaxKind.NilType);
+        await N(SyntaxKind.NilType);
         {
-            N(SyntaxKind.NilKeyword, "nil");
+            await N(SyntaxKind.NilKeyword, "nil");
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesParenthesizedTypes()
+    [Test]
+    public async Task Parser_ParsesParenthesizedTypes()
     {
-        UsingType("(T)");
+        await UsingTypeAsync("(T)");
 
-        N(SyntaxKind.ParenthesizedType);
+        await N(SyntaxKind.ParenthesizedType);
         {
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesNilableTypes()
+    [Test]
+    public async Task Parser_ParsesNilableTypes()
     {
-        UsingType("{T}?");
+        await UsingTypeAsync("{T}?");
 
-        N(SyntaxKind.NilableType);
+        await N(SyntaxKind.NilableType);
         {
-            N(SyntaxKind.ArrayType);
+            await N(SyntaxKind.ArrayType);
             {
-                N(SyntaxKind.OpenBraceToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.OpenBraceToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CloseBraceToken);
+                await N(SyntaxKind.CloseBraceToken);
             }
-            N(SyntaxKind.QuestionToken);
+            await N(SyntaxKind.QuestionToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesIntersectionType()
+    [Test]
+    public async Task Parser_ParsesIntersectionType()
     {
-        UsingType("T & T");
+        await UsingTypeAsync("T & T");
 
-        N(SyntaxKind.IntersectionType);
+        await N(SyntaxKind.IntersectionType);
         {
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
-            N(SyntaxKind.AmpersandToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.AmpersandToken);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
-            }
-        }
-        EOF();
-    }
-
-    [Fact]
-    public void Parser_ParsesUnionType()
-    {
-        UsingType("T | T");
-
-        N(SyntaxKind.UnionType);
-        {
-            N(SyntaxKind.SimpleTypeName);
-            {
-                N(SyntaxKind.IdentifierToken, "T");
-            }
-            N(SyntaxKind.PipeToken);
-            N(SyntaxKind.SimpleTypeName);
-            {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesLocalVariableWithTypeBinding()
+    [Test]
+    public async Task Parser_ParsesUnionType()
     {
-        UsingStatement("local Var: T = true");
+        await UsingTypeAsync("T | T");
 
-        N(SyntaxKind.LocalVariableDeclarationStatement);
+        await N(SyntaxKind.UnionType);
         {
-            N(SyntaxKind.LocalKeyword);
-            N(SyntaxKind.LocalDeclarationName);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierToken, "T");
+            }
+            await N(SyntaxKind.PipeToken);
+            await N(SyntaxKind.SimpleTypeName);
+            {
+                await N(SyntaxKind.IdentifierToken, "T");
+            }
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesLocalVariableWithTypeBinding()
+    {
+        await UsingStatementAsync("local Var: T = true");
+
+        await N(SyntaxKind.LocalVariableDeclarationStatement);
+        {
+            await N(SyntaxKind.LocalKeyword);
+            await N(SyntaxKind.LocalDeclarationName);
+            {
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "Var");
-                }
-            }
-            N(SyntaxKind.TypeBinding);
-            {
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
-                {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "Var");
                 }
             }
-
-            N(SyntaxKind.EqualsValuesClause);
+            await N(SyntaxKind.TypeBinding);
             {
-                N(SyntaxKind.EqualsToken);
-                N(SyntaxKind.TrueLiteralExpression);
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.TrueKeyword);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                }
+            }
+
+            await N(SyntaxKind.EqualsValuesClause);
+            {
+                await N(SyntaxKind.EqualsToken);
+                await N(SyntaxKind.TrueLiteralExpression);
+                {
+                    await N(SyntaxKind.TrueKeyword);
                 }
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesNumericForLoop()
+    [Test]
+    public async Task Parser_ParsesNumericForLoop()
     {
-        UsingStatement("for i:T = 1, 5 do end");
+        await UsingStatementAsync("for i:T = 1, 5 do end");
 
-        N(SyntaxKind.NumericForStatement);
+        await N(SyntaxKind.NumericForStatement);
         {
-            N(SyntaxKind.ForKeyword);
-            N(SyntaxKind.TypedIdentifierName);
+            await N(SyntaxKind.ForKeyword);
+            await N(SyntaxKind.TypedIdentifierName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "i");
+                    await N(SyntaxKind.IdentifierToken, "i");
                 }
-                N(SyntaxKind.TypeBinding);
+                await N(SyntaxKind.TypeBinding);
                 {
-                    N(SyntaxKind.ColonToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.ColonToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
             }
-            N(SyntaxKind.EqualsToken);
-            N(SyntaxKind.NumericalLiteralExpression);
+            await N(SyntaxKind.EqualsToken);
+            await N(SyntaxKind.NumericalLiteralExpression);
             {
-                N(SyntaxKind.NumericLiteralToken, "1");
+                await N(SyntaxKind.NumericLiteralToken, "1");
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.NumericalLiteralExpression);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.NumericalLiteralExpression);
             {
-                N(SyntaxKind.NumericLiteralToken, "5");
+                await N(SyntaxKind.NumericLiteralToken, "5");
             }
-            N(SyntaxKind.DoKeyword);
-            M(SyntaxKind.StatementList);
+            await N(SyntaxKind.DoKeyword);
+            await M(SyntaxKind.StatementList);
             { }
-            N(SyntaxKind.EndKeyword);
+            await N(SyntaxKind.EndKeyword);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesGenericForLoop()
+    [Test]
+    public async Task Parser_ParsesGenericForLoop()
     {
-        UsingStatement("for i:T in iter() do end");
+        await UsingStatementAsync("for i:T in iter() do end");
 
-        N(SyntaxKind.GenericForStatement);
+        await N(SyntaxKind.GenericForStatement);
         {
-            N(SyntaxKind.ForKeyword);
-            N(SyntaxKind.TypedIdentifierName);
+            await N(SyntaxKind.ForKeyword);
+            await N(SyntaxKind.TypedIdentifierName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "i");
+                    await N(SyntaxKind.IdentifierToken, "i");
                 }
-                N(SyntaxKind.TypeBinding);
+                await N(SyntaxKind.TypeBinding);
                 {
-                    N(SyntaxKind.ColonToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.ColonToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
             }
-            N(SyntaxKind.InKeyword);
-            N(SyntaxKind.FunctionCallExpression);
+            await N(SyntaxKind.InKeyword);
+            await N(SyntaxKind.FunctionCallExpression);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "iter");
+                    await N(SyntaxKind.IdentifierToken, "iter");
                 }
-                N(SyntaxKind.ExpressionListFunctionArgument);
+                await N(SyntaxKind.ExpressionListFunctionArgument);
                 {
-                    N(SyntaxKind.OpenParenthesisToken);
-                    N(SyntaxKind.CloseParenthesisToken);
+                    await N(SyntaxKind.OpenParenthesisToken);
+                    await N(SyntaxKind.CloseParenthesisToken);
                 }
             }
-            N(SyntaxKind.DoKeyword);
-            M(SyntaxKind.StatementList);
+            await N(SyntaxKind.DoKeyword);
+            await M(SyntaxKind.StatementList);
             { }
-            N(SyntaxKind.EndKeyword);
+            await N(SyntaxKind.EndKeyword);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesGenericForLoopWithOccasionalTyping()
+    [Test]
+    public async Task Parser_ParsesGenericForLoopWithOccasionalTyping()
     {
-        UsingStatement("for i: T, v in iter() do end");
+        await UsingStatementAsync("for i: T, v in iter() do end");
 
-        N(SyntaxKind.GenericForStatement);
+        await N(SyntaxKind.GenericForStatement);
         {
-            N(SyntaxKind.ForKeyword);
-            N(SyntaxKind.TypedIdentifierName);
+            await N(SyntaxKind.ForKeyword);
+            await N(SyntaxKind.TypedIdentifierName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "i");
+                    await N(SyntaxKind.IdentifierToken, "i");
                 }
-                N(SyntaxKind.TypeBinding);
+                await N(SyntaxKind.TypeBinding);
                 {
-                    N(SyntaxKind.ColonToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.ColonToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.TypedIdentifierName);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.TypedIdentifierName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "v");
+                    await N(SyntaxKind.IdentifierToken, "v");
                 }
             }
-            N(SyntaxKind.InKeyword);
-            N(SyntaxKind.FunctionCallExpression);
+            await N(SyntaxKind.InKeyword);
+            await N(SyntaxKind.FunctionCallExpression);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "iter");
+                    await N(SyntaxKind.IdentifierToken, "iter");
                 }
-                N(SyntaxKind.ExpressionListFunctionArgument);
+                await N(SyntaxKind.ExpressionListFunctionArgument);
                 {
-                    N(SyntaxKind.OpenParenthesisToken);
-                    N(SyntaxKind.CloseParenthesisToken);
+                    await N(SyntaxKind.OpenParenthesisToken);
+                    await N(SyntaxKind.CloseParenthesisToken);
                 }
             }
-            N(SyntaxKind.DoKeyword);
-            M(SyntaxKind.StatementList);
+            await N(SyntaxKind.DoKeyword);
+            await M(SyntaxKind.StatementList);
             { }
-            N(SyntaxKind.EndKeyword);
+            await N(SyntaxKind.EndKeyword);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTypedNamedParameters()
+    [Test]
+    public async Task Parser_ParsesTypedNamedParameters()
     {
-        UsingStatement("function a(b:T, c:A) end");
+        await UsingStatementAsync("function a(b:T, c:A) end");
 
-        N(SyntaxKind.FunctionDeclarationStatement);
+        await N(SyntaxKind.FunctionDeclarationStatement);
         {
-            N(SyntaxKind.FunctionKeyword);
-            N(SyntaxKind.SimpleFunctionName);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.SimpleFunctionName);
             {
-                N(SyntaxKind.IdentifierToken, "a");
+                await N(SyntaxKind.IdentifierToken, "a");
             }
-            N(SyntaxKind.ParameterList);
+            await N(SyntaxKind.ParameterList);
             {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.NamedParameter);
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.NamedParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "b");
-                    N(SyntaxKind.TypeBinding);
+                    await N(SyntaxKind.IdentifierToken, "b");
+                    await N(SyntaxKind.TypeBinding);
                     {
-                        N(SyntaxKind.ColonToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.ColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.NamedParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.NamedParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "c");
-                    N(SyntaxKind.TypeBinding);
+                    await N(SyntaxKind.IdentifierToken, "c");
+                    await N(SyntaxKind.TypeBinding);
                     {
-                        N(SyntaxKind.ColonToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.ColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "A");
+                            await N(SyntaxKind.IdentifierToken, "A");
                         }
                     }
                 }
-                N(SyntaxKind.CloseParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
             }
-            M(SyntaxKind.StatementList);
-            N(SyntaxKind.EndKeyword);
+            await M(SyntaxKind.StatementList);
+            await N(SyntaxKind.EndKeyword);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesOccasionallyTypedNamedParameters()
+    [Test]
+    public async Task Parser_ParsesOccasionallyTypedNamedParameters()
     {
-        UsingStatement("function a(b, c:A) end");
+        await UsingStatementAsync("function a(b, c:A) end");
 
-        N(SyntaxKind.FunctionDeclarationStatement);
+        await N(SyntaxKind.FunctionDeclarationStatement);
         {
-            N(SyntaxKind.FunctionKeyword);
-            N(SyntaxKind.SimpleFunctionName);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.SimpleFunctionName);
             {
-                N(SyntaxKind.IdentifierToken, "a");
+                await N(SyntaxKind.IdentifierToken, "a");
             }
-            N(SyntaxKind.ParameterList);
+            await N(SyntaxKind.ParameterList);
             {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.NamedParameter);
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.NamedParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "b");
+                    await N(SyntaxKind.IdentifierToken, "b");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.NamedParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.NamedParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "c");
-                    N(SyntaxKind.TypeBinding);
+                    await N(SyntaxKind.IdentifierToken, "c");
+                    await N(SyntaxKind.TypeBinding);
                     {
-                        N(SyntaxKind.ColonToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.ColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "A");
+                            await N(SyntaxKind.IdentifierToken, "A");
                         }
                     }
                 }
-                N(SyntaxKind.CloseParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
             }
-            M(SyntaxKind.StatementList);
-            N(SyntaxKind.EndKeyword);
+            await M(SyntaxKind.StatementList);
+            await N(SyntaxKind.EndKeyword);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesNamedParameterAndVararg()
+    [Test]
+    public async Task Parser_ParsesNamedParameterAndVararg()
     {
-        UsingStatement("function a(b:T, ...:A) end");
+        await UsingStatementAsync("function a(b:T, ...:A) end");
 
-        N(SyntaxKind.FunctionDeclarationStatement);
+        await N(SyntaxKind.FunctionDeclarationStatement);
         {
-            N(SyntaxKind.FunctionKeyword);
-            N(SyntaxKind.SimpleFunctionName);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.SimpleFunctionName);
             {
-                N(SyntaxKind.IdentifierToken, "a");
+                await N(SyntaxKind.IdentifierToken, "a");
             }
-            N(SyntaxKind.ParameterList);
+            await N(SyntaxKind.ParameterList);
             {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.NamedParameter);
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.NamedParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "b");
-                    N(SyntaxKind.TypeBinding);
+                    await N(SyntaxKind.IdentifierToken, "b");
+                    await N(SyntaxKind.TypeBinding);
                     {
-                        N(SyntaxKind.ColonToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.ColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.VarArgParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.VarArgParameter);
                 {
-                    N(SyntaxKind.DotDotDotToken);
-                    N(SyntaxKind.TypeBinding);
+                    await N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.TypeBinding);
                     {
-                        N(SyntaxKind.ColonToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.ColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "A");
+                            await N(SyntaxKind.IdentifierToken, "A");
                         }
                     }
                 }
-                N(SyntaxKind.CloseParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
             }
-            M(SyntaxKind.StatementList);
-            N(SyntaxKind.EndKeyword);
+            await M(SyntaxKind.StatementList);
+            await N(SyntaxKind.EndKeyword);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesAnonymousFunctionParameters()
+    [Test]
+    public async Task Parser_ParsesAnonymousFunctionParameters()
     {
-        UsingStatement("local a = function(b:T, c:T) end");
+        await UsingStatementAsync("local a = function(b:T, c:T) end");
 
-        N(SyntaxKind.LocalVariableDeclarationStatement);
+        await N(SyntaxKind.LocalVariableDeclarationStatement);
         {
-            N(SyntaxKind.LocalKeyword);
-            N(SyntaxKind.LocalDeclarationName);
+            await N(SyntaxKind.LocalKeyword);
+            await N(SyntaxKind.LocalDeclarationName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "a");
+                    await N(SyntaxKind.IdentifierToken, "a");
                 }
             }
-            N(SyntaxKind.EqualsValuesClause);
+            await N(SyntaxKind.EqualsValuesClause);
             {
-                N(SyntaxKind.EqualsToken);
-                N(SyntaxKind.AnonymousFunctionExpression);
+                await N(SyntaxKind.EqualsToken);
+                await N(SyntaxKind.AnonymousFunctionExpression);
                 {
-                    N(SyntaxKind.FunctionKeyword);
-                    N(SyntaxKind.ParameterList);
+                    await N(SyntaxKind.FunctionKeyword);
+                    await N(SyntaxKind.ParameterList);
                     {
-                        N(SyntaxKind.OpenParenthesisToken);
-                        N(SyntaxKind.NamedParameter);
+                        await N(SyntaxKind.OpenParenthesisToken);
+                        await N(SyntaxKind.NamedParameter);
                         {
-                            N(SyntaxKind.IdentifierToken, "b");
-                            N(SyntaxKind.TypeBinding);
+                            await N(SyntaxKind.IdentifierToken, "b");
+                            await N(SyntaxKind.TypeBinding);
                             {
-                                N(SyntaxKind.ColonToken);
-                                N(SyntaxKind.SimpleTypeName);
+                                await N(SyntaxKind.ColonToken);
+                                await N(SyntaxKind.SimpleTypeName);
                                 {
-                                    N(SyntaxKind.IdentifierToken, "T");
-                                }
-                            }
-                        }
-                        N(SyntaxKind.CommaToken);
-                        N(SyntaxKind.NamedParameter);
-                        {
-                            N(SyntaxKind.IdentifierToken, "c");
-                            N(SyntaxKind.TypeBinding);
-                            {
-                                N(SyntaxKind.ColonToken);
-                                N(SyntaxKind.SimpleTypeName);
-                                {
-                                    N(SyntaxKind.IdentifierToken, "T");
+                                    await N(SyntaxKind.IdentifierToken, "T");
                                 }
                             }
                         }
-                        N(SyntaxKind.CloseParenthesisToken);
-                    }
-                    M(SyntaxKind.StatementList);
-                    N(SyntaxKind.EndKeyword);
-                }
-            }
-        }
-        EOF();
-    }
-
-    [Fact]
-    public void Parser_ParsesNamedFunctionReturnType()
-    {
-        UsingStatement("function a() : T end");
-
-        N(SyntaxKind.FunctionDeclarationStatement);
-        {
-            N(SyntaxKind.FunctionKeyword);
-            N(SyntaxKind.SimpleFunctionName);
-            {
-                N(SyntaxKind.IdentifierToken, "a");
-            }
-            N(SyntaxKind.ParameterList);
-            {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.CloseParenthesisToken);
-            }
-            N(SyntaxKind.TypeBinding);
-            {
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
-                {
-                    N(SyntaxKind.IdentifierToken, "T");
-                }
-            }
-            M(SyntaxKind.StatementList);
-            N(SyntaxKind.EndKeyword);
-        }
-        EOF();
-    }
-
-    [Fact]
-    public void Parser_ParsesAnonymousFunctionReturnType()
-    {
-        UsingStatement("local a = function() : T end");
-
-        N(SyntaxKind.LocalVariableDeclarationStatement);
-        {
-            N(SyntaxKind.LocalKeyword);
-            N(SyntaxKind.LocalDeclarationName);
-            {
-                N(SyntaxKind.IdentifierName);
-                {
-                    N(SyntaxKind.IdentifierToken, "a");
-                }
-            }
-            N(SyntaxKind.EqualsValuesClause);
-            {
-                N(SyntaxKind.EqualsToken);
-                N(SyntaxKind.AnonymousFunctionExpression);
-                {
-                    N(SyntaxKind.FunctionKeyword);
-                    N(SyntaxKind.ParameterList);
-                    {
-                        N(SyntaxKind.OpenParenthesisToken);
-                        N(SyntaxKind.CloseParenthesisToken);
-                    }
-                    N(SyntaxKind.TypeBinding);
-                    {
-                        N(SyntaxKind.ColonToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.CommaToken);
+                        await N(SyntaxKind.NamedParameter);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "c");
+                            await N(SyntaxKind.TypeBinding);
+                            {
+                                await N(SyntaxKind.ColonToken);
+                                await N(SyntaxKind.SimpleTypeName);
+                                {
+                                    await N(SyntaxKind.IdentifierToken, "T");
+                                }
+                            }
+                        }
+                        await N(SyntaxKind.CloseParenthesisToken);
+                    }
+                    await M(SyntaxKind.StatementList);
+                    await N(SyntaxKind.EndKeyword);
+                }
+            }
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesNamedFunctionReturnType()
+    {
+        await UsingStatementAsync("function a() : T end");
+
+        await N(SyntaxKind.FunctionDeclarationStatement);
+        {
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.SimpleFunctionName);
+            {
+                await N(SyntaxKind.IdentifierToken, "a");
+            }
+            await N(SyntaxKind.ParameterList);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
+            }
+            await N(SyntaxKind.TypeBinding);
+            {
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
+                {
+                    await N(SyntaxKind.IdentifierToken, "T");
+                }
+            }
+            await M(SyntaxKind.StatementList);
+            await N(SyntaxKind.EndKeyword);
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesAnonymousFunctionReturnType()
+    {
+        await UsingStatementAsync("local a = function() : T end");
+
+        await N(SyntaxKind.LocalVariableDeclarationStatement);
+        {
+            await N(SyntaxKind.LocalKeyword);
+            await N(SyntaxKind.LocalDeclarationName);
+            {
+                await N(SyntaxKind.IdentifierName);
+                {
+                    await N(SyntaxKind.IdentifierToken, "a");
+                }
+            }
+            await N(SyntaxKind.EqualsValuesClause);
+            {
+                await N(SyntaxKind.EqualsToken);
+                await N(SyntaxKind.AnonymousFunctionExpression);
+                {
+                    await N(SyntaxKind.FunctionKeyword);
+                    await N(SyntaxKind.ParameterList);
+                    {
+                        await N(SyntaxKind.OpenParenthesisToken);
+                        await N(SyntaxKind.CloseParenthesisToken);
+                    }
+                    await N(SyntaxKind.TypeBinding);
+                    {
+                        await N(SyntaxKind.ColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
-                    M(SyntaxKind.StatementList);
-                    N(SyntaxKind.EndKeyword);
+                    await M(SyntaxKind.StatementList);
+                    await N(SyntaxKind.EndKeyword);
                 }
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTypeDeclarationStatement()
+    [Test]
+    public async Task Parser_ParsesTypeDeclarationStatement()
     {
-        UsingStatement("type a = T");
+        await UsingStatementAsync("type a = T");
 
-        N(SyntaxKind.TypeDeclarationStatement);
+        await N(SyntaxKind.TypeDeclarationStatement);
         {
-            N(SyntaxKind.TypeKeyword);
-            N(SyntaxKind.IdentifierToken, "a");
-            N(SyntaxKind.EqualsToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.TypeKeyword);
+            await N(SyntaxKind.IdentifierToken, "a");
+            await N(SyntaxKind.EqualsToken);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesExportedTypeDeclarationStatement()
+    [Test]
+    public async Task Parser_ParsesExportedTypeDeclarationStatement()
     {
-        UsingStatement("export type a = T");
+        await UsingStatementAsync("export type a = T");
 
-        N(SyntaxKind.TypeDeclarationStatement);
+        await N(SyntaxKind.TypeDeclarationStatement);
         {
-            N(SyntaxKind.ExportKeyword);
-            N(SyntaxKind.TypeKeyword);
-            N(SyntaxKind.IdentifierToken, "a");
-            N(SyntaxKind.EqualsToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.ExportKeyword);
+            await N(SyntaxKind.TypeKeyword);
+            await N(SyntaxKind.IdentifierToken, "a");
+            await N(SyntaxKind.EqualsToken);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTypeCastExpression()
+    [Test]
+    public async Task Parser_ParsesTypeCastExpression()
     {
-        UsingStatement("local a = b :: T");
+        await UsingStatementAsync("local a = b :: T");
 
-        N(SyntaxKind.LocalVariableDeclarationStatement);
+        await N(SyntaxKind.LocalVariableDeclarationStatement);
         {
-            N(SyntaxKind.LocalKeyword);
-            N(SyntaxKind.LocalDeclarationName);
+            await N(SyntaxKind.LocalKeyword);
+            await N(SyntaxKind.LocalDeclarationName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "a");
+                    await N(SyntaxKind.IdentifierToken, "a");
                 }
             }
-            N(SyntaxKind.EqualsValuesClause);
+            await N(SyntaxKind.EqualsValuesClause);
             {
-                N(SyntaxKind.EqualsToken);
-                N(SyntaxKind.TypeCastExpression);
+                await N(SyntaxKind.EqualsToken);
+                await N(SyntaxKind.TypeCastExpression);
                 {
-                    N(SyntaxKind.IdentifierName);
+                    await N(SyntaxKind.IdentifierName);
                     {
-                        N(SyntaxKind.IdentifierToken, "b");
+                        await N(SyntaxKind.IdentifierToken, "b");
                     }
-                    N(SyntaxKind.ColonColonToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.ColonColonToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "T");
-                    }
-                }
-            }
-        }
-        EOF();
-    }
-
-    [Fact]
-    public void Parser_ParsesTypeDeclarationStatementWithAdding()
-    {
-        UsingStatement("local a = b :: T + b :: T");
-
-        N(SyntaxKind.LocalVariableDeclarationStatement);
-        {
-            N(SyntaxKind.LocalKeyword);
-            N(SyntaxKind.LocalDeclarationName);
-            {
-                N(SyntaxKind.IdentifierName);
-                {
-                    N(SyntaxKind.IdentifierToken, "a");
-                }
-            }
-            N(SyntaxKind.EqualsValuesClause);
-            {
-                N(SyntaxKind.EqualsToken);
-                N(SyntaxKind.AddExpression);
-                {
-                    N(SyntaxKind.TypeCastExpression);
-                    {
-                        N(SyntaxKind.IdentifierName);
-                        {
-                            N(SyntaxKind.IdentifierToken, "b");
-                        }
-                        N(SyntaxKind.ColonColonToken);
-                        N(SyntaxKind.SimpleTypeName);
-                        {
-                            N(SyntaxKind.IdentifierToken, "T");
-                        }
-                    }
-                    N(SyntaxKind.PlusToken);
-                    N(SyntaxKind.TypeCastExpression);
-                    {
-                        N(SyntaxKind.IdentifierName);
-                        {
-                            N(SyntaxKind.IdentifierToken, "b");
-                        }
-                        N(SyntaxKind.ColonColonToken);
-                        N(SyntaxKind.SimpleTypeName);
-                        {
-                            N(SyntaxKind.IdentifierToken, "T");
-                        }
+                        await N(SyntaxKind.IdentifierToken, "T");
                     }
                 }
             }
@@ -1734,37 +1682,49 @@ public sealed class TypeParsingTests(ITestOutputHelper output) : ParsingTestsBas
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParsesTypeDeclarationStatementWithUnary()
+    [Test]
+    public async Task Parser_ParsesTypeDeclarationStatementWithAdding()
     {
-        UsingStatement("local a = -b :: T");
+        await UsingStatementAsync("local a = b :: T + b :: T");
 
-        N(SyntaxKind.LocalVariableDeclarationStatement);
+        await N(SyntaxKind.LocalVariableDeclarationStatement);
         {
-            N(SyntaxKind.LocalKeyword);
-            N(SyntaxKind.LocalDeclarationName);
+            await N(SyntaxKind.LocalKeyword);
+            await N(SyntaxKind.LocalDeclarationName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "a");
+                    await N(SyntaxKind.IdentifierToken, "a");
                 }
             }
-            N(SyntaxKind.EqualsValuesClause);
+            await N(SyntaxKind.EqualsValuesClause);
             {
-                N(SyntaxKind.EqualsToken);
-                N(SyntaxKind.UnaryMinusExpression);
+                await N(SyntaxKind.EqualsToken);
+                await N(SyntaxKind.AddExpression);
                 {
-                    N(SyntaxKind.MinusToken);
-                    N(SyntaxKind.TypeCastExpression);
+                    await N(SyntaxKind.TypeCastExpression);
                     {
-                        N(SyntaxKind.IdentifierName);
+                        await N(SyntaxKind.IdentifierName);
                         {
-                            N(SyntaxKind.IdentifierToken, "b");
+                            await N(SyntaxKind.IdentifierToken, "b");
                         }
-                        N(SyntaxKind.ColonColonToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.ColonColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                    await N(SyntaxKind.PlusToken);
+                    await N(SyntaxKind.TypeCastExpression);
+                    {
+                        await N(SyntaxKind.IdentifierName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "b");
+                        }
+                        await N(SyntaxKind.ColonColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
@@ -1773,41 +1733,37 @@ public sealed class TypeParsingTests(ITestOutputHelper output) : ParsingTestsBas
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParseTypeDeclarationStatementWithPow()
+    [Test]
+    public async Task Parser_ParsesTypeDeclarationStatementWithUnary()
     {
-        UsingStatement("local a = b ^ b :: T");
+        await UsingStatementAsync("local a = -b :: T");
 
-        N(SyntaxKind.LocalVariableDeclarationStatement);
+        await N(SyntaxKind.LocalVariableDeclarationStatement);
         {
-            N(SyntaxKind.LocalKeyword);
-            N(SyntaxKind.LocalDeclarationName);
+            await N(SyntaxKind.LocalKeyword);
+            await N(SyntaxKind.LocalDeclarationName);
             {
-                N(SyntaxKind.IdentifierName);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.IdentifierToken, "a");
+                    await N(SyntaxKind.IdentifierToken, "a");
                 }
             }
-            N(SyntaxKind.EqualsValuesClause);
+            await N(SyntaxKind.EqualsValuesClause);
             {
-                N(SyntaxKind.EqualsToken);
-                N(SyntaxKind.ExponentiateExpression);
+                await N(SyntaxKind.EqualsToken);
+                await N(SyntaxKind.UnaryMinusExpression);
                 {
-                    N(SyntaxKind.IdentifierName);
+                    await N(SyntaxKind.MinusToken);
+                    await N(SyntaxKind.TypeCastExpression);
                     {
-                        N(SyntaxKind.IdentifierToken, "b");
-                    }
-                    N(SyntaxKind.HatToken);
-                    N(SyntaxKind.TypeCastExpression);
-                    {
-                        N(SyntaxKind.IdentifierName);
+                        await N(SyntaxKind.IdentifierName);
                         {
-                            N(SyntaxKind.IdentifierToken, "b");
+                            await N(SyntaxKind.IdentifierToken, "b");
                         }
-                        N(SyntaxKind.ColonColonToken);
-                        N(SyntaxKind.SimpleTypeName);
+                        await N(SyntaxKind.ColonColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
                         {
-                            N(SyntaxKind.IdentifierToken, "T");
+                            await N(SyntaxKind.IdentifierToken, "T");
                         }
                     }
                 }
@@ -1816,55 +1772,98 @@ public sealed class TypeParsingTests(ITestOutputHelper output) : ParsingTestsBas
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParseEmptyTypePack()
+    [Test]
+    public async Task Parser_ParseTypeDeclarationStatementWithPow()
     {
-        UsingStatement("function a(): () end");
+        await UsingStatementAsync("local a = b ^ b :: T");
 
-        N(SyntaxKind.FunctionDeclarationStatement);
+        await N(SyntaxKind.LocalVariableDeclarationStatement);
         {
-            N(SyntaxKind.FunctionKeyword);
-            N(SyntaxKind.SimpleFunctionName);
+            await N(SyntaxKind.LocalKeyword);
+            await N(SyntaxKind.LocalDeclarationName);
             {
-                N(SyntaxKind.IdentifierToken, "a");
-            }
-            N(SyntaxKind.ParameterList);
-            {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.CloseParenthesisToken);
-            }
-            N(SyntaxKind.TypeBinding);
-            {
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.TypePack);
+                await N(SyntaxKind.IdentifierName);
                 {
-                    N(SyntaxKind.OpenParenthesisToken);
-                    N(SyntaxKind.CloseParenthesisToken);
+                    await N(SyntaxKind.IdentifierToken, "a");
                 }
             }
-            M(SyntaxKind.StatementList);
-            N(SyntaxKind.EndKeyword);
+            await N(SyntaxKind.EqualsValuesClause);
+            {
+                await N(SyntaxKind.EqualsToken);
+                await N(SyntaxKind.ExponentiateExpression);
+                {
+                    await N(SyntaxKind.IdentifierName);
+                    {
+                        await N(SyntaxKind.IdentifierToken, "b");
+                    }
+                    await N(SyntaxKind.HatToken);
+                    await N(SyntaxKind.TypeCastExpression);
+                    {
+                        await N(SyntaxKind.IdentifierName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "b");
+                        }
+                        await N(SyntaxKind.ColonColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+            }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ParseEmptyTypeArgument()
+    [Test]
+    public async Task Parser_ParseEmptyTypePack()
     {
-        UsingStatement("type T = T<>");
+        await UsingStatementAsync("function a(): () end");
 
-        N(SyntaxKind.TypeDeclarationStatement);
+        await N(SyntaxKind.FunctionDeclarationStatement);
         {
-            N(SyntaxKind.TypeKeyword);
-            N(SyntaxKind.IdentifierToken, "T");
-            N(SyntaxKind.EqualsToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.SimpleFunctionName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
-                N(SyntaxKind.TypeArgumentList);
+                await N(SyntaxKind.IdentifierToken, "a");
+            }
+            await N(SyntaxKind.ParameterList);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
+            }
+            await N(SyntaxKind.TypeBinding);
+            {
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.TypePack);
                 {
-                    N(SyntaxKind.LessThanToken);
-                    N(SyntaxKind.GreaterThanToken);
+                    await N(SyntaxKind.OpenParenthesisToken);
+                    await N(SyntaxKind.CloseParenthesisToken);
+                }
+            }
+            await M(SyntaxKind.StatementList);
+            await N(SyntaxKind.EndKeyword);
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParseEmptyTypeArgument()
+    {
+        await UsingStatementAsync("type T = T<>");
+
+        await N(SyntaxKind.TypeDeclarationStatement);
+        {
+            await N(SyntaxKind.TypeKeyword);
+            await N(SyntaxKind.IdentifierToken, "T");
+            await N(SyntaxKind.EqualsToken);
+            await N(SyntaxKind.SimpleTypeName);
+            {
+                await N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.TypeArgumentList);
+                {
+                    await N(SyntaxKind.LessThanToken);
+                    await N(SyntaxKind.GreaterThanToken);
                 }
             }
         }

@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using Loretta.CodeAnalysis;
 using Loretta.CodeAnalysis.Test.Utilities;
@@ -56,13 +57,6 @@ namespace Loretta.Test.Utilities
         }
 
         public static string NormalizeNewLines(XCData data)
-        {
-            if (ExecutionConditionUtil.IsWindows)
-            {
-                return data.Value.Replace("\n", "\r\n");
-            }
-
-            return data.Value;
-        }
+            => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? data.Value.Replace("\n", "\r\n") : data.Value;
     }
 }

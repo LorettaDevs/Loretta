@@ -1,202 +1,199 @@
-using Xunit;
+using Loretta.CodeAnalysis.Test.Utilities;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 
-public sealed class InterpolatedStringTests(ITestOutputHelper output) : ParsingTestsBase(output)
+public sealed class InterpolatedStringTests : ParsingTestsBase
 {
-    [Fact]
-    public void LanguageParser_ProperlyReadsStringsInsideInterpolatedStrings()
+    [Test]
+    public async Task LanguageParser_ProperlyReadsStringsInsideInterpolatedStrings()
     {
-        UsingExpression(
+        await UsingExpressionAsync(
             """`some\tthing {"a very\nlong string"} some\nthing`""",
             new LuaParseOptions(LuaSyntaxOptions.Luau));
 
-        N(SyntaxKind.InterpolatedStringExpression);
+        await N(SyntaxKind.InterpolatedStringExpression);
         {
-            N(SyntaxKind.BacktickToken);
-            N(SyntaxKind.InterpolatedStringText);
+            await N(SyntaxKind.BacktickToken);
+            await N(SyntaxKind.InterpolatedStringText);
             {
-                Assert.Equal(
-                    "some\tthing ",
-                    N(SyntaxKind.InterpolatedStringTextToken, "some\\tthing ").AsToken().Value);
+                var token = (await N(SyntaxKind.InterpolatedStringTextToken, "some\\tthing ")).AsToken();
+                await Assert.That(token).HasValue("some\tthing ");
             }
-            N(SyntaxKind.Interpolation);
+            await N(SyntaxKind.Interpolation);
             {
-                N(SyntaxKind.OpenBraceToken);
-                N(SyntaxKind.StringLiteralExpression);
+                await N(SyntaxKind.OpenBraceToken);
+                await N(SyntaxKind.StringLiteralExpression);
                 {
-                    Assert.Equal(
-                        "a very\nlong string",
-                        N(SyntaxKind.StringLiteralToken, "\"a very\\nlong string\"").AsToken().Value);
+                    var token = (await N(SyntaxKind.StringLiteralToken, "\"a very\\nlong string\"")).AsToken();
+                    await Assert.That(token).HasValue("a very\nlong string");
                 }
-                N(SyntaxKind.CloseBraceToken);
+                await N(SyntaxKind.CloseBraceToken);
             }
-            N(SyntaxKind.InterpolatedStringText);
+            await N(SyntaxKind.InterpolatedStringText);
             {
-                Assert.Equal(
-                    " some\nthing",
-                    N(SyntaxKind.InterpolatedStringTextToken, " some\\nthing").AsToken().Value);
+                var token = (await N(SyntaxKind.InterpolatedStringTextToken, " some\\nthing")).AsToken();
+                await Assert.That(token).HasValue(" some\nthing");
             }
-            N(SyntaxKind.BacktickToken);
+            await N(SyntaxKind.BacktickToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void LanguageParser_ProperlyReadsDeeplyNestedInterpolatedStrings()
+    [Test]
+    public async Task LanguageParser_ProperlyReadsDeeplyNestedInterpolatedStrings()
     {
-        UsingExpression(
+        await UsingExpressionAsync(
             """`a {`very {`{`very {`{`very` .. ` ` .. `very`} very{(" very"):rep(100)}`}`} very`} nested`} string`""",
             new LuaParseOptions(LuaSyntaxOptions.Luau));
 
-        N(SyntaxKind.InterpolatedStringExpression);
+        await N(SyntaxKind.InterpolatedStringExpression);
         {
-            N(SyntaxKind.BacktickToken);
-            N(SyntaxKind.InterpolatedStringText);
+            await N(SyntaxKind.BacktickToken);
+            await N(SyntaxKind.InterpolatedStringText);
             {
-                N(SyntaxKind.InterpolatedStringTextToken, "a ");
+                await N(SyntaxKind.InterpolatedStringTextToken, "a ");
             }
-            N(SyntaxKind.Interpolation);
+            await N(SyntaxKind.Interpolation);
             {
-                N(SyntaxKind.OpenBraceToken);
-                N(SyntaxKind.InterpolatedStringExpression);
+                await N(SyntaxKind.OpenBraceToken);
+                await N(SyntaxKind.InterpolatedStringExpression);
                 {
-                    N(SyntaxKind.BacktickToken);
-                    N(SyntaxKind.InterpolatedStringText);
+                    await N(SyntaxKind.BacktickToken);
+                    await N(SyntaxKind.InterpolatedStringText);
                     {
-                        N(SyntaxKind.InterpolatedStringTextToken, "very ");
+                        await N(SyntaxKind.InterpolatedStringTextToken, "very ");
                     }
-                    N(SyntaxKind.Interpolation);
+                    await N(SyntaxKind.Interpolation);
                     {
-                        N(SyntaxKind.OpenBraceToken);
-                        N(SyntaxKind.InterpolatedStringExpression);
+                        await N(SyntaxKind.OpenBraceToken);
+                        await N(SyntaxKind.InterpolatedStringExpression);
                         {
-                            N(SyntaxKind.BacktickToken);
-                            N(SyntaxKind.Interpolation);
+                            await N(SyntaxKind.BacktickToken);
+                            await N(SyntaxKind.Interpolation);
                             {
-                                N(SyntaxKind.OpenBraceToken);
-                                N(SyntaxKind.InterpolatedStringExpression);
+                                await N(SyntaxKind.OpenBraceToken);
+                                await N(SyntaxKind.InterpolatedStringExpression);
                                 {
-                                    N(SyntaxKind.BacktickToken);
-                                    N(SyntaxKind.InterpolatedStringText);
+                                    await N(SyntaxKind.BacktickToken);
+                                    await N(SyntaxKind.InterpolatedStringText);
                                     {
-                                        N(SyntaxKind.InterpolatedStringTextToken, "very ");
+                                        await N(SyntaxKind.InterpolatedStringTextToken, "very ");
                                     }
-                                    N(SyntaxKind.Interpolation);
+                                    await N(SyntaxKind.Interpolation);
                                     {
-                                        N(SyntaxKind.OpenBraceToken);
-                                        N(SyntaxKind.InterpolatedStringExpression);
+                                        await N(SyntaxKind.OpenBraceToken);
+                                        await N(SyntaxKind.InterpolatedStringExpression);
                                         {
-                                            N(SyntaxKind.BacktickToken);
-                                            N(SyntaxKind.Interpolation);
+                                            await N(SyntaxKind.BacktickToken);
+                                            await N(SyntaxKind.Interpolation);
                                             {
-                                                N(SyntaxKind.OpenBraceToken);
-                                                N(SyntaxKind.ConcatExpression);
+                                                await N(SyntaxKind.OpenBraceToken);
+                                                await N(SyntaxKind.ConcatExpression);
                                                 {
-                                                    N(SyntaxKind.ConcatExpression);
+                                                    await N(SyntaxKind.ConcatExpression);
                                                     {
-                                                        N(SyntaxKind.InterpolatedStringExpression);
+                                                        await N(SyntaxKind.InterpolatedStringExpression);
                                                         {
-                                                            N(SyntaxKind.BacktickToken);
-                                                            N(SyntaxKind.InterpolatedStringText);
+                                                            await N(SyntaxKind.BacktickToken);
+                                                            await N(SyntaxKind.InterpolatedStringText);
                                                             {
-                                                                N(SyntaxKind.InterpolatedStringTextToken, "very");
+                                                                await N(SyntaxKind.InterpolatedStringTextToken, "very");
                                                             }
-                                                            N(SyntaxKind.BacktickToken);
+                                                            await N(SyntaxKind.BacktickToken);
                                                         }
-                                                        N(SyntaxKind.DotDotToken);
-                                                        N(SyntaxKind.InterpolatedStringExpression);
+                                                        await N(SyntaxKind.DotDotToken);
+                                                        await N(SyntaxKind.InterpolatedStringExpression);
                                                         {
-                                                            N(SyntaxKind.BacktickToken);
-                                                            N(SyntaxKind.InterpolatedStringText);
+                                                            await N(SyntaxKind.BacktickToken);
+                                                            await N(SyntaxKind.InterpolatedStringText);
                                                             {
-                                                                N(SyntaxKind.InterpolatedStringTextToken, " ");
+                                                                await N(SyntaxKind.InterpolatedStringTextToken, " ");
                                                             }
-                                                            N(SyntaxKind.BacktickToken);
+                                                            await N(SyntaxKind.BacktickToken);
                                                         }
                                                     }
-                                                    N(SyntaxKind.DotDotToken);
-                                                    N(SyntaxKind.InterpolatedStringExpression);
+                                                    await N(SyntaxKind.DotDotToken);
+                                                    await N(SyntaxKind.InterpolatedStringExpression);
                                                     {
-                                                        N(SyntaxKind.BacktickToken);
-                                                        N(SyntaxKind.InterpolatedStringText);
+                                                        await N(SyntaxKind.BacktickToken);
+                                                        await N(SyntaxKind.InterpolatedStringText);
                                                         {
-                                                            N(SyntaxKind.InterpolatedStringTextToken, "very");
+                                                            await N(SyntaxKind.InterpolatedStringTextToken, "very");
                                                         }
-                                                        N(SyntaxKind.BacktickToken);
+                                                        await N(SyntaxKind.BacktickToken);
                                                     }
                                                 }
-                                                N(SyntaxKind.CloseBraceToken);
+                                                await N(SyntaxKind.CloseBraceToken);
                                             }
-                                            N(SyntaxKind.InterpolatedStringText);
+                                            await N(SyntaxKind.InterpolatedStringText);
                                             {
-                                                N(SyntaxKind.InterpolatedStringTextToken, " very");
+                                                await N(SyntaxKind.InterpolatedStringTextToken, " very");
                                             }
-                                            N(SyntaxKind.Interpolation);
+                                            await N(SyntaxKind.Interpolation);
                                             {
-                                                N(SyntaxKind.OpenBraceToken);
-                                                N(SyntaxKind.MethodCallExpression);
+                                                await N(SyntaxKind.OpenBraceToken);
+                                                await N(SyntaxKind.MethodCallExpression);
                                                 {
-                                                    N(SyntaxKind.ParenthesizedExpression);
+                                                    await N(SyntaxKind.ParenthesizedExpression);
                                                     {
-                                                        N(SyntaxKind.OpenParenthesisToken);
-                                                        N(SyntaxKind.StringLiteralExpression);
+                                                        await N(SyntaxKind.OpenParenthesisToken);
+                                                        await N(SyntaxKind.StringLiteralExpression);
                                                         {
-                                                            N(SyntaxKind.StringLiteralToken, "\" very\"");
+                                                            await N(SyntaxKind.StringLiteralToken, "\" very\"");
                                                         }
-                                                        N(SyntaxKind.CloseParenthesisToken);
+                                                        await N(SyntaxKind.CloseParenthesisToken);
                                                     }
-                                                    N(SyntaxKind.ColonToken);
-                                                    N(SyntaxKind.IdentifierToken, "rep");
-                                                    N(SyntaxKind.ExpressionListFunctionArgument);
+                                                    await N(SyntaxKind.ColonToken);
+                                                    await N(SyntaxKind.IdentifierToken, "rep");
+                                                    await N(SyntaxKind.ExpressionListFunctionArgument);
                                                     {
-                                                        N(SyntaxKind.OpenParenthesisToken);
-                                                        N(SyntaxKind.NumericalLiteralExpression);
+                                                        await N(SyntaxKind.OpenParenthesisToken);
+                                                        await N(SyntaxKind.NumericalLiteralExpression);
                                                         {
-                                                            N(SyntaxKind.NumericLiteralToken, "100");
+                                                            await N(SyntaxKind.NumericLiteralToken, "100");
                                                         }
-                                                        N(SyntaxKind.CloseParenthesisToken);
+                                                        await N(SyntaxKind.CloseParenthesisToken);
                                                     }
                                                 }
-                                                N(SyntaxKind.CloseBraceToken);
+                                                await N(SyntaxKind.CloseBraceToken);
                                             }
-                                            N(SyntaxKind.BacktickToken);
+                                            await N(SyntaxKind.BacktickToken);
                                         }
-                                        N(SyntaxKind.CloseBraceToken);
+                                        await N(SyntaxKind.CloseBraceToken);
                                     }
-                                    N(SyntaxKind.BacktickToken);
+                                    await N(SyntaxKind.BacktickToken);
                                 }
-                                N(SyntaxKind.CloseBraceToken);
+                                await N(SyntaxKind.CloseBraceToken);
                             }
-                            N(SyntaxKind.InterpolatedStringText);
+                            await N(SyntaxKind.InterpolatedStringText);
                             {
-                                N(SyntaxKind.InterpolatedStringTextToken, " very");
+                                await N(SyntaxKind.InterpolatedStringTextToken, " very");
                             }
-                            N(SyntaxKind.BacktickToken);
+                            await N(SyntaxKind.BacktickToken);
                         }
-                        N(SyntaxKind.CloseBraceToken);
+                        await N(SyntaxKind.CloseBraceToken);
                     }
-                    N(SyntaxKind.InterpolatedStringText);
+                    await N(SyntaxKind.InterpolatedStringText);
                     {
-                        N(SyntaxKind.InterpolatedStringTextToken, " nested");
+                        await N(SyntaxKind.InterpolatedStringTextToken, " nested");
                     }
-                    N(SyntaxKind.BacktickToken);
+                    await N(SyntaxKind.BacktickToken);
                 }
-                N(SyntaxKind.CloseBraceToken);
+                await N(SyntaxKind.CloseBraceToken);
             }
-            N(SyntaxKind.InterpolatedStringText);
+            await N(SyntaxKind.InterpolatedStringText);
             {
-                N(SyntaxKind.InterpolatedStringTextToken, " string");
+                await N(SyntaxKind.InterpolatedStringTextToken, " string");
             }
-            N(SyntaxKind.BacktickToken);
+            await N(SyntaxKind.BacktickToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void LanguageParser_ProperlyReadsInterpolatedStringsWithComplexExpressions()
+    [Test]
+    public async Task LanguageParser_ProperlyReadsInterpolatedStringsWithComplexExpressions()
     {
-        UsingExpression(
+        await UsingExpressionAsync(
             """
             print(`some {function()
               print(`other {function()
@@ -210,385 +207,398 @@ public sealed class InterpolatedStringTests(ITestOutputHelper output) : ParsingT
             """,
             new LuaParseOptions(LuaSyntaxOptions.Luau));
 
-        N(SyntaxKind.FunctionCallExpression);
+        await N(SyntaxKind.FunctionCallExpression);
         {
-            N(SyntaxKind.IdentifierName);
+            await N(SyntaxKind.IdentifierName);
             {
-                N(SyntaxKind.IdentifierToken, "print");
+                await N(SyntaxKind.IdentifierToken, "print");
             }
-            N(SyntaxKind.ExpressionListFunctionArgument);
+            await N(SyntaxKind.ExpressionListFunctionArgument);
             {
-                N(SyntaxKind.OpenParenthesisToken);
-                N(SyntaxKind.InterpolatedStringExpression);
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.InterpolatedStringExpression);
                 {
-                    N(SyntaxKind.BacktickToken);
-                    N(SyntaxKind.InterpolatedStringText);
+                    await N(SyntaxKind.BacktickToken);
+                    await N(SyntaxKind.InterpolatedStringText);
                     {
-                        N(SyntaxKind.InterpolatedStringTextToken, "some ");
+                        await N(SyntaxKind.InterpolatedStringTextToken, "some ");
                     }
-                    N(SyntaxKind.Interpolation);
+                    await N(SyntaxKind.Interpolation);
                     {
-                        N(SyntaxKind.OpenBraceToken);
-                        N(SyntaxKind.AnonymousFunctionExpression);
+                        await N(SyntaxKind.OpenBraceToken);
+                        await N(SyntaxKind.AnonymousFunctionExpression);
                         {
-                            N(SyntaxKind.FunctionKeyword);
-                            N(SyntaxKind.ParameterList);
+                            await N(SyntaxKind.FunctionKeyword);
+                            await N(SyntaxKind.ParameterList);
                             {
-                                N(SyntaxKind.OpenParenthesisToken);
-                                N(SyntaxKind.CloseParenthesisToken);
+                                await N(SyntaxKind.OpenParenthesisToken);
+                                await N(SyntaxKind.CloseParenthesisToken);
                             }
-                            N(SyntaxKind.StatementList);
+                            await N(SyntaxKind.StatementList);
                             {
-                                N(SyntaxKind.ExpressionStatement);
+                                await N(SyntaxKind.ExpressionStatement);
                                 {
-                                    N(SyntaxKind.FunctionCallExpression);
+                                    await N(SyntaxKind.FunctionCallExpression);
                                     {
-                                        N(SyntaxKind.IdentifierName);
+                                        await N(SyntaxKind.IdentifierName);
                                         {
-                                            N(SyntaxKind.IdentifierToken, "print");
+                                            await N(SyntaxKind.IdentifierToken, "print");
                                         }
-                                        N(SyntaxKind.ExpressionListFunctionArgument);
+                                        await N(SyntaxKind.ExpressionListFunctionArgument);
                                         {
-                                            N(SyntaxKind.OpenParenthesisToken);
-                                            N(SyntaxKind.InterpolatedStringExpression);
+                                            await N(SyntaxKind.OpenParenthesisToken);
+                                            await N(SyntaxKind.InterpolatedStringExpression);
                                             {
-                                                N(SyntaxKind.BacktickToken);
-                                                N(SyntaxKind.InterpolatedStringText);
+                                                await N(SyntaxKind.BacktickToken);
+                                                await N(SyntaxKind.InterpolatedStringText);
                                                 {
-                                                    N(SyntaxKind.InterpolatedStringTextToken, "other ");
+                                                    await N(SyntaxKind.InterpolatedStringTextToken, "other ");
                                                 }
-                                                N(SyntaxKind.Interpolation);
+                                                await N(SyntaxKind.Interpolation);
                                                 {
-                                                    N(SyntaxKind.OpenBraceToken);
-                                                    N(SyntaxKind.AnonymousFunctionExpression);
+                                                    await N(SyntaxKind.OpenBraceToken);
+                                                    await N(SyntaxKind.AnonymousFunctionExpression);
                                                     {
-                                                        N(SyntaxKind.FunctionKeyword);
-                                                        N(SyntaxKind.ParameterList);
+                                                        await N(SyntaxKind.FunctionKeyword);
+                                                        await N(SyntaxKind.ParameterList);
                                                         {
-                                                            N(SyntaxKind.OpenParenthesisToken);
-                                                            N(SyntaxKind.CloseParenthesisToken);
+                                                            await N(SyntaxKind.OpenParenthesisToken);
+                                                            await N(SyntaxKind.CloseParenthesisToken);
                                                         }
-                                                        N(SyntaxKind.StatementList);
+                                                        await N(SyntaxKind.StatementList);
                                                         {
-                                                            N(SyntaxKind.ExpressionStatement);
+                                                            await N(SyntaxKind.ExpressionStatement);
                                                             {
-                                                                N(SyntaxKind.FunctionCallExpression);
+                                                                await N(SyntaxKind.FunctionCallExpression);
                                                                 {
-                                                                    N(SyntaxKind.IdentifierName);
+                                                                    await N(SyntaxKind.IdentifierName);
                                                                     {
-                                                                        N(SyntaxKind.IdentifierToken, "print");
+                                                                        await N(SyntaxKind.IdentifierToken, "print");
                                                                     }
-                                                                    N(SyntaxKind.ExpressionListFunctionArgument);
+                                                                    await N(SyntaxKind.ExpressionListFunctionArgument);
                                                                     {
-                                                                        N(SyntaxKind.OpenParenthesisToken);
-                                                                        N(SyntaxKind.InterpolatedStringExpression);
+                                                                        await N(SyntaxKind.OpenParenthesisToken);
+                                                                        await N(
+                                                                            SyntaxKind.InterpolatedStringExpression);
                                                                         {
-                                                                            N(SyntaxKind.BacktickToken);
-                                                                            N(SyntaxKind.InterpolatedStringText);
+                                                                            await N(SyntaxKind.BacktickToken);
+                                                                            await N(SyntaxKind.InterpolatedStringText);
                                                                             {
-                                                                                N(
+                                                                                await N(
                                                                                     SyntaxKind
                                                                                         .InterpolatedStringTextToken,
                                                                                     "some ");
                                                                             }
-                                                                            N(SyntaxKind.Interpolation);
+                                                                            await N(SyntaxKind.Interpolation);
                                                                             {
-                                                                                N(SyntaxKind.OpenBraceToken);
-                                                                                N(SyntaxKind.IfExpression);
+                                                                                await N(SyntaxKind.OpenBraceToken);
+                                                                                await N(SyntaxKind.IfExpression);
                                                                                 {
-                                                                                    N(SyntaxKind.IfKeyword);
-                                                                                    N(
+                                                                                    await N(SyntaxKind.IfKeyword);
+                                                                                    await N(
                                                                                         SyntaxKind
                                                                                             .TrueLiteralExpression);
                                                                                     {
-                                                                                        N(SyntaxKind.TrueKeyword);
+                                                                                        await N(SyntaxKind.TrueKeyword);
                                                                                     }
-                                                                                    N(SyntaxKind.ThenKeyword);
-                                                                                    N(
+                                                                                    await N(SyntaxKind.ThenKeyword);
+                                                                                    await N(
                                                                                         SyntaxKind
                                                                                             .AnonymousFunctionExpression);
                                                                                     {
-                                                                                        N(
-                                                                                            SyntaxKind
-                                                                                                .FunctionKeyword);
-                                                                                        N(SyntaxKind.ParameterList);
+                                                                                        await N(
+                                                                                            SyntaxKind.FunctionKeyword);
+                                                                                        await N(
+                                                                                            SyntaxKind.ParameterList);
                                                                                         {
-                                                                                            N(
+                                                                                            await N(
                                                                                                 SyntaxKind
                                                                                                     .OpenParenthesisToken);
-                                                                                            N(
+                                                                                            await N(
                                                                                                 SyntaxKind
                                                                                                     .CloseParenthesisToken);
                                                                                         }
-                                                                                        N(SyntaxKind.StatementList);
+                                                                                        await N(
+                                                                                            SyntaxKind.StatementList);
                                                                                         {
-                                                                                            N(
+                                                                                            await N(
                                                                                                 SyntaxKind
                                                                                                     .ExpressionStatement);
                                                                                             {
-                                                                                                N(
+                                                                                                await N(
                                                                                                     SyntaxKind
                                                                                                         .FunctionCallExpression);
                                                                                                 {
-                                                                                                    N(
+                                                                                                    await N(
                                                                                                         SyntaxKind
                                                                                                             .IdentifierName);
                                                                                                     {
-                                                                                                        N(
+                                                                                                        await N(
                                                                                                             SyntaxKind
                                                                                                                 .IdentifierToken,
                                                                                                             "print");
                                                                                                     }
-                                                                                                    N(
+                                                                                                    await N(
                                                                                                         SyntaxKind
                                                                                                             .ExpressionListFunctionArgument);
                                                                                                     {
-                                                                                                        N(
+                                                                                                        await N(
                                                                                                             SyntaxKind
                                                                                                                 .OpenParenthesisToken);
-                                                                                                        N(
+                                                                                                        await N(
                                                                                                             SyntaxKind
                                                                                                                 .InterpolatedStringExpression);
                                                                                                         {
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .BacktickToken);
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .InterpolatedStringText);
                                                                                                             {
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .InterpolatedStringTextToken,
                                                                                                                     "fucked up ");
                                                                                                             }
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .Interpolation);
                                                                                                             {
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .OpenBraceToken);
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .AddExpression);
                                                                                                                 {
-                                                                                                                    N(
-                                                                                                                        SyntaxKind
-                                                                                                                            .NumericalLiteralExpression);
-                                                                                                                    {
+                                                                                                                    await
                                                                                                                         N(
                                                                                                                             SyntaxKind
-                                                                                                                                .NumericLiteralToken,
-                                                                                                                            "1");
+                                                                                                                                .NumericalLiteralExpression);
+                                                                                                                    {
+                                                                                                                        await
+                                                                                                                            N(
+                                                                                                                                SyntaxKind
+                                                                                                                                    .NumericLiteralToken,
+                                                                                                                                "1");
                                                                                                                     }
-                                                                                                                    N(
-                                                                                                                        SyntaxKind
-                                                                                                                            .PlusToken);
-                                                                                                                    N(
-                                                                                                                        SyntaxKind
-                                                                                                                            .ExponentiateExpression);
+                                                                                                                    await
+                                                                                                                        N(
+                                                                                                                            SyntaxKind
+                                                                                                                                .PlusToken);
+                                                                                                                    await
+                                                                                                                        N(
+                                                                                                                            SyntaxKind
+                                                                                                                                .ExponentiateExpression);
                                                                                                                     {
-                                                                                                                        N(
-                                                                                                                            SyntaxKind
-                                                                                                                                .NumericalLiteralExpression);
-                                                                                                                        {
+                                                                                                                        await
                                                                                                                             N(
                                                                                                                                 SyntaxKind
-                                                                                                                                    .NumericLiteralToken,
-                                                                                                                                "2");
+                                                                                                                                    .NumericalLiteralExpression);
+                                                                                                                        {
+                                                                                                                            await
+                                                                                                                                N(
+                                                                                                                                    SyntaxKind
+                                                                                                                                        .NumericLiteralToken,
+                                                                                                                                    "2");
                                                                                                                         }
-                                                                                                                        N(
-                                                                                                                            SyntaxKind
-                                                                                                                                .HatToken);
-                                                                                                                        N(
-                                                                                                                            SyntaxKind
-                                                                                                                                .NumericalLiteralExpression);
-                                                                                                                        {
+                                                                                                                        await
                                                                                                                             N(
                                                                                                                                 SyntaxKind
-                                                                                                                                    .NumericLiteralToken,
-                                                                                                                                "6");
+                                                                                                                                    .HatToken);
+                                                                                                                        await
+                                                                                                                            N(
+                                                                                                                                SyntaxKind
+                                                                                                                                    .NumericalLiteralExpression);
+                                                                                                                        {
+                                                                                                                            await
+                                                                                                                                N(
+                                                                                                                                    SyntaxKind
+                                                                                                                                        .NumericLiteralToken,
+                                                                                                                                    "6");
                                                                                                                         }
                                                                                                                     }
                                                                                                                 }
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .CloseBraceToken);
                                                                                                             }
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .InterpolatedStringText);
                                                                                                             {
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .InterpolatedStringTextToken,
                                                                                                                     " shit");
                                                                                                             }
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .BacktickToken);
                                                                                                         }
-                                                                                                        N(
+                                                                                                        await N(
                                                                                                             SyntaxKind
                                                                                                                 .CloseParenthesisToken);
                                                                                                     }
                                                                                                 }
                                                                                             }
                                                                                         }
-                                                                                        N(SyntaxKind.EndKeyword);
+                                                                                        await N(SyntaxKind.EndKeyword);
                                                                                     }
-                                                                                    N(SyntaxKind.ElseKeyword);
-                                                                                    N(
+                                                                                    await N(SyntaxKind.ElseKeyword);
+                                                                                    await N(
                                                                                         SyntaxKind
                                                                                             .AnonymousFunctionExpression);
                                                                                     {
-                                                                                        N(
-                                                                                            SyntaxKind
-                                                                                                .FunctionKeyword);
-                                                                                        N(SyntaxKind.ParameterList);
+                                                                                        await N(
+                                                                                            SyntaxKind.FunctionKeyword);
+                                                                                        await N(
+                                                                                            SyntaxKind.ParameterList);
                                                                                         {
-                                                                                            N(
+                                                                                            await N(
                                                                                                 SyntaxKind
                                                                                                     .OpenParenthesisToken);
-                                                                                            N(
+                                                                                            await N(
                                                                                                 SyntaxKind
                                                                                                     .VarArgParameter);
                                                                                             {
-                                                                                                N(
+                                                                                                await N(
                                                                                                     SyntaxKind
                                                                                                         .DotDotDotToken);
                                                                                             }
-                                                                                            N(
+                                                                                            await N(
                                                                                                 SyntaxKind
                                                                                                     .CloseParenthesisToken);
                                                                                         }
-                                                                                        N(SyntaxKind.StatementList);
+                                                                                        await N(
+                                                                                            SyntaxKind.StatementList);
                                                                                         {
-                                                                                            N(
+                                                                                            await N(
                                                                                                 SyntaxKind
                                                                                                     .ExpressionStatement);
                                                                                             {
-                                                                                                N(
+                                                                                                await N(
                                                                                                     SyntaxKind
                                                                                                         .FunctionCallExpression);
                                                                                                 {
-                                                                                                    N(
+                                                                                                    await N(
                                                                                                         SyntaxKind
                                                                                                             .IdentifierName);
                                                                                                     {
-                                                                                                        N(
+                                                                                                        await N(
                                                                                                             SyntaxKind
                                                                                                                 .IdentifierToken,
                                                                                                             "print");
                                                                                                     }
-                                                                                                    N(
+                                                                                                    await N(
                                                                                                         SyntaxKind
                                                                                                             .ExpressionListFunctionArgument);
                                                                                                     {
-                                                                                                        N(
+                                                                                                        await N(
                                                                                                             SyntaxKind
                                                                                                                 .OpenParenthesisToken);
-                                                                                                        N(
+                                                                                                        await N(
                                                                                                             SyntaxKind
                                                                                                                 .InterpolatedStringExpression);
                                                                                                         {
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .BacktickToken);
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .InterpolatedStringText);
                                                                                                             {
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .InterpolatedStringTextToken,
                                                                                                                     "fucked up ");
                                                                                                             }
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .Interpolation);
                                                                                                             {
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .OpenBraceToken);
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .VarArgExpression);
                                                                                                                 {
-                                                                                                                    N(
-                                                                                                                        SyntaxKind
-                                                                                                                            .DotDotDotToken);
+                                                                                                                    await
+                                                                                                                        N(
+                                                                                                                            SyntaxKind
+                                                                                                                                .DotDotDotToken);
                                                                                                                 }
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .CloseBraceToken);
                                                                                                             }
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .InterpolatedStringText);
                                                                                                             {
-                                                                                                                N(
+                                                                                                                await N(
                                                                                                                     SyntaxKind
                                                                                                                         .InterpolatedStringTextToken,
                                                                                                                     " shit");
                                                                                                             }
-                                                                                                            N(
+                                                                                                            await N(
                                                                                                                 SyntaxKind
                                                                                                                     .BacktickToken);
                                                                                                         }
-                                                                                                        N(
+                                                                                                        await N(
                                                                                                             SyntaxKind
                                                                                                                 .CloseParenthesisToken);
                                                                                                     }
                                                                                                 }
                                                                                             }
                                                                                         }
-                                                                                        N(SyntaxKind.EndKeyword);
+                                                                                        await N(SyntaxKind.EndKeyword);
                                                                                     }
                                                                                 }
-                                                                                N(SyntaxKind.CloseBraceToken);
+                                                                                await N(SyntaxKind.CloseBraceToken);
                                                                             }
-                                                                            N(SyntaxKind.InterpolatedStringText);
+                                                                            await N(SyntaxKind.InterpolatedStringText);
                                                                             {
-                                                                                N(
+                                                                                await N(
                                                                                     SyntaxKind
                                                                                         .InterpolatedStringTextToken,
                                                                                     " shit");
                                                                             }
-                                                                            N(SyntaxKind.BacktickToken);
+                                                                            await N(SyntaxKind.BacktickToken);
                                                                         }
-                                                                        N(SyntaxKind.CloseParenthesisToken);
+                                                                        await N(SyntaxKind.CloseParenthesisToken);
                                                                     }
                                                                 }
                                                             }
                                                         }
-                                                        N(SyntaxKind.EndKeyword);
+                                                        await N(SyntaxKind.EndKeyword);
                                                     }
-                                                    N(SyntaxKind.CloseBraceToken);
+                                                    await N(SyntaxKind.CloseBraceToken);
                                                 }
-                                                N(SyntaxKind.InterpolatedStringText);
+                                                await N(SyntaxKind.InterpolatedStringText);
                                                 {
-                                                    N(SyntaxKind.InterpolatedStringTextToken, " shit");
+                                                    await N(SyntaxKind.InterpolatedStringTextToken, " shit");
                                                 }
-                                                N(SyntaxKind.BacktickToken);
+                                                await N(SyntaxKind.BacktickToken);
                                             }
-                                            N(SyntaxKind.CloseParenthesisToken);
+                                            await N(SyntaxKind.CloseParenthesisToken);
                                         }
                                     }
                                 }
                             }
-                            N(SyntaxKind.EndKeyword);
+                            await N(SyntaxKind.EndKeyword);
                         }
-                        N(SyntaxKind.CloseBraceToken);
+                        await N(SyntaxKind.CloseBraceToken);
                     }
-                    N(SyntaxKind.InterpolatedStringText);
+                    await N(SyntaxKind.InterpolatedStringText);
                     {
-                        N(SyntaxKind.InterpolatedStringTextToken, " fucked up shit");
+                        await N(SyntaxKind.InterpolatedStringTextToken, " fucked up shit");
                     }
-                    N(SyntaxKind.BacktickToken);
+                    await N(SyntaxKind.BacktickToken);
                 }
-                N(SyntaxKind.CloseParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
             }
         }
         EOF();

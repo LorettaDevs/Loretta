@@ -1,196 +1,195 @@
-﻿using Xunit;
-
+﻿
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Parsing;
 
-public sealed class TypeParsingErrorTests(ITestOutputHelper output) : ParsingTestsBase(output)
+public sealed class TypeParsingErrorTests : ParsingTestsBase
 {
-    [Fact]
-    public void Parser_ParsesTableType_WithMultipleIndexers_ButErrors()
+    [Test]
+    public async Task Parser_ParsesTableType_WithMultipleIndexers_ButErrors()
     {
-        UsingType(
+        await UsingTypeAsync(
             "{[Type]: Type, [Type]: Type}",
             // (1,16): error LUA1017: Only one indexer is allowed per table type
             // {[Type]: Type, [Type]: Type}
             Diagnostic(ErrorCode.ERR_OnlyOneTableTypeIndexerIsAllowed, "[Type]: Type").WithLocation(1, 16));
 
-        N(SyntaxKind.TableType);
+        await N(SyntaxKind.TableType);
         {
-            N(SyntaxKind.OpenBraceToken);
+            await N(SyntaxKind.OpenBraceToken);
             {
-                N(SyntaxKind.TableTypeIndexer);
+                await N(SyntaxKind.TableTypeIndexer);
                 {
-                    N(SyntaxKind.OpenBracketToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.OpenBracketToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "Type");
+                        await N(SyntaxKind.IdentifierToken, "Type");
                     }
-                    N(SyntaxKind.CloseBracketToken);
-                    N(SyntaxKind.ColonToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.CloseBracketToken);
+                    await N(SyntaxKind.ColonToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "Type");
+                        await N(SyntaxKind.IdentifierToken, "Type");
                     }
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TableTypeIndexer);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TableTypeIndexer);
                 {
-                    N(SyntaxKind.OpenBracketToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.OpenBracketToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "Type");
+                        await N(SyntaxKind.IdentifierToken, "Type");
                     }
-                    N(SyntaxKind.CloseBracketToken);
-                    N(SyntaxKind.ColonToken);
-                    N(SyntaxKind.SimpleTypeName);
+                    await N(SyntaxKind.CloseBracketToken);
+                    await N(SyntaxKind.ColonToken);
+                    await N(SyntaxKind.SimpleTypeName);
                     {
-                        N(SyntaxKind.IdentifierToken, "Type");
+                        await N(SyntaxKind.IdentifierToken, "Type");
                     }
                 }
             }
-            N(SyntaxKind.CloseBraceToken);
+            await N(SyntaxKind.CloseBraceToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_DoesNotIdentifyDoubleIndexersNaively()
+    [Test]
+    public async Task Parser_DoesNotIdentifyDoubleIndexersNaively()
     {
-        UsingType(
+        await UsingTypeAsync(
             "{prop: T, [T]: T, prop: T, prop: T, [T]: T}",
             // (1,37): error LUA1017: Only one indexer is allowed per table type
             // {prop: T, [T]: T, prop: T, prop: T, [T]: T}
             Diagnostic(ErrorCode.ERR_OnlyOneTableTypeIndexerIsAllowed, "[T]: T").WithLocation(1, 37));
 
-        N(SyntaxKind.TableType);
+        await N(SyntaxKind.TableType);
         {
-            N(SyntaxKind.OpenBraceToken);
-            N(SyntaxKind.TableTypeProperty);
+            await N(SyntaxKind.OpenBraceToken);
+            await N(SyntaxKind.TableTypeProperty);
             {
-                N(SyntaxKind.IdentifierToken, "prop");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "prop");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.TableTypeIndexer);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.TableTypeIndexer);
             {
-                N(SyntaxKind.OpenBracketToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.OpenBracketToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CloseBracketToken);
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.CloseBracketToken);
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.TableTypeProperty);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.TableTypeProperty);
             {
-                N(SyntaxKind.IdentifierToken, "prop");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "prop");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.TableTypeProperty);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.TableTypeProperty);
             {
-                N(SyntaxKind.IdentifierToken, "prop");
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.IdentifierToken, "prop");
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.TableTypeIndexer);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.TableTypeIndexer);
             {
-                N(SyntaxKind.OpenBracketToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.OpenBracketToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CloseBracketToken);
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.CloseBracketToken);
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CloseBraceToken);
+            await N(SyntaxKind.CloseBraceToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ErrorsOnMixingOfNilableAndIntersectionTypes()
+    [Test]
+    public async Task Parser_ErrorsOnMixingOfNilableAndIntersectionTypes()
     {
-        UsingType(
+        await UsingTypeAsync(
             "T? & T",
             // (1,1): error LUA1014: Using nilable types directly in intersections is not allowed
             // T? & T
             Diagnostic(ErrorCode.ERR_MixingNilableAndIntersectionNotAllowed, "T? & T").WithLocation(1, 1));
 
-        N(SyntaxKind.IntersectionType);
+        await N(SyntaxKind.IntersectionType);
         {
-            N(SyntaxKind.NilableType);
+            await N(SyntaxKind.NilableType);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.QuestionToken);
+                await N(SyntaxKind.QuestionToken);
             }
-            N(SyntaxKind.AmpersandToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.AmpersandToken);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ErrorsOnMixingOfIntersectionAndUnionTypes()
+    [Test]
+    public async Task Parser_ErrorsOnMixingOfIntersectionAndUnionTypes()
     {
-        UsingType(
+        await UsingTypeAsync(
             "T | T & T",
             // (1,1): error LUA1015: Mixing union and intersection types is not allowed
             // T | T & T
             Diagnostic(ErrorCode.ERR_MixingUnionsAndIntersectionsNotAllowed, "T | T & T").WithLocation(1, 1));
 
-        N(SyntaxKind.IntersectionType);
+        await N(SyntaxKind.IntersectionType);
         {
-            N(SyntaxKind.UnionType);
+            await N(SyntaxKind.UnionType);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.PipeToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.PipeToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.AmpersandToken);
-            N(SyntaxKind.SimpleTypeName);
+            await N(SyntaxKind.AmpersandToken);
+            await N(SyntaxKind.SimpleTypeName);
             {
-                N(SyntaxKind.IdentifierToken, "T");
+                await N(SyntaxKind.IdentifierToken, "T");
             }
         }
     }
 
-    [Fact]
-    public void Parser_ErrorsOnMixingOfNilableAndIntersectionTypes_AsWellAsNilableAndIntersectionTypes()
+    [Test]
+    public async Task Parser_ErrorsOnMixingOfNilableAndIntersectionTypes_AsWellAsNilableAndIntersectionTypes()
     {
-        UsingType(
+        await UsingTypeAsync(
             "T | T & T?",
             // (1,1): error LUA1014: Using nilable types directly in intersections is not allowed
             // T | T & T?
@@ -199,130 +198,130 @@ public sealed class TypeParsingErrorTests(ITestOutputHelper output) : ParsingTes
             // T | T & T?
             Diagnostic(ErrorCode.ERR_MixingUnionsAndIntersectionsNotAllowed, "T | T & T?").WithLocation(1, 1));
 
-        N(SyntaxKind.IntersectionType);
+        await N(SyntaxKind.IntersectionType);
         {
-            N(SyntaxKind.UnionType);
+            await N(SyntaxKind.UnionType);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.PipeToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.PipeToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.AmpersandToken);
-            N(SyntaxKind.NilableType);
+            await N(SyntaxKind.AmpersandToken);
+            await N(SyntaxKind.NilableType);
             {
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.QuestionToken);
+                await N(SyntaxKind.QuestionToken);
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ErrorsOnTypeParametersAfterTypePackParameters()
+    [Test]
+    public async Task Parser_ErrorsOnTypeParametersAfterTypePackParameters()
     {
-        UsingType(
+        await UsingTypeAsync(
             "<T, T..., T> () -> nil",
             // (1,11): error LUA1018: Normal type parameters must come before pack type parameters
             // <T, T..., T> () -> nil
             Diagnostic(ErrorCode.ERR_NormalTypeParametersComeBeforePacks, "T").WithLocation(1, 11));
 
-        N(SyntaxKind.FunctionType);
+        await N(SyntaxKind.FunctionType);
         {
-            N(SyntaxKind.TypeParameterList);
+            await N(SyntaxKind.TypeParameterList);
             {
-                N(SyntaxKind.LessThanToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.LessThanToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
-                    N(SyntaxKind.DotDotDotToken);
+                    await N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.DotDotDotToken);
                 }
-                N(SyntaxKind.CommaToken);
-                N(SyntaxKind.TypeParameter);
+                await N(SyntaxKind.CommaToken);
+                await N(SyntaxKind.TypeParameter);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.GreaterThanToken);
+                await N(SyntaxKind.GreaterThanToken);
             }
             // /TypeParameterList
 
-            N(SyntaxKind.OpenParenthesisToken);
-            N(SyntaxKind.CloseParenthesisToken);
+            await N(SyntaxKind.OpenParenthesisToken);
+            await N(SyntaxKind.CloseParenthesisToken);
 
-            N(SyntaxKind.MinusGreaterThanToken);
+            await N(SyntaxKind.MinusGreaterThanToken);
 
-            N(SyntaxKind.NilType);
+            await N(SyntaxKind.NilType);
             {
-                N(SyntaxKind.NilKeyword);
+                await N(SyntaxKind.NilKeyword);
             }
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ErrorsOnMultipleIndexers()
+    [Test]
+    public async Task Parser_ErrorsOnMultipleIndexers()
     {
-        UsingType(
+        await UsingTypeAsync(
             "{[T]: T, [T]: T}",
             // (1,10): error LUA1017: Only one indexer is allowed per table type
             // {[T]: T, [T]: T}
             Diagnostic(ErrorCode.ERR_OnlyOneTableTypeIndexerIsAllowed, "[T]: T").WithLocation(1, 10));
 
-        N(SyntaxKind.TableType);
+        await N(SyntaxKind.TableType);
         {
-            N(SyntaxKind.OpenBraceToken);
-            N(SyntaxKind.TableTypeIndexer);
+            await N(SyntaxKind.OpenBraceToken);
+            await N(SyntaxKind.TableTypeIndexer);
             {
-                N(SyntaxKind.OpenBracketToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.OpenBracketToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CloseBracketToken);
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.CloseBracketToken);
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CommaToken);
-            N(SyntaxKind.TableTypeIndexer);
+            await N(SyntaxKind.CommaToken);
+            await N(SyntaxKind.TableTypeIndexer);
             {
-                N(SyntaxKind.OpenBracketToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.OpenBracketToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
-                N(SyntaxKind.CloseBracketToken);
-                N(SyntaxKind.ColonToken);
-                N(SyntaxKind.SimpleTypeName);
+                await N(SyntaxKind.CloseBracketToken);
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
                 {
-                    N(SyntaxKind.IdentifierToken, "T");
+                    await N(SyntaxKind.IdentifierToken, "T");
                 }
             }
-            N(SyntaxKind.CloseBraceToken);
+            await N(SyntaxKind.CloseBraceToken);
         }
         EOF();
     }
 
-    [Fact]
-    public void Parser_ErrorsWhenAcceptTypedLuaIsFalse_AndTypedLuaStructuresAreFound()
+    [Test]
+    public async Task Parser_ErrorsWhenAcceptTypedLuaIsFalse_AndTypedLuaStructuresAreFound()
     {
         var options = LuaSyntaxOptions.All.With(acceptTypedLua: false);
-        ParseAndValidate(
+        await ParseAndValidateAsync(
             """
             type T = T
             export type T = T

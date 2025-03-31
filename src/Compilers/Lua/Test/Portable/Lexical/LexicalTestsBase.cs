@@ -1,5 +1,4 @@
 ﻿using Loretta.CodeAnalysis.Lua.Test.Utilities;
-using Xunit;
 
 namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical;
 

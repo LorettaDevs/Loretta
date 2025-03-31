@@ -22,38 +22,52 @@ namespace Loretta.CodeAnalysis.Lua.Test.Utilities
             Value = value;
         }
 
-        public SyntaxTree[] GetSyntaxTrees(LuaParseOptions parseOptions, string sourceFileName = "")
+        public async Task<SyntaxTree[]> GetSyntaxTreesAsync(LuaParseOptions parseOptions, string sourceFileName = "")
         {
             switch (Value)
             {
                 case string source:
-                    return [LuaTestBase.Parse(source, filename: sourceFileName, parseOptions)];
+                    return [await LuaTestBase.ParseAsync(source, filename: sourceFileName, parseOptions)];
+
                 case string[] sources:
                     Debug.Assert(string.IsNullOrEmpty(sourceFileName));
-                    return LuaTestBase.Parse(parseOptions, sources);
+                    return await LuaTestBase.ParseAsync(parseOptions, sources);
+
                 case SyntaxTree tree:
                     Debug.Assert(parseOptions == null);
                     Debug.Assert(string.IsNullOrEmpty(sourceFileName));
                     return [tree];
+
                 case SyntaxTree[] trees:
                     Debug.Assert(parseOptions == null);
                     Debug.Assert(string.IsNullOrEmpty(sourceFileName));
                     return trees;
+
                 case LuaTestSource[] testSources:
-                    return testSources.SelectMany(s => s.GetSyntaxTrees(parseOptions, sourceFileName)).ToArray();
-                case null:
-                    return [];
-                default:
-                    throw new Exception($"Unexpected value: {Value}");
+                {
+                    var list = new List<SyntaxTree>();
+                    foreach (var source in testSources)
+                        list.AddRange(await source.GetSyntaxTreesAsync(parseOptions, sourceFileName));
+                    return [.. list];
+                }
+
+                case null: return [];
+                default:   throw new Exception($"Unexpected value: {Value}");
             }
         }
 
         public static implicit operator LuaTestSource(string source) => new(source);
+
         public static implicit operator LuaTestSource(string[] source) => new(source);
+
         public static implicit operator LuaTestSource(SyntaxTree source) => new(source);
+
         public static implicit operator LuaTestSource(SyntaxTree[] source) => new(source);
+
         public static implicit operator LuaTestSource(List<SyntaxTree> source) => new(source.ToArray());
+
         public static implicit operator LuaTestSource(ImmutableArray<SyntaxTree> source) => new(source.ToArray());
+
         public static implicit operator LuaTestSource(LuaTestSource[] source) => new(source);
     }
 }

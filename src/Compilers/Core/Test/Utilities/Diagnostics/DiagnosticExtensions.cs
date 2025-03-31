@@ -4,26 +4,29 @@
 #nullable disable
 
 using Loretta.CodeAnalysis.Test.Utilities;
-using Loretta.Test.Utilities;
-using Xunit;
 
 namespace Loretta.CodeAnalysis
 {
     public static class DiagnosticExtensions
     {
-        public static void Verify(this IEnumerable<Diagnostic> actual, params DiagnosticDescription[] expected) =>
-            Verify(actual, expected, errorCodeOnly: false);
+        public static void Verify(this IEnumerable<Diagnostic> actual, params DiagnosticDescription[] expected)
+            => Verify(actual, expected, errorCodeOnly: false);
 
-        public static void Verify(this IEnumerable<Diagnostic> actual, bool fallbackToErrorCodeOnlyForNonEnglish, params DiagnosticDescription[] expected) =>
-            Verify(actual, expected, errorCodeOnly: fallbackToErrorCodeOnlyForNonEnglish && EnsureEnglishUICulture.PreferredOrNull != null);
-
-        private static void Verify(IEnumerable<Diagnostic> actual, DiagnosticDescription[] expected, bool errorCodeOnly)
+        public static bool AreEquivalent(
+            this IEnumerable<Diagnostic> actual,
+            DiagnosticDescription[]      expected,
+            bool                         errorCodeOnly)
         {
             if (expected == null) throw new ArgumentException("Must specify expected errors.", nameof(expected));
 
-            var includeDefaultSeverity = expected.Length > 0 && expected.All(e => e.DefaultSeverity != null);
-            var includeEffectiveSeverity = expected.Length > 0 && expected.All(e => e.EffectiveSeverity != null);
-            var unmatched = actual.Select(d => new DiagnosticDescription(d, errorCodeOnly, includeDefaultSeverity, includeEffectiveSeverity))
+            var includeDefaultSeverity   = expected.Length > 0 && expected.All(static e => e.DefaultSeverity != null);
+            var includeEffectiveSeverity = expected.Length > 0 && expected.All(static e => e.EffectiveSeverity != null);
+            var unmatched = actual.Select(
+                                      d => new DiagnosticDescription(
+                                          d,
+                                          errorCodeOnly,
+                                          includeDefaultSeverity,
+                                          includeEffectiveSeverity))
                                   .ToList();
 
             // Try to match each of the 'expected' errors to one of the 'actual' ones.
@@ -34,11 +37,17 @@ namespace Loretta.CodeAnalysis
                 if (index > -1)
                     unmatched.RemoveAt(index);
                 else
-                    Assert.Fail(DiagnosticDescription.GetAssertText(expected, actual));
+                    return false;
             }
 
             // If any 'extra' errors appear that were not in the 'expected' list, fail test.
-            if (unmatched.Count > 0) Assert.Fail(DiagnosticDescription.GetAssertText(expected, actual));
+            return unmatched.Count <= 0;
+        }
+
+        private static void Verify(IEnumerable<Diagnostic> actual, DiagnosticDescription[] expected, bool errorCodeOnly)
+        {
+            if (!AreEquivalent(actual, expected, errorCodeOnly))
+                Assert.Fail(DiagnosticDescription.GetAssertText(expected, actual));
         }
     }
 }
