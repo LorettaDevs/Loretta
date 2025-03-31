@@ -4,6 +4,7 @@ on:
   workflow_call:
   push:
     paths:
+      - '.github/workflows/build-and-test.yml'
       - 'src/**'
       - 'build/**'
   pull_request:
