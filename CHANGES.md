@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## v0.2.13 (2025-03-30)
+
 ### Added
 
 - Implemented support for Luau interpolated strings by @GGG-KILLER in https://github.com/LorettaDevs/Loretta/pull/138.
