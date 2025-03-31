@@ -17,5 +17,6 @@
         <Compile Include="$(MSBuildThisFileDirectory)StringBuilderReader.cs"/>
         <Compile Include="$(MSBuildThisFileDirectory)OptimizedSwitch.cs"/>
         <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs"/>
+        <Compile Include="$(MSBuildThisFileDirectory)Hash.cs"/>
     </ItemGroup>
 </Project>

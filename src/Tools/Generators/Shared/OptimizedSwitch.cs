@@ -44,11 +44,9 @@ namespace Loretta.Generators
                 return;
             }
 
-            var hash = string.Join(
-                                 "|",
-                                 values: _clauses.Select(static c => c.Key)
-                                                 .Append(DefaultBodyWriter is null ? "default" : "nodefault"))
-                             .GetHashCode();
+            var hash = Hash.CombineValues(
+                values: _clauses.Select(static c => c.Key).Append(DefaultBodyWriter is null ? "default" : "no default"),
+                StringComparer.OrdinalIgnoreCase);
             var branchVariableName = $"__branch__{hash:X8}";
 
             writer.Write("int ");
