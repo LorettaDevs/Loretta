@@ -62,6 +62,7 @@ jobs:
           paths-ignore:
             - 'docs/**'
             - '**/*.g.cs'
+            - '**/*.Generated.cs'
           query-filters:
             - exclude:
                 id: cs/local-shadows-member
