@@ -5,7 +5,7 @@
     <PropertyGroup>
         <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
         <OutputType Condition="'$(TargetFramework)' != 'netstandard2.0'">Exe</OutputType>
-        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <EnforceExtendedAnalyzerRules Condition="'$(TargetFramework)' == 'netstandard2.0'">true</EnforceExtendedAnalyzerRules>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,11 +22,10 @@
         <Compile Include="..\..\..\Compilers\Lua\Portable\IntegerFormats.cs" Link="Grammar\IntegerFormats.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
         <Compile Include="..\..\..\Compilers\Lua\Portable\BacktickStringType.cs" Link="Grammar\BacktickStringType.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
         <Compile Include="..\..\..\Compilers\Lua\Portable\Syntax\SyntaxFacts.cs" Link="Grammar\SyntaxFacts.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
-        <Compile Include="..\..\..\Compilers\Lua\Portable\Generated\Loretta.Generators.SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.SyntaxFactsGenerator\SyntaxFacts.g.cs" Link="Grammar\SyntaxFacts.g.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
-        <Compile Include="..\..\..\Compilers\Lua\Portable\Generated\Loretta.Generators.SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.SyntaxFactsGenerator\SyntaxKindAttributes.g.cs" Link="Grammar\SyntaxKindAttributes.g.cs" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
 
         <ProjectReference Include="..\..\..\Compilers\Core\Portable\Loretta.CodeAnalysis.csproj" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
         <PackageReference Include="Tsu" Version="2.2.2" Condition="'$(TargetFramework)' != 'netstandard2.0'"/>
+        <ProjectReference Include="..\SyntaxFactsGenerator\Loretta.Generators.SyntaxFactsGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable disable
-
 // We only support grammar generation in the command line version for now which is the netcoreapp target
 #if NETCOREAPP
 using System.Text.RegularExpressions;
@@ -169,7 +167,7 @@ namespace Loretta.Generators.SyntaxXml.Grammar
                    : Join(" | ", field.Kinds.Select(static k => HandleTokenName(k.Name)))
                        .Parenthesize(field.Kinds.Count >= 2);
 
-        private static Production HandleTokenName(string tokenName)
+        private static Production HandleTokenName(string? tokenName)
         {
             var kind = GetSyntaxKind(tokenName);
             if (kind == SyntaxKind.None) return RuleReference("SyntaxToken");
@@ -177,14 +175,14 @@ namespace Loretta.Generators.SyntaxXml.Grammar
             var text = SyntaxFacts.GetText(kind);
             if (text != "") return new Production(text == "'" ? "'\\''" : $"'{text}'");
 
-            if (tokenName.StartsWith("EndOf", StringComparison.Ordinal)) return new Production("");
+            if (tokenName!.StartsWith("EndOf", StringComparison.Ordinal)) return new Production("");
 
             return tokenName.StartsWith("Omitted", StringComparison.Ordinal)
                        ? new Production("/* epsilon */")
                        : RuleReference(tokenName);
         }
 
-        private static SyntaxKind GetSyntaxKind(string name)
+        private static SyntaxKind GetSyntaxKind(string? name)
             => Enum.TryParse<SyntaxKind>(name, out var kind) ? kind : SyntaxKind.None;
 
         private static Production RuleReference(string name)
@@ -202,7 +200,7 @@ namespace Loretta.Generators.SyntaxXml.Grammar
         // Converts a PascalCased name into snake_cased name.
     }
 
-    internal readonly struct Production(string text, IEnumerable<string> referencedRules = null)
+    internal readonly struct Production(string text, IEnumerable<string>? referencedRules = null)
         : IComparable<Production>
     {
         public readonly string                 Text = text;
