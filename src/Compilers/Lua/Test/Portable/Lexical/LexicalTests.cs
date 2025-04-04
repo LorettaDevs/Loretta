@@ -10,7 +10,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical;
 public sealed class LexicalTests : LexicalTestsBase
 {
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     [Arguments("0b00000000000000000000000000000000000000000000000000000000000000001")]
     [Arguments("0o0000000000000000000001")]
     public async Task Lexer_DoesNot_CountNumberDigitsNaively(string text)
@@ -29,7 +28,6 @@ public sealed class LexicalTests : LexicalTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Output")]
     [Arguments("--[")]
     [Arguments("--[=")]
     [Arguments("--[==")]
@@ -54,7 +52,6 @@ public sealed class LexicalTests : LexicalTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Output")]
     public async Task Lexer_Lexes_ShebangsOnlyOnFileStart()
     {
         const string shebang = "#!/bin/bash";
@@ -79,7 +76,6 @@ public sealed class LexicalTests : LexicalTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Output")]
     public async Task Lexer_LexesInvalidEscapes_WhenLuaSyntaxOptionsAcceptInvalidEscapesIsTrue()
     {
         const string rawText  = @"'\A\B\C\D\E'";
@@ -94,7 +90,6 @@ public sealed class LexicalTests : LexicalTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Lexer_Tests")]
     public async Task Lexer_Covers_AllTokens()
     {
         var tokenKinds = Enum.GetValues<SyntaxKind>()
@@ -114,7 +109,6 @@ public sealed class LexicalTests : LexicalTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Output")]
     [MethodDataSource(nameof(GetTokensData))]
     public async Task Lexer_Lexes_Token(LuaSyntaxOptions options, ShortToken expectedToken)
     {
@@ -140,7 +134,6 @@ public sealed class LexicalTests : LexicalTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Output")]
     [MethodDataSource(nameof(GetTriviaData))]
     public async Task Lexer_Lexes_Trivia(LuaSyntaxOptions options, ShortToken expectedTrivia)
     {
@@ -156,9 +149,7 @@ public sealed class LexicalTests : LexicalTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Output")]
-    [TProperty("IsLongTest", "1")]
-    [TProperty("LongTestType", "TokenPairs")]
+    [Category("LongTests"), Category("LongTests/100k")]
     [MethodDataSource(nameof(GetTokenPairsData))]
     public async Task Lexer_Lexes_TokenPairs(LuaSyntaxOptions options, ShortToken tokenA, ShortToken tokenB)
     {
@@ -178,9 +169,7 @@ public sealed class LexicalTests : LexicalTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Output")]
-    [TProperty("IsLongTest", "1")]
-    [TProperty("LongTestType", "TokenPairs")]
+    [Category("LongTests"), Category("LongTests/1M")]
     [MethodDataSource(nameof(GetTokenPairsWithSeparatorsData))]
     public async Task Lexer_Lexes_TokenPairs_WithSeparators(
         LuaSyntaxOptions options,

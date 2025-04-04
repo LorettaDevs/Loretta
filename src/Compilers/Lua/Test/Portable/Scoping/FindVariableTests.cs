@@ -5,7 +5,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping;
 public sealed class FindVariableTests : ScriptTestsBase
 {
     [Test]
-    [TProperty("Category", "Script/FindVariable")]
     [Arguments(ScopeKind.File, "glob")]
     [Arguments(ScopeKind.Function, "a")]
     [Arguments(ScopeKind.Block, "b")]
@@ -16,7 +15,6 @@ public sealed class FindVariableTests : ScriptTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Script/FindVariable")]
     [Arguments(ScopeKind.Global, "glob")]
     [Arguments(ScopeKind.Global, "a")]
     [Arguments(ScopeKind.File, "a")]

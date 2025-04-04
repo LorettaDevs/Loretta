@@ -5,7 +5,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping;
 public sealed class CanBeAccessedInTests : ScriptTestsBase
 {
     [Test]
-    [TProperty("Category", "Script/CanBeAccessedIn")]
     public async Task Script_CanBeAccessedIn_ReturnsTrueWhenSameScope()
     {
         var (tree, script) = await ParseScriptAsync("local a = 1 print(a)");
@@ -21,7 +20,6 @@ public sealed class CanBeAccessedInTests : ScriptTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Script/CanBeAccessedIn")]
     public async Task Script_CanBeAccessedIn_ReturnsTrueWhenScopeIsChild()
     {
         var (tree, script) = await ParseScriptAsync("local a = 1\r\n" + "do\r\n" + "    print(a)\r\n" + "end");
@@ -39,7 +37,6 @@ public sealed class CanBeAccessedInTests : ScriptTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Script/CanBeAccessedIn")]
     public async Task Script_CanBeAccessedIn_ReturnsFalseWhenScopeIsParentOfParent()
     {
         var (tree, script) = await ParseScriptAsync("do\r\n" + "    local a = 1\r\n" + "end");

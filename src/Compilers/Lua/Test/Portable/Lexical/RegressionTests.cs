@@ -7,8 +7,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Lexical;
 public sealed class RegressionTests : LexicalTestsBase
 {
     [Test]
-    [TProperty("Type", TestType.Regression)]
-    [TProperty("Category", "Lexer/Output")]
     public async Task Lexer_Lexes_LongStringWithoutLeadingNewLine()
     {
         const string rawText = """
@@ -31,8 +29,6 @@ public sealed class RegressionTests : LexicalTestsBase
 
     [Test]
     [WorkItem(120, "https://github.com/LorettaDevs/Loretta/issues/120")]
-    [TProperty("Type", TestType.Regression)]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_Lexes_HexIntegersProperlyWhenPresetDoesntSupportIntegers()
     {
         const string rawText = "0X049bbe662";
@@ -49,8 +45,6 @@ public sealed class RegressionTests : LexicalTestsBase
 
     [Test]
     [WorkItem(120, "https://github.com/LorettaDevs/Loretta/issues/120")]
-    [TProperty("Type", TestType.Regression)]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_Warns_AboutHexFloatsProperlyWhenPresetDoesntSupportIntegers()
     {
         const string rawText = "0X049bbe662.ff";
@@ -68,8 +62,6 @@ public sealed class RegressionTests : LexicalTestsBase
 
     [Test]
     [WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
-    [TProperty("Type", TestType.Regression)]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_DoesNotLexContinueAsKeywordWhenItHasBeenDisabled()
     {
         const string rawText = """
@@ -104,8 +96,6 @@ public sealed class RegressionTests : LexicalTestsBase
     // This didn't exactly come from this issue, but it was another keyword that didn't have this handling.
     [Test]
     [WorkItem(127, "https://github.com/LorettaDevs/Loretta/issues/127")]
-    [TProperty("Type", TestType.Regression)]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_DoesNotLexGotoAsKeywordWhenItHasBeenDisabled()
     {
         const string rawText = """
@@ -131,8 +121,6 @@ public sealed class RegressionTests : LexicalTestsBase
 
     [Test]
     [WorkItem(142, "https://github.com/LorettaDevs/Loretta/issues/142")]
-    [TProperty("Type", TestType.Regression)]
-    [TProperty("Category", "Lexer/Diagnostics")]
     [Arguments(
         """
         "\30\62\71\35\5\20\120\47\117\83\71\53"

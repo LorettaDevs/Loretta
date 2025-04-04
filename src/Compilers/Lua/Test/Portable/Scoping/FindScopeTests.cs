@@ -6,7 +6,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Scoping;
 public sealed class ScopeTests : ScriptTestsBase
 {
     [Test]
-    [TProperty("Category", "Script/FindScope")]
     public async Task CompilationUnit_HasFileScope()
     {
         var (tree, script) = await ParseScriptAsync("print 'Hello'");
@@ -20,7 +19,6 @@ public sealed class ScopeTests : ScriptTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Script/FindScope")]
     public async Task FindScope_OnRootElement_ReturnsRootScope()
     {
         var (tree, script) = await ParseScriptAsync("print 'Hello'");
@@ -36,7 +34,6 @@ public sealed class ScopeTests : ScriptTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Script/FindScope")]
     [WorkItem(106, "https://github.com/LorettaDevs/Loretta/issues/106")]
     public async Task FindScope_LocalFunctionIsParsed()
     {
@@ -47,7 +44,6 @@ public sealed class ScopeTests : ScriptTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Script/FindScope")]
     [WorkItem(106, "https://github.com/LorettaDevs/Loretta/issues/106")]
     public async Task FindScope_AnonymousFunctionIsParsed()
     {

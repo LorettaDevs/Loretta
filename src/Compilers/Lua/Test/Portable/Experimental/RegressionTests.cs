@@ -8,8 +8,6 @@ namespace Loretta.CodeAnalysis.Lua.UnitTests.Experimental;
 public sealed class RegressionTests : LuaTestBase
 {
     [Test]
-    [TProperty("Type", TestType.Regression)]
-    [TProperty("Category", TestCategory.Experimental_Minifying_NamingStrategies)]
     // This test was added because I found out that the naming strategies were falling into
     // infinite loops when they found an existing variable in the scope that they were inserting.
     public async Task NamingStrategies_Alphabetic_DoesNotFallIntoAnInfiniteLoop()
@@ -25,8 +23,6 @@ public sealed class RegressionTests : LuaTestBase
 
     [Test]
     [WorkItem(55, "https://github.com/GGG-KILLER/Loretta/issues/55")]
-    [TProperty("Type", TestType.Regression)]
-    [TProperty("Category", TestCategory.Experimental_Minifying)]
     [Arguments(
         """
         local x = 0

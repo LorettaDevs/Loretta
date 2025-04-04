@@ -13,7 +13,6 @@ public sealed class LexicalErrorTests : LuaTestBase
         => await ParsingTestsBase.ParseAndValidateAsync(text, options, expectedErrors);
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsOn_InvalidEscapes()
     {
         const string source = """
@@ -48,7 +47,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsOn_StringWithLineBreakButLexesRestProperly()
     {
         const string source = "local str1 = \"some\nlocal str2 = 'some\r\nlocal str3 = \"some\rlocal str4 = 'some";
@@ -70,7 +68,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsOn_InterpolatedStringWithLineBreakButLexesRestProperly()
     {
         const string source = "local str1 = `some\nlocal str2 = `some\r\nlocal str3 = `some\rlocal str4 = `some";
@@ -92,7 +89,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     [Arguments("\"text")]
     [Arguments("'text")]
     [Arguments("\"text'")]
@@ -107,7 +103,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsOn_InvalidNumbers()
     {
         const string srcText = """
@@ -134,7 +129,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsOn_LargeNumbersAndOverflows()
     {
         const string srcText = """
@@ -163,7 +157,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     [Arguments("/* hi")]
     [Arguments("--[[ hi")]
     [Arguments("--[=[ hi")]
@@ -178,7 +171,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticWhen_ShebangIsFound_And_LuaSyntaxOptionsAcceptShebangIsFalse()
     {
         const string srcText = "#!/bin/bash";
@@ -191,7 +183,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticWhen_BinaryNumberIsFound_And_LuaSyntaxOptionsAcceptBinaryNumbersIsFalse()
     {
         const string srcText = "local num = 0b1010";
@@ -204,7 +195,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticWhen_OctalNumberIsFound_And_LuaSyntaxOptionsAcceptOctalNumbersIsFalse()
     {
         const string srcText = "local num = 0o77";
@@ -217,7 +207,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticWhen_HexFloatIsFound_And_LuaSyntaxOptionsAcceptHexFloatIsFalse()
     {
         const string srcText = """
@@ -240,7 +229,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task
         Lexer_EmitsDiagnosticWhen_UnderscoreInNumberIsFound_And_LuaSyntaxOptionsAcceptUnderscoresInNumbersIsFalse()
     {
@@ -271,7 +259,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task
         Lexer_EmitsDiagnosticWhen_IdentifiersWithCharactersAbove0x7FAreFound_And_LuaSyntaxOptionsUseLuajitIdentifierRulesIsFalse()
     {
@@ -309,7 +296,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticWhen_BadCharactersAreFound()
     {
         const string source = @"@$\";
@@ -337,7 +323,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsWhen_HexEscapesAreFound_And_LuaSyntaxOptionsAcceptHexEscapesIsFalse()
     {
         const string srcText = """
@@ -364,7 +349,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task
         Lexer_EmitsMultipleDiagnosticsWhen_MultipleHexEscapesAreFound_And_LuaSyntaxOptionsAcceptHexEscapesIsFalse()
     {
@@ -384,7 +368,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsWarning_ForExoticLineBreak()
     {
         const string source = "local a = 1\n\rlocal b = 2\n\rlocal c = 3";
@@ -400,7 +383,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task
         Lexer_EmitsDiagnosticsWhen_WhitespaceEscapesAreFound_And_LuaSyntaxOptionsAcceptWhitespaceEscapeIsFalse()
     {
@@ -420,7 +402,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsWhen_InvalidUnicodeEscapesAreFound()
     {
         const string source = """
@@ -454,7 +435,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsWhen_UnicodeEscapesAreFound_And_LuaSyntaxOptionsAcceptUnicodeEscapeIsFalse()
     {
         const string source = """
@@ -473,7 +453,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task
         Lexer_EmitsDiagnosticsWhen_InterpolatedOrHashStringsAreFound_And_LuaSyntaxOptionsBacktickStringTypeIsNone()
     {
@@ -493,7 +472,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsWhen_LuaJITSuffixIsMalformed()
     {
         const string source = "local a = 2000e5LL";
@@ -506,7 +484,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsWhen_LuaJITSuffix_AND_LuaSyntaxOptionsAcceptLuaJITNumberSuffixesIsFalse()
     {
         const string source = "local a = 2000ULL";
@@ -519,7 +496,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsNoDiagnosticsWhen_AnInvalidEscapeIsFound()
     {
         const string source = @"local a = '\A\B\C\D\E'";
@@ -527,7 +503,6 @@ public sealed class LexicalErrorTests : LuaTestBase
     }
 
     [Test]
-    [TProperty("Category", "Lexer/Diagnostics")]
     public async Task Lexer_EmitsDiagnosticsWhen_NestingLongStrings()
     {
         const string source = """

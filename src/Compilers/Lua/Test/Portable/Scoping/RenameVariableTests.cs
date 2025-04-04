@@ -3,7 +3,6 @@
 public sealed class RenameVariableTests : ScriptTestsBase
 {
     [Test]
-    [TProperty("Category", "Script/RenameVariable")]
     public async Task Script_RenameVariable_ReturnsErrorForUnsupportedIdentifier()
     {
         var (tree, script) = await ParseScriptAsync("local a = 2", LuaSyntaxOptions.Lua51);
@@ -20,7 +19,6 @@ public sealed class RenameVariableTests : ScriptTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Script/RenameVariable")]
     public async Task Script_RenameVariable_ReturnsErrorForConflictingVariable()
     {
         var (tree, script) = await ParseScriptAsync("local a, b = 2, 3", LuaSyntaxOptions.Lua51);
@@ -39,7 +37,6 @@ public sealed class RenameVariableTests : ScriptTestsBase
     }
 
     [Test]
-    [TProperty("Category", "Script/RenameVariable")]
     public async Task Script_RenameVariable_ReturnsCorrectlyRenamedScript()
     {
         var (tree, script) = await ParseScriptAsync("local a = 2\r\nlocal function a() end", LuaSyntaxOptions.Lua51);
