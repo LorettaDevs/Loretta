@@ -50,9 +50,9 @@ namespace Loretta.CodeAnalysis
             var bitsHash = _bits0.GetHashCode();
 
             if (_bits == null) return Hash.Combine(_capacity, bitsHash);
-            for (int i = 0; i < _bits.Length; i++)
+            foreach (var word in _bits)
             {
-                bitsHash = Hash.Combine(_bits[i].GetHashCode(), bitsHash);
+                bitsHash = Hash.Combine(word.GetHashCode(), bitsHash);
             }
 
             return Hash.Combine(_capacity, bitsHash);
@@ -190,7 +190,7 @@ namespace Loretta.CodeAnalysis
 
         public static BitVector Null => default;
 
-        public static BitVector Empty { get; } = new(0, (Word[]) [], 0);
+        public static BitVector Empty { get; } = new(0, [], 0);
 
         /// <summary>
         /// Modify this bit vector by bitwise AND-ing each element with the other bit vector.

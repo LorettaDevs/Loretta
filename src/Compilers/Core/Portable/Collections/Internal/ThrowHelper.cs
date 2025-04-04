@@ -174,7 +174,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         internal static void IfNullAndNullsAreIllegalThenThrow<T>(object? value, ExceptionArgument argName)
         {
             // Note that default(T) is not equal to null for value types except when T is Nullable<U>.
-            if (!(default(T) == null) && value == null)
+            if (default(T) is not null && value == null)
                 ThrowArgumentNullException(argName);
         }
 
@@ -262,6 +262,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
     //
     // The convention for this enum is using the argument name as the enum name
     //
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal enum ExceptionArgument
     {
         dictionary,
@@ -286,6 +287,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
     //
     // The convention for this enum is using the resource name as the enum name
     //
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal enum ExceptionResource
     {
         ArgumentOutOfRange_Index,

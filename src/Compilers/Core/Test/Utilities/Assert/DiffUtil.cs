@@ -1,19 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#nullable disable
-
 namespace Loretta.CodeAnalysis.Test.Utilities
 {
     public static class DiffUtil
     {
         private enum EditKind
         {
-            /// <summary>
-            /// No change.
-            /// </summary>
-            None = 0,
-
             /// <summary>
             /// Node value was updated.
             /// </summary>
@@ -54,14 +47,14 @@ namespace Loretta.CodeAnalysis.Test.Utilities
         }
 
         public static string DiffReport<T>(
-            IEnumerable<T>       expected,
-            IEnumerable<T>       actual,
-            string               separator,
-            IEqualityComparer<T> comparer = null,
-            Func<T, string>      toString = null)
+            IEnumerable<T>        expected,
+            IEnumerable<T>        actual,
+            string                separator,
+            IEqualityComparer<T>? comparer = null,
+            Func<T, string>?      toString = null)
         {
             var lcs = (comparer != null) ? new Lcs<T>(comparer) : Lcs<T>.Default;
-            toString ??= static obj => obj.ToString();
+            toString ??= static obj => obj!.ToString()!;
 
             var expectedList = expected as IList<T> ?? [.. expected];
             var actualList   = actual as IList<T> ?? [.. actual];

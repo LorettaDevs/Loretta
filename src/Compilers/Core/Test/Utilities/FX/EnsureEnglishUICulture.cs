@@ -1,16 +1,16 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#nullable disable
-
 using System.Diagnostics;
 using System.Globalization;
+using JetBrains.Annotations;
 
 namespace Loretta.Test.Utilities
 {
+    [PublicAPI]
     public class EnsureEnglishUICulture : IDisposable
     {
-        public static CultureInfo PreferredOrNull
+        public static CultureInfo? PreferredOrNull
         {
             get
             {
@@ -24,22 +24,20 @@ namespace Loretta.Test.Utilities
             }
         }
 
-        private bool _needToRestore;
-        private readonly CultureInfo _threadUICulture;
-        private readonly int _threadId;
+        private          bool         _needToRestore;
+        private readonly CultureInfo? _threadUiCulture;
+        private readonly int          _threadId;
 
         public EnsureEnglishUICulture()
         {
             _threadId = Environment.CurrentManagedThreadId;
             var preferred = PreferredOrNull;
 
-            if (preferred != null)
-            {
-                _threadUICulture = CultureInfo.CurrentUICulture;
-                _needToRestore = true;
+            if (preferred == null) return;
+            _threadUiCulture = CultureInfo.CurrentUICulture;
+            _needToRestore   = true;
 
-                CultureInfo.CurrentUICulture = preferred;
-            }
+            CultureInfo.CurrentUICulture = preferred;
         }
 
         public void Dispose()
@@ -49,7 +47,7 @@ namespace Loretta.Test.Utilities
             if (_needToRestore && _threadId == Environment.CurrentManagedThreadId)
             {
                 _needToRestore = false;
-                CultureInfo.CurrentUICulture = _threadUICulture;
+                CultureInfo.CurrentUICulture = _threadUiCulture!;
             }
             GC.SuppressFinalize(this);
         }

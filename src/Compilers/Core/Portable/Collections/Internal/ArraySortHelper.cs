@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 #endif
 
 #if !NET5_0 && !NET5_0_OR_GREATER
-using Half = System.Single;
+using Half = float;
 #endif
 
 namespace Loretta.CodeAnalysis.Collections.Internal
@@ -28,7 +28,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         public static void Sort(SegmentedArraySegment<T> keys, IComparer<T>? comparer)
         {
             // Add a try block here to detect IComparers (or their
-            // underlying IComparables, etc) that are bogus.
+            // underlying IComparables, etc.) that are bogus.
             try
             {
                 comparer ??= Comparer<T>.Default;
@@ -77,19 +77,25 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             }
         }
 
-        internal static int InternalBinarySearch(SegmentedArray<T> array, int index, int length, T value, IComparer<T> comparer)
+        internal static int InternalBinarySearch(
+            SegmentedArray<T> array,
+            int               index,
+            int               length,
+            T                 value,
+            IComparer<T>      comparer)
         {
-            LorettaDebug.Assert(index >= 0 && length >= 0 && (array.Length - index >= length), "Check the arguments in the caller!");
+            LorettaDebug.Assert(
+                index >= 0 && length >= 0 && (array.Length - index >= length),
+                "Check the arguments in the caller!");
 
             int lo = index;
             int hi = index + length - 1;
             while (lo <= hi)
             {
-                int i = lo + ((hi - lo) >> 1);
+                int i     = lo + ((hi - lo) >> 1);
                 int order = comparer.Compare(array[i], value);
 
-                if (order == 0)
-                    return i;
+                if (order == 0) return i;
                 if (order < 0)
                 {
                     lo = i + 1;
@@ -142,7 +148,6 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             {
                 if (partitionSize <= SegmentedArrayHelper.IntrosortSizeThreshold)
                 {
-
                     if (partitionSize == 2)
                     {
                         SwapIfGreater(keys, comparer, 0, 1);
@@ -187,13 +192,16 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             int middle = hi >> 1;
 
             // Sort lo, mid and hi appropriately, then pick mid as the pivot.
-            SwapIfGreater(keys, comparer, 0, middle);  // swap the low with the mid point
-            SwapIfGreater(keys, comparer, 0, hi);   // swap the low with the high
+            SwapIfGreater(keys, comparer, 0, middle);  // swap the low with the mid-point
+            SwapIfGreater(keys, comparer, 0, hi);      // swap the low with the high
             SwapIfGreater(keys, comparer, middle, hi); // swap the middle with the high
 
             T pivot = keys[middle];
             Swap(keys, middle, hi - 1);
-            int left = 0, right = hi - 1;  // We already partitioned lo and hi and put the pivot in hi - 1.  And we pre-increment & decrement below.
+            int left = 0,
+                right =
+                    hi
+                    - 1; // We already partitioned lo and hi and put the pivot in hi - 1.  And we pre-increment & decrement below.
 
             while (left < right)
             {
@@ -207,8 +215,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                     // Intentionally empty
                 }
 
-                if (left >= right)
-                    break;
+                if (left >= right) break;
 
                 Swap(keys, left, right);
             }
@@ -254,11 +261,10 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                     child++;
                 }
 
-                if (!(comparer(d, keys[lo + child - 1]) < 0))
-                    break;
+                if (!(comparer(d, keys[lo + child - 1]) < 0)) break;
 
                 keys[lo + i - 1] = keys[lo + child - 1];
-                i = child;
+                i                = child;
             }
 
             keys[lo + i - 1] = d;
@@ -288,16 +294,16 @@ namespace Loretta.CodeAnalysis.Collections.Internal
     internal static class SegmentedArraySortUtils
     {
 #if !NETCOREAPP
-        private static ReadOnlySpan<byte> Log2DeBruijn => new byte[32]
-        {
-            00, 09, 01, 10, 13, 21, 02, 29,
-            11, 14, 16, 18, 22, 25, 03, 30,
-            08, 12, 20, 28, 15, 17, 24, 07,
-            19, 27, 23, 06, 26, 05, 04, 31,
-        };
+        private static ReadOnlySpan<byte> Log2DeBruijn
+            =>
+            [
+                00, 09, 01, 10, 13, 21, 02, 29, 11, 14, 16, 18, 22, 25, 03, 30, 08, 12, 20, 28, 15, 17, 24, 07, 19,
+                27, 23, 06, 26, 05, 04, 31,
+            ];
 #endif
 
-        public static int MoveNansToFront<TKey, TValue>(SegmentedArraySegment<TKey> keys, Span<TValue> values) where TKey : notnull
+        public static int MoveNansToFront<TKey, TValue>(SegmentedArraySegment<TKey> keys, Span<TValue> values)
+            where TKey : notnull
         {
             LorettaDebug.Assert(typeof(TKey) == typeof(double) || typeof(TKey) == typeof(float));
 
@@ -305,9 +311,9 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
             for (int i = 0; i < keys.Length; i++)
             {
-                if ((typeof(TKey) == typeof(double) && double.IsNaN((double) (object) keys[i])) ||
-                    (typeof(TKey) == typeof(float) && float.IsNaN((float) (object) keys[i])) ||
-                    (typeof(TKey) == typeof(Half) && Half.IsNaN((Half) (object) keys[i])))
+                if ((typeof(TKey) == typeof(double) && double.IsNaN((double) (object) keys[i]))
+                    || (typeof(TKey) == typeof(float) && float.IsNaN((float) (object) keys[i]))
+                    || (typeof(TKey) == typeof(Half) && Half.IsNaN((Half) (object) keys[i])))
                 {
                     (keys[i], keys[left]) = (keys[left], keys[i]);
                     if ((uint) i < (uint) values.Length) // check to see if we have values
@@ -322,12 +328,13 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             return left;
         }
 
-        public static int Log2(uint value) =>
+        public static int Log2(uint value)
+            =>
 #if NETCOREAPP
             BitOperations.Log2(value);
 #else
-            // Fallback contract is 0->0
-            Log2SoftwareFallback(value);
+                // Fallback contract is 0->0
+                Log2SoftwareFallback(value);
 #endif
 
 #if !NETCOREAPP
@@ -342,7 +349,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
             // No AggressiveInlining due to large method size
             // Has conventional contract 0->0 (Log(0) is undefined)
 
-            // Fill trailing zeros with ones, eg 00010010 becomes 00011111
+            // Fill trailing zeros with ones, e.g. 00010010 becomes 00011111
             value |= value >> 01;
             value |= value >> 02;
             value |= value >> 04;
@@ -354,7 +361,7 @@ namespace Loretta.CodeAnalysis.Collections.Internal
                 // Using deBruijn sequence, k=2, n=5 (2^5=32) : 0b_0000_0111_1100_0100_1010_1100_1101_1101u
                 ref MemoryMarshal.GetReference(Log2DeBruijn),
                 // uint|long -> IntPtr cast on 32-bit platforms does expensive overflow checks not needed here
-                (IntPtr)(int)((value * 0x07C4ACDDu) >> 27));
+                (IntPtr) (int) ((value * 0x07C4ACDDu) >> 27));
         }
 #endif
     }

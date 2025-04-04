@@ -1,136 +1,149 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#nullable disable
-
 using System.Text;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using Loretta.CodeAnalysis.PooledObjects;
 using Loretta.CodeAnalysis.Text;
 using Loretta.Test.Utilities;
 
 namespace Loretta.CodeAnalysis.Test.Utilities
 {
+    [PublicAPI]
     public sealed class DiagnosticDescription
     {
-        public static readonly DiagnosticDescription[] None = Array.Empty<DiagnosticDescription>();
-        public static readonly DiagnosticDescription[] Any = null;
+        [PublicAPI]
+        public static readonly DiagnosticDescription[] None = [];
+
+        [PublicAPI]
+        public static readonly DiagnosticDescription[]? Any;
 
         // common fields for all DiagnosticDescriptions
-        private readonly object _code;
-        private readonly bool _isWarningAsError;
-        private readonly bool _isSuppressed;
-        private readonly string _squiggledText;
-        private readonly object[] _arguments;
-        private readonly LinePosition? _startPosition; // May not have a value only in the case that we're constructed via factories
-        private readonly bool _argumentOrderDoesNotMatter;
-        private readonly Type _errorCodeType;
-        private readonly bool _ignoreArgumentsWhenComparing;
+        private readonly object                        _code;
+        private readonly bool                          _isWarningAsError;
+        private readonly bool                          _isSuppressed;
+        private readonly string?                       _squiggledText;
+        private readonly IReadOnlyCollection<object?>? _arguments;
+
+        private readonly LinePosition?
+            _startPosition; // May not have a value only in the case that we're constructed via factories
+
+        private readonly bool                _argumentOrderDoesNotMatter;
+        private readonly Type                _errorCodeType;
+        private readonly bool                _ignoreArgumentsWhenComparing;
         private readonly DiagnosticSeverity? _defaultSeverityOpt;
         private readonly DiagnosticSeverity? _effectiveSeverityOpt;
 
         // fields for DiagnosticDescriptions constructed via factories
-        private readonly Func<SyntaxNode, bool> _syntaxPredicate;
-        private bool _showPredicate; // show predicate in ToString if comparison fails
+        private readonly Func<SyntaxNode, bool>? _syntaxPredicate;
+        private          bool                    _showPredicate; // show predicate in ToString if comparison fails
 
         // fields for DiagnosticDescriptions constructed from Diagnostics
-        private readonly Location _location;
+        private readonly Location? _location;
 
-        private IEnumerable<string> _argumentsAsStrings;
-        private IEnumerable<string> GetArgumentsAsStrings()
+        private IEnumerable<string>? _argumentsAsStrings;
+
+        private IEnumerable<string>? GetArgumentsAsStrings()
         {
             // We'll use IFormattable here, because it is more explicit than just calling .ToString()
             // (and is closer to what the compiler actually does when displaying error messages)
-            _argumentsAsStrings ??= _arguments.Select(o =>
-            {
-                if (o is DiagnosticInfo embedded)
+            _argumentsAsStrings ??= _arguments?.Select(
+                static o =>
                 {
-                    return embedded.GetMessage(EnsureEnglishUICulture.PreferredOrNull);
-                }
+                    if (o is DiagnosticInfo embedded)
+                    {
+                        return embedded.GetMessage(EnsureEnglishUICulture.PreferredOrNull);
+                    }
 
-                return string.Format(EnsureEnglishUICulture.PreferredOrNull, "{0}", o);
-            });
+                    return string.Format(EnsureEnglishUICulture.PreferredOrNull, "{0}", o);
+                });
             return _argumentsAsStrings;
         }
 
+        [PublicAPI]
         public DiagnosticDescription(
-            object code,
-            bool isWarningAsError,
-            string squiggledText,
-            object[] arguments,
-            LinePosition? startLocation,
-            Func<SyntaxNode, bool> syntaxNodePredicate,
-            bool argumentOrderDoesNotMatter,
-            Type errorCodeType = null,
-            DiagnosticSeverity? defaultSeverityOpt = null,
-            DiagnosticSeverity? effectiveSeverityOpt = null,
-            bool isSuppressed = false)
+            object                        code,
+            bool                          isWarningAsError,
+            string?                       squiggledText,
+            IReadOnlyCollection<object?>? arguments,
+            LinePosition?                 startLocation,
+            Func<SyntaxNode, bool>?       syntaxNodePredicate,
+            bool                          argumentOrderDoesNotMatter,
+            Type?                         errorCodeType        = null,
+            DiagnosticSeverity?           defaultSeverityOpt   = null,
+            DiagnosticSeverity?           effectiveSeverityOpt = null,
+            bool                          isSuppressed         = false)
         {
-            _code = code;
-            _isWarningAsError = isWarningAsError;
-            _squiggledText = squiggledText;
-            _arguments = arguments;
-            _startPosition = startLocation;
-            _syntaxPredicate = syntaxNodePredicate;
+            _code                       = code;
+            _isWarningAsError           = isWarningAsError;
+            _squiggledText              = squiggledText;
+            _arguments                  = arguments;
+            _startPosition              = startLocation;
+            _syntaxPredicate            = syntaxNodePredicate;
             _argumentOrderDoesNotMatter = argumentOrderDoesNotMatter;
-            _errorCodeType = errorCodeType ?? code.GetType();
-            _defaultSeverityOpt = defaultSeverityOpt;
-            _effectiveSeverityOpt = effectiveSeverityOpt;
-            _isSuppressed = isSuppressed;
+            _errorCodeType              = errorCodeType ?? code.GetType();
+            _defaultSeverityOpt         = defaultSeverityOpt;
+            _effectiveSeverityOpt       = effectiveSeverityOpt;
+            _isSuppressed               = isSuppressed;
         }
 
         public DiagnosticDescription(
-            object code,
-            string squiggledText,
-            object[] arguments,
-            LinePosition? startLocation,
+            object                 code,
+            string                 squiggledText,
+            object[]               arguments,
+            LinePosition?          startLocation,
             Func<SyntaxNode, bool> syntaxNodePredicate,
-            bool argumentOrderDoesNotMatter,
-            Type errorCodeType = null,
-            DiagnosticSeverity? defaultSeverityOpt = null,
-            DiagnosticSeverity? effectiveSeverityOpt = null,
-            bool isSuppressed = false)
+            bool                   argumentOrderDoesNotMatter,
+            Type?                  errorCodeType        = null,
+            DiagnosticSeverity?    defaultSeverityOpt   = null,
+            DiagnosticSeverity?    effectiveSeverityOpt = null,
+            bool                   isSuppressed         = false)
         {
-            _code = code;
-            _isWarningAsError = false;
-            _squiggledText = squiggledText;
-            _arguments = arguments;
-            _startPosition = startLocation;
-            _syntaxPredicate = syntaxNodePredicate;
+            _code                       = code;
+            _isWarningAsError           = false;
+            _squiggledText              = squiggledText;
+            _arguments                  = arguments;
+            _startPosition              = startLocation;
+            _syntaxPredicate            = syntaxNodePredicate;
             _argumentOrderDoesNotMatter = argumentOrderDoesNotMatter;
-            _errorCodeType = errorCodeType ?? code.GetType();
-            _defaultSeverityOpt = defaultSeverityOpt;
-            _effectiveSeverityOpt = effectiveSeverityOpt;
-            _isSuppressed = isSuppressed;
+            _errorCodeType              = errorCodeType ?? code.GetType();
+            _defaultSeverityOpt         = defaultSeverityOpt;
+            _effectiveSeverityOpt       = effectiveSeverityOpt;
+            _isSuppressed               = isSuppressed;
         }
 
-        public DiagnosticDescription(Diagnostic d, bool errorCodeOnly, bool includeDefaultSeverity = false, bool includeEffectiveSeverity = false)
+        public DiagnosticDescription(
+            Diagnostic d,
+            bool       errorCodeOnly,
+            bool       includeDefaultSeverity   = false,
+            bool       includeEffectiveSeverity = false)
         {
-            _code = d.Code;
-            _isWarningAsError = d.IsWarningAsError;
-            _isSuppressed = d.IsSuppressed;
-            _location = d.Location;
-            _defaultSeverityOpt = includeDefaultSeverity ? d.DefaultSeverity : null;
+            _code                 = d.Code;
+            _isWarningAsError     = d.IsWarningAsError;
+            _isSuppressed         = d.IsSuppressed;
+            _location             = d.Location;
+            _defaultSeverityOpt   = includeDefaultSeverity ? d.DefaultSeverity : null;
             _effectiveSeverityOpt = includeEffectiveSeverity ? d.Severity : null;
 
-            DiagnosticWithInfo dinfo = null;
+            DiagnosticWithInfo? diagInfo = null;
             if (d.Code == 0)
             {
-                _code = d.Id;
+                _code          = d.Id;
                 _errorCodeType = typeof(string);
             }
             else
             {
-                dinfo = d as DiagnosticWithInfo;
-                if (dinfo == null)
+                diagInfo = d as DiagnosticWithInfo;
+                if (diagInfo == null)
                 {
-                    _code = d.Code;
+                    _code          = d.Code;
                     _errorCodeType = typeof(int);
                 }
                 else
                 {
-                    _errorCodeType = dinfo.Info.MessageProvider.ErrorCodeType;
-                    _code = d.Code;
+                    _errorCodeType = diagInfo.Info.MessageProvider.ErrorCodeType;
+                    _code          = d.Code;
                 }
             }
 
@@ -144,9 +157,9 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                     _squiggledText = _location.SourceTree.GetText().ToString(_location.SourceSpan);
                 }
 
-                if (dinfo != null)
+                if (diagInfo != null)
                 {
-                    _arguments = dinfo.Info.Arguments;
+                    _arguments = diagInfo.Info.Arguments;
                 }
                 else
                 {
@@ -161,7 +174,7 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                     }
                 }
 
-                if (_arguments != null && _arguments.Length == 0)
+                if (_arguments is { Count: 0 })
                 {
                     _arguments = null;
                 }
@@ -170,59 +183,144 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             _startPosition = _location.GetLineSpan().StartLinePosition;
         }
 
-        public DiagnosticDescription WithArguments(params object[] arguments) =>
-            new(_code, _isWarningAsError, _squiggledText, arguments, _startPosition, _syntaxPredicate, false, _errorCodeType, _defaultSeverityOpt, _effectiveSeverityOpt, _isSuppressed);
+        [PublicAPI]
+        public DiagnosticDescription WithArguments(params object[] arguments)
+            => new(
+                _code,
+                _isWarningAsError,
+                _squiggledText,
+                arguments,
+                _startPosition,
+                _syntaxPredicate,
+                false,
+                _errorCodeType,
+                _defaultSeverityOpt,
+                _effectiveSeverityOpt,
+                _isSuppressed);
 
-        public DiagnosticDescription WithArgumentsAnyOrder(params string[] arguments) =>
-            new(_code, _isWarningAsError, _squiggledText, arguments, _startPosition, _syntaxPredicate, true, _errorCodeType, _defaultSeverityOpt, _effectiveSeverityOpt, _isSuppressed);
+        public DiagnosticDescription WithArgumentsAnyOrder(params string[] arguments)
+            => new(
+                _code,
+                _isWarningAsError,
+                _squiggledText,
+                arguments,
+                _startPosition,
+                _syntaxPredicate,
+                true,
+                _errorCodeType,
+                _defaultSeverityOpt,
+                _effectiveSeverityOpt,
+                _isSuppressed);
 
-        public DiagnosticDescription WithWarningAsError(bool isWarningAsError) =>
-            new(_code, isWarningAsError, _squiggledText, _arguments, _startPosition, _syntaxPredicate, true, _errorCodeType, _defaultSeverityOpt, _effectiveSeverityOpt, _isSuppressed);
+        public DiagnosticDescription WithWarningAsError(bool isWarningAsError)
+            => new(
+                _code,
+                isWarningAsError,
+                _squiggledText,
+                _arguments,
+                _startPosition,
+                _syntaxPredicate,
+                true,
+                _errorCodeType,
+                _defaultSeverityOpt,
+                _effectiveSeverityOpt,
+                _isSuppressed);
 
-        public DiagnosticDescription WithDefaultSeverity(DiagnosticSeverity defaultSeverity) =>
-            new(_code, _isWarningAsError, _squiggledText, _arguments, _startPosition, _syntaxPredicate, true, _errorCodeType, defaultSeverity, _effectiveSeverityOpt, _isSuppressed);
+        public DiagnosticDescription WithDefaultSeverity(DiagnosticSeverity defaultSeverity)
+            => new(
+                _code,
+                _isWarningAsError,
+                _squiggledText,
+                _arguments,
+                _startPosition,
+                _syntaxPredicate,
+                true,
+                _errorCodeType,
+                defaultSeverity,
+                _effectiveSeverityOpt,
+                _isSuppressed);
 
-        public DiagnosticDescription WithEffectiveSeverity(DiagnosticSeverity effectiveSeverity) =>
-            new(_code, _isWarningAsError, _squiggledText, _arguments, _startPosition, _syntaxPredicate, true, _errorCodeType, _defaultSeverityOpt, effectiveSeverity, _isSuppressed);
+        public DiagnosticDescription WithEffectiveSeverity(DiagnosticSeverity effectiveSeverity)
+            => new(
+                _code,
+                _isWarningAsError,
+                _squiggledText,
+                _arguments,
+                _startPosition,
+                _syntaxPredicate,
+                true,
+                _errorCodeType,
+                _defaultSeverityOpt,
+                effectiveSeverity,
+                _isSuppressed);
 
         /// <summary>
         /// Specialized syntaxPredicate that can be used to verify the start of the squiggled Span
         /// </summary>
-        public DiagnosticDescription WithLocation(int line, int column) =>
-            new(_code, _isWarningAsError, _squiggledText, _arguments, new LinePosition(line - 1, column - 1), _syntaxPredicate, _argumentOrderDoesNotMatter, _errorCodeType, _defaultSeverityOpt, _effectiveSeverityOpt, _isSuppressed);
+        [PublicAPI]
+        public DiagnosticDescription WithLocation(int line, int column)
+            => new(
+                _code,
+                _isWarningAsError,
+                _squiggledText,
+                _arguments,
+                new LinePosition(line - 1, column - 1),
+                _syntaxPredicate,
+                _argumentOrderDoesNotMatter,
+                _errorCodeType,
+                _defaultSeverityOpt,
+                _effectiveSeverityOpt,
+                _isSuppressed);
 
         /// <summary>
         /// Can be used to unambiguously identify Diagnostics that can not be uniquely identified by code, squiggledText and arguments
         /// </summary>
         /// <param name="syntaxPredicate">The argument to syntaxPredicate will be the nearest SyntaxNode whose Span contains first squiggled character.</param>
-        public DiagnosticDescription WhereSyntax(Func<SyntaxNode, bool> syntaxPredicate) =>
-            new(_code, _isWarningAsError, _squiggledText, _arguments, _startPosition, syntaxPredicate, _argumentOrderDoesNotMatter, _errorCodeType, _defaultSeverityOpt, _effectiveSeverityOpt, _isSuppressed);
+        public DiagnosticDescription WhereSyntax(Func<SyntaxNode, bool> syntaxPredicate)
+            => new(
+                _code,
+                _isWarningAsError,
+                _squiggledText,
+                _arguments,
+                _startPosition,
+                syntaxPredicate,
+                _argumentOrderDoesNotMatter,
+                _errorCodeType,
+                _defaultSeverityOpt,
+                _effectiveSeverityOpt,
+                _isSuppressed);
 
+        [PublicAPI]
         public object Code => _code;
+
+        [PublicAPI]
         public bool HasLocation => _startPosition != null;
+
+        [PublicAPI]
         public bool IsWarningAsError => _isWarningAsError;
+
+        [PublicAPI]
         public bool IsSuppressed => _isSuppressed;
+
+        [PublicAPI]
         public DiagnosticSeverity? DefaultSeverity => _defaultSeverityOpt;
+
+        [PublicAPI]
         public DiagnosticSeverity? EffectiveSeverity => _effectiveSeverityOpt;
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (obj is not DiagnosticDescription d)
-                return false;
+            if (obj is not DiagnosticDescription d) return false;
 
-            if (!_code.Equals(d._code))
-                return false;
+            if (!_code.Equals(d._code)) return false;
 
-            if (_isWarningAsError != d._isWarningAsError)
-                return false;
+            if (_isWarningAsError != d._isWarningAsError) return false;
 
-            if (_isSuppressed != d._isSuppressed)
-                return false;
+            if (_isSuppressed != d._isSuppressed) return false;
 
             if (!_ignoreArgumentsWhenComparing)
             {
-                if (_squiggledText != d._squiggledText)
-                    return false;
+                if (_squiggledText != d._squiggledText) return false;
             }
 
             if (_startPosition != null)
@@ -238,10 +336,10 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
             if (_syntaxPredicate != null)
             {
-                if (d._location == null)
-                    return false;
+                if (d._location == null) return false;
 
-                if (!_syntaxPredicate(d._location.SourceTree.GetRoot().FindToken(_location.SourceSpan.Start, true).Parent))
+                if (!_syntaxPredicate(
+                        d._location!.SourceTree!.GetRoot().FindToken(_location!.SourceSpan.Start, true).Parent!))
                 {
                     _showPredicate = true;
                     return false;
@@ -251,10 +349,10 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             }
             if (d._syntaxPredicate != null)
             {
-                if (_location == null)
-                    return false;
+                if (_location == null) return false;
 
-                if (!d._syntaxPredicate(_location.SourceTree.GetRoot().FindToken(_location.SourceSpan.Start, true).Parent))
+                if (!d._syntaxPredicate(
+                        _location.SourceTree!.GetRoot().FindToken(_location.SourceSpan.Start, true).Parent!))
                 {
                     d._showPredicate = true;
                     return false;
@@ -264,37 +362,33 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             }
 
             // If ignoring arguments, we can skip the rest of this method.
-            if (_ignoreArgumentsWhenComparing || d._ignoreArgumentsWhenComparing)
-                return true;
+            if (_ignoreArgumentsWhenComparing || d._ignoreArgumentsWhenComparing) return true;
 
             // Only validation of arguments should happen between here and the end of this method.
             if (_arguments == null)
             {
-                if (d._arguments != null)
-                    return false;
+                if (d._arguments != null) return false;
             }
             else // _arguments != null
             {
-                if (d._arguments == null)
-                    return false;
+                if (d._arguments == null) return false;
 
                 // we'll compare the arguments as strings
-                var args1 = GetArgumentsAsStrings();
-                var args2 = d.GetArgumentsAsStrings();
+                var args1 = GetArgumentsAsStrings()!;
+                var args2 = d.GetArgumentsAsStrings()!;
                 if (_argumentOrderDoesNotMatter || d._argumentOrderDoesNotMatter)
                 {
-                    if (args1.Count() != args2.Count() || !args1.SetEquals(args2))
-                        return false;
+                    // ReSharper disable PossibleMultipleEnumeration
+                    if (args1.Count() != args2.Count() || !args1.SetEquals(args2)) return false;
+                    // ReSharper restore PossibleMultipleEnumeration
                 }
                 else
                 {
-                    if (!args1.SequenceEqual(args2))
-                        return false;
+                    if (!args1.SequenceEqual(args2)) return false;
                 }
             }
 
-            if (_defaultSeverityOpt != d._defaultSeverityOpt ||
-                _effectiveSeverityOpt != d._effectiveSeverityOpt)
+            if (_defaultSeverityOpt != d._defaultSeverityOpt || _effectiveSeverityOpt != d._effectiveSeverityOpt)
             {
                 return false;
             }
@@ -304,18 +398,15 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
         public override int GetHashCode()
         {
-            int hashCode;
-            hashCode = _code.GetHashCode();
+            var hashCode = _code.GetHashCode();
             hashCode = Hash.Combine(_isWarningAsError.GetHashCode(), hashCode);
             hashCode = Hash.Combine(_isSuppressed.GetHashCode(), hashCode);
 
             // TODO: !!! This implementation isn't consistent with Equals, which might ignore inequality of some members based on ignoreArgumentsWhenComparing flag, etc.
             hashCode = Hash.Combine(_squiggledText, hashCode);
             hashCode = Hash.Combine(_arguments, hashCode);
-            if (_startPosition != null)
-                hashCode = Hash.Combine(hashCode, _startPosition.Value.GetHashCode());
-            if (_defaultSeverityOpt != null)
-                hashCode = Hash.Combine(hashCode, _defaultSeverityOpt.Value.GetHashCode());
+            if (_startPosition != null) hashCode      = Hash.Combine(hashCode, _startPosition.Value.GetHashCode());
+            if (_defaultSeverityOpt != null) hashCode = Hash.Combine(hashCode, _defaultSeverityOpt.Value.GetHashCode());
             if (_effectiveSeverityOpt != null)
                 hashCode = Hash.Combine(hashCode, _effectiveSeverityOpt.Value.GetHashCode());
             return hashCode;
@@ -363,13 +454,13 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             if (_arguments != null)
             {
                 sb.Append(".WithArguments(");
-                var argumentStrings = GetArgumentsAsStrings().GetEnumerator();
+                using var argumentStrings = GetArgumentsAsStrings()!.GetEnumerator();
                 for (var i = 0; argumentStrings.MoveNext(); i++)
                 {
                     sb.Append('"');
                     sb.Append(argumentStrings.Current);
                     sb.Append('"');
-                    if (i < _arguments.Length - 1)
+                    if (i < _arguments.Count - 1)
                     {
                         sb.Append(", ");
                     }
@@ -412,8 +503,8 @@ namespace Loretta.CodeAnalysis.Test.Utilities
         public static string GetAssertText(DiagnosticDescription[] expected, IEnumerable<Diagnostic> actual)
         {
             const int indentDepth = 4;
-            var includeDefaultSeverity = expected.Length > 0 && expected.All(d => d.DefaultSeverity != null);
-            var includeEffectiveSeverity = expected.Length > 0 && expected.All(d => d.EffectiveSeverity != null);
+            var includeDefaultSeverity = expected.Length > 0 && expected.All(static d => d.DefaultSeverity != null);
+            var includeEffectiveSeverity = expected.Length > 0 && expected.All(static d => d.EffectiveSeverity != null);
 
             if (IsSortedOrEmpty(expected))
             {
@@ -437,11 +528,11 @@ namespace Loretta.CodeAnalysis.Test.Utilities
 
             // write out the actual results as method calls (copy/paste this to update baseline)
             assertText.AppendLine("Actual:");
-            var actualText = ArrayBuilder<string>.GetInstance();
-            var e = actual.GetEnumerator();
+            var       actualText = ArrayBuilder<string>.GetInstance();
+            using var e          = actual.GetEnumerator();
             for (i = 0; e.MoveNext(); i++)
             {
-                var d = e.Current;
+                var d       = e.Current;
                 var message = d.ToString();
                 if (Regex.Match(message, @"{\d+}").Success)
                 {
@@ -461,12 +552,17 @@ namespace Loretta.CodeAnalysis.Test.Utilities
                 {
                     Indent(assertText, indentDepth);
                     assertText.Append("// ");
-                    assertText.AppendLine(l.SourceTree.GetText().Lines.GetLineFromPosition(l.SourceSpan.Start).ToString());
+                    assertText.AppendLine(
+                        l.SourceTree.GetText().Lines.GetLineFromPosition(l.SourceSpan.Start).ToString());
                 }
 
-                var description = new DiagnosticDescription(d, errorCodeOnly: false, includeDefaultSeverity, includeEffectiveSeverity);
+                var description = new DiagnosticDescription(
+                    d,
+                    errorCodeOnly: false,
+                    includeDefaultSeverity,
+                    includeEffectiveSeverity);
                 var diffDescription = description;
-                var idx = Array.IndexOf(expected, description);
+                var idx             = Array.IndexOf(expected, description);
                 if (idx != -1)
                 {
                     diffDescription = expected[idx];
@@ -488,12 +584,15 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             return assertText.ToString();
         }
 
-        private static IEnumerable<Diagnostic> Sort(IEnumerable<Diagnostic> diagnostics) => diagnostics.OrderBy(d => d.Location.GetLineSpan().StartLinePosition, LinePositionComparer.Instance);
+        private static IEnumerable<Diagnostic> Sort(IEnumerable<Diagnostic> diagnostics)
+            => diagnostics.OrderBy(
+                static d => d.Location.GetLineSpan().StartLinePosition,
+                LinePositionComparer.Instance);
 
-        private static bool IsSortedOrEmpty(DiagnosticDescription[] diagnostics)
+        private static bool IsSortedOrEmpty(IEnumerable<DiagnosticDescription> diagnostics)
         {
-            var comparer = LinePositionComparer.Instance;
-            DiagnosticDescription last = null;
+            var                    comparer = LinePositionComparer.Instance;
+            DiagnosticDescription? last     = null;
             foreach (var diagnostic in diagnostics)
             {
                 if (diagnostic._startPosition == null)
@@ -509,7 +608,8 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             return true;
         }
 
-        private static string GetDiagnosticDescription(DiagnosticDescription d, int indentDepth) => new string(' ', 4 * indentDepth) + d.ToString();
+        private static string GetDiagnosticDescription(DiagnosticDescription d, int indentDepth)
+            => new string(' ', 4 * indentDepth) + d;
 
         private static void Indent(StringBuilder sb, int count) => sb.Append(' ', 4 * count);
 
@@ -527,9 +627,9 @@ namespace Loretta.CodeAnalysis.Test.Utilities
             }
         }
 
-        private class LinePositionComparer : IComparer<LinePosition?>
+        private sealed class LinePositionComparer : IComparer<LinePosition?>
         {
-            internal static LinePositionComparer Instance = new();
+            internal static readonly LinePositionComparer Instance = new();
 
             public int Compare(LinePosition? x, LinePosition? y)
             {

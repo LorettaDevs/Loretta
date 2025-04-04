@@ -16,7 +16,7 @@ namespace Loretta.CodeAnalysis.Collections
                 internal KeyCollection(Builder dictionary)
                 {
                     LorettaDebug.Assert(dictionary is not null);
-                    _dictionary = dictionary!;
+                    _dictionary = dictionary;
                 }
 
                 public int Count => _dictionary.Count;

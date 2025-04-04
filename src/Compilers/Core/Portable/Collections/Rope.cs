@@ -11,9 +11,13 @@ namespace Loretta.CodeAnalysis
     internal abstract class Rope
     {
         public static readonly Rope Empty = ForString("");
+
         public abstract override string ToString();
+
         public abstract int Length { get; }
+
         protected abstract IEnumerable<char> GetChars();
+
         private Rope() { }
 
         /// <summary>
@@ -32,11 +36,9 @@ namespace Loretta.CodeAnalysis
         {
             if (r1 is null) throw new ArgumentNullException(nameof(r1));
             if (r2 is null) throw new ArgumentNullException(nameof(r2));
-            return
-                r1.Length == 0 ? r2 :
-                r2.Length == 0 ? r1 :
-                checked(r1.Length + r2.Length < 32) ? ForString(r1.ToString() + r2.ToString()) :
-                new ConcatRope(r1, r2);
+            if (r1.Length == 0) return r2;
+            if (r2.Length == 0) return r1;
+            return checked(r1.Length + r2.Length < 32) ? ForString(r1 + r2.ToString()) : new ConcatRope(r1, r2);
         }
 
         /// <summary>
@@ -44,16 +46,13 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         public override bool Equals(object? obj)
         {
-            if (obj is not Rope other || Length != other.Length)
-                return false;
-            if (Length == 0)
-                return true;
-            var chars0 = GetChars().GetEnumerator();
-            var chars1 = other.GetChars().GetEnumerator();
+            if (obj is not Rope other || Length != other.Length) return false;
+            if (Length == 0) return true;
+            using var chars0 = GetChars().GetEnumerator();
+            using var chars1 = other.GetChars().GetEnumerator();
             while (chars0.MoveNext() && chars1.MoveNext())
             {
-                if (chars0.Current != chars1.Current)
-                    return false;
+                if (chars0.Current != chars1.Current) return false;
             }
 
             return true;
@@ -61,9 +60,8 @@ namespace Loretta.CodeAnalysis
 
         public override int GetHashCode()
         {
-            int result = Length;
-            foreach (char c in GetChars())
-                result = Hash.Combine(c, result);
+            int result                            = Length;
+            foreach (char c in GetChars()) result = Hash.Combine(c, result);
 
             return result;
         }
@@ -71,52 +69,41 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// A rope that wraps a simple string.
         /// </summary>
-        private sealed class StringRope : Rope
+        private sealed class StringRope(string value) : Rope
         {
-            private readonly string _value;
-            public StringRope(string value)
-            {
-                _value = value;
-            }
+            public override string ToString() => value;
 
-            public override string ToString() => _value;
-            public override int Length => _value.Length;
-            protected override IEnumerable<char> GetChars() => _value;
+            public override int Length => value.Length;
+
+            protected override IEnumerable<char> GetChars() => value;
         }
 
         /// <summary>
         /// A rope that represents the concatenation of two ropes.
         /// </summary>
-        private sealed class ConcatRope : Rope
+        private sealed class ConcatRope(Rope left, Rope right) : Rope
         {
-            private readonly Rope _left, _right;
-            public override int Length { get; }
+            private readonly Rope _left = left, _right = right;
 
-            public ConcatRope(Rope left, Rope right)
-            {
-                _left = left;
-                _right = right;
-                Length = checked(left.Length + right.Length);
-            }
+            public override int Length { get; } = checked(left.Length + right.Length);
 
             public override string ToString()
             {
-                var psb = PooledStringBuilder.GetInstance();
+                var psb   = PooledStringBuilder.GetInstance();
                 var stack = new Stack<Rope>();
                 stack.Push(this);
                 while (stack.Count != 0)
                 {
                     switch (stack.Pop())
                     {
-                        case StringRope s:
-                            psb.Builder.Append(s.ToString());
-                            break;
+                        case StringRope s: psb.Builder.Append(s); break;
+
                         case ConcatRope c:
                             stack.Push(c._right);
                             stack.Push(c._left);
                             break;
-                        case var v:
-                            throw ExceptionUtilities.UnexpectedValue(v.GetType().Name);
+
+                        case var v: throw ExceptionUtilities.UnexpectedValue(v.GetType().Name);
                     }
                 }
 
@@ -132,15 +119,15 @@ namespace Loretta.CodeAnalysis
                     switch (stack.Pop())
                     {
                         case StringRope s:
-                            foreach (var c in s.ToString())
-                                yield return c;
+                            foreach (var c in s.ToString()) yield return c;
                             break;
+
                         case ConcatRope c:
                             stack.Push(c._right);
                             stack.Push(c._left);
                             break;
-                        case var v:
-                            throw ExceptionUtilities.UnexpectedValue(v.GetType().Name);
+
+                        case var v: throw ExceptionUtilities.UnexpectedValue(v.GetType().Name);
                     }
                 }
             }

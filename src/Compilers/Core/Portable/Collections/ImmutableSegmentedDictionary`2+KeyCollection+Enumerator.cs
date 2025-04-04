@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
+using JetBrains.Annotations;
 
 namespace Loretta.CodeAnalysis.Collections
 {
@@ -13,7 +14,7 @@ namespace Loretta.CodeAnalysis.Collections
             {
                 private ImmutableSegmentedDictionary<TKey, TValue>.Enumerator _enumerator;
 
-                internal Enumerator(ImmutableSegmentedDictionary<TKey, TValue>.Enumerator enumerator)
+                internal Enumerator([HandlesResourceDisposal] ImmutableSegmentedDictionary<TKey, TValue>.Enumerator enumerator)
                 {
                     _enumerator = enumerator;
                 }

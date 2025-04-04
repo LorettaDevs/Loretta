@@ -11,36 +11,28 @@ using System.Diagnostics;
 
 namespace Loretta.CodeAnalysis.Collections.Internal
 {
-    internal sealed class IDictionaryDebugView<K, V>
-        where K : notnull
+    internal sealed class DictionaryDebugView<TKey, TValue>(IDictionary<TKey, TValue> dictionary) where TKey : notnull
     {
-        private readonly IDictionary<K, V> _dict;
-
-        public IDictionaryDebugView(IDictionary<K, V> dictionary)
-        {
-            _dict = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
-        }
+        private readonly IDictionary<TKey, TValue> _dict = dictionary
+                                                           ?? throw new ArgumentNullException(nameof(dictionary));
 
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        public KeyValuePair<K, V>[] Items
+        public KeyValuePair<TKey, TValue>[] Items
         {
             get
             {
-                var items = new KeyValuePair<K, V>[_dict.Count];
+                var items = new KeyValuePair<TKey, TValue>[_dict.Count];
                 _dict.CopyTo(items, 0);
                 return items;
             }
         }
     }
 
-    internal sealed class DictionaryKeyCollectionDebugView<TKey, TValue>
+    // ReSharper disable once UnusedTypeParameter // Needed for debug type proxying
+    internal sealed class DictionaryKeyCollectionDebugView<TKey, TValue>(ICollection<TKey> collection)
     {
-        private readonly ICollection<TKey> _collection;
-
-        public DictionaryKeyCollectionDebugView(ICollection<TKey> collection)
-        {
-            _collection = collection ?? throw new ArgumentNullException(nameof(collection));
-        }
+        private readonly ICollection<TKey> _collection = collection
+                                                         ?? throw new ArgumentNullException(nameof(collection));
 
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         public TKey[] Items
@@ -54,14 +46,11 @@ namespace Loretta.CodeAnalysis.Collections.Internal
         }
     }
 
-    internal sealed class DictionaryValueCollectionDebugView<TKey, TValue>
+    // ReSharper disable once UnusedTypeParameter // Needed for debug type proxying
+    internal sealed class DictionaryValueCollectionDebugView<TKey, TValue>(ICollection<TValue> collection)
     {
-        private readonly ICollection<TValue> _collection;
-
-        public DictionaryValueCollectionDebugView(ICollection<TValue> collection)
-        {
-            _collection = collection ?? throw new ArgumentNullException(nameof(collection));
-        }
+        private readonly ICollection<TValue> _collection =
+            collection ?? throw new ArgumentNullException(nameof(collection));
 
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         public TValue[] Items

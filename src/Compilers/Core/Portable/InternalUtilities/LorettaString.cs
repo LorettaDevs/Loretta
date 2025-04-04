@@ -11,10 +11,8 @@ namespace Loretta.Utilities
         public static bool IsNullOrEmpty([NotNullWhen(returnValue: false)] string? value)
             => string.IsNullOrEmpty(value);
 
-#if !NET20
         /// <inheritdoc cref="string.IsNullOrWhiteSpace(string)"/>
         public static bool IsNullOrWhiteSpace([NotNullWhen(returnValue: false)] string? value)
             => string.IsNullOrWhiteSpace(value);
-#endif
     }
 }

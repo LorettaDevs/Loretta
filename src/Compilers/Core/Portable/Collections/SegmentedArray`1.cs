@@ -2,8 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Loretta.CodeAnalysis.Collections.Internal;
 
 namespace Loretta.CodeAnalysis.Collections
@@ -32,11 +34,13 @@ namespace Loretta.CodeAnalysis.Collections
         /// <summary>
         /// The bit shift to apply to an array index to get the page index within <see cref="_items"/>.
         /// </summary>
+        [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "Depends on generic type.")]
         private static readonly int s_segmentShift = SegmentedArrayHelper.CalculateSegmentShift(s_segmentSize);
 
         /// <summary>
         /// The bit mask to apply to an array index to get the index within a page of <see cref="_items"/>.
         /// </summary>
+        [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "Depends on generic type.")]
         private static readonly int s_offsetMask = SegmentedArrayHelper.CalculateOffsetMask(s_segmentSize);
 
         private readonly int _length;
@@ -51,7 +55,7 @@ namespace Loretta.CodeAnalysis.Collections
 
             if (length == 0)
             {
-                _items = Array.Empty<T[]>();
+                _items  = [];
                 _length = 0;
             }
             else
@@ -299,25 +303,18 @@ namespace Loretta.CodeAnalysis.Collections
         internal TestAccessor GetTestAccessor()
             => new(this);
 
-        public struct Enumerator : IEnumerator<T>
+        public struct Enumerator(SegmentedArray<T> array) : IEnumerator<T>
         {
-            private readonly T[][] _items;
-            private int _nextItemSegment;
-            private int _nextItemIndex;
-            private T _current;
+            private readonly T[][] _items           = array._items;
+            private          int   _nextItemSegment = 0;
+            private          int   _nextItemIndex   = 0;
+            private          T     _current         = default!;
 
-            public Enumerator(SegmentedArray<T> array)
-            {
-                _items = array._items;
-                _nextItemSegment = 0;
-                _nextItemIndex = 0;
-                _current = default!;
-            }
+            public readonly T Current => _current;
 
-            public T Current => _current;
-            object? IEnumerator.Current => Current;
+            readonly object? IEnumerator.Current => Current;
 
-            public void Dispose()
+            public readonly void Dispose()
             {
             }
 
@@ -346,22 +343,17 @@ namespace Loretta.CodeAnalysis.Collections
             {
                 _nextItemSegment = 0;
                 _nextItemIndex = 0;
-                _current = default!;
+                _current = default(T)!;
             }
         }
 
-        internal readonly struct TestAccessor
+        internal readonly struct TestAccessor(SegmentedArray<T> array)
         {
-            private readonly SegmentedArray<T> _array;
-
-            public TestAccessor(SegmentedArray<T> array)
-            {
-                _array = array;
-            }
-
+            [PublicAPI]
             public static int SegmentSize => s_segmentSize;
 
-            public T[][] Items => _array._items;
+            [PublicAPI]
+            public T[][] Items => array._items;
         }
     }
 }

@@ -11,12 +11,12 @@ namespace Loretta.CodeAnalysis.Collections
         {
             public readonly struct ValueCollection : ICollection<TValue>, IReadOnlyCollection<TValue>, ICollection
             {
-                private readonly ImmutableSegmentedDictionary<TKey, TValue>.Builder _dictionary;
+                private readonly Builder _dictionary;
 
-                internal ValueCollection(ImmutableSegmentedDictionary<TKey, TValue>.Builder dictionary)
+                internal ValueCollection(Builder dictionary)
                 {
                     LorettaDebug.Assert(dictionary is not null);
-                    _dictionary = dictionary!;
+                    _dictionary = dictionary;
                 }
 
                 public int Count => _dictionary.Count;

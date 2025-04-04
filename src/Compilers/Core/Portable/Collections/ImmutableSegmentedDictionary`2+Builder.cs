@@ -35,13 +35,12 @@ namespace Loretta.CodeAnalysis.Collections
                     if (value is null)
                         throw new ArgumentNullException(nameof(value));
 
-                    if (value != KeyComparer)
-                    {
-                        // Rewrite the mutable dictionary using a new comparer
-                        var valuesToAdd = ReadOnlyDictionary;
-                        _mutableDictionary = new SegmentedDictionary<TKey, TValue>(value);
-                        AddRange(valuesToAdd);
-                    }
+                    if (ReferenceEquals(value, KeyComparer)) return;
+
+                    // Rewrite the mutable dictionary using a new comparer
+                    var valuesToAdd = ReadOnlyDictionary;
+                    _mutableDictionary = new SegmentedDictionary<TKey, TValue>(value);
+                    AddRange(valuesToAdd);
                 }
             }
 

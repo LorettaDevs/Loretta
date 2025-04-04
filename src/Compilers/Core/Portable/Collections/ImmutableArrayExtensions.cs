@@ -1,13 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using Loretta.CodeAnalysis.PooledObjects;
-
-#if DEBUG
-#endif
 
 namespace Loretta.CodeAnalysis
 {
@@ -24,8 +19,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>An immutable copy of the contents of the sequence.</returns>
         /// <exception cref="ArgumentNullException">If items is null (default)</exception>
         /// <remarks>If the sequence is null, this will throw <see cref="ArgumentNullException"/></remarks>
-        public static ImmutableArray<T> AsImmutable<T>(this IEnumerable<T> items) =>
-            ImmutableArray.CreateRange<T>(items);
+        public static ImmutableArray<T> AsImmutable<T>(this IEnumerable<T> items) => [..items];
 
         /// <summary>
         /// Converts a sequence to an immutable array.
@@ -35,14 +29,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>An immutable copy of the contents of the sequence.</returns>
         /// <remarks>If the sequence is null, this will return an empty array.</remarks>
         public static ImmutableArray<T> AsImmutableOrEmpty<T>(this IEnumerable<T>? items)
-        {
-            if (items == null)
-            {
-                return ImmutableArray<T>.Empty;
-            }
-
-            return ImmutableArray.CreateRange<T>(items);
-        }
+            => items == null ? [] : [..items];
 
         /// <summary>
         /// Converts a sequence to an immutable array.
@@ -52,14 +39,7 @@ namespace Loretta.CodeAnalysis
         /// <returns>An immutable copy of the contents of the sequence.</returns>
         /// <remarks>If the sequence is null, this will return the default (null) array.</remarks>
         public static ImmutableArray<T> AsImmutableOrNull<T>(this IEnumerable<T>? items)
-        {
-            if (items == null)
-            {
-                return default;
-            }
-
-            return ImmutableArray.CreateRange<T>(items);
-        }
+            => items == null ? default(ImmutableArray<T>) : [..items];
 
         /// <summary>
         /// Converts an array to an immutable array. The array must not be null.
@@ -70,24 +50,7 @@ namespace Loretta.CodeAnalysis
         public static ImmutableArray<T> AsImmutable<T>(this T[] items)
         {
             LorettaDebug.Assert(items != null);
-            return ImmutableArray.Create<T>(items);
-        }
-
-        /// <summary>
-        /// Converts a array to an immutable array.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="items">The sequence to convert</param>
-        /// <returns></returns>
-        /// <remarks>If the sequence is null, this will return the default (null) array.</remarks>
-        public static ImmutableArray<T> AsImmutableOrNull<T>(this T[]? items)
-        {
-            if (items == null)
-            {
-                return default;
-            }
-
-            return ImmutableArray.Create<T>(items);
+            return [..items];
         }
 
         /// <summary>
@@ -95,24 +58,25 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items">The sequence to convert</param>
-        /// <returns>If the array is null, this will return an empty immutable array.</returns>
-        public static ImmutableArray<T> AsImmutableOrEmpty<T>(this T[]? items)
-        {
-            if (items == null)
-            {
-                return ImmutableArray<T>.Empty;
-            }
+        /// <returns></returns>
+        /// <remarks>If the sequence is null, this will return the default (null) array.</remarks>
+        public static ImmutableArray<T> AsImmutableOrNull<T>(this T[]? items)
+            => items == null ? default(ImmutableArray<T>) : [..items];
 
-            return ImmutableArray.Create<T>(items);
-        }
+        /// <summary>
+        /// Converts an array to an immutable array.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items">The sequence to convert</param>
+        /// <returns>If the array is null, this will return an empty immutable array.</returns>
+        public static ImmutableArray<T> AsImmutableOrEmpty<T>(this T[]? items) => items == null ? [] : [..items];
 
         /// <summary>
         /// Reads bytes from specified <see cref="MemoryStream"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <returns>Read-only content of the stream.</returns>
-        public static ImmutableArray<byte> ToImmutable(this MemoryStream stream) =>
-            ImmutableArray.Create<byte>(stream.ToArray());
+        public static ImmutableArray<byte> ToImmutable(this MemoryStream stream) => [..stream.ToArray()];
 
         /// <summary>
         /// Maps an immutable array to another immutable array.
@@ -121,9 +85,11 @@ namespace Loretta.CodeAnalysis
         /// <typeparam name="TResult"></typeparam>
         /// <param name="items">The array to map</param>
         /// <param name="map">The mapping delegate</param>
-        /// <returns>If the items's length is 0, this will return an empty immutable array</returns>
-        public static ImmutableArray<TResult> SelectAsArray<TItem, TResult>(this ImmutableArray<TItem> items, Func<TItem, TResult> map) =>
-            ImmutableArray.CreateRange(items, map);
+        /// <returns>If the items array's length is 0, this will return an empty immutable array</returns>
+        public static ImmutableArray<TResult> SelectAsArray<TItem, TResult>(
+            this ImmutableArray<TItem> items,
+            Func<TItem, TResult>       map)
+            => ImmutableArray.CreateRange(items, map);
 
         /// <summary>
         /// Maps an immutable array to another immutable array.
@@ -134,9 +100,12 @@ namespace Loretta.CodeAnalysis
         /// <param name="items">The sequence to map</param>
         /// <param name="map">The mapping delegate</param>
         /// <param name="arg">The extra input used by mapping delegate</param>
-        /// <returns>If the items's length is 0, this will return an empty immutable array.</returns>
-        public static ImmutableArray<TResult> SelectAsArray<TItem, TArg, TResult>(this ImmutableArray<TItem> items, Func<TItem, TArg, TResult> map, TArg arg) =>
-            ImmutableArray.CreateRange(items, map, arg);
+        /// <returns>If the items array's length is 0, this will return an empty immutable array.</returns>
+        public static ImmutableArray<TResult> SelectAsArray<TItem, TArg, TResult>(
+            this ImmutableArray<TItem> items,
+            Func<TItem, TArg, TResult> map,
+            TArg                       arg)
+            => ImmutableArray.CreateRange(items, map, arg);
 
         /// <summary>
         ///  Maps an immutable array to another immutable array.
@@ -147,33 +116,31 @@ namespace Loretta.CodeAnalysis
         /// <param name="items">The sequence to map</param>
         /// <param name="map">The mapping delegate</param>
         /// <param name="arg">The extra input used by mapping delegate</param>
-        /// <returns>If the items's length is 0, this will return an empty immutable array.</returns>
-        public static ImmutableArray<TResult> SelectAsArray<TItem, TArg, TResult>(this ImmutableArray<TItem> items, Func<TItem, int, TArg, TResult> map, TArg arg)
+        /// <returns>If the items array's length is 0, this will return an empty immutable array.</returns>
+        public static ImmutableArray<TResult> SelectAsArray<TItem, TArg, TResult>(
+            this ImmutableArray<TItem>      items,
+            Func<TItem, int, TArg, TResult> map,
+            TArg                            arg)
         {
             switch (items.Length)
             {
-                case 0:
-                    return ImmutableArray<TResult>.Empty;
+                case 0: return [];
 
-                case 1:
-                    return ImmutableArray.Create(map(items[0], 0, arg));
+                case 1: return [map(items[0], 0, arg)];
 
-                case 2:
-                    return ImmutableArray.Create(map(items[0], 0, arg), map(items[1], 1, arg));
+                case 2: return [map(items[0], 0, arg), map(items[1], 1, arg)];
 
-                case 3:
-                    return ImmutableArray.Create(map(items[0], 0, arg), map(items[1], 1, arg), map(items[2], 2, arg));
+                case 3: return [map(items[0], 0, arg), map(items[1], 1, arg), map(items[2], 2, arg)];
 
                 case 4:
-                    return ImmutableArray.Create(map(items[0], 0, arg), map(items[1], 1, arg), map(items[2], 2, arg), map(items[3], 3, arg));
+                    return [map(items[0], 0, arg), map(items[1], 1, arg), map(items[2], 2, arg), map(items[3], 3, arg)];
 
                 default:
                     var builder = ArrayBuilder<TResult>.GetInstance(items.Length);
-                    for (int i = 0; i < items.Length; i++)
+                    for (var i = 0; i < items.Length; i++)
                     {
                         builder.Add(map(items[i], i, arg));
                     }
-
                     return builder.ToImmutableAndFree();
             }
         }
@@ -186,13 +153,13 @@ namespace Loretta.CodeAnalysis
         /// <param name="array">The array to transform</param>
         /// <param name="predicate">The condition to use for filtering the array content.</param>
         /// <param name="selector">A transform function to apply to each element that is not filtered out by <paramref name="predicate"/>.</param>
-        /// <returns>If the items's length is 0, this will return an empty immutable array.</returns>
-        public static ImmutableArray<TResult> SelectAsArray<TItem, TResult>(this ImmutableArray<TItem> array, Func<TItem, bool> predicate, Func<TItem, TResult> selector)
+        /// <returns>If the items array's length is 0, this will return an empty immutable array.</returns>
+        public static ImmutableArray<TResult> SelectAsArray<TItem, TResult>(
+            this ImmutableArray<TItem> array,
+            Func<TItem, bool>          predicate,
+            Func<TItem, TResult>       selector)
         {
-            if (array.Length == 0)
-            {
-                return ImmutableArray<TResult>.Empty;
-            }
+            if (array.Length == 0) return [];
 
             var builder = ArrayBuilder<TResult>.GetInstance();
             foreach (var item in array)
@@ -202,70 +169,73 @@ namespace Loretta.CodeAnalysis
                     builder.Add(selector(item));
                 }
             }
-
             return builder.ToImmutableAndFree();
         }
 
         /// <summary>
         /// Maps an immutable array through a function that returns ValueTasks, returning the new ImmutableArray.
         /// </summary>
-        public static async ValueTask<ImmutableArray<TResult>> SelectAsArrayAsync<TItem, TResult>(this ImmutableArray<TItem> array, Func<TItem, CancellationToken, ValueTask<TResult>> selector, CancellationToken cancellationToken)
+        public static async ValueTask<ImmutableArray<TResult>> SelectAsArrayAsync<TItem, TResult>(
+            this ImmutableArray<TItem>                         array,
+            Func<TItem, CancellationToken, ValueTask<TResult>> selector,
+            CancellationToken                                  cancellationToken)
         {
             var builder = ArrayBuilder<TResult>.GetInstance(array.Length);
-
             foreach (var item in array)
             {
                 builder.Add(await selector(item, cancellationToken).ConfigureAwait(false));
             }
-
             return builder.ToImmutableAndFree();
         }
 
         /// <summary>
         /// Zips two immutable arrays together through a mapping function, producing another immutable array.
         /// </summary>
-        /// <returns>If the items's length is 0, this will return an empty immutable array.</returns>
-        public static ImmutableArray<TResult> ZipAsArray<T1, T2, TResult>(this ImmutableArray<T1> self, ImmutableArray<T2> other, Func<T1, T2, TResult> map)
+        /// <returns>If the items array's length is 0, this will return an empty immutable array.</returns>
+        public static ImmutableArray<TResult> ZipAsArray<T1, T2, TResult>(
+            this ImmutableArray<T1> self,
+            ImmutableArray<T2>      other,
+            Func<T1, T2, TResult>   map)
         {
             LorettaDebug.Assert(self.Length == other.Length);
             switch (self.Length)
             {
-                case 0:
-                    return ImmutableArray<TResult>.Empty;
+                case 0: return [];
 
-                case 1:
-                    return ImmutableArray.Create(map(self[0], other[0]));
+                case 1: return [map(self[0], other[0])];
 
-                case 2:
-                    return ImmutableArray.Create(map(self[0], other[0]), map(self[1], other[1]));
+                case 2: return [map(self[0], other[0]), map(self[1], other[1])];
 
-                case 3:
-                    return ImmutableArray.Create(map(self[0], other[0]), map(self[1], other[1]), map(self[2], other[2]));
+                case 3: return [map(self[0], other[0]), map(self[1], other[1]), map(self[2], other[2])];
 
                 case 4:
-                    return ImmutableArray.Create(map(self[0], other[0]), map(self[1], other[1]), map(self[2], other[2]), map(self[3], other[3]));
+                    return
+                    [
+                        map(self[0], other[0]), map(self[1], other[1]), map(self[2], other[2]),
+                        map(self[3], other[3]),
+                    ];
 
                 default:
                     var builder = ArrayBuilder<TResult>.GetInstance(self.Length);
-                    for (int i = 0; i < self.Length; i++)
+                    for (var i = 0; i < self.Length; i++)
                     {
                         builder.Add(map(self[i], other[i]));
                     }
-
                     return builder.ToImmutableAndFree();
             }
         }
 
-        public static ImmutableArray<TResult> ZipAsArray<T1, T2, TArg, TResult>(this ImmutableArray<T1> self, ImmutableArray<T2> other, TArg arg, Func<T1, T2, int, TArg, TResult> map)
+        public static ImmutableArray<TResult> ZipAsArray<T1, T2, TArg, TResult>(
+            this ImmutableArray<T1>          self,
+            ImmutableArray<T2>               other,
+            TArg                             arg,
+            Func<T1, T2, int, TArg, TResult> map)
         {
             LorettaDebug.Assert(self.Length == other.Length);
-            if (self.IsEmpty)
-            {
-                return ImmutableArray<TResult>.Empty;
-            }
+            if (self.IsEmpty) return [];
 
             var builder = ArrayBuilder<TResult>.GetInstance(self.Length);
-            for (int i = 0; i < self.Length; i++)
+            for (var i = 0; i < self.Length; i++)
             {
                 builder.Add(map(self[i], other[i], i, arg));
             }
@@ -292,24 +262,31 @@ namespace Loretta.CodeAnalysis
         /// <param name="arg">
         /// The extra argument that will be passed on to the filter delegate.
         /// </param>
-        public static ImmutableArray<T> WhereAsArray<T, TArg>(this ImmutableArray<T> array, Func<T, TArg, bool> predicate, TArg arg)
+        public static ImmutableArray<T> WhereAsArray<T, TArg>(
+            this ImmutableArray<T> array,
+            Func<T, TArg, bool>    predicate,
+            TArg                   arg)
             => WhereAsArrayImpl(array, predicateWithoutArg: null, predicate, arg);
 
-        private static ImmutableArray<T> WhereAsArrayImpl<T, TArg>(ImmutableArray<T> array, Func<T, bool>? predicateWithoutArg, Func<T, TArg, bool>? predicateWithArg, TArg arg)
+        private static ImmutableArray<T> WhereAsArrayImpl<T, TArg>(
+            ImmutableArray<T>    array,
+            Func<T, bool>?       predicateWithoutArg,
+            Func<T, TArg, bool>? predicateWithArg,
+            TArg                 arg)
         {
             LorettaDebug.Assert(!array.IsDefault);
             LorettaDebug.Assert(predicateWithArg != null ^ predicateWithoutArg != null);
 
             ArrayBuilder<T>? builder = null;
-            bool none = true;
-            bool all = true;
+            var              none    = true;
+            var              all     = true;
 
-            int n = array.Length;
-            for (int i = 0; i < n; i++)
+            var n = array.Length;
+            for (var i = 0; i < n; i++)
             {
                 var a = array[i];
 
-                if ((predicateWithoutArg != null) ? predicateWithoutArg(a) : predicateWithArg!(a, arg))
+                if (predicateWithoutArg?.Invoke(a) ?? predicateWithArg!(a, arg))
                 {
                     none = false;
                     if (all)
@@ -331,15 +308,15 @@ namespace Loretta.CodeAnalysis
                     }
 
                     LorettaDebug.Assert(i > 0);
-                    if (all)
+
+                    if (!all) continue;
+
+                    LorettaDebug.Assert(builder == null);
+                    all     = false;
+                    builder = ArrayBuilder<T>.GetInstance();
+                    for (var j = 0; j < i; j++)
                     {
-                        LorettaDebug.Assert(builder == null);
-                        all = false;
-                        builder = ArrayBuilder<T>.GetInstance();
-                        for (int j = 0; j < i; j++)
-                        {
-                            builder.Add(array[j]);
-                        }
+                        builder.Add(array[j]);
                     }
                 }
             }
@@ -357,14 +334,14 @@ namespace Loretta.CodeAnalysis
             else
             {
                 LorettaDebug.Assert(none);
-                return ImmutableArray<T>.Empty;
+                return [];
             }
         }
 
         public static bool Any<T, TArg>(this ImmutableArray<T> array, Func<T, TArg, bool> predicate, TArg arg)
         {
-            int n = array.Length;
-            for (int i = 0; i < n; i++)
+            var n = array.Length;
+            for (var i = 0; i < n; i++)
             {
                 var a = array[i];
 
@@ -373,14 +350,13 @@ namespace Loretta.CodeAnalysis
                     return true;
                 }
             }
-
             return false;
         }
 
         public static bool All<T, TArg>(this ImmutableArray<T> array, Func<T, TArg, bool> predicate, TArg arg)
         {
-            int n = array.Length;
-            for (int i = 0; i < n; i++)
+            var n = array.Length;
+            for (var i = 0; i < n; i++)
             {
                 var a = array[i];
 
@@ -395,8 +371,8 @@ namespace Loretta.CodeAnalysis
 
         public static async Task<bool> AnyAsync<T>(this ImmutableArray<T> array, Func<T, Task<bool>> predicateAsync)
         {
-            int n = array.Length;
-            for (int i = 0; i < n; i++)
+            var n = array.Length;
+            for (var i = 0; i < n; i++)
             {
                 var a = array[i];
 
@@ -409,10 +385,13 @@ namespace Loretta.CodeAnalysis
             return false;
         }
 
-        public static async Task<bool> AnyAsync<T, TArg>(this ImmutableArray<T> array, Func<T, TArg, Task<bool>> predicateAsync, TArg arg)
+        public static async Task<bool> AnyAsync<T, TArg>(
+            this ImmutableArray<T>    array,
+            Func<T, TArg, Task<bool>> predicateAsync,
+            TArg                      arg)
         {
-            int n = array.Length;
-            for (int i = 0; i < n; i++)
+            var n = array.Length;
+            for (var i = 0; i < n; i++)
             {
                 var a = array[i];
 
@@ -425,10 +404,12 @@ namespace Loretta.CodeAnalysis
             return false;
         }
 
-        public static async ValueTask<T?> FirstOrDefaultAsync<T>(this ImmutableArray<T> array, Func<T, Task<bool>> predicateAsync)
+        public static async ValueTask<T?> FirstOrDefaultAsync<T>(
+            this ImmutableArray<T> array,
+            Func<T, Task<bool>>    predicateAsync)
         {
-            int n = array.Length;
-            for (int i = 0; i < n; i++)
+            var n = array.Length;
+            for (var i = 0; i < n; i++)
             {
                 var a = array[i];
 
@@ -438,7 +419,7 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            return default;
+            return default(T?);
         }
 
         /// <summary>
@@ -446,7 +427,8 @@ namespace Loretta.CodeAnalysis
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ImmutableArray<TBase> Cast<TDerived, TBase>(this ImmutableArray<TDerived> items)
-            where TDerived : class, TBase => ImmutableArray<TBase>.CastUp(items);
+            where TDerived : class, TBase
+            => ImmutableArray<TBase>.CastUp(items);
 
         /// <summary>
         /// Determines whether this instance and another immutable array are equal.
@@ -456,7 +438,10 @@ namespace Loretta.CodeAnalysis
         /// <param name="array2"></param>
         /// <param name="comparer">The comparer to determine if the two arrays are equal.</param>
         /// <returns>True if the two arrays are equal</returns>
-        public static bool SetEquals<T>(this ImmutableArray<T> array1, ImmutableArray<T> array2, IEqualityComparer<T> comparer)
+        public static bool SetEquals<T>(
+            this ImmutableArray<T> array1,
+            ImmutableArray<T>      array2,
+            IEqualityComparer<T>   comparer)
         {
             if (array1.IsDefault)
             {
@@ -497,8 +482,8 @@ namespace Loretta.CodeAnalysis
         /// <summary>
         /// Returns an empty array if the input array is null (default)
         /// </summary>
-        public static ImmutableArray<T> NullToEmpty<T>(this ImmutableArray<T> array) =>
-            array.IsDefault ? ImmutableArray<T>.Empty : array;
+        public static ImmutableArray<T> NullToEmpty<T>(this ImmutableArray<T> array)
+            => array.IsDefault ? ImmutableArray<T>.Empty : array;
 
         /// <summary>
         /// Returns an array of distinct elements, preserving the order in the original array.
@@ -513,7 +498,7 @@ namespace Loretta.CodeAnalysis
                 return array;
             }
 
-            var set = new HashSet<T>(comparer);
+            var set     = new HashSet<T>(comparer);
             var builder = ArrayBuilder<T>.GetInstance();
             foreach (var a in array)
             {
@@ -546,10 +531,10 @@ namespace Loretta.CodeAnalysis
         internal static ImmutableArray<T> ConditionallyDeOrder<T>(this ImmutableArray<T> array)
         {
 #if DEBUG
-            if (!array.IsDefault && array.Length >= 2)
+            if (array is { IsDefault: false, Length: >= 2 })
             {
-                T[] copy = array.ToArray();
-                int last = copy.Length - 1;
+                var copy = array.ToArray();
+                var last = copy.Length - 1;
                 (copy[last], copy[0]) = (copy[0], copy[last]);
                 return copy.AsImmutable();
             }
@@ -559,13 +544,9 @@ namespace Loretta.CodeAnalysis
 
         internal static ImmutableArray<TValue> Flatten<TKey, TValue>(
             this Dictionary<TKey, ImmutableArray<TValue>> dictionary,
-            IComparer<TValue>? comparer = null)
-            where TKey : notnull
+            IComparer<TValue>?                            comparer = null) where TKey : notnull
         {
-            if (dictionary.Count == 0)
-            {
-                return ImmutableArray<TValue>.Empty;
-            }
+            if (dictionary.Count == 0) return [];
 
             var builder = ArrayBuilder<TValue>.GetInstance();
 
@@ -583,10 +564,13 @@ namespace Loretta.CodeAnalysis
             return builder.ToImmutableAndFree();
         }
 
-        internal static ImmutableArray<T> Concat<T>(this ImmutableArray<T> first, ImmutableArray<T> second) =>
-            first.AddRange(second);
+        internal static ImmutableArray<T> Concat<T>(this ImmutableArray<T> first, ImmutableArray<T> second)
+            => first.AddRange(second);
 
-        internal static ImmutableArray<T> Concat<T>(this ImmutableArray<T> first, ImmutableArray<T> second, ImmutableArray<T> third)
+        internal static ImmutableArray<T> Concat<T>(
+            this ImmutableArray<T> first,
+            ImmutableArray<T>      second,
+            ImmutableArray<T>      third)
         {
             var builder = ArrayBuilder<T>.GetInstance(first.Length + second.Length + third.Length);
             builder.AddRange(first);
@@ -595,7 +579,11 @@ namespace Loretta.CodeAnalysis
             return builder.ToImmutableAndFree();
         }
 
-        internal static ImmutableArray<T> Concat<T>(this ImmutableArray<T> first, ImmutableArray<T> second, ImmutableArray<T> third, ImmutableArray<T> fourth)
+        internal static ImmutableArray<T> Concat<T>(
+            this ImmutableArray<T> first,
+            ImmutableArray<T>      second,
+            ImmutableArray<T>      third,
+            ImmutableArray<T>      fourth)
         {
             var builder = ArrayBuilder<T>.GetInstance(first.Length + second.Length + third.Length + fourth.Length);
             builder.AddRange(first);
@@ -605,8 +593,7 @@ namespace Loretta.CodeAnalysis
             return builder.ToImmutableAndFree();
         }
 
-        internal static ImmutableArray<T> Concat<T>(this ImmutableArray<T> first, T second) =>
-            first.Add(second);
+        internal static ImmutableArray<T> Concat<T>(this ImmutableArray<T> first, T second) => first.Add(second);
 
         internal static bool HasDuplicates<T>(this ImmutableArray<T> array, IEqualityComparer<T> comparer)
         {
@@ -616,8 +603,7 @@ namespace Loretta.CodeAnalysis
                 case 1:
                     return false;
 
-                case 2:
-                    return comparer.Equals(array[0], array[1]);
+                case 2: return comparer.Equals(array[0], array[1]);
 
                 default:
                     var set = new HashSet<T>(comparer);
@@ -640,10 +626,10 @@ namespace Loretta.CodeAnalysis
                 return 0;
             }
 
-            int count = 0;
-            for (int i = 0; i < items.Length; ++i)
+            var count = 0;
+            foreach (var item in items)
             {
-                if (predicate(items[i]))
+                if (predicate(item))
                 {
                     ++count;
                 }
@@ -652,60 +638,40 @@ namespace Loretta.CodeAnalysis
             return count;
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct ImmutableArrayProxy<T>
-        {
-            internal T[] MutableArray;
-        }
-
-        // TODO(https://github.com/dotnet/corefx/issues/34126): Remove when System.Collections.Immutable
-        // provides a Span API
-        internal static T[] DangerousGetUnderlyingArray<T>(this ImmutableArray<T> array)
-            => Unsafe.As<ImmutableArray<T>, ImmutableArrayProxy<T>>(ref array).MutableArray;
-
-        internal static ReadOnlySpan<T> AsSpan<T>(this ImmutableArray<T> array)
-            => array.DangerousGetUnderlyingArray();
-
-        internal static ImmutableArray<T> DangerousCreateFromUnderlyingArray<T>([MaybeNull] ref T[] array)
-        {
-            var proxy = new ImmutableArrayProxy<T> { MutableArray = array };
-            array = null!;
-            return Unsafe.As<ImmutableArrayProxy<T>, ImmutableArray<T>>(ref proxy);
-        }
-
-        internal static Dictionary<K, ImmutableArray<T>> ToDictionary<K, T>(this ImmutableArray<T> items, Func<T, K> keySelector, IEqualityComparer<K>? comparer = null)
-            where K : notnull
+        internal static Dictionary<TKey, ImmutableArray<TValue>> ToDictionary<TKey, TValue>(
+            this ImmutableArray<TValue> items,
+            Func<TValue, TKey>             keySelector,
+            IEqualityComparer<TKey>?  comparer = null) where TKey : notnull
         {
             if (items.Length == 1)
             {
-                var dictionary1 = new Dictionary<K, ImmutableArray<T>>(1, comparer);
-                T value = items[0];
-                dictionary1.Add(keySelector(value), ImmutableArray.Create(value));
+                var dictionary1 = new Dictionary<TKey, ImmutableArray<TValue>>(1, comparer);
+                var value       = items[0];
+                dictionary1.Add(keySelector(value), [value]);
                 return dictionary1;
             }
 
             if (items.Length == 0)
             {
-                return new Dictionary<K, ImmutableArray<T>>(comparer);
+                return new Dictionary<TKey, ImmutableArray<TValue>>(comparer);
             }
 
-            // bucketize
+            // bucket-ize
             // prevent reallocation. it may not have 'count' entries, but it won't have more. 
-            var accumulator = new Dictionary<K, ArrayBuilder<T>>(items.Length, comparer);
-            for (int i = 0; i < items.Length; i++)
+            var accumulator = new Dictionary<TKey, ArrayBuilder<TValue>>(items.Length, comparer);
+            foreach (var item in items)
             {
-                var item = items[i];
-                var key = keySelector(item);
+                var key  = keySelector(item);
                 if (!accumulator.TryGetValue(key, out var bucket))
                 {
-                    bucket = ArrayBuilder<T>.GetInstance();
+                    bucket = ArrayBuilder<TValue>.GetInstance();
                     accumulator.Add(key, bucket);
                 }
 
                 bucket.Add(item);
             }
 
-            var dictionary = new Dictionary<K, ImmutableArray<T>>(accumulator.Count, comparer);
+            var dictionary = new Dictionary<TKey, ImmutableArray<TValue>>(accumulator.Count, comparer);
 
             // freeze
             foreach (var pair in accumulator)
@@ -716,10 +682,14 @@ namespace Loretta.CodeAnalysis
             return dictionary;
         }
 
-        internal static Location FirstOrNone(this ImmutableArray<Location> items) =>
-            items.IsEmpty ? Location.None : items[0];
+        internal static Location FirstOrNone(this ImmutableArray<Location> items)
+            => items.IsEmpty ? Location.None : items[0];
 
-        internal static bool SequenceEqual<TElement, TArg>(this ImmutableArray<TElement> array1, ImmutableArray<TElement> array2, TArg arg, Func<TElement, TElement, TArg, bool> predicate)
+        internal static bool SequenceEqual<TElement, TArg>(
+            this ImmutableArray<TElement>        array1,
+            ImmutableArray<TElement>             array2,
+            TArg                                 arg,
+            Func<TElement, TElement, TArg, bool> predicate)
         {
             // The framework implementation of SequenceEqual forces a NullRef for default array1 and 2, so we
             // maintain the same behavior in this extension
@@ -738,7 +708,7 @@ namespace Loretta.CodeAnalysis
                 return false;
             }
 
-            for (int i = 0; i < array1.Length; i++)
+            for (var i = 0; i < array1.Length; i++)
             {
                 if (!predicate(array1[i], array2[i], arg))
                 {

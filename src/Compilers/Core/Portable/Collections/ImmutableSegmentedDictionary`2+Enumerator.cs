@@ -17,6 +17,7 @@ namespace Loretta.CodeAnalysis.Collections
             {
                 _dictionary = dictionary;
                 _returnType = returnType;
+                // ReSharper disable once GenericEnumeratorNotDisposed // false positive
                 _enumerator = dictionary.GetEnumerator();
             }
 
@@ -54,7 +55,11 @@ namespace Loretta.CodeAnalysis.Collections
             public bool MoveNext()
                 => _enumerator.MoveNext();
 
-            public void Reset() => _enumerator = _dictionary.GetEnumerator();
+            public void Reset()
+            {
+                _enumerator.Dispose();
+                _enumerator = _dictionary.GetEnumerator();
+            }
         }
     }
 }

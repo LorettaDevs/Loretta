@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Loretta.CodeAnalysis.Collections.Internal
 {
     internal static class SegmentedArrayHelper
@@ -34,9 +36,14 @@ namespace Loretta.CodeAnalysis.Collections.Internal
 
             return segmentSize;
 
-            static int ArraySize(int elementSize, int segmentSize) =>
-                // Array object header, plus space for the elements
-                (2 * IntPtr.Size) + (elementSize * segmentSize);
+            [SuppressMessage(
+                "ReSharper",
+                "BuiltInTypeReferenceStyleForMemberAccess",
+                Justification = "No nint in .NET Standard.")]
+            static int ArraySize(int elementSize, int segmentSize)
+                =>
+                    // Array object header, plus space for the elements
+                    (2 * IntPtr.Size) + (elementSize * segmentSize);
         }
 
         /// <summary>

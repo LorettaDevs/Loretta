@@ -1,17 +1,19 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#nullable disable
-
+using JetBrains.Annotations;
 using Loretta.CodeAnalysis.Test.Utilities;
 
 namespace Loretta.CodeAnalysis
 {
+    [PublicAPI]
     public static class DiagnosticExtensions
     {
+        [PublicAPI]
         public static void Verify(this IEnumerable<Diagnostic> actual, params DiagnosticDescription[] expected)
             => Verify(actual, expected, errorCodeOnly: false);
 
+        [PublicAPI]
         public static bool AreEquivalent(
             this IEnumerable<Diagnostic> actual,
             DiagnosticDescription[]      expected,
@@ -44,10 +46,12 @@ namespace Loretta.CodeAnalysis
             return unmatched.Count <= 0;
         }
 
+        [PublicAPI]
         private static void Verify(IEnumerable<Diagnostic> actual, DiagnosticDescription[] expected, bool errorCodeOnly)
         {
-            if (!AreEquivalent(actual, expected, errorCodeOnly))
-                Assert.Fail(DiagnosticDescription.GetAssertText(expected, actual));
+            var diagnostics = actual.ToArray();
+            if (!AreEquivalent(diagnostics, expected, errorCodeOnly))
+                Assert.Fail(DiagnosticDescription.GetAssertText(expected, diagnostics));
         }
     }
 }

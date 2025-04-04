@@ -20,7 +20,7 @@ namespace Loretta.CodeAnalysis
             return false;
         }
 
-        public static bool Any<T, A>(this ArrayBuilder<T> builder, Func<T, A, bool> predicate, A arg)
+        public static bool Any<TElem, TArg>(this ArrayBuilder<TElem> builder, Func<TElem, TArg, bool> predicate, TArg arg)
         {
             foreach (var item in builder)
             {
@@ -44,7 +44,10 @@ namespace Loretta.CodeAnalysis
             return true;
         }
 
-        public static bool All<T, A>(this ArrayBuilder<T> builder, Func<T, A, bool> predicate, A arg)
+        public static bool All<TElem, TArg>(
+            this ArrayBuilder<TElem> builder,
+            Func<TElem, TArg, bool>  predicate,
+            TArg                     arg)
         {
             foreach (var item in builder)
             {
@@ -63,7 +66,7 @@ namespace Loretta.CodeAnalysis
         /// <typeparam name="TResult"></typeparam>
         /// <param name="items">The array to map</param>
         /// <param name="map">The mapping delegate</param>
-        /// <returns>If the items's length is 0, this will return an empty immutable array</returns>
+        /// <returns>If the items list's length is 0, this will return an empty immutable array</returns>
         public static ImmutableArray<TResult> SelectAsArray<TItem, TResult>(
             this ArrayBuilder<TItem> items,
             Func<TItem, TResult>     map)
@@ -72,13 +75,13 @@ namespace Loretta.CodeAnalysis
             {
                 case 0: return ImmutableArray<TResult>.Empty;
 
-                case 1: return ImmutableArray.Create(map(items[0]));
+                case 1: return [map(items[0])];
 
-                case 2: return ImmutableArray.Create(map(items[0]), map(items[1]));
+                case 2: return [map(items[0]), map(items[1])];
 
-                case 3: return ImmutableArray.Create(map(items[0]), map(items[1]), map(items[2]));
+                case 3: return [map(items[0]), map(items[1]), map(items[2])];
 
-                case 4: return ImmutableArray.Create(map(items[0]), map(items[1]), map(items[2]), map(items[3]));
+                case 4: return [map(items[0]), map(items[1]), map(items[2]), map(items[3])];
 
                 default:
                     var builder = ArrayBuilder<TResult>.GetInstance(items.Count);
@@ -100,7 +103,7 @@ namespace Loretta.CodeAnalysis
         /// <param name="items">The sequence to map</param>
         /// <param name="map">The mapping delegate</param>
         /// <param name="arg">The extra input used by mapping delegate</param>
-        /// <returns>If the items's length is 0, this will return an empty immutable array.</returns>
+        /// <returns>If the items list's length is 0, this will return an empty immutable array.</returns>
         public static ImmutableArray<TResult> SelectAsArray<TItem, TArg, TResult>(
             this ArrayBuilder<TItem>   items,
             Func<TItem, TArg, TResult> map,
@@ -108,20 +111,15 @@ namespace Loretta.CodeAnalysis
         {
             switch (items.Count)
             {
-                case 0: return ImmutableArray<TResult>.Empty;
+                case 0: return [];
 
-                case 1: return ImmutableArray.Create(map(items[0], arg));
+                case 1: return [map(items[0], arg)];
 
-                case 2: return ImmutableArray.Create(map(items[0], arg), map(items[1], arg));
+                case 2: return [map(items[0], arg), map(items[1], arg)];
 
-                case 3: return ImmutableArray.Create(map(items[0], arg), map(items[1], arg), map(items[2], arg));
+                case 3: return [map(items[0], arg), map(items[1], arg), map(items[2], arg)];
 
-                case 4:
-                    return ImmutableArray.Create(
-                        map(items[0], arg),
-                        map(items[1], arg),
-                        map(items[2], arg),
-                        map(items[3], arg));
+                case 4: return [map(items[0], arg), map(items[1], arg), map(items[2], arg), map(items[3], arg)];
 
                 default:
                     var builder = ArrayBuilder<TResult>.GetInstance(items.Count);
@@ -187,8 +185,7 @@ namespace Loretta.CodeAnalysis
             }
         }
 
-#nullable disable
-        public static void FreeAll<T>(this ArrayBuilder<T> builder, Func<T, ArrayBuilder<T>> getNested)
+        public static void FreeAll<T>(this ArrayBuilder<T> builder, Func<T, ArrayBuilder<T>?> getNested)
         {
             foreach (var item in builder)
             {

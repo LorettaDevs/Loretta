@@ -3,6 +3,7 @@
 
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace Loretta.CodeAnalysis.Collections
 {
@@ -55,7 +56,7 @@ namespace Loretta.CodeAnalysis.Collections
     ///
     /// <para>This type should be thread-safe. As a struct, it cannot protect its own fields from being changed from one
     /// thread while its members are executing on other threads because structs can change <em>in place</em> simply by
-    /// reassigning the field containing this struct. Therefore it is extremely important that <strong>⚠⚠ Every member
+    /// reassigning the field containing this struct. Therefore, it is extremely important that <strong>⚠⚠ Every member
     /// should only dereference <c>this</c> ONCE ⚠⚠</strong>. If a member needs to reference the
     /// <see cref="_dictionary"/> field, that counts as a dereference of <c>this</c>. Calling other instance members
     /// (properties or methods) also counts as dereferencing <c>this</c>. Any member that needs to use <c>this</c> more
@@ -63,10 +64,12 @@ namespace Loretta.CodeAnalysis.Collections
     /// This effectively copies the one field in the struct to a local variable so that it is insulated from other
     /// threads.</para>
     /// </devremarks>
-    internal readonly partial struct ImmutableSegmentedDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>, IDictionary, IEquatable<ImmutableSegmentedDictionary<TKey, TValue>>
-        where TKey : notnull
+    internal readonly partial struct ImmutableSegmentedDictionary<TKey, TValue>
+        : IImmutableDictionary<TKey, TValue>, IDictionary<TKey, TValue>, IDictionary,
+          IEquatable<ImmutableSegmentedDictionary<TKey, TValue>> where TKey : notnull
     {
-        public static readonly ImmutableSegmentedDictionary<TKey, TValue> Empty = new(new SegmentedDictionary<TKey, TValue>());
+        public static readonly ImmutableSegmentedDictionary<TKey, TValue> Empty = new(
+            new SegmentedDictionary<TKey, TValue>());
 
         private readonly SegmentedDictionary<TKey, TValue> _dictionary;
 
@@ -125,23 +128,30 @@ namespace Loretta.CodeAnalysis.Collections
             set => throw new NotSupportedException();
         }
 
-        public static bool operator ==(ImmutableSegmentedDictionary<TKey, TValue> left, ImmutableSegmentedDictionary<TKey, TValue> right)
+        public static bool operator ==(
+            ImmutableSegmentedDictionary<TKey, TValue> left,
+            ImmutableSegmentedDictionary<TKey, TValue> right)
             => left.Equals(right);
 
-        public static bool operator !=(ImmutableSegmentedDictionary<TKey, TValue> left, ImmutableSegmentedDictionary<TKey, TValue> right)
+        public static bool operator !=(
+            ImmutableSegmentedDictionary<TKey, TValue> left,
+            ImmutableSegmentedDictionary<TKey, TValue> right)
             => !left.Equals(right);
 
-        public static bool operator ==(ImmutableSegmentedDictionary<TKey, TValue>? left, ImmutableSegmentedDictionary<TKey, TValue>? right)
+        public static bool operator ==(
+            ImmutableSegmentedDictionary<TKey, TValue>? left,
+            ImmutableSegmentedDictionary<TKey, TValue>? right)
             => left.GetValueOrDefault().Equals(right.GetValueOrDefault());
 
-        public static bool operator !=(ImmutableSegmentedDictionary<TKey, TValue>? left, ImmutableSegmentedDictionary<TKey, TValue>? right)
+        public static bool operator !=(
+            ImmutableSegmentedDictionary<TKey, TValue>? left,
+            ImmutableSegmentedDictionary<TKey, TValue>? right)
             => !left.GetValueOrDefault().Equals(right.GetValueOrDefault());
 
         public ImmutableSegmentedDictionary<TKey, TValue> Add(TKey key, TValue value)
         {
             var self = this;
-            if (self.Contains(new KeyValuePair<TKey, TValue>(key, value)))
-                return self;
+            if (self.Contains(new KeyValuePair<TKey, TValue>(key, value))) return self;
 
             var dictionary = new SegmentedDictionary<TKey, TValue>(self._dictionary, self._dictionary.Comparer)
             {
@@ -155,7 +165,9 @@ namespace Loretta.CodeAnalysis.Collections
             var self = this;
 
             // Optimize the case of adding to an empty collection
-            if (self.IsEmpty && TryCastToImmutableSegmentedDictionary(pairs, out var other) && self.KeyComparer == other.KeyComparer)
+            if (self.IsEmpty
+                && TryCastToImmutableSegmentedDictionary(pairs, out var other)
+                && Equals(self.KeyComparer, other.KeyComparer))
             {
                 return other;
             }
@@ -164,15 +176,13 @@ namespace Loretta.CodeAnalysis.Collections
             foreach (var pair in pairs)
             {
                 ICollection<KeyValuePair<TKey, TValue>> collectionToCheck = dictionary ?? self._dictionary;
-                if (collectionToCheck.Contains(pair))
-                    continue;
+                if (collectionToCheck.Contains(pair)) continue;
 
                 dictionary ??= new SegmentedDictionary<TKey, TValue>(self._dictionary, self._dictionary.Comparer);
                 dictionary.Add(pair.Key, pair.Value);
             }
 
-            if (dictionary is null)
-                return self;
+            if (dictionary is null) return self;
 
             return new ImmutableSegmentedDictionary<TKey, TValue>(dictionary);
         }
@@ -189,25 +199,18 @@ namespace Loretta.CodeAnalysis.Collections
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> pair)
-        {
-            return TryGetValue(pair.Key, out var value)
-                && EqualityComparer<TValue>.Default.Equals(value, pair.Value);
-        }
+            => TryGetValue(pair.Key, out var value) && EqualityComparer<TValue>.Default.Equals(value, pair.Value);
 
-        public bool ContainsKey(TKey key)
-            => _dictionary.ContainsKey(key);
+        public bool ContainsKey(TKey key) => _dictionary.ContainsKey(key);
 
-        public bool ContainsValue(TValue value)
-            => _dictionary.ContainsValue(value);
+        public bool ContainsValue(TValue value) => _dictionary.ContainsValue(value);
 
-        public Enumerator GetEnumerator()
-            => new(_dictionary, Enumerator.ReturnType.KeyValuePair);
+        public Enumerator GetEnumerator() => new(_dictionary, Enumerator.ReturnType.KeyValuePair);
 
         public ImmutableSegmentedDictionary<TKey, TValue> Remove(TKey key)
         {
             var self = this;
-            if (!self._dictionary.ContainsKey(key))
-                return self;
+            if (!self._dictionary.ContainsKey(key)) return self;
 
             var dictionary = new SegmentedDictionary<TKey, TValue>(self._dictionary, self._dictionary.Comparer);
             dictionary.Remove(key);
@@ -277,20 +280,21 @@ namespace Loretta.CodeAnalysis.Collections
             keyComparer ??= EqualityComparer<TKey>.Default;
 
             var self = this;
-            if (self.KeyComparer == keyComparer)
+            if (Equals(self.KeyComparer, keyComparer))
             {
                 // Don't need to reconstruct the dictionary because the key comparer is the same
                 return self;
             }
             else if (self.IsEmpty)
             {
-                if (keyComparer == Empty.KeyComparer)
+                if (Equals(keyComparer, Empty.KeyComparer))
                 {
                     return Empty;
                 }
                 else
                 {
-                    return new ImmutableSegmentedDictionary<TKey, TValue>(new SegmentedDictionary<TKey, TValue>(keyComparer));
+                    return new ImmutableSegmentedDictionary<TKey, TValue>(
+                        new SegmentedDictionary<TKey, TValue>(keyComparer));
                 }
             }
             else
@@ -299,34 +303,29 @@ namespace Loretta.CodeAnalysis.Collections
             }
         }
 
-        public Builder ToBuilder()
-            => new(this);
+        public Builder ToBuilder() => new(this);
 
-        public override int GetHashCode()
-            => _dictionary?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _dictionary?.GetHashCode() ?? 0;
 
         public override bool Equals(object? obj)
-        {
-            return obj is ImmutableSegmentedDictionary<TKey, TValue> other
-                && Equals(other);
-        }
+            => obj is ImmutableSegmentedDictionary<TKey, TValue> other && Equals(other);
 
-        public bool Equals(ImmutableSegmentedDictionary<TKey, TValue> other)
-            => _dictionary == other._dictionary;
+        public bool Equals(ImmutableSegmentedDictionary<TKey, TValue> other) => _dictionary == other._dictionary;
 
-        IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.Clear()
-            => Clear();
+        IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.Clear() => Clear();
 
         IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.Add(TKey key, TValue value)
             => Add(key, value);
 
-        IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.AddRange(IEnumerable<KeyValuePair<TKey, TValue>> pairs)
+        IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.AddRange(
+            IEnumerable<KeyValuePair<TKey, TValue>> pairs)
             => AddRange(pairs);
 
         IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.SetItem(TKey key, TValue value)
             => SetItem(key, value);
 
-        IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.SetItems(IEnumerable<KeyValuePair<TKey, TValue>> items)
+        IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.SetItems(
+            IEnumerable<KeyValuePair<TKey, TValue>> items)
             => SetItems(items);
 
         IImmutableDictionary<TKey, TValue> IImmutableDictionary<TKey, TValue>.RemoveRange(IEnumerable<TKey> keys)
@@ -340,43 +339,36 @@ namespace Loretta.CodeAnalysis.Collections
         IDictionaryEnumerator IDictionary.GetEnumerator()
             => new Enumerator(_dictionary, Enumerator.ReturnType.DictionaryEntry);
 
-        IEnumerator IEnumerable.GetEnumerator()
-            => new Enumerator(_dictionary, Enumerator.ReturnType.KeyValuePair);
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(_dictionary, Enumerator.ReturnType.KeyValuePair);
 
         void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
             => ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).CopyTo(array, arrayIndex);
 
-        bool IDictionary.Contains(object key)
-            => ((IDictionary) _dictionary).Contains(key);
+        bool IDictionary.Contains(object key) => ((IDictionary) _dictionary).Contains(key);
 
-        void ICollection.CopyTo(Array array, int index)
-            => ((ICollection) _dictionary).CopyTo(array, index);
+        void ICollection.CopyTo(Array array, int index) => ((ICollection) _dictionary).CopyTo(array, index);
 
-        void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
-            => throw new NotSupportedException();
+        void IDictionary<TKey, TValue>.Add(TKey key, TValue value) => throw new NotSupportedException();
 
-        bool IDictionary<TKey, TValue>.Remove(TKey key)
-            => throw new NotSupportedException();
+        bool IDictionary<TKey, TValue>.Remove(TKey key) => throw new NotSupportedException();
 
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
             => throw new NotSupportedException();
 
-        void ICollection<KeyValuePair<TKey, TValue>>.Clear()
-            => throw new NotSupportedException();
+        void ICollection<KeyValuePair<TKey, TValue>>.Clear() => throw new NotSupportedException();
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
             => throw new NotSupportedException();
 
-        void IDictionary.Add(object key, object? value)
-            => throw new NotSupportedException();
+        void IDictionary.Add(object key, object? value) => throw new NotSupportedException();
 
-        void IDictionary.Clear()
-            => throw new NotSupportedException();
+        void IDictionary.Clear() => throw new NotSupportedException();
 
-        void IDictionary.Remove(object key)
-            => throw new NotSupportedException();
+        void IDictionary.Remove(object key) => throw new NotSupportedException();
 
-        private static bool TryCastToImmutableSegmentedDictionary(IEnumerable<KeyValuePair<TKey, TValue>> pairs, out ImmutableSegmentedDictionary<TKey, TValue> other)
+        private static bool TryCastToImmutableSegmentedDictionary(
+            [NoEnumeration] IEnumerable<KeyValuePair<TKey, TValue>>    pairs,
+            out             ImmutableSegmentedDictionary<TKey, TValue> other)
         {
             if (pairs is ImmutableSegmentedDictionary<TKey, TValue> dictionary)
             {
@@ -384,7 +376,7 @@ namespace Loretta.CodeAnalysis.Collections
                 return true;
             }
 
-            if (pairs is ImmutableSegmentedDictionary<TKey, TValue>.Builder builder)
+            if (pairs is Builder builder)
             {
                 other = builder.ToImmutable();
                 return true;

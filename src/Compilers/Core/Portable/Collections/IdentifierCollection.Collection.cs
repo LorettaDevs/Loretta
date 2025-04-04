@@ -5,15 +5,9 @@ namespace Loretta.CodeAnalysis
 {
     internal partial class IdentifierCollection
     {
-        private abstract class CollectionBase : ICollection<string>
+        private abstract class CollectionBase(IdentifierCollection identifierCollection) : ICollection<string>
         {
-            protected readonly IdentifierCollection IdentifierCollection;
-            private int _count = -1;
-
-            protected CollectionBase(IdentifierCollection identifierCollection)
-            {
-                IdentifierCollection = identifierCollection;
-            }
+            protected readonly IdentifierCollection IdentifierCollection = identifierCollection;
 
             public abstract bool Contains(string item);
 
@@ -22,7 +16,8 @@ namespace Loretta.CodeAnalysis
                 using var enumerator = GetEnumerator();
                 while (arrayIndex < array.Length && enumerator.MoveNext())
                 {
-                    array[arrayIndex] = enumerator.Current;
+                    // ReSharper disable once RedundantSuppressNullableWarningExpression // only happens in .NET Standard
+                    array[arrayIndex] = enumerator.Current!;
                     arrayIndex++;
                 }
             }
@@ -31,14 +26,15 @@ namespace Loretta.CodeAnalysis
             {
                 get
                 {
-                    if (_count == -1)
+                    if (field == -1)
                     {
-                        _count = IdentifierCollection._map.Values.Sum(o => o is string ? 1 : ((ISet<string>) o).Count);
+                        field = IdentifierCollection._map.Values.Sum(
+                            static o => o is string ? 1 : ((ISet<string>) o).Count);
                     }
 
-                    return _count;
+                    return field;
                 }
-            }
+            } = -1;
 
             public bool IsReadOnly => true;
 
@@ -46,11 +42,11 @@ namespace Loretta.CodeAnalysis
             {
                 foreach (var obj in IdentifierCollection._map.Values)
                 {
-                    if (obj is HashSet<string> strs)
+                    if (obj is HashSet<string> strSet)
                     {
-                        foreach (var s in strs)
+                        foreach (var str in strSet)
                         {
-                            yield return s;
+                            yield return str;
                         }
                     }
                     else
@@ -60,33 +56,28 @@ namespace Loretta.CodeAnalysis
                 }
             }
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() =>
-                GetEnumerator();
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
-            #region Unsupported  
+            #region Unsupported
+
             public void Add(string item) => throw new NotSupportedException();
 
             public void Clear() => throw new NotSupportedException();
 
             public bool Remove(string item) => throw new NotSupportedException();
+
             #endregion
         }
 
-        private sealed class CaseSensitiveCollection : CollectionBase
+        private sealed class CaseSensitiveCollection(IdentifierCollection identifierCollection) : CollectionBase(
+            identifierCollection)
         {
-            public CaseSensitiveCollection(IdentifierCollection identifierCollection) : base(identifierCollection)
-            {
-            }
-
             public override bool Contains(string item) => IdentifierCollection.CaseSensitiveContains(item);
         }
 
-        private sealed class CaseInsensitiveCollection : CollectionBase
+        private sealed class CaseInsensitiveCollection(IdentifierCollection identifierCollection) : CollectionBase(
+            identifierCollection)
         {
-            public CaseInsensitiveCollection(IdentifierCollection identifierCollection) : base(identifierCollection)
-            {
-            }
-
             public override bool Contains(string item) => IdentifierCollection.CaseInsensitiveContains(item);
         }
     }
