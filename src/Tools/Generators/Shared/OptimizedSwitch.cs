@@ -44,9 +44,9 @@ namespace Loretta.Generators
                 return;
             }
 
-            var hash = Hash.CombineValues(
+            var hash = Hash.GetJoinedFnvHashCode(
                 values: _clauses.Select(static c => c.Key).Append(DefaultBodyWriter is null ? "default" : "no default"),
-                StringComparer.OrdinalIgnoreCase);
+                "|");
             var branchVariableName = $"__branch__{hash:X8}";
 
             writer.Write("int ");
