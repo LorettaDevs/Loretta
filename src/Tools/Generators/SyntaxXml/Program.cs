@@ -24,11 +24,10 @@ if (!File.Exists(inputFile))
     return 1;
 }
 
-var    writeSource = true;
-var    writeTests = false;
+var    writeTests      = false;
 var    writeSignatures = false;
-var    writeGrammar = false;
-string outputFile = null;
+var    writeGrammar    = false;
+string outputFile      = null;
 
 switch (args.Length)
 {
@@ -38,11 +37,7 @@ switch (args.Length)
 
         switch (args[2])
         {
-            case "/test":
-                writeTests = true;
-                writeSource = false;
-                break;
-
+            case "/test":    writeTests   = true; break;
             case "/grammar": writeGrammar = true; break;
             default:         return WriteUsage();
         }
@@ -50,25 +45,25 @@ switch (args.Length)
     }
 
     case 2 when args[1] == "/sig": writeSignatures = true; break;
-    case 2:                        outputFile = args[1]; break;
+    default:                       return WriteUsage();
 }
 
 return writeGrammar
            ? WriteGrammarFile(inputFile, outputFile)
-           : WriteLuaSourceFiles(inputFile, writeSource, writeTests, writeSignatures, outputFile);
+           : WriteLuaSourceFiles(inputFile, writeTests, writeSignatures, outputFile);
 
 static int WriteUsage()
 {
     Console.WriteLine("Invalid usage:");
     Console.WriteLine(
-        $"  {typeof(Program).GetTypeInfo().Assembly.ManifestModule.Name} input-file output-file [/test | /grammar]");
+        $"  {typeof(Program).GetTypeInfo().Assembly.ManifestModule.Name} input-file output-file </test | /grammar>");
     Console.WriteLine($"  {typeof(Program).GetTypeInfo().Assembly.ManifestModule.Name} input-file /sig");
     return 1;
 }
 
 static Tree ReadTree(string inputFile)
 {
-    var reader = XmlReader.Create(inputFile, new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit });
+    var reader     = XmlReader.Create(inputFile, new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit });
     var serializer = new XmlSerializer(typeof(Tree));
     return (Tree) serializer.Deserialize(reader);
 }
@@ -77,7 +72,7 @@ static int WriteGrammarFile(string inputFile, string outputLocation)
 {
     try
     {
-        var grammarText = GrammarGenerator.Run(ReadTree(inputFile).Types);
+        var grammarText    = GrammarGenerator.Run(ReadTree(inputFile).Types);
         var outputMainFile = Path.Combine(outputLocation.Trim('"'), "Lua.Generated.g4");
 
         using var outFile = new StreamWriter(File.Open(outputMainFile, FileMode.Create), Encoding.UTF8);
@@ -96,12 +91,7 @@ static int WriteGrammarFile(string inputFile, string outputLocation)
     return 0;
 }
 
-static int WriteLuaSourceFiles(
-    string inputFile,
-    bool   writeSource,
-    bool   writeTests,
-    bool   writeSignatures,
-    string outputFile)
+static int WriteLuaSourceFiles(string inputFile, bool writeTests, bool writeSignatures, string outputFile)
 {
     var tree = ReadTree(inputFile);
 
@@ -113,26 +103,8 @@ static int WriteLuaSourceFiles(
     // and placing into a single linear list that we can then process.
     TreeFlattening.FlattenChildren(tree);
 
-    if (writeSignatures)
-    {
-        SignatureWriter.Write(Console.Out, tree);
-    }
-    else
-    {
-        if (writeSource)
-        {
-            var outputPath = outputFile.Trim('"');
-            var prefix = Path.GetFileName(inputFile);
-            var outputMainFile = Path.Combine(outputPath, $"{prefix}.Main.Generated.cs");
-            var outputInternalFile = Path.Combine(outputPath, $"{prefix}.Internal.Generated.cs");
-            var outputSyntaxFile = Path.Combine(outputPath, $"{prefix}.Syntax.Generated.cs");
-
-            WriteToFile(writer => SourceWriter.WriteMain(writer, tree), outputMainFile);
-            WriteToFile(writer => SourceWriter.WriteInternal(writer, tree), outputInternalFile);
-            WriteToFile(writer => SourceWriter.WriteSyntax(writer, tree), outputSyntaxFile);
-        }
-        if (writeTests) WriteToFile(writer => TestWriter.Write(writer, tree), outputFile);
-    }
+    if (writeSignatures) SignatureWriter.Write(Console.Out, tree);
+    if (writeTests) WriteToFile(writer => TestWriter.Write(writer, tree), outputFile);
 
     return 0;
 }
@@ -140,7 +112,7 @@ static int WriteLuaSourceFiles(
 static void WriteToFile(Action<TextWriter> writeAction, string outputFile)
 {
     var stringBuilder = new StringBuilder();
-    var writer = new StringWriter(stringBuilder);
+    var writer        = new StringWriter(stringBuilder);
     writeAction(writer);
 
     var text = stringBuilder.ToString();
@@ -148,7 +120,7 @@ static void WriteToFile(Action<TextWriter> writeAction, string outputFile)
     do
     {
         length = text.Length;
-        text = text.Replace($"{{{Environment.NewLine}{Environment.NewLine}", $"{{{Environment.NewLine}");
+        text   = text.Replace($"{{{Environment.NewLine}{Environment.NewLine}", $"{{{Environment.NewLine}");
     } while (text.Length != length);
 
     try
