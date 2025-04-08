@@ -114,6 +114,6 @@ jobs:
     - name: Upload loc as a Build Artifact
       uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:
-        name: sarif-results
-        path: sarif-results
+        name: sarif-results-${{matrix.language}}.sarif
+        path: sarif-results/${{matrix.language}}.sarif
         retention-days: 1
