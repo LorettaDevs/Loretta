@@ -4,6 +4,11 @@ name: DocFX Build and Publish
 on:
   push:
     branches: [main]
+    paths:
+      - '.github/workflows/build-docs.yml'
+      - 'build/**'
+      - 'docs/**'
+      - 'src/**'
   pull_request:
     branches: [main]
   workflow_dispatch:
