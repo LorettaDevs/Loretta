@@ -11,7 +11,7 @@ on:
   pull_request:
     branches: [ "main" ]
     paths-ignore:
-      - '.github/**'
+      - '.github/ISSUE_TEMPLATE/**'
       - 'docs/**'
       - '**/*.md'
       - '**/*.txt'
