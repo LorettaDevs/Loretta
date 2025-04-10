@@ -8,6 +8,8 @@ on:
       - 'src/**'
       - 'build/**'
   pull_request:
+  merge_group: # Needed for PR merge queues
+    types: [ checks_requested ]
   workflow_dispatch:
 
 concurrency:

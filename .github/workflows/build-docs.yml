@@ -11,6 +11,8 @@ on:
       - 'src/**'
   pull_request:
     branches: [main]
+  merge_group: # Needed for PR merge queues
+    types: [ checks_requested ]
   workflow_dispatch:
     inputs:
       target_branch:
