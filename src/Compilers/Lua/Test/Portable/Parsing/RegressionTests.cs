@@ -258,4 +258,8 @@ public sealed class RegressionTests : ParsingTestsBase
                // (1,21): error LUA1003: ) expected
                // ::label:: goto label
                Diagnostic(ErrorCode.ERR_CloseParenExpected, "").WithLocation(1, 21));
+    
+    [Test, WorkItem(147, "https://github.com/LorettaDevs/Loretta/issues/147")]
+    public async Task LanguageParser_WhenParsingEmptyReturnAtEndOfFile_DoNotGenerateErrors()
+        => await ParseAndValidateAsync("return", LuaSyntaxOptions.Lua51);
 }
