@@ -22585,6 +22585,12 @@ references:
   commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.FalseType
   fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.FalseType
   nameWithType: SyntaxKind.FalseType
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.FloorDivideAssignmentStatement
+  name: FloorDivideAssignmentStatement
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_FloorDivideAssignmentStatement
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.FloorDivideAssignmentStatement
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.FloorDivideAssignmentStatement
+  nameWithType: SyntaxKind.FloorDivideAssignmentStatement
 - uid: Loretta.CodeAnalysis.Lua.SyntaxKind.FloorDivideExpression
   name: FloorDivideExpression
   href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_FloorDivideExpression
@@ -23179,6 +23185,12 @@ references:
   commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.SlashEqualsToken
   fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.SlashEqualsToken
   nameWithType: SyntaxKind.SlashEqualsToken
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.SlashSlashEqualsToken
+  name: SlashSlashEqualsToken
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_SlashSlashEqualsToken
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.SlashSlashEqualsToken
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.SlashSlashEqualsToken
+  nameWithType: SyntaxKind.SlashSlashEqualsToken
 - uid: Loretta.CodeAnalysis.Lua.SyntaxKind.SlashSlashToken
   name: SlashSlashToken
   href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_SlashSlashToken
