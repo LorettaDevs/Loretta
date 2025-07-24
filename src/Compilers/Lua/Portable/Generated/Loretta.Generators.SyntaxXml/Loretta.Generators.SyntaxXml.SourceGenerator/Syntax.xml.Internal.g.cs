@@ -10686,7 +10686,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case SyntaxKind.DivideAssignmentStatement:
                 case SyntaxKind.ModuloAssignmentStatement:
                 case SyntaxKind.ConcatAssignmentStatement:
-                case SyntaxKind.ExponentiateAssignmentStatement: break;
+                case SyntaxKind.ExponentiateAssignmentStatement:
+                case SyntaxKind.FloorDivideAssignmentStatement: break;
                 default: throw new ArgumentException("Invalid kind provided.", nameof(kind));
             }
 #if DEBUG
@@ -10700,7 +10701,8 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 case SyntaxKind.SlashEqualsToken:
                 case SyntaxKind.PercentEqualsToken:
                 case SyntaxKind.DotDotEqualsToken:
-                case SyntaxKind.HatEqualsToken: break;
+                case SyntaxKind.HatEqualsToken:
+                case SyntaxKind.SlashSlashEqualsToken: break;
                 default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(assignmentOperatorToken));
             }
             if (expression == null) throw new ArgumentNullException(nameof(expression));

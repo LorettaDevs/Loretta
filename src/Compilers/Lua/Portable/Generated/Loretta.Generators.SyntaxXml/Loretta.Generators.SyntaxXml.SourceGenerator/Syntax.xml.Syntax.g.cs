@@ -2070,6 +2070,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
     /// <item><description><see cref="SyntaxKind.ModuloAssignmentStatement"/></description></item>
     /// <item><description><see cref="SyntaxKind.ConcatAssignmentStatement"/></description></item>
     /// <item><description><see cref="SyntaxKind.ExponentiateAssignmentStatement"/></description></item>
+    /// <item><description><see cref="SyntaxKind.FloorDivideAssignmentStatement"/></description></item>
     /// </list>
     /// </remarks>
     public sealed partial class CompoundAssignmentStatementSyntax : StatementSyntax

@@ -396,7 +396,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                         case '/' when _options.SyntaxOptions.AcceptFloorDivision:
                             TextWindow.AdvanceChar();
-                            info.Kind = SyntaxKind.SlashSlashToken;
+                            switch (TextWindow.PeekChar())
+                            {
+                                case '=' when _options.SyntaxOptions.AcceptCompoundAssignment:
+                                    TextWindow.AdvanceChar();
+                                    info.Kind = SyntaxKind.SlashSlashEqualsToken;
+                                    break;
+                                default:
+                                    info.Kind = SyntaxKind.SlashSlashToken;
+                                    break;
+                            };
                             break;
 
                         default: info.Kind = SyntaxKind.SlashToken; break;

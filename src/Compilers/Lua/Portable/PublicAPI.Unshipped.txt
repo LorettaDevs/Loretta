@@ -1,1 +1,3 @@
 #nullable enable
+Loretta.CodeAnalysis.Lua.SyntaxKind.FloorDivideAssignmentStatement = 2119 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.SyntaxKind.SlashSlashEqualsToken = 58 -> Loretta.CodeAnalysis.Lua.SyntaxKind

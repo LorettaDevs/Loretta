@@ -433,8 +433,17 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Represents the <c>`</c> token.</summary>
         [Token(Text = "`")]
         BacktickToken = 57,
+        
+        /// <summary>
+        /// Represents the <c>//=</c> token.
+        /// </summary>
+        [Token(Text = "//=")]
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentOperatorToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentOperator, SlashSlashToken)]
+        [Property(SyntaxKindProperty.CompoundAssignmentStatement, FloorDivideAssignmentStatement)]
+        SlashSlashEqualsToken = 58,
 
-        // Big gap 58-500 (insert new fixed-text tokens here)
+        // Big gap 59-500 (insert new fixed-text tokens here)
 
         // Keywords
         /// <summary>
@@ -830,6 +839,10 @@ namespace Loretta.CodeAnalysis.Lua
         [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
         [Property(SyntaxKindProperty.OperatorTokenKind, HatEqualsToken)]
         ExponentiateAssignmentStatement = 2052,
+        
+        [ExtraCategories(SyntaxKindCategory.CompoundAssignmentStatement)]
+        [Property(SyntaxKindProperty.OperatorTokenKind, SlashSlashEqualsToken)]
+        FloorDivideAssignmentStatement = 2119,
 
         // Control Flow Statements
         NumericForStatement  = 2053,
@@ -905,7 +918,7 @@ namespace Loretta.CodeAnalysis.Lua
         //     Type binding
         TypeBinding = 2111,
 
-        // Big gap 2117-3000 (insert new nodes here)
+        // Big gap 2120-3000 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,
