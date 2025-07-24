@@ -4,7 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [UNRELEASED]
+## [Unreleased]
+
+### Added
+
+- Support for floor division assignments (`//=`) by @toxamin in https://github.com/LorettaDevs/Loretta/pull/157.
+- Support for underlines before the number base prefix by @toxamin in https://github.com/LorettaDevs/Loretta/pull/156.
+
+### Changed
+
+- Disabled the token cache to prevent the issue brought up in https://github.com/LorettaDevs/Loretta/issues/152 by @toxamin in https://github.com/LorettaDevs/Loretta/pull/153.
+
+<!-- ### Deprecated -->
+
+<!-- ### Removed -->
+
+### Fixed
+
+- Parsing of empty return statements at the end of the file by @toxamin in https://github.com/LorettaDevs/Loretta/pull/148.
+
+<!-- ### Security -->
 
 ## v0.2.13 (2025-03-30)
 
