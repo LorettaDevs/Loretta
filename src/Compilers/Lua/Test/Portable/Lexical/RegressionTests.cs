@@ -168,7 +168,7 @@ public sealed class RegressionTests : LexicalTestsBase
         var syntaxTree2 = LuaSyntaxTree.ParseText(str, new LuaParseOptions(LuaSyntaxOptions.Luau));
 
         syntaxTree.GetDiagnostics().Verify(Diagnostic(ErrorCode.ERR_NonFunctionCallBeingUsedAsStatement, "continue;")
-            .WithLocation(9, 34));
+            .WithLocation(9, 14));
         syntaxTree2.GetDiagnostics().Verify();
     }
 }
