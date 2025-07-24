@@ -143,4 +143,32 @@ public sealed class RegressionTests : LexicalTestsBase
             token.GetDiagnostics().Verify();
         }
     }
+
+    [Test]
+    [WorkItem(152, "https://github.com/LorettaDevs/Loretta/issues/152")]
+    public void Lexer_TokenCacheCorrectlyHandlesSyntaxOptions()
+    {
+        var str = """
+
+                   repeat
+                       m, E = G:zR(E, H);
+                       if m == 0x7423 then
+                           break;
+                       else
+                           if m ~= 0X76D4 then
+                           else
+                               continue;
+                           end;
+                       end;
+                   until false;
+                          
+                  """;
+
+        var syntaxTree = LuaSyntaxTree.ParseText(str, new LuaParseOptions(LuaSyntaxOptions.Lua51));
+        var syntaxTree2 = LuaSyntaxTree.ParseText(str, new LuaParseOptions(LuaSyntaxOptions.Luau));
+
+        syntaxTree.GetDiagnostics().Verify(Diagnostic(ErrorCode.ERR_NonFunctionCallBeingUsedAsStatement, "continue;")
+            .WithLocation(9, 14));
+        syntaxTree2.GetDiagnostics().Verify();
+    }
 }

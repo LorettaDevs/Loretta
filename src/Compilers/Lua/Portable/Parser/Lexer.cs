@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿//#define LEXER_TOKEN_CACHE
+using System.Numerics;
 using System.Text;
 using Loretta.CodeAnalysis.Lua.Utilities;
 using Loretta.CodeAnalysis.Syntax.InternalSyntax;
@@ -65,7 +66,14 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             base.Dispose();
         }
 
-        public SyntaxToken Lex() => QuickScanSyntaxToken() ?? LexSyntaxToken();
+        public SyntaxToken Lex()
+        {
+#if LEXER_TOKEN_CACHE
+            return QuickScanSyntaxToken() ?? LexSyntaxToken();
+#else
+            return LexSyntaxToken();
+#endif
+        }
 
         private SyntaxToken LexSyntaxToken()
         {
