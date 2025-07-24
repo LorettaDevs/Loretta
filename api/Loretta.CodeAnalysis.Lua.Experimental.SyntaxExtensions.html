@@ -94,10 +94,16 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
       <span class="xref">System.Object.Equals(System.Object)</span>
     </div>
     <div>
       <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
     </div>
     <div>
       <span class="xref">System.Object.GetHashCode()</span>
@@ -108,19 +114,64 @@
     <div>
       <span class="xref">System.Object.MemberwiseClone()</span>
     </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.Lua.Experimental.html">Loretta.CodeAnalysis.Lua.Experimental</a></h6>
-  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.Lua.Experimental.dll</h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
   <h5 id="Loretta_CodeAnalysis_Lua_Experimental_SyntaxExtensions_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static class SyntaxExtensions</code></pre>
   </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Loretta_CodeAnalysis_Lua_Experimental_SyntaxExtensions_FoldConstants_" data-uid="Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_Experimental_SyntaxExtensions_FoldConstants_Loretta_CodeAnalysis_SyntaxNode_Loretta_CodeAnalysis_Lua_Experimental_ConstantFoldingOptions_" data-uid="Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions.FoldConstants(Loretta.CodeAnalysis.SyntaxNode,Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions)">FoldConstants(SyntaxNode, ConstantFoldingOptions)</h4>
+  <div class="markdown level1 summary"><p>Runs constant folding on the tree rooted by the provided node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SyntaxNode FoldConstants(this SyntaxNode node, ConstantFoldingOptions options)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a></td>
+        <td><span class="parametername">node</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.Lua.Experimental.ConstantFoldingOptions.html">ConstantFoldingOptions</a></td>
+        <td><span class="parametername">options</span></td>
+        <td><p>Options to use when constant folding.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.SyntaxNode.html">SyntaxNode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           
@@ -128,12 +179,6 @@
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
-                  <li>
-                    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_Experimental_SyntaxExtensions.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.Experimental.SyntaxExtensions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Experimental/ConstantFolder.cs/#L572" class="contribution-link">View Source</a>
-                  </li>
                 </ul>
               </div>
               <div class="toggle-mode">

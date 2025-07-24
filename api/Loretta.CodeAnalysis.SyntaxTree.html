@@ -101,6 +101,9 @@
       <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
     </div>
     <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
       <span class="xref">System.Object.GetHashCode()</span>
     </div>
     <div>
@@ -109,25 +112,17 @@
     <div>
       <span class="xref">System.Object.MemberwiseClone()</span>
     </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.html">Loretta.CodeAnalysis</a></h6>
-  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.dll</h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
   <h5 id="Loretta_CodeAnalysis_SyntaxTree_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public abstract class SyntaxTree</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_Encoding.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.Encoding%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L59">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_Encoding_" data-uid="Loretta.CodeAnalysis.SyntaxTree.Encoding*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_Encoding" data-uid="Loretta.CodeAnalysis.SyntaxTree.Encoding">Encoding</h4>
   <div class="markdown level1 summary"><p>The text encoding of the source document.</p>
@@ -135,7 +130,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract Encoding Encoding { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract Encoding? Encoding { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -147,18 +142,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Text.Encoding</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Encoding</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_FilePath.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.FilePath%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L24">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_FilePath_" data-uid="Loretta.CodeAnalysis.SyntaxTree.FilePath*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_FilePath" data-uid="Loretta.CodeAnalysis.SyntaxTree.FilePath">FilePath</h4>
   <div class="markdown level1 summary"><p>The path of the source document file.</p>
@@ -188,13 +178,8 @@
 The path shall not be null.</p>
 <p>The file doesn't need to exist on disk. The path is opaque to the compiler.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_HasCompilationUnitRoot.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.HasCompilationUnitRoot%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L29">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_HasCompilationUnitRoot_" data-uid="Loretta.CodeAnalysis.SyntaxTree.HasCompilationUnitRoot*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_HasCompilationUnitRoot" data-uid="Loretta.CodeAnalysis.SyntaxTree.HasCompilationUnitRoot">HasCompilationUnitRoot</h4>
   <div class="markdown level1 summary"><p>Returns true if this syntax tree has a root with SyntaxKind &quot;CompilationUnit&quot;.</p>
@@ -219,13 +204,8 @@ The path shall not be null.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_Length.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.Length%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L44">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_Length_" data-uid="Loretta.CodeAnalysis.SyntaxTree.Length*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_Length" data-uid="Loretta.CodeAnalysis.SyntaxTree.Length">Length</h4>
   <div class="markdown level1 summary"><p>The length of the text of the syntax tree.</p>
@@ -250,13 +230,8 @@ The path shall not be null.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_Options.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.Options%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L34">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_Options_" data-uid="Loretta.CodeAnalysis.SyntaxTree.Options*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_Options" data-uid="Loretta.CodeAnalysis.SyntaxTree.Options">Options</h4>
   <div class="markdown level1 summary"><p>The options used by the parser to produce the syntax tree.</p>
@@ -283,13 +258,8 @@ The path shall not be null.</p>
   </table>
   <h3 id="methods">Methods
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetChangedSpans_Loretta_CodeAnalysis_SyntaxTree_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetChangedSpans(Loretta.CodeAnalysis.SyntaxTree)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L160">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetChangedSpans_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetChangedSpans*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetChangedSpans_Loretta_CodeAnalysis_SyntaxTree_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetChangedSpans(Loretta.CodeAnalysis.SyntaxTree)">GetChangedSpans(SyntaxTree)</h4>
   <div class="markdown level1 summary"><p>Returns a list of the changed regions between this tree and the specified tree. The list is conservative for
@@ -327,18 +297,13 @@ performance reasons. It may return larger regions than what has actually changed
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a>&gt;</td>
+        <td><span class="xref">IList</span>&lt;<span class="xref">TextSpan</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetChanges_Loretta_CodeAnalysis_SyntaxTree_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetChanges(Loretta.CodeAnalysis.SyntaxTree)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L190">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetChanges_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetChanges*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetChanges_Loretta_CodeAnalysis_SyntaxTree_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetChanges(Loretta.CodeAnalysis.SyntaxTree)">GetChanges(SyntaxTree)</h4>
   <div class="markdown level1 summary"><p>Gets a list of text changes that when applied to the old tree produce this tree.</p>
@@ -376,7 +341,7 @@ performance reasons. It may return larger regions than what has actually changed
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Text.TextChange.html">TextChange</a>&gt;</td>
+        <td><span class="xref">IList</span>&lt;<span class="xref">TextChange</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -385,13 +350,8 @@ performance reasons. It may return larger regions than what has actually changed
   <div class="markdown level1 remarks"><p>The list of changes may be different than the original changes that produced
 this tree.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L114">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_CancellationToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(CancellationToken)">GetDiagnostics(CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets a list of all the diagnostics in the syntax tree.
@@ -435,13 +395,8 @@ like nowarn, warnaserror etc.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNode_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L121">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNode_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNode)">GetDiagnostics(SyntaxNode)</h4>
   <div class="markdown level1 summary"><p>Gets a list of all the diagnostics in the sub tree that has the specified node as its root.
@@ -485,13 +440,8 @@ like nowarn, warnaserror etc.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNodeOrToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNodeOrToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L143">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxNodeOrToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxNodeOrToken)">GetDiagnostics(SyntaxNodeOrToken)</h4>
   <div class="markdown level1 summary"><p>Gets a list of all the diagnostics in either the sub tree that has the specified node as its root or
@@ -536,13 +486,8 @@ like nowarn, warnaserror etc.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L128">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxToken)">GetDiagnostics(SyntaxToken)</h4>
   <div class="markdown level1 summary"><p>Gets a list of all the diagnostics associated with the token and any related trivia.
@@ -586,13 +531,8 @@ like nowarn, warnaserror etc.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxTrivia_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxTrivia)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L135">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetDiagnostics_Loretta_CodeAnalysis_SyntaxTrivia_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetDiagnostics(Loretta.CodeAnalysis.SyntaxTrivia)">GetDiagnostics(SyntaxTrivia)</h4>
   <div class="markdown level1 summary"><p>Gets a list of all the diagnostics associated with the trivia.
@@ -636,15 +576,10 @@ like nowarn, warnaserror etc.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetLineSpan_Loretta_CodeAnalysis_Text_TextSpan_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetLineSpan(Loretta.CodeAnalysis.Text.TextSpan%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L154">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetLineSpan_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetLineSpan*"></a>
-  <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetLineSpan_Loretta_CodeAnalysis_Text_TextSpan_CancellationToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetLineSpan(Loretta.CodeAnalysis.Text.TextSpan,CancellationToken)">GetLineSpan(TextSpan, CancellationToken)</h4>
+  <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetLineSpan_TextSpan_CancellationToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetLineSpan(TextSpan,CancellationToken)">GetLineSpan(TextSpan, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets the location in terms of path, line and column for a given span.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -663,7 +598,7 @@ like nowarn, warnaserror etc.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a></td>
+        <td><span class="xref">TextSpan</span></td>
         <td><span class="parametername">span</span></td>
         <td><p>Span within the tree.</p>
 </td>
@@ -693,15 +628,10 @@ The values are not affected by line mapping directives (<code>#line</code>).</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetLocation_Loretta_CodeAnalysis_Text_TextSpan_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetLocation(Loretta.CodeAnalysis.Text.TextSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L165">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetLocation_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetLocation*"></a>
-  <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetLocation_Loretta_CodeAnalysis_Text_TextSpan_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetLocation(Loretta.CodeAnalysis.Text.TextSpan)">GetLocation(TextSpan)</h4>
+  <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetLocation_TextSpan_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetLocation(TextSpan)">GetLocation(TextSpan)</h4>
   <div class="markdown level1 summary"><p>Gets a location for the specified text span.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -720,7 +650,7 @@ The values are not affected by line mapping directives (<code>#line</code>).</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Loretta.CodeAnalysis.Text.TextSpan.html">TextSpan</a></td>
+        <td><span class="xref">TextSpan</span></td>
         <td><span class="parametername">span</span></td>
         <td></td>
       </tr>
@@ -741,13 +671,8 @@ The values are not affected by line mapping directives (<code>#line</code>).</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetReference_Loretta_CodeAnalysis_SyntaxNode_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetReference(Loretta.CodeAnalysis.SyntaxNode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L182">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetReference_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetReference*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetReference_Loretta_CodeAnalysis_SyntaxNode_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetReference(Loretta.CodeAnalysis.SyntaxNode)">GetReference(SyntaxNode)</h4>
   <div class="markdown level1 summary"><p>Gets a SyntaxReference for a specified syntax node. SyntaxReferences can be used to
@@ -791,13 +716,8 @@ memory.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetRoot_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetRoot(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L83">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetRoot_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetRoot*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetRoot_CancellationToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetRoot(CancellationToken)">GetRoot(CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets the root node of the syntax tree, causing computation if necessary.</p>
@@ -839,13 +759,8 @@ memory.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetRootAsync_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetRootAsync(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L93">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetRootAsync_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetRootAsync*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetRootAsync_CancellationToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetRootAsync(CancellationToken)">GetRootAsync(CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets the root node of the syntax tree asynchronously.</p>
@@ -887,13 +802,8 @@ memory.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetText_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetText(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L54">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetText_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetText*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetText_CancellationToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetText(CancellationToken)">GetText(CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets the text of the source document.</p>
@@ -930,18 +840,13 @@ memory.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a></td>
+        <td><span class="xref">SourceText</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_GetTextAsync_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.GetTextAsync(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L68">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_GetTextAsync_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetTextAsync*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_GetTextAsync_CancellationToken_" data-uid="Loretta.CodeAnalysis.SyntaxTree.GetTextAsync(CancellationToken)">GetTextAsync(CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets the text of the source document asynchronously.</p>
@@ -978,7 +883,7 @@ memory.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Task</span>&lt;<a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a>&gt;</td>
+        <td><span class="xref">Task</span>&lt;<span class="xref">SourceText</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -987,13 +892,8 @@ memory.</p>
   <div class="markdown level1 remarks"><p>By default, the work associated with this method will be executed immediately on the current thread.
 Implementations that wish to schedule this work differently should override <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_GetTextAsync_CancellationToken_">GetTextAsync(CancellationToken)</a>.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_IsEquivalentTo_Loretta_CodeAnalysis_SyntaxTree_System_Boolean_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxTree%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L175">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_IsEquivalentTo_" data-uid="Loretta.CodeAnalysis.SyntaxTree.IsEquivalentTo*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_IsEquivalentTo_Loretta_CodeAnalysis_SyntaxTree_System_Boolean_" data-uid="Loretta.CodeAnalysis.SyntaxTree.IsEquivalentTo(Loretta.CodeAnalysis.SyntaxTree,System.Boolean)">IsEquivalentTo(SyntaxTree, Boolean)</h4>
   <div class="markdown level1 summary"><p>Determines if two trees are the same, disregarding trivia differences.</p>
@@ -1044,13 +944,8 @@ or initializer expressions, otherwise all nodes and tokens must be equivalent.</
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_ToString.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L205">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_ToString_" data-uid="Loretta.CodeAnalysis.SyntaxTree.ToString*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_ToString" data-uid="Loretta.CodeAnalysis.SyntaxTree.ToString">ToString()</h4>
   <div class="markdown level1 summary"><p>Returns a <span class="xref">System.String</span> that represents the entire source text of this <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html">SyntaxTree</a>.</p>
@@ -1077,13 +972,8 @@ or initializer expressions, otherwise all nodes and tokens must be equivalent.</
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">System.Object.ToString()</span></div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_TryGetRoot_Loretta_CodeAnalysis_SyntaxNode__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.TryGetRoot(Loretta.CodeAnalysis.SyntaxNode%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L73">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_TryGetRoot_" data-uid="Loretta.CodeAnalysis.SyntaxTree.TryGetRoot*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_TryGetRoot_Loretta_CodeAnalysis_SyntaxNode__" data-uid="Loretta.CodeAnalysis.SyntaxTree.TryGetRoot(Loretta.CodeAnalysis.SyntaxNode@)">TryGetRoot(out SyntaxNode)</h4>
   <div class="markdown level1 summary"><p>Gets the root of the syntax tree if it is available.</p>
@@ -1125,21 +1015,16 @@ or initializer expressions, otherwise all nodes and tokens must be equivalent.</
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_TryGetText_Loretta_CodeAnalysis_Text_SourceText__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.TryGetText(Loretta.CodeAnalysis.Text.SourceText%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L49">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_TryGetText_" data-uid="Loretta.CodeAnalysis.SyntaxTree.TryGetText*"></a>
-  <h4 id="Loretta_CodeAnalysis_SyntaxTree_TryGetText_Loretta_CodeAnalysis_Text_SourceText__" data-uid="Loretta.CodeAnalysis.SyntaxTree.TryGetText(Loretta.CodeAnalysis.Text.SourceText@)">TryGetText(out SourceText)</h4>
+  <h4 id="Loretta_CodeAnalysis_SyntaxTree_TryGetText_System_Nullable_SourceText___" data-uid="Loretta.CodeAnalysis.SyntaxTree.TryGetText(System.Nullable{SourceText}@)">TryGetText(out Nullable&lt;SourceText&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets the syntax tree's text if it is available.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract bool TryGetText(out SourceText text)</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract bool TryGetText(out SourceText? text)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1152,7 +1037,7 @@ or initializer expressions, otherwise all nodes and tokens must be equivalent.</
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">SourceText</span>&gt;</td>
         <td><span class="parametername">text</span></td>
         <td></td>
       </tr>
@@ -1173,15 +1058,10 @@ or initializer expressions, otherwise all nodes and tokens must be equivalent.</
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_WithChangedText_Loretta_CodeAnalysis_Text_SourceText_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.WithChangedText(Loretta.CodeAnalysis.Text.SourceText)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L107">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_WithChangedText_" data-uid="Loretta.CodeAnalysis.SyntaxTree.WithChangedText*"></a>
-  <h4 id="Loretta_CodeAnalysis_SyntaxTree_WithChangedText_Loretta_CodeAnalysis_Text_SourceText_" data-uid="Loretta.CodeAnalysis.SyntaxTree.WithChangedText(Loretta.CodeAnalysis.Text.SourceText)">WithChangedText(SourceText)</h4>
+  <h4 id="Loretta_CodeAnalysis_SyntaxTree_WithChangedText_SourceText_" data-uid="Loretta.CodeAnalysis.SyntaxTree.WithChangedText(SourceText)">WithChangedText(SourceText)</h4>
   <div class="markdown level1 summary"><p>Create a new syntax tree based off this tree using a new source text.</p>
 <p>If the new source text is a minor change from the current source text an incremental
 parse will occur reusing most of the current syntax tree internal data.  Otherwise, a
@@ -1203,7 +1083,7 @@ full parse will occur using the new source text.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a></td>
+        <td><span class="xref">SourceText</span></td>
         <td><span class="parametername">newText</span></td>
         <td></td>
       </tr>
@@ -1224,13 +1104,8 @@ full parse will occur using the new source text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_WithFilePath_System_String_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.WithFilePath(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L200">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_WithFilePath_" data-uid="Loretta.CodeAnalysis.SyntaxTree.WithFilePath*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_WithFilePath_System_String_" data-uid="Loretta.CodeAnalysis.SyntaxTree.WithFilePath(System.String)">WithFilePath(String)</h4>
   <div class="markdown level1 summary"><p>Returns a new tree whose <a class="xref" href="Loretta.CodeAnalysis.SyntaxTree.html#Loretta_CodeAnalysis_SyntaxTree_FilePath">FilePath</a> is the specified node and other properties are copied from the current tree.</p>
@@ -1272,13 +1147,8 @@ full parse will occur using the new source text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree_WithRootAndOptions_Loretta_CodeAnalysis_SyntaxNode_Loretta_CodeAnalysis_ParseOptions_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree.WithRootAndOptions(Loretta.CodeAnalysis.SyntaxNode%2CLoretta.CodeAnalysis.ParseOptions)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L195">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_SyntaxTree_WithRootAndOptions_" data-uid="Loretta.CodeAnalysis.SyntaxTree.WithRootAndOptions*"></a>
   <h4 id="Loretta_CodeAnalysis_SyntaxTree_WithRootAndOptions_Loretta_CodeAnalysis_SyntaxNode_Loretta_CodeAnalysis_ParseOptions_" data-uid="Loretta.CodeAnalysis.SyntaxTree.WithRootAndOptions(Loretta.CodeAnalysis.SyntaxNode,Loretta.CodeAnalysis.ParseOptions)">WithRootAndOptions(SyntaxNode, ParseOptions)</h4>
   <div class="markdown level1 summary"><p>Returns a new tree whose root and options are as specified and other properties are copied from the current tree.</p>
@@ -1325,10 +1195,6 @@ full parse will occur using the new source text.</p>
       </tr>
     </tbody>
   </table>
-  <h3 id="extensionmethods">Extension Methods</h3>
-  <div>
-      <a class="xref" href="Loretta.CodeAnalysis.Lua.LuaExtensions.html#Loretta_CodeAnalysis_Lua_LuaExtensions_GetCompilationUnitRoot_Loretta_CodeAnalysis_SyntaxTree_CancellationToken_">LuaExtensions.GetCompilationUnitRoot(SyntaxTree, CancellationToken)</a>
-  </div>
 </article>
           </div>
           
@@ -1336,12 +1202,6 @@ full parse will occur using the new source text.</p>
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
-                  <li>
-                    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_SyntaxTree.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.SyntaxTree%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Syntax/SyntaxTree.cs/#L13" class="contribution-link">View Source</a>
-                  </li>
                 </ul>
               </div>
               <div class="toggle-mode">

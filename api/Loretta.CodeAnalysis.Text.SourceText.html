@@ -100,6 +100,9 @@
       <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
     </div>
     <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
       <span class="xref">System.Object.GetHashCode()</span>
     </div>
     <div>
@@ -108,25 +111,17 @@
     <div>
       <span class="xref">System.Object.MemberwiseClone()</span>
     </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.Text.html">Loretta.CodeAnalysis.Text</a></h6>
-  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.dll</h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
   <h5 id="Loretta_CodeAnalysis_Text_SourceText_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public abstract class SourceText</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_ChecksumAlgorithm.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.ChecksumAlgorithm%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L305">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_ChecksumAlgorithm_" data-uid="Loretta.CodeAnalysis.Text.SourceText.ChecksumAlgorithm*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_ChecksumAlgorithm" data-uid="Loretta.CodeAnalysis.Text.SourceText.ChecksumAlgorithm">ChecksumAlgorithm</h4>
   <div class="markdown level1 summary"><p>Hash algorithm to use to calculate checksum of the text that's saved to PDB.</p>
@@ -151,13 +146,8 @@
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Container.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Container%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L349">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Container_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Container*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Container" data-uid="Loretta.CodeAnalysis.Text.SourceText.Container">Container</h4>
   <div class="markdown level1 summary"><p>The container of this <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a>.</p>
@@ -182,13 +172,8 @@
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Encoding.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Encoding%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L315">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Encoding_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Encoding*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Encoding" data-uid="Loretta.CodeAnalysis.Text.SourceText.Encoding">Encoding</h4>
   <div class="markdown level1 summary"><p>Encoding of the file that the text was read from or is going to be saved to.
@@ -197,7 +182,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract Encoding Encoding { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract Encoding? Encoding { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -209,22 +194,17 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Text.Encoding</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Encoding</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 id="Loretta_CodeAnalysis_Text_SourceText_Encoding_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>If the encoding is not specified the source isn't debuggable.
-If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> is written to a file a <span class="xref">System.Text.Encoding.UTF8</span> shall be used as a default.</p>
+If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> is written to a file a <see cref="!:Encoding.UTF8"></see> shall be used as a default.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Item_System_Int32_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L339">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Item_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Item*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Item_System_Int32_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Item(System.Int32)">Item[Int32]</h4>
   <div class="markdown level1 summary"><p>Returns a character at given position.</p>
@@ -268,13 +248,8 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Length.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Length%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L320">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Length_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Length*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Length" data-uid="Loretta.CodeAnalysis.Text.SourceText.Length">Length</h4>
   <div class="markdown level1 summary"><p>The length of the text in characters.</p>
@@ -299,13 +274,8 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Lines.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Lines%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L689">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Lines_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Lines*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Lines" data-uid="Loretta.CodeAnalysis.Text.SourceText.Lines">Lines</h4>
   <div class="markdown level1 summary"><p>The collection of individual text lines.</p>
@@ -332,13 +302,8 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
   </table>
   <h3 id="methods">Methods
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_ContentEquals_Loretta_CodeAnalysis_Text_SourceText_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.ContentEquals(Loretta.CodeAnalysis.Text.SourceText)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L883">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_ContentEquals_" data-uid="Loretta.CodeAnalysis.Text.SourceText.ContentEquals*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_ContentEquals_Loretta_CodeAnalysis_Text_SourceText_" data-uid="Loretta.CodeAnalysis.Text.SourceText.ContentEquals(Loretta.CodeAnalysis.Text.SourceText)">ContentEquals(SourceText)</h4>
   <div class="markdown level1 summary"><p>Compares the content with content of another <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a>.</p>
@@ -380,13 +345,8 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_CopyTo_System_Int32_System_Char___System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.CopyTo(System.Int32%2CSystem.Char%5B%5D%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L344">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_CopyTo_" data-uid="Loretta.CodeAnalysis.Text.SourceText.CopyTo*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_CopyTo_System_Int32_System_Char___System_Int32_System_Int32_" data-uid="Loretta.CodeAnalysis.Text.SourceText.CopyTo(System.Int32,System.Char[],System.Int32,System.Int32)">CopyTo(Int32, Char[], Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Copy a range of characters from this SourceText to a destination array.</p>
@@ -428,21 +388,16 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_From_Stream_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_System_Boolean_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.From(Stream%2CSystem.Text.Encoding%2CLoretta.CodeAnalysis.Text.SourceHashAlgorithm%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L130">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_From_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From*"></a>
-  <h4 id="Loretta_CodeAnalysis_Text_SourceText_From_Stream_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_System_Boolean_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From(Stream,System.Text.Encoding,Loretta.CodeAnalysis.Text.SourceHashAlgorithm,System.Boolean)">From(Stream, Encoding, SourceHashAlgorithm, Boolean)</h4>
+  <h4 id="Loretta_CodeAnalysis_Text_SourceText_From_Stream_System_Nullable_Encoding__Loretta_CodeAnalysis_Text_SourceHashAlgorithm_System_Boolean_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From(Stream,System.Nullable{Encoding},Loretta.CodeAnalysis.Text.SourceHashAlgorithm,System.Boolean)">From(Stream, Nullable&lt;Encoding&gt;, SourceHashAlgorithm, Boolean)</h4>
   <div class="markdown level1 summary"><p>Constructs a <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> from stream content.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static SourceText From(Stream stream, Encoding encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1, bool throwIfBinaryDetected = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static SourceText From(Stream stream, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1, bool throwIfBinaryDetected = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -461,10 +416,10 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Text.Encoding</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Encoding</span>&gt;</td>
         <td><span class="parametername">encoding</span></td>
         <td><p>Data encoding to use if the stream doesn't start with Byte Order Mark specifying the encoding.
-<span class="xref">System.Text.Encoding.UTF8</span> if not specified.</p>
+<see cref="!:Encoding.UTF8"></see> if not specified.</p>
 </td>
       </tr>
       <tr>
@@ -497,40 +452,19 @@ characters, then an <see cref="!:InvalidDataException"></see> is thrown.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Loretta_CodeAnalysis_Text_SourceText_From_Stream_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_System_Boolean__remarks">Remarks</h5>
+  <h5 id="Loretta_CodeAnalysis_Text_SourceText_From_Stream_System_Nullable_Encoding__Loretta_CodeAnalysis_Text_SourceHashAlgorithm_System_Boolean__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Reads from the beginning of the stream. Leaves the stream open.</p>
 </div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Text.DecoderFallbackException</span></td>
-        <td><p>If the given encoding is set to use a throwing decoder as a fallback</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_From_System_Byte___System_Int32_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_System_Boolean_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.From(System.Byte%5B%5D%2CSystem.Int32%2CSystem.Text.Encoding%2CLoretta.CodeAnalysis.Text.SourceHashAlgorithm%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L187">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_From_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From*"></a>
-  <h4 id="Loretta_CodeAnalysis_Text_SourceText_From_System_Byte___System_Int32_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_System_Boolean_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From(System.Byte[],System.Int32,System.Text.Encoding,Loretta.CodeAnalysis.Text.SourceHashAlgorithm,System.Boolean)">From(Byte[], Int32, Encoding, SourceHashAlgorithm, Boolean)</h4>
+  <h4 id="Loretta_CodeAnalysis_Text_SourceText_From_System_Byte___System_Int32_System_Nullable_Encoding__Loretta_CodeAnalysis_Text_SourceHashAlgorithm_System_Boolean_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From(System.Byte[],System.Int32,System.Nullable{Encoding},Loretta.CodeAnalysis.Text.SourceHashAlgorithm,System.Boolean)">From(Byte[], Int32, Nullable&lt;Encoding&gt;, SourceHashAlgorithm, Boolean)</h4>
   <div class="markdown level1 summary"><p>Constructs a <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> from a byte array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static SourceText From(byte[] buffer, int length, Encoding encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1, bool throwIfBinaryDetected = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static SourceText From(byte[] buffer, int length, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1, bool throwIfBinaryDetected = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -555,10 +489,10 @@ characters, then an <see cref="!:InvalidDataException"></see> is thrown.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Text.Encoding</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Encoding</span>&gt;</td>
         <td><span class="parametername">encoding</span></td>
         <td><p>Data encoding to use if the encoded buffer doesn't start with Byte Order Mark.
-<span class="xref">System.Text.Encoding.UTF8</span> if not specified.</p>
+<see cref="!:Encoding.UTF8"></see> if not specified.</p>
 </td>
       </tr>
       <tr>
@@ -592,37 +526,16 @@ characters, then an <see cref="!:InvalidDataException"></see> is thrown.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Text.DecoderFallbackException</span></td>
-        <td><p>If the given encoding is set to use a throwing decoder as a fallback</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_From_System_String_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.From(System.String%2CSystem.Text.Encoding%2CLoretta.CodeAnalysis.Text.SourceHashAlgorithm)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L67">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_From_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From*"></a>
-  <h4 id="Loretta_CodeAnalysis_Text_SourceText_From_System_String_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From(System.String,System.Text.Encoding,Loretta.CodeAnalysis.Text.SourceHashAlgorithm)">From(String, Encoding, SourceHashAlgorithm)</h4>
+  <h4 id="Loretta_CodeAnalysis_Text_SourceText_From_System_String_System_Nullable_Encoding__Loretta_CodeAnalysis_Text_SourceHashAlgorithm_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From(System.String,System.Nullable{Encoding},Loretta.CodeAnalysis.Text.SourceHashAlgorithm)">From(String, Nullable&lt;Encoding&gt;, SourceHashAlgorithm)</h4>
   <div class="markdown level1 summary"><p>Constructs a <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> from text in a string.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static SourceText From(string text, Encoding encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)</code></pre>
+    <pre><code class="lang-csharp hljs">public static SourceText From(string text, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -641,12 +554,12 @@ characters, then an <see cref="!:InvalidDataException"></see> is thrown.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Text.Encoding</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Encoding</span>&gt;</td>
         <td><span class="parametername">encoding</span></td>
         <td><p>Encoding of the file that the <code data-dev-comment-type="paramref" class="paramref">text</code> was read from or is going to be saved to.
 <code>null</code> if the encoding is unspecified.
 If the encoding is not specified the resulting <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> isn't debuggable.
-If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> is written to a file a <span class="xref">System.Text.Encoding.UTF8</span> shall be used as a default.</p>
+If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> is written to a file a <see cref="!:Encoding.UTF8"></see> shall be used as a default.</p>
 </td>
       </tr>
       <tr>
@@ -672,21 +585,16 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_From_TextReader_System_Int32_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.From(TextReader%2CSystem.Int32%2CSystem.Text.Encoding%2CLoretta.CodeAnalysis.Text.SourceHashAlgorithm)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L89">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_From_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From*"></a>
-  <h4 id="Loretta_CodeAnalysis_Text_SourceText_From_TextReader_System_Int32_System_Text_Encoding_Loretta_CodeAnalysis_Text_SourceHashAlgorithm_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From(TextReader,System.Int32,System.Text.Encoding,Loretta.CodeAnalysis.Text.SourceHashAlgorithm)">From(TextReader, Int32, Encoding, SourceHashAlgorithm)</h4>
+  <h4 id="Loretta_CodeAnalysis_Text_SourceText_From_TextReader_System_Int32_System_Nullable_Encoding__Loretta_CodeAnalysis_Text_SourceHashAlgorithm_" data-uid="Loretta.CodeAnalysis.Text.SourceText.From(TextReader,System.Int32,System.Nullable{Encoding},Loretta.CodeAnalysis.Text.SourceHashAlgorithm)">From(TextReader, Int32, Nullable&lt;Encoding&gt;, SourceHashAlgorithm)</h4>
   <div class="markdown level1 summary"><p>Constructs a <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> from text in a string.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static SourceText From(TextReader reader, int length, Encoding encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)</code></pre>
+    <pre><code class="lang-csharp hljs">public static SourceText From(TextReader reader, int length, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -711,12 +619,12 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Text.Encoding</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Encoding</span>&gt;</td>
         <td><span class="parametername">encoding</span></td>
         <td><p>Encoding of the file that the <code data-dev-comment-type="paramref" class="paramref">reader</code> was read from or is going to be saved to.
 <code>null</code> if the encoding is unspecified.
 If the encoding is not specified the resulting <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> isn't debuggable.
-If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> is written to a file a <span class="xref">System.Text.Encoding.UTF8</span> shall be used as a default.</p>
+If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> is written to a file a <see cref="!:Encoding.UTF8"></see> shall be used as a default.</p>
 </td>
       </tr>
       <tr>
@@ -742,13 +650,8 @@ If an encoding-less <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.h
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_GetChangeRanges_Loretta_CodeAnalysis_Text_SourceText_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.GetChangeRanges(Loretta.CodeAnalysis.Text.SourceText)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L633">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_GetChangeRanges_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetChangeRanges*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_GetChangeRanges_Loretta_CodeAnalysis_Text_SourceText_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetChangeRanges(Loretta.CodeAnalysis.Text.SourceText)">GetChangeRanges(SourceText)</h4>
   <div class="markdown level1 summary"><p>Gets the set of <a class="xref" href="Loretta.CodeAnalysis.Text.TextChangeRange.html">TextChangeRange</a> that describe how the text changed
@@ -792,13 +695,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_GetChecksum.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.GetChecksum%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L451">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_GetChecksum_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetChecksum*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_GetChecksum" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetChecksum">GetChecksum()</h4>
   <div class="markdown level1 summary"><p>Returns the checksum for this text.</p>
@@ -823,13 +721,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_GetSubText_Loretta_CodeAnalysis_Text_TextSpan_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.GetSubText(Loretta.CodeAnalysis.Text.TextSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L375">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_GetSubText_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetSubText*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_GetSubText_Loretta_CodeAnalysis_Text_TextSpan_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetSubText(Loretta.CodeAnalysis.Text.TextSpan)">GetSubText(TextSpan)</h4>
   <div class="markdown level1 summary"><p>Gets a <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> that contains the characters in the specified span of this text.</p>
@@ -871,13 +764,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_GetSubText_System_Int32_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.GetSubText(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L397">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_GetSubText_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetSubText*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_GetSubText_System_Int32_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetSubText(System.Int32)">GetSubText(Int32)</h4>
   <div class="markdown level1 summary"><p>Returns a <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> that has the contents of this text including and after the start position.</p>
@@ -919,13 +807,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_GetTextChanges_Loretta_CodeAnalysis_Text_SourceText_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.GetTextChanges(Loretta.CodeAnalysis.Text.SourceText)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L651">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_GetTextChanges_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetTextChanges*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_GetTextChanges_Loretta_CodeAnalysis_Text_SourceText_" data-uid="Loretta.CodeAnalysis.Text.SourceText.GetTextChanges(Loretta.CodeAnalysis.Text.SourceText)">GetTextChanges(SourceText)</h4>
   <div class="markdown level1 summary"><p>Gets the set of <a class="xref" href="Loretta.CodeAnalysis.Text.TextChange.html">TextChange</a> that describe how the text changed
@@ -969,13 +852,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Replace_Loretta_CodeAnalysis_Text_TextSpan_System_String_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Replace(Loretta.CodeAnalysis.Text.TextSpan%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L621">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Replace_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Replace*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Replace_Loretta_CodeAnalysis_Text_TextSpan_System_String_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Replace(Loretta.CodeAnalysis.Text.TextSpan,System.String)">Replace(TextSpan, String)</h4>
   <div class="markdown level1 summary"><p>Returns a new SourceText with the specified span of characters replaced by the new text.</p>
@@ -1022,13 +900,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Replace_System_Int32_System_Int32_System_String_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Replace(System.Int32%2CSystem.Int32%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L626">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Replace_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Replace*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Replace_System_Int32_System_Int32_System_String_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Replace(System.Int32,System.Int32,System.String)">Replace(Int32, Int32, String)</h4>
   <div class="markdown level1 summary"><p>Returns a new SourceText with the specified range of characters replaced by the new text.</p>
@@ -1080,13 +953,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_ToString.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L483">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_ToString_" data-uid="Loretta.CodeAnalysis.Text.SourceText.ToString*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_ToString" data-uid="Loretta.CodeAnalysis.Text.SourceText.ToString">ToString()</h4>
   <div class="markdown level1 summary"><p>Provides a string representation of the SourceText.</p>
@@ -1113,13 +981,8 @@ or a single change encompassing the entire text.</p>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">System.Object.ToString()</span></div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_ToString_Loretta_CodeAnalysis_Text_TextSpan_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.ToString(Loretta.CodeAnalysis.Text.TextSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L489">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_ToString_" data-uid="Loretta.CodeAnalysis.Text.SourceText.ToString*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_ToString_Loretta_CodeAnalysis_Text_TextSpan_" data-uid="Loretta.CodeAnalysis.Text.SourceText.ToString(Loretta.CodeAnalysis.Text.TextSpan)">ToString(TextSpan)</h4>
   <div class="markdown level1 summary"><p>Gets a string containing the characters in specified span.</p>
@@ -1161,13 +1024,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_WithChanges_IEnumerable_Loretta_CodeAnalysis_Text_TextChange__.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.WithChanges(IEnumerable%7BLoretta.CodeAnalysis.Text.TextChange%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L517">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_WithChanges_" data-uid="Loretta.CodeAnalysis.Text.SourceText.WithChanges*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_WithChanges_IEnumerable_Loretta_CodeAnalysis_Text_TextChange__" data-uid="Loretta.CodeAnalysis.Text.SourceText.WithChanges(IEnumerable{Loretta.CodeAnalysis.Text.TextChange})">WithChanges(IEnumerable&lt;TextChange&gt;)</h4>
   <div class="markdown level1 summary"><p>Constructs a new SourceText from this text with the specified changes.</p>
@@ -1209,13 +1067,8 @@ or a single change encompassing the entire text.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_WithChanges_Loretta_CodeAnalysis_Text_TextChange___.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.WithChanges(Loretta.CodeAnalysis.Text.TextChange%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L616">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_WithChanges_" data-uid="Loretta.CodeAnalysis.Text.SourceText.WithChanges*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_WithChanges_Loretta_CodeAnalysis_Text_TextChange___" data-uid="Loretta.CodeAnalysis.Text.SourceText.WithChanges(Loretta.CodeAnalysis.Text.TextChange[])">WithChanges(TextChange[])</h4>
   <div class="markdown level1 summary"><p>Constructs a new SourceText from this text with the specified changes.
@@ -1263,13 +1116,8 @@ or a single change encompassing the entire text.</p>
   <div class="markdown level1 remarks"><p>Changes do not have to be in sorted order.  However, <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html#Loretta_CodeAnalysis_Text_SourceText_WithChanges_IEnumerable_Loretta_CodeAnalysis_Text_TextChange__">WithChanges(IEnumerable&lt;TextChange&gt;)</a> will
 perform better if they are.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Write_TextWriter_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Write(TextWriter%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L417">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Write_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Write*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Write_TextWriter_CancellationToken_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Write(TextWriter,CancellationToken)">Write(TextWriter, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Write this <a class="xref" href="Loretta.CodeAnalysis.Text.SourceText.html">SourceText</a> to a text writer.</p>
@@ -1301,13 +1149,8 @@ perform better if they are.</p>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText_Write_TextWriter_Loretta_CodeAnalysis_Text_TextSpan_CancellationToken_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText.Write(TextWriter%2CLoretta.CodeAnalysis.Text.TextSpan%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L422">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Text_SourceText_Write_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Write*"></a>
   <h4 id="Loretta_CodeAnalysis_Text_SourceText_Write_TextWriter_Loretta_CodeAnalysis_Text_TextSpan_CancellationToken_" data-uid="Loretta.CodeAnalysis.Text.SourceText.Write(TextWriter,Loretta.CodeAnalysis.Text.TextSpan,CancellationToken)">Write(TextWriter, TextSpan, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Write a span of text to a text writer.</p>
@@ -1351,12 +1194,6 @@ perform better if they are.</p>
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
-                  <li>
-                    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Text_SourceText.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Text.SourceText%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Core/Portable/Text/SourceText.cs/#L14" class="contribution-link">View Source</a>
-                  </li>
                 </ul>
               </div>
               <div class="toggle-mode">

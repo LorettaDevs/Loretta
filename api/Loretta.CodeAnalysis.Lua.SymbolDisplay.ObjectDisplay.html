@@ -94,10 +94,16 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
       <span class="xref">System.Object.Equals(System.Object)</span>
     </div>
     <div>
       <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
     </div>
     <div>
       <span class="xref">System.Object.GetHashCode()</span>
@@ -108,28 +114,17 @@
     <div>
       <span class="xref">System.Object.MemberwiseClone()</span>
     </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Loretta.CodeAnalysis.Lua.SymbolDisplay.html">Loretta.CodeAnalysis.Lua.SymbolDisplay</a></h6>
-  <h6><strong>Assembly</strong>: Loretta.CodeAnalysis.Lua.dll</h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
   <h5 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static class ObjectDisplay</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_NilLiteral.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NilLiteral%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L18">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_NilLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NilLiteral*"></a>
   <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_NilLiteral" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NilLiteral">NilLiteral</h4>
   <div class="markdown level1 summary"><p>The nil literal in Lua.</p>
@@ -154,15 +149,89 @@
       </tr>
     </tbody>
   </table>
+  
+  
+  <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_NullLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NullLiteral*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_NullLiteral" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.NullLiteral">NullLiteral</h4>
+  <div class="markdown level1 summary"><p>The nil literal in Lua.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string NullLiteral { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Boolean_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L69">View Source</a>
-  </span>
+  
+  
+  <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral*"></a>
+  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_Complex_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Nullable_CultureInfo__" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(Complex,Loretta.CodeAnalysis.ObjectDisplayOptions,System.Nullable{CultureInfo})">FormatLiteral(Complex, ObjectDisplayOptions, Nullable&lt;CultureInfo&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns a Lua number literal with the given value and the <code>i</code> suffix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string FormatLiteral(Complex value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Complex</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Loretta.CodeAnalysis.ObjectDisplayOptions.html">ObjectDisplayOptions</a></td>
+        <td><span class="parametername">options</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">CultureInfo</span>&gt;</td>
+        <td><span class="parametername">cultureInfo</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral*"></a>
   <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Boolean_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Boolean)">FormatLiteral(Boolean)</h4>
   <div class="markdown level1 summary"><p>Returns a string representation of a boolean.</p>
@@ -206,21 +275,16 @@
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Double_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Globalization_CultureInfo_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Double%2CLoretta.CodeAnalysis.ObjectDisplayOptions%2CSystem.Globalization.CultureInfo)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L365">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral*"></a>
-  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Double_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Globalization_CultureInfo_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Double,Loretta.CodeAnalysis.ObjectDisplayOptions,System.Globalization.CultureInfo)">FormatLiteral(Double, ObjectDisplayOptions, CultureInfo)</h4>
+  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Double_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Nullable_CultureInfo__" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Double,Loretta.CodeAnalysis.ObjectDisplayOptions,System.Nullable{CultureInfo})">FormatLiteral(Double, ObjectDisplayOptions, Nullable&lt;CultureInfo&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns a Lua number literal with the given value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string FormatLiteral(double value, ObjectDisplayOptions options, CultureInfo cultureInfo = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static string FormatLiteral(double value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -243,7 +307,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Globalization.CultureInfo</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">CultureInfo</span>&gt;</td>
         <td><span class="parametername">cultureInfo</span></td>
         <td></td>
       </tr>
@@ -264,21 +328,16 @@
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Int64_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Globalization_CultureInfo_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Int64%2CLoretta.CodeAnalysis.ObjectDisplayOptions%2CSystem.Globalization.CultureInfo)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L384">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral*"></a>
-  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Int64_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Globalization_CultureInfo_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Int64,Loretta.CodeAnalysis.ObjectDisplayOptions,System.Globalization.CultureInfo)">FormatLiteral(Int64, ObjectDisplayOptions, CultureInfo)</h4>
+  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Int64_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Nullable_CultureInfo__" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Int64,Loretta.CodeAnalysis.ObjectDisplayOptions,System.Nullable{CultureInfo})">FormatLiteral(Int64, ObjectDisplayOptions, Nullable&lt;CultureInfo&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns a Lua number literal with the given value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string FormatLiteral(long value, ObjectDisplayOptions options, CultureInfo cultureInfo = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static string FormatLiteral(long value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -301,7 +360,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Globalization.CultureInfo</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">CultureInfo</span>&gt;</td>
         <td><span class="parametername">cultureInfo</span></td>
         <td></td>
       </tr>
@@ -322,71 +381,8 @@
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Numerics_Complex_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Globalization_CultureInfo_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Numerics.Complex%2CLoretta.CodeAnalysis.ObjectDisplayOptions%2CSystem.Globalization.CultureInfo)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L422">View Source</a>
-  </span>
-  <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral*"></a>
-  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_Numerics_Complex_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Globalization_CultureInfo_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.Numerics.Complex,Loretta.CodeAnalysis.ObjectDisplayOptions,System.Globalization.CultureInfo)">FormatLiteral(Complex, ObjectDisplayOptions, CultureInfo)</h4>
-  <div class="markdown level1 summary"><p>Returns a Lua number literal with the given value and the <code>i</code> suffix.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string FormatLiteral(Complex value, ObjectDisplayOptions options, CultureInfo cultureInfo = null)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Numerics.Complex</span></td>
-        <td><span class="parametername">value</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Loretta.CodeAnalysis.ObjectDisplayOptions.html">ObjectDisplayOptions</a></td>
-        <td><span class="parametername">options</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Globalization.CultureInfo</span></td>
-        <td><span class="parametername">cultureInfo</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_String_Loretta_CodeAnalysis_ObjectDisplayOptions_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.String%2CLoretta.CodeAnalysis.ObjectDisplayOptions)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L256">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral*"></a>
   <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_String_Loretta_CodeAnalysis_ObjectDisplayOptions_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.String,Loretta.CodeAnalysis.ObjectDisplayOptions)">FormatLiteral(String, ObjectDisplayOptions)</h4>
   <div class="markdown level1 summary"><p>Returns a Lua string literal with the given value.</p>
@@ -439,21 +435,16 @@
   <h5 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_String_Loretta_CodeAnalysis_ObjectDisplayOptions__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Optionally escapes non-printable characters.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_UInt64_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Globalization_CultureInfo_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.UInt64%2CLoretta.CodeAnalysis.ObjectDisplayOptions%2CSystem.Globalization.CultureInfo)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L403">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral*"></a>
-  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_UInt64_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Globalization_CultureInfo_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.UInt64,Loretta.CodeAnalysis.ObjectDisplayOptions,System.Globalization.CultureInfo)">FormatLiteral(UInt64, ObjectDisplayOptions, CultureInfo)</h4>
+  <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatLiteral_System_UInt64_Loretta_CodeAnalysis_ObjectDisplayOptions_System_Nullable_CultureInfo__" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatLiteral(System.UInt64,Loretta.CodeAnalysis.ObjectDisplayOptions,System.Nullable{CultureInfo})">FormatLiteral(UInt64, ObjectDisplayOptions, Nullable&lt;CultureInfo&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns a Lua number literal with the given value and the <code>ULL</code> suffix.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string FormatLiteral(ulong value, ObjectDisplayOptions options, CultureInfo cultureInfo = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static string FormatLiteral(ulong value, ObjectDisplayOptions options, CultureInfo? cultureInfo = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -476,7 +467,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Globalization.CultureInfo</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">CultureInfo</span>&gt;</td>
         <td><span class="parametername">cultureInfo</span></td>
         <td></td>
       </tr>
@@ -497,13 +488,8 @@
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatPrimitive_System_Object_Loretta_CodeAnalysis_ObjectDisplayOptions_.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatPrimitive(System.Object%2CLoretta.CodeAnalysis.ObjectDisplayOptions)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L34">View Source</a>
-  </span>
+  
+  
   <a id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatPrimitive_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatPrimitive*"></a>
   <h4 id="Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay_FormatPrimitive_System_Object_Loretta_CodeAnalysis_ObjectDisplayOptions_" data-uid="Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay.FormatPrimitive(System.Object,Loretta.CodeAnalysis.ObjectDisplayOptions)">FormatPrimitive(Object, ObjectDisplayOptions)</h4>
   <div class="markdown level1 summary"><p>Returns a string representation of an object of primitive type.</p>
@@ -563,12 +549,6 @@
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
-                  <li>
-                    <a href="https://github.com/LorettaDevs/Loretta/new/main/apiSpec/new?filename=Loretta_CodeAnalysis_Lua_SymbolDisplay_ObjectDisplay.md&amp;value=---%0Auid%3A%20Loretta.CodeAnalysis.Lua.SymbolDisplay.ObjectDisplay%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/LorettaDevs/Loretta/blob/main/src/Compilers/Lua/Portable/SymbolDisplay/ObjectDisplay.cs/#L13" class="contribution-link">View Source</a>
-                  </li>
                 </ul>
               </div>
               <div class="toggle-mode">

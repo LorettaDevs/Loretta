@@ -481,7 +481,7 @@ or <code>math.ceil</code>).</p>
 <p>For that, we'll be implementing a method to check a function call's <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.FunctionCallExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_FunctionCallExpressionSyntax_Expression">Expression</a>
 to see if it is an <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax.html">IdentifierNameSyntax</a> or a <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.MemberAccessExpressionSyntax.html">MemberAccessExpressionSyntax</a>
 whose base <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.MemberAccessExpressionSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_MemberAccessExpressionSyntax_Expression">Expression</a> is a <a class="xref" href="../../api/Loretta.CodeAnalysis.Lua.Syntax.IdentifierNameSyntax.html">IdentifierNameSyntax</a>.</p>
-<p>We can check if a node is of a certain type by using the <a class="xref" href="../../api/Loretta.CodeAnalysis.LuaExtensions.html#Loretta_CodeAnalysis_LuaExtensions_IsKind_Loretta_CodeAnalysis_SyntaxNode_Loretta_CodeAnalysis_Lua_SyntaxKind_">IsKind(SyntaxNode, SyntaxKind)</a>
+<p>We can check if a node is of a certain type by using the @Loretta.CodeAnalysis.LuaExtensions.IsKind(Loretta.CodeAnalysis.SyntaxNode,Loretta.CodeAnalysis.Lua.SyntaxKind)
 method:</p>
 <pre><code class="lang-cs">/// &lt;summary&gt;
 /// Returns whether the provided node can be turned into a local.
