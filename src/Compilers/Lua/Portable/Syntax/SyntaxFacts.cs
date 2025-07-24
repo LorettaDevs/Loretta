@@ -92,7 +92,8 @@ namespace Loretta.CodeAnalysis.Lua
             switch (kind)
             {
                 case SyntaxKind.ColonColonToken when !options.AcceptGoto:
-                case SyntaxKind.SlashSlashToken when !options.AcceptFloorDivision:
+                case SyntaxKind.SlashSlashToken or SyntaxKind.SlashSlashEqualsToken 
+                    when !options.AcceptFloorDivision:
                 case SyntaxKind.AmpersandAmpersandToken or SyntaxKind.PipePipeToken or SyntaxKind.BangToken
                     when !options.AcceptCBooleanOperators:
                 case SyntaxKind.AmpersandToken
@@ -200,7 +201,7 @@ namespace Loretta.CodeAnalysis.Lua
                 return true;
             if (kindA is SyntaxKind.MinusToken && kindB is SyntaxKind.MinusGreaterThanToken or SyntaxKind.GreaterThanToken or SyntaxKind.GreaterThanEqualsToken)
                 return true;
-            if (kindA is SyntaxKind.SlashToken or SyntaxKind.SlashSlashToken && kindB is SyntaxKind.SlashToken or SyntaxKind.SlashSlashToken or SyntaxKind.SlashEqualsToken)
+            if (kindA is SyntaxKind.SlashToken or SyntaxKind.SlashSlashToken && kindB is SyntaxKind.SlashToken or SyntaxKind.SlashSlashToken or SyntaxKind.SlashEqualsToken or SyntaxKind.SlashSlashEqualsToken or SyntaxKind.EqualsToken or SyntaxKind.EqualsEqualsToken)
                 return true;
             return false;
         }

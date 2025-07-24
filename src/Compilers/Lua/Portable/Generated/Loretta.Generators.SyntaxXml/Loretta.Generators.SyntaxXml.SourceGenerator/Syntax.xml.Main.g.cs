@@ -1394,7 +1394,8 @@ namespace Loretta.CodeAnalysis.Lua
                 case SyntaxKind.DivideAssignmentStatement:
                 case SyntaxKind.ModuloAssignmentStatement:
                 case SyntaxKind.ConcatAssignmentStatement:
-                case SyntaxKind.ExponentiateAssignmentStatement: break;
+                case SyntaxKind.ExponentiateAssignmentStatement:
+                case SyntaxKind.FloorDivideAssignmentStatement: break;
                 default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(kind));
             }
             if (variable == null) throw new ArgumentNullException(nameof(variable));
@@ -1406,7 +1407,8 @@ namespace Loretta.CodeAnalysis.Lua
                 case SyntaxKind.SlashEqualsToken:
                 case SyntaxKind.PercentEqualsToken:
                 case SyntaxKind.DotDotEqualsToken:
-                case SyntaxKind.HatEqualsToken: break;
+                case SyntaxKind.HatEqualsToken:
+                case SyntaxKind.SlashSlashEqualsToken: break;
                 default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(assignmentOperatorToken));
             }
             if (expression == null) throw new ArgumentNullException(nameof(expression));
@@ -1433,6 +1435,7 @@ namespace Loretta.CodeAnalysis.Lua
                 SyntaxKind.ModuloAssignmentStatement => SyntaxKind.PercentEqualsToken,
                 SyntaxKind.ConcatAssignmentStatement => SyntaxKind.DotDotEqualsToken,
                 SyntaxKind.ExponentiateAssignmentStatement => SyntaxKind.HatEqualsToken,
+                SyntaxKind.FloorDivideAssignmentStatement => SyntaxKind.SlashSlashEqualsToken,
                 _ => throw new ArgumentOutOfRangeException(),
             };
 

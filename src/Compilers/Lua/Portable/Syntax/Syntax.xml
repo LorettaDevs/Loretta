@@ -1151,6 +1151,7 @@
         <Kind Name="ModuloAssignmentStatement"/>
         <Kind Name="ConcatAssignmentStatement"/>
         <Kind Name="ExponentiateAssignmentStatement"/>
+        <Kind Name="FloorDivideAssignmentStatement"/>
         <Field Name="Variable" Type="PrefixExpressionSyntax">
             <PropertyComment>
                 <summary>The variable being assigned to.</summary>
@@ -1167,6 +1168,7 @@
             <Kind Name="PercentEqualsToken"/>
             <Kind Name="DotDotEqualsToken"/>
             <Kind Name="HatEqualsToken"/>
+            <Kind Name="SlashSlashEqualsToken" />
         </Field>
         <Field Name="Expression" Type="ExpressionSyntax">
             <PropertyComment>
