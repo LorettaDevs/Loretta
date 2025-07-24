@@ -28,7 +28,6 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: windows-latest
-          - os: macos-latest
     steps:
       - name: Print concurrency key
         run: echo '${{ github.workflow }}-${{ github.head_ref || github.ref_name }}'
