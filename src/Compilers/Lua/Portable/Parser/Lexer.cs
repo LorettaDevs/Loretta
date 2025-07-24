@@ -544,13 +544,26 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 #region Numbers
 
                 case '0':
-                    switch (TextWindow.PeekChar(1))
+
+                    var i = 1;
+                    while (TextWindow.PeekChar(i) == '_')
+                    {
+                        i++;
+                    }
+
+                    var hasUnderscores = i != 1;
+
+                    switch (TextWindow.PeekChar(i))
                     {
                         // 0b[01_]+
                         case 'b':
                         case 'B':
                             // Skip the prefix
-                            TextWindow.AdvanceChar(2);
+                            TextWindow.AdvanceChar(i + 1);
+
+                            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
+                                AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             ParseBinaryNumber(ref info);
                             return;
@@ -559,7 +572,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         case 'o':
                         case 'O':
                             // Skip the prefix
-                            TextWindow.AdvanceChar(2);
+                            TextWindow.AdvanceChar(i + 1);
+
+                            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
+                                AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             ParseOctalNumber(ref info);
                             return;
@@ -568,7 +585,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                         case 'x':
                         case 'X':
                             // Skip the prefix
-                            TextWindow.AdvanceChar(2);
+                            TextWindow.AdvanceChar(i + 1);
+
+                            if (!_options.SyntaxOptions.AcceptUnderscoreInNumberLiterals && hasUnderscores)
+                                AddError(ErrorCode.ERR_UnderscoreInNumericLiteralNotSupportedInVersion);
+
                             info.Kind = SyntaxKind.NumericLiteralToken;
                             ParseHexadecimalNumber(ref info);
                             return;
