@@ -1,3 +1,23 @@
 #nullable enable
+*REMOVED*Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Left.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+*REMOVED*Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.SyntaxToken ampersandToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+*REMOVED*Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.WithLeft(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+*REMOVED*Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Left.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax!
+*REMOVED*Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.SyntaxToken pipeToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+*REMOVED*Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.WithLeft(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+*REMOVED*static Loretta.CodeAnalysis.Lua.SyntaxFactory.IntersectionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+*REMOVED*static Loretta.CodeAnalysis.Lua.SyntaxFactory.IntersectionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.SyntaxToken ampersandToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+*REMOVED*static Loretta.CodeAnalysis.Lua.SyntaxFactory.UnionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+*REMOVED*static Loretta.CodeAnalysis.Lua.SyntaxFactory.UnionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! left, Loretta.CodeAnalysis.SyntaxToken pipeToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
 Loretta.CodeAnalysis.Lua.SyntaxKind.FloorDivideAssignmentStatement = 2119 -> Loretta.CodeAnalysis.Lua.SyntaxKind
 Loretta.CodeAnalysis.Lua.SyntaxKind.SlashSlashEqualsToken = 58 -> Loretta.CodeAnalysis.Lua.SyntaxKind
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Left.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax? left, Loretta.CodeAnalysis.SyntaxToken pipeToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax.WithLeft(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax? left) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Left.get -> Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax?
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.Update(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax? left, Loretta.CodeAnalysis.SyntaxToken ampersandToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax.WithLeft(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax? left) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.IntersectionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax? left, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.IntersectionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax? left, Loretta.CodeAnalysis.SyntaxToken ampersandToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.IntersectionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.UnionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax? left, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!
+static Loretta.CodeAnalysis.Lua.SyntaxFactory.UnionType(Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax? left, Loretta.CodeAnalysis.SyntaxToken pipeToken, Loretta.CodeAnalysis.Lua.Syntax.TypeSyntax! right) -> Loretta.CodeAnalysis.Lua.Syntax.UnionTypeSyntax!

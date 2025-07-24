@@ -4542,7 +4542,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
 
         /// <summary>Gets the type on the left side of the operator.</summary>
-        public TypeSyntax Left => GetRedAtZero(ref this.left)!;
+        public TypeSyntax? Left => GetRedAtZero(ref this.left);
 
         /// <summary>
         /// Gets the <c>|</c> operator token.
@@ -4555,7 +4555,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         internal override SyntaxNode? GetNodeSlot(int index)
             => index switch
             {
-                0 => GetRedAtZero(ref this.left)!,
+                0 => GetRedAtZero(ref this.left),
                 2 => GetRed(ref this.right, 2)!,
                 _ => null,
             };
@@ -4571,7 +4571,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitUnionType(this);
         public override TResult? Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) where TResult : default => visitor.VisitUnionType(this);
 
-        public UnionTypeSyntax Update(TypeSyntax left, SyntaxToken pipeToken, TypeSyntax right)
+        public UnionTypeSyntax Update(TypeSyntax? left, SyntaxToken pipeToken, TypeSyntax right)
         {
             if (left != this.Left || pipeToken != this.PipeToken || right != this.Right)
             {
@@ -4583,7 +4583,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             return this;
         }
 
-        public UnionTypeSyntax WithLeft(TypeSyntax left) => Update(left, this.PipeToken, this.Right);
+        public UnionTypeSyntax WithLeft(TypeSyntax? left) => Update(left, this.PipeToken, this.Right);
         public UnionTypeSyntax WithPipeToken(SyntaxToken pipeToken) => Update(this.Left, pipeToken, this.Right);
         public UnionTypeSyntax WithRight(TypeSyntax right) => Update(this.Left, this.PipeToken, right);
     }
@@ -4606,7 +4606,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         }
 
         /// <summary>Gets the type on the left side of the operator.</summary>
-        public TypeSyntax Left => GetRedAtZero(ref this.left)!;
+        public TypeSyntax? Left => GetRedAtZero(ref this.left);
 
         /// <summary>
         /// Gets the <c>&amp;</c> operator token.
@@ -4619,7 +4619,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         internal override SyntaxNode? GetNodeSlot(int index)
             => index switch
             {
-                0 => GetRedAtZero(ref this.left)!,
+                0 => GetRedAtZero(ref this.left),
                 2 => GetRed(ref this.right, 2)!,
                 _ => null,
             };
@@ -4635,7 +4635,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
         public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitIntersectionType(this);
         public override TResult? Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) where TResult : default => visitor.VisitIntersectionType(this);
 
-        public IntersectionTypeSyntax Update(TypeSyntax left, SyntaxToken ampersandToken, TypeSyntax right)
+        public IntersectionTypeSyntax Update(TypeSyntax? left, SyntaxToken ampersandToken, TypeSyntax right)
         {
             if (left != this.Left || ampersandToken != this.AmpersandToken || right != this.Right)
             {
@@ -4647,7 +4647,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             return this;
         }
 
-        public IntersectionTypeSyntax WithLeft(TypeSyntax left) => Update(left, this.AmpersandToken, this.Right);
+        public IntersectionTypeSyntax WithLeft(TypeSyntax? left) => Update(left, this.AmpersandToken, this.Right);
         public IntersectionTypeSyntax WithAmpersandToken(SyntaxToken ampersandToken) => Update(this.Left, ampersandToken, this.Right);
         public IntersectionTypeSyntax WithRight(TypeSyntax right) => Update(this.Left, this.AmpersandToken, right);
     }

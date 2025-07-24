@@ -710,10 +710,10 @@ namespace Loretta.CodeAnalysis.Lua
             => node.Update((ExpressionSyntax?)Visit(node.Expression) ?? throw new ArgumentNullException("expression"), VisitToken(node.ColonColonToken), (TypeSyntax?)Visit(node.Type) ?? throw new ArgumentNullException("type"));
 
         public override SyntaxNode? VisitUnionType(UnionTypeSyntax node)
-            => node.Update((TypeSyntax?)Visit(node.Left) ?? throw new ArgumentNullException("left"), VisitToken(node.PipeToken), (TypeSyntax?)Visit(node.Right) ?? throw new ArgumentNullException("right"));
+            => node.Update((TypeSyntax?)Visit(node.Left), VisitToken(node.PipeToken), (TypeSyntax?)Visit(node.Right) ?? throw new ArgumentNullException("right"));
 
         public override SyntaxNode? VisitIntersectionType(IntersectionTypeSyntax node)
-            => node.Update((TypeSyntax?)Visit(node.Left) ?? throw new ArgumentNullException("left"), VisitToken(node.AmpersandToken), (TypeSyntax?)Visit(node.Right) ?? throw new ArgumentNullException("right"));
+            => node.Update((TypeSyntax?)Visit(node.Left), VisitToken(node.AmpersandToken), (TypeSyntax?)Visit(node.Right) ?? throw new ArgumentNullException("right"));
 
         public override SyntaxNode? VisitEqualsType(EqualsTypeSyntax node)
             => node.Update(VisitToken(node.EqualsToken), (TypeSyntax?)Visit(node.Type) ?? throw new ArgumentNullException("type"));
@@ -2199,16 +2199,15 @@ namespace Loretta.CodeAnalysis.Lua
         /// <see cref="UnionTypeSyntax" />
         /// node.
         /// </summary>
-        public static UnionTypeSyntax UnionType(TypeSyntax left, SyntaxToken pipeToken, TypeSyntax right)
+        public static UnionTypeSyntax UnionType(TypeSyntax? left, SyntaxToken pipeToken, TypeSyntax right)
         {
-            if (left == null) throw new ArgumentNullException(nameof(left));
             if (pipeToken.Kind() != SyntaxKind.PipeToken) throw new ArgumentException($"Invalid kind provided. Expected PipeToken but got {pipeToken.Kind()}.", nameof(pipeToken));
             if (right == null) throw new ArgumentNullException(nameof(right));
-            return (UnionTypeSyntax)Syntax.InternalSyntax.SyntaxFactory.UnionType((Syntax.InternalSyntax.TypeSyntax)left.Green, (Syntax.InternalSyntax.SyntaxToken)pipeToken.Node!, (Syntax.InternalSyntax.TypeSyntax)right.Green).CreateRed();
+            return (UnionTypeSyntax)Syntax.InternalSyntax.SyntaxFactory.UnionType(left == null ? null : (Syntax.InternalSyntax.TypeSyntax)left.Green, (Syntax.InternalSyntax.SyntaxToken)pipeToken.Node!, (Syntax.InternalSyntax.TypeSyntax)right.Green).CreateRed();
         }
 
         /// <summary>Creates a new UnionTypeSyntax instance.</summary>
-        public static UnionTypeSyntax UnionType(TypeSyntax left, TypeSyntax right)
+        public static UnionTypeSyntax UnionType(TypeSyntax? left, TypeSyntax right)
             => SyntaxFactory.UnionType(left, SyntaxFactory.Token(SyntaxKind.PipeToken), right);
 
         /// <summary>
@@ -2216,16 +2215,15 @@ namespace Loretta.CodeAnalysis.Lua
         /// <see cref="IntersectionTypeSyntax" />
         /// node.
         /// </summary>
-        public static IntersectionTypeSyntax IntersectionType(TypeSyntax left, SyntaxToken ampersandToken, TypeSyntax right)
+        public static IntersectionTypeSyntax IntersectionType(TypeSyntax? left, SyntaxToken ampersandToken, TypeSyntax right)
         {
-            if (left == null) throw new ArgumentNullException(nameof(left));
             if (ampersandToken.Kind() != SyntaxKind.AmpersandToken) throw new ArgumentException($"Invalid kind provided. Expected AmpersandToken but got {ampersandToken.Kind()}.", nameof(ampersandToken));
             if (right == null) throw new ArgumentNullException(nameof(right));
-            return (IntersectionTypeSyntax)Syntax.InternalSyntax.SyntaxFactory.IntersectionType((Syntax.InternalSyntax.TypeSyntax)left.Green, (Syntax.InternalSyntax.SyntaxToken)ampersandToken.Node!, (Syntax.InternalSyntax.TypeSyntax)right.Green).CreateRed();
+            return (IntersectionTypeSyntax)Syntax.InternalSyntax.SyntaxFactory.IntersectionType(left == null ? null : (Syntax.InternalSyntax.TypeSyntax)left.Green, (Syntax.InternalSyntax.SyntaxToken)ampersandToken.Node!, (Syntax.InternalSyntax.TypeSyntax)right.Green).CreateRed();
         }
 
         /// <summary>Creates a new IntersectionTypeSyntax instance.</summary>
-        public static IntersectionTypeSyntax IntersectionType(TypeSyntax left, TypeSyntax right)
+        public static IntersectionTypeSyntax IntersectionType(TypeSyntax? left, TypeSyntax right)
             => SyntaxFactory.IntersectionType(left, SyntaxFactory.Token(SyntaxKind.AmpersandToken), right);
 
         /// <summary>

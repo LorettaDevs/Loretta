@@ -41,4 +41,16 @@ public sealed class TypeParsingRegressionTests : ParsingTestsBase
     [Test, WorkItem(119, "https://github.com/LorettaDevs/Loretta/issues/119")]
     public async Task LanguageParser_ParsesVariadicFunctionTypeReturnTypes_Correctly()
         => await ParseAndValidateTypeAsync("((Player, ...any) -> ...any)?", LuaSyntaxOptions.Luau);
+
+    [Test, WorkItem(150, "https://github.com/LorettaDevs/Loretta/issues/150")]
+    public async Task LanguageParser_ParsesLeadingIntersectionType_Correctly()
+        => await ParseAndValidateAsync(
+            """local f: & number & string = "hi" """,
+            LuaSyntaxOptions.Luau);
+
+    [Test, WorkItem(150, "https://github.com/LorettaDevs/Loretta/issues/150")]
+    public async Task LanguageParser_ParsesLeadingUnionType_Correctly()
+        => await ParseAndValidateAsync(
+            """local f: | number | string = "hi" """,
+            LuaSyntaxOptions.Luau);
 }
