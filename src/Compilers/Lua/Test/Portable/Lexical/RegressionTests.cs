@@ -171,4 +171,23 @@ public sealed class RegressionTests : LexicalTestsBase
             .WithLocation(9, 14));
         syntaxTree2.GetDiagnostics().Verify();
     }
+    
+    [Test]
+    [WorkItem(149, "https://github.com/LorettaDevs/Loretta/issues/149")]
+    [Arguments("0_____b111001", (double) 0b111001)]
+    [Arguments("0_____xFFFF", 0xFFFF)]
+    [Arguments("0_xFFFF", 0xFFFF)]
+    public async Task Lexer_Lexes_Number_WithLeadingUnderscoresBeforePrefix(string text, double value)
+    {
+        var token = LexToken(text, LuaSyntaxOptions.Luau);
+
+        using (Assert.Multiple())
+        {
+            await Assert.That(token)
+                .HasKind(SyntaxKind.NumericLiteralToken)
+                .And.HasText(text)
+                .And.HasValue(value);
+            token.GetDiagnostics().Verify();
+        }
+    }
 }
