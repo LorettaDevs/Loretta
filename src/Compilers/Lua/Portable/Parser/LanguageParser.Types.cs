@@ -49,11 +49,43 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         internal partial TypeSyntax ParseType()
         {
-            var type = ParsePossiblyNullableType();
-
-            var isNilable = type.Kind is SyntaxKind.NilableType;
             var isUnion = false;
             var isIntersection = false;
+            
+            TypeSyntax type;
+            var isNilable = false;
+            
+            switch (CurrentToken.Kind)
+            {
+                case SyntaxKind.PipeToken:
+                {
+                    var pipeToken = EatTokenWithPrejudice(SyntaxKind.PipeToken);
+                    var right = ParsePossiblyNullableType();
+                    isNilable |= right.Kind is SyntaxKind.NilableType;
+                    type = SyntaxFactory.UnionType(
+                        null,
+                        pipeToken,
+                        right);
+                    isUnion = true;
+                    break;
+                }
+                case SyntaxKind.AmpersandToken:
+                {
+                    var ampersandToken = EatTokenWithPrejudice(SyntaxKind.AmpersandToken);
+                    var right = ParsePossiblyNullableType();
+                    isNilable |= right.Kind is SyntaxKind.NilableType;
+                    type = SyntaxFactory.IntersectionType(
+                        null,
+                        ampersandToken,
+                        right);
+                    isIntersection = true;
+                    break;
+                }
+                default:
+                    type = ParsePossiblyNullableType();
+                    isNilable |= type.Kind is SyntaxKind.NilableType;
+                    break;
+            }
 
             while (CurrentToken.Kind is SyntaxKind.PipeToken or SyntaxKind.AmpersandToken)
             {

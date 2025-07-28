@@ -2519,7 +2519,7 @@
             </summary>
         </FactoryComment>
         <Kind Name="UnionType"/>
-        <Field Name="Left" Type="TypeSyntax">
+        <Field Name="Left" Type="TypeSyntax" Optional="true" FactoryRequired="true">
             <PropertyComment>
                 <summary>Gets the type on the left side of the operator.</summary>
             </PropertyComment>
@@ -2551,7 +2551,7 @@
             </summary>
         </FactoryComment>
         <Kind Name="IntersectionType"/>
-        <Field Name="Left" Type="TypeSyntax">
+        <Field Name="Left" Type="TypeSyntax" Optional="true" FactoryRequired="true">
             <PropertyComment>
                 <summary>Gets the type on the left side of the operator.</summary>
             </PropertyComment>
