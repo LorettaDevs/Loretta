@@ -262,4 +262,31 @@ public sealed class RegressionTests : ParsingTestsBase
     [Test, WorkItem(147, "https://github.com/LorettaDevs/Loretta/issues/147")]
     public async Task LanguageParser_WhenParsingEmptyReturnAtEndOfFile_DoNotGenerateErrors()
         => await ParseAndValidateAsync("return", LuaSyntaxOptions.Lua51);
+
+    [Test, WorkItem(160, "https://github.com/LorettaDevs/Loretta/issues/160")]
+    public async Task LanguageParser_ConcatIsRightAssociative()
+    {
+        await UsingExpressionAsync("a .. b .. c", new LuaParseOptions(LuaSyntaxOptions.All));
+        await N(SyntaxKind.ConcatExpression);
+        {
+            await N(SyntaxKind.IdentifierName);
+            {
+                await N(SyntaxKind.IdentifierToken, "a");
+            }
+            await N(SyntaxKind.DotDotToken, "..");
+            await N(SyntaxKind.ConcatExpression);
+            {
+                await N(SyntaxKind.IdentifierName);
+                {
+                    await N(SyntaxKind.IdentifierToken, "b");
+                }
+                await N(SyntaxKind.DotDotToken, "..");
+                await N(SyntaxKind.IdentifierName);
+                {
+                    await N(SyntaxKind.IdentifierToken, "c");
+                }
+            }
+        }
+        EOF();
+    }
 }

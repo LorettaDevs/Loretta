@@ -21,7 +21,7 @@ namespace Loretta.CodeAnalysis.Lua
         /// <param name="kind"></param>
         /// <returns></returns>
         public static bool IsRightAssociative(SyntaxKind kind) =>
-            kind is SyntaxKind.HatToken;
+            kind is SyntaxKind.HatToken or SyntaxKind.DotDotToken;
 
         /// <summary>
         /// Checks whether a given kind is a reserved keyword.
