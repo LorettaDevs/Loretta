@@ -90,18 +90,18 @@ public sealed class InterpolatedStringTests : ParsingTestsBase
                                                 await N(SyntaxKind.OpenBraceToken);
                                                 await N(SyntaxKind.ConcatExpression);
                                                 {
+                                                    await N(SyntaxKind.InterpolatedStringExpression);
+                                                    {
+                                                        await N(SyntaxKind.BacktickToken);
+                                                        await N(SyntaxKind.InterpolatedStringText);
+                                                        {
+                                                            await N(SyntaxKind.InterpolatedStringTextToken, "very");
+                                                        }
+                                                        await N(SyntaxKind.BacktickToken);
+                                                    }
+                                                    await N(SyntaxKind.DotDotToken);
                                                     await N(SyntaxKind.ConcatExpression);
                                                     {
-                                                        await N(SyntaxKind.InterpolatedStringExpression);
-                                                        {
-                                                            await N(SyntaxKind.BacktickToken);
-                                                            await N(SyntaxKind.InterpolatedStringText);
-                                                            {
-                                                                await N(SyntaxKind.InterpolatedStringTextToken, "very");
-                                                            }
-                                                            await N(SyntaxKind.BacktickToken);
-                                                        }
-                                                        await N(SyntaxKind.DotDotToken);
                                                         await N(SyntaxKind.InterpolatedStringExpression);
                                                         {
                                                             await N(SyntaxKind.BacktickToken);
@@ -111,16 +111,16 @@ public sealed class InterpolatedStringTests : ParsingTestsBase
                                                             }
                                                             await N(SyntaxKind.BacktickToken);
                                                         }
-                                                    }
-                                                    await N(SyntaxKind.DotDotToken);
-                                                    await N(SyntaxKind.InterpolatedStringExpression);
-                                                    {
-                                                        await N(SyntaxKind.BacktickToken);
-                                                        await N(SyntaxKind.InterpolatedStringText);
+                                                        await N(SyntaxKind.DotDotToken);
+                                                        await N(SyntaxKind.InterpolatedStringExpression);
                                                         {
-                                                            await N(SyntaxKind.InterpolatedStringTextToken, "very");
+                                                            await N(SyntaxKind.BacktickToken);
+                                                            await N(SyntaxKind.InterpolatedStringText);
+                                                            {
+                                                                await N(SyntaxKind.InterpolatedStringTextToken, "very");
+                                                            }
+                                                            await N(SyntaxKind.BacktickToken);
                                                         }
-                                                        await N(SyntaxKind.BacktickToken);
                                                     }
                                                 }
                                                 await N(SyntaxKind.CloseBraceToken);
