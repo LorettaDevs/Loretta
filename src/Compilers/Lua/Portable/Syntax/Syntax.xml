@@ -2020,6 +2020,71 @@
         </Field>
     </Node>
 
+    <Node Name="TypeFunctionDeclarationStatementSyntax" Base="StatementSyntax">
+        <TypeComment>
+            <summary>Represents a type function declaration statement.</summary>
+        </TypeComment>
+        <FactoryComment>
+            <summary>
+                Creates a new
+                <see cref="TypeFunctionDeclarationStatementSyntax"/>
+                node.
+            </summary>
+        </FactoryComment>
+        <Kind Name="TypeFunctionDeclarationStatement"/>
+        <Field Name="ExportKeyword" Type="SyntaxToken" Optional="true">
+            <PropertyComment>
+                <summary>The 'export' keyword.</summary>
+            </PropertyComment>
+            <Kind Name="ExportKeyword"/>
+        </Field>
+        <Field Name="TypeKeyword" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The 'type' keyword.</summary>
+            </PropertyComment>
+            <Kind Name="TypeKeyword"/>
+        </Field>
+        <Field Name="FunctionKeyword" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The 'function' keyword.</summary>
+            </PropertyComment>
+            <Kind Name="FunctionKeyword"/>
+        </Field>
+        <Field Name="Name" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>Represents the type function's name.</summary>
+            </PropertyComment>
+            <Kind Name="IdentifierToken"/>
+        </Field>
+        <Field Name="Parameters" Type="ParameterListSyntax" FactoryRequired="true">
+            <PropertyComment>
+                <summary>The parameter list.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="TypeBinding" Type="TypeBindingSyntax" Optional="true">
+            <PropertyComment>
+                <summary>The function's (optional) return type.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="Body" Type="StatementListSyntax" FactoryRequired="true">
+            <PropertyComment>
+                <summary>The function's body.</summary>
+            </PropertyComment>
+        </Field>
+        <Field Name="EndKeyword" Type="SyntaxToken">
+            <PropertyComment>
+                <summary>The 'end' keyword.</summary>
+            </PropertyComment>
+            <Kind Name="EndKeyword"/>
+        </Field>
+        <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+            <PropertyComment>
+                <summary>The semicolon at the end of the statement (if any).</summary>
+            </PropertyComment>
+            <Kind Name="SemicolonToken"/>
+        </Field>
+    </Node>
+
     <!-- Types -->
 
     <AbstractNode Name="TypeSyntax" Base="LuaSyntaxNode">

@@ -6760,6 +6760,209 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
     }
 
+    /// <summary>Represents a type function declaration statement.</summary>
+    internal sealed partial class TypeFunctionDeclarationStatementSyntax : StatementSyntax
+    {
+        internal readonly SyntaxToken? exportKeyword;
+        internal readonly SyntaxToken typeKeyword;
+        internal readonly SyntaxToken functionKeyword;
+        internal readonly SyntaxToken name;
+        internal readonly ParameterListSyntax parameters;
+        internal readonly TypeBindingSyntax? typeBinding;
+        internal readonly StatementListSyntax body;
+        internal readonly SyntaxToken endKeyword;
+        internal readonly SyntaxToken? semicolonToken;
+
+        internal TypeFunctionDeclarationStatementSyntax(SyntaxKind kind, SyntaxToken? exportKeyword, SyntaxToken typeKeyword, SyntaxToken functionKeyword, SyntaxToken name, ParameterListSyntax parameters, TypeBindingSyntax? typeBinding, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken? semicolonToken, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations)
+          : base(kind, diagnostics, annotations)
+        {
+            this.SlotCount = 9;
+            if (exportKeyword != null)
+            {
+                this.AdjustFlagsAndWidth(exportKeyword);
+                this.exportKeyword = exportKeyword;
+            }
+            this.AdjustFlagsAndWidth(typeKeyword);
+            this.typeKeyword = typeKeyword;
+            this.AdjustFlagsAndWidth(functionKeyword);
+            this.functionKeyword = functionKeyword;
+            this.AdjustFlagsAndWidth(name);
+            this.name = name;
+            this.AdjustFlagsAndWidth(parameters);
+            this.parameters = parameters;
+            if (typeBinding != null)
+            {
+                this.AdjustFlagsAndWidth(typeBinding);
+                this.typeBinding = typeBinding;
+            }
+            this.AdjustFlagsAndWidth(body);
+            this.body = body;
+            this.AdjustFlagsAndWidth(endKeyword);
+            this.endKeyword = endKeyword;
+            if (semicolonToken != null)
+            {
+                this.AdjustFlagsAndWidth(semicolonToken);
+                this.semicolonToken = semicolonToken;
+            }
+        }
+
+        internal TypeFunctionDeclarationStatementSyntax(SyntaxKind kind, SyntaxToken? exportKeyword, SyntaxToken typeKeyword, SyntaxToken functionKeyword, SyntaxToken name, ParameterListSyntax parameters, TypeBindingSyntax? typeBinding, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken? semicolonToken)
+          : base(kind)
+        {
+            this.SlotCount = 9;
+            if (exportKeyword != null)
+            {
+                this.AdjustFlagsAndWidth(exportKeyword);
+                this.exportKeyword = exportKeyword;
+            }
+            this.AdjustFlagsAndWidth(typeKeyword);
+            this.typeKeyword = typeKeyword;
+            this.AdjustFlagsAndWidth(functionKeyword);
+            this.functionKeyword = functionKeyword;
+            this.AdjustFlagsAndWidth(name);
+            this.name = name;
+            this.AdjustFlagsAndWidth(parameters);
+            this.parameters = parameters;
+            if (typeBinding != null)
+            {
+                this.AdjustFlagsAndWidth(typeBinding);
+                this.typeBinding = typeBinding;
+            }
+            this.AdjustFlagsAndWidth(body);
+            this.body = body;
+            this.AdjustFlagsAndWidth(endKeyword);
+            this.endKeyword = endKeyword;
+            if (semicolonToken != null)
+            {
+                this.AdjustFlagsAndWidth(semicolonToken);
+                this.semicolonToken = semicolonToken;
+            }
+        }
+
+        /// <summary>The 'export' keyword.</summary>
+        public SyntaxToken? ExportKeyword => this.exportKeyword;
+        /// <summary>The 'type' keyword.</summary>
+        public SyntaxToken TypeKeyword => this.typeKeyword;
+        /// <summary>The 'function' keyword.</summary>
+        public SyntaxToken FunctionKeyword => this.functionKeyword;
+        /// <summary>Represents the type function's name.</summary>
+        public SyntaxToken Name => this.name;
+        /// <summary>The parameter list.</summary>
+        public ParameterListSyntax Parameters => this.parameters;
+        /// <summary>The function's (optional) return type.</summary>
+        public TypeBindingSyntax? TypeBinding => this.typeBinding;
+        /// <summary>The function's body.</summary>
+        public StatementListSyntax Body => this.body;
+        /// <summary>The 'end' keyword.</summary>
+        public SyntaxToken EndKeyword => this.endKeyword;
+        /// <summary>The semicolon at the end of the statement (if any).</summary>
+        public override SyntaxToken? SemicolonToken => this.semicolonToken;
+
+        internal override GreenNode? GetSlot(int index)
+            => index switch
+            {
+                0 => this.exportKeyword,
+                1 => this.typeKeyword,
+                2 => this.functionKeyword,
+                3 => this.name,
+                4 => this.parameters,
+                5 => this.typeBinding,
+                6 => this.body,
+                7 => this.endKeyword,
+                8 => this.semicolonToken,
+                _ => null,
+            };
+
+        internal override SyntaxNode CreateRed(SyntaxNode? parent, int position) => new Lua.Syntax.TypeFunctionDeclarationStatementSyntax(this, parent, position);
+
+        public override void Accept(LuaSyntaxVisitor visitor) => visitor.VisitTypeFunctionDeclarationStatement(this);
+        public override TResult Accept<TResult>(LuaSyntaxVisitor<TResult> visitor) => visitor.VisitTypeFunctionDeclarationStatement(this);
+
+        public TypeFunctionDeclarationStatementSyntax Update(SyntaxToken exportKeyword, SyntaxToken typeKeyword, SyntaxToken functionKeyword, SyntaxToken name, ParameterListSyntax parameters, TypeBindingSyntax typeBinding, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
+        {
+            if (exportKeyword != this.ExportKeyword || typeKeyword != this.TypeKeyword || functionKeyword != this.FunctionKeyword || name != this.Name || parameters != this.Parameters || typeBinding != this.TypeBinding || body != this.Body || endKeyword != this.EndKeyword || semicolonToken != this.SemicolonToken)
+            {
+                var newNode = SyntaxFactory.TypeFunctionDeclarationStatement(exportKeyword, typeKeyword, functionKeyword, name, parameters, typeBinding, body, endKeyword, semicolonToken);
+                var diags = GetDiagnostics();
+                if (diags?.Length > 0)
+                    newNode = newNode.WithDiagnosticsGreen(diags);
+                var annotations = GetAnnotations();
+                if (annotations?.Length > 0)
+                    newNode = newNode.WithAnnotationsGreen(annotations);
+                return newNode;
+            }
+
+            return this;
+        }
+
+        internal override GreenNode SetDiagnostics(DiagnosticInfo[]? diagnostics)
+            => new TypeFunctionDeclarationStatementSyntax(this.Kind, this.exportKeyword, this.typeKeyword, this.functionKeyword, this.name, this.parameters, this.typeBinding, this.body, this.endKeyword, this.semicolonToken, diagnostics, GetAnnotations());
+
+        internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
+            => new TypeFunctionDeclarationStatementSyntax(this.Kind, this.exportKeyword, this.typeKeyword, this.functionKeyword, this.name, this.parameters, this.typeBinding, this.body, this.endKeyword, this.semicolonToken, GetDiagnostics(), annotations);
+
+        internal TypeFunctionDeclarationStatementSyntax(ObjectReader reader)
+          : base(reader)
+        {
+            this.SlotCount = 9;
+            var exportKeyword = (SyntaxToken?)reader.ReadValue();
+            if (exportKeyword != null)
+            {
+                AdjustFlagsAndWidth(exportKeyword);
+                this.exportKeyword = exportKeyword;
+            }
+            var typeKeyword = (SyntaxToken)reader.ReadValue();
+            AdjustFlagsAndWidth(typeKeyword);
+            this.typeKeyword = typeKeyword;
+            var functionKeyword = (SyntaxToken)reader.ReadValue();
+            AdjustFlagsAndWidth(functionKeyword);
+            this.functionKeyword = functionKeyword;
+            var name = (SyntaxToken)reader.ReadValue();
+            AdjustFlagsAndWidth(name);
+            this.name = name;
+            var parameters = (ParameterListSyntax)reader.ReadValue();
+            AdjustFlagsAndWidth(parameters);
+            this.parameters = parameters;
+            var typeBinding = (TypeBindingSyntax?)reader.ReadValue();
+            if (typeBinding != null)
+            {
+                AdjustFlagsAndWidth(typeBinding);
+                this.typeBinding = typeBinding;
+            }
+            var body = (StatementListSyntax)reader.ReadValue();
+            AdjustFlagsAndWidth(body);
+            this.body = body;
+            var endKeyword = (SyntaxToken)reader.ReadValue();
+            AdjustFlagsAndWidth(endKeyword);
+            this.endKeyword = endKeyword;
+            var semicolonToken = (SyntaxToken?)reader.ReadValue();
+            if (semicolonToken != null)
+            {
+                AdjustFlagsAndWidth(semicolonToken);
+                this.semicolonToken = semicolonToken;
+            }
+        }
+
+        internal override void WriteTo(ObjectWriter writer)
+        {
+            base.WriteTo(writer);
+            writer.WriteValue(this.exportKeyword);
+            writer.WriteValue(this.typeKeyword);
+            writer.WriteValue(this.functionKeyword);
+            writer.WriteValue(this.name);
+            writer.WriteValue(this.parameters);
+            writer.WriteValue(this.typeBinding);
+            writer.WriteValue(this.body);
+            writer.WriteValue(this.endKeyword);
+            writer.WriteValue(this.semicolonToken);
+        }
+
+        static TypeFunctionDeclarationStatementSyntax()
+        {
+            ObjectBinder.RegisterTypeReader(typeof(TypeFunctionDeclarationStatementSyntax), r => new TypeFunctionDeclarationStatementSyntax(r));
+        }
+    }
+
     /// <summary>The base node for type annotations</summary>
     internal abstract partial class TypeSyntax : LuaSyntaxNode
     {
@@ -9557,6 +9760,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public virtual TResult VisitExpressionStatement(ExpressionStatementSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitEmptyStatement(EmptyStatementSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitTypeDeclarationStatement(TypeDeclarationStatementSyntax node) => this.DefaultVisit(node);
+        public virtual TResult VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitTypeBinding(TypeBindingSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitSimpleTypeName(SimpleTypeNameSyntax node) => this.DefaultVisit(node);
         public virtual TResult VisitCompositeTypeName(CompositeTypeNameSyntax node) => this.DefaultVisit(node);
@@ -9641,6 +9845,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         public virtual void VisitExpressionStatement(ExpressionStatementSyntax node) => this.DefaultVisit(node);
         public virtual void VisitEmptyStatement(EmptyStatementSyntax node) => this.DefaultVisit(node);
         public virtual void VisitTypeDeclarationStatement(TypeDeclarationStatementSyntax node) => this.DefaultVisit(node);
+        public virtual void VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax node) => this.DefaultVisit(node);
         public virtual void VisitTypeBinding(TypeBindingSyntax node) => this.DefaultVisit(node);
         public virtual void VisitSimpleTypeName(SimpleTypeNameSyntax node) => this.DefaultVisit(node);
         public virtual void VisitCompositeTypeName(CompositeTypeNameSyntax node) => this.DefaultVisit(node);
@@ -9836,6 +10041,9 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
         public override LuaSyntaxNode VisitTypeDeclarationStatement(TypeDeclarationStatementSyntax node)
             => node.Update((SyntaxToken)Visit(node.ExportKeyword), (SyntaxToken)Visit(node.TypeKeyword), (SyntaxToken)Visit(node.Name), (TypeParameterListSyntax)Visit(node.TypeParameterList), (SyntaxToken)Visit(node.EqualsToken), (TypeSyntax)Visit(node.Type), (SyntaxToken)Visit(node.SemicolonToken));
+
+        public override LuaSyntaxNode VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax node)
+            => node.Update((SyntaxToken)Visit(node.ExportKeyword), (SyntaxToken)Visit(node.TypeKeyword), (SyntaxToken)Visit(node.FunctionKeyword), (SyntaxToken)Visit(node.Name), (ParameterListSyntax)Visit(node.Parameters), (TypeBindingSyntax)Visit(node.TypeBinding), (StatementListSyntax)Visit(node.Body), (SyntaxToken)Visit(node.EndKeyword), (SyntaxToken)Visit(node.SemicolonToken));
 
         public override LuaSyntaxNode VisitTypeBinding(TypeBindingSyntax node)
             => node.Update((SyntaxToken)Visit(node.ColonToken), (TypeSyntax)Visit(node.Type));
@@ -11254,6 +11462,42 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             return new TypeDeclarationStatementSyntax(SyntaxKind.TypeDeclarationStatement, exportKeyword, typeKeyword, name, typeParameterList, equalsToken, type, semicolonToken);
         }
 
+        public static TypeFunctionDeclarationStatementSyntax TypeFunctionDeclarationStatement(SyntaxToken? exportKeyword, SyntaxToken typeKeyword, SyntaxToken functionKeyword, SyntaxToken name, ParameterListSyntax parameters, TypeBindingSyntax? typeBinding, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken? semicolonToken)
+        {
+#if DEBUG
+            if (exportKeyword != null)
+            {
+                switch (exportKeyword.Kind)
+                {
+                    case SyntaxKind.ExportKeyword:
+                    case SyntaxKind.None: break;
+                    default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(exportKeyword));
+                }
+            }
+            if (typeKeyword == null) throw new ArgumentNullException(nameof(typeKeyword));
+            if (typeKeyword.Kind != SyntaxKind.TypeKeyword) throw new ArgumentException($"Invalid kind provided. Expected TypeKeyword but got {typeKeyword.Kind}.", nameof(typeKeyword));
+            if (functionKeyword == null) throw new ArgumentNullException(nameof(functionKeyword));
+            if (functionKeyword.Kind != SyntaxKind.FunctionKeyword) throw new ArgumentException($"Invalid kind provided. Expected FunctionKeyword but got {functionKeyword.Kind}.", nameof(functionKeyword));
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (name.Kind != SyntaxKind.IdentifierToken) throw new ArgumentException($"Invalid kind provided. Expected IdentifierToken but got {name.Kind}.", nameof(name));
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            if (body == null) throw new ArgumentNullException(nameof(body));
+            if (endKeyword == null) throw new ArgumentNullException(nameof(endKeyword));
+            if (endKeyword.Kind != SyntaxKind.EndKeyword) throw new ArgumentException($"Invalid kind provided. Expected EndKeyword but got {endKeyword.Kind}.", nameof(endKeyword));
+            if (semicolonToken != null)
+            {
+                switch (semicolonToken.Kind)
+                {
+                    case SyntaxKind.SemicolonToken:
+                    case SyntaxKind.None: break;
+                    default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(semicolonToken));
+                }
+            }
+#endif
+
+            return new TypeFunctionDeclarationStatementSyntax(SyntaxKind.TypeFunctionDeclarationStatement, exportKeyword, typeKeyword, functionKeyword, name, parameters, typeBinding, body, endKeyword, semicolonToken);
+        }
+
         public static TypeBindingSyntax TypeBinding(SyntaxToken colonToken, TypeSyntax type)
         {
 #if DEBUG
@@ -11841,6 +12085,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                 typeof(ExpressionStatementSyntax),
                 typeof(EmptyStatementSyntax),
                 typeof(TypeDeclarationStatementSyntax),
+                typeof(TypeFunctionDeclarationStatementSyntax),
                 typeof(TypeBindingSyntax),
                 typeof(SimpleTypeNameSyntax),
                 typeof(CompositeTypeNameSyntax),
