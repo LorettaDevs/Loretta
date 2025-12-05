@@ -4437,6 +4437,19 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypedIdentifierName
   nameWithType: LuaSyntaxRewriter.VisitTypedIdentifierName
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  name: VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitTypeFunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  nameWithType: LuaSyntaxRewriter.VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeFunctionDeclarationStatement*
+  name: VisitTypeFunctionDeclarationStatement
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitTypeFunctionDeclarationStatement_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeFunctionDeclarationStatement
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeFunctionDeclarationStatement
+  nameWithType: LuaSyntaxRewriter.VisitTypeFunctionDeclarationStatement
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.VisitTypeofType(Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax)
   name: VisitTypeofType(TypeofTypeSyntax)
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxRewriter.html#Loretta_CodeAnalysis_Lua_LuaSyntaxRewriter_VisitTypeofType_Loretta_CodeAnalysis_Lua_Syntax_TypeofTypeSyntax_
@@ -5752,6 +5765,19 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypedIdentifierName
   nameWithType: LuaSyntaxVisitor.VisitTypedIdentifierName
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  name: VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeFunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  nameWithType: LuaSyntaxVisitor.VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeFunctionDeclarationStatement*
+  name: VisitTypeFunctionDeclarationStatement
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeFunctionDeclarationStatement_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeFunctionDeclarationStatement
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeFunctionDeclarationStatement
+  nameWithType: LuaSyntaxVisitor.VisitTypeFunctionDeclarationStatement
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.VisitTypeofType(Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax)
   name: VisitTypeofType(TypeofTypeSyntax)
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_VisitTypeofType_Loretta_CodeAnalysis_Lua_Syntax_TypeofTypeSyntax_
@@ -7107,6 +7133,23 @@ references:
   fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitTypedIdentifierName
   nameWithType: LuaSyntaxVisitor<TResult>.VisitTypedIdentifierName
   nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitTypedIdentifierName
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  name: VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitTypeFunctionDeclarationStatement_Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitTypeFunctionDeclarationStatement(Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax)
+  nameWithType: LuaSyntaxVisitor<TResult>.VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax)
+  nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax)
+- uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitTypeFunctionDeclarationStatement*
+  name: VisitTypeFunctionDeclarationStatement
+  href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitTypeFunctionDeclarationStatement_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitTypeFunctionDeclarationStatement
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>.VisitTypeFunctionDeclarationStatement
+  fullName.vb: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult).VisitTypeFunctionDeclarationStatement
+  nameWithType: LuaSyntaxVisitor<TResult>.VisitTypeFunctionDeclarationStatement
+  nameWithType.vb: LuaSyntaxVisitor(Of TResult).VisitTypeFunctionDeclarationStatement
 - uid: Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor`1.VisitTypeofType(Loretta.CodeAnalysis.Lua.Syntax.TypeofTypeSyntax)
   name: VisitTypeofType(TypeofTypeSyntax)
   href: api/Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor-1.html#Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_1_VisitTypeofType_Loretta_CodeAnalysis_Lua_Syntax_TypeofTypeSyntax_
@@ -17372,6 +17415,313 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.Syntax.TypedIdentifierNameSyntax.WithTypeBinding
   nameWithType: TypedIdentifierNameSyntax.WithTypeBinding
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax
+  name: TypeFunctionDeclarationStatementSyntax
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html
+  commentId: T:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax
+  nameWithType: TypeFunctionDeclarationStatementSyntax
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  name: Accept(LuaSyntaxVisitor)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Accept_Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Accept(LuaSyntaxVisitor)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept*
+  name: Accept
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Accept_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Accept
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept``1(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor{``0})
+  name: Accept<TResult>(LuaSyntaxVisitor<TResult>)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Accept__1_Loretta_CodeAnalysis_Lua_LuaSyntaxVisitor___0__
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept``1(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor{``0})
+  name.vb: Accept(Of TResult)(LuaSyntaxVisitor(Of TResult))
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept<TResult>(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor<TResult>)
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Accept(Of TResult)(Loretta.CodeAnalysis.Lua.LuaSyntaxVisitor(Of TResult))
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Accept<TResult>(LuaSyntaxVisitor<TResult>)
+  nameWithType.vb: TypeFunctionDeclarationStatementSyntax.Accept(Of TResult)(LuaSyntaxVisitor(Of TResult))
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddBodyStatements(Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax[])
+  name: AddBodyStatements(StatementSyntax[])
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_AddBodyStatements_Loretta_CodeAnalysis_Lua_Syntax_StatementSyntax___
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddBodyStatements(Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax[])
+  name.vb: AddBodyStatements(StatementSyntax())
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddBodyStatements(Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax[])
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddBodyStatements(Loretta.CodeAnalysis.Lua.Syntax.StatementSyntax())
+  nameWithType: TypeFunctionDeclarationStatementSyntax.AddBodyStatements(StatementSyntax[])
+  nameWithType.vb: TypeFunctionDeclarationStatementSyntax.AddBodyStatements(StatementSyntax())
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddBodyStatements*
+  name: AddBodyStatements
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_AddBodyStatements_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddBodyStatements
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddBodyStatements
+  nameWithType: TypeFunctionDeclarationStatementSyntax.AddBodyStatements
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddParametersParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax[])
+  name: AddParametersParameters(ParameterSyntax[])
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_AddParametersParameters_Loretta_CodeAnalysis_Lua_Syntax_ParameterSyntax___
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddParametersParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax[])
+  name.vb: AddParametersParameters(ParameterSyntax())
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddParametersParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax[])
+  fullName.vb: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddParametersParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterSyntax())
+  nameWithType: TypeFunctionDeclarationStatementSyntax.AddParametersParameters(ParameterSyntax[])
+  nameWithType.vb: TypeFunctionDeclarationStatementSyntax.AddParametersParameters(ParameterSyntax())
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddParametersParameters*
+  name: AddParametersParameters
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_AddParametersParameters_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddParametersParameters
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.AddParametersParameters
+  nameWithType: TypeFunctionDeclarationStatementSyntax.AddParametersParameters
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Body
+  name: Body
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Body
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Body
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Body
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Body
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Body*
+  name: Body
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Body_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Body
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Body
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Body
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.EndKeyword
+  name: EndKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_EndKeyword
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.EndKeyword
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.EndKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.EndKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.EndKeyword*
+  name: EndKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_EndKeyword_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.EndKeyword
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.EndKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.EndKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.ExportKeyword
+  name: ExportKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_ExportKeyword
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.ExportKeyword
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.ExportKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.ExportKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.ExportKeyword*
+  name: ExportKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_ExportKeyword_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.ExportKeyword
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.ExportKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.ExportKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.FunctionKeyword
+  name: FunctionKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_FunctionKeyword
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.FunctionKeyword
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.FunctionKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.FunctionKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.FunctionKeyword*
+  name: FunctionKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_FunctionKeyword_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.FunctionKeyword
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.FunctionKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.FunctionKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Name
+  name: Name
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Name
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Name
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Name
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Name
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Name*
+  name: Name
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Name_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Name
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Name
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Name
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Parameters
+  name: Parameters
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Parameters
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Parameters
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Parameters
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Parameters
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Parameters*
+  name: Parameters
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Parameters_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Parameters
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Parameters
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Parameters
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.SemicolonToken
+  name: SemicolonToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_SemicolonToken
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.SemicolonToken
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.SemicolonToken
+  nameWithType: TypeFunctionDeclarationStatementSyntax.SemicolonToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.SemicolonToken*
+  name: SemicolonToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_SemicolonToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.SemicolonToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.SemicolonToken
+  nameWithType: TypeFunctionDeclarationStatementSyntax.SemicolonToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeBinding
+  name: TypeBinding
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_TypeBinding
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeBinding
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeBinding
+  nameWithType: TypeFunctionDeclarationStatementSyntax.TypeBinding
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeBinding*
+  name: TypeBinding
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_TypeBinding_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeBinding
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeBinding
+  nameWithType: TypeFunctionDeclarationStatementSyntax.TypeBinding
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeKeyword
+  name: TypeKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_TypeKeyword
+  commentId: P:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeKeyword
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.TypeKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeKeyword*
+  name: TypeKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_TypeKeyword_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeKeyword
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.TypeKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.TypeKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)
+  name: Update(SyntaxToken, SyntaxToken, SyntaxToken, SyntaxToken, ParameterListSyntax, TypeBindingSyntax, StatementListSyntax, SyntaxToken, SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Update_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_TypeBindingSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Update(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Update(SyntaxToken, SyntaxToken, SyntaxToken, SyntaxToken, ParameterListSyntax, TypeBindingSyntax, StatementListSyntax, SyntaxToken, SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Update*
+  name: Update
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_Update_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Update
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.Update
+  nameWithType: TypeFunctionDeclarationStatementSyntax.Update
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithBody(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  name: WithBody(StatementListSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithBody_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithBody(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithBody(Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithBody(StatementListSyntax)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithBody*
+  name: WithBody
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithBody_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithBody
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithBody
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithBody
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithEndKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithEndKeyword(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithEndKeyword_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithEndKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithEndKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithEndKeyword(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithEndKeyword*
+  name: WithEndKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithEndKeyword_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithEndKeyword
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithEndKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithEndKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithExportKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithExportKeyword(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithExportKeyword_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithExportKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithExportKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithExportKeyword(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithExportKeyword*
+  name: WithExportKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithExportKeyword_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithExportKeyword
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithExportKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithExportKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithFunctionKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithFunctionKeyword(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithFunctionKeyword_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithFunctionKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithFunctionKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithFunctionKeyword(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithFunctionKeyword*
+  name: WithFunctionKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithFunctionKeyword_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithFunctionKeyword
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithFunctionKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithFunctionKeyword
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithName(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithName(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithName_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithName(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithName(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithName(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithName*
+  name: WithName
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithName_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithName
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithName
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithName
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax)
+  name: WithParameters(ParameterListSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithParameters_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithParameters(Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithParameters(ParameterListSyntax)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithParameters*
+  name: WithParameters
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithParameters_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithParameters
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithParameters
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithParameters
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithSemicolonToken(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithSemicolonToken_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithSemicolonToken(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithSemicolonToken(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithSemicolonToken*
+  name: WithSemicolonToken
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithSemicolonToken_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithSemicolonToken
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithSemicolonToken
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithSemicolonToken
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax)
+  name: WithTypeBinding(TypeBindingSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithTypeBinding_Loretta_CodeAnalysis_Lua_Syntax_TypeBindingSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeBinding(Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithTypeBinding(TypeBindingSyntax)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeBinding*
+  name: WithTypeBinding
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithTypeBinding_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeBinding
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeBinding
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithTypeBinding
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  name: WithTypeKeyword(SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithTypeKeyword_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeKeyword(Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithTypeKeyword(SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeKeyword*
+  name: WithTypeKeyword
+  href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.html#Loretta_CodeAnalysis_Lua_Syntax_TypeFunctionDeclarationStatementSyntax_WithTypeKeyword_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeKeyword
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.Syntax.TypeFunctionDeclarationStatementSyntax.WithTypeKeyword
+  nameWithType: TypeFunctionDeclarationStatementSyntax.WithTypeKeyword
 - uid: Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax
   name: TypeNameSyntax
   href: api/Loretta.CodeAnalysis.Lua.Syntax.TypeNameSyntax.html
@@ -21426,6 +21776,37 @@ references:
   isSpec: "True"
   fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypedIdentifierName
   nameWithType: SyntaxFactory.TypedIdentifierName
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  name: TypeFunctionDeclarationStatement(SyntaxToken, ParameterListSyntax, StatementListSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_TypeFunctionDeclarationStatement_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  nameWithType: SyntaxFactory.TypeFunctionDeclarationStatement(SyntaxToken, ParameterListSyntax, StatementListSyntax)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  name: TypeFunctionDeclarationStatement(SyntaxToken, ParameterListSyntax, TypeBindingSyntax, StatementListSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_TypeFunctionDeclarationStatement_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_TypeBindingSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  nameWithType: SyntaxFactory.TypeFunctionDeclarationStatement(SyntaxToken, ParameterListSyntax, TypeBindingSyntax, StatementListSyntax)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)
+  name: TypeFunctionDeclarationStatement(SyntaxToken, SyntaxToken, SyntaxToken, SyntaxToken, ParameterListSyntax, TypeBindingSyntax, StatementListSyntax, SyntaxToken, SyntaxToken)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_TypeFunctionDeclarationStatement_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_TypeBindingSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_Loretta_CodeAnalysis_SyntaxToken_Loretta_CodeAnalysis_SyntaxToken_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax,Loretta.CodeAnalysis.SyntaxToken,Loretta.CodeAnalysis.SyntaxToken)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax, Loretta.CodeAnalysis.Lua.Syntax.TypeBindingSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax, Loretta.CodeAnalysis.SyntaxToken, Loretta.CodeAnalysis.SyntaxToken)
+  nameWithType: SyntaxFactory.TypeFunctionDeclarationStatement(SyntaxToken, SyntaxToken, SyntaxToken, SyntaxToken, ParameterListSyntax, TypeBindingSyntax, StatementListSyntax, SyntaxToken, SyntaxToken)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  name: TypeFunctionDeclarationStatement(String, ParameterListSyntax, StatementListSyntax)
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_TypeFunctionDeclarationStatement_System_String_Loretta_CodeAnalysis_Lua_Syntax_ParameterListSyntax_Loretta_CodeAnalysis_Lua_Syntax_StatementListSyntax_
+  commentId: M:Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(System.String,Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax,Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement(System.String, Loretta.CodeAnalysis.Lua.Syntax.ParameterListSyntax, Loretta.CodeAnalysis.Lua.Syntax.StatementListSyntax)
+  nameWithType: SyntaxFactory.TypeFunctionDeclarationStatement(String, ParameterListSyntax, StatementListSyntax)
+- uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement*
+  name: TypeFunctionDeclarationStatement
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_TypeFunctionDeclarationStatement_
+  commentId: Overload:Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement
+  isSpec: "True"
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeFunctionDeclarationStatement
+  nameWithType: SyntaxFactory.TypeFunctionDeclarationStatement
 - uid: Loretta.CodeAnalysis.Lua.SyntaxFactory.TypeofType(Loretta.CodeAnalysis.Lua.Syntax.ExpressionSyntax)
   name: TypeofType(ExpressionSyntax)
   href: api/Loretta.CodeAnalysis.Lua.SyntaxFactory.html#Loretta_CodeAnalysis_Lua_SyntaxFactory_TypeofType_Loretta_CodeAnalysis_Lua_Syntax_ExpressionSyntax_
@@ -23353,6 +23734,12 @@ references:
   commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.TypedIdentifierName
   fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.TypedIdentifierName
   nameWithType: SyntaxKind.TypedIdentifierName
+- uid: Loretta.CodeAnalysis.Lua.SyntaxKind.TypeFunctionDeclarationStatement
+  name: TypeFunctionDeclarationStatement
+  href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_TypeFunctionDeclarationStatement
+  commentId: F:Loretta.CodeAnalysis.Lua.SyntaxKind.TypeFunctionDeclarationStatement
+  fullName: Loretta.CodeAnalysis.Lua.SyntaxKind.TypeFunctionDeclarationStatement
+  nameWithType: SyntaxKind.TypeFunctionDeclarationStatement
 - uid: Loretta.CodeAnalysis.Lua.SyntaxKind.TypeKeyword
   name: TypeKeyword
   href: api/Loretta.CodeAnalysis.Lua.SyntaxKind.html#Loretta_CodeAnalysis_Lua_SyntaxKind_TypeKeyword
