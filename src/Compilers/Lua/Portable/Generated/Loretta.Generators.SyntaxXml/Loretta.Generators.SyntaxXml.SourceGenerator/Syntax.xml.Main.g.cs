@@ -184,6 +184,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Called when the visitor visits a TypeDeclarationStatementSyntax node.</summary>
         public virtual TResult? VisitTypeDeclarationStatement(TypeDeclarationStatementSyntax node) => this.DefaultVisit(node);
 
+        /// <summary>Called when the visitor visits a TypeFunctionDeclarationStatementSyntax node.</summary>
+        public virtual TResult? VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax node) => this.DefaultVisit(node);
+
         /// <summary>Called when the visitor visits a TypeBindingSyntax node.</summary>
         public virtual TResult? VisitTypeBinding(TypeBindingSyntax node) => this.DefaultVisit(node);
 
@@ -427,6 +430,9 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Called when the visitor visits a TypeDeclarationStatementSyntax node.</summary>
         public virtual void VisitTypeDeclarationStatement(TypeDeclarationStatementSyntax node) => this.DefaultVisit(node);
 
+        /// <summary>Called when the visitor visits a TypeFunctionDeclarationStatementSyntax node.</summary>
+        public virtual void VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax node) => this.DefaultVisit(node);
+
         /// <summary>Called when the visitor visits a TypeBindingSyntax node.</summary>
         public virtual void VisitTypeBinding(TypeBindingSyntax node) => this.DefaultVisit(node);
 
@@ -669,6 +675,9 @@ namespace Loretta.CodeAnalysis.Lua
 
         public override SyntaxNode? VisitTypeDeclarationStatement(TypeDeclarationStatementSyntax node)
             => node.Update(VisitToken(node.ExportKeyword), VisitToken(node.TypeKeyword), VisitToken(node.Name), (TypeParameterListSyntax?)Visit(node.TypeParameterList), VisitToken(node.EqualsToken), (TypeSyntax?)Visit(node.Type) ?? throw new ArgumentNullException("type"), VisitToken(node.SemicolonToken));
+
+        public override SyntaxNode? VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax node)
+            => node.Update(VisitToken(node.ExportKeyword), VisitToken(node.TypeKeyword), VisitToken(node.FunctionKeyword), VisitToken(node.Name), (ParameterListSyntax?)Visit(node.Parameters) ?? throw new ArgumentNullException("parameters"), (TypeBindingSyntax?)Visit(node.TypeBinding), (StatementListSyntax?)Visit(node.Body) ?? throw new ArgumentNullException("body"), VisitToken(node.EndKeyword), VisitToken(node.SemicolonToken));
 
         public override SyntaxNode? VisitTypeBinding(TypeBindingSyntax node)
             => node.Update(VisitToken(node.ColonToken), (TypeSyntax?)Visit(node.Type) ?? throw new ArgumentNullException("type"));
@@ -1946,6 +1955,46 @@ namespace Loretta.CodeAnalysis.Lua
         /// <summary>Creates a new TypeDeclarationStatementSyntax instance.</summary>
         public static TypeDeclarationStatementSyntax TypeDeclarationStatement(string name, TypeSyntax type)
             => SyntaxFactory.TypeDeclarationStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.TypeKeyword), SyntaxFactory.Identifier(name), default(TypeParameterListSyntax?), SyntaxFactory.Token(SyntaxKind.EqualsToken), type, default(SyntaxToken));
+
+        /// <summary>
+        /// Creates a new
+        /// <see cref="TypeFunctionDeclarationStatementSyntax" />
+        /// node.
+        /// </summary>
+        public static TypeFunctionDeclarationStatementSyntax TypeFunctionDeclarationStatement(SyntaxToken exportKeyword, SyntaxToken typeKeyword, SyntaxToken functionKeyword, SyntaxToken name, ParameterListSyntax parameters, TypeBindingSyntax? typeBinding, StatementListSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
+        {
+            switch (exportKeyword.Kind())
+            {
+                case SyntaxKind.ExportKeyword:
+                case SyntaxKind.None: break;
+                default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(exportKeyword));
+            }
+            if (typeKeyword.Kind() != SyntaxKind.TypeKeyword) throw new ArgumentException($"Invalid kind provided. Expected TypeKeyword but got {typeKeyword.Kind()}.", nameof(typeKeyword));
+            if (functionKeyword.Kind() != SyntaxKind.FunctionKeyword) throw new ArgumentException($"Invalid kind provided. Expected FunctionKeyword but got {functionKeyword.Kind()}.", nameof(functionKeyword));
+            if (name.Kind() != SyntaxKind.IdentifierToken) throw new ArgumentException($"Invalid kind provided. Expected IdentifierToken but got {name.Kind()}.", nameof(name));
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            if (body == null) throw new ArgumentNullException(nameof(body));
+            if (endKeyword.Kind() != SyntaxKind.EndKeyword) throw new ArgumentException($"Invalid kind provided. Expected EndKeyword but got {endKeyword.Kind()}.", nameof(endKeyword));
+            switch (semicolonToken.Kind())
+            {
+                case SyntaxKind.SemicolonToken:
+                case SyntaxKind.None: break;
+                default: throw new ArgumentException("Provided kind is not one of the valid ones.", nameof(semicolonToken));
+            }
+            return (TypeFunctionDeclarationStatementSyntax)Syntax.InternalSyntax.SyntaxFactory.TypeFunctionDeclarationStatement((Syntax.InternalSyntax.SyntaxToken?)exportKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)typeKeyword.Node!, (Syntax.InternalSyntax.SyntaxToken)functionKeyword.Node!, (Syntax.InternalSyntax.SyntaxToken)name.Node!, (Syntax.InternalSyntax.ParameterListSyntax)parameters.Green, typeBinding == null ? null : (Syntax.InternalSyntax.TypeBindingSyntax)typeBinding.Green, (Syntax.InternalSyntax.StatementListSyntax)body.Green, (Syntax.InternalSyntax.SyntaxToken)endKeyword.Node!, (Syntax.InternalSyntax.SyntaxToken?)semicolonToken.Node).CreateRed();
+        }
+
+        /// <summary>Creates a new TypeFunctionDeclarationStatementSyntax instance.</summary>
+        public static TypeFunctionDeclarationStatementSyntax TypeFunctionDeclarationStatement(SyntaxToken name, ParameterListSyntax parameters, TypeBindingSyntax? typeBinding, StatementListSyntax body)
+            => SyntaxFactory.TypeFunctionDeclarationStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.TypeKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, parameters, typeBinding, body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+
+        /// <summary>Creates a new TypeFunctionDeclarationStatementSyntax instance.</summary>
+        public static TypeFunctionDeclarationStatementSyntax TypeFunctionDeclarationStatement(SyntaxToken name, ParameterListSyntax parameters, StatementListSyntax body)
+            => SyntaxFactory.TypeFunctionDeclarationStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.TypeKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), name, parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
+
+        /// <summary>Creates a new TypeFunctionDeclarationStatementSyntax instance.</summary>
+        public static TypeFunctionDeclarationStatementSyntax TypeFunctionDeclarationStatement(string name, ParameterListSyntax parameters, StatementListSyntax body)
+            => SyntaxFactory.TypeFunctionDeclarationStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.TypeKeyword), SyntaxFactory.Token(SyntaxKind.FunctionKeyword), SyntaxFactory.Identifier(name), parameters, default(TypeBindingSyntax?), body, SyntaxFactory.Token(SyntaxKind.EndKeyword), default(SyntaxToken));
 
         /// <summary>
         /// Creates a new

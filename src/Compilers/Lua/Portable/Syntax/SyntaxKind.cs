@@ -874,6 +874,9 @@ namespace Loretta.CodeAnalysis.Lua
         EmptyStatement           = 2073,
         TypeDeclarationStatement = 2087,
 
+        [ExtraCategories(SyntaxKindCategory.FunctionExpressionOrDeclaration)]
+        TypeFunctionDeclarationStatement = 2120,
+
         // Types
         //     Supporting type kinds
         EqualsType        = 2088,
@@ -918,7 +921,7 @@ namespace Loretta.CodeAnalysis.Lua
         //     Type binding
         TypeBinding = 2111,
 
-        // Big gap 2120-3000 (insert new nodes here)
+        // Big gap 2121-3000 (insert new nodes here)
 
         // Other types of nodes
         CompilationUnit = 3001,

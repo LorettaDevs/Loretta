@@ -172,10 +172,11 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                               && PeekToken(1) is
                               {
                                   Kind: SyntaxKind.IdentifierToken, ContextualKind: SyntaxKind.TypeKeyword,
-                              })
+                              }
+                              && PeekToken(2).Kind is SyntaxKind.IdentifierToken or SyntaxKind.FunctionKeyword)
                              || (CurrentToken.ContextualKind is SyntaxKind.TypeKeyword
-                                 && PeekToken(1).Kind is SyntaxKind.IdentifierToken):
-                        return ParseTypeDeclarationStatement();
+                                 && PeekToken(1).Kind is SyntaxKind.IdentifierToken or SyntaxKind.FunctionKeyword):
+                        return ParseTypeDeclarationOrTypeFunctionDeclarationStatement();
 
                     default:
                     {
@@ -230,15 +231,10 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
         }
 
         /// <summary>
-        ///     Parses the following non-terminal:
-        ///     <code>
-        ///         type_declaration_statement
-        ///           : 'export'? 'type' identifier_token type_parameter_list? '=' type ';'?
-        ///           ;
-        ///     </code>
+        /// Dispatches to either <see cref="ParseTypeDeclarationStatement"/> or
+        /// <see cref="ParseTypeFunctionDeclarationStatement"/> based on the next token.
         /// </summary>
-        /// <returns></returns>
-        private TypeDeclarationStatementSyntax ParseTypeDeclarationStatement()
+        private StatementSyntax ParseTypeDeclarationOrTypeFunctionDeclarationStatement()
         {
             SyntaxToken? exportKeyword = null;
             if (CurrentToken.ContextualKind is SyntaxKind.ExportKeyword)
@@ -247,6 +243,26 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             }
 
             var typeKeyword = EatContextualToken(SyntaxKind.TypeKeyword);
+
+            // Check if this is a type function declaration (type function ...)
+            if (CurrentToken.Kind == SyntaxKind.FunctionKeyword)
+            {
+                return ParseTypeFunctionDeclarationStatement(exportKeyword, typeKeyword);
+            }
+
+            return ParseTypeDeclarationStatement(exportKeyword, typeKeyword);
+        }
+
+        /// <summary>
+        ///     Parses the following non-terminal:
+        ///     <code>
+        ///         type_declaration_statement
+        ///           : 'export'? 'type' identifier_token type_parameter_list? '=' type ';'?
+        ///           ;
+        ///     </code>
+        /// </summary>
+        private TypeDeclarationStatementSyntax ParseTypeDeclarationStatement(SyntaxToken? exportKeyword, SyntaxToken typeKeyword)
+        {
             var typeName = EatToken(SyntaxKind.IdentifierToken);
             var typeParameterList = TryParseTypeParameterList(true);
             var equalsToken = EatToken(SyntaxKind.EqualsToken);
@@ -268,6 +284,43 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
                     ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
             }
             return typeDeclarationStatement;
+        }
+
+        /// <summary>
+        ///     Parses the following non-terminal:
+        ///     <code>
+        ///         type_function_declaration_statement
+        ///           : 'export'? 'type' 'function' identifier_token parameter_list type_binding? statement_list 'end' ';'?
+        ///           ;
+        ///     </code>
+        /// </summary>
+        private TypeFunctionDeclarationStatementSyntax ParseTypeFunctionDeclarationStatement(SyntaxToken? exportKeyword, SyntaxToken typeKeyword)
+        {
+            var functionKeyword = EatToken(SyntaxKind.FunctionKeyword);
+            var name = EatToken(SyntaxKind.IdentifierToken);
+            var parameters = ParseParameterList();
+            var typeBinding = TryParseReturnTypeBinding();
+            var body = ParseStatementList(SyntaxKind.EndKeyword);
+            var endKeyword = EatToken(SyntaxKind.EndKeyword);
+            var semicolonToken = TryMatchSemicolon();
+
+            var typeFunctionDeclarationStatement = SyntaxFactory.TypeFunctionDeclarationStatement(
+                exportKeyword,
+                typeKeyword,
+                functionKeyword,
+                name,
+                parameters,
+                typeBinding,
+                body,
+                endKeyword,
+                semicolonToken);
+            if (!Options.SyntaxOptions.AcceptTypedLua)
+            {
+                typeFunctionDeclarationStatement = AddError(
+                    typeFunctionDeclarationStatement,
+                    ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion);
+            }
+            return typeFunctionDeclarationStatement;
         }
 
         private LocalDeclarationNameSyntax ParseLocalDeclarationName()

@@ -167,23 +167,23 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static SyntaxKind GetKeywordKind(String text)
         {
-            int __branch__ACE84D6A = -1;
+            int __branch__9229C0B8 = -1;
             switch (text.Length)
             {
                 case 2:
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(text.AsSpan(0, 2))))
                     {
                         case /* "do" = */ 0x006f0064:
-                            __branch__ACE84D6A = 3;
+                            __branch__9229C0B8 = 3;
                             break;
                         case /* "if" = */ 0x00660069:
-                            __branch__ACE84D6A = 12;
+                            __branch__9229C0B8 = 12;
                             break;
                         case /* "in" = */ 0x006e0069:
-                            __branch__ACE84D6A = 13;
+                            __branch__9229C0B8 = 13;
                             break;
                         case /* "or" = */ 0x0072006f:
-                            __branch__ACE84D6A = 17;
+                            __branch__9229C0B8 = 17;
                             break;
                     }
                     break;
@@ -192,23 +192,23 @@ namespace Loretta.CodeAnalysis.Lua
                     {
                         // and
                         case /* "an" = */ 0x006e0061 when string.Equals(text, "and", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 0;
+                            __branch__9229C0B8 = 0;
                             break;
                         // end
                         case /* "en" = */ 0x006e0065 when string.Equals(text, "end", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 6;
+                            __branch__9229C0B8 = 6;
                             break;
                         // for
                         case /* "fo" = */ 0x006f0066 when string.Equals(text, "for", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 9;
+                            __branch__9229C0B8 = 9;
                             break;
                         // nil
                         case /* "ni" = */ 0x0069006e when string.Equals(text, "nil", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 15;
+                            __branch__9229C0B8 = 15;
                             break;
                         // not
                         case /* "no" = */ 0x006f006e when string.Equals(text, "not", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 16;
+                            __branch__9229C0B8 = 16;
                             break;
                     }
                     break;
@@ -216,19 +216,19 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<long>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(text.AsSpan(0, 4))))
                     {
                         case /* "else" = */ 0x00650073006c0065:
-                            __branch__ACE84D6A = 5;
+                            __branch__9229C0B8 = 5;
                             break;
                         case /* "goto" = */ 0x006f0074006f0067:
-                            __branch__ACE84D6A = 11;
+                            __branch__9229C0B8 = 11;
                             break;
                         case /* "then" = */ 0x006e006500680074:
-                            __branch__ACE84D6A = 20;
-                            break;
-                        case /* "true" = */ 0x0065007500720074:
-                            __branch__ACE84D6A = 21;
+                            __branch__9229C0B8 = 20;
                             break;
                         case /* "type" = */ 0x0065007000790074:
-                            __branch__ACE84D6A = 22;
+                            __branch__9229C0B8 = 21;
+                            break;
+                        case /* "true" = */ 0x0065007500720074:
+                            __branch__9229C0B8 = 23;
                             break;
                     }
                     break;
@@ -237,23 +237,23 @@ namespace Loretta.CodeAnalysis.Lua
                     {
                         // break
                         case /* "b" = */ 'b' when string.Equals(text, "break", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 1;
+                            __branch__9229C0B8 = 1;
                             break;
                         // false
                         case /* "f" = */ 'f' when string.Equals(text, "false", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 8;
+                            __branch__9229C0B8 = 8;
                             break;
                         // local
                         case /* "l" = */ 'l' when string.Equals(text, "local", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 14;
+                            __branch__9229C0B8 = 14;
                             break;
                         // until
                         case /* "u" = */ 'u' when string.Equals(text, "until", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 24;
+                            __branch__9229C0B8 = 24;
                             break;
                         // while
                         case /* "w" = */ 'w' when string.Equals(text, "while", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 25;
+                            __branch__9229C0B8 = 25;
                             break;
                     }
                     break;
@@ -262,23 +262,23 @@ namespace Loretta.CodeAnalysis.Lua
                     {
                         // elseif
                         case /* "ls" = */ 0x0073006c when string.Equals(text, "elseif", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 4;
+                            __branch__9229C0B8 = 4;
                             break;
                         // export
                         case /* "xp" = */ 0x00700078 when string.Equals(text, "export", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 7;
+                            __branch__9229C0B8 = 7;
                             break;
                         // repeat
                         case /* "ep" = */ 0x00700065 when string.Equals(text, "repeat", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 18;
+                            __branch__9229C0B8 = 18;
                             break;
                         // return
                         case /* "et" = */ 0x00740065 when string.Equals(text, "return", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 19;
+                            __branch__9229C0B8 = 19;
                             break;
                         // typeof
                         case /* "yp" = */ 0x00700079 when string.Equals(text, "typeof", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 23;
+                            __branch__9229C0B8 = 22;
                             break;
                     }
                     break;
@@ -287,17 +287,17 @@ namespace Loretta.CodeAnalysis.Lua
                     {
                         // continue
                         case /* "c" = */ 'c' when string.Equals(text, "continue", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 2;
+                            __branch__9229C0B8 = 2;
                             break;
                         // function
                         case /* "f" = */ 'f' when string.Equals(text, "function", StringComparison.Ordinal):
-                            __branch__ACE84D6A = 10;
+                            __branch__9229C0B8 = 10;
                             break;
                     }
                     break;
             }
 
-            switch (__branch__ACE84D6A)
+            switch (__branch__9229C0B8)
             {
                 case 0:
                 {
@@ -448,21 +448,21 @@ namespace Loretta.CodeAnalysis.Lua
 #pragma warning restore CS0162 // Unreachable code detected
                 case 21:
                 {
-                    return SyntaxKind.TrueKeyword;
+                    return SyntaxKind.TypeKeyword;
                 }
 #pragma warning disable CS0162 // Unreachable code detected
                 break;
 #pragma warning restore CS0162 // Unreachable code detected
                 case 22:
                 {
-                    return SyntaxKind.TypeKeyword;
+                    return SyntaxKind.TypeofKeyword;
                 }
 #pragma warning disable CS0162 // Unreachable code detected
                 break;
 #pragma warning restore CS0162 // Unreachable code detected
                 case 23:
                 {
-                    return SyntaxKind.TypeofKeyword;
+                    return SyntaxKind.TrueKeyword;
                 }
 #pragma warning disable CS0162 // Unreachable code detected
                 break;
@@ -496,23 +496,23 @@ namespace Loretta.CodeAnalysis.Lua
         /// </summary>
         public static SyntaxKind GetKeywordKind(ReadOnlySpan<char> span)
         {
-            int __branch__ACE84D6A = -1;
+            int __branch__9229C0B8 = -1;
             switch (span.Length)
             {
                 case 2:
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(span.Slice(0, 2))))
                     {
                         case /* "do" = */ 0x006f0064:
-                            __branch__ACE84D6A = 3;
+                            __branch__9229C0B8 = 3;
                             break;
                         case /* "if" = */ 0x00660069:
-                            __branch__ACE84D6A = 12;
+                            __branch__9229C0B8 = 12;
                             break;
                         case /* "in" = */ 0x006e0069:
-                            __branch__ACE84D6A = 13;
+                            __branch__9229C0B8 = 13;
                             break;
                         case /* "or" = */ 0x0072006f:
-                            __branch__ACE84D6A = 17;
+                            __branch__9229C0B8 = 17;
                             break;
                     }
                     break;
@@ -521,23 +521,23 @@ namespace Loretta.CodeAnalysis.Lua
                     {
                         // and
                         case /* "an" = */ 0x006e0061 when span.Equals("and".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 0;
+                            __branch__9229C0B8 = 0;
                             break;
                         // end
                         case /* "en" = */ 0x006e0065 when span.Equals("end".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 6;
+                            __branch__9229C0B8 = 6;
                             break;
                         // for
                         case /* "fo" = */ 0x006f0066 when span.Equals("for".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 9;
+                            __branch__9229C0B8 = 9;
                             break;
                         // nil
                         case /* "ni" = */ 0x0069006e when span.Equals("nil".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 15;
+                            __branch__9229C0B8 = 15;
                             break;
                         // not
                         case /* "no" = */ 0x006f006e when span.Equals("not".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 16;
+                            __branch__9229C0B8 = 16;
                             break;
                     }
                     break;
@@ -545,19 +545,19 @@ namespace Loretta.CodeAnalysis.Lua
                     switch (System.Runtime.InteropServices.MemoryMarshal.Read<long>(System.Runtime.InteropServices.MemoryMarshal.Cast<char, byte>(span.Slice(0, 4))))
                     {
                         case /* "else" = */ 0x00650073006c0065:
-                            __branch__ACE84D6A = 5;
+                            __branch__9229C0B8 = 5;
                             break;
                         case /* "goto" = */ 0x006f0074006f0067:
-                            __branch__ACE84D6A = 11;
+                            __branch__9229C0B8 = 11;
                             break;
                         case /* "then" = */ 0x006e006500680074:
-                            __branch__ACE84D6A = 20;
-                            break;
-                        case /* "true" = */ 0x0065007500720074:
-                            __branch__ACE84D6A = 21;
+                            __branch__9229C0B8 = 20;
                             break;
                         case /* "type" = */ 0x0065007000790074:
-                            __branch__ACE84D6A = 22;
+                            __branch__9229C0B8 = 21;
+                            break;
+                        case /* "true" = */ 0x0065007500720074:
+                            __branch__9229C0B8 = 23;
                             break;
                     }
                     break;
@@ -566,23 +566,23 @@ namespace Loretta.CodeAnalysis.Lua
                     {
                         // break
                         case /* "b" = */ 'b' when span.Equals("break".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 1;
+                            __branch__9229C0B8 = 1;
                             break;
                         // false
                         case /* "f" = */ 'f' when span.Equals("false".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 8;
+                            __branch__9229C0B8 = 8;
                             break;
                         // local
                         case /* "l" = */ 'l' when span.Equals("local".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 14;
+                            __branch__9229C0B8 = 14;
                             break;
                         // until
                         case /* "u" = */ 'u' when span.Equals("until".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 24;
+                            __branch__9229C0B8 = 24;
                             break;
                         // while
                         case /* "w" = */ 'w' when span.Equals("while".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 25;
+                            __branch__9229C0B8 = 25;
                             break;
                     }
                     break;
@@ -591,23 +591,23 @@ namespace Loretta.CodeAnalysis.Lua
                     {
                         // elseif
                         case /* "ls" = */ 0x0073006c when span.Equals("elseif".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 4;
+                            __branch__9229C0B8 = 4;
                             break;
                         // export
                         case /* "xp" = */ 0x00700078 when span.Equals("export".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 7;
+                            __branch__9229C0B8 = 7;
                             break;
                         // repeat
                         case /* "ep" = */ 0x00700065 when span.Equals("repeat".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 18;
+                            __branch__9229C0B8 = 18;
                             break;
                         // return
                         case /* "et" = */ 0x00740065 when span.Equals("return".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 19;
+                            __branch__9229C0B8 = 19;
                             break;
                         // typeof
                         case /* "yp" = */ 0x00700079 when span.Equals("typeof".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 23;
+                            __branch__9229C0B8 = 22;
                             break;
                     }
                     break;
@@ -616,17 +616,17 @@ namespace Loretta.CodeAnalysis.Lua
                     {
                         // continue
                         case /* "c" = */ 'c' when span.Equals("continue".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 2;
+                            __branch__9229C0B8 = 2;
                             break;
                         // function
                         case /* "f" = */ 'f' when span.Equals("function".AsSpan(), StringComparison.Ordinal):
-                            __branch__ACE84D6A = 10;
+                            __branch__9229C0B8 = 10;
                             break;
                     }
                     break;
             }
 
-            switch (__branch__ACE84D6A)
+            switch (__branch__9229C0B8)
             {
                 case 0:
                 {
@@ -777,21 +777,21 @@ namespace Loretta.CodeAnalysis.Lua
 #pragma warning restore CS0162 // Unreachable code detected
                 case 21:
                 {
-                    return SyntaxKind.TrueKeyword;
+                    return SyntaxKind.TypeKeyword;
                 }
 #pragma warning disable CS0162 // Unreachable code detected
                 break;
 #pragma warning restore CS0162 // Unreachable code detected
                 case 22:
                 {
-                    return SyntaxKind.TypeKeyword;
+                    return SyntaxKind.TypeofKeyword;
                 }
 #pragma warning disable CS0162 // Unreachable code detected
                 break;
 #pragma warning restore CS0162 // Unreachable code detected
                 case 23:
                 {
-                    return SyntaxKind.TypeofKeyword;
+                    return SyntaxKind.TrueKeyword;
                 }
 #pragma warning disable CS0162 // Unreachable code detected
                 break;
@@ -948,9 +948,9 @@ namespace Loretta.CodeAnalysis.Lua
                 SyntaxKind.RepeatKeyword => "repeat",
                 SyntaxKind.ReturnKeyword => "return",
                 SyntaxKind.ThenKeyword => "then",
-                SyntaxKind.TrueKeyword => "true",
                 SyntaxKind.TypeKeyword => "type",
                 SyntaxKind.TypeofKeyword => "typeof",
+                SyntaxKind.TrueKeyword => "true",
                 SyntaxKind.UntilKeyword => "until",
                 SyntaxKind.WhileKeyword => "while",
 
@@ -1098,9 +1098,9 @@ namespace Loretta.CodeAnalysis.Lua
                 case SyntaxKind.RepeatKeyword:
                 case SyntaxKind.ReturnKeyword:
                 case SyntaxKind.ThenKeyword:
-                case SyntaxKind.TrueKeyword:
                 case SyntaxKind.TypeKeyword:
                 case SyntaxKind.TypeofKeyword:
+                case SyntaxKind.TrueKeyword:
                 case SyntaxKind.UntilKeyword:
                 case SyntaxKind.WhileKeyword:
                     return true;
@@ -1196,9 +1196,9 @@ namespace Loretta.CodeAnalysis.Lua
                 case SyntaxKind.ThenKeyword:
                 case SyntaxKind.TildeEqualsToken:
                 case SyntaxKind.TildeToken:
-                case SyntaxKind.TrueKeyword:
                 case SyntaxKind.TypeKeyword:
                 case SyntaxKind.TypeofKeyword:
+                case SyntaxKind.TrueKeyword:
                 case SyntaxKind.UntilKeyword:
                 case SyntaxKind.WhileKeyword:
                     return true;
@@ -1400,6 +1400,7 @@ namespace Loretta.CodeAnalysis.Lua
                 case SyntaxKind.AnonymousFunctionExpression:
                 case SyntaxKind.FunctionDeclarationStatement:
                 case SyntaxKind.LocalFunctionDeclarationStatement:
+                case SyntaxKind.TypeFunctionDeclarationStatement:
                     return true;
 
                 default:
@@ -1416,6 +1417,7 @@ namespace Loretta.CodeAnalysis.Lua
             SyntaxKind.AnonymousFunctionExpression,
             SyntaxKind.LocalFunctionDeclarationStatement,
             SyntaxKind.FunctionDeclarationStatement,
+            SyntaxKind.TypeFunctionDeclarationStatement,
         });
 
         /// <summary>

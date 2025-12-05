@@ -1869,4 +1869,199 @@ public sealed class TypeParsingTests : ParsingTestsBase
         }
         EOF();
     }
+
+    [Test]
+    public async Task Parser_ParsesTypeFunctionDeclarationStatement()
+    {
+        await UsingStatementAsync("type function myTypeFunc() return types.number end");
+
+        await N(SyntaxKind.TypeFunctionDeclarationStatement);
+        {
+            await N(SyntaxKind.TypeKeyword);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.IdentifierToken, "myTypeFunc");
+            await N(SyntaxKind.ParameterList);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
+            }
+            await N(SyntaxKind.StatementList);
+            {
+                await N(SyntaxKind.ReturnStatement);
+                {
+                    await N(SyntaxKind.ReturnKeyword);
+                    await N(SyntaxKind.MemberAccessExpression);
+                    {
+                        await N(SyntaxKind.IdentifierName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "types");
+                        }
+                        await N(SyntaxKind.DotToken);
+                        await N(SyntaxKind.IdentifierToken, "number");
+                    }
+                }
+            }
+            await N(SyntaxKind.EndKeyword);
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesExportedTypeFunctionDeclarationStatement()
+    {
+        await UsingStatementAsync("export type function myTypeFunc() return types.number end");
+
+        await N(SyntaxKind.TypeFunctionDeclarationStatement);
+        {
+            await N(SyntaxKind.ExportKeyword);
+            await N(SyntaxKind.TypeKeyword);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.IdentifierToken, "myTypeFunc");
+            await N(SyntaxKind.ParameterList);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
+            }
+            await N(SyntaxKind.StatementList);
+            {
+                await N(SyntaxKind.ReturnStatement);
+                {
+                    await N(SyntaxKind.ReturnKeyword);
+                    await N(SyntaxKind.MemberAccessExpression);
+                    {
+                        await N(SyntaxKind.IdentifierName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "types");
+                        }
+                        await N(SyntaxKind.DotToken);
+                        await N(SyntaxKind.IdentifierToken, "number");
+                    }
+                }
+            }
+            await N(SyntaxKind.EndKeyword);
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesTypeFunctionDeclarationStatementWithParameters()
+    {
+        await UsingStatementAsync("type function serialize(arg) return arg end");
+
+        await N(SyntaxKind.TypeFunctionDeclarationStatement);
+        {
+            await N(SyntaxKind.TypeKeyword);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.IdentifierToken, "serialize");
+            await N(SyntaxKind.ParameterList);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.NamedParameter);
+                {
+                    await N(SyntaxKind.IdentifierToken, "arg");
+                }
+                await N(SyntaxKind.CloseParenthesisToken);
+            }
+            await N(SyntaxKind.StatementList);
+            {
+                await N(SyntaxKind.ReturnStatement);
+                {
+                    await N(SyntaxKind.ReturnKeyword);
+                    await N(SyntaxKind.IdentifierName);
+                    {
+                        await N(SyntaxKind.IdentifierToken, "arg");
+                    }
+                }
+            }
+            await N(SyntaxKind.EndKeyword);
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesTypeFunctionDeclarationStatementWithReturnType()
+    {
+        await UsingStatementAsync("type function myTypeFunc(): T return types.number end");
+
+        await N(SyntaxKind.TypeFunctionDeclarationStatement);
+        {
+            await N(SyntaxKind.TypeKeyword);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.IdentifierToken, "myTypeFunc");
+            await N(SyntaxKind.ParameterList);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.CloseParenthesisToken);
+            }
+            await N(SyntaxKind.TypeBinding);
+            {
+                await N(SyntaxKind.ColonToken);
+                await N(SyntaxKind.SimpleTypeName);
+                {
+                    await N(SyntaxKind.IdentifierToken, "T");
+                }
+            }
+            await N(SyntaxKind.StatementList);
+            {
+                await N(SyntaxKind.ReturnStatement);
+                {
+                    await N(SyntaxKind.ReturnKeyword);
+                    await N(SyntaxKind.MemberAccessExpression);
+                    {
+                        await N(SyntaxKind.IdentifierName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "types");
+                        }
+                        await N(SyntaxKind.DotToken);
+                        await N(SyntaxKind.IdentifierToken, "number");
+                    }
+                }
+            }
+            await N(SyntaxKind.EndKeyword);
+        }
+        EOF();
+    }
+
+    [Test]
+    public async Task Parser_ParsesTypeFunctionDeclarationStatementWithTypedParameters()
+    {
+        await UsingStatementAsync("type function serialize(arg: T) return arg end");
+
+        await N(SyntaxKind.TypeFunctionDeclarationStatement);
+        {
+            await N(SyntaxKind.TypeKeyword);
+            await N(SyntaxKind.FunctionKeyword);
+            await N(SyntaxKind.IdentifierToken, "serialize");
+            await N(SyntaxKind.ParameterList);
+            {
+                await N(SyntaxKind.OpenParenthesisToken);
+                await N(SyntaxKind.NamedParameter);
+                {
+                    await N(SyntaxKind.IdentifierToken, "arg");
+                    await N(SyntaxKind.TypeBinding);
+                    {
+                        await N(SyntaxKind.ColonToken);
+                        await N(SyntaxKind.SimpleTypeName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "T");
+                        }
+                    }
+                }
+                await N(SyntaxKind.CloseParenthesisToken);
+            }
+            await N(SyntaxKind.StatementList);
+            {
+                await N(SyntaxKind.ReturnStatement);
+                {
+                    await N(SyntaxKind.ReturnKeyword);
+                    await N(SyntaxKind.IdentifierName);
+                    {
+                        await N(SyntaxKind.IdentifierToken, "arg");
+                    }
+                }
+            }
+            await N(SyntaxKind.EndKeyword);
+        }
+        EOF();
+    }
 }

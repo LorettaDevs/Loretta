@@ -732,6 +732,20 @@ namespace Loretta.CodeAnalysis.Lua.Syntax
             return base.VisitTypeDeclarationStatement(node);
         }
 
+        // type_function_declaration_statement
+        //   : 'export'? 'type' 'function' identifier_token parameter_list type_binding? statement_list 'end' ';'?
+        //   ;
+        public override SyntaxNode? VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax node)
+        {
+            AddSpaceAfterToken(node.ExportKeyword);
+            AddSpaceAfterToken(node.TypeKeyword);
+            AddSpaceAfterToken(node.FunctionKeyword);
+            AddLineBreaksAfterToken(node.TypeBinding?.GetLastToken() ?? node.Parameters.GetLastToken());
+            AddLineBreaksAfterToken(node.Body.GetLastToken());
+
+            return base.VisitTypeFunctionDeclarationStatement(node);
+        }
+
         // while_statement
         //   : 'while' expression 'do' statement_list 'end' ';'?
         //   ;

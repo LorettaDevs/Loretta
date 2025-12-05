@@ -368,6 +368,21 @@ namespace Loretta.CodeAnalysis.Lua
                 }
             }
 
+            public override void VisitTypeFunctionDeclarationStatement(TypeFunctionDeclarationStatementSyntax node)
+            {
+                var scope = CreateFunctionScope(node);
+                try
+                {
+                    foreach (var parameter in node.Parameters.Parameters)
+                        _variables.Add(parameter, CreateParameter(scope, parameter));
+                    Visit(node.Body);
+                }
+                finally
+                {
+                    PopScope(scope);
+                }
+            }
+
             public override void VisitDoStatement(DoStatementSyntax node)
             {
                 var scope = CreateBlockScope(node);
