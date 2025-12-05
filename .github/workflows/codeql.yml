@@ -15,8 +15,6 @@ on:
       - 'docs/**'
       - '**/*.md'
       - '**/*.txt'
-  merge_group: # Needed for PR merge queues
-    types: [ checks_requested ]
   schedule:
     - cron: '41 11 * * 6'
 
