@@ -91,7 +91,7 @@ namespace Loretta.CodeAnalysis.Lua
         {
             switch (kind)
             {
-                case SyntaxKind.ColonColonToken when !options.AcceptGoto:
+                case SyntaxKind.ColonColonToken when !options.AcceptGoto && !options.AcceptTypedLua:
                 case SyntaxKind.SlashSlashToken or SyntaxKind.SlashSlashEqualsToken 
                     when !options.AcceptFloorDivision:
                 case SyntaxKind.AmpersandAmpersandToken or SyntaxKind.PipePipeToken or SyntaxKind.BangToken

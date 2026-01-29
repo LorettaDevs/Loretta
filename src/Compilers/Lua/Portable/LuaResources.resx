@@ -319,4 +319,7 @@
     <data name="ERR_InterpolatedStringsNotSupportedInVersion" xml:space="preserve">
       <value>Interpolated strings are not supported in this lua version</value>
   </data>
+  <data name="ERR_GotoNotSupportedInLuaVersion" xml:space="preserve">
+    <value>Goto statements and labels are not supported in this lua version</value>
+  </data>
 </root>

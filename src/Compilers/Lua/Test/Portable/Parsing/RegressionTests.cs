@@ -289,4 +289,67 @@ public sealed class RegressionTests : ParsingTestsBase
         }
         EOF();
     }
+
+    [Test]
+    public async Task LanguageParser_LuauTypeCast_ParsesCorrectly()
+    {
+        // ensure that "::" is correctly recognized as a TypeCastExpression in Luau
+        await UsingTreeAsync("local a = {} :: table", new LuaParseOptions(LuaSyntaxOptions.Luau));
+        await N(SyntaxKind.CompilationUnit);
+        {
+            await N(SyntaxKind.StatementList);
+            {
+                await N(SyntaxKind.LocalVariableDeclarationStatement);
+                {
+                    await N(SyntaxKind.LocalKeyword);
+                    await N(SyntaxKind.LocalDeclarationName);
+                    {
+                        await N(SyntaxKind.IdentifierName);
+                        {
+                            await N(SyntaxKind.IdentifierToken, "a");
+                        }
+                    }
+                    await N(SyntaxKind.EqualsValuesClause);
+                    {
+                        await N(SyntaxKind.EqualsToken);
+                        await N(SyntaxKind.TypeCastExpression);
+                        {
+                            await N(SyntaxKind.TableConstructorExpression);
+                            {
+                                await N(SyntaxKind.OpenBraceToken);
+                                await N(SyntaxKind.CloseBraceToken);
+                            }
+                            await N(SyntaxKind.ColonColonToken, "::");
+                            await N(SyntaxKind.SimpleTypeName);
+                            {
+                                await N(SyntaxKind.IdentifierToken, "table");
+                            }
+                        }
+                    }
+                }
+            }
+            await N(SyntaxKind.EndOfFileToken);
+        }
+        EOF();
+    }
+    [Test]
+    public async Task LanguageParser_LuauGoto_GeneratesCorrectError()
+    {
+        // ensure that while "::" is enabled for type casts, using it for labels still generates the goto error in Luau
+        await ParseAndValidateAsync(
+               "::label::",
+               LuaSyntaxOptions.Luau,
+               // (1,1): error LUA1019: Goto statements and labels are not supported in this lua version
+               Diagnostic(ErrorCode.ERR_GotoNotSupportedInLuaVersion, "::label::").WithLocation(1, 1));
+    }
+    [Test]
+    public async Task LanguageParser_Lua52_TypeCast_GeneratesError()
+    {
+        // ensure that in Lua 5.2 (which supports goto but not types), using :: for a cast triggers the "Typed lua is not supported" error.
+        await ParseAndValidateAsync(
+            "local a = x :: table",
+            LuaSyntaxOptions.Lua52,
+            // (1,11): error LUA1016: Typed lua is not supported in this lua version
+            Diagnostic(ErrorCode.ERR_TypedLuaNotSupportedInLuaVersion, "x :: table").WithLocation(1, 11));
+    }
 }
