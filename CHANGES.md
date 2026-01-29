@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Diagnostic LUA1019: "Goto statements and labels are not supported in this lua version".
 - Support for floor division assignments (`//=`) by @toxamin in https://github.com/LorettaDevs/Loretta/pull/157.
 - Support for underlines before the number base prefix by @toxamin in https://github.com/LorettaDevs/Loretta/pull/156.
 
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed parsing of Luau type casts (`::`) when `AcceptGoto` is false by @Fiusen in https://github.com/LorettaDevs/Loretta/pull/164.
 - Parsing of empty return statements at the end of the file by @toxamin in https://github.com/LorettaDevs/Loretta/pull/148.
 
 <!-- ### Security -->
