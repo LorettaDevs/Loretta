@@ -434,5 +434,11 @@ namespace Loretta.CodeAnalysis.Lua {
                 return ResourceManager.GetString("ERR_InterpolatedStringsNotSupportedInVersion", resourceCulture);
             }
         }
+
+        internal static string ERR_GotoNotSupportedInLuaVersion {
+            get {
+                return ResourceManager.GetString("ERR_GotoNotSupportedInLuaVersion", resourceCulture);
+            }
+        }
     }
 }

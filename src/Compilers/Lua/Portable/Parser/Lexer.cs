@@ -271,7 +271,7 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
 
                 case ':':
                     TextWindow.AdvanceChar();
-                    if (_options.SyntaxOptions.AcceptGoto && TextWindow.PeekChar() == ':')
+                    if ((_options.SyntaxOptions.AcceptGoto || _options.SyntaxOptions.AcceptTypedLua) && TextWindow.PeekChar() == ':')
                     {
                         TextWindow.AdvanceChar();
                         info.Kind = SyntaxKind.ColonColonToken;

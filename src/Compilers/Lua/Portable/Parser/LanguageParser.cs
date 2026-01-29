@@ -599,10 +599,16 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var gotoKeyword = EatToken(SyntaxKind.GotoKeyword);
             var labelName = EatToken(SyntaxKind.IdentifierToken);
             var semicolonToken = TryMatchSemicolon();
-            return SyntaxFactory.GotoStatement(
+            
+            var node = SyntaxFactory.GotoStatement(
                 gotoKeyword,
                 labelName,
                 semicolonToken);
+
+            if (!Options.SyntaxOptions.AcceptGoto)
+                node = AddError(node, ErrorCode.ERR_GotoNotSupportedInLuaVersion);
+
+            return node;
         }
 
         private BreakStatementSyntax ParseBreakStatement()
@@ -628,11 +634,17 @@ namespace Loretta.CodeAnalysis.Lua.Syntax.InternalSyntax
             var identifier = EatToken(SyntaxKind.IdentifierToken);
             var rightDelimiterToken = EatToken(SyntaxKind.ColonColonToken);
             var semicolonToken = TryMatchSemicolon();
-            return SyntaxFactory.GotoLabelStatement(
+
+            var node = SyntaxFactory.GotoLabelStatement(
                 leftDelimiterToken,
                 identifier,
                 rightDelimiterToken,
                 semicolonToken);
+
+            if (!Options.SyntaxOptions.AcceptGoto)
+                node = AddError(node, ErrorCode.ERR_GotoNotSupportedInLuaVersion);
+
+            return node;
         }
 
         private FunctionDeclarationStatementSyntax ParseFunctionDeclarationStatement()

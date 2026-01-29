@@ -66,6 +66,7 @@ namespace Loretta.CodeAnalysis.Lua
         ERR_TypedLuaNotSupportedInLuaVersion           = 1016,
         ERR_OnlyOneTableTypeIndexerIsAllowed           = 1017,
         ERR_NormalTypeParametersComeBeforePacks        = 1018,
+        ERR_GotoNotSupportedInLuaVersion               = 1019,
 
         // MessageProvider stuff
         ERR_BadDocumentationMode = 2000,
