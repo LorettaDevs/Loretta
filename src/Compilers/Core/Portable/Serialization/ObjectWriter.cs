@@ -862,14 +862,8 @@ namespace Loretta.Utilities
             else
             {
                 var writable = instanceAsWritable;
-                if (writable == null)
-                {
-                    writable = instance as IObjectWritable;
-                    if (writable == null)
-                    {
-                        throw NoSerializationWriterException($"{instance.GetType()} must implement {nameof(IObjectWritable)}");
-                    }
-                }
+                writable ??= instance as IObjectWritable
+                    ?? throw NoSerializationWriterException($"{instance.GetType()} must implement {nameof(IObjectWritable)}");
 
                 var oldDepth = _recursionDepth;
                 _recursionDepth++;
