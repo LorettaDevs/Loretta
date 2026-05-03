@@ -25,10 +25,6 @@
         }
 
         /// <inheritdoc/>
-        public void ReleaseSlot(int slot)
-        {
-            if (!_freeSlots.Add(slot))
-                throw new InvalidOperationException($"Slot {slot} was released two times.");
-        }
+        public void ReleaseSlot(int slot) => _freeSlots.Add(slot);
     }
 }
